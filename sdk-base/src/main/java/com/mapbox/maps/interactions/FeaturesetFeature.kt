@@ -8,7 +8,6 @@ import com.mapbox.geojson.Polygon
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.FeaturesetFeatureId
 import com.mapbox.maps.LongClickInteraction
-import com.mapbox.maps.MapboxExperimental
 import org.json.JSONObject
 import java.util.Objects
 
@@ -17,7 +16,6 @@ import java.util.Objects
  *  1. User map interactions ([ClickInteraction], [LongClickInteraction]).
  *  2. Map query methods like `MapboxMap.queryRenderedFeatures`.
  */
-@MapboxExperimental
 open class FeaturesetFeature<FS : FeatureState> @RestrictTo(RestrictTo.Scope.LIBRARY) constructor(
   /**
    * Optional identifier holding feature id and feature namespace.

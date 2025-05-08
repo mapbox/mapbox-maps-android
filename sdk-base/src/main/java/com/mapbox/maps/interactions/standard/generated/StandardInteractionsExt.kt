@@ -9,7 +9,6 @@ import com.mapbox.maps.FeaturesetDescriptor
 import com.mapbox.maps.InteractionContext
 import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapInteraction
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 
 /**
@@ -23,7 +22,6 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
  * @param onClick callback triggered when the `poi` featureset is clicked.
  */
 @JvmOverloads
-@MapboxExperimental
 fun ClickInteraction.Companion.standardPoi(
   importId: String? = null,
   filter: Value? = null,
@@ -60,7 +58,6 @@ fun ClickInteraction.Companion.standardPoi(
  * @param onLongClick callback triggered when the `poi` featureset is long clicked.
  */
 @JvmOverloads
-@MapboxExperimental
 fun LongClickInteraction.Companion.standardPoi(
   importId: String? = null,
   filter: Value? = null,
@@ -96,7 +93,6 @@ fun LongClickInteraction.Companion.standardPoi(
  * @param onClick callback triggered when the `place-labels` featureset is clicked.
  */
 @JvmOverloads
-@MapboxExperimental
 fun ClickInteraction.Companion.standardPlaceLabels(
   importId: String? = null,
   filter: Value? = null,
@@ -133,7 +129,6 @@ fun ClickInteraction.Companion.standardPlaceLabels(
  * @param onLongClick callback triggered when the `place-labels` featureset is long clicked.
  */
 @JvmOverloads
-@MapboxExperimental
 fun LongClickInteraction.Companion.standardPlaceLabels(
   importId: String? = null,
   filter: Value? = null,
@@ -169,7 +164,6 @@ fun LongClickInteraction.Companion.standardPlaceLabels(
  * @param onClick callback triggered when the `buildings` featureset is clicked.
  */
 @JvmOverloads
-@MapboxExperimental
 fun ClickInteraction.Companion.standardBuildings(
   importId: String? = null,
   filter: Value? = null,
@@ -206,7 +200,6 @@ fun ClickInteraction.Companion.standardBuildings(
  * @param onLongClick callback triggered when the `buildings` featureset is long clicked.
  */
 @JvmOverloads
-@MapboxExperimental
 fun LongClickInteraction.Companion.standardBuildings(
   importId: String? = null,
   filter: Value? = null,

@@ -10,7 +10,6 @@ import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 /**
  * For internal usage.
  */
-@OptIn(MapboxExperimental::class)
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 class DragInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 

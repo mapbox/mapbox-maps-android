@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.compose.style.interactions.generated
 
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.FeatureStateOperationCallback
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.QueryFeatureStateCallback
 import com.mapbox.maps.interactions.FeatureState
@@ -23,7 +22,6 @@ import com.mapbox.maps.interactions.standard.generated.StandardPoiState
  *
  * Note that this is a sealed interface, it's not expected to be implemented outside of this library.
  */
-@MapboxExperimental
 public sealed interface FeaturesetFeatureScope {
 
   /**
@@ -33,7 +31,6 @@ public sealed interface FeaturesetFeatureScope {
    * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
    * Refer to [setFeatureState] if the callback is required.
    */
-  @MapboxExperimental
   public fun StandardPoiFeature.setStandardPoiState(
     init: StandardPoiState.Builder.() -> Unit,
   ) {
@@ -47,7 +44,6 @@ public sealed interface FeaturesetFeatureScope {
    * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
    * Refer to [setFeatureState] if the callback is required.
    */
-  @MapboxExperimental
   public fun StandardPlaceLabelsFeature.setStandardPlaceLabelsState(
     init: StandardPlaceLabelsState.Builder.() -> Unit,
   ) {
@@ -61,7 +57,6 @@ public sealed interface FeaturesetFeatureScope {
    * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
    * Refer to [setFeatureState] if the callback is required.
    */
-  @MapboxExperimental
   public fun StandardBuildingsFeature.setStandardBuildingsState(
     init: StandardBuildingsState.Builder.() -> Unit,
   ) {
@@ -76,7 +71,6 @@ public sealed interface FeaturesetFeatureScope {
    *
    * @return A [Cancelable] object that could be used to cancel the pending query.
    */
-  @MapboxExperimental
   public fun <FS : FeatureState> FeaturesetFeature<FS>.setFeatureState(
     state: FS,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback {}
@@ -96,7 +90,6 @@ public sealed interface FeaturesetFeatureScope {
    *
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
-  @MapboxExperimental
   public fun <FS, FSK> FeaturesetFeature<FS>.removeFeatureState(
     stateKey: FSK? = null,
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
@@ -114,17 +107,14 @@ public sealed interface FeaturesetFeatureScope {
    *
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
-  @MapboxExperimental
   public fun <FS : FeatureState> FeaturesetFeature<FS>.resetFeatureStates(
     callback: FeatureStateOperationCallback = FeatureStateOperationCallback { }
   ): Cancelable
 }
 
-@OptIn(MapboxExperimental::class)
 internal class FeaturesetFeatureScopeImpl internal constructor(private val mapboxMap: MapboxMap) :
   FeaturesetFeatureScope {
 
-  @MapboxExperimental
   override fun <FS : FeatureState> FeaturesetFeature<FS>.setFeatureState(
     state: FS,
     callback: FeatureStateOperationCallback
@@ -136,7 +126,6 @@ internal class FeaturesetFeatureScopeImpl internal constructor(private val mapbo
     )
   }
 
-  @MapboxExperimental
   override fun <FS, FSK> FeaturesetFeature<FS>.removeFeatureState(
     stateKey: FSK?,
     callback: FeatureStateOperationCallback
@@ -148,7 +137,6 @@ internal class FeaturesetFeatureScopeImpl internal constructor(private val mapbo
     )
   }
 
-  @MapboxExperimental
   override fun <FS : FeatureState> FeaturesetFeature<FS>.resetFeatureStates(callback: FeatureStateOperationCallback): Cancelable {
     return mapboxMap.resetFeatureStates(descriptor = descriptor, callback = callback)
   }

@@ -2636,7 +2636,6 @@ class MapboxMap :
    *
    * @return A [Cancelable] object that could be used to cancel the pending query.
    */
-  @MapboxExperimental
   @JvmOverloads
   fun <FS : FeatureState> setFeatureState(
     featuresetFeature: FeaturesetFeature<FS>,
@@ -2768,7 +2767,6 @@ class MapboxMap :
    *
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
-  @MapboxExperimental
   @JvmOverloads
   fun <FS, FSK> removeFeatureState(
     featuresetFeature: FeaturesetFeature<FS>,
@@ -2839,7 +2837,6 @@ class MapboxMap :
    *
    * @return A [Cancelable] object that could be used to cancel the pending operation.
    */
-  @MapboxExperimental
   @JvmOverloads
   fun resetFeatureStates(
     descriptor: TypedFeaturesetDescriptor<*, *>,

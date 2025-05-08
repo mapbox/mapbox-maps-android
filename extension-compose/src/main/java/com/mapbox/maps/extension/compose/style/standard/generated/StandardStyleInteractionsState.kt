@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.InteractionContext
 import com.mapbox.maps.LongClickInteraction
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions
 import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope
@@ -21,7 +20,6 @@ import com.mapbox.maps.interactions.standard.generated.standardPoi
 /**
  * [StandardStyleInteractionsState] manages the map interactions defined for Mapbox Standard Style.
  */
-@MapboxExperimental
 public class StandardStyleInteractionsState : BasicStyleInteractions() {
 
   @Composable
@@ -39,7 +37,6 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when the Standard featureset is clicked.
    */
-  @MapboxExperimental
   public fun onPoiClicked(
     importId: String? = null,
     filter: Expression? = null,
@@ -68,7 +65,6 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when the Standard featureset is long clicked.
    */
-  @MapboxExperimental
   public fun onPoiLongClicked(
     importId: String? = null,
     filter: Expression? = null,
@@ -97,7 +93,6 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when the Standard featureset is clicked.
    */
-  @MapboxExperimental
   public fun onPlaceLabelsClicked(
     importId: String? = null,
     filter: Expression? = null,
@@ -126,7 +121,6 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when the Standard featureset is long clicked.
    */
-  @MapboxExperimental
   public fun onPlaceLabelsLongClicked(
     importId: String? = null,
     filter: Expression? = null,
@@ -155,7 +149,6 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when the Standard featureset is clicked.
    */
-  @MapboxExperimental
   public fun onBuildingsClicked(
     importId: String? = null,
     filter: Expression? = null,
@@ -184,7 +177,6 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when the Standard featureset is long clicked.
    */
-  @MapboxExperimental
   public fun onBuildingsLongClicked(
     importId: String? = null,
     filter: Expression? = null,

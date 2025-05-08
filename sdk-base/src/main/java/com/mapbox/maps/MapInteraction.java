@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 /**
  * Base class for interactions. Should not be used directly.
  */
-@MapboxExperimental
 public abstract class MapInteraction {
 
     /**

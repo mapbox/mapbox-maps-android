@@ -4,7 +4,6 @@ package com.mapbox.maps.interactions.standard.generated
 
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.FeaturesetFeatureId
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
@@ -13,7 +12,6 @@ import com.mapbox.maps.interactions.FeaturesetFeature
  * Typed class of [FeaturesetFeature] representing StandardBuildings coming from Mapbox Standard Style.
  * Allows easy access to [Feature] properties.
  */
-@MapboxExperimental
 class StandardBuildingsFeature(
   id: FeaturesetFeatureId?,
   importId: String?,

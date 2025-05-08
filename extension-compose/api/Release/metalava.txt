@@ -1632,7 +1632,7 @@ package com.mapbox.maps.extension.compose.style.imports {
 
 package com.mapbox.maps.extension.compose.style.interactions {
 
-  @com.mapbox.maps.MapboxExperimental public abstract class BasicStyleInteractions {
+  public abstract class BasicStyleInteractions {
     ctor public BasicStyleInteractions();
     method @androidx.compose.runtime.Composable protected final void BindToMap(com.mapbox.maps.MapboxMap map, String? importId = null);
     method @androidx.compose.runtime.Composable protected final void UpdateInteractions(com.mapbox.maps.MapboxMap map, String? importId);
@@ -1667,22 +1667,22 @@ package com.mapbox.maps.extension.compose.style.interactions {
 
 package com.mapbox.maps.extension.compose.style.interactions.generated {
 
-  @com.mapbox.maps.MapboxExperimental public sealed interface FeaturesetFeatureScope {
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS>, FSK? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+  public sealed interface FeaturesetFeatureScope {
+    method public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS>, FSK? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
 }));
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.FeaturesetFeature<FS>, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+    method public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.FeaturesetFeature<FS>, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
 }));
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS>, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+    method public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS>, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
 }));
-    method @com.mapbox.maps.MapboxExperimental public default void setStandardBuildingsState(com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,kotlin.Unit> init);
-    method @com.mapbox.maps.MapboxExperimental public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
-    method @com.mapbox.maps.MapboxExperimental public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
+    method public default void setStandardBuildingsState(com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,kotlin.Unit> init);
+    method public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
+    method public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
   }
 
 }
@@ -4956,7 +4956,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
 package com.mapbox.maps.extension.compose.style.standard {
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public class BaseStandardStyleState {
+  @androidx.compose.runtime.Stable public class BaseStandardStyleState {
     ctor protected BaseStandardStyleState(com.mapbox.maps.extension.compose.style.projection.generated.Projection initialProjection, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState initialAtmosphereState, com.mapbox.maps.extension.compose.style.precipitations.generated.RainState initialRainState, com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState initialSnowState, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState initialTerrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState initialLightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions initialStyleTransition);
     method public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getAtmosphereState();
     method public final com.mapbox.maps.extension.compose.style.lights.LightsState getLightsState();
@@ -5003,20 +5003,6 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showTransitLabels;
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ExperimentalStandardStyleState extends com.mapbox.maps.extension.compose.style.standard.BaseStandardStyleState {
-    ctor public ExperimentalStandardStyleState();
-    method public com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState getConfigurationsState();
-    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState getInteractionsState();
-    method public void setConfigurationsState(com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState);
-    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState);
-    property public final com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState configurationsState;
-    property public final com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState interactionsState;
-  }
-
-  public final class ExperimentalStandardStyleStateKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.style.standard.ExperimentalStandardStyleState rememberExperimentalStandardStyleState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.ExperimentalStandardStyleState,kotlin.Unit> init = {});
-  }
-
   @androidx.compose.runtime.Immutable public final class LightPresetValue {
     ctor public LightPresetValue(com.mapbox.bindgen.Value value);
     ctor public LightPresetValue(String value);
@@ -5057,12 +5043,8 @@ package com.mapbox.maps.extension.compose.style.standard {
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState,kotlin.Unit> init);
   }
 
-  public final class MapboxStandardStyleExperimentalKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyleExperimental(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.ExperimentalStandardStyleState experimentalStandardStyleState = rememberExperimentalStandardStyleState());
-  }
-
   public final class MapboxStandardStyleKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
     return transition({ 
@@ -5071,13 +5053,14 @@ package com.mapbox.maps.extension.compose.style.standard {
 }), com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState standardStyleConfigurationState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
+    method @Deprecated @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.projection.generated.Projection projection = com.mapbox.maps.extension.compose.style.projection.generated.Projection.INITIAL, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState atmosphereState = remember({ 
     return <init>()
 }), com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState terrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState lightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions styleTransition = remember({ 
     return transition({ 
     
     })
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.StandardStyleState standardStyleState = rememberStandardStyleState());
   }
 
   @androidx.compose.runtime.Stable public final class StandardSatelliteStyleConfigurationState extends com.mapbox.maps.extension.compose.style.standard.BaseStyleConfigurationState {
@@ -5098,6 +5081,20 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setTheme(com.mapbox.maps.extension.compose.style.standard.ThemeValue);
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
     property public final com.mapbox.maps.extension.compose.style.standard.ThemeValue theme;
+  }
+
+  @androidx.compose.runtime.Stable public final class StandardStyleState extends com.mapbox.maps.extension.compose.style.standard.BaseStandardStyleState {
+    ctor public StandardStyleState();
+    method public com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState getConfigurationsState();
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState getInteractionsState();
+    method public void setConfigurationsState(com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState);
+    property public final com.mapbox.maps.extension.compose.style.standard.StandardStyleConfigurationState configurationsState;
+    property public final com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState interactionsState;
+  }
+
+  public final class StandardStyleStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.standard.StandardStyleState rememberStandardStyleState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardStyleState,kotlin.Unit> init = {});
   }
 
   @androidx.compose.runtime.Immutable public final class ThemeValue {
@@ -5123,14 +5120,14 @@ package com.mapbox.maps.extension.compose.style.standard {
 
 package com.mapbox.maps.extension.compose.style.standard.generated {
 
-  @com.mapbox.maps.MapboxExperimental public final class StandardStyleInteractionsState extends com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions {
+  public final class StandardStyleInteractionsState extends com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions {
     ctor public StandardStyleInteractionsState();
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onBuildingsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onBuildingsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPlaceLabelsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPlaceLabelsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPoiClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPoiLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onBuildingsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onBuildingsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPlaceLabelsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPlaceLabelsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPoiClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPoiLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
   }
 
 }

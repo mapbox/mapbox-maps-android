@@ -31,7 +31,6 @@ import com.mapbox.maps.interactions.standard.generated.standardPoi
  *  2. [LongClickInteraction.invoke] (map surface long click interaction outside of all the feature sets) will always get triggered last.
  *  3. When having several [LongClickInteraction]s with the same [FeaturesetDescriptor] / map surface (see point 2) - the **last** registered [LongClickInteraction] will be triggered **first**.
  */
-@MapboxExperimental
 class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
   internal constructor(
@@ -113,7 +112,6 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      */
     @JvmOverloads
     @JvmStatic
-    @MapboxExperimental
     fun featureset(
       id: String,
       importId: String? = null,
@@ -148,7 +146,6 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      */
     @JvmOverloads
     @JvmStatic
-    @MapboxExperimental
     fun layer(
       id: String,
       filter: Value? = null,
@@ -179,7 +176,6 @@ class LongClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      */
     @JvmStatic
     @JvmName("map")
-    @MapboxExperimental
     operator fun invoke(onLongClick: (InteractionContext) -> Boolean): LongClickInteraction<Nothing> =
       LongClickInteraction(onLongClick)
   }

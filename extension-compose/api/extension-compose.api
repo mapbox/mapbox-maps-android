@@ -4267,18 +4267,6 @@ public abstract class com/mapbox/maps/extension/compose/style/standard/BaseStyle
 	public final fun setShowTransitLabels (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/standard/ExperimentalStandardStyleState : com/mapbox/maps/extension/compose/style/standard/BaseStandardStyleState {
-	public fun <init> ()V
-	public final fun getConfigurationsState ()Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState;
-	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
-	public final fun setConfigurationsState (Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState;)V
-	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;)V
-}
-
-public final class com/mapbox/maps/extension/compose/style/standard/ExperimentalStandardStyleStateKt {
-	public static final fun rememberExperimentalStandardStyleState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/standard/ExperimentalStandardStyleState;
-}
-
 public final class com/mapbox/maps/extension/compose/style/standard/LightPresetValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue$Companion;
 	public static final field DAWN Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;
@@ -4307,13 +4295,10 @@ public final class com/mapbox/maps/extension/compose/style/standard/MapboxStanda
 	public static final fun MapboxStandardSatelliteStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/mapbox/maps/extension/compose/style/standard/MapboxStandardStyleExperimentalKt {
-	public static final fun MapboxStandardStyleExperimental (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/ExperimentalStandardStyleState;Landroidx/compose/runtime/Composer;II)V
-}
-
 public final class com/mapbox/maps/extension/compose/style/standard/MapboxStandardStyleKt {
 	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapboxStandardStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleState;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleConfigurationState : com/mapbox/maps/extension/compose/style/standard/BaseStyleConfigurationState {
@@ -4330,6 +4315,18 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getTheme ()Lcom/mapbox/maps/extension/compose/style/standard/ThemeValue;
 	public final fun setShow3dObjects (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setTheme (Lcom/mapbox/maps/extension/compose/style/standard/ThemeValue;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/StandardStyleState : com/mapbox/maps/extension/compose/style/standard/BaseStandardStyleState {
+	public fun <init> ()V
+	public final fun getConfigurationsState ()Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun setConfigurationsState (Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/StandardStyleStateKt {
+	public static final fun rememberStandardStyleState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/standard/StandardStyleState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/standard/ThemeValue {

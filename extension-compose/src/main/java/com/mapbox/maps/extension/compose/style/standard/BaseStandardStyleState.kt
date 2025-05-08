@@ -16,8 +16,8 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 /**
  * The base state holder for the Standard Style.
  */
+@OptIn(MapboxExperimental::class)
 @Stable
-@MapboxExperimental
 public open class BaseStandardStyleState protected constructor(
   initialProjection: Projection,
   initialAtmosphereState: AtmosphereState,

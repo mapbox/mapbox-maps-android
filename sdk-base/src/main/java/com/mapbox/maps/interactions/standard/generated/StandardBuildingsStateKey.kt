@@ -3,13 +3,11 @@
 package com.mapbox.maps.interactions.standard.generated
 
 import com.mapbox.maps.MapboxDelicateApi
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeatureStateKey
 
 /**
  * State keys for [StandardBuildingsState] that should be used in `removeFeatureState`.
  */
-@MapboxExperimental
 class StandardBuildingsStateKey private constructor(
   key: String
 ) : FeatureStateKey<StandardBuildingsState>(key) {

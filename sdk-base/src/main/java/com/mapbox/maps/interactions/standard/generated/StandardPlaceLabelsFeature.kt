@@ -6,7 +6,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.FeaturesetFeatureId
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeaturesetFeature
 
 /**
@@ -15,7 +14,6 @@ import com.mapbox.maps.interactions.FeaturesetFeature
  * Typed class of [FeaturesetFeature] representing StandardPlaceLabels coming from Mapbox Standard Style.
  * Allows easy access to [Feature] properties.
  */
-@MapboxExperimental
 class StandardPlaceLabelsFeature(
   id: FeaturesetFeatureId?,
   importId: String?,

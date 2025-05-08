@@ -53,7 +53,7 @@ class StandardStyleInteractionsActivity : AppCompatActivity() {
     val map = mapView.mapboxMap
     val selectedPoiList = mutableListOf<StandardPoiFeature>()
 
-    map.loadStyle(Style.STANDARD_EXPERIMENTAL)
+    map.loadStyle(Style.STANDARD)
 
     // the most basic use-case to highlight clicked building
     map.addInteraction(

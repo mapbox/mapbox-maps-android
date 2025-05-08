@@ -261,12 +261,12 @@ package com.mapbox.maps {
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId, String featureId, String? stateKey, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId, String featureId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String featureId, com.mapbox.maps.FeatureStateOperationCallback callback);
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FSK? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+    method public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FSK? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
 }));
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FSK? stateKey = null);
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature);
+    method public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FSK? stateKey = null);
+    method public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature);
     method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, com.mapbox.maps.FeaturesetFeatureId id, FSK? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
@@ -288,11 +288,11 @@ package com.mapbox.maps {
     method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String? sourceLayerId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, com.mapbox.maps.FeatureStateOperationCallback callback);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+    method public com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
 }));
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor);
+    method public com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setBounds(com.mapbox.maps.CameraBoundsOptions options);
     method public void setCamera(com.mapbox.maps.CameraOptions cameraOptions);
     method public void setCamera(com.mapbox.maps.FreeCameraOptions freeCameraOptions);
@@ -302,11 +302,11 @@ package com.mapbox.maps {
     method @Deprecated public void setDebug(java.util.List<? extends com.mapbox.maps.MapDebugOptions> debugOptions, boolean enabled);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+    method public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
 }));
-    method @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state);
+    method public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state);
     method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, com.mapbox.maps.FeaturesetFeatureId id, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
 
 
@@ -483,7 +483,6 @@ package com.mapbox.maps {
     field public static final String SATELLITE = "mapbox://styles/mapbox/satellite-v9";
     field public static final String SATELLITE_STREETS = "mapbox://styles/mapbox/satellite-streets-v12";
     field public static final String STANDARD = "mapbox://styles/mapbox/standard";
-    field @com.mapbox.maps.MapboxExperimental public static final String STANDARD_EXPERIMENTAL = "mapbox://styles/mapbox-map-design/standard-experimental-ime";
     field public static final String STANDARD_SATELLITE = "mapbox://styles/mapbox/standard-satellite";
     field public static final String TRAFFIC_DAY = "mapbox://styles/mapbox/traffic-day-v2";
     field public static final String TRAFFIC_NIGHT = "mapbox://styles/mapbox/traffic-night-v2";

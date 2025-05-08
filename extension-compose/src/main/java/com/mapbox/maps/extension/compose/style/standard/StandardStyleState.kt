@@ -19,26 +19,25 @@ import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.extension.style.utils.transition
 
 /**
- * Create and remember a [ExperimentalStandardStyleState] with init block.
+ * Create and remember a [StandardStyleState] with init block.
  *
- * @param init the initialization block to be applied to the [ExperimentalStandardStyleState] after created and remembered.
+ * @param init the initialization block to be applied to the [StandardStyleState] after created and remembered.
  *
- * @return [ExperimentalStandardStyleState]
+ * @return [StandardStyleState]
  */
 @Composable
-@MapboxExperimental
-public inline fun rememberExperimentalStandardStyleState(crossinline init: ExperimentalStandardStyleState.() -> Unit = {}): ExperimentalStandardStyleState {
+public inline fun rememberStandardStyleState(crossinline init: StandardStyleState.() -> Unit = {}): StandardStyleState {
   return remember {
-    ExperimentalStandardStyleState()
+    StandardStyleState()
   }.apply(init)
 }
 
 /**
  * Experimental state holder for the Mapbox Standard Style.
  */
+@OptIn(MapboxExperimental::class)
 @Stable
-@MapboxExperimental
-public class ExperimentalStandardStyleState internal constructor(
+public class StandardStyleState internal constructor(
   initialStyleInteractionsState: StandardStyleInteractionsState,
   initialProjection: Projection,
   initialAtmosphereState: AtmosphereState,
@@ -58,7 +57,7 @@ public class ExperimentalStandardStyleState internal constructor(
   initialStyleTransition = initialStyleTransition,
 ) {
   /**
-   * Construct a default [ExperimentalStandardStyleState].
+   * Construct a default [StandardStyleState].
    */
   public constructor() : this(
     initialStyleInteractionsState = StandardStyleInteractionsState(),
@@ -75,7 +74,6 @@ public class ExperimentalStandardStyleState internal constructor(
   /**
    * The [StyleInteractionsState] manages the map interactions defined for the style.
    */
-  @MapboxExperimental
   public var interactionsState: StandardStyleInteractionsState by mutableStateOf(
     initialStyleInteractionsState
   )
@@ -83,6 +81,5 @@ public class ExperimentalStandardStyleState internal constructor(
   /**
    * Configuration state options to be applied to Mapbox Standard Style.
    */
-  @MapboxExperimental
   public var configurationsState: StandardStyleConfigurationState by mutableStateOf(initialConfigurationState)
 }

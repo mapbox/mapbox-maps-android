@@ -5,7 +5,6 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.FeaturesetDescriptor
 import com.mapbox.maps.FeaturesetFeatureId
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.standard.generated.StandardBuildings
 import java.util.Objects
 
@@ -15,7 +14,6 @@ import java.util.Objects
  * See generated predefined featuresets (e.g. [StandardBuildings]) to use with Mapbox Standard Style.
  * See [TypedFeaturesetDescriptor.Featureset] and [TypedFeaturesetDescriptor.Layer] to define a fully custom FeaturesetDescriptor.
  */
-@MapboxExperimental
 abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeature<FS>> protected constructor() {
 
   /**
@@ -46,7 +44,6 @@ abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeatu
    * @param featuresetId mandatory id.
    * @param importId optional style import id.
    */
-  @MapboxExperimental
   class Featureset @JvmOverloads constructor(
     val featuresetId: String,
     val importId: String? = null
@@ -111,7 +108,6 @@ abstract class TypedFeaturesetDescriptor<FS : FeatureState, FF : FeaturesetFeatu
    *
    * @param layerId mandatory id.
    */
-  @MapboxExperimental
   class Layer(
     val layerId: String,
   ) : TypedFeaturesetDescriptor<FeatureState, FeaturesetFeature<FeatureState>>() {

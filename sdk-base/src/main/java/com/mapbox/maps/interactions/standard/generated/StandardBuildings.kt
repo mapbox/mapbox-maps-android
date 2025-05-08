@@ -6,13 +6,11 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.FeaturesetDescriptor
 import com.mapbox.maps.FeaturesetFeatureId
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.TypedFeaturesetDescriptor
 
 /**
  * Represents a `buildings` featureset from Mapbox Standard Style.
  */
-@MapboxExperimental
 class StandardBuildings @JvmOverloads constructor(
   /**
    * Optional import id when using Mapbox Standard Style as a style import for another style.

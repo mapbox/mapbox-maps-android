@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -33,16 +32,15 @@ import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardSatelliteStyle
-import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyleExperimental
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.extension.compose.style.standard.ThemeValue
-import com.mapbox.maps.extension.compose.style.standard.rememberExperimentalStandardStyleState
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.extension.style.utils.transition
 
 /**
  * Example to showcase usage of the configs of `MapboxStandardStyle`.
  */
 public class StandardStyleActivity : ComponentActivity() {
-  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -353,8 +351,8 @@ public class StandardStyleActivity : ComponentActivity() {
                   showPedestrianRoads = BooleanValue(enablePedestrianRoads)
                 }
               } else {
-                MapboxStandardStyleExperimental(
-                  experimentalStandardStyleState = rememberExperimentalStandardStyleState {
+                MapboxStandardStyle(
+                  standardStyleState = rememberStandardStyleState {
                     interactionsState.onBuildingsClicked { clickedBuilding, _ ->
                       clickedBuilding.setStandardBuildingsState {
                         highlight(true)

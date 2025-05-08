@@ -4,7 +4,6 @@ package com.mapbox.maps.interactions.standard.generated
 
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.logW
 
@@ -12,7 +11,6 @@ import com.mapbox.maps.logW
  * Typed feature state class needed for generic `MapboxMap.setFeatureState` and `MapboxMap.getFeatureState`
  * when working with StandardBuildings in Mapbox Standard Style.
  */
-@MapboxExperimental
 class StandardBuildingsState internal constructor(
   /**
    * For internal usage.
@@ -88,7 +86,6 @@ class StandardBuildingsState internal constructor(
 /**
  * Builder function to create [StandardBuildingsState].
  */
-@MapboxExperimental
 @JvmSynthetic
 fun StandardBuildingsState(init: StandardBuildingsState.Builder.() -> Unit): StandardBuildingsState =
   StandardBuildingsState.Builder().apply(init).build()

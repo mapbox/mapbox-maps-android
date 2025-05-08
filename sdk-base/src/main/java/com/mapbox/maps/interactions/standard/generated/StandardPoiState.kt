@@ -4,7 +4,6 @@ package com.mapbox.maps.interactions.standard.generated
 
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.logW
 
@@ -12,7 +11,6 @@ import com.mapbox.maps.logW
  * Typed feature state class needed for generic `MapboxMap.setFeatureState` and `MapboxMap.getFeatureState`
  * when working with StandardPoi in Mapbox Standard Style.
  */
-@MapboxExperimental
 class StandardPoiState internal constructor(
   /**
    * For internal usage.
@@ -59,7 +57,6 @@ class StandardPoiState internal constructor(
 /**
  * Builder function to create [StandardPoiState].
  */
-@MapboxExperimental
 @JvmSynthetic
 fun StandardPoiState(init: StandardPoiState.Builder.() -> Unit): StandardPoiState =
   StandardPoiState.Builder().apply(init).build()

@@ -4,7 +4,6 @@ package com.mapbox.maps.interactions.standard.generated
 
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.logW
 
@@ -12,7 +11,6 @@ import com.mapbox.maps.logW
  * Typed feature state class needed for generic `MapboxMap.setFeatureState` and `MapboxMap.getFeatureState`
  * when working with StandardPlaceLabels in Mapbox Standard Style.
  */
-@MapboxExperimental
 class StandardPlaceLabelsState internal constructor(
   /**
    * For internal usage.
@@ -105,7 +103,6 @@ class StandardPlaceLabelsState internal constructor(
 /**
  * Builder function to create [StandardPlaceLabelsState].
  */
-@MapboxExperimental
 @JvmSynthetic
 fun StandardPlaceLabelsState(init: StandardPlaceLabelsState.Builder.() -> Unit): StandardPlaceLabelsState =
   StandardPlaceLabelsState.Builder().apply(init).build()

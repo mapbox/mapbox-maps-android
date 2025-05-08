@@ -9,7 +9,6 @@ import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.InteractionContext
 import com.mapbox.maps.LongClickInteraction
 import com.mapbox.maps.MapInteraction
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope
 import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScopeImpl
@@ -22,7 +21,6 @@ import com.mapbox.maps.interactions.FeaturesetFeature
  *
  * Note this is a generic implementation with no public API exposed.
  */
-@MapboxExperimental
 public abstract class BasicStyleInteractions {
   // map interaction builder entries that will be built and added to the map when the state is bind to the map.
   // this property is used directly by generated Standard interactions and then lambda represents (importId? -> MapInteraction)

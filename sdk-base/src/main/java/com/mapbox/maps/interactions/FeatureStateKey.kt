@@ -1,6 +1,5 @@
 package com.mapbox.maps.interactions
 
-import com.mapbox.maps.MapboxExperimental
 import java.util.Objects
 
 /**
@@ -8,7 +7,6 @@ import java.util.Objects
  *
  * Refer to static [create] method to create an instance of [FeatureStateKey].
  */
-@MapboxExperimental
 open class FeatureStateKey<FS : FeatureState> internal constructor(
   /**
    * The feature state key to remove from the feature.

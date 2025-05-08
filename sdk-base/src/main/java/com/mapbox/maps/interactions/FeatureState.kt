@@ -2,7 +2,6 @@ package com.mapbox.maps.interactions
 
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.interactions.FeatureState.Builder
 import com.mapbox.maps.logW
 import java.util.Objects
@@ -10,7 +9,6 @@ import java.util.Objects
 /**
  * Feature state class needed for generic `MapboxMap.setFeatureState` and `MapboxMap.getFeatureState`.
  */
-@MapboxExperimental
 open class FeatureState internal constructor(
   /**
    * For internal usage.
@@ -143,7 +141,6 @@ open class FeatureState internal constructor(
 /**
  * Builder function to create [FeatureState].
  */
-@MapboxExperimental
 @JvmSynthetic
 fun FeatureState(init: Builder.() -> Unit): FeatureState =
   Builder().apply(init).build()

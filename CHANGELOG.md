@@ -7,6 +7,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose `RenderThreadStatsRecorder` as experimental API.
 * Expose an experimental API to define a non-rectangular screen culling shape(`MapboxMap.get/setScreenCullingShape`)
 * Expose new experimental properties: `CircleLayer.circleElevationReference`, `FillLayer.fillConstructBridgeGuardRail`, `FillLayer.fillBridgeGuardRailColor`, `FillLayer.fillTunnelStructureColor`.
+* Promote `MapInteraction` APIs to stable, remove experimental `Style.STANDARD_EXPERIMENTAL` constant, as `Style.STANDARD` supports featuresets and map interactions by default.
+* [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
 
 ## Bug fixes 🐞
 * Fix registering camera change listener every time `mapView.scalebar.enabled` is called with value `true` and it was already enabled.

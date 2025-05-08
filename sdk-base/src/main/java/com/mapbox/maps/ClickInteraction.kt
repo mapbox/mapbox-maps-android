@@ -28,7 +28,6 @@ import com.mapbox.maps.interactions.standard.generated.standardPoi
  *  2. [ClickInteraction.invoke] (map surface click interaction outside of all the feature sets) will always get triggered last.
  *  3. When having several [ClickInteraction]s with the same [FeaturesetDescriptor] / map surface (see point 2) - the **last** registered [ClickInteraction] will be triggered **first**.
  */
-@MapboxExperimental
 class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
 
   internal constructor(
@@ -109,7 +108,6 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      */
     @JvmOverloads
     @JvmStatic
-    @MapboxExperimental
     fun featureset(
       id: String,
       importId: String? = null,
@@ -144,7 +142,6 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      */
     @JvmOverloads
     @JvmStatic
-    @MapboxExperimental
     fun layer(
       id: String,
       filter: Value? = null,
@@ -175,7 +172,6 @@ class ClickInteraction<T : FeaturesetFeature<*>> : MapInteraction {
      */
     @JvmStatic
     @JvmName("map")
-    @MapboxExperimental
     operator fun invoke(onClick: (InteractionContext) -> Boolean): ClickInteraction<Nothing> =
       ClickInteraction(onClick)
   }

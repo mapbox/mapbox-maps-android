@@ -702,7 +702,7 @@ public class JavaInterfaceChecker {
             )
     );
 
-    mapboxMap.loadStyle(Style.STANDARD_EXPERIMENTAL);
+    mapboxMap.loadStyle(Style.STANDARD);
     mapboxMap.addInteraction(
             StandardInteractions.standardBuildings(
                     ClickInteraction.Companion,
