@@ -5,13 +5,44 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Expose `RenderThreadStatsRecorder` as experimental API.
-* Expose an experimental API to define a non-rectangular screen culling shape(`MapboxMap.get/setScreenCullingShape`)
 * Expose new experimental properties: `CircleLayer.circleElevationReference`, `FillLayer.fillConstructBridgeGuardRail`, `FillLayer.fillBridgeGuardRailColor`, `FillLayer.fillTunnelStructureColor`.
 * Promote `MapInteraction` APIs to stable, remove experimental `Style.STANDARD_EXPERIMENTAL` constant, as `Style.STANDARD` supports featuresets and map interactions by default.
 * [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
 
+# 11.12.0 May 7, 2025
+## Features ✨ and improvements 🏁
+* Mapbox Geofencing is now available in public preview. Follow the documentation and code examples for [Android](https://docs.mapbox.com/android/maps/guides/geofencing/) and [iOS](https://docs.mapbox.com/ios/maps/guides/geofencing/) to get started.
+* Avoid fetching pixelRatio from gl-native while rendering scalebar to improve CPU usage.
+* Promote `MapView.attribution.getMapAttributionDelegate().extraAttributions` to stable.
+* Expose an experimental API to define a non-rectangular screen culling shape(`MapboxMap.get/setScreenCullingShape`)
+* Introduce experimental `colorUseTheme` API for `AmbientLight`, `DirectionalLight`, and `FlatLight` to override color theme of light.
+* [compose] Introduce experimental `colorUseTheme` API for `AmbientLightState`, `DirectionalLightState`, and `FlatLightState` to override color theme of light.
+* [compose] Introduce experimental `vignetteColorUseTheme` and `colorUseTheme` for `RainState` and `SnowState` which allows overriding color theme of precipitations.
+* [compose] Annotate `rememberGeoJsonSourceState` as delicate API due to performance implications when used with large GeoJsonData.
+* Avoid dynamic view annotation overlapping given symbol layers.
+* Vector icons can now also be retrieved via `getStyleImage` API.
+* Revert changes to `at` expression and add new `at-interpolated` expression.
+* Enable tile pack v2 format by default.
+
 ## Bug fixes 🐞
+* Fixed a crash that occurred when a runtime-added unused image was removed and later reused.
+* `*-sort-key` properties now uses double, fixing incorrect sorting with big key values
 * Fix registering camera change listener every time `mapView.scalebar.enabled` is called with value `true` and it was already enabled.
+* Fix map flickering caused by the fill-extrusion pan tiles and missing stencil in 3D layers.
+* Fix semi transparent landmark icons.
+* Return null for config expression if requested config option is missing.
+* Fix clipPath and mask rendering for vector icon rasterization.
+* Fix dotted lines on tile borders.
+* Fix pattern not found when using imports.
+* Fix line layer not rendering if using `line-pattern` inside an imported style.
+* Fix ground effect gradient not working with multiple polygons.
+* Add simple bounds check to avoid crash during centroid computation.
+* Fix invisible line when interpolating line-width from 0 to 1 using line-progress.
+* Tile loading speedup.
+* Fix URL migration to DB v10.
+
+## Dependencies
+* Update gl-native to v11.12.0 and common to v24.12.0.
 
 # 11.12.0-rc.1
 ## Features ✨ and improvements 🏁
