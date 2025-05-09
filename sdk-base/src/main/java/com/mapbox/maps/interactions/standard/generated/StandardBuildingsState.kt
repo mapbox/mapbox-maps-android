@@ -23,9 +23,9 @@ class StandardBuildingsState internal constructor(
   /**
    * When `true`, the building is highlighted. Use this state to create a temporary effect (e.g. hover).
    *
-   * Available global configuration(s): "buildingHighlightColor".
+   * Available global configuration(s): "colorBuildingHighlight".
    *
-   * Example of applying "buildingHighlightColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "buildingHighlightColor", Value.valueOf("#FF0000"))
+   * Example of applying "colorBuildingHighlight": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorBuildingHighlight", Value.valueOf(newValue))
    */
   @Suppress("UNCHECKED_CAST")
   val highlight: Boolean? get() = (internalState.contents as HashMap<String, Value>)["highlight"]?.contents as? Boolean
@@ -33,9 +33,9 @@ class StandardBuildingsState internal constructor(
   /**
    * When `true`, the building is selected. Use this state to create a permanent effect. Note: the `select` state has a higher priority than `highlight`.
    *
-   * Available global configuration(s): "buildingSelectColor".
+   * Available global configuration(s): "colorBuildingSelect".
    *
-   * Example of applying "buildingSelectColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "buildingSelectColor", Value.valueOf("#FF0000"))
+   * Example of applying "colorBuildingSelect": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorBuildingSelect", Value.valueOf(newValue))
    */
   @Suppress("UNCHECKED_CAST")
   val select: Boolean? get() = (internalState.contents as HashMap<String, Value>)["select"]?.contents as? Boolean
@@ -49,9 +49,9 @@ class StandardBuildingsState internal constructor(
      * Set state for [highlight]. See the state definition below.
      *
      * When `true`, the building is highlighted. Use this state to create a temporary effect (e.g. hover).
-     * Available global configuration(s): "buildingHighlightColor".
+     * Available global configuration(s): "colorBuildingHighlight".
      *
-     * Example of applying "buildingHighlightColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "buildingHighlightColor", Value.valueOf("#FF0000"))
+     * Example of applying "colorBuildingHighlight": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorBuildingHighlight", Value.valueOf(newValue))
      */
     fun highlight(highlight: Boolean): Builder {
       rawStateMap["highlight"] = Value.valueOf(highlight)
@@ -62,9 +62,9 @@ class StandardBuildingsState internal constructor(
      * Set state for [select]. See the state definition below.
      *
      * When `true`, the building is selected. Use this state to create a permanent effect. Note: the `select` state has a higher priority than `highlight`.
-     * Available global configuration(s): "buildingSelectColor".
+     * Available global configuration(s): "colorBuildingSelect".
      *
-     * Example of applying "buildingSelectColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "buildingSelectColor", Value.valueOf("#FF0000"))
+     * Example of applying "colorBuildingSelect": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorBuildingSelect", Value.valueOf(newValue))
      */
     fun select(select: Boolean): Builder {
       rawStateMap["select"] = Value.valueOf(select)

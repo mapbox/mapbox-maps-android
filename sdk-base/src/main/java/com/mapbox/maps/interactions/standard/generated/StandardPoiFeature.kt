@@ -32,7 +32,7 @@ class StandardPoiFeature(
   val name get(): String? = originalFeature.getStringProperty("name")
 
   /**
-   * A high-level point of interest category like airport, transit, etc.
+   * A high-level category, like POI, airport, transit, etc.
    */
   val group get(): String? = originalFeature.getStringProperty("group")
 

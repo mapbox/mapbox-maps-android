@@ -30,9 +30,9 @@ class StandardPlaceLabelsState internal constructor(
   /**
    * When `true`, the feature is highlighted. Use this state to create a temporary effect (e.g. hover).
    *
-   * Available global configuration(s): "placeLabelHighlightColor".
+   * Available global configuration(s): "colorPlaceLabelHighlight".
    *
-   * Example of applying "placeLabelHighlightColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "placeLabelHighlightColor", Value.valueOf("#FF0000"))
+   * Example of applying "colorPlaceLabelHighlight": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorPlaceLabelHighlight", Value.valueOf(newValue))
    */
   @Suppress("UNCHECKED_CAST")
   val highlight: Boolean? get() = (internalState.contents as HashMap<String, Value>)["highlight"]?.contents as? Boolean
@@ -40,9 +40,9 @@ class StandardPlaceLabelsState internal constructor(
   /**
    * When `true`, the feature is selected. Use this state to create a permanent effect. Note: the `select` state has a higher priority than `highlight`.
    *
-   * Available global configuration(s): "placeLabelSelectColor".
+   * Available global configuration(s): "colorPlaceLabelSelect".
    *
-   * Example of applying "placeLabelSelectColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "placeLabelSelectColor", Value.valueOf("#FF0000"))
+   * Example of applying "colorPlaceLabelSelect": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorPlaceLabelSelect", Value.valueOf(newValue))
    */
   @Suppress("UNCHECKED_CAST")
   val select: Boolean? get() = (internalState.contents as HashMap<String, Value>)["select"]?.contents as? Boolean
@@ -66,9 +66,9 @@ class StandardPlaceLabelsState internal constructor(
      * Set state for [highlight]. See the state definition below.
      *
      * When `true`, the feature is highlighted. Use this state to create a temporary effect (e.g. hover).
-     * Available global configuration(s): "placeLabelHighlightColor".
+     * Available global configuration(s): "colorPlaceLabelHighlight".
      *
-     * Example of applying "placeLabelHighlightColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "placeLabelHighlightColor", Value.valueOf("#FF0000"))
+     * Example of applying "colorPlaceLabelHighlight": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorPlaceLabelHighlight", Value.valueOf(newValue))
      */
     fun highlight(highlight: Boolean): Builder {
       rawStateMap["highlight"] = Value.valueOf(highlight)
@@ -79,9 +79,9 @@ class StandardPlaceLabelsState internal constructor(
      * Set state for [select]. See the state definition below.
      *
      * When `true`, the feature is selected. Use this state to create a permanent effect. Note: the `select` state has a higher priority than `highlight`.
-     * Available global configuration(s): "placeLabelSelectColor".
+     * Available global configuration(s): "colorPlaceLabelSelect".
      *
-     * Example of applying "placeLabelSelectColor": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "placeLabelSelectColor", Value.valueOf("#FF0000"))
+     * Example of applying "colorPlaceLabelSelect": style.setStyleImportConfigProperty(importId /* "basemap" if not specified explicitly */, "colorPlaceLabelSelect", Value.valueOf(newValue))
      */
     fun select(select: Boolean): Builder {
       rawStateMap["select"] = Value.valueOf(select)
