@@ -501,7 +501,7 @@ internal constructor(
           gte(pointCount, literal(colorLevels[level].first.toLong()))
         ) else all(
           has(POINT_COUNT),
-          gt(pointCount, literal(colorLevels[level].first.toLong())),
+          gte(pointCount, literal(colorLevels[level].first.toLong())),
           lt(pointCount, literal(colorLevels[level - 1].first.toLong()))
         )
       )
