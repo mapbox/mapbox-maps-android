@@ -1,12 +1,16 @@
 package com.mapbox.maps.gradle.plugins.extensions
 
 import com.mapbox.maps.gradle.plugins.internal.setDisallowChanges
-import japicmp.filter.BehaviorFilter
-import japicmp.filter.ClassFilter
-import javassist.CtBehavior
-import javassist.CtClass
-import javassist.NotFoundException
+import japicmp.model.JApiAnnotation
+import japicmp.model.JApiClass
+import japicmp.model.JApiCompatibility
+import japicmp.model.JApiCompatibilityChangeType
+import japicmp.model.JApiMethod
 import me.champeau.gradle.japicmp.JapicmpTask
+import me.champeau.gradle.japicmp.report.Violation
+import me.champeau.gradle.japicmp.report.stdrules.AbstractRecordingSeenMembers
+import me.champeau.gradle.japicmp.report.stdrules.BinaryIncompatibleRule
+import me.champeau.gradle.japicmp.report.stdrules.RecordSeenMembersSetup
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
@@ -17,7 +21,6 @@ import org.gradle.kotlin.dsl.property
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 import java.nio.file.Files
 import javax.inject.Inject
-
 
 public abstract class MapboxJApiCmpExtension @Inject constructor(objects: ObjectFactory) {
   private val currentVersionProperty: Property<String> = objects.property<String>()
@@ -179,15 +182,20 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
       //includeSynthetic.set(true)
       ignoreMissingClasses.set(true)
 
-      // Exclude classes and/or methods annotated with RestrictTo
-      addExcludeFilter(ClassWithRestrictToAnnotationFilter::class.java)
-      addExcludeFilter(MethodWithRestrictToAnnotationFilter::class.java)
-
-      // Exclude classes and/or methods annotated with MapboxExperimental
-      addExcludeFilter(ClassWithExperimentalAnnotationFilter::class.java)
-      addExcludeFilter(MethodWithExperimentalAnnotationFilter::class.java)
+      // Exclude @RestrictTo, @VisibleForTesting and @MapboxExperimental annotations
+      annotationExcludes.set(
+        listOf(
+          RESTRICT_TO_ANNOTATION,
+          EXPERIMENTAL_ANNOTATION,
+          MAPS_EXPERIMENTAL_ANNOTATION,
+          VISIBLE_FOR_TESTING_ANNOTATION,
+        )
+      )
 
       richReport {
+        addDefaultRules.set(true)
+        addSetupRule(RecordSeenMembersSetup::class.java)
+        addRule(InternalFilterRule::class.java)
         destinationDir.set(rootProject.layout.buildDirectory.dir("reports/japi/"))
         reportName.set("${project.path.drop(1)}.html")
       }
@@ -203,53 +211,65 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
   }
 }
 
-private const val RESTRICT_TO_ANNOTATION_NAME = "androidx.annotation.RestrictTo"
-private const val EXPERIMENTAL_ANNOTATION_NAME = "com.mapbox.maps.MapboxExperimental"
 
-public class ClassWithRestrictToAnnotationFilter : ClassFilter {
-  override fun matches(ctClass: CtClass): Boolean =
-    ctClass.itOrDeclaringClassHasAnnotation(RESTRICT_TO_ANNOTATION_NAME)
-}
+/**
+ * Changes to non-internal properties and changing their visibility to `internal` is a breaking change.
+ * However, changes to the internal variables are not considered as a breaking change.
+ */
+public class InternalFilterRule : AbstractRecordingSeenMembers() {
+  private val binaryIncompatibleRule = BinaryIncompatibleRule()
 
-public class ClassWithExperimentalAnnotationFilter : ClassFilter {
-  override fun matches(ctClass: CtClass): Boolean =
-    ctClass.hasAnnotation(EXPERIMENTAL_ANNOTATION_NAME)
-}
-
-public class MethodWithExperimentalAnnotationFilter : BehaviorFilter {
-  override fun matches(ctBehavior: CtBehavior): Boolean =
-    ctBehavior.itOrDeclaringClassHasAnnotation(EXPERIMENTAL_ANNOTATION_NAME)
-}
-
-public class MethodWithRestrictToAnnotationFilter : BehaviorFilter {
-  override fun matches(ctBehavior: CtBehavior): Boolean =
-    ctBehavior.itOrDeclaringClassHasAnnotation(RESTRICT_TO_ANNOTATION_NAME)
-}
-
-private fun CtBehavior.itOrDeclaringClassHasAnnotation(annotationName: String): Boolean {
-  var hasAnnotation = hasAnnotation(annotationName)
-  // Method does not have annotation, let's check its class
-  try {
-    if (!hasAnnotation) {
-      hasAnnotation = declaringClass.itOrDeclaringClassHasAnnotation(annotationName)
-    }
-  } catch (_: NotFoundException) {
-    // Not much we can do if we can't load the class so let's ignore it
-  }
-  return hasAnnotation
-}
-
-private fun CtClass.itOrDeclaringClassHasAnnotation(annotationName: String): Boolean {
-  var hasAnnotation = hasAnnotation(annotationName)
-  if (!hasAnnotation) {
-    try {
-      if (declaringClass != null) {
-        hasAnnotation = declaringClass.itOrDeclaringClassHasAnnotation(annotationName)
-      }
-    } catch (_: NotFoundException) {
-      // Not much we can do if we can't load the class so let's ignore it
+  override fun maybeAddViolation(member: JApiCompatibility): Violation? {
+    return if (member.containsInternallyVisibleFunctionOrVariableChanges()) {
+      Violation.accept(member, "Kotlin internal visibility")
+    } else if (member.hasOnlyKotlinMetadataModification()) {
+      Violation.accept(member, "Kotlin metadata change")
+    } else {
+      binaryIncompatibleRule.maybeAddViolation(member)
     }
   }
-  return hasAnnotation
+
+  /**
+   * This function checks if the given JApiCompatibility object has a change to an internal variable or function.
+   */
+  private fun JApiCompatibility.containsInternallyVisibleFunctionOrVariableChanges(): Boolean {
+    if (this.isBinaryCompatible) return false
+    val member = (this as? JApiMethod) ?: return false
+    val isKotlinClass = member.itOrDeclaringClassContainsKotlinMetadata()
+    // Check if the method corresponds to an internal variable
+    return isKotlinClass && member.name.contains("$") && member.accessModifier.valueOld.equals(
+      "public", ignoreCase = true
+    )
+  }
+
+  /**
+   * This function checks if the given JApiCompatibility object has a modification to the Kotlin metadata.
+   * If the change is an  annotation modification and the member is a class,
+   * it checks if the class has only Kotlin metadata changes.
+   *
+   * @return true if member is not binary compatible and contains only Kotlin metadata changes, false otherwise.
+   */
+  private fun JApiCompatibility.hasOnlyKotlinMetadataModification(): Boolean {
+    if (this.isBinaryCompatible) return false
+    val member = this as? JApiClass
+    val incompatibleChanges = member?.compatibilityChanges
+    val compatibilityChange = incompatibleChanges?.firstOrNull()?.takeIf {
+      it.type == JApiCompatibilityChangeType.ANNOTATION_MODIFIED && incompatibleChanges.size == 1
+    }
+    if (compatibilityChange == null) return false
+    return member.annotations.containsKotlinMetadata()
+  }
+
+  private fun JApiMethod.itOrDeclaringClassContainsKotlinMetadata(): Boolean {
+    return this.annotations.containsKotlinMetadata() || this.getjApiClass()?.annotations.containsKotlinMetadata() == true
+  }
+
+  private fun List<JApiAnnotation>?.containsKotlinMetadata(): Boolean {
+    return this?.any { it.fullyQualifiedName == "kotlin.Metadata" } == true
+  }
 }
 
+private const val RESTRICT_TO_ANNOTATION = "@androidx.annotation.RestrictTo"
+private const val MAPS_EXPERIMENTAL_ANNOTATION = "@com.mapbox.maps.MapboxExperimental"
+private const val VISIBLE_FOR_TESTING_ANNOTATION = "@androidx.annotation.VisibleForTesting"
+private const val EXPERIMENTAL_ANNOTATION = "@com.mapbox.annotation.MapboxExperimental"

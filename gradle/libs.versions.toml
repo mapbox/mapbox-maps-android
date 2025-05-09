@@ -30,7 +30,7 @@ pluginBinaryCompatibilityValidator = "0.13.2"
 dokka = "1.7.20"
 kotlin = "1.7.20"
 detekt = "1.22.0"
-japicmp = "0.4.1"
+japicmp = "0.4.6"
 
 # Dependencies
 
