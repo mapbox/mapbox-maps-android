@@ -5,7 +5,9 @@ import japicmp.model.JApiAnnotation
 import japicmp.model.JApiClass
 import japicmp.model.JApiCompatibility
 import japicmp.model.JApiCompatibilityChangeType
+import japicmp.model.JApiField
 import japicmp.model.JApiMethod
+import javassist.CtMethod
 import me.champeau.gradle.japicmp.JapicmpTask
 import me.champeau.gradle.japicmp.report.Violation
 import me.champeau.gradle.japicmp.report.stdrules.AbstractRecordingSeenMembers
@@ -224,6 +226,10 @@ public class InternalFilterRule : AbstractRecordingSeenMembers() {
       Violation.accept(member, "Kotlin internal visibility")
     } else if (member.hasOnlyKotlinMetadataModification()) {
       Violation.accept(member, "Kotlin metadata change")
+    } else if(member.classContainsOnlyMethodChangesWithExcludedAnnotations()) {
+      Violation.accept(member, "Contains changes to excluded annotations")
+    } else if(member.containsChangesToCompanionObjectVariableWithExcludedAnnotations()) {
+      Violation.accept(member, "Companion object variable with excluded annotations")
     } else {
       binaryIncompatibleRule.maybeAddViolation(member)
     }
@@ -266,6 +272,69 @@ public class InternalFilterRule : AbstractRecordingSeenMembers() {
 
   private fun List<JApiAnnotation>?.containsKotlinMetadata(): Boolean {
     return this?.any { it.fullyQualifiedName == "kotlin.Metadata" } == true
+  }
+
+  /**
+   * When we have a constant declared in a companion object, the annotation is declared in separate class ending with '$Companion'.
+   * This function checks if field is declared in companion object and if it has any of the excluded annotations.
+   */
+  private fun JApiCompatibility.containsChangesToCompanionObjectVariableWithExcludedAnnotations(): Boolean {
+    if (this.isBinaryCompatible) return false
+    val member = (this as? JApiField) ?: return false
+    // Get the declaring class first
+    val declaringClass = member.getjApiClass()
+    val oldClass = declaringClass.oldClass.orElse(null) ?: return false
+    val companionClass =
+      oldClass.declaredClasses.firstOrNull { it.name.contains("${oldClass.name}\$Companion") }
+        ?: return false
+    val methodMatchingFieldName =
+      companionClass.methods.firstOrNull { it.name.contains(member.name) } ?: return false
+    return methodMatchingFieldName.containsExcludedAnnotation()
+  }
+
+  private fun CtMethod.containsExcludedAnnotation(): Boolean {
+    return arrayOf(
+      RESTRICT_TO_ANNOTATION,
+      MAPS_EXPERIMENTAL_ANNOTATION,
+      VISIBLE_FOR_TESTING_ANNOTATION,
+      EXPERIMENTAL_ANNOTATION
+    )
+      .map { it.substring(1) }
+      .any {
+        hasAnnotation(it)
+      }
+  }
+
+  /**
+   * Checks if all method updates in a class and its declared classes only affect methods with excluded annotations.
+   *
+   * This function identifies methods that existed in the old version of a class and its nested classes
+   * but were either removed or changed in the new version. It goes through updated methods
+   * and checks whether they contain excluded annotations (like @MapboxExperimental, @RestrictTo, etc.).
+   *
+   * @return true if all method changes only affect methods with excluded annotations.
+   */
+  private fun JApiCompatibility.classContainsOnlyMethodChangesWithExcludedAnnotations(): Boolean {
+    if (this.isBinaryCompatible) return false
+    val member = (this as? JApiClass) ?: return false
+    // Get the declaring class first
+    val declaringClass = member
+    val oldClass = declaringClass.oldClass.orElse(null) ?: return false
+    val newClass = declaringClass.newClass.orElse(null) ?: return false
+    val oldMethods = (oldClass.methods + oldClass.declaredClasses.flatMap { it.methods.toList() }).toMutableList()
+    val newMethods = newClass.methods + newClass.declaredClasses.flatMap { it.methods.toList() }
+    newMethods.forEach { newMethod ->
+      // remove methods that have the same name and signature
+      oldMethods.removeIf {
+        it.name == newMethod.name && it.signature == newMethod.signature
+      }
+    }
+    // Remaining methods might be deleted or have been changed.
+    // If they contain excluded annotations, we will not consider them as breaking changes.
+    // That's why we check if all of them contain excluded annotations.
+    // If there is at least one method that doesn't contain excluded annotation,
+    // we will consider it as breaking change and JApiCmp should provide details in the report.
+    return oldMethods.all { it.containsExcludedAnnotation() }
   }
 }
 
