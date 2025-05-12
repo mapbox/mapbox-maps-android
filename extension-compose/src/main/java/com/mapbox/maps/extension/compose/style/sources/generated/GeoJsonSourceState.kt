@@ -232,8 +232,8 @@ public class GeoJsonSourceState private constructor(
   private val promoteIdState: MutableState<PromoteIdValue> = mutableStateOf(promoteId)
 
   /**
-   * A property to use as a feature id (for feature state). Either a property name, or
-   * an object of the form `{<sourceLayer>: <propertyName>}`.
+   * A property to use as a feature id. An expression can be used to dynamically check
+   * multiple properties.
    */
   public var promoteId: PromoteIdValue by promoteIdState
 

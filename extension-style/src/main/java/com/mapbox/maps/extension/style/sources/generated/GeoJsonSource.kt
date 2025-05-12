@@ -336,8 +336,8 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     get() = getPropertyValue("generateId")
 
   /**
-   * A property to use as a feature id (for feature state). Either a property name, or
-   * an object of the form `{<sourceLayer>: <propertyName>}`.
+   * A property to use as a feature id. An expression can be used to dynamically check
+   * multiple properties.
    */
   val promoteId: PromoteId?
     /**
@@ -703,8 +703,8 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
     }
 
     /**
-     * A property to use as a feature id (for feature state). Either a property name, or
-     * an object of the form `{<sourceLayer>: <propertyName>}`.
+     * A property to use as a feature id. An expression can be used to dynamically check
+     * multiple properties.
      */
     fun promoteId(value: PromoteId): Builder = apply {
       val propertyValue = PropertyValue("promoteId", value.toValue())
