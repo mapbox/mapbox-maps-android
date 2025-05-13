@@ -147,10 +147,6 @@ class PointAnnotationManager(
         layer.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
         dragLayer.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
       }
-      PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE -> {
-        layer.iconImageCrossFade(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE))
-        dragLayer.iconImageCrossFade(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE))
-      }
       PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY -> {
         layer.iconOcclusionOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY))
         dragLayer.iconOcclusionOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY))
@@ -240,7 +236,6 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
-   * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
    * PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET - Double
@@ -297,7 +292,6 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
    * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
-   * PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE - Double
    * PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
    * PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET - Double
@@ -1981,37 +1975,30 @@ class PointAnnotationManager(
     }
 
   /**
-   * The default iconImageCrossFade for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   * The IconImageCrossFade property
    *
    * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
    */
   var iconImageCrossFade: Double?
     /**
-     * Get the iconImageCrossFade property.
+     * Get the IconImageCrossFade property
      *
      * @return property wrapper value around Double
      */
-    get() {
-      val value = dataDrivenPropertyDefaultValues.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
-      value?.let {
-        return it.asString.toDouble()
-      }
-      return null
+    get(): Double? {
+      return layer.iconImageCrossFade
     }
     /**
-     * Set the iconImageCrossFade property.
-     *
-     * @param value constant property value for Double
+     * Set the IconImageCrossFade property
+     * @param value property wrapper value around Double
      */
     set(value) {
-      if (value != null) {
-        dataDrivenPropertyDefaultValues.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE, value)
-        enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
       } else {
-        dataDrivenPropertyDefaultValues.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade").value
       }
-      // Update child annotation property if not being set.
-      update(annotations)
+      setLayerProperty(wrappedValue, "icon-image-cross-fade")
     }
 
   /**
@@ -2751,7 +2738,6 @@ class PointAnnotationManager(
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH] = false
-    dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_ICON_OPACITY] = false
     dataDrivenPropertyUsageMap[PointAnnotationOptions.PROPERTY_SYMBOL_Z_OFFSET] = false

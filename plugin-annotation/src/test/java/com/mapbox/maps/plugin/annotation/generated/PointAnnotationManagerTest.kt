@@ -144,8 +144,6 @@ class PointAnnotationManagerTest {
     every { dragLayer.iconHaloColor(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloWidth(any<Expression>()) } answers { layer }
     every { dragLayer.iconHaloWidth(any<Expression>()) } answers { dragLayer }
-    every { layer.iconImageCrossFade(any<Expression>()) } answers { layer }
-    every { dragLayer.iconImageCrossFade(any<Expression>()) } answers { dragLayer }
     every { layer.iconOcclusionOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.iconOcclusionOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.iconOpacity(any<Expression>()) } answers { layer }
@@ -571,11 +569,6 @@ class PointAnnotationManagerTest {
     assertEquals(0.0, annotation.iconHaloWidth)
     annotation.iconHaloWidth = null
     assertNull(annotation.iconHaloWidth)
-
-    annotation.iconImageCrossFade = 0.0
-    assertEquals(0.0, annotation.iconImageCrossFade)
-    annotation.iconImageCrossFade = null
-    assertNull(annotation.iconImageCrossFade)
 
     annotation.iconOcclusionOpacity = 0.0
     assertEquals(0.0, annotation.iconOcclusionOpacity)
@@ -2026,35 +2019,6 @@ class PointAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
     verify(exactly = 1) { manager.dragLayer.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
-  }
-
-  @Test
-  fun testIconImageCrossFadeLayerProperty() {
-    every { style.styleSourceExists(any()) } returns true
-    every { style.styleLayerExists(any()) } returns true
-    verify(exactly = 0) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-    val options = PointAnnotationOptions()
-      .withPoint(Point.fromLngLat(0.0, 0.0))
-      .withIconImageCrossFade(0.0)
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-    verify(exactly = 1) { manager.dragLayer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-    verify(exactly = 1) { manager.dragLayer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-  }
-
-  @Test
-  fun testIconImageCrossFadeInAnnotationManager() {
-    every { style.styleSourceExists(any()) } returns true
-    every { style.styleLayerExists(any()) } returns true
-    verify(exactly = 0) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-    val options = PointAnnotationOptions()
-      .withPoint(Point.fromLngLat(0.0, 0.0))
-    manager.iconImageCrossFade = 0.0
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
-    verify(exactly = 1) { manager.dragLayer.iconImageCrossFade(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)) }
   }
 
   @Test

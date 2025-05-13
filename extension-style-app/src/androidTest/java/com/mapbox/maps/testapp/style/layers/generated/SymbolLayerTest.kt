@@ -1757,18 +1757,14 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun iconImageCrossFadeAsExpressionTest() {
-    val expression = number {
-      get {
-        literal("number")
-      }
-    }
+    val expression = literal(1.0)
     val layer = symbolLayer("id", "source") {
       iconImageCrossFade(expression)
     }
     setupLayer(layer)
 
-    assertEquals(expression.toString(), layer.iconImageCrossFadeAsExpression.toString())
-    assertEquals(null, layer.iconImageCrossFade)
+    assertEquals(1.0, layer.iconImageCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconImageCrossFade!!, 1E-5)
   }
 
   @Test

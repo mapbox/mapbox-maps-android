@@ -47,7 +47,6 @@ public class PointAnnotationState private constructor(
   initialIconHaloBlur: Double?,
   initialIconHaloColor: Color?,
   initialIconHaloWidth: Double?,
-  initialIconImageCrossFade: Double?,
   initialIconOcclusionOpacity: Double?,
   initialIconOpacity: Double?,
   initialSymbolZOffset: Double?,
@@ -89,7 +88,6 @@ public class PointAnnotationState private constructor(
     initialIconHaloBlur = null,
     initialIconHaloColor = null,
     initialIconHaloWidth = null,
-    initialIconImageCrossFade = null,
     initialIconOcclusionOpacity = null,
     initialIconOpacity = null,
     initialSymbolZOffset = null,
@@ -203,10 +201,6 @@ public class PointAnnotationState private constructor(
    * Distance of halo to the icon outline. Default value: 0. Minimum value: 0. The unit of iconHaloWidth is in pixels.
    */
   public var iconHaloWidth: Double? by mutableStateOf(initialIconHaloWidth)
-  /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
-   */
-  public var iconImageCrossFade: Double? by mutableStateOf(initialIconImageCrossFade)
   /**
    * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
@@ -507,16 +501,6 @@ public class PointAnnotationState private constructor(
     )
   }
   @Composable
-  private fun UpdateIconImageCrossFade(
-    annotationNode: PointAnnotationNode
-  ) {
-    annotationNode.annotationManager.update(
-      annotationNode.annotation.also { annotation ->
-        annotation.iconImageCrossFade = iconImageCrossFade
-      }
-    )
-  }
-  @Composable
   private fun UpdateIconOcclusionOpacity(
     annotationNode: PointAnnotationNode
   ) {
@@ -684,7 +668,6 @@ public class PointAnnotationState private constructor(
     UpdateIconHaloBlur(annotationNode)
     UpdateIconHaloColor(annotationNode)
     UpdateIconHaloWidth(annotationNode)
-    UpdateIconImageCrossFade(annotationNode)
     UpdateIconOcclusionOpacity(annotationNode)
     UpdateIconOpacity(annotationNode)
     UpdateSymbolZOffset(annotationNode)

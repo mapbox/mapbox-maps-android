@@ -924,39 +924,6 @@ class PointAnnotation(
     }
 
   /**
-   * The iconImageCrossFade property
-   *
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
-   */
-  var iconImageCrossFade: Double?
-    /**
-     * Get the iconImageCrossFade property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
-      value?.let {
-        return it.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the iconImageCrossFade property
-     *
-     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      if (value != null) {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE, value)
-      } else {
-        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
-      }
-    }
-
-  /**
    * The iconOcclusionOpacity property
    *
    * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
@@ -1578,9 +1545,6 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)
-    }
-    jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)?.let {
-      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE_CROSS_FADE)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_ICON_OCCLUSION_OPACITY)

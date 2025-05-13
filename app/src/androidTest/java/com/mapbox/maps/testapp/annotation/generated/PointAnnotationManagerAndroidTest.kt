@@ -670,7 +670,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconImageCrossFade = expectedValue
       assertEquals(expectedValue, pointAnnotationManager.iconImageCrossFade)
       pointAnnotationManager.iconImageCrossFade = null
-      assertEquals(null, pointAnnotationManager.iconImageCrossFade)
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-image-cross-fade").silentUnwrap(), pointAnnotationManager.iconImageCrossFade)
     }
   }
 

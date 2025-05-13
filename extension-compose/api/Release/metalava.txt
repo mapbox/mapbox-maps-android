@@ -621,7 +621,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public String? getIconHaloColorUseTheme();
     method public Double? getIconHaloWidth();
     method public com.mapbox.maps.extension.compose.annotation.IconImage? getIconImage();
-    method public Double? getIconImageCrossFade();
     method public Double? getIconOcclusionOpacity();
     method public java.util.List<java.lang.Double>? getIconOffset();
     method public Double? getIconOpacity();
@@ -660,7 +659,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconHaloColorUseTheme(String?);
     method public void setIconHaloWidth(Double?);
     method public void setIconImage(com.mapbox.maps.extension.compose.annotation.IconImage?);
-    method public void setIconImageCrossFade(Double?);
     method public void setIconOcclusionOpacity(Double?);
     method public void setIconOffset(java.util.List<java.lang.Double>?);
     method public void setIconOpacity(Double?);
@@ -699,7 +697,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final String? iconHaloColorUseTheme;
     property public final Double? iconHaloWidth;
     property public final com.mapbox.maps.extension.compose.annotation.IconImage? iconImage;
-    property public final Double? iconImageCrossFade;
     property public final Double? iconOcclusionOpacity;
     property public final java.util.List<java.lang.Double>? iconOffset;
     property public final Double? iconOpacity;

@@ -501,24 +501,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
-   */
-  var iconImageCrossFade: Double? = null
-
-  /**
-   * Set icon-image-cross-fade to initialise the pointAnnotation with.
-   *
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
-   *
-   * @param iconImageCrossFade the icon-image-cross-fade value
-   * @return this
-   */
-  fun withIconImageCrossFade(iconImageCrossFade: Double): PointAnnotationOptions {
-    this.iconImageCrossFade = iconImageCrossFade
-    return this
-  }
-
-  /**
    * The opacity at which the icon will be drawn in case of being depth occluded. Absent value means full occlusion against terrain only. Default value: 0. Value range: [0, 1]
    */
   var iconOcclusionOpacity: Double? = null
@@ -965,9 +947,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     iconHaloWidth?.let {
       jsonObject.addProperty(PROPERTY_ICON_HALO_WIDTH, it)
     }
-    iconImageCrossFade?.let {
-      jsonObject.addProperty(PROPERTY_ICON_IMAGE_CROSS_FADE, it)
-    }
     iconOcclusionOpacity?.let {
       jsonObject.addProperty(PROPERTY_ICON_OCCLUSION_OPACITY, it)
     }
@@ -1095,9 +1074,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for icon-halo-width */
     const val PROPERTY_ICON_HALO_WIDTH = "icon-halo-width"
-
-    /** The property for icon-image-cross-fade */
-    const val PROPERTY_ICON_IMAGE_CROSS_FADE = "icon-image-cross-fade"
 
     /** The property for icon-occlusion-opacity */
     const val PROPERTY_ICON_OCCLUSION_OPACITY = "icon-occlusion-opacity"
@@ -1231,9 +1207,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_ICON_HALO_WIDTH)) {
         options.iconHaloWidth = feature.getProperty(PROPERTY_ICON_HALO_WIDTH).asDouble
-      }
-      if (feature.hasProperty(PROPERTY_ICON_IMAGE_CROSS_FADE)) {
-        options.iconImageCrossFade = feature.getProperty(PROPERTY_ICON_IMAGE_CROSS_FADE).asDouble
       }
       if (feature.hasProperty(PROPERTY_ICON_OCCLUSION_OPACITY)) {
         options.iconOcclusionOpacity = feature.getProperty(PROPERTY_ICON_OCCLUSION_OPACITY).asDouble

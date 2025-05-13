@@ -344,7 +344,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getIconHaloWidth();
     method public String? getIconImage();
     method public android.graphics.Bitmap? getIconImageBitmap();
-    method public Double? getIconImageCrossFade();
     method public Double? getIconOcclusionOpacity();
     method public java.util.List<java.lang.Double>? getIconOffset();
     method public Double? getIconOpacity();
@@ -391,7 +390,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconHaloWidth(Double?);
     method public void setIconImage(String?);
     method public void setIconImageBitmap(android.graphics.Bitmap?);
-    method public void setIconImageCrossFade(Double?);
     method public void setIconOcclusionOpacity(Double?);
     method public void setIconOffset(java.util.List<java.lang.Double>?);
     method public void setIconOpacity(Double?);
@@ -437,7 +435,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? iconHaloWidth;
     property public final String? iconImage;
     property public final android.graphics.Bitmap? iconImageBitmap;
-    property public final Double? iconImageCrossFade;
     property public final Double? iconOcclusionOpacity;
     property public final java.util.List<java.lang.Double>? iconOffset;
     property public final Double? iconOpacity;
@@ -747,7 +744,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getIconHaloColorUseTheme();
     method public Double? getIconHaloWidth();
     method public String? getIconImage();
-    method public Double? getIconImageCrossFade();
     method public Double? getIconOcclusionOpacity();
     method public java.util.List<java.lang.Double>? getIconOffset();
     method public Double? getIconOpacity();
@@ -787,7 +783,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconHaloColorUseTheme(String?);
     method public void setIconHaloWidth(Double?);
     method public void setIconImage(String?);
-    method public void setIconImageCrossFade(Double?);
     method public void setIconOcclusionOpacity(Double?);
     method public void setIconOffset(java.util.List<java.lang.Double>?);
     method public void setIconOpacity(Double?);
@@ -832,7 +827,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconHaloWidth(double iconHaloWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconImage(android.graphics.Bitmap iconImageBitmap);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconImage(String iconImage);
-    method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconImageCrossFade(double iconImageCrossFade);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconOcclusionOpacity(double iconOcclusionOpacity);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconOffset(java.util.List<java.lang.Double> iconOffset);
     method public com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions withIconOpacity(double iconOpacity);
@@ -874,7 +868,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? iconHaloColorUseTheme;
     property public final Double? iconHaloWidth;
     property public final String? iconImage;
-    property public final Double? iconImageCrossFade;
     property public final Double? iconOcclusionOpacity;
     property public final java.util.List<java.lang.Double>? iconOffset;
     property public final Double? iconOpacity;
@@ -914,7 +907,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_ICON_HALO_COLOR_USE_THEME = "icon-halo-color-use-theme";
     field public static final String PROPERTY_ICON_HALO_WIDTH = "icon-halo-width";
     field public static final String PROPERTY_ICON_IMAGE = "icon-image";
-    field public static final String PROPERTY_ICON_IMAGE_CROSS_FADE = "icon-image-cross-fade";
     field public static final String PROPERTY_ICON_OCCLUSION_OPACITY = "icon-occlusion-opacity";
     field public static final String PROPERTY_ICON_OFFSET = "icon-offset";
     field public static final String PROPERTY_ICON_OPACITY = "icon-opacity";
