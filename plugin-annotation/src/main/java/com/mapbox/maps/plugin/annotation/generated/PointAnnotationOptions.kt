@@ -819,6 +819,26 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
+  * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+  */
+  @Deprecated("Use PointAnnotationManager.iconImageCrossFadeTransition instead")
+  var iconImageCrossFade: Double? = null
+
+  /**
+   * Set icon-image-cross-fade to initialise the pointAnnotation with.
+   *
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   *
+   * @param iconImageCrossFade the icon-image-cross-fade value
+   * @return this
+   */
+  @Deprecated("Use PointAnnotationManager.iconImageCrossFadeTransition instead")
+  fun withIconImageCrossFade(iconImageCrossFade: Double): PointAnnotationOptions {
+    this.iconImageCrossFade = iconImageCrossFade
+    return this
+  }
+
+  /**
    * Returns whether this pointAnnotation is draggable, meaning it can be dragged across the screen when touched and moved.
    *
    * @return draggable when touched
@@ -1119,6 +1139,8 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
+    /** The property for icon-image-cross-fade */
+    const val PROPERTY_ICON_IMAGE_CROSS_FADE = "icon-image-cross-fade"
 
     /**
      * Creates PointAnnotationOptions out of a Feature.
@@ -1252,6 +1274,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean
+      }
+      if (feature.hasProperty(PROPERTY_ICON_IMAGE_CROSS_FADE)) {
+        options.iconImageCrossFade = feature.getProperty(PROPERTY_ICON_IMAGE_CROSS_FADE).asDouble
       }
       return options
     }

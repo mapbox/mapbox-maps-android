@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Breaking changes ⚠️
+* `PointAnnotation.iconImageCrossFade` has been deprecated and setting value to it will not have any impact. Use `PointAnnotationManager.iconImageCrossFadeTransition` instead.
+
 ## Features ✨ and improvements 🏁
 * Expose `RenderThreadStatsRecorder` as experimental API.
 * Expose new experimental properties: `CircleLayer.circleElevationReference`, `FillLayer.fillConstructBridgeGuardRail`, `FillLayer.fillBridgeGuardRailColor`, `FillLayer.fillTunnelStructureColor`.

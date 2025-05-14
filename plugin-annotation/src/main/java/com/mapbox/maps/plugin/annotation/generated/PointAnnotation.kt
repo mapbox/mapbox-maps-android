@@ -76,6 +76,32 @@ class PointAnnotation(
         jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
       }
     }
+
+  /**
+   * The iconImageCrossFade property
+   *
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   */
+  @Deprecated("This property has been deprecated and will do no operations. Use PointAnnotationManager.iconImageCrossFade instead")
+  var iconImageCrossFade: Double?
+    /**
+     * Get the iconImageCrossFade property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      return null
+    }
+    /**
+     * Set the iconImageCrossFade property
+     *
+     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      // Do nothing, this property is deprecated
+    }
   // Property accessors
   /**
    * The iconAnchor property

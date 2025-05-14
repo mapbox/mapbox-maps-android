@@ -301,6 +301,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Ljava/lang/String;
 	public final fun getIconImageBitmap ()Landroid/graphics/Bitmap;
+	public final fun getIconImageCrossFade ()Ljava/lang/Double;
 	public final fun getIconOcclusionOpacity ()Ljava/lang/Double;
 	public final fun getIconOffset ()Ljava/util/List;
 	public final fun getIconOpacity ()Ljava/lang/Double;
@@ -348,6 +349,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotation :
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Ljava/lang/String;)V
 	public final fun setIconImageBitmap (Landroid/graphics/Bitmap;)V
+	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
 	public final fun setIconOcclusionOpacity (Ljava/lang/Double;)V
 	public final fun setIconOffset (Ljava/util/List;)V
 	public final fun setIconOpacity (Ljava/lang/Double;)V
@@ -576,6 +578,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public static final field PROPERTY_ICON_HALO_COLOR_USE_THEME Ljava/lang/String;
 	public static final field PROPERTY_ICON_HALO_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_ICON_IMAGE Ljava/lang/String;
+	public static final field PROPERTY_ICON_IMAGE_CROSS_FADE Ljava/lang/String;
 	public static final field PROPERTY_ICON_OCCLUSION_OPACITY Ljava/lang/String;
 	public static final field PROPERTY_ICON_OFFSET Ljava/lang/String;
 	public static final field PROPERTY_ICON_OPACITY Ljava/lang/String;
@@ -620,6 +623,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Ljava/lang/String;
+	public final fun getIconImageCrossFade ()Ljava/lang/Double;
 	public final fun getIconOcclusionOpacity ()Ljava/lang/Double;
 	public final fun getIconOffset ()Ljava/util/List;
 	public final fun getIconOpacity ()Ljava/lang/Double;
@@ -659,6 +663,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Ljava/lang/String;)V
+	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
 	public final fun setIconOcclusionOpacity (Ljava/lang/Double;)V
 	public final fun setIconOffset (Ljava/util/List;)V
 	public final fun setIconOpacity (Ljava/lang/Double;)V
@@ -703,6 +708,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationOp
 	public final fun withIconHaloWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconImage (Landroid/graphics/Bitmap;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconImage (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
+	public final fun withIconImageCrossFade (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconOcclusionOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconOffset (Ljava/util/List;)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
 	public final fun withIconOpacity (D)Lcom/mapbox/maps/plugin/annotation/generated/PointAnnotationOptions;
