@@ -523,6 +523,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconHaloColorUseTheme ()Ljava/lang/String;
 	public final fun getIconHaloWidth ()Ljava/lang/Double;
 	public final fun getIconImage ()Lcom/mapbox/maps/extension/compose/annotation/IconImage;
+	public final fun getIconImageCrossFade ()Ljava/lang/Double;
 	public final fun getIconOcclusionOpacity ()Ljava/lang/Double;
 	public final fun getIconOffset ()Ljava/util/List;
 	public final fun getIconOpacity ()Ljava/lang/Double;
@@ -561,6 +562,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconHaloColorUseTheme (Ljava/lang/String;)V
 	public final fun setIconHaloWidth (Ljava/lang/Double;)V
 	public final fun setIconImage (Lcom/mapbox/maps/extension/compose/annotation/IconImage;)V
+	public final fun setIconImageCrossFade (Ljava/lang/Double;)V
 	public final fun setIconOcclusionOpacity (Ljava/lang/Double;)V
 	public final fun setIconOffset (Ljava/util/List;)V
 	public final fun setIconOpacity (Ljava/lang/Double;)V

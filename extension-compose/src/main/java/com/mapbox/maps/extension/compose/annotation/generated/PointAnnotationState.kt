@@ -61,6 +61,7 @@ public class PointAnnotationState private constructor(
   initialIconHaloColorUseTheme: String?,
   initialTextColorUseTheme: String?,
   initialTextHaloColorUseTheme: String?,
+  initialIconImageCrossFade: Double?,
   initialPointAnnotationInteractionsState: PointAnnotationInteractionsState,
 ) {
 
@@ -102,6 +103,7 @@ public class PointAnnotationState private constructor(
     initialIconHaloColorUseTheme = null,
     initialTextColorUseTheme = null,
     initialTextHaloColorUseTheme = null,
+  initialIconImageCrossFade = null,
     initialPointAnnotationInteractionsState = PointAnnotationInteractionsState(),
 )
 
@@ -262,6 +264,11 @@ public class PointAnnotationState private constructor(
    */
   @MapboxExperimental
   public var textHaloColorUseTheme: String? by mutableStateOf(initialTextHaloColorUseTheme)
+
+  /**
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   */
+  public var iconImageCrossFade: Double? by mutableStateOf(initialIconImageCrossFade)
 
   @Composable
   private fun UpdateIconAnchor(
@@ -641,6 +648,13 @@ public class PointAnnotationState private constructor(
     )
   }
 
+ @Composable
+  private fun UpdateIconImageCrossFade(
+    annotationNode: PointAnnotationNode
+  ) {
+    annotationNode.annotationManager.iconImageCrossFade = iconImageCrossFade
+  }
+
   @Composable
   internal fun UpdateProperties(
     annotationNode: PointAnnotationNode,
@@ -682,6 +696,7 @@ public class PointAnnotationState private constructor(
     UpdateIconHaloColorUseTheme(annotationNode)
     UpdateTextColorUseTheme(annotationNode)
     UpdateTextHaloColorUseTheme(annotationNode)
+    UpdateIconImageCrossFade(annotationNode)
   }
 }
 
