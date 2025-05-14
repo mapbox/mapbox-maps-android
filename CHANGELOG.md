@@ -7,6 +7,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose `RenderThreadStatsRecorder` as experimental API.
 * Expose new experimental properties: `CircleLayer.circleElevationReference`, `FillLayer.fillConstructBridgeGuardRail`, `FillLayer.fillBridgeGuardRailColor`, `FillLayer.fillTunnelStructureColor`.
 * Promote `MapInteraction` APIs to stable, remove experimental `Style.STANDARD_EXPERIMENTAL` constant, as `Style.STANDARD` supports featuresets and map interactions by default.
+  * Add common `MapInteraction` APIs to `StandardStyleInteractionsState`: `.onFeaturesetClicked`, `.onLayerClicked`, `.onFeaturesetLongClicked`, `.onLayerLongClicked`, `.onMapClicked`, `.onMapLongClicked`.
+  * Add `StyleInteractionsState` to `MapboxStandardSatelliteStyle` so interactions can be used with the satellite style.
 * [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
 
 # 11.12.0 May 7, 2025

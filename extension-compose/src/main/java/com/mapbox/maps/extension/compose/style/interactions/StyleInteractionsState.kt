@@ -6,7 +6,6 @@ import androidx.compose.runtime.remember
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.InteractionContext
 import com.mapbox.maps.LongClickInteraction
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -20,7 +19,6 @@ import com.mapbox.maps.interactions.FeaturesetFeature
  *
  * @return [StyleInteractionsState]
  */
-@MapboxExperimental
 @Composable
 public inline fun rememberStyleInteractionStates(crossinline init: StyleInteractionsState.() -> Unit = {}): StyleInteractionsState {
   return remember {
@@ -32,7 +30,6 @@ public inline fun rememberStyleInteractionStates(crossinline init: StyleInteract
  * [StyleInteractionsState] manages the map interactions defined for the style.
  */
 @Stable
-@MapboxExperimental
 public class StyleInteractionsState : BasicStyleInteractions() {
 
   @Composable
@@ -51,7 +48,6 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when featureset is clicked.
    */
-  @MapboxExperimental
   public fun onFeaturesetClicked(
     id: String,
     importId: String? = null,
@@ -78,7 +74,6 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when layer is clicked.
    */
-  @MapboxExperimental
   public fun onLayerClicked(
     id: String,
     filter: Expression? = null,
@@ -99,7 +94,6 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when featureset is clicked.
    */
-  @MapboxExperimental
   public fun onFeaturesetLongClicked(
     id: String,
     importId: String? = null,
@@ -126,7 +120,6 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when layer is clicked.
    */
-  @MapboxExperimental
   public fun onLayerLongClicked(
     id: String,
     filter: Expression? = null,
@@ -143,7 +136,6 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    *
    * @param onClick callback triggered when map surface is clicked.
    */
-  @MapboxExperimental
   public fun onMapClicked(
     onClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {
@@ -157,7 +149,6 @@ public class StyleInteractionsState : BasicStyleInteractions() {
    *
    * @param onLongClick callback triggered when map surface is clicked.
    */
-  @MapboxExperimental
   public fun onMapLongClicked(
     onLongClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean
   ): StyleInteractionsState = apply {

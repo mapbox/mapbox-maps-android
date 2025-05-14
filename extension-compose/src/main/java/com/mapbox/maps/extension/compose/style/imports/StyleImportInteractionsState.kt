@@ -6,7 +6,6 @@ import androidx.compose.runtime.remember
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.InteractionContext
 import com.mapbox.maps.LongClickInteraction
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.compose.style.interactions.BasicStyleInteractions
 import com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope
@@ -21,7 +20,6 @@ import com.mapbox.maps.interactions.FeaturesetFeature
  *
  * @return [StyleImportInteractionsState]
  */
-@MapboxExperimental
 @Composable
 public inline fun rememberStyleImportInteractionsState(crossinline init: StyleImportInteractionsState.() -> Unit = {}): StyleImportInteractionsState {
   return remember {
@@ -33,7 +31,6 @@ public inline fun rememberStyleImportInteractionsState(crossinline init: StyleIm
  * [StyleImportInteractionsState] manages the map interactions defined for the style import.
  */
 @Stable
-@MapboxExperimental
 public class StyleImportInteractionsState : BasicStyleInteractions() {
 
   @Composable
@@ -52,7 +49,6 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onClick callback triggered when featureset is clicked.
    */
-  @MapboxExperimental
   public fun onFeaturesetClicked(
     id: String,
     importId: String? = null,
@@ -80,7 +76,6 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
    * @param onLongClick callback triggered when featureset is clicked.
    */
-  @MapboxExperimental
   public fun onFeaturesetLongClicked(
     id: String,
     importId: String? = null,
@@ -104,7 +99,6 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    *
    * @param onClick callback triggered when map surface is clicked.
    */
-  @MapboxExperimental
   public fun onMapClicked(
     onClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {
@@ -118,7 +112,6 @@ public class StyleImportInteractionsState : BasicStyleInteractions() {
    *
    * @param onLongClick callback triggered when map surface is clicked.
    */
-  @MapboxExperimental
   public fun onMapLongClicked(
     onLongClick: FeaturesetFeatureScope.(InteractionContext) -> Boolean
   ): StyleImportInteractionsState = apply {

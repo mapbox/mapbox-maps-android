@@ -51,7 +51,6 @@ public class StyleImportState internal constructor(
   /**
    * The [StyleImportInteractionsState] defined for the imported style.
    */
-  @MapboxExperimental
   public var interactionsState: StyleImportInteractionsState by mutableStateOf(initialStyleImportInteractionsState)
 
   /**

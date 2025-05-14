@@ -24,22 +24,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.rememberMapState
-import com.mapbox.maps.extension.compose.style.GenericStyle
-import com.mapbox.maps.extension.compose.style.rememberStyleState
+import com.mapbox.maps.extension.compose.style.imports.rememberStyleImportState
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeatureStateKey
 import com.mapbox.maps.interactions.FeaturesetFeature
 
 public class InteractionsActivity : ComponentActivity() {
-
-  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -88,31 +86,39 @@ public class InteractionsActivity : ComponentActivity() {
               mapState = mapState,
               mapViewportState = mapViewportState,
               style = {
-                GenericStyle(
-                  style = "asset://fragment-realestate-NY.json",
-                  styleState = rememberStyleState {
-                    styleInteractionsState
-                      .onFeaturesetClicked(id = "hotels-price") { priceLabel, _ ->
-                        if (selectedPriceLabel?.id != priceLabel.id) {
-                          selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
-                          selectedPriceLabel = priceLabel
-                        }
-                        val newActiveState = priceLabel.state.getBooleanState("active")?.not() ?: true
-                        priceLabel.setFeatureState(
-                          FeatureState {
-                            addBooleanState("active", newActiveState)
-                          }
-                        ) {
-                          isActive = newActiveState
-                        }
-                        return@onFeaturesetClicked true
-                      }
+                MapboxStandardStyle(
+                  standardStyleState = rememberStandardStyleState {
+                    interactionsState
                       .onMapClicked {
                         selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
                         selectedPriceLabel = null
                         isActive = null
                         true
                       }
+                  },
+                  styleImportsContent = {
+                    StyleImport(
+                      importId = "realestate",
+                      style = "asset://fragment-realestate-NY.json",
+                      styleImportState = rememberStyleImportState {
+                        interactionsState
+                          .onFeaturesetClicked(id = "hotels-price") { priceLabel, _ ->
+                            if (selectedPriceLabel?.id != priceLabel.id) {
+                              selectedPriceLabel?.removeFeatureState(FeatureStateKey.create("active"))
+                              selectedPriceLabel = priceLabel
+                            }
+                            val newActiveState = priceLabel.state.getBooleanState("active")?.not() ?: true
+                            priceLabel.setFeatureState(
+                              FeatureState {
+                                addBooleanState("active", newActiveState)
+                              }
+                            ) {
+                              isActive = newActiveState
+                            }
+                            return@onFeaturesetClicked true
+                          }
+                      }
+                    )
                   }
                 )
               }
