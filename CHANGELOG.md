@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.11.1
+# 11.11.1 May 16, 2025
 ## Bug fixes 🐞
 * Fixed a crash that occurred when a runtime-added unused image was removed and later reused.
 
