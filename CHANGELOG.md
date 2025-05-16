@@ -4,6 +4,12 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.11.1
+## Bug fixes 🐞
+* Fixed a crash that occurred when a runtime-added unused image was removed and later reused.
+
+## Dependencies
+* Update gl-native to v11.11.4.
 
 # 11.11.0 March 26, 2025
 ## Features ✨ and improvements 🏁
