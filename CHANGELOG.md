@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.13.0-beta.1 May 19, 2025
 ## Breaking changes ⚠️
 * `PointAnnotation.iconImageCrossFade` has been deprecated and setting value to it will not have any impact. Use `PointAnnotationManager.iconImageCrossFadeTransition` instead.
 
@@ -13,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
   * Add common `MapInteraction` APIs to `StandardStyleInteractionsState`: `.onFeaturesetClicked`, `.onLayerClicked`, `.onFeaturesetLongClicked`, `.onLayerLongClicked`, `.onMapClicked`, `.onMapLongClicked`.
   * Add `StyleInteractionsState` to `MapboxStandardSatelliteStyle` so interactions can be used with the satellite style.
 * [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
+
 
 # 11.12.0 May 7, 2025
 ## Features ✨ and improvements 🏁
