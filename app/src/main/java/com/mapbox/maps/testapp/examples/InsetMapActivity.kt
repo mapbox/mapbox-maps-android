@@ -6,11 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.coroutine.cameraChangedEvents
+import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -41,6 +42,7 @@ class InsetMapActivity : AppCompatActivity() {
   private lateinit var mainMapboxMap: MapboxMap
   private var insetMapboxMap: MapboxMap? = null
 
+  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityInsetMapBinding.inflate(layoutInflater)
@@ -55,8 +57,8 @@ class InsetMapActivity : AppCompatActivity() {
       // repeatOnLifecycle launches the block in a new coroutine every time the
       // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
       repeatOnLifecycle(Lifecycle.State.STARTED) {
-        mainMapboxMap.cameraChangedEvents.collect {
-          updateInsetMapCamera(it.cameraState)
+        mainMapboxMap.cameraChangedCoalescedEvents.collect { cameraEvent ->
+          updateInsetMapCamera(cameraEvent.cameraState)
         }
       }
     }

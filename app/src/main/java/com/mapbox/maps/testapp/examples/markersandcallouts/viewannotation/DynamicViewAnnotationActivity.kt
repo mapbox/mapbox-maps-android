@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.lifecycleScope
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeometryCollection
@@ -284,10 +285,11 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
   /**
    * Renders the padding on top of the MapView.
    */
+  @OptIn(MapboxExperimental::class)
   private fun MapView.showPaddingZone() {
     val paddingView = PaddingView(context)
     addView(paddingView)
-    mapboxMap.subscribeCameraChanged {
+    mapboxMap.subscribeCameraChangedCoalesced {
       it.cameraState.padding.let { padding ->
         paddingView.updateRect(
           Rect(

@@ -15,6 +15,8 @@ Mapbox welcomes participation and contributions from everyone.
   * Add common `MapInteraction` APIs to `StandardStyleInteractionsState`: `.onFeaturesetClicked`, `.onLayerClicked`, `.onFeaturesetLongClicked`, `.onLayerLongClicked`, `.onMapClicked`, `.onMapLongClicked`.
   * Add `StyleInteractionsState` to `MapboxStandardSatelliteStyle` so interactions can be used with the satellite style.
 * [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
+* Expose new experimental camera event `MapboxMap.subscribeCameraChangedCoalesced`, `MapboxMap.cameraChangedCoalescedEvents`.
+* [compose] Expose new camera event `MapState.cameraChangedCoalescedEvents`
 
 
 # 11.12.0 May 7, 2025
