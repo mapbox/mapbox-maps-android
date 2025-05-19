@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.compose
 
 import android.os.Parcelable
-import androidx.annotation.RestrictTo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -156,7 +155,6 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * Conflated [Flow] of [CameraChangedCoalesced] updates from [MapboxMap.subscribeCameraChangedCoalesced].
    */
-  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @com.mapbox.annotation.MapboxExperimental
   public val cameraChangedCoalescedEvents: Flow<CameraChangedCoalesced> = mapboxMapFlow.flatMapLatest {
     it?.cameraChangedCoalescedEvents ?: emptyFlow()
