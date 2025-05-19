@@ -1840,6 +1840,7 @@ class MapboxMap :
    *
    * @param cameraChangedCoalescedCallback the callback to be invoked when the camera changes.
    */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @com.mapbox.annotation.MapboxExperimental
   override fun subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback: CameraChangedCoalescedCallback): Cancelable {
     checkNativeMap("subscribeCameraChangedCoalesced")

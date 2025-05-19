@@ -6,6 +6,7 @@
 
 package com.mapbox.maps.coroutine
 
+import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -38,6 +39,7 @@ suspend fun MapboxMap.awaitStyle(): Style = suspendCoroutine { continuation ->
  * Load a new style from a style extension, suspends until style is loaded.
  *
  * @param styleExtension the style extension to load
+ * @param transitionOptions the transition options to use when loading the style
  */
 @JvmSynthetic
 suspend fun MapboxMap.awaitLoadStyle(
@@ -52,7 +54,8 @@ suspend fun MapboxMap.awaitLoadStyle(
 /**
  * Load a new style from a style URI or JSON, suspends until style is loaded.
  *
- * @param style the style URI to load
+ * @param styleUri the style URI to load
+ * @param transitionOptions the transition options to use when loading the style
  */
 @JvmSynthetic
 suspend fun MapboxMap.awaitLoadStyle(
@@ -309,6 +312,7 @@ val MapboxMap.cameraChangedEvents: Flow<CameraChanged>
 /**
  * Conflated [Flow] of [CameraChangedCoalesced] updates from [MapboxMap.subscribeCameraChangedCoalesced].
  */
+@get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 @com.mapbox.annotation.MapboxExperimental
 val MapboxMap.cameraChangedCoalescedEvents: Flow<CameraChangedCoalesced>
   @JvmSynthetic

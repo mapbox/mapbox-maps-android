@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
+import androidx.annotation.RestrictTo
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCallback
 import com.mapbox.maps.CameraChangedCoalesced
@@ -324,6 +325,7 @@ interface MapListenerDelegate {
    *
    * @param cameraChangedCoalescedCallback the callback to be invoked when the camera changes.
    */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @com.mapbox.annotation.MapboxExperimental
   fun subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback: CameraChangedCoalescedCallback): Cancelable
 

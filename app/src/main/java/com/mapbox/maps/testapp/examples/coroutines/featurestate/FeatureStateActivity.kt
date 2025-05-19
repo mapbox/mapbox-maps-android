@@ -11,7 +11,6 @@ import androidx.core.view.doOnLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxMap
@@ -21,7 +20,7 @@ import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Style
-import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
+import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.getFeatureState
 import com.mapbox.maps.coroutine.queryRenderedFeatures
 import com.mapbox.maps.coroutine.setFeatureState
@@ -96,12 +95,11 @@ class FeatureStateActivity : AppCompatActivity() {
     }
   }
 
-  @OptIn(MapboxExperimental::class)
   private suspend fun highlightFeatureOnHover() {
     val crosshairScreenBox = getCrosshairScreenBox()
 
     // Observe camera changes and query the rendered features under the crosshair.
-    mapboxMap.cameraChangedCoalescedEvents
+    mapboxMap.cameraChangedEvents
       .map { _ ->
         mapboxMap
           .queryRenderedFeatures(

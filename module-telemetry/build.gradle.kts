@@ -11,17 +11,6 @@ android {
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
-  buildTypes {
-    debug {
-      ndk {
-        var abi: String =
-          if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
-        if (abi.isNotBlank()) {
-          abiFilters.add(abi)
-        }
-      }
-    }
-  }
 }
 
 mapboxLibrary {

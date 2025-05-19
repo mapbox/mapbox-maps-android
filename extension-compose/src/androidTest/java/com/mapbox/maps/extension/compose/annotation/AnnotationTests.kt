@@ -57,7 +57,6 @@ import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import org.junit.Assert.assertEquals
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -208,7 +207,6 @@ public class AnnotationTests {
   }
 
   @Test
-  @Ignore("Flaky test, times out")
   public fun testPointAnnotation() {
     var clickedAnnotation: PointAnnotation? = null
     var longClickedAnnotation: PointAnnotation? = null
@@ -444,7 +442,6 @@ public class AnnotationTests {
   }
 
   @Test
-  @Ignore("Flaky test, times out")
   public fun testPolylineAnnotation() {
     var clickedAnnotation: PolylineAnnotation? = null
     var longClickedAnnotation: PolylineAnnotation? = null
