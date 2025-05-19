@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.12.1
+# 11.12.1 May 19, 2025
 ## Features ✨ and improvements 🏁
 * Performance optimizations
 
