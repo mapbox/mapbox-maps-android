@@ -2,6 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# main
+
+# 11.12.1
+## Features ✨ and improvements 🏁
+* Performance optimizations
+
+## Dependencies
+* Update gl-native to v11.12.1 and common to v24.12.1.
 
 # 11.12.0 May 7, 2025
 ## Features ✨ and improvements 🏁
