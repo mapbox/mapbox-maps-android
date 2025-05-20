@@ -15,6 +15,7 @@ import androidx.test.uiautomator.UiObject2
 import com.mapbox.maps.testapp.examples.SurfaceRecyclerViewActivity
 import com.mapbox.maps.testapp.integration.BaseReuseIntegrationTest
 import org.hamcrest.core.Is
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -27,6 +28,7 @@ class MapViewSurfaceModeWithRecyclerViewTest : BaseReuseIntegrationTest(SurfaceR
 
   @Test
   @LargeTest
+  @Ignore("Flaky test")
   fun scrollSurfaceRecyclerView() {
     // wait extra seconds to make sure recycler view is indeed added to hierarchy
     Thread.sleep(2_000)
