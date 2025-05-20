@@ -18,6 +18,26 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose new experimental camera event `MapboxMap.subscribeCameraChangedCoalesced`, `MapboxMap.cameraChangedCoalescedEvents`.
 * [compose] Expose new camera event `MapState.cameraChangedCoalescedEvents`
 
+## Bug fixes 🐞
+* Fix elevated lines rendering regression.
+* Do not write errors to logs if event was not send because events are disabled.
+* Fixed incorrect placement for symbols with symbol-z-elevate on Globe projection.
+* Elevated symbol heights now change as smooth as building heighs.
+* Fixing unstable placement for elevated symbols.
+* Respect config expressions in filter.
+* Fix symbol order with symbol-z-elevate true and symbol-z-order viewport-y.
+* Fix issue that promoteId content is missing after vector source serialization.
+
+## Dependencies
+* Update gl-native to v11.13.0-beta.1, common to 24.13.0-beta.1.
+
+
+# 11.11.1 May 16, 2025
+## Bug fixes 🐞
+* Fixed a crash that occurred when a runtime-added unused image was removed and later reused.
+
+## Dependencies
+* Update gl-native to v11.11.4.
 
 # 11.12.0 May 7, 2025
 ## Features ✨ and improvements 🏁
