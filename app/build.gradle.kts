@@ -36,7 +36,7 @@ android {
     targetSdk = libs.versions.exampleTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.testapp"
     versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
-    versionName = if (project.hasProperty("gitVersionName")) project.property("gitVersionName") as String else "0.1.0"
+    versionName = project.property("TEST_APP_VERSION_NAME") as String
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments += mapOf("clearPackageData" to "true")

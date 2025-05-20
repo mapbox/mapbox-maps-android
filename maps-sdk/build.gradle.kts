@@ -63,6 +63,18 @@ android {
       targetCompatibility = JavaVersion.VERSION_1_8
     }
   }
+
+  buildTypes {
+    debug {
+      ndk {
+        var abi: String =
+          if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
+        if (abi.isNotBlank()) {
+          abiFilters.add(abi)
+        }
+      }
+    }
+  }
 }
 
 dependencies {
