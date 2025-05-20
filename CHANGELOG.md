@@ -3,6 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.13.0-beta.1 May 19, 2025
 ## Breaking changes ⚠️
 * `PointAnnotation.iconImageCrossFade` has been deprecated and setting value to it will not have any impact. Use `PointAnnotationManager.iconImageCrossFadeTransition` instead.
 
@@ -16,6 +18,20 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
 * Expose new experimental camera event `MapboxMap.subscribeCameraChangedCoalesced`, `MapboxMap.cameraChangedCoalescedEvents`.
 * [compose] Expose new camera event `MapState.cameraChangedCoalescedEvents`
+
+## Bug fixes 🐞
+* Fix elevated lines rendering regression.
+* Do not write errors to logs if event was not send because events are disabled.
+* Fixed incorrect placement for symbols with symbol-z-elevate on Globe projection.
+* Elevated symbol heights now change as smooth as building heighs.
+* Fixing unstable placement for elevated symbols.
+* Respect config expressions in filter.
+* Fix symbol order with symbol-z-elevate true and symbol-z-order viewport-y.
+* Fix issue that promoteId content is missing after vector source serialization.
+
+## Dependencies
+* Update gl-native to v11.13.0-beta.1, common to 24.13.0-beta.1.
+
 
 # 11.11.1 May 16, 2025
 ## Bug fixes 🐞
