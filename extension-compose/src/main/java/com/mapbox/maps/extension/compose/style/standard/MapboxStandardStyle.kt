@@ -65,6 +65,9 @@ public fun MapboxStandardStyle(
       styleImportsConfig = styleImportsConfig {
         importConfig(importId = "basemap") {
           with(standardStyleConfigurationState) {
+            if (showLandmarkIcons.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICON, showLandmarkIcons.value)
+            }
             if (showPlaceLabels.isNotInitial()) {
               config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
             }
@@ -184,6 +187,9 @@ public fun MapboxStandardStyle(
       styleImportsConfig = styleImportsConfig {
         importConfig(importId = "basemap") {
           with(standardStyleState.configurationsState) {
+            if (showLandmarkIcons.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICON, showLandmarkIcons.value)
+            }
             if (showPlaceLabels.isNotInitial()) {
               config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
             }

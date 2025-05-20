@@ -4314,8 +4314,10 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardSate
 public final class com/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState : com/mapbox/maps/extension/compose/style/standard/BaseStyleConfigurationState {
 	public fun <init> ()V
 	public final fun getShow3dObjects ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShowLandmarkIcons ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getTheme ()Lcom/mapbox/maps/extension/compose/style/standard/ThemeValue;
 	public final fun setShow3dObjects (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShowLandmarkIcons (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setTheme (Lcom/mapbox/maps/extension/compose/style/standard/ThemeValue;)V
 }
 

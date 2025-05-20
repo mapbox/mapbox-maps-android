@@ -5092,10 +5092,13 @@ package com.mapbox.maps.extension.compose.style.standard {
   @androidx.compose.runtime.Stable public final class StandardStyleConfigurationState extends com.mapbox.maps.extension.compose.style.standard.BaseStyleConfigurationState {
     ctor public StandardStyleConfigurationState();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dObjects();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowLandmarkIcons();
     method public com.mapbox.maps.extension.compose.style.standard.ThemeValue getTheme();
     method public void setShow3dObjects(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowLandmarkIcons(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setTheme(com.mapbox.maps.extension.compose.style.standard.ThemeValue);
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showLandmarkIcons;
     property public final com.mapbox.maps.extension.compose.style.standard.ThemeValue theme;
   }
 

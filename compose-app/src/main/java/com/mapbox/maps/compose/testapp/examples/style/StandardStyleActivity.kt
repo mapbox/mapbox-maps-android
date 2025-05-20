@@ -47,6 +47,9 @@ public class StandardStyleActivity : ComponentActivity() {
       var isStandardSatellite by remember {
         mutableStateOf(false)
       }
+      var enableLandmarkIcons by remember {
+        mutableStateOf(false)
+      }
       var enablePlaceLabels by remember {
         mutableStateOf(true)
       }
@@ -84,6 +87,30 @@ public class StandardStyleActivity : ComponentActivity() {
             Column(
               modifier = Modifier.width(IntrinsicSize.Max)
             ) {
+              Row(
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                FloatingActionButton(
+                  modifier = Modifier
+                    .defaultMinSize(
+                      minWidth = ButtonDefaults.MinWidth,
+                      minHeight = ButtonDefaults.MinHeight
+                    )
+                    .padding(end = 4.dp),
+                  onClick = {
+                    if (!isStandardSatellite) {
+                      enableLandmarkIcons = !enableLandmarkIcons
+                    }
+                  },
+                  shape = RoundedCornerShape(16.dp),
+                  backgroundColor = if (isStandardSatellite) Color.Gray else MaterialTheme.colors.secondary,
+                ) {
+                  Text(
+                    modifier = Modifier.padding(6.dp),
+                    text = "showLandmarkIcons: $enableLandmarkIcons"
+                  )
+                }
+              }
               Row(
                 modifier = Modifier.fillMaxWidth()
               ) {
@@ -364,6 +391,7 @@ public class StandardStyleActivity : ComponentActivity() {
                       enablePlacementTransitions(true)
                     }
                     configurationsState.apply {
+                      showLandmarkIcons = BooleanValue(enableLandmarkIcons)
                       showPlaceLabels = BooleanValue(enablePlaceLabels)
                       showRoadLabels = BooleanValue(enableRoadLabels)
                       showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)
