@@ -64,6 +64,9 @@ android {
         }
       }
       tasks.findByName("compile${variantName}")!!.dependsOn(copyTask)
+      tasks.named("dokkaHtml") {
+        dependsOn("moveKspReleaseKotlinTask", "kspReleaseKotlin")
+      }
     }
   }
 }
