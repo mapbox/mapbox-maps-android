@@ -4,6 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.12.2
+## Bug fixes 🐞
+* Limit view annotations collision grid size.
+
+## Dependencies
+* Update gl-native to v11.12.2 and common to v24.12.2.
+
+
 # 11.12.1 May 19, 2025
 ## Features ✨ and improvements 🏁
 * Performance optimizations
