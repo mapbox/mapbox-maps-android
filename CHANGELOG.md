@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.12.2
+# 11.12.2 May 23, 2025
 ## Bug fixes 🐞
 * Limit view annotations collision grid size.
 
