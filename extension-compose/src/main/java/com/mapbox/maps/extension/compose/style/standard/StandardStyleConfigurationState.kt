@@ -81,7 +81,8 @@ public data class ThemeValue(public val value: Value) {
 @Stable
 public class StandardStyleConfigurationState private constructor(
   initialTheme: ThemeValue,
-  initialShow3dObjects: BooleanValue
+  initialShow3dObjects: BooleanValue,
+  initialShowLandmarkIcons: BooleanValue,
 ) : BaseStyleConfigurationState() {
 
   /**
@@ -90,6 +91,7 @@ public class StandardStyleConfigurationState private constructor(
   public constructor() : this(
     initialTheme = ThemeValue.INITIAL,
     initialShow3dObjects = BooleanValue.INITIAL,
+    initialShowLandmarkIcons = BooleanValue.INITIAL,
   )
 
   /**
@@ -102,7 +104,13 @@ public class StandardStyleConfigurationState private constructor(
    */
   public var show3dObjects: BooleanValue by mutableStateOf(initialShow3dObjects)
 
+  /**
+   * Shows or hides Landmark Icons, default to false.
+   */
+  public var showLandmarkIcons: BooleanValue by mutableStateOf(initialShowLandmarkIcons)
+
   internal companion object {
+    internal const val CONFIG_SHOW_LANDMARK_ICON = "showLandmarkIcons"
     internal const val CONFIG_THEME = "theme"
     internal const val CONFIG_SHOW_3D_OBJECTS = "show3dObjects"
   }

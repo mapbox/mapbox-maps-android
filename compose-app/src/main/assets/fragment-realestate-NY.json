@@ -6,6 +6,7 @@
             "config": {
                 "font": "Montserrat",
                 "lightPreset": "dusk",
+                "showLandmarkIcons": true,
                 "showPointOfInterestLabels": true,
                 "showTransitLabels": false,
                 "showPlaceLabels": true,

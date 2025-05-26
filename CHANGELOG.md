@@ -4,6 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.13.0-rc.1
+## Features ✨ and improvements 🏁
+* [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
+
+
 # 11.13.0-beta.1 May 19, 2025
 ## Breaking changes ⚠️
 * `PointAnnotation.iconImageCrossFade` has been deprecated and setting value to it will not have any impact. Use `PointAnnotationManager.iconImageCrossFadeTransition` instead.
