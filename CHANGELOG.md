@@ -4,6 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.13.0-rc.1
+## Features ✨ and improvements 🏁
+* [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
+
+
 # 11.13.0-beta.1 May 19, 2025
 ## Breaking changes ⚠️
 * `PointAnnotation.iconImageCrossFade` has been deprecated and setting value to it will not have any impact. Use `PointAnnotationManager.iconImageCrossFadeTransition` instead.
@@ -15,7 +20,6 @@ Mapbox welcomes participation and contributions from everyone.
   * Add common `MapInteraction` APIs to `StandardStyleInteractionsState`: `.onFeaturesetClicked`, `.onLayerClicked`, `.onFeaturesetLongClicked`, `.onLayerLongClicked`, `.onMapClicked`, `.onMapLongClicked`.
   * Add `StyleInteractionsState` to `MapboxStandardSatelliteStyle` so interactions can be used with the satellite style.
 * [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
-* [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
 * Expose new experimental camera event `MapboxMap.subscribeCameraChangedCoalesced`, `MapboxMap.cameraChangedCoalescedEvents`.
 * [compose] Expose new camera event `MapState.cameraChangedCoalescedEvents`
 
