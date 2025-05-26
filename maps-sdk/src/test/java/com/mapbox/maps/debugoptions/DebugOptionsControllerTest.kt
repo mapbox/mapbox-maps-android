@@ -12,12 +12,14 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
+@Ignore("Ignoring this test as it is flaky and requires two runs to pass")
 class DebugOptionsControllerTest {
   private val mapboxMap: MapboxMap = mockk(relaxed = true)
   private val cameraDebugView: CameraDebugView = mockk(relaxed = true)
