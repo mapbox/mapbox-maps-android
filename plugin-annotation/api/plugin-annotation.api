@@ -140,6 +140,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public fun getClusterClickListeners ()Ljava/util/List;
 	public fun getClusterLongClickListeners ()Ljava/util/List;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun getSlot ()Ljava/lang/String;
 	public fun removeClusterClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterClickListener;)Z
 	public fun removeClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
@@ -162,6 +164,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/CircleAnnotationM
 	public final fun setCircleTranslate (Ljava/util/List;)V
 	public final fun setCircleTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 	public final fun setSlot (Ljava/lang/String;)V
 }
 
@@ -431,6 +435,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun getIconTranslate ()Ljava/util/List;
 	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun getSlot ()Ljava/lang/String;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
@@ -510,6 +516,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public final fun setIconTranslate (Ljava/util/List;)V
 	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 	public final fun setSlot (Ljava/lang/String;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
 	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)V
@@ -826,6 +834,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun getSlot ()Ljava/lang/String;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillBridgeGuardRailColorInt (Ljava/lang/Integer;)V
@@ -850,6 +860,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolygonAnnotation
 	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 	public final fun setSlot (Ljava/lang/String;)V
 }
 
@@ -1028,6 +1040,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineWidth ()Ljava/lang/Double;
 	public final fun getLineWidthUnit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;
 	public final fun getLineZOffset ()Ljava/lang/Double;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun getSlot ()Ljava/lang/String;
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun setLineBlur (Ljava/lang/Double;)V
@@ -1065,6 +1079,8 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineWidth (Ljava/lang/Double;)V
 	public final fun setLineWidthUnit (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;)V
 	public final fun setLineZOffset (Ljava/lang/Double;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 	public final fun setSlot (Ljava/lang/String;)V
 }
 

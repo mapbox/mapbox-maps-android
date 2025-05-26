@@ -392,6 +392,30 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testMaxZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.maxZoom = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.maxZoom)
+      polylineAnnotationManager.maxZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "maxzoom").silentUnwrap(), polylineAnnotationManager.maxZoom)
+    }
+  }
+
+  @Test
+  fun testMinZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.minZoom = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.minZoom)
+      polylineAnnotationManager.minZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "minzoom").silentUnwrap(), polylineAnnotationManager.minZoom)
+    }
+  }
+
+  @Test
   fun testLineBorderColorUseTheme() {
     rule.runOnUiThread {
       val expectedValue = "default"

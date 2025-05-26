@@ -2552,6 +2552,60 @@ class PointAnnotationManager(
     }
 
   /**
+   * The MaxZoom property
+   *
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  var maxZoom: Double?
+    /**
+     * Get the MaxZoom property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.maxZoom
+    }
+    /**
+     * Set the MaxZoom property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "maxzoom").value
+      }
+      setLayerProperty(wrappedValue, "maxzoom")
+    }
+
+  /**
+   * The MinZoom property
+   *
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  var minZoom: Double?
+    /**
+     * Get the MinZoom property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.minZoom
+    }
+    /**
+     * Set the MinZoom property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "minzoom").value
+      }
+      setLayerProperty(wrappedValue, "minzoom")
+    }
+
+  /**
    * The default iconColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
    * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
