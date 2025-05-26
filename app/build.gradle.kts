@@ -40,6 +40,13 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments += mapOf("clearPackageData" to "true")
+    ndk {
+      val abi: String =
+        if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
+      if (abi.isNotBlank() && !project.hasProperty("android.injected.invoked.from.ide")) {
+        abiFilters.add(abi)
+      }
+    }
   }
   buildTypes {
     getByName("release") {

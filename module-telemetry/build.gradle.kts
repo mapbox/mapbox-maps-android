@@ -10,15 +10,11 @@ android {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    debug {
-      ndk {
-        var abi: String =
-          if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
-        if (abi.isNotBlank()) {
-          abiFilters.add(abi)
-        }
+    ndk {
+      val abi: String =
+        if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
+      if (abi.isNotBlank() && !project.hasProperty("android.injected.invoked.from.ide")) {
+        abiFilters.add(abi)
       }
     }
   }
