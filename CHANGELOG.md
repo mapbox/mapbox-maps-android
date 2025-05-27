@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
 
+## Bug fixes 🐞
+* MapboxTracing was deprecated and moved to package com.mapbox.common.
+
 # 11.15.0-beta.2 August 15, 2025
 ## Bug fixes 🐞
 * Fix tile border debug feature flickering on globe

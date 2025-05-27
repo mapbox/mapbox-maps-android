@@ -3,12 +3,14 @@ package com.mapbox.maps
 /**
  * Allows to control several levels of tracing that could be useful to understand the performance of Mapbox Maps.
  * For more details about Android tracing refer to relevant section of DEVELOPING.md file.
+ * API is deprecated, please use com.mapbox.common.MapboxTracing
  */
+@Deprecated(
+  "Please use com.mapbox.common.MapboxTracing instead.",
+  replaceWith = ReplaceWith("MapboxTracing", "com.mapbox.common.MapboxTracing")
+)
 object MapboxTracing {
-
-  internal const val MAPBOX_TRACE_ID = "mbx"
-
-  internal var platformTracingEnabled = false
+  private val impl = com.mapbox.common.MapboxTracing
 
   /**
    * Enable all the traces: native rendering engine traces and Android Maps SDK traces.
@@ -17,8 +19,7 @@ object MapboxTracing {
    * This tracing is designed to be usable in release builds to enable local profiling.
    */
   fun enableAll() {
-    platformTracingEnabled = true
-    Tracing.setTracingBackendType(TracingBackendType.PLATFORM)
+    impl.enableAll()
   }
 
   /**
@@ -27,7 +28,7 @@ object MapboxTracing {
    * @throws [RuntimeException] if build is not debuggable.
    */
   fun enablePlatform() {
-    platformTracingEnabled = true
+    impl.enablePlatform()
   }
 
   /**
@@ -36,7 +37,7 @@ object MapboxTracing {
    * @throws [RuntimeException] if build is not debuggable.
    */
   fun enableCore() {
-    Tracing.setTracingBackendType(TracingBackendType.PLATFORM)
+    impl.enableCore()
   }
 
   /**
@@ -45,7 +46,6 @@ object MapboxTracing {
    * @throws [RuntimeException] if build is not debuggable.
    */
   fun disableAll() {
-    platformTracingEnabled = false
-    Tracing.setTracingBackendType(TracingBackendType.NOOP)
+    impl.disableAll()
   }
 }

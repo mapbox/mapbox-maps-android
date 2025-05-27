@@ -14,10 +14,10 @@ import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxTracing
+import com.mapbox.common.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.maps.ContextMode
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxTracing
-import com.mapbox.maps.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
