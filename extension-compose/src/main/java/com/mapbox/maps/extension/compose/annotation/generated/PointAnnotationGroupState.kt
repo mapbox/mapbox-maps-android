@@ -99,6 +99,8 @@ public class PointAnnotationGroupState private constructor(
   initialTextOpacity: Double?,
   initialTextTranslate: List<Double>?,
   initialTextTranslateAnchor: TextTranslateAnchor?,
+  initialMaxZoom: Double?,
+  initialMinZoom: Double?,
   initialIconColorUseTheme: String?,
   initialIconHaloColorUseTheme: String?,
   initialTextColorUseTheme: String?,
@@ -172,6 +174,8 @@ public class PointAnnotationGroupState private constructor(
     initialTextOpacity = null,
     initialTextTranslate = null,
     initialTextTranslateAnchor = null,
+    initialMaxZoom = null,
+    initialMinZoom = null,
     initialIconColorUseTheme = null,
     initialIconHaloColorUseTheme = null,
     initialTextColorUseTheme = null,
@@ -451,6 +455,14 @@ public class PointAnnotationGroupState private constructor(
    * Controls the frame of reference for `text-translate`. Default value: "map".
    */
   public var textTranslateAnchor: TextTranslateAnchor? by mutableStateOf(initialTextTranslateAnchor)
+  /**
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var maxZoom: Double? by mutableStateOf(initialMaxZoom)
+  /**
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var minZoom: Double? by mutableStateOf(initialMinZoom)
   /**
    * This property defines whether the `iconColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
    */
@@ -748,6 +760,14 @@ public class PointAnnotationGroupState private constructor(
     annotationManager.textTranslateAnchor = textTranslateAnchor
   }
   @Composable
+  private fun UpdateMaxZoom(annotationManager: PointAnnotationManager) {
+    annotationManager.maxZoom = maxZoom
+  }
+  @Composable
+  private fun UpdateMinZoom(annotationManager: PointAnnotationManager) {
+    annotationManager.minZoom = minZoom
+  }
+  @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateIconColorUseTheme(annotationManager: PointAnnotationManager) {
     annotationManager.iconColorUseTheme = iconColorUseTheme
@@ -836,6 +856,8 @@ public class PointAnnotationGroupState private constructor(
     UpdateTextOpacity(annotationManager)
     UpdateTextTranslate(annotationManager)
     UpdateTextTranslateAnchor(annotationManager)
+    UpdateMaxZoom(annotationManager)
+    UpdateMinZoom(annotationManager)
     UpdateIconColorUseTheme(annotationManager)
     UpdateIconHaloColorUseTheme(annotationManager)
     UpdateTextColorUseTheme(annotationManager)

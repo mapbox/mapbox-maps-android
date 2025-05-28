@@ -50,6 +50,8 @@ public class PolylineAnnotationGroupState private constructor(
   initialLineTrimFadeRange: List<Double>?,
   initialLineTrimOffset: List<Double>?,
   initialLineWidth: Double?,
+  initialMaxZoom: Double?,
+  initialMinZoom: Double?,
   initialLineBorderColorUseTheme: String?,
   initialLineColorUseTheme: String?,
   initialLineGradientUseTheme: String?,
@@ -84,6 +86,8 @@ public class PolylineAnnotationGroupState private constructor(
     initialLineTrimFadeRange = null,
     initialLineTrimOffset = null,
     initialLineWidth = null,
+    initialMaxZoom = null,
+    initialMinZoom = null,
     initialLineBorderColorUseTheme = null,
     initialLineColorUseTheme = null,
     initialLineGradientUseTheme = null,
@@ -209,6 +213,14 @@ public class PolylineAnnotationGroupState private constructor(
    * Stroke thickness. Default value: 1. Minimum value: 0. The unit of lineWidth is in pixels.
    */
   public var lineWidth: Double? by mutableStateOf(initialLineWidth)
+  /**
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var maxZoom: Double? by mutableStateOf(initialMaxZoom)
+  /**
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var minZoom: Double? by mutableStateOf(initialMinZoom)
   /**
    * This property defines whether the `lineBorderColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
    */
@@ -345,6 +357,14 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineWidth = lineWidth
   }
   @Composable
+  private fun UpdateMaxZoom(annotationManager: PolylineAnnotationManager) {
+    annotationManager.maxZoom = maxZoom
+  }
+  @Composable
+  private fun UpdateMinZoom(annotationManager: PolylineAnnotationManager) {
+    annotationManager.minZoom = minZoom
+  }
+  @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateLineBorderColorUseTheme(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineBorderColorUseTheme = lineBorderColorUseTheme
@@ -394,6 +414,8 @@ public class PolylineAnnotationGroupState private constructor(
     UpdateLineTrimFadeRange(annotationManager)
     UpdateLineTrimOffset(annotationManager)
     UpdateLineWidth(annotationManager)
+    UpdateMaxZoom(annotationManager)
+    UpdateMinZoom(annotationManager)
     UpdateLineBorderColorUseTheme(annotationManager)
     UpdateLineColorUseTheme(annotationManager)
     UpdateLineGradientUseTheme(annotationManager)

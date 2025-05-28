@@ -34,6 +34,8 @@ public class PolygonAnnotationGroupState private constructor(
   initialFillTranslateAnchor: FillTranslateAnchor?,
   initialFillTunnelStructureColor: Color?,
   initialFillZOffset: Double?,
+  initialMaxZoom: Double?,
+  initialMinZoom: Double?,
   initialFillBridgeGuardRailColorUseTheme: String?,
   initialFillColorUseTheme: String?,
   initialFillOutlineColorUseTheme: String?,
@@ -55,6 +57,8 @@ public class PolygonAnnotationGroupState private constructor(
     initialFillTranslateAnchor = null,
     initialFillTunnelStructureColor = null,
     initialFillZOffset = null,
+    initialMaxZoom = null,
+    initialMinZoom = null,
     initialFillBridgeGuardRailColorUseTheme = null,
     initialFillColorUseTheme = null,
     initialFillOutlineColorUseTheme = null,
@@ -127,6 +131,14 @@ public class PolygonAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var fillZOffset: Double? by mutableStateOf(initialFillZOffset)
+  /**
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var maxZoom: Double? by mutableStateOf(initialMaxZoom)
+  /**
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var minZoom: Double? by mutableStateOf(initialMinZoom)
   /**
    * This property defines whether the `fillBridgeGuardRailColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
    */
@@ -210,6 +222,14 @@ public class PolygonAnnotationGroupState private constructor(
     annotationManager.fillZOffset = fillZOffset
   }
   @Composable
+  private fun UpdateMaxZoom(annotationManager: PolygonAnnotationManager) {
+    annotationManager.maxZoom = maxZoom
+  }
+  @Composable
+  private fun UpdateMinZoom(annotationManager: PolygonAnnotationManager) {
+    annotationManager.minZoom = minZoom
+  }
+  @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateFillBridgeGuardRailColorUseTheme(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillBridgeGuardRailColorUseTheme = fillBridgeGuardRailColorUseTheme
@@ -246,6 +266,8 @@ public class PolygonAnnotationGroupState private constructor(
     UpdateFillTranslateAnchor(annotationManager)
     UpdateFillTunnelStructureColor(annotationManager)
     UpdateFillZOffset(annotationManager)
+    UpdateMaxZoom(annotationManager)
+    UpdateMinZoom(annotationManager)
     UpdateFillBridgeGuardRailColorUseTheme(annotationManager)
     UpdateFillColorUseTheme(annotationManager)
     UpdateFillOutlineColorUseTheme(annotationManager)
