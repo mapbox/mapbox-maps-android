@@ -863,6 +863,30 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testMaxZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.maxZoom = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.maxZoom)
+      pointAnnotationManager.maxZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "maxzoom").silentUnwrap(), pointAnnotationManager.maxZoom)
+    }
+  }
+
+  @Test
+  fun testMinZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.minZoom = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.minZoom)
+      pointAnnotationManager.minZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "minzoom").silentUnwrap(), pointAnnotationManager.minZoom)
+    }
+  }
+
+  @Test
   fun testIconColorUseTheme() {
     rule.runOnUiThread {
       val expectedValue = "default"

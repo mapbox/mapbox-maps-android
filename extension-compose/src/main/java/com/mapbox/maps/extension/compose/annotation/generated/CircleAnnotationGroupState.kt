@@ -36,6 +36,8 @@ public class CircleAnnotationGroupState private constructor(
   initialCircleStrokeWidth: Double?,
   initialCircleTranslate: List<Double>?,
   initialCircleTranslateAnchor: CircleTranslateAnchor?,
+  initialMaxZoom: Double?,
+  initialMinZoom: Double?,
   initialCircleColorUseTheme: String?,
   initialCircleStrokeColorUseTheme: String?,
   initialCircleAnnotationGroupInteractionsState: CircleAnnotationGroupInteractionsState,
@@ -55,6 +57,8 @@ public class CircleAnnotationGroupState private constructor(
     initialCircleStrokeWidth = null,
     initialCircleTranslate = null,
     initialCircleTranslateAnchor = null,
+    initialMaxZoom = null,
+    initialMinZoom = null,
     initialCircleColorUseTheme = null,
     initialCircleStrokeColorUseTheme = null,
     initialCircleAnnotationGroupInteractionsState = CircleAnnotationGroupInteractionsState(),
@@ -121,6 +125,14 @@ public class CircleAnnotationGroupState private constructor(
    * Controls the frame of reference for `circle-translate`. Default value: "map".
    */
   public var circleTranslateAnchor: CircleTranslateAnchor? by mutableStateOf(initialCircleTranslateAnchor)
+  /**
+   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var maxZoom: Double? by mutableStateOf(initialMaxZoom)
+  /**
+   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. Value range: [0, 24]
+   */
+  public var minZoom: Double? by mutableStateOf(initialMinZoom)
   /**
    * This property defines whether the `circleColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
    */
@@ -190,6 +202,14 @@ public class CircleAnnotationGroupState private constructor(
     annotationManager.circleTranslateAnchor = circleTranslateAnchor
   }
   @Composable
+  private fun UpdateMaxZoom(annotationManager: CircleAnnotationManager) {
+    annotationManager.maxZoom = maxZoom
+  }
+  @Composable
+  private fun UpdateMinZoom(annotationManager: CircleAnnotationManager) {
+    annotationManager.minZoom = minZoom
+  }
+  @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateCircleColorUseTheme(annotationManager: CircleAnnotationManager) {
     annotationManager.circleColorUseTheme = circleColorUseTheme
@@ -216,6 +236,8 @@ public class CircleAnnotationGroupState private constructor(
     UpdateCircleStrokeWidth(annotationManager)
     UpdateCircleTranslate(annotationManager)
     UpdateCircleTranslateAnchor(annotationManager)
+    UpdateMaxZoom(annotationManager)
+    UpdateMinZoom(annotationManager)
     UpdateCircleColorUseTheme(annotationManager)
     UpdateCircleStrokeColorUseTheme(annotationManager)
   }

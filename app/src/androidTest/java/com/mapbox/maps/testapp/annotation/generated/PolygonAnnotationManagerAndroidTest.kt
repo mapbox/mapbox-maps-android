@@ -233,6 +233,30 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testMaxZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.maxZoom = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.maxZoom)
+      polygonAnnotationManager.maxZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "maxzoom").silentUnwrap(), polygonAnnotationManager.maxZoom)
+    }
+  }
+
+  @Test
+  fun testMinZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.minZoom = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.minZoom)
+      polygonAnnotationManager.minZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "minzoom").silentUnwrap(), polygonAnnotationManager.minZoom)
+    }
+  }
+
+  @Test
   fun testFillBridgeGuardRailColorUseTheme() {
     rule.runOnUiThread {
       val expectedValue = "default"

@@ -228,6 +228,30 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testMaxZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.maxZoom = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.maxZoom)
+      circleAnnotationManager.maxZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("circle", "maxzoom").silentUnwrap(), circleAnnotationManager.maxZoom)
+    }
+  }
+
+  @Test
+  fun testMinZoom() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
+      circleAnnotationManager.minZoom = expectedValue
+      assertEquals(expectedValue, circleAnnotationManager.minZoom)
+      circleAnnotationManager.minZoom = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("circle", "minzoom").silentUnwrap(), circleAnnotationManager.minZoom)
+    }
+  }
+
+  @Test
   fun testCircleColorUseTheme() {
     rule.runOnUiThread {
       val expectedValue = "default"

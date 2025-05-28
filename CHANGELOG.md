@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.13.0-rc.1
 ## Features ✨ and improvements 🏁
+* Introduce `minZoom` and `maxZoom` properties for `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager`.
+* [compose] Introduce `minZoom` and `maxZoom` properties for `CircleAnnotationGroupState`, `PointAnnotationGroupState`, `PolygonAnnotationGroupState`, `PolylineAnnotationGroupState`.
 * [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
 
 

@@ -155,6 +155,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> getClusterClickListeners();
     method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> getClusterLongClickListeners();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public String? getSlot();
     method public void setCircleBlur(Double?);
     method public void setCircleColorInt(@ColorInt Integer?);
@@ -176,6 +178,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setCircleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor?);
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     method public void setSlot(String?);
     property public final Double? circleBlur;
     property @ColorInt public final Integer? circleColorInt;
@@ -198,6 +202,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterClickListener> clusterClickListeners;
     property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> clusterLongClickListeners;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager.Companion Companion;
   }
@@ -517,6 +523,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<java.lang.Double>? getIconTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public String? getSlot();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
@@ -595,6 +603,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     method public void setSlot(String?);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
@@ -674,6 +684,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final java.util.List<java.lang.Double>? iconTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
     property public final String? slot;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
@@ -1044,6 +1056,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getFillTunnelStructureColorUseTheme();
     method public Double? getFillZOffset();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public String? getSlot();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setFillAntialias(Boolean?);
@@ -1069,6 +1083,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillTunnelStructureColorUseTheme(String?);
     method public void setFillZOffset(Double?);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     method public void setSlot(String?);
     property public final Boolean? fillAntialias;
     property @ColorInt public final Integer? fillBridgeGuardRailColorInt;
@@ -1093,6 +1109,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? fillTunnelStructureColorUseTheme;
     property public final Double? fillZOffset;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager.Companion Companion;
   }
@@ -1298,6 +1316,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? getLineWidthUnit();
     method public Double? getLineZOffset();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public String? getSlot();
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
@@ -1336,6 +1356,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineWidth(Double?);
     method public void setLineWidthUnit(com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit?);
     method public void setLineZOffset(Double?);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     method public void setSlot(String?);
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public final Double? lineBlur;
@@ -1373,6 +1395,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? lineWidthUnit;
     property public final Double? lineZOffset;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
     property public final String? slot;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;
   }

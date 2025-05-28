@@ -243,6 +243,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun getCircleTranslate ()Ljava/util/List;
 	public final fun getCircleTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun setCircleBlur (Ljava/lang/Double;)V
 	public final fun setCircleColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setCircleColorUseTheme (Ljava/lang/String;)V
@@ -260,6 +262,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Circle
 	public final fun setCircleTranslate (Ljava/util/List;)V
 	public final fun setCircleTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/CircleTranslateAnchor;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationGroupInteractionsState;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/CircleAnnotationInteractionsState {
@@ -368,6 +372,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun getIconTranslate ()Ljava/util/List;
 	public final fun getIconTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
 	public final fun getSymbolPlacement ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;
@@ -439,6 +445,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/PointA
 	public final fun setIconTranslate (Ljava/util/List;)V
 	public final fun setIconTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PointAnnotationGroupInteractionsState;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
 	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)V
 	public final fun setSymbolPlacement (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;)V
@@ -637,6 +645,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillTunnelStructureColorUseTheme ()Ljava/lang/String;
 	public final fun getFillZOffset ()Ljava/lang/Double;
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun setFillAntialias (Ljava/lang/Boolean;)V
 	public final fun setFillBridgeGuardRailColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillBridgeGuardRailColorUseTheme (Ljava/lang/String;)V
@@ -656,6 +666,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun setFillTunnelStructureColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillZOffset (Ljava/lang/Double;)V
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationGroupInteractionsState;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolygonAnnotationInteractionsState {
@@ -773,6 +785,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineWidth ()Ljava/lang/Double;
 	public final fun getLineWidthUnit ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;
 	public final fun getLineZOffset ()Ljava/lang/Double;
+	public final fun getMaxZoom ()Ljava/lang/Double;
+	public final fun getMinZoom ()Ljava/lang/Double;
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationGroupInteractionsState;)V
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
@@ -805,6 +819,8 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineWidth (Ljava/lang/Double;)V
 	public final fun setLineWidthUnit (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineWidthUnit;)V
 	public final fun setLineZOffset (Ljava/lang/Double;)V
+	public final fun setMaxZoom (Ljava/lang/Double;)V
+	public final fun setMinZoom (Ljava/lang/Double;)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/generated/PolylineAnnotationInteractionsState {

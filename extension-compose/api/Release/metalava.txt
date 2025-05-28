@@ -228,6 +228,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public java.util.List<java.lang.Double>? getCircleTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? getCircleTranslateAnchor();
     method public com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState getInteractionsState();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public void setCircleBlur(Double?);
     method public void setCircleColor(androidx.compose.ui.graphics.Color?);
     method public void setCircleColorUseTheme(String?);
@@ -245,6 +247,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setCircleTranslate(java.util.List<java.lang.Double>?);
     method public void setCircleTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor?);
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     property public final Double? circleBlur;
     property public final androidx.compose.ui.graphics.Color? circleColor;
     property public final String? circleColorUseTheme;
@@ -262,6 +266,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final java.util.List<java.lang.Double>? circleTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor? circleTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationGroupInteractionsState interactionsState;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
   }
 
   @androidx.compose.runtime.Stable public final class CircleAnnotationInteractionsState {
@@ -390,6 +396,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public java.util.List<java.lang.Double>? getIconTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? getIconTranslateAnchor();
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState getInteractionsState();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
@@ -461,6 +469,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconTranslate(java.util.List<java.lang.Double>?);
     method public void setIconTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor?);
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
@@ -532,6 +542,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final java.util.List<java.lang.Double>? iconTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor? iconTranslateAnchor;
     property public final com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState interactionsState;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
@@ -779,6 +791,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public String? getFillTunnelStructureColorUseTheme();
     method public Double? getFillZOffset();
     method public com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState getInteractionsState();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public void setFillAntialias(Boolean?);
     method public void setFillBridgeGuardRailColor(androidx.compose.ui.graphics.Color?);
     method public void setFillBridgeGuardRailColorUseTheme(String?);
@@ -798,6 +812,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setFillTunnelStructureColorUseTheme(String?);
     method public void setFillZOffset(Double?);
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     property public final Boolean? fillAntialias;
     property public final androidx.compose.ui.graphics.Color? fillBridgeGuardRailColor;
     property public final String? fillBridgeGuardRailColorUseTheme;
@@ -817,6 +833,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final String? fillTunnelStructureColorUseTheme;
     property public final Double? fillZOffset;
     property public final com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotationGroupInteractionsState interactionsState;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
   }
 
   @androidx.compose.runtime.Stable public final class PolygonAnnotationInteractionsState {
@@ -957,6 +975,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? getLineWidthUnit();
     method public Double? getLineZOffset();
+    method public Double? getMaxZoom();
+    method public Double? getMinZoom();
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState);
     method public void setLineBlur(Double?);
     method public void setLineBorderColor(androidx.compose.ui.graphics.Color?);
@@ -989,6 +1009,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineWidth(Double?);
     method public void setLineWidthUnit(com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit?);
     method public void setLineZOffset(Double?);
+    method public void setMaxZoom(Double?);
+    method public void setMinZoom(Double?);
     property public final com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotationGroupInteractionsState interactionsState;
     property public final Double? lineBlur;
     property public final androidx.compose.ui.graphics.Color? lineBorderColor;
@@ -1021,6 +1043,8 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit? lineWidthUnit;
     property public final Double? lineZOffset;
+    property public final Double? maxZoom;
+    property public final Double? minZoom;
   }
 
   @androidx.compose.runtime.Stable public final class PolylineAnnotationInteractionsState {
