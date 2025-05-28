@@ -1977,7 +1977,7 @@ class PointAnnotationManager(
   /**
    * The IconImageCrossFade property
    *
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    */
   var iconImageCrossFade: Double?
     /**

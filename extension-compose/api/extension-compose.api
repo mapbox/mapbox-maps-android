@@ -638,6 +638,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun getFillOutlineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getFillOutlineColorUseTheme ()Ljava/lang/String;
 	public final fun getFillPattern ()Ljava/lang/String;
+	public final fun getFillPatternCrossFade ()Ljava/lang/Double;
 	public final fun getFillSortKey ()Ljava/lang/Double;
 	public final fun getFillTranslate ()Ljava/util/List;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;
@@ -659,6 +660,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polygo
 	public final fun setFillOutlineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setFillOutlineColorUseTheme (Ljava/lang/String;)V
 	public final fun setFillPattern (Ljava/lang/String;)V
+	public final fun setFillPatternCrossFade (Ljava/lang/Double;)V
 	public final fun setFillSortKey (Ljava/lang/Double;)V
 	public final fun setFillTranslate (Ljava/util/List;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillTranslateAnchor;)V
@@ -774,6 +776,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineOffset ()Ljava/lang/Double;
 	public final fun getLineOpacity ()Ljava/lang/Double;
 	public final fun getLinePattern ()Ljava/lang/String;
+	public final fun getLinePatternCrossFade ()Ljava/lang/Double;
 	public final fun getLineRoundLimit ()Ljava/lang/Double;
 	public final fun getLineSortKey ()Ljava/lang/Double;
 	public final fun getLineTranslate ()Ljava/util/List;
@@ -808,6 +811,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineOffset (Ljava/lang/Double;)V
 	public final fun setLineOpacity (Ljava/lang/Double;)V
 	public final fun setLinePattern (Ljava/lang/String;)V
+	public final fun setLinePatternCrossFade (Ljava/lang/Double;)V
 	public final fun setLineRoundLimit (Ljava/lang/Double;)V
 	public final fun setLineSortKey (Ljava/lang/Double;)V
 	public final fun setLineTranslate (Ljava/util/List;)V
@@ -1905,6 +1909,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillExtrusionOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillExtrusionPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getFillExtrusionPatternCrossFade ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillExtrusionRoundedRoof ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getFillExtrusionTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getFillExtrusionTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;
@@ -1957,6 +1962,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillExtrusionOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillExtrusionPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setFillExtrusionPatternCrossFade (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillExtrusionRoundedRoof (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setFillExtrusionTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setFillExtrusionTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillExtrusionTranslateAnchorValue;)V
@@ -2016,6 +2022,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun getFillOutlineColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getFillOutlineColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getFillPattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getFillPatternCrossFade ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFillTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getFillTranslateAnchor ()Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;
@@ -2048,6 +2055,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Fill
 	public final fun setFillOutlineColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setFillOutlineColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setFillPattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setFillPatternCrossFade (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFillTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setFillTranslateAnchor (Lcom/mapbox/maps/extension/compose/style/layers/generated/FillTranslateAnchorValue;)V
@@ -2411,6 +2419,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun getLineOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLinePattern ()Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;
+	public final fun getLinePatternCrossFade ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineRoundLimit ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineSortKey ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineTranslate ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
@@ -2462,6 +2471,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun setLineOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLinePattern (Lcom/mapbox/maps/extension/compose/style/layers/ImageValue;)V
+	public final fun setLinePatternCrossFade (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineRoundLimit (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineSortKey (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineTranslate (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V

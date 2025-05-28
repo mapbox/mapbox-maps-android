@@ -169,6 +169,18 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testFillPatternCrossFade() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
+      polygonAnnotationManager.fillPatternCrossFade = expectedValue
+      assertEquals(expectedValue, polygonAnnotationManager.fillPatternCrossFade)
+      polygonAnnotationManager.fillPatternCrossFade = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade").silentUnwrap(), polygonAnnotationManager.fillPatternCrossFade)
+    }
+  }
+
+  @Test
   fun testFillTranslate() {
     rule.runOnUiThread {
       val expectedValue = listOf(0.0, 1.0)

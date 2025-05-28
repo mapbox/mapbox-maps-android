@@ -2464,6 +2464,73 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionPatternCrossFadeSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillExtrusionPatternCrossFade(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-pattern-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillExtrusionPatternCrossFadeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillExtrusionPatternCrossFade?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-pattern-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionPatternCrossFadeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionPatternCrossFade(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-pattern-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionPatternCrossFadeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionPatternCrossFadeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-pattern-cross-fade") }
+  }
+
+  @Test
+  fun fillExtrusionPatternCrossFadeAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionPatternCrossFadeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-pattern-cross-fade") }
+  }
+
+  @Test
+  fun fillExtrusionPatternCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillExtrusionPatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionPatternCrossFade!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-pattern-cross-fade") }
+  }
+
+  @Test
   fun fillExtrusionRoundedRoofSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = true
@@ -3891,6 +3958,37 @@ class FillExtrusionLayerTest {
     assertEquals("abc", FillExtrusionLayer.defaultFillExtrusionPatternAsExpression.toString())
     assertEquals("abc", FillExtrusionLayer.defaultFillExtrusionPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern") }
+  }
+
+  @Test
+  fun defaultFillExtrusionPatternCrossFadeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionPatternCrossFade?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionPatternCrossFadeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionPatternCrossFadeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern-cross-fade") }
+  }
+
+  @Test
+  fun defaultFillExtrusionPatternCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionPatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillExtrusionLayer.defaultFillExtrusionPatternCrossFade!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern-cross-fade") }
   }
 
   @Test

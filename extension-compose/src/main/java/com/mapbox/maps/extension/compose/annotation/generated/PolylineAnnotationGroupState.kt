@@ -44,6 +44,7 @@ public class PolylineAnnotationGroupState private constructor(
   initialLineOffset: Double?,
   initialLineOpacity: Double?,
   initialLinePattern: String?,
+  initialLinePatternCrossFade: Double?,
   initialLineTranslate: List<Double>?,
   initialLineTranslateAnchor: LineTranslateAnchor?,
   initialLineTrimColor: Color?,
@@ -80,6 +81,7 @@ public class PolylineAnnotationGroupState private constructor(
     initialLineOffset = null,
     initialLineOpacity = null,
     initialLinePattern = null,
+    initialLinePatternCrossFade = null,
     initialLineTranslate = null,
     initialLineTranslateAnchor = null,
     initialLineTrimColor = null,
@@ -187,6 +189,10 @@ public class PolylineAnnotationGroupState private constructor(
    * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   public var linePattern: String? by mutableStateOf(initialLinePattern)
+  /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  public var linePatternCrossFade: Double? by mutableStateOf(initialLinePatternCrossFade)
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    */
@@ -331,6 +337,10 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.linePattern = linePattern
   }
   @Composable
+  private fun UpdateLinePatternCrossFade(annotationManager: PolylineAnnotationManager) {
+    annotationManager.linePatternCrossFade = linePatternCrossFade
+  }
+  @Composable
   private fun UpdateLineTranslate(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineTranslate = lineTranslate
   }
@@ -408,6 +418,7 @@ public class PolylineAnnotationGroupState private constructor(
     UpdateLineOffset(annotationManager)
     UpdateLineOpacity(annotationManager)
     UpdateLinePattern(annotationManager)
+    UpdateLinePatternCrossFade(annotationManager)
     UpdateLineTranslate(annotationManager)
     UpdateLineTranslateAnchor(annotationManager)
     UpdateLineTrimColor(annotationManager)

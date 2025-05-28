@@ -2343,6 +2343,73 @@ class LineLayerTest {
   }
 
   @Test
+  fun linePatternCrossFadeSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.linePatternCrossFade(testValue)
+    verify { style.setStyleLayerProperty("id", "line-pattern-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun linePatternCrossFadeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.linePatternCrossFade?.toString())
+    verify { style.getStyleLayerProperty("id", "line-pattern-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun linePatternCrossFadeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.linePatternCrossFade(expression)
+    verify { style.setStyleLayerProperty("id", "line-pattern-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun linePatternCrossFadeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.linePatternCrossFadeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-pattern-cross-fade") }
+  }
+
+  @Test
+  fun linePatternCrossFadeAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.linePatternCrossFadeAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-pattern-cross-fade") }
+  }
+
+  @Test
+  fun linePatternCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.linePatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.linePatternCrossFade!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-pattern-cross-fade") }
+  }
+
+  @Test
   fun lineTranslateSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0)
@@ -3939,6 +4006,37 @@ class LineLayerTest {
     assertEquals("abc", LineLayer.defaultLinePatternAsExpression.toString())
     assertEquals("abc", LineLayer.defaultLinePattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern") }
+  }
+
+  @Test
+  fun defaultLinePatternCrossFadeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLinePatternCrossFade?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLinePatternCrossFadeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLinePatternCrossFadeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-cross-fade") }
+  }
+
+  @Test
+  fun defaultLinePatternCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLinePatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLinePatternCrossFade!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-cross-fade") }
   }
 
   @Test

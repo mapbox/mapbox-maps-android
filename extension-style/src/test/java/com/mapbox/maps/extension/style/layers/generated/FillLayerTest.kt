@@ -1416,6 +1416,73 @@ class FillLayerTest {
   }
 
   @Test
+  fun fillPatternCrossFadeSet() {
+    val layer = fillLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.fillPatternCrossFade(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-pattern-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun fillPatternCrossFadeGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.fillPatternCrossFade?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-pattern-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillPatternCrossFadeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillPatternCrossFade(expression)
+    verify { style.setStyleLayerProperty("id", "fill-pattern-cross-fade", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillPatternCrossFadeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillPatternCrossFadeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-pattern-cross-fade") }
+  }
+
+  @Test
+  fun fillPatternCrossFadeAsExpressionGetNull() {
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillPatternCrossFadeAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-pattern-cross-fade") }
+  }
+
+  @Test
+  fun fillPatternCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = fillLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.fillPatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillPatternCrossFade!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "fill-pattern-cross-fade") }
+  }
+
+  @Test
   fun fillTranslateSet() {
     val layer = fillLayer("id", "source") {}
     val testValue = listOf(0.0, 1.0)
@@ -2498,6 +2565,37 @@ class FillLayerTest {
     assertEquals("abc", FillLayer.defaultFillPatternAsExpression.toString())
     assertEquals("abc", FillLayer.defaultFillPattern)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern") }
+  }
+
+  @Test
+  fun defaultFillPatternCrossFadeTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), FillLayer.defaultFillPatternCrossFade?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillPatternCrossFadeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillLayer.defaultFillPatternCrossFadeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade") }
+  }
+
+  @Test
+  fun defaultFillPatternCrossFadeAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, FillLayer.defaultFillPatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, FillLayer.defaultFillPatternCrossFade!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade") }
   }
 
   @Test

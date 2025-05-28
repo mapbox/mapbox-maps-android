@@ -372,6 +372,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(String value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression within(com.mapbox.geojson.Geometry geometry);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression worldview(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression zoom();
   }
 
@@ -538,6 +539,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(String value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression within(com.mapbox.geojson.Geometry geometry);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.expressions.generated.Expression worldview(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression zoom();
     property public final Object? literalValue;
     field public static final com.mapbox.maps.extension.style.expressions.generated.Expression.Companion Companion;
@@ -795,6 +797,8 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(String value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression within(com.mapbox.geojson.Geometry geometry);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.expressions.generated.Expression worldview(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression worldview(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression zoom();
   }
 
@@ -945,6 +949,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder varExpression(String value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder within(com.mapbox.geojson.Geometry geometry);
+    method @com.mapbox.maps.MapboxExperimental public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder worldview(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder zoom();
   }
 
@@ -1832,6 +1837,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(String fillExtrusionPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionPattern);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternCrossFade(double fillExtrusionPatternCrossFade);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionPatternCrossFade);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionRoundedRoof(boolean fillExtrusionRoundedRoof);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionRoundedRoof(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionRoundedRoof);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(java.util.List<java.lang.Double> fillExtrusionTranslate);
@@ -1911,6 +1918,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getFillExtrusionOpacityTransition();
     method public String? getFillExtrusionPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionPatternAsExpression();
+    method public Double? getFillExtrusionPatternCrossFade();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionPatternCrossFadeAsExpression();
     method public Boolean? getFillExtrusionRoundedRoof();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillExtrusionRoundedRoofAsExpression();
     method public java.util.List<java.lang.Double>? getFillExtrusionTranslate();
@@ -2002,6 +2011,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? fillExtrusionOpacityTransition;
     property public final String? fillExtrusionPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionPatternAsExpression;
+    property public final Double? fillExtrusionPatternCrossFade;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionPatternCrossFadeAsExpression;
     property public final Boolean? fillExtrusionRoundedRoof;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillExtrusionRoundedRoofAsExpression;
     property public final java.util.List<java.lang.Double>? fillExtrusionTranslate;
@@ -2091,6 +2102,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultFillExtrusionOpacityTransition();
     method public String? getDefaultFillExtrusionPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionPatternAsExpression();
+    method public Double? getDefaultFillExtrusionPatternCrossFade();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionPatternCrossFadeAsExpression();
     method public Boolean? getDefaultFillExtrusionRoundedRoof();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillExtrusionRoundedRoofAsExpression();
     method public java.util.List<java.lang.Double>? getDefaultFillExtrusionTranslate();
@@ -2170,6 +2183,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultFillExtrusionOpacityTransition;
     property public final String? defaultFillExtrusionPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionPatternAsExpression;
+    property public final Double? defaultFillExtrusionPatternCrossFade;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionPatternCrossFadeAsExpression;
     property public final Boolean? defaultFillExtrusionRoundedRoof;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillExtrusionRoundedRoofAsExpression;
     property public final java.util.List<java.lang.Double>? defaultFillExtrusionTranslate;
@@ -2268,6 +2283,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(String fillExtrusionPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionPattern);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternCrossFade(double fillExtrusionPatternCrossFade = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionPatternCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionPatternCrossFade);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionRoundedRoof(boolean fillExtrusionRoundedRoof = true);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionRoundedRoof(com.mapbox.maps.extension.style.expressions.generated.Expression fillExtrusionRoundedRoof);
     method public com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer fillExtrusionTranslate(java.util.List<java.lang.Double> fillExtrusionTranslate = listOf(0.0, 0.0));
@@ -2334,6 +2351,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOutlineColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillOutlineColorUseTheme);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(String fillPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillPattern);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternCrossFade(double fillPatternCrossFade);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression fillPatternCrossFade);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(double fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(com.mapbox.maps.extension.style.expressions.generated.Expression fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslate(java.util.List<java.lang.Double> fillTranslate);
@@ -2386,6 +2405,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillOutlineColorUseThemeAsExpression();
     method public String? getFillPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillPatternAsExpression();
+    method public Double? getFillPatternCrossFade();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillPatternCrossFadeAsExpression();
     method public Double? getFillSortKey();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFillSortKeyAsExpression();
     method public java.util.List<java.lang.Double>? getFillTranslate();
@@ -2449,6 +2470,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillOutlineColorUseThemeAsExpression;
     property public final String? fillPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillPatternAsExpression;
+    property public final Double? fillPatternCrossFade;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillPatternCrossFadeAsExpression;
     property public final Double? fillSortKey;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fillSortKeyAsExpression;
     property public final java.util.List<java.lang.Double>? fillTranslate;
@@ -2510,6 +2533,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillOutlineColorUseThemeAsExpression();
     method public String? getDefaultFillPattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillPatternAsExpression();
+    method public Double? getDefaultFillPatternCrossFade();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillPatternCrossFadeAsExpression();
     method public Double? getDefaultFillSortKey();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultFillSortKeyAsExpression();
     method public java.util.List<java.lang.Double>? getDefaultFillTranslate();
@@ -2561,6 +2586,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillOutlineColorUseThemeAsExpression;
     property public final String? defaultFillPattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillPatternAsExpression;
+    property public final Double? defaultFillPatternCrossFade;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillPatternCrossFadeAsExpression;
     property public final Double? defaultFillSortKey;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultFillSortKeyAsExpression;
     property public final java.util.List<java.lang.Double>? defaultFillTranslate;
@@ -2620,6 +2647,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.FillLayer fillOutlineColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression fillOutlineColorUseTheme);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(String fillPattern);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPattern(com.mapbox.maps.extension.style.expressions.generated.Expression fillPattern);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternCrossFade(double fillPatternCrossFade = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillPatternCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression fillPatternCrossFade);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(double fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillSortKey(com.mapbox.maps.extension.style.expressions.generated.Expression fillSortKey);
     method public com.mapbox.maps.extension.style.layers.generated.FillLayer fillTranslate(java.util.List<java.lang.Double> fillTranslate = listOf(0.0, 0.0));
@@ -3080,6 +3109,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineOpacityTransition();
     method public String? getLinePattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLinePatternAsExpression();
+    method public Double? getLinePatternCrossFade();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLinePatternCrossFadeAsExpression();
     method public Double? getLineRoundLimit();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineRoundLimitAsExpression();
     method public Double? getLineSortKey();
@@ -3176,6 +3207,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePattern(String linePattern);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePattern(com.mapbox.maps.extension.style.expressions.generated.Expression linePattern);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternCrossFade(double linePatternCrossFade);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression linePatternCrossFade);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(double lineRoundLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(com.mapbox.maps.extension.style.expressions.generated.Expression lineRoundLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineSortKey(double lineSortKey);
@@ -3266,6 +3299,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineOpacityTransition;
     property public final String? linePattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? linePatternAsExpression;
+    property public final Double? linePatternCrossFade;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? linePatternCrossFadeAsExpression;
     property public final Double? lineRoundLimit;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineRoundLimitAsExpression;
     property public final Double? lineSortKey;
@@ -3355,6 +3390,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineOpacityTransition();
     method public String? getDefaultLinePattern();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLinePatternAsExpression();
+    method public Double? getDefaultLinePatternCrossFade();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLinePatternCrossFadeAsExpression();
     method public Double? getDefaultLineRoundLimit();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineRoundLimitAsExpression();
     method public Double? getDefaultLineSortKey();
@@ -3436,6 +3473,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineOpacityTransition;
     property public final String? defaultLinePattern;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLinePatternAsExpression;
+    property public final Double? defaultLinePatternCrossFade;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLinePatternCrossFadeAsExpression;
     property public final Double? defaultLineRoundLimit;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineRoundLimitAsExpression;
     property public final Double? defaultLineSortKey;
@@ -3532,6 +3571,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePattern(String linePattern);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePattern(com.mapbox.maps.extension.style.expressions.generated.Expression linePattern);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternCrossFade(double linePatternCrossFade = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer linePatternCrossFade(com.mapbox.maps.extension.style.expressions.generated.Expression linePatternCrossFade);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(double lineRoundLimit = 1.05);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineRoundLimit(com.mapbox.maps.extension.style.expressions.generated.Expression lineRoundLimit);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineSortKey(double lineSortKey);

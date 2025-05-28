@@ -51,6 +51,7 @@ private constructor(
   initialFillOutlineColorUseTheme: StringValue,
   initialFillOutlineColorTransition: Transition,
   initialFillPattern: ImageValue,
+  initialFillPatternCrossFade: DoubleValue,
   initialFillTranslate: DoubleListValue,
   initialFillTranslateTransition: Transition,
   initialFillTranslateAnchor: FillTranslateAnchorValue,
@@ -89,6 +90,7 @@ private constructor(
     initialFillOutlineColorUseTheme = StringValue.INITIAL,
     initialFillOutlineColorTransition = Transition.INITIAL,
     initialFillPattern = ImageValue.INITIAL,
+    initialFillPatternCrossFade = DoubleValue.INITIAL,
     initialFillTranslate = DoubleListValue.INITIAL,
     initialFillTranslateTransition = Transition.INITIAL,
     initialFillTranslateAnchor = FillTranslateAnchorValue.INITIAL,
@@ -233,6 +235,12 @@ private constructor(
    */
   public var fillPattern: ImageValue by fillPatternState
 
+  private val fillPatternCrossFadeState: MutableState<DoubleValue> = mutableStateOf(initialFillPatternCrossFade)
+  /**
+   *  Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  public var fillPatternCrossFade: DoubleValue by fillPatternCrossFadeState
+
   private val fillTranslateState: MutableState<DoubleListValue> = mutableStateOf(initialFillTranslate)
   /**
    *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
@@ -342,6 +350,7 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, fillOutlineColorUseThemeState, "fill-outline-color-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillOutlineColorTransitionState, "fill-outline-color-transition")
     AddImageWhenNotInitial(layerNode, fillPatternState, "fill-pattern")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillPatternCrossFadeState, "fill-pattern-cross-fade")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillTranslateState, "fill-translate")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillTranslateTransitionState, "fill-translate-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillTranslateAnchorState, "fill-translate-anchor")

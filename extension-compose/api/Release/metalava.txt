@@ -784,6 +784,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public androidx.compose.ui.graphics.Color? getFillOutlineColor();
     method public String? getFillOutlineColorUseTheme();
     method public String? getFillPattern();
+    method public Double? getFillPatternCrossFade();
     method public Double? getFillSortKey();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
@@ -805,6 +806,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setFillOutlineColor(androidx.compose.ui.graphics.Color?);
     method public void setFillOutlineColorUseTheme(String?);
     method public void setFillPattern(String?);
+    method public void setFillPatternCrossFade(Double?);
     method public void setFillSortKey(Double?);
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
@@ -826,6 +828,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final androidx.compose.ui.graphics.Color? fillOutlineColor;
     property public final String? fillOutlineColorUseTheme;
     property public final String? fillPattern;
+    property public final Double? fillPatternCrossFade;
     property public final Double? fillSortKey;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
@@ -964,6 +967,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineOffset();
     method public Double? getLineOpacity();
     method public String? getLinePattern();
+    method public Double? getLinePatternCrossFade();
     method public Double? getLineRoundLimit();
     method public Double? getLineSortKey();
     method public java.util.List<java.lang.Double>? getLineTranslate();
@@ -998,6 +1002,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineOffset(Double?);
     method public void setLineOpacity(Double?);
     method public void setLinePattern(String?);
+    method public void setLinePatternCrossFade(Double?);
     method public void setLineRoundLimit(Double?);
     method public void setLineSortKey(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
@@ -1032,6 +1037,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineOffset;
     property public final Double? lineOpacity;
     property public final String? linePattern;
+    property public final Double? linePatternCrossFade;
     property public final Double? lineRoundLimit;
     property public final Double? lineSortKey;
     property public final java.util.List<java.lang.Double>? lineTranslate;
@@ -2229,6 +2235,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionOpacityTransition();
     method public com.mapbox.maps.extension.compose.style.layers.ImageValue getFillExtrusionPattern();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionPatternCrossFade();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getFillExtrusionRoundedRoof();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getFillExtrusionTranslate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue getFillExtrusionTranslateAnchor();
@@ -2281,6 +2288,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillExtrusionOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillExtrusionOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillExtrusionPattern(com.mapbox.maps.extension.compose.style.layers.ImageValue);
+    method public void setFillExtrusionPatternCrossFade(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillExtrusionRoundedRoof(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setFillExtrusionTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setFillExtrusionTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue);
@@ -2333,6 +2341,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionOpacity;
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionOpacityTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.ImageValue fillExtrusionPattern;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionPatternCrossFade;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue fillExtrusionRoundedRoof;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue fillExtrusionTranslate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionTranslateAnchorValue fillExtrusionTranslateAnchor;
@@ -2395,6 +2404,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getFillOutlineColorTransition();
     method public com.mapbox.maps.extension.compose.style.StringValue getFillOutlineColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.layers.ImageValue getFillPattern();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getFillPatternCrossFade();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillSortKey();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getFillTranslate();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue getFillTranslateAnchor();
@@ -2427,6 +2437,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillOutlineColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillOutlineColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setFillPattern(com.mapbox.maps.extension.compose.style.layers.ImageValue);
+    method public void setFillPatternCrossFade(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillSortKey(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue);
@@ -2459,6 +2470,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition fillOutlineColorTransition;
     property public final com.mapbox.maps.extension.compose.style.StringValue fillOutlineColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.layers.ImageValue fillPattern;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue fillPatternCrossFade;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillSortKey;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue fillTranslate;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.FillTranslateAnchorValue fillTranslateAnchor;
@@ -2846,6 +2858,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getLineOpacityTransition();
     method public com.mapbox.maps.extension.compose.style.layers.ImageValue getLinePattern();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getLinePatternCrossFade();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineRoundLimit();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineSortKey();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineTranslate();
@@ -2897,6 +2910,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLinePattern(com.mapbox.maps.extension.compose.style.layers.ImageValue);
+    method public void setLinePatternCrossFade(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineRoundLimit(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineSortKey(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineTranslate(com.mapbox.maps.extension.compose.style.DoubleListValue);
@@ -2948,6 +2962,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineOpacity;
     property public final com.mapbox.maps.extension.compose.style.Transition lineOpacityTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.ImageValue linePattern;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue linePatternCrossFade;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineRoundLimit;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineSortKey;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineTranslate;

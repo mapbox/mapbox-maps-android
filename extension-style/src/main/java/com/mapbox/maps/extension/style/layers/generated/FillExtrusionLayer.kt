@@ -2226,6 +2226,62 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  val fillExtrusionPatternCrossFade: Double?
+    /**
+     * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternCrossFade] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-pattern-cross-fade")
+    }
+
+  /**
+   * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternCrossFade] to set the default property.
+   *
+   * @param fillExtrusionPatternCrossFade value of fillExtrusionPatternCrossFade
+   */
+  override fun fillExtrusionPatternCrossFade(fillExtrusionPatternCrossFade: Double): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-pattern-cross-fade", fillExtrusionPatternCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * This is an Expression representation of "fill-extrusion-pattern-cross-fade".
+   *
+   */
+  val fillExtrusionPatternCrossFadeAsExpression: Expression?
+    /**
+     * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * Get the FillExtrusionPatternCrossFade property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternCrossFadeAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-pattern-cross-fade")
+
+  /**
+   * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionPatternCrossFadeAsExpression] to set the default property.
+   *
+   * @param fillExtrusionPatternCrossFade value of fillExtrusionPatternCrossFade as Expression
+   */
+  override fun fillExtrusionPatternCrossFade(fillExtrusionPatternCrossFade: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-pattern-cross-fade", fillExtrusionPatternCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
    */
   @MapboxExperimental
@@ -3737,6 +3793,43 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     */
+    val defaultFillExtrusionPatternCrossFade: Double?
+      /**
+       * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+       *
+       * Get the default value of FillExtrusionPatternCrossFade property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern-cross-fade").silentUnwrap()
+      }
+
+    /**
+     * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * This is an Expression representation of "fill-extrusion-pattern-cross-fade".
+     *
+     */
+    val defaultFillExtrusionPatternCrossFadeAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionPatternCrossFade property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-pattern-cross-fade").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionPatternCrossFade?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.
      */
     @MapboxExperimental
@@ -4666,6 +4759,20 @@ interface FillExtrusionLayerDsl {
    * @param fillExtrusionPattern value of fillExtrusionPattern as Expression
    */
   fun fillExtrusionPattern(fillExtrusionPattern: Expression): FillExtrusionLayer
+
+  /**
+   * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * @param fillExtrusionPatternCrossFade value of fillExtrusionPatternCrossFade
+   */
+  fun fillExtrusionPatternCrossFade(fillExtrusionPatternCrossFade: Double = 0.0): FillExtrusionLayer
+
+  /**
+   * Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * @param fillExtrusionPatternCrossFade value of fillExtrusionPatternCrossFade as Expression
+   */
+  fun fillExtrusionPatternCrossFade(fillExtrusionPatternCrossFade: Expression): FillExtrusionLayer
 
   /**
    * Indicates whether top edges should be rounded when fill-extrusion-edge-radius has a value greater than 0. If false, rounded edges are only applied to the sides. Default is true. Default value: true.

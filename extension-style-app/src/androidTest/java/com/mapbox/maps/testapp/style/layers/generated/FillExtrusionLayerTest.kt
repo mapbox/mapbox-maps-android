@@ -1196,6 +1196,30 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillExtrusionPatternCrossFadeTest() {
+    val testValue = 1.0
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionPatternCrossFade(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillExtrusionPatternCrossFade!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillExtrusionPatternCrossFadeAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillExtrusionLayer("id", "source") {
+      fillExtrusionPatternCrossFade(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillExtrusionPatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillExtrusionPatternCrossFade!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillExtrusionRoundedRoofTest() {
     val testValue = true
     val layer = fillExtrusionLayer("id", "source") {
@@ -1472,6 +1496,8 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionOpacityTransition should not be null", FillExtrusionLayer.defaultFillExtrusionOpacityTransition)
     assertNotNull("defaultFillExtrusionPattern should not be null", FillExtrusionLayer.defaultFillExtrusionPattern)
     assertNotNull("defaultFillExtrusionPatternAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionPatternAsExpression)
+    assertNotNull("defaultFillExtrusionPatternCrossFade should not be null", FillExtrusionLayer.defaultFillExtrusionPatternCrossFade)
+    assertNotNull("defaultFillExtrusionPatternCrossFadeAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionPatternCrossFadeAsExpression)
     assertNotNull("defaultFillExtrusionRoundedRoof should not be null", FillExtrusionLayer.defaultFillExtrusionRoundedRoof)
     assertNotNull("defaultFillExtrusionRoundedRoofAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionRoundedRoofAsExpression)
     assertNotNull("defaultFillExtrusionTranslate should not be null", FillExtrusionLayer.defaultFillExtrusionTranslate)
@@ -1518,6 +1544,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionLineWidthTestValue = 1.0
     val fillExtrusionOpacityTestValue = 1.0
     val fillExtrusionPatternTestValue = "abc"
+    val fillExtrusionPatternCrossFadeTestValue = 1.0
     val fillExtrusionRoundedRoofTestValue = true
     val fillExtrusionTranslateTestValue = listOf(0.0, 1.0)
     val fillExtrusionTranslateAnchorTestValue = FillExtrusionTranslateAnchor.MAP
@@ -1554,6 +1581,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionLineWidth(fillExtrusionLineWidthTestValue)
       fillExtrusionOpacity(fillExtrusionOpacityTestValue)
       fillExtrusionPattern(fillExtrusionPatternTestValue)
+      fillExtrusionPatternCrossFade(fillExtrusionPatternCrossFadeTestValue)
       fillExtrusionRoundedRoof(fillExtrusionRoundedRoofTestValue)
       fillExtrusionTranslate(fillExtrusionTranslateTestValue)
       fillExtrusionTranslateAnchor(fillExtrusionTranslateAnchorTestValue)
@@ -1595,6 +1623,7 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionLineWidthTestValue, cachedLayer.fillExtrusionLineWidth)
     assertEquals(fillExtrusionOpacityTestValue, cachedLayer.fillExtrusionOpacity)
     assertEquals(fillExtrusionPatternTestValue, cachedLayer.fillExtrusionPattern)
+    assertEquals(fillExtrusionPatternCrossFadeTestValue, cachedLayer.fillExtrusionPatternCrossFade)
     assertEquals(fillExtrusionRoundedRoofTestValue, cachedLayer.fillExtrusionRoundedRoof)
     assertEquals(fillExtrusionTranslateTestValue, cachedLayer.fillExtrusionTranslate)
     assertEquals(fillExtrusionTranslateAnchorTestValue, cachedLayer.fillExtrusionTranslateAnchor)

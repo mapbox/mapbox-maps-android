@@ -2056,6 +2056,62 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  val linePatternCrossFade: Double?
+    /**
+     * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * Use static method [LineLayer.defaultLinePatternCrossFade] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-pattern-cross-fade")
+    }
+
+  /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [LineLayer.defaultLinePatternCrossFade] to set the default property.
+   *
+   * @param linePatternCrossFade value of linePatternCrossFade
+   */
+  override fun linePatternCrossFade(linePatternCrossFade: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-pattern-cross-fade", linePatternCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * This is an Expression representation of "line-pattern-cross-fade".
+   *
+   */
+  val linePatternCrossFadeAsExpression: Expression?
+    /**
+     * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * Get the LinePatternCrossFade property as an Expression
+     *
+     * Use static method [LineLayer.defaultLinePatternCrossFadeAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-pattern-cross-fade")
+
+  /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [LineLayer.defaultLinePatternCrossFadeAsExpression] to set the default property.
+   *
+   * @param linePatternCrossFade value of linePatternCrossFade as Expression
+   */
+  override fun linePatternCrossFade(linePatternCrossFade: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-pattern-cross-fade", linePatternCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
    */
   val lineTranslate: List<Double>?
@@ -3691,6 +3747,43 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
+     * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     */
+    val defaultLinePatternCrossFade: Double?
+      /**
+       * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+       *
+       * Get the default value of LinePatternCrossFade property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-cross-fade").silentUnwrap()
+      }
+
+    /**
+     * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * This is an Expression representation of "line-pattern-cross-fade".
+     *
+     */
+    val defaultLinePatternCrossFadeAsExpression: Expression?
+      /**
+       * Get default value of the LinePatternCrossFade property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-cross-fade").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLinePatternCrossFade?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
      */
     val defaultLineTranslate: List<Double>?
@@ -4608,6 +4701,20 @@ interface LineLayerDsl {
    * @param linePattern value of linePattern as Expression
    */
   fun linePattern(linePattern: Expression): LineLayer
+
+  /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * @param linePatternCrossFade value of linePatternCrossFade
+   */
+  fun linePatternCrossFade(linePatternCrossFade: Double = 0.0): LineLayer
+
+  /**
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * @param linePatternCrossFade value of linePatternCrossFade as Expression
+   */
+  fun linePatternCrossFade(linePatternCrossFade: Expression): LineLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.

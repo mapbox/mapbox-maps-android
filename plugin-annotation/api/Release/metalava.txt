@@ -1048,6 +1048,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getFillOutlineColorString();
     method public String? getFillOutlineColorUseTheme();
     method public String? getFillPattern();
+    method public Double? getFillPatternCrossFade();
     method public Double? getFillSortKey();
     method public java.util.List<java.lang.Double>? getFillTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? getFillTranslateAnchor();
@@ -1075,6 +1076,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setFillOutlineColorString(String?);
     method public void setFillOutlineColorUseTheme(String?);
     method public void setFillPattern(String?);
+    method public void setFillPatternCrossFade(Double?);
     method public void setFillSortKey(Double?);
     method public void setFillTranslate(java.util.List<java.lang.Double>?);
     method public void setFillTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor?);
@@ -1101,6 +1103,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? fillOutlineColorString;
     property public final String? fillOutlineColorUseTheme;
     property public final String? fillPattern;
+    property public final Double? fillPatternCrossFade;
     property public final Double? fillSortKey;
     property public final java.util.List<java.lang.Double>? fillTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor? fillTranslateAnchor;
@@ -1303,6 +1306,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineOffset();
     method public Double? getLineOpacity();
     method public String? getLinePattern();
+    method public Double? getLinePatternCrossFade();
     method public Double? getLineRoundLimit();
     method public Double? getLineSortKey();
     method public java.util.List<java.lang.Double>? getLineTranslate();
@@ -1343,6 +1347,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineOffset(Double?);
     method public void setLineOpacity(Double?);
     method public void setLinePattern(String?);
+    method public void setLinePatternCrossFade(Double?);
     method public void setLineRoundLimit(Double?);
     method public void setLineSortKey(Double?);
     method public void setLineTranslate(java.util.List<java.lang.Double>?);
@@ -1382,6 +1387,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineOffset;
     property public final Double? lineOpacity;
     property public final String? linePattern;
+    property public final Double? linePatternCrossFade;
     property public final Double? lineRoundLimit;
     property public final Double? lineSortKey;
     property public final java.util.List<java.lang.Double>? lineTranslate;

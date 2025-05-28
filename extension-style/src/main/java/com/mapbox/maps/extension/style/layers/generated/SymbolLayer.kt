@@ -3603,11 +3603,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    */
   val iconImageCrossFade: Double?
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
      *
      * Use static method [SymbolLayer.defaultIconImageCrossFade] to get the default property.
      *
@@ -3618,7 +3618,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconImageCrossFade] to set the default property.
    *
@@ -3630,14 +3630,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "icon-image-cross-fade".
    *
    */
   val iconImageCrossFadeAsExpression: Expression?
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
      *
      * Get the IconImageCrossFade property as an Expression
      *
@@ -3647,7 +3647,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       getPropertyValueAsExpressionOrLiteralExpression("icon-image-cross-fade")
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * Use static method [SymbolLayer.defaultIconImageCrossFadeAsExpression] to set the default property.
    *
@@ -7250,11 +7250,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-halo-width-transition").silentUnwrap()
 
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
      */
     val defaultIconImageCrossFade: Double?
       /**
-       * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+       * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
        *
        * Get the default value of IconImageCrossFade property
        *
@@ -7265,7 +7265,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+     * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "icon-image-cross-fade".
      *
@@ -9006,21 +9006,21 @@ interface SymbolLayerDsl {
   fun iconHaloWidthTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * @param iconImageCrossFade value of iconImageCrossFade
    */
   fun iconImageCrossFade(iconImageCrossFade: Double = 0.0): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * @param iconImageCrossFade value of iconImageCrossFade as Expression
    */
   fun iconImageCrossFade(iconImageCrossFade: Expression): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * Set the IconImageCrossFade property transition options
    *
@@ -9029,7 +9029,7 @@ interface SymbolLayerDsl {
   fun iconImageCrossFadeTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. Default value: 0. Value range: [0, 1]
+   * Controls the transition progress between the image variants of icon-image. Zero means the first variant is used, one is the second, and in between they are blended together. . Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
    *
    * DSL for [iconImageCrossFadeTransition].
    */

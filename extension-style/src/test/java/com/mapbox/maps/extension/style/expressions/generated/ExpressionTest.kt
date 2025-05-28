@@ -1771,6 +1771,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_worldview() {
+    val expression = worldview {
+      // test builder function
+      worldview {}
+    }
+    assertEquals("assert worldview expression", "[worldview, [worldview]]", expression.toString())
+  }
+
+  @Test
+  fun expression_worldview() {
+    val expression = Expression.worldview(Expression.literal("abc"))
+    assertEquals("assert worldview expression", "[worldview, abc]", expression.toString())
+  }
+
+  @Test
   fun expression_zoom() {
     val expression = zoom()
     assertEquals("assert zoom expression", "[zoom]", expression.toString())

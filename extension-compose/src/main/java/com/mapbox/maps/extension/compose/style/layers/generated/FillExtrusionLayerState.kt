@@ -72,6 +72,7 @@ private constructor(
   initialFillExtrusionOpacity: DoubleValue,
   initialFillExtrusionOpacityTransition: Transition,
   initialFillExtrusionPattern: ImageValue,
+  initialFillExtrusionPatternCrossFade: DoubleValue,
   initialFillExtrusionRoundedRoof: BooleanValue,
   initialFillExtrusionTranslate: DoubleListValue,
   initialFillExtrusionTranslateTransition: Transition,
@@ -130,6 +131,7 @@ private constructor(
     initialFillExtrusionOpacity = DoubleValue.INITIAL,
     initialFillExtrusionOpacityTransition = Transition.INITIAL,
     initialFillExtrusionPattern = ImageValue.INITIAL,
+    initialFillExtrusionPatternCrossFade = DoubleValue.INITIAL,
     initialFillExtrusionRoundedRoof = BooleanValue.INITIAL,
     initialFillExtrusionTranslate = DoubleListValue.INITIAL,
     initialFillExtrusionTranslateTransition = Transition.INITIAL,
@@ -431,6 +433,12 @@ private constructor(
    */
   public var fillExtrusionPattern: ImageValue by fillExtrusionPatternState
 
+  private val fillExtrusionPatternCrossFadeState: MutableState<DoubleValue> = mutableStateOf(initialFillExtrusionPatternCrossFade)
+  /**
+   *  Controls the transition progress between the image variants of fill-extrusion-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  public var fillExtrusionPatternCrossFade: DoubleValue by fillExtrusionPatternCrossFadeState
+
   @MapboxExperimental
   private val fillExtrusionRoundedRoofState: MutableState<BooleanValue> = mutableStateOf(initialFillExtrusionRoundedRoof)
   /**
@@ -551,6 +559,7 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionOpacityState, "fill-extrusion-opacity")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionOpacityTransitionState, "fill-extrusion-opacity-transition")
     AddImageWhenNotInitial(layerNode, fillExtrusionPatternState, "fill-extrusion-pattern")
+    ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionPatternCrossFadeState, "fill-extrusion-pattern-cross-fade")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionRoundedRoofState, "fill-extrusion-rounded-roof")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionTranslateState, "fill-extrusion-translate")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionTranslateTransitionState, "fill-extrusion-translate-transition")

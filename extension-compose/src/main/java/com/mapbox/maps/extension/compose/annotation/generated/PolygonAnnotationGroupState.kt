@@ -30,6 +30,7 @@ public class PolygonAnnotationGroupState private constructor(
   initialFillOpacity: Double?,
   initialFillOutlineColor: Color?,
   initialFillPattern: String?,
+  initialFillPatternCrossFade: Double?,
   initialFillTranslate: List<Double>?,
   initialFillTranslateAnchor: FillTranslateAnchor?,
   initialFillTunnelStructureColor: Color?,
@@ -53,6 +54,7 @@ public class PolygonAnnotationGroupState private constructor(
     initialFillOpacity = null,
     initialFillOutlineColor = null,
     initialFillPattern = null,
+    initialFillPatternCrossFade = null,
     initialFillTranslate = null,
     initialFillTranslateAnchor = null,
     initialFillTunnelStructureColor = null,
@@ -113,6 +115,10 @@ public class PolygonAnnotationGroupState private constructor(
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   public var fillPattern: String? by mutableStateOf(initialFillPattern)
+  /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  public var fillPatternCrossFade: Double? by mutableStateOf(initialFillPatternCrossFade)
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    */
@@ -204,6 +210,10 @@ public class PolygonAnnotationGroupState private constructor(
     annotationManager.fillPattern = fillPattern
   }
   @Composable
+  private fun UpdateFillPatternCrossFade(annotationManager: PolygonAnnotationManager) {
+    annotationManager.fillPatternCrossFade = fillPatternCrossFade
+  }
+  @Composable
   private fun UpdateFillTranslate(annotationManager: PolygonAnnotationManager) {
     annotationManager.fillTranslate = fillTranslate
   }
@@ -262,6 +272,7 @@ public class PolygonAnnotationGroupState private constructor(
     UpdateFillOpacity(annotationManager)
     UpdateFillOutlineColor(annotationManager)
     UpdateFillPattern(annotationManager)
+    UpdateFillPatternCrossFade(annotationManager)
     UpdateFillTranslate(annotationManager)
     UpdateFillTranslateAnchor(annotationManager)
     UpdateFillTunnelStructureColor(annotationManager)

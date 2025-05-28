@@ -1260,6 +1260,62 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  val fillPatternCrossFade: Double?
+    /**
+     * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * Use static method [FillLayer.defaultFillPatternCrossFade] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("fill-pattern-cross-fade")
+    }
+
+  /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [FillLayer.defaultFillPatternCrossFade] to set the default property.
+   *
+   * @param fillPatternCrossFade value of fillPatternCrossFade
+   */
+  override fun fillPatternCrossFade(fillPatternCrossFade: Double): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-pattern-cross-fade", fillPatternCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * This is an Expression representation of "fill-pattern-cross-fade".
+   *
+   */
+  val fillPatternCrossFadeAsExpression: Expression?
+    /**
+     * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * Get the FillPatternCrossFade property as an Expression
+     *
+     * Use static method [FillLayer.defaultFillPatternCrossFadeAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-pattern-cross-fade")
+
+  /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [FillLayer.defaultFillPatternCrossFadeAsExpression] to set the default property.
+   *
+   * @param fillPatternCrossFade value of fillPatternCrossFade as Expression
+   */
+  override fun fillPatternCrossFade(fillPatternCrossFade: Expression): FillLayer = apply {
+    val propertyValue = PropertyValue("fill-pattern-cross-fade", fillPatternCrossFade)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
    */
   val fillTranslate: List<Double>?
@@ -2334,6 +2390,43 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
+     * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     */
+    val defaultFillPatternCrossFade: Double?
+      /**
+       * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+       *
+       * Get the default value of FillPatternCrossFade property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade").silentUnwrap()
+      }
+
+    /**
+     * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+     *
+     * This is an Expression representation of "fill-pattern-cross-fade".
+     *
+     */
+    val defaultFillPatternCrossFadeAsExpression: Expression?
+      /**
+       * Get default value of the FillPatternCrossFade property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillPatternCrossFade?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.
      */
     val defaultFillTranslate: List<Double>?
@@ -2945,6 +3038,20 @@ interface FillLayerDsl {
    * @param fillPattern value of fillPattern as Expression
    */
   fun fillPattern(fillPattern: Expression): FillLayer
+
+  /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * @param fillPatternCrossFade value of fillPatternCrossFade
+   */
+  fun fillPatternCrossFade(fillPatternCrossFade: Double = 0.0): FillLayer
+
+  /**
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   *
+   * @param fillPatternCrossFade value of fillPatternCrossFade as Expression
+   */
+  fun fillPatternCrossFade(fillPatternCrossFade: Expression): FillLayer
 
   /**
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.

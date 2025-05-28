@@ -68,6 +68,7 @@ private constructor(
   initialLineOpacity: DoubleValue,
   initialLineOpacityTransition: Transition,
   initialLinePattern: ImageValue,
+  initialLinePatternCrossFade: DoubleValue,
   initialLineTranslate: DoubleListValue,
   initialLineTranslateTransition: Transition,
   initialLineTranslateAnchor: LineTranslateAnchorValue,
@@ -125,6 +126,7 @@ private constructor(
     initialLineOpacity = DoubleValue.INITIAL,
     initialLineOpacityTransition = Transition.INITIAL,
     initialLinePattern = ImageValue.INITIAL,
+    initialLinePatternCrossFade = DoubleValue.INITIAL,
     initialLineTranslate = DoubleListValue.INITIAL,
     initialLineTranslateTransition = Transition.INITIAL,
     initialLineTranslateAnchor = LineTranslateAnchorValue.INITIAL,
@@ -373,6 +375,12 @@ private constructor(
    */
   public var linePattern: ImageValue by linePatternState
 
+  private val linePatternCrossFadeState: MutableState<DoubleValue> = mutableStateOf(initialLinePatternCrossFade)
+  /**
+   *  Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  public var linePatternCrossFade: DoubleValue by linePatternCrossFadeState
+
   private val lineTranslateState: MutableState<DoubleListValue> = mutableStateOf(initialLineTranslate)
   /**
    *  The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.
@@ -509,6 +517,7 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, lineOpacityState, "line-opacity")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineOpacityTransitionState, "line-opacity-transition")
     AddImageWhenNotInitial(layerNode, linePatternState, "line-pattern")
+    ActionWhenNotInitial(layerNode.setPropertyAction, linePatternCrossFadeState, "line-pattern-cross-fade")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineTranslateState, "line-translate")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineTranslateTransitionState, "line-translate-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineTranslateAnchorState, "line-translate-anchor")

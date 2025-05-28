@@ -601,6 +601,33 @@ class PolygonAnnotationManager(
     }
 
   /**
+   * The FillPatternCrossFade property
+   *
+   * Controls the transition progress between the image variants of fill-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  var fillPatternCrossFade: Double?
+    /**
+     * Get the FillPatternCrossFade property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.fillPatternCrossFade
+    }
+    /**
+     * Set the FillPatternCrossFade property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-pattern-cross-fade").value
+      }
+      setLayerProperty(wrappedValue, "fill-pattern-cross-fade")
+    }
+
+  /**
    * The FillTranslate property
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of fillTranslate is in pixels.

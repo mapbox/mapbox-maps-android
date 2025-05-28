@@ -623,6 +623,30 @@ class FillLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun fillPatternCrossFadeTest() {
+    val testValue = 1.0
+    val layer = fillLayer("id", "source") {
+      fillPatternCrossFade(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.fillPatternCrossFade!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun fillPatternCrossFadeAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = fillLayer("id", "source") {
+      fillPatternCrossFade(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.fillPatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.fillPatternCrossFade!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
   fun fillTranslateTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = fillLayer("id", "source") {
@@ -927,6 +951,8 @@ class FillLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillOutlineColorTransition should not be null", FillLayer.defaultFillOutlineColorTransition)
     assertNotNull("defaultFillPattern should not be null", FillLayer.defaultFillPattern)
     assertNotNull("defaultFillPatternAsExpression should not be null", FillLayer.defaultFillPatternAsExpression)
+    assertNotNull("defaultFillPatternCrossFade should not be null", FillLayer.defaultFillPatternCrossFade)
+    assertNotNull("defaultFillPatternCrossFadeAsExpression should not be null", FillLayer.defaultFillPatternCrossFadeAsExpression)
     assertNotNull("defaultFillTranslate should not be null", FillLayer.defaultFillTranslate)
     assertNotNull("defaultFillTranslateAsExpression should not be null", FillLayer.defaultFillTranslateAsExpression)
     assertNotNull("defaultFillTranslateTransition should not be null", FillLayer.defaultFillTranslateTransition)
@@ -965,6 +991,7 @@ class FillLayerTest : BaseStyleTest() {
     val fillOutlineColorTestValue = "rgba(0, 0, 0, 1)"
     val fillOutlineColorUseThemeTestValue = "default"
     val fillPatternTestValue = "abc"
+    val fillPatternCrossFadeTestValue = 1.0
     val fillTranslateTestValue = listOf(0.0, 1.0)
     val fillTranslateAnchorTestValue = FillTranslateAnchor.MAP
     val fillTunnelStructureColorTestValue = "rgba(0, 0, 0, 1)"
@@ -991,6 +1018,7 @@ class FillLayerTest : BaseStyleTest() {
       fillOutlineColor(fillOutlineColorTestValue)
       fillOutlineColorUseTheme(fillOutlineColorUseThemeTestValue)
       fillPattern(fillPatternTestValue)
+      fillPatternCrossFade(fillPatternCrossFadeTestValue)
       fillTranslate(fillTranslateTestValue)
       fillTranslateAnchor(fillTranslateAnchorTestValue)
       fillTunnelStructureColor(fillTunnelStructureColorTestValue)
@@ -1022,6 +1050,7 @@ class FillLayerTest : BaseStyleTest() {
     assertEquals(fillOutlineColorTestValue, cachedLayer.fillOutlineColor)
     assertEquals(fillOutlineColorUseThemeTestValue, cachedLayer.fillOutlineColorUseTheme)
     assertEquals(fillPatternTestValue, cachedLayer.fillPattern)
+    assertEquals(fillPatternCrossFadeTestValue, cachedLayer.fillPatternCrossFade)
     assertEquals(fillTranslateTestValue, cachedLayer.fillTranslate)
     assertEquals(fillTranslateAnchorTestValue, cachedLayer.fillTranslateAnchor)
     assertEquals(fillTunnelStructureColorTestValue, cachedLayer.fillTunnelStructureColor)

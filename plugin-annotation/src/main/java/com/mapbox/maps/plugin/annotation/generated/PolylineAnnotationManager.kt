@@ -923,6 +923,33 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LinePatternCrossFade property
+   *
+   * Controls the transition progress between the image variants of line-pattern. Zero means the first variant is used, one is the second, and in between they are blended together. Both images should be the same size and have the same type (either raster or vector). Default value: 0. Value range: [0, 1]
+   */
+  var linePatternCrossFade: Double?
+    /**
+     * Get the LinePatternCrossFade property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.linePatternCrossFade
+    }
+    /**
+     * Set the LinePatternCrossFade property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-pattern-cross-fade").value
+      }
+      setLayerProperty(wrappedValue, "line-pattern-cross-fade")
+    }
+
+  /**
    * The LineTranslate property
    *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively. Default value: [0,0]. The unit of lineTranslate is in pixels.

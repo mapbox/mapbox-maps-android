@@ -1079,6 +1079,30 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun linePatternCrossFadeTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      linePatternCrossFade(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.linePatternCrossFade!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun linePatternCrossFadeAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      linePatternCrossFade(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.linePatternCrossFadeAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.linePatternCrossFade!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineTranslateTest() {
     val testValue = listOf(0.0, 1.0)
     val layer = lineLayer("id", "source") {
@@ -1459,6 +1483,8 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineOpacityTransition should not be null", LineLayer.defaultLineOpacityTransition)
     assertNotNull("defaultLinePattern should not be null", LineLayer.defaultLinePattern)
     assertNotNull("defaultLinePatternAsExpression should not be null", LineLayer.defaultLinePatternAsExpression)
+    assertNotNull("defaultLinePatternCrossFade should not be null", LineLayer.defaultLinePatternCrossFade)
+    assertNotNull("defaultLinePatternCrossFadeAsExpression should not be null", LineLayer.defaultLinePatternCrossFadeAsExpression)
     assertNotNull("defaultLineTranslate should not be null", LineLayer.defaultLineTranslate)
     assertNotNull("defaultLineTranslateAsExpression should not be null", LineLayer.defaultLineTranslateAsExpression)
     assertNotNull("defaultLineTranslateTransition should not be null", LineLayer.defaultLineTranslateTransition)
@@ -1534,6 +1560,7 @@ class LineLayerTest : BaseStyleTest() {
     val lineOffsetTestValue = 1.0
     val lineOpacityTestValue = 1.0
     val linePatternTestValue = "abc"
+    val linePatternCrossFadeTestValue = 1.0
     val lineTranslateTestValue = listOf(0.0, 1.0)
     val lineTranslateAnchorTestValue = LineTranslateAnchor.MAP
     val lineTrimColorTestValue = "rgba(0, 0, 0, 1)"
@@ -1574,6 +1601,7 @@ class LineLayerTest : BaseStyleTest() {
       lineOffset(lineOffsetTestValue)
       lineOpacity(lineOpacityTestValue)
       linePattern(linePatternTestValue)
+      linePatternCrossFade(linePatternCrossFadeTestValue)
       lineTranslate(lineTranslateTestValue)
       lineTranslateAnchor(lineTranslateAnchorTestValue)
       lineTrimColor(lineTrimColorTestValue)
@@ -1619,6 +1647,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineOffsetTestValue, cachedLayer.lineOffset)
     assertEquals(lineOpacityTestValue, cachedLayer.lineOpacity)
     assertEquals(linePatternTestValue, cachedLayer.linePattern)
+    assertEquals(linePatternCrossFadeTestValue, cachedLayer.linePatternCrossFade)
     assertEquals(lineTranslateTestValue, cachedLayer.lineTranslate)
     assertEquals(lineTranslateAnchorTestValue, cachedLayer.lineTranslateAnchor)
     assertEquals(lineTrimColorTestValue, cachedLayer.lineTrimColor)
