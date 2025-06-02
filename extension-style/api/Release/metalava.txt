@@ -372,6 +372,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(String value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression within(com.mapbox.geojson.Geometry geometry);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression worldview(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression zoom();
   }
 
@@ -538,6 +539,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(String value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression within(com.mapbox.geojson.Geometry geometry);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.style.expressions.generated.Expression worldview(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression zoom();
     property public final Object? literalValue;
     field public static final com.mapbox.maps.extension.style.expressions.generated.Expression.Companion Companion;
@@ -795,6 +797,8 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression varExpression(String value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression within(com.mapbox.geojson.Geometry geometry);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.expressions.generated.Expression worldview(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression worldview(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression zoom();
   }
 
@@ -945,6 +949,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder varExpression(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder varExpression(String value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder within(com.mapbox.geojson.Geometry geometry);
+    method @com.mapbox.maps.MapboxExperimental public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder worldview(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder zoom();
   }
 

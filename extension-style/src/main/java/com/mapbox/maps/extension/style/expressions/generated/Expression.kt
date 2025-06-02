@@ -1021,6 +1021,14 @@ class Expression : Value {
     }
 
     /**
+     * Returns the current worldview being used.
+     */
+    @MapboxExperimental
+    fun worldview(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.worldview(block))
+    }
+
+    /**
      * Returns the current zoom level. Note that in style layout and paint properties, ["zoom"] may only
      * appear as the input to a top-level "step" or "interpolate" expression.
      */
@@ -3685,6 +3693,25 @@ class Expression : Value {
       }
       throw MapboxStyleException(expected.error)
     }
+
+    /**
+     * Returns the current worldview being used.
+     */
+    @JvmStatic
+    @MapboxExperimental
+    fun worldview(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("worldview")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "worldview".
+     */
+    fun worldview(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("worldview").apply(block).build()
 
     /**
      * Returns the current zoom level. Note that in style layout and paint properties, ["zoom"] may only

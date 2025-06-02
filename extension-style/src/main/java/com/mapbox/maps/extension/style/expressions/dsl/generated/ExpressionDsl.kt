@@ -522,6 +522,11 @@ fun varExpression(block: Expression.ExpressionBuilder.() -> Unit): Expression = 
 fun within(geometry: Geometry): Expression = Expression.within(geometry)
 
 /**
+ * Returns the current worldview being used.
+ */
+fun worldview(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.worldview(block)
+
+/**
  * Returns the current zoom level. Note that in style layout and paint properties, ["zoom"] may only appear as the input to a top-level "step" or "interpolate" expression.
  */
 fun zoom(): Expression = Expression.zoom()

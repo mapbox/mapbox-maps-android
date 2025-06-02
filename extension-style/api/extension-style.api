@@ -328,6 +328,7 @@ public final class com/mapbox/maps/extension/style/expressions/dsl/generated/Exp
 	public static final fun varExpression (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun varExpression (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun within (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun worldview (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun zoom ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 }
 
@@ -497,6 +498,7 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public static final fun varExpression (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun varExpression ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun within (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public static final fun worldview ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public static final fun zoom ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 }
 
@@ -758,6 +760,8 @@ public final class com/mapbox/maps/extension/style/expressions/generated/Express
 	public final fun varExpression (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun varExpression ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun within (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun worldview (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun worldview ([Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun zoom ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 }
 
@@ -908,6 +912,7 @@ public class com/mapbox/maps/extension/style/expressions/generated/Expression$Ex
 	public final fun varExpression (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun varExpression (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun within (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
+	public final fun worldview (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 	public final fun zoom ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression$ExpressionBuilder;
 }
 
