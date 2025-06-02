@@ -42,12 +42,12 @@
         app:mapbox_compassMarginLeft="32dp"
         app:mapbox_compassMarginRight="32dp"
         app:mapbox_compassMarginTop="32dp"
-        app:mapbox_gesturesDoubleTapToZoomInEnabled="false"
-        app:mapbox_gesturesPinchToZoomEnabled="false"
-        app:mapbox_gesturesPitchEnabled="false"
-        app:mapbox_gesturesQuickZoomEnabled="false"
+        app:mapbox_gesturesDoubleTapToZoomInEnabled="true"
+        app:mapbox_gesturesPinchToZoomEnabled="true"
+        app:mapbox_gesturesPitchEnabled="true"
+        app:mapbox_gesturesQuickZoomEnabled="true"
         app:mapbox_gesturesRotateEnabled="true"
-        app:mapbox_gesturesScrollEnabled="false"
+        app:mapbox_gesturesScrollEnabled="true"
         app:mapbox_logoEnabled="true"
         app:mapbox_logoGravity="bottom|right"
         app:mapbox_logoMarginBottom="32dp"
@@ -56,11 +56,11 @@
         app:mapbox_logoMarginTop="32dp" />
 
     <Button
-        android:id="@+id/satellite_streets_button"
+        android:id="@+id/custom_style_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/menu_map_style_satellite_streets"
+        android:text="@string/menu_map_style_custom_style"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/streets_button"
         app:layout_constraintStart_toStartOf="@+id/streets_button"
@@ -73,8 +73,8 @@
         android:text="@string/menu_map_style_satellite"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/satellite_streets_button"
-        app:layout_constraintStart_toStartOf="@+id/satellite_streets_button"
+        app:layout_constraintEnd_toEndOf="@+id/custom_style_button"
+        app:layout_constraintStart_toStartOf="@+id/custom_style_button"
         app:layout_constraintTop_toTopOf="@+id/outdoors_button"
         app:layout_constraintVertical_bias="0.0" />
 

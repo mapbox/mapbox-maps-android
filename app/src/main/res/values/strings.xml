@@ -9,7 +9,7 @@
     <string name="menu_map_style_standard">Standard</string>
     <string name="menu_map_style_satellite">Satellite</string>
     <string name="menu_map_style_standard_satellite">Standard Satellite</string>
-    <string name="menu_map_style_satellite_streets">Satellite Streets</string>
+    <string name="menu_map_style_custom_style">Custom</string>
     <string name="toggle_focus_on_a_point">Toggle focus on a point</string>
     <string name="toggle_velocity_animations">Toggle deceleration animations</string>
     <string name="toggle_rotate_enabled">Toggle rotate enabled</string>
