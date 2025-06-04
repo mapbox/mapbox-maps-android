@@ -5,14 +5,24 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 ## Features ✨ and improvements 🏁
-* Introduce custom layer matrices API `CustomLayerMapProjection` in `CustomLayerRenderParameters` for globe projection.
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 
-# 11.13.0-rc.1
+# 11.13.0-rc.1 June 03, 2025
 ## Features ✨ and improvements 🏁
+* Introduce custom layer matrices API `CustomLayerMapProjection` in `CustomLayerRenderParameters` for globe projection.
 * Introduce `minZoom` and `maxZoom` properties for `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager`.
 * [compose] Introduce `minZoom` and `maxZoom` properties for `CircleAnnotationGroupState`, `PointAnnotationGroupState`, `PolygonAnnotationGroupState`, `PolylineAnnotationGroupState`.
 * [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
+
+## Bug fixes 🐞
+* Fixed disappearing volatile tiles on camera changes in offline mode when `maximumStaleInterval` is set.
+* Resolved frequent DVA repositioning issues.
+* Fixed fill patterns for elevated roads.
+* Tiles are now properly reloaded when the language setting is removed.
+* Limited the collision grid size for view annotations to improve performance.
+
+## Dependencies
+* Update gl-native to v11.13.0-rc.1, common to 24.13.0-rc.1.
 
 # 11.13.0-beta.1 May 19, 2025
 ## Breaking changes ⚠️
