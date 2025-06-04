@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 
+
 # 11.13.0-rc.1 June 03, 2025
 ## Features ✨ and improvements 🏁
 * Introduce custom layer matrices API `CustomLayerMapProjection` in `CustomLayerRenderParameters` for globe projection.

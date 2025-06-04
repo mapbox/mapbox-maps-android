@@ -18,12 +18,12 @@ Working examples of the Compose extension can be found in our [compose test appl
   - [Use Camera Animation / Viewport APIs](#use-camera-animation--viewport-apis)
   - [Add Annotations to the map](#add-annotations-to-the-map)
     - [Add a single `CircleAnnotation` to the map](#add-a-single-circleannotation-to-the-map)
-    - [Add multiple `CircleAnnotations` to the map in a group(more efficent for large number of annotations)](#add-multiple-circleannotations-to-the-map-in-a-groupmore-efficent-for-large-number-of-annotations)
+    - [Add multiple `CircleAnnotations` to the map in a group(more efficient for large number of annotations)](#add-multiple-circleannotations-to-the-map-in-a-groupmore-efficient-for-large-number-of-annotations)
     - [Add multiple `PointAnnotations` to the map as cluster(only supported for `PointAnnotation` and `CircleAnnotation`)](#add-multiple-pointannotations-to-the-map-as-clusteronly-supported-for-pointannotation-and-circleannotation)
     - [Add `ViewAnnotation` to the map](#add-viewannotation-to-the-map)
   - [Configure Map ornaments(Compass, ScaleBar, Attribution, Logo)](#configure-map-ornamentscompass-scalebar-attribution-logo)
   - [Gestures settings](#gestures-settings)
-  - [Work with runtime styling (work in progress)](#work-with-runtime-styling-work-in-progress)
+  - [Work with runtime styling](#work-with-runtime-styling)
     - [Runtime styling with layers and sources](#runtime-styling-with-layers-and-sources)
 - [Compatibility with Maps SDK v11](#compatibility-with-maps-sdk-v11)
 
@@ -51,11 +51,11 @@ allprojects {
 
 // In your build.gradle, add the compose extension with your other dependencies.
 dependencies {
-  implementation 'com.mapbox.extension:maps-compose:11.12.0-beta.1'
+  implementation 'com.mapbox.extension:maps-compose:11.13.0-rc.1'
 
   // Pick your versions of Android Mapbox Map SDK
   // Note that Compose extension is compatible with Maps SDK v11.0+.
-  implementation 'com.mapbox.maps:android:11.12.0-beta.1'
+  implementation 'com.mapbox.maps:android:11.13.0-rc.1'
 }
 ```
 
