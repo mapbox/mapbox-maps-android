@@ -712,52 +712,52 @@ class MapboxMapTest {
 
   @Test
   fun cameraForCoordinatesOne() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     val camera = mockk<CameraOptions>()
     val box = mockk<ScreenBox>()
     mapboxMap.cameraForCoordinates(points, camera, box)
-    verify { nativeMap.cameraForCoordinates(points, camera, box) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, camera, box) }
   }
 
   @Test
   fun cameraForCoordinatesTwo() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     val edgeInsets = mockk<EdgeInsets>()
     mapboxMap.cameraForCoordinates(points, edgeInsets, 0.0, 1.0)
-    verify { nativeMap.cameraForCoordinates(points, edgeInsets, 0.0, 1.0) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, edgeInsets, 0.0, 1.0) }
   }
 
   @Test
   fun cameraForCoordinatesOverload() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     mapboxMap.cameraForCoordinates(points)
-    verify { nativeMap.cameraForCoordinates(points, null, null, null) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, null, null, null) }
   }
 
   @Test
   fun cameraForCoordinatesWithoutPadding() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     mapboxMap.cameraForCoordinates(points)
-    verify { nativeMap.cameraForCoordinates(points, null, null, null) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, null, null, null) }
   }
 
   @Test
   fun cameraForCoordinatesOverloadBearing() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     mapboxMap.cameraForCoordinates(points, bearing = 2.0)
-    verify { nativeMap.cameraForCoordinates(points, null, 2.0, null) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, null, 2.0, null) }
   }
 
   @Test
   fun cameraForCoordinatesOverloadPitch() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     mapboxMap.cameraForCoordinates(points, pitch = 2.0)
-    verify { nativeMap.cameraForCoordinates(points, null, null, 2.0) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, null, null, 2.0) }
   }
 
   @Test
   fun cameraForCoordinatesWithOffset() {
-    val points = mockk<List<Point>>()
+    val points = defaultPointsList
     val camera = mockk<CameraOptions>()
     val offset = mockk<ScreenCoordinate>()
     every { nativeMap.sizeSet } returns true
@@ -765,7 +765,7 @@ class MapboxMapTest {
       ExpectedFactory.createValue(mockk())
 
     mapboxMap.cameraForCoordinates(points, camera, ZERO_EDGE_INSETS, 1.0, offset)
-    verify { nativeMap.cameraForCoordinates(points, camera, ZERO_EDGE_INSETS, 1.0, offset) }
+    verify { nativeMap.cameraForCoordinates(defaultPointsBbox, camera, ZERO_EDGE_INSETS, 1.0, offset) }
   }
 
   @Test
@@ -1848,6 +1848,19 @@ class MapboxMapTest {
     val map = mockk<Map>()
     every { nativeMap.map } returns map
     assertEquals(mapboxMap.getNativeMap(), map)
+  }
+
+  private companion object {
+    private val defaultPointsList = listOf(
+      Point.fromLngLat(0.0, 0.0),
+      Point.fromLngLat(1.1, 1.1),
+      Point.fromLngLat(2.2, 2.2),
+      Point.fromLngLat(3.3, 3.3),
+    )
+    private val defaultPointsBbox = listOf(
+      Point.fromLngLat(0.0, 0.0),
+      Point.fromLngLat(3.3, 3.3),
+    )
   }
 }
 
