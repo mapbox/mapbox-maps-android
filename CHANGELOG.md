@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.12.3
+
+# 11.12.3 June 05, 2025
 ## Features ✨ and improvements 🏁
 * Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
 
@@ -14,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.12.3 and common to v24.12.3.
+
 
 # 11.12.2 May 23, 2025
 ## Bug fixes 🐞
