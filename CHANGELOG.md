@@ -8,6 +8,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
 
+## Bug fixes 🐞
+* Fix a crash in disk cache code when fetching a high-zoom (z > 16) tile.
+* Fix a bug where cameraForCoordiantes with screen box oscillates when initial zoom is close to set max zoom.
+
+## Dependencies
+* Update gl-native to v11.12.3 and common to v24.12.3.
+
 # 11.12.2 May 23, 2025
 ## Bug fixes 🐞
 * Limit view annotations collision grid size.
