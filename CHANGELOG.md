@@ -4,6 +4,20 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
+* Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
+
+# 11.12.3 June 05, 2025
+## Features ✨ and improvements 🏁
+* Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
+
+## Bug fixes 🐞
+* Fix a crash in disk cache code when fetching a high-zoom (z > 16) tile.
+* Fix a bug where cameraForCoordiantes with screen box oscillates when initial zoom is close to set max zoom.
+## Dependencies
+* Update gl-native to v11.12.3 and common to v24.12.3.
+
 # 11.13.0-rc.1 June 03, 2025
 ## Features ✨ and improvements 🏁
 * Introduce custom layer matrices API `CustomLayerMapProjection` in `CustomLayerRenderParameters` for globe projection.
