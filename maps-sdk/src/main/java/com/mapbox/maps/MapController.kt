@@ -77,6 +77,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     this.contextMode = mapInitOptions.mapOptions.contextMode
+    logI(TAG, "Registering asset file source factory")
     AssetManagerProvider().initialize(mapInitOptions.context.assets)
     this.nativeMap = MapProvider.getNativeMapWrapper(
       mapInitOptions,
