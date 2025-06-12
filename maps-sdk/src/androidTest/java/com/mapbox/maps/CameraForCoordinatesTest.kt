@@ -3,6 +3,7 @@ package com.mapbox.maps
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.util.isEmpty
@@ -28,10 +29,15 @@ class CameraForCoordinatesTest {
   fun setUp() {
     val latch = CountDownLatch(2)
     rule.scenario.onActivity {
-      mapView = MapView(it, MapInitOptions(it))
+      val mapOptions = MapInitOptions.getDefaultMapOptions(it).toBuilder()
+        .pixelRatio(1F)
+        .build()
+      mapView = MapView(it, MapInitOptions(it, mapOptions = mapOptions))
       mapboxMap = mapView.mapboxMap
+      mapboxMap.loadStyle("{}")
       // Hardcoded width and height to avoid issues with different screen sizes
       it.frameLayout.addView(mapView, 200, 200)
+      mapboxMap.setStyleProjection(Value.valueOf(hashMapOf("name" to Value.valueOf("mercator"))))
       mapboxMap.getStyle {
         latch.countDown()
       }
@@ -65,7 +71,7 @@ class CameraForCoordinatesTest {
         Assert.assertFalse(cameraForCoordinates.isEmpty)
         Assert.assertEquals(2.001, cameraForCoordinates.center!!.latitude(), 0.001)
         Assert.assertEquals(2.001, cameraForCoordinates.center!!.longitude(), 0.001)
-        Assert.assertEquals(3.738, cameraForCoordinates.zoom!!, 0.001)
+        Assert.assertEquals(5.134, cameraForCoordinates.zoom!!, 0.001)
         countDownLatch.countDown()
       }
     }
@@ -91,9 +97,10 @@ class CameraForCoordinatesTest {
           offset = null,
         )
         Assert.assertFalse(cameraForCoordinates.isEmpty)
-        Assert.assertEquals(-180.0, cameraForCoordinates.center!!.longitude(), 0.001)
-        Assert.assertEquals(85.902, cameraForCoordinates.center!!.latitude(), 0.001)
-        Assert.assertEquals(0.0, cameraForCoordinates.zoom!!, 0.001)
+        mapboxMap.setCamera(cameraForCoordinates)
+        Assert.assertEquals(0.0, cameraForCoordinates.center!!.longitude(), 0.001)
+        Assert.assertEquals(15.058, cameraForCoordinates.center!!.latitude(), 0.001)
+        Assert.assertEquals(-1.356, cameraForCoordinates.zoom!!, 0.001)
         countDownLatch.countDown()
       }
     }
@@ -120,9 +127,8 @@ class CameraForCoordinatesTest {
         )
         Assert.assertFalse(cameraForCoordinates.isEmpty)
         Assert.assertEquals(-167.5, cameraForCoordinates.center!!.longitude(), 0.001)
-        Assert.assertEquals(20.179, cameraForCoordinates.center!!.latitude(), 0.001)
-        Assert.assertEquals(0.478, cameraForCoordinates.zoom!!, 0.001)
-        mapboxMap.setCamera(cameraForCoordinates)
+        Assert.assertEquals(19.750, cameraForCoordinates.center!!.latitude(), 0.001)
+        Assert.assertEquals(2.006, cameraForCoordinates.zoom!!, 0.001)
         countDownLatch.countDown()
       }
     }
