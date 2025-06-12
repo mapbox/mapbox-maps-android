@@ -1,11 +1,12 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
-import androidx.core.animation.doOnEnd
 import com.mapbox.bindgen.Value
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
@@ -43,6 +44,13 @@ internal class LocationPuckManager(
   internal var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
   private val onBearingUpdated: ((Double) -> Unit) = {
     lastBearing = it
+  }
+
+  private val disablePuckAnimationOnEnd = object : AnimatorListenerAdapter() {
+    override fun onAnimationEnd(animation: Animator) {
+      animationManager.puckAnimationEnabled = false
+      animation.removeListener(this)
+    }
   }
 
   private var lastAccuracyRadius: Double = 0.0
@@ -155,9 +163,7 @@ internal class LocationPuckManager(
         doubleArrayOf(0.0),
         options = {
           duration = 0
-          doOnEnd {
-            animationManager.puckAnimationEnabled = false
-          }
+          addListener(disablePuckAnimationOnEnd)
         },
         forceUpdate
       )
