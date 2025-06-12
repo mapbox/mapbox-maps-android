@@ -2,11 +2,6 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# main
-
-## Features ✨ and improvements 🏁
-* Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
-* Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
 
 # 11.13.0
 ## Bug fixes 🐞
