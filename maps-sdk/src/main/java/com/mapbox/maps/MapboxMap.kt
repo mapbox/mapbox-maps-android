@@ -2983,34 +2983,31 @@ class MapboxMap :
       if (points.size <= 2) {
         return points
       }
-      val bbox = DoubleArray(4)
-      bbox[0] = Double.POSITIVE_INFINITY
-      bbox[1] = Double.POSITIVE_INFINITY
-      bbox[2] = Double.NEGATIVE_INFINITY
-      bbox[3] = Double.NEGATIVE_INFINITY
+      var minLongitude = Double.POSITIVE_INFINITY
+      var minLatitude = Double.POSITIVE_INFINITY
+      var maxLongitude = Double.NEGATIVE_INFINITY
+      var maxLatitude = Double.NEGATIVE_INFINITY
 
-      @Suppress("ReplaceManualRangeWithIndicesCalls")
-      for (i in 0 until points.size) {
-        val point: Point = points[i]
+      for (point in points) {
         val longitude = point.longitude()
         val latitude = point.latitude()
 
-        if (bbox[0] > longitude) {
-          bbox[0] = longitude
+        if (minLongitude > longitude) {
+          minLongitude = longitude
         }
-        if (bbox[1] > latitude) {
-          bbox[1] = latitude
+        if (minLatitude > latitude) {
+          minLatitude = latitude
         }
-        if (bbox[2] < longitude) {
-          bbox[2] = longitude
+        if (maxLongitude < longitude) {
+          maxLongitude = longitude
         }
-        if (bbox[3] < latitude) {
-          bbox[3] = latitude
+        if (maxLatitude < latitude) {
+          maxLatitude = latitude
         }
       }
       return listOf(
-        Point.fromLngLat(bbox[0], bbox[1]),
-        Point.fromLngLat(bbox[2], bbox[3])
+        Point.fromLngLat(minLongitude, minLatitude),
+        Point.fromLngLat(maxLongitude, maxLatitude)
       )
     }
   }
