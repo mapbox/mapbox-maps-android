@@ -8,6 +8,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 * Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
 
+# 11.13.0
+## Bug fixes 🐞
+* Fix location indicator bearing animation update being missing in some occasions.
+
 # 11.12.3 June 05, 2025
 ## Features ✨ and improvements 🏁
 * Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
