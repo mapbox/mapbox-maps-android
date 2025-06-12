@@ -8,6 +8,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix location indicator bearing animation update being missing in some occasions.
 
+## Dependencies
+* Update gl-native to v11.12.4 and common to v24.12.4.
+
 # 11.12.3 June 05, 2025
 ## Features ✨ and improvements 🏁
 * Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
