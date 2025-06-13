@@ -424,27 +424,7 @@ do not recommend using snapshot releases in production environment.
 
 ### Automatic snapshot releases
 
-By default, each commit to the main branch of the repository will trigger a snapshot release for the
-sdk, as well as all the plugins/extensions/modules, with an unique version name.
-
-The name of the snapshot is defined in the `VERSION_NAME` in the project's `gradle.properties` file,
-with the commit hash inserted before the `-SNAPSHOT`.
-
-An example of snapshot for the sdk is `com.mapbox.maps:android:10.0.0-a1d95e7a-SNAPSHOT`.
-
-### Manually triggered snapshot releases
-
-The Mapbox Maps SDK for Android also features manually triggered snapshot releases from a developing
-branch.
-
-If a last commit in a developing branch has `publish_android_snapshot` in a title or description,
-the `build-modules-and-instrumentation-tests` CI step will create a snapshot release.
-
-The name of the snapshot release would be:
-
-${LAST_RELEASE_VERSION_BEFORE_THIS_COMMIT}-${BRANCH_NAME}-SNAPSHOT for example:
-
-`10.0.0-rc.1-peng-commit-message-based-snapshot-SNAPSHOT`
+Snapshot releases are automatically published once a day and the main branch points to the latest snapshot.
 
 ### Use snapshot releases in your app
 
