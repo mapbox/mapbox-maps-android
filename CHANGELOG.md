@@ -4,6 +4,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.13.0
+## Features ✨ and improvements 🏁
+* Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
+
 ## Bug fixes 🐞
 * Fix location indicator bearing animation update being missing in some occasions.
 

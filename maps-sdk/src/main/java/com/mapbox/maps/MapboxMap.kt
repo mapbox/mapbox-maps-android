@@ -793,7 +793,12 @@ class MapboxMap :
     pitch: Double?
   ): CameraOptions {
     checkNativeMap("cameraForCoordinates")
-    return nativeMap.cameraForCoordinates(coordinates, coordinatesPadding, bearing, pitch)
+    return nativeMap.cameraForCoordinates(
+      calculateBoundingBox(coordinates),
+      coordinatesPadding,
+      bearing,
+      pitch
+    )
   }
 
   /**
@@ -827,7 +832,7 @@ class MapboxMap :
     box: ScreenBox
   ): CameraOptions {
     checkNativeMap("cameraForCoordinates")
-    return nativeMap.cameraForCoordinates(coordinates, camera, box)
+    return nativeMap.cameraForCoordinates(calculateBoundingBox(coordinates), camera, box)
   }
 
   /**
@@ -869,7 +874,13 @@ class MapboxMap :
     if (!nativeMap.sizeSet) {
       return cameraOptions { }
     }
-    return nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset).getValueOrElse {
+    return nativeMap.cameraForCoordinates(
+      calculateBoundingBox(coordinates),
+      camera,
+      coordinatesPadding,
+      maxZoom,
+      offset
+    ).getValueOrElse {
       logE(
         TAG,
         "Error occurred in synchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
@@ -900,14 +911,19 @@ class MapboxMap :
     checkNativeMap("cameraForCoordinates")
     nativeMap.whenMapSizeReady {
       result.invoke(
-        nativeMap.cameraForCoordinates(coordinates, camera, coordinatesPadding, maxZoom, offset)
-          .getValueOrElse {
-            logE(
-              TAG,
-              "Error occurred in asynchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
-            )
-            return@getValueOrElse cameraOptions { }
-          }
+        nativeMap.cameraForCoordinates(
+          calculateBoundingBox(coordinates),
+          camera,
+          coordinatesPadding,
+          maxZoom,
+          offset
+        ).getValueOrElse {
+          logE(
+            TAG,
+            "Error occurred in asynchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
+          )
+          return@getValueOrElse cameraOptions { }
+        }
       )
     }
   }
@@ -2957,5 +2973,42 @@ class MapboxMap :
       nativeObserver: NativeObserver,
       pixelRatio: Float
     ) = MapboxMap(nativeMap, nativeObserver, pixelRatio)
+
+    /**
+     * Calculates the bounding box for a list of points.
+     *
+     * @return the bounding box as a list of two points or the original [points] if the size is less than or equal to 2.
+     */
+    private fun calculateBoundingBox(points: List<Point>): List<Point> {
+      if (points.size <= 2) {
+        return points
+      }
+      var minLongitude = Double.POSITIVE_INFINITY
+      var minLatitude = Double.POSITIVE_INFINITY
+      var maxLongitude = Double.NEGATIVE_INFINITY
+      var maxLatitude = Double.NEGATIVE_INFINITY
+
+      for (point in points) {
+        val longitude = point.longitude()
+        val latitude = point.latitude()
+
+        if (minLongitude > longitude) {
+          minLongitude = longitude
+        }
+        if (minLatitude > latitude) {
+          minLatitude = latitude
+        }
+        if (maxLongitude < longitude) {
+          maxLongitude = longitude
+        }
+        if (maxLatitude < latitude) {
+          maxLatitude = latitude
+        }
+      }
+      return listOf(
+        Point.fromLngLat(minLongitude, minLatitude),
+        Point.fromLngLat(maxLongitude, maxLatitude)
+      )
+    }
   }
 }
