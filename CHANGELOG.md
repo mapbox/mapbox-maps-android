@@ -6,11 +6,45 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
-* Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
 
 # 11.13.0
+## Features ✨ and improvements 🏁
+* Expose `RenderThreadStatsRecorder` as experimental API.
+* Expose new experimental properties: `CircleLayer.circleElevationReference`, `FillLayer.fillConstructBridgeGuardRail`, `FillLayer.fillBridgeGuardRailColor`, `FillLayer.fillTunnelStructureColor`.
+* Promote `MapInteraction` APIs to stable, remove experimental `Style.STANDARD_EXPERIMENTAL` constant, as `Style.STANDARD` supports featuresets and map interactions by default.
+  * Add common `MapInteraction` APIs to `StandardStyleInteractionsState`: `.onFeaturesetClicked`, `.onLayerClicked`, `.onFeaturesetLongClicked`, `.onLayerLongClicked`, `.onMapClicked`, `.onMapLongClicked`.
+  * Add `StyleInteractionsState` to `MapboxStandardSatelliteStyle` so interactions can be used with the satellite style.
+* [compose] Rename experimental `ExperimentalStandardStyleState` to `StandardStyleState`, rename experimental `MapboxStandardStyleExperimental` to `MapboxStandardStyle(styleImportsContent, topSlot, middleSlot, bottomSlot, standardStyleState)`, and deprecate previous `MapboxStandardStyle` composable functions.
+* Expose new experimental camera event `MapboxMap.subscribeCameraChangedCoalesced`, `MapboxMap.cameraChangedCoalescedEvents`.
+* [compose] Expose new camera event `MapState.cameraChangedCoalescedEvents`
+* Introduce custom layer matrices API `CustomLayerMapProjection` in `CustomLayerRenderParameters` for globe projection.
+* Introduce `minZoom` and `maxZoom` properties for `CircleAnnotationManager`, `PointAnnotationManager`, `PolygonAnnotationManager`, `PolylineAnnotationManager`.
+* Introduce experimental `worldview` expression.
+* [compose] Introduce `minZoom` and `maxZoom` properties for `CircleAnnotationGroupState`, `PointAnnotationGroupState`, `PolygonAnnotationGroupState`, `PolylineAnnotationGroupState`.
+* [compose] Add config option `showLandmarkIcons` to `MapboxStandardStyle`.
+* Improve the performance of `MapboxMap.cameraForCoordinates(...)` for large amounts of points.
+
 ## Bug fixes 🐞
+* Fix elevated lines rendering regression.
+* Do not write errors to logs if event was not send because events are disabled.
+* Fixed incorrect placement for symbols with symbol-z-elevate on Globe projection.
+* Elevated symbol heights now change as smooth as building heighs.
+* Fixing unstable placement for elevated symbols.
+* Respect config expressions in filter.
+* Fix symbol order with symbol-z-elevate true and symbol-z-order viewport-y.
+* Fix issue that promoteId content is missing after vector source serialization.
+* Fixed disappearing volatile tiles on camera changes in offline mode when `maximumStaleInterval` is set.
+* Resolved frequent DVA repositioning issues.
+* Fixed fill patterns for elevated roads.
+* Tiles are now properly reloaded when the language setting is removed.
+* Limited the collision grid size for view annotations to improve performance.
 * Fix location indicator bearing animation update being missing in some occasions.
+* Fix a bug where `cameraForCoordiantes` with screen box oscillates when initial zoom is close to set max zoom.
+* Skip unneeded tiles relayout when landmark icons get enabled.
+* Fix a crash in disk cache code when fetching a high-zoom (z > 16) tile.
+
+## Dependencies
+* Update gl-native to v11.13.0, common to 24.13.0.
 
 # 11.12.4 June 12, 2025
 ## Bug fixes 🐞
