@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MapPluginExtensionsDelegate</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>mapbox-maps-android</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.plugin.delegates/MapPluginExtensionsDelegate///PointingToDeclaration//540127926">
+  <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a><span class="delimiter">/</span><a href="../index.html">com.mapbox.maps.plugin.delegates</a><span class="delimiter">/</span><span class="current">MapPluginExtensionsDelegate</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Map</span><wbr></wbr><span>Plugin</span><wbr></wbr><span>Extensions</span><wbr></wbr><span><span>Delegate</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">MapPluginExtensionsDelegate</a></div><p class="paragraph">Definition of the map plugin extensions delegate. Makes possible to call plugin functions directly from MapboxMap.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Extensions">Extensions</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="183949113%2FFunctions%2F540127926" anchor-label="cameraAnimationsPlugin" id="183949113%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="camera-animations-plugin.html"><span>camera</span><wbr></wbr><span>Animations</span><wbr></wbr><span><span>Plugin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="183949113%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="camera-animations-plugin.html"><span class="token function">cameraAnimationsPlugin</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">function<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.plugin.animation/-camera-animations-plugin/index.html">CameraAnimationsPlugin</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Call extension function on <a href="../../com.mapbox.maps.plugin.animation/-camera-animations-plugin/index.html">CameraAnimationsPlugin</a>. In most cases should not be called directly.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-319535757%2FFunctions%2F540127926" anchor-label="gesturesPlugin" id="-319535757%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="gestures-plugin.html"><span>gestures</span><wbr></wbr><span><span>Plugin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-319535757%2FFunctions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword"></span><span class="token keyword">fun </span><a href="gestures-plugin.html"><span class="token function">gesturesPlugin</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">function<span class="token operator">: </span><span class="token keyword"></span><a href="../../com.mapbox.maps.plugin.gestures/-gestures-plugin/index.html">GesturesPlugin</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Call extension function on <a href="../../com.mapbox.maps.plugin.gestures/-gestures-plugin/index.html">GesturesPlugin</a>. In most cases should not be called directly.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Inheritors</h2>
+      <div class="table" data-togglable="Inheritors"><a data-name="-102623862%2FInheritors%2F540127926" anchor-label="MapboxMap" id="-102623862%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps/-mapbox-map/index.html">MapboxMap</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-102623862%2FInheritors%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <h2 class="tabbedcontent">Extensions</h2>
+      <div class="table" data-togglable="Extensions"><a data-name="486740352%2FExtensions%2F540127926" anchor-label="addOnFlingListener" id="486740352%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-fling-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Fling</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="486740352%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-fling-listener.html"><span class="token function">addOnFlingListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onFlingListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-fling-listener/index.html">OnFlingListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is has received a fling gesture. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1004271682%2FExtensions%2F540127926" anchor-label="addOnMapClickListener" id="1004271682%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-map-click-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Map</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1004271682%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-map-click-listener.html"><span class="token function">addOnMapClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onMapClickListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-map-click-listener/index.html">OnMapClickListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is clicked. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="789774074%2FExtensions%2F540127926" anchor-label="addOnMapLongClickListener" id="789774074%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-map-long-click-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Map</span><wbr></wbr><span>Long</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="789774074%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-map-long-click-listener.html"><span class="token function">addOnMapLongClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onMapLongClickListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-map-long-click-listener/index.html">OnMapLongClickListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is long clicked. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1012658568%2FExtensions%2F540127926" anchor-label="addOnMoveListener" id="-1012658568%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-move-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Move</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1012658568%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-move-listener.html"><span class="token function">addOnMoveListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-move-listener/index.html">OnMoveListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is moved. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1887373468%2FExtensions%2F540127926" anchor-label="addOnRotateListener" id="-1887373468%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-rotate-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Rotate</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1887373468%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-rotate-listener.html"><span class="token function">addOnRotateListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-rotate-listener/index.html">OnRotateListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is rotated. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1181630784%2FExtensions%2F540127926" anchor-label="addOnScaleListener" id="-1181630784%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-scale-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Scale</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1181630784%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-scale-listener.html"><span class="token function">addOnScaleListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-scale-listener/index.html">OnScaleListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is scaled. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1095345248%2FExtensions%2F540127926" anchor-label="addOnShoveListener" id="1095345248%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/add-on-shove-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Shove</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1095345248%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/add-on-shove-listener.html"><span class="token function">addOnShoveListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-shove-listener/index.html">OnShoveListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a callback that is invoked when the map is shoved. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="813624137%2FExtensions%2F540127926" anchor-label="easeTo" id="813624137%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.animation/ease-to.html"><span>ease</span><wbr></wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="813624137%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.animation/ease-to.html"><span class="token function">easeTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cameraOptions<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">animatorListener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Extension easeTo() for <a href="index.html">MapPluginExtensionsDelegate</a> Ease the map camera to a given camera options and animation options</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="650842688%2FExtensions%2F540127926" anchor-label="flyTo" id="650842688%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.animation/fly-to.html"><span>fly</span><wbr></wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="650842688%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.animation/fly-to.html"><span class="token function">flyTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cameraOptions<span class="token operator">: </span><a href="../../com.mapbox.maps/-camera-options/index.html">CameraOptions</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">animatorListener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Extension flyTo() function for <a href="index.html">MapPluginExtensionsDelegate</a> Fly the map camera to a given camera options.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1846100734%2FExtensions%2F540127926" anchor-label="getGesturesManager" id="-1846100734%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/get-gestures-manager.html"><span>get</span><wbr></wbr><span>Gestures</span><wbr></wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1846100734%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/get-gestures-manager.html"><span class="token function">getGesturesManager</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.mapbox.android.gestures/AndroidGesturesManager///PointingToDeclaration/">AndroidGesturesManager</span><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Get the current configured AndroidGesturesManager. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1151438927%2FExtensions%2F540127926" anchor-label="moveBy" id="1151438927%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.animation/move-by.html"><span>move</span><wbr></wbr><span><span>By</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1151438927%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.animation/move-by.html"><span class="token function">moveBy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">screenCoordinate<span class="token operator">: </span><a href="../../com.mapbox.maps/-screen-coordinate/index.html">ScreenCoordinate</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">animatorListener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Extension moveBy() function for <a href="index.html">MapPluginExtensionsDelegate</a> Move the map by a given screen coordinate with optional animation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1580132417%2FExtensions%2F540127926" anchor-label="pitchBy" id="1580132417%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.animation/pitch-by.html"><span>pitch</span><wbr></wbr><span><span>By</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1580132417%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.animation/pitch-by.html"><span class="token function">pitchBy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pitch<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">animatorListener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Extension pitchBy() function for <a href="index.html">MapPluginExtensionsDelegate</a> Pitch the map by with optional animation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2006091005%2FExtensions%2F540127926" anchor-label="removeOnFlingListener" id="2006091005%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-fling-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Fling</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2006091005%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-fling-listener.html"><span class="token function">removeOnFlingListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onFlingListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-fling-listener/index.html">OnFlingListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is has received a fling gesture. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1882462719%2FExtensions%2F540127926" anchor-label="removeOnMapClickListener" id="1882462719%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-map-click-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Map</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1882462719%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-map-click-listener.html"><span class="token function">removeOnMapClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onMapClickListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-map-click-listener/index.html">OnMapClickListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is clicked. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-733998153%2FExtensions%2F540127926" anchor-label="removeOnMapLongClickListener" id="-733998153%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-map-long-click-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Map</span><wbr></wbr><span>Long</span><wbr></wbr><span>Click</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-733998153%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-map-long-click-listener.html"><span class="token function">removeOnMapLongClickListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">onMapLongClickListener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-map-long-click-listener/index.html">OnMapLongClickListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is long clicked. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="360987957%2FExtensions%2F540127926" anchor-label="removeOnMoveListener" id="360987957%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-move-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Move</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="360987957%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-move-listener.html"><span class="token function">removeOnMoveListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-move-listener/index.html">OnMoveListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is moved. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-2080276575%2FExtensions%2F540127926" anchor-label="removeOnRotateListener" id="-2080276575%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-rotate-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Rotate</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2080276575%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-rotate-listener.html"><span class="token function">removeOnRotateListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-rotate-listener/index.html">OnRotateListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is rotated. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="337719869%2FExtensions%2F540127926" anchor-label="removeOnScaleListener" id="337719869%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-scale-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Scale</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="337719869%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-scale-listener.html"><span class="token function">removeOnScaleListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-scale-listener/index.html">OnScaleListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is scaled. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1680271395%2FExtensions%2F540127926" anchor-label="removeOnShoveListener" id="-1680271395%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/remove-on-shove-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Shove</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1680271395%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/remove-on-shove-listener.html"><span class="token function">removeOnShoveListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.gestures/-on-shove-listener/index.html">OnShoveListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a callback that is invoked when the map is shoved. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="2114688047%2FExtensions%2F540127926" anchor-label="rotateBy" id="2114688047%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.animation/rotate-by.html"><span>rotate</span><wbr></wbr><span><span>By</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2114688047%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.animation/rotate-by.html"><span class="token function">rotateBy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">first<span class="token operator">: </span><a href="../../com.mapbox.maps/-screen-coordinate/index.html">ScreenCoordinate</a><span class="token punctuation">, </span></span><span class="parameter ">second<span class="token operator">: </span><a href="../../com.mapbox.maps/-screen-coordinate/index.html">ScreenCoordinate</a><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">animatorListener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Extension rotateBy() function for <a href="index.html">MapPluginExtensionsDelegate</a> Rotate the map by with optional animation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="825338730%2FExtensions%2F540127926" anchor-label="scaleBy" id="825338730%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.animation/scale-by.html"><span>scale</span><wbr></wbr><span><span>By</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="825338730%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.animation/scale-by.html"><span class="token function">scaleBy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">amount<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">screenCoordinate<span class="token operator">: </span><a href="../../com.mapbox.maps/-screen-coordinate/index.html">ScreenCoordinate</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">animationOptions<span class="token operator">: </span><a href="../../com.mapbox.maps.plugin.animation/-map-animation-options/index.html">MapAnimationOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">animatorListener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.mapbox.common/-cancelable/index.html">Cancelable</a></div><div class="brief "><p class="paragraph">Extension scaleBy() function for <a href="index.html">MapPluginExtensionsDelegate</a> Scale the map by with optional animation.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1266205753%2FExtensions%2F540127926" anchor-label="setGesturesManager" id="-1266205753%2FExtensions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="../../com.mapbox.maps.plugin.gestures/set-gestures-manager.html"><span>set</span><wbr></wbr><span>Gestures</span><wbr></wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1266205753%2FExtensions%2F540127926"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html">MapPluginExtensionsDelegate</a><span class="token punctuation">.</span><a href="../../com.mapbox.maps.plugin.gestures/set-gestures-manager.html"><span class="token function">setGesturesManager</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">androidGesturesManager<span class="token operator">: </span><span data-unresolved-link="com.mapbox.android.gestures/AndroidGesturesManager///PointingToDeclaration/">AndroidGesturesManager</span><span class="token punctuation">, </span></span><span class="parameter ">attachDefaultListeners<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">setDefaultMutuallyExclusives<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set the AndroidGesturesManager instance. Gesture plugin with id = <a href="../../com.mapbox.maps.plugin/-plugin/-companion/-m-a-p-b-o-x_-g-e-s-t-u-r-e-s_-p-l-u-g-i-n_-i-d.html">Plugin.MAPBOX_GESTURES_PLUGIN_ID</a> must be added while constructing <code class="lang-kotlin">MapView</code> as part of <code class="lang-kotlin">MapInitOptions.plugins</code>.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
