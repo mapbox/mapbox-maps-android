@@ -1,11 +1,11 @@
 package com.mapbox.maps.testapp.auto.car
 
-import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface
 import com.mapbox.maps.extension.androidauto.widgets.CompassWidget
 import com.mapbox.maps.extension.androidauto.widgets.LogoWidget
+import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 
 /**
  * Note that the Widgets are only available when using android auto extension together with the
@@ -15,7 +15,7 @@ import com.mapbox.maps.extension.androidauto.widgets.LogoWidget
 class CarMapWidgets : MapboxCarMapObserver {
   private lateinit var logoWidget: LogoWidget
   private lateinit var compassWidget: CompassWidget
-  private var cancellable: Cancelable? = null
+  private lateinit var onCameraChangeListener: OnCameraChangeListener
   override fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {
     super.onAttached(mapboxCarMapSurface)
     with(mapboxCarMapSurface) {
@@ -25,19 +25,17 @@ class CarMapWidgets : MapboxCarMapObserver {
         marginX = 26f,
         marginY = 120f,
       )
+      onCameraChangeListener = OnCameraChangeListener { compassWidget.setRotation(-mapSurface.getMapboxMap().cameraState.bearing.toFloat()) }
       mapSurface.addWidget(logoWidget)
       mapSurface.addWidget(compassWidget)
-      cancellable = mapSurface.mapboxMap.subscribeCameraChanged {
-        compassWidget.setRotation(-mapSurface.mapboxMap.cameraState.bearing.toFloat())
-      }
+      mapSurface.getMapboxMap().addOnCameraChangeListener(onCameraChangeListener)
     }
   }
 
   override fun onDetached(mapboxCarMapSurface: MapboxCarMapSurface) {
     super.onDetached(mapboxCarMapSurface)
     with(mapboxCarMapSurface) {
-      cancellable?.cancel()
-      cancellable = null
+      mapSurface.getMapboxMap().removeOnCameraChangeListener(onCameraChangeListener)
       mapSurface.removeWidget(logoWidget)
       mapSurface.removeWidget(compassWidget)
     }
