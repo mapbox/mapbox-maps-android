@@ -3,11 +3,20 @@ package com.mapbox.maps.renderer
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.opengl.GLES20
-import androidx.annotation.*
+import androidx.annotation.AnyThread
+import androidx.annotation.MainThread
+import androidx.annotation.UiThread
+import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
-import com.mapbox.maps.*
+import com.mapbox.maps.DelegatingMapClient
 import com.mapbox.maps.MapView.OnSnapshotReady
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.NativeMapImpl
+import com.mapbox.maps.RenderFrameFinishedCallback
+import com.mapbox.maps.RenderModeType
 import com.mapbox.maps.Size
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.gl.PixelReader
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
@@ -111,6 +120,16 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   @RenderThread
   fun render() {
     map?.render()
+  }
+
+  /**
+   * Resets the renderer thread service type to Interactive.
+   * Must be called on the render thread.
+   */
+  @MapboxExperimental
+  @RenderThread
+  fun resetThreadServiceType() {
+    map?.resetThreadServiceType()
   }
 
   @UiThread

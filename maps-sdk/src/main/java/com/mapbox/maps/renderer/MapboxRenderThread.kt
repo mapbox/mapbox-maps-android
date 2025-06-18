@@ -224,6 +224,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     )
   }
 
+  /**
+   * Resets the renderer thread service type to Interactive.
+   * Must be called on the render thread.
+   */
+  @OptIn(MapboxExperimental::class)
+  @RenderThread
+  private fun resetThreadServiceType() {
+    mapboxRenderer.resetThreadServiceType()
+  }
+
   private fun setUpRenderThread(creatingSurface: Boolean): Boolean {
     surfaceProcessingLock.withLock {
       try {
@@ -717,6 +727,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun resume() {
     paused = false
     logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
+    postNonRenderEvent(RenderEvent(::resetThreadServiceType, false))
     // schedule render if we resume not after first create (e.g. bring map back to front)
     renderPreparedGuardedRun(::postPrepareRenderFrame)
   }
