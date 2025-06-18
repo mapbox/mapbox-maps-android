@@ -21,7 +21,6 @@ pluginMapboxAccessToken = "0.4.0"
 pluginMapboxSdkRegistry = "1.3.3"
 pluginMapboxSdkVersions = "1.1.3"
 pluginMapboxNdk = "0.1.0"
-pluginPitest = "0.2.8"
 pluginTaskTree = "2.1.0"
 pluginPlayPublisher = "3.7.0"
 pluginGradleVersions = "0.42.0"
@@ -106,7 +105,6 @@ plugin-mapbox-sdkRegistry = { module = "com.mapbox.gradle.plugins:sdk-registry",
 plugin-mapbox-sdkVersions = { module = "com.mapbox.mapboxsdk:mapbox-android-sdk-versions", version.ref = "pluginMapboxSdkVersions" }
 plugin-mapbox-ndk = { module = "com.mapbox.gradle.plugins:ndk", version.ref = "pluginMapboxNdk" }
 
-plugin-pitest = { module = "pl.droidsonroids.gradle:gradle-pitest-plugin", version.ref = "pluginPitest" }
 plugin-playPublisher = { module = "com.github.triplet.gradle:play-publisher", version.ref = "pluginPlayPublisher" }
 plugin-gradleVersions = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "pluginGradleVersions" }
 
@@ -158,7 +156,6 @@ junit = { module = "junit:junit", version.ref = "junit" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinDataCompatAnnotation = { module = "com.github.tobrun.kotlin-data-compat:annotation", version.ref = "kotlinDataCompat" }
 kotlinDataCompatProcessor = { module = "com.github.tobrun.kotlin-data-compat:processor", version.ref = "kotlinDataCompat" }
-kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 lint = { module = "com.android.tools.lint:lint", version.ref = "lint" }
 lintApi = { module = "com.android.tools.lint:lint-api", version.ref = "lint" }
 lintChecks = { module = "com.android.tools.lint:lint-checks", version.ref = "lint" }
@@ -173,8 +170,6 @@ mapbox-javaTurf = { module = "com.mapbox.mapboxsdk:mapbox-sdk-turf", version.ref
 mapbox-services = { module = "com.mapbox.mapboxsdk:mapbox-sdk-services", version.ref = "mapboxJavaServices" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-mockkAgentApi = { module = "io.mockk:mockk-agent-api", version.ref = "mockk" }
-mockkAgentJvm = { module = "io.mockk:mockk-agent-jvm", version.ref = "mockk" }
 
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectricEgl = { module = "org.khronos:opengl-api", version.ref = "robolectricEgl" }

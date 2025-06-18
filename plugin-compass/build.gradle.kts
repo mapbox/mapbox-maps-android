@@ -27,9 +27,6 @@ dependencies {
   implementation(libs.bundles.base.dependencies)
 
   testImplementation(libs.bundles.base.dependenciesTests)
-  testImplementation(libs.mockkAgentApi)
-  testImplementation(libs.mockkAgentJvm)
-  testImplementation(libs.kotlinReflect)
   testImplementation(project(":plugin-animation"))
 
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
@@ -42,12 +39,6 @@ project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
-  from("$rootDir/gradle/pitest.gradle")
   from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
-}
-
-configure<pl.droidsonroids.gradle.pitest.PitestPluginExtension> {
-  targetClasses.set(listOf("com.mapbox.maps.plugin.compass**"))
-  targetTests.set(listOf("**Compass**"))
 }

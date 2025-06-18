@@ -26,7 +26,6 @@ buildscript {
     classpath(libs.plugin.mapbox.sdkRegistry)
     classpath(libs.plugin.mapbox.sdkVersions)
     classpath(libs.plugin.mapbox.ndk)
-    classpath(libs.plugin.pitest)
     classpath(libs.plugin.playPublisher)
     classpath(libs.plugin.gradleVersions)
   }
