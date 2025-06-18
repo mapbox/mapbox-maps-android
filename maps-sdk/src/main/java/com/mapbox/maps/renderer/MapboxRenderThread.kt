@@ -211,11 +211,15 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.TAG = ""
   }
 
+  /**
+   * Keep a runnable to [prepareRenderFrame] to avoid creating a new one on every frame.
+   */
+  private val prepareRenderFrameRunnable: Runnable = Runnable {
+      prepareRenderFrame()
+  }
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
     renderHandlerThread.postDelayed(
-      {
-        prepareRenderFrame()
-      },
+      prepareRenderFrameRunnable,
       delayMillis
     )
   }
@@ -506,8 +510,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun onSurfaceSizeChanged(width: Int, height: Int) {
     if (this.width != width || this.height != height) {
       renderHandlerThread.post {
-        this.width = width
-        this.height = height
+        this@MapboxRenderThread.width = width
+        this@MapboxRenderThread.height = height
         sizeChanged = true
         prepareRenderFrame()
       }
@@ -522,7 +526,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         if (renderHandlerThread.isRunning) {
           renderHandlerThread.post {
             awaitingNextVsync = false
-            Choreographer.getInstance().removeFrameCallback(this)
+            Choreographer.getInstance().removeFrameCallback(this@MapboxRenderThread)
             surfaceProcessingLock.withLock {
               // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
               if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
@@ -687,9 +691,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             renderThreadPrepared -> {
               renderEvent.runnable?.run()
             }
+
             paused -> {
               nonRenderEventQueue.add(renderEvent)
             }
+
             else -> {
               logW(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
               postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
@@ -712,9 +718,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     paused = false
     logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
     // schedule render if we resume not after first create (e.g. bring map back to front)
-    renderPreparedGuardedRun {
-      postPrepareRenderFrame()
-    }
+    renderPreparedGuardedRun(::postPrepareRenderFrame)
   }
 
   @UiThread

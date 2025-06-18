@@ -2,7 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.os.Handler
 import androidx.annotation.RestrictTo
-import androidx.core.os.postDelayed
+import androidx.core.os.HandlerCompat
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import kotlin.math.pow
@@ -85,6 +85,10 @@ internal class FpsManager(
     return true
   }
 
+  /**
+   * Keep a runnable to [onRenderingPaused] to avoid creating a new one every time.
+   */
+  private val onRenderingPausedRunnable = Runnable { onRenderingPaused() }
   fun postRender() {
     val frameRenderTimeNs = System.nanoTime() - preRenderTimeNs
     frameRenderTimeAccumulatedNs += frameRenderTimeNs
@@ -95,12 +99,12 @@ internal class FpsManager(
       // however to produce correct values we also update FPS after IDLE_TIMEOUT_MS
       // otherwise when updating the map after it was IDLE first update will report
       // huge delta between new frame and last frame (as we're using dirty rendering)
-      handler.postDelayed(
-        VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / ONE_MILLISECOND_NS),
-        fpsManagerToken
-      ) {
-        onRenderingPaused()
-      }
+      HandlerCompat.postDelayed(
+        handler,
+        onRenderingPausedRunnable,
+        fpsManagerToken,
+        VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / ONE_MILLISECOND_NS)
+      )
     }
     preRenderTimeNs = -1L
   }

@@ -31,11 +31,11 @@ internal class RenderHandlerThread(
   @Suppress("PrivatePropertyName")
   private val TAG = "Mbgl-$handlerThreadName" + if (mapName.isNotBlank()) "\\$mapName" else ""
 
-  fun post(task: () -> Unit) {
+  fun post(task: Runnable) {
     postDelayed(task, 0)
   }
 
-  fun postDelayed(task: () -> Unit, delayMillis: Long) {
+  fun postDelayed(task: Runnable, delayMillis: Long) {
     handler?.let {
       val message = Message.obtain(it, task)
       it.sendMessageDelayed(message, delayMillis)
