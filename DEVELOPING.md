@@ -442,3 +442,14 @@ And then update the Mapbox Maps SDK's version name to the snapshot version in yo
 ## Working with traces
 
 If you're experiencing performance problems, enabling and analyzing traces is a crucial step for diagnosis. For step-by-step instructions on how to enable tracing and interpret the collected data, please consult the [tracing guide](https://docs.mapbox.com/android/maps/guides/debugging-and-profiling/tracing/).
+
+## Logging
+
+The Maps SDK for Android logs are handled by [MapboxLogger](https://github.com/mapbox/mapbox-maps-android/blob/main/sdk-base/src/main/java/com/mapbox/maps/MapboxLogger.kt), which provides a unified logging interface for all SDK components. It uses `com.mapbox.common.Log` from the Mapbox Common SDK under the hood.
+
+Example usage:
+```kotlin
+import com.mapbox.maps.logD
+// ...
+logD(TAG, "Debug message")
+```
