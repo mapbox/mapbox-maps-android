@@ -7,6 +7,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 * Provide depth range used for rendering 3D content to custom layers.
+# 11.13.1 June 18, 2025
+
+## Bug fixes 🐞
+* Apply a more robust policy for retrying failed network requests.
+
+## Dependencies
+* Update gl-native to v11.13.1, common to 24.13.1.
 
 # 11.13.0
 ## Features ✨ and improvements 🏁
