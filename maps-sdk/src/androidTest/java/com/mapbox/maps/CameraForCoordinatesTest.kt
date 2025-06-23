@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import androidx.core.view.doOnLayout
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -27,7 +28,7 @@ class CameraForCoordinatesTest {
 
   @Before
   fun setUp() {
-    val latch = CountDownLatch(2)
+    val latch = CountDownLatch(1)
     rule.scenario.onActivity {
       val mapOptions = MapInitOptions.getDefaultMapOptions(it).toBuilder()
         .pixelRatio(1F)
@@ -37,13 +38,10 @@ class CameraForCoordinatesTest {
       mapboxMap.loadStyle("{}")
       // Hardcoded width and height to avoid issues with different screen sizes
       it.frameLayout.addView(mapView, 200, 200)
+      mapView.doOnLayout {
+        latch.countDown()
+      }
       mapboxMap.setStyleProjection(Value.valueOf(hashMapOf("name" to Value.valueOf("mercator"))))
-      mapboxMap.getStyle {
-        latch.countDown()
-      }
-      mapboxMap.subscribeMapIdle {
-        latch.countDown()
-      }
     }
     latch.throwExceptionOnTimeoutMs(timeoutMs = 30_000L)
   }
@@ -97,7 +95,6 @@ class CameraForCoordinatesTest {
           offset = null,
         )
         Assert.assertFalse(cameraForCoordinates.isEmpty)
-        mapboxMap.setCamera(cameraForCoordinates)
         Assert.assertEquals(0.0, cameraForCoordinates.center!!.longitude(), 0.001)
         Assert.assertEquals(15.058, cameraForCoordinates.center!!.latitude(), 0.001)
         Assert.assertEquals(-1.356, cameraForCoordinates.zoom!!, 0.001)
