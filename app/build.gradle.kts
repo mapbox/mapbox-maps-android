@@ -131,12 +131,10 @@ dependencies {
   androidTestImplementation(libs.androidx.testJUnit)
   androidTestImplementation(libs.androidx.uiAutomator)
   testImplementation(libs.junit)
-  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

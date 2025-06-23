@@ -29,13 +29,11 @@ dependencies {
 
   testImplementation(libs.bundles.base.dependenciesTests)
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
-  detektPlugins(libs.detektFormatting)
 }
 
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
-  from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

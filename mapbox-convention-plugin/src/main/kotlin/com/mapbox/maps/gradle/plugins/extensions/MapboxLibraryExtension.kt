@@ -71,7 +71,6 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
   private fun Project.applyRequiredPlugins() {
     plugins.apply("com.android.library")
     plugins.apply("kotlin-android")
-    plugins.apply("io.gitlab.arturbosch.detekt")
   }
 
   internal companion object {

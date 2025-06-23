@@ -30,7 +30,6 @@ dependencies {
   testImplementation(project(":plugin-animation"))
 
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
-  detektPlugins(libs.detektFormatting)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "1.8" }
@@ -39,6 +38,5 @@ project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
-  from("$rootDir/gradle/detekt.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

@@ -28,7 +28,6 @@ pluginBinaryCompatibilityValidator = "0.13.2"
 
 dokka = "1.7.20"
 kotlin = "1.7.20"
-detekt = "1.22.0"
 japicmp = "0.4.6"
 
 # Dependencies
@@ -87,7 +86,6 @@ plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 plugin-jacoco = { module = "org.jacoco:org.jacoco.core", version.ref = "pluginJacoco" }
 plugin-license = { module = "com.jaredsburrows:gradle-license-plugin", version.ref = "pluginLicense" }
 plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
-plugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 plugin-japicmp = { module = "me.champeau.gradle:japicmp-gradle-plugin", version.ref = "japicmp" }
 
 plugin-mapbox-accessToken = { module = "com.mapbox.gradle.plugins:access-token", version.ref = "pluginMapboxAccessToken" }
@@ -127,7 +125,6 @@ coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
 coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 
-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 equalsVerifier = { module = "nl.jqno.equalsverifier:equalsverifier", version.ref = "equalsVerifier" }
 googleCarAppLibrary = { module = "androidx.car.app:app", version.ref = "googleCarAppLibrary" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
@@ -161,6 +158,5 @@ base-dependenciesTests = ["junit", "mockk", "androidx-testCore", "equalsVerifier
 base-dependenciesAndroidTests = ["androidx-testRunner", "androidx-jUnitTestRules", "androidx-espresso"]
 
 [plugins]
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 taskTreeId = { id = "com.dorongold.task-tree", version.ref = "pluginTaskTree" }
 binaryCompatibilityValidatorId = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "pluginBinaryCompatibilityValidator" }

@@ -79,7 +79,6 @@ subprojects {
 plugins {
   id("com.mapbox.gradle.root")
   // the IDE mistakenly highlights `libs` as an error, see https://github.com/gradle/gradle/issues/22797
-  alias(libs.plugins.detekt) apply false
   alias(libs.plugins.binaryCompatibilityValidatorId)
   // Used to print dependency tree of the task, useful to debug gradle tasks
   // Ticket to track adding this feature to gradle officially: https://github.com/gradle/gradle/issues/980
@@ -146,4 +145,3 @@ public val isBuildingReleaseTag = "^v[0-9]+\\.[0-9]+\\.[0-9]+.*\$".toRegex().mat
  * @return True if this build is part of Circleci job triggered from a PR that targets a release branch
  */
 public val isTargettingReleaseBranch = "^v[0-9]+\\.[0-9]+\$".toRegex().matches(System.getenv("PR_TARGET_BRANCH") ?: "")
-

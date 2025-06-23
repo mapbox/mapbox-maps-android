@@ -22,7 +22,6 @@ public abstract class MapboxApplicationExtension @Inject constructor(objects: Ob
   private fun Project.applyRequiredPlugins() {
     plugins.apply("com.android.application")
     plugins.apply("kotlin-android")
-    plugins.apply("io.gitlab.arturbosch.detekt")
     plugins.apply("com.mapbox.maps.token")
   }
 
