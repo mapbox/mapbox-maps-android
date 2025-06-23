@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.Feature
@@ -137,11 +138,14 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
   }
 
   private fun getRoute() {
+    val routeOptions =
+      RouteOptions.builder()
+        .coordinatesList(listOf(originPoint, destinationPoint))
+        .overview(DirectionsCriteria.OVERVIEW_FULL)
+        .profile(DirectionsCriteria.PROFILE_WALKING)
+        .build()
     directionsClient = MapboxDirections.builder()
-      .origin(originPoint)
-      .destination(destinationPoint)
-      .overview(DirectionsCriteria.OVERVIEW_FULL)
-      .profile(DirectionsCriteria.PROFILE_WALKING)
+      .routeOptions(routeOptions)
       .accessToken(MapboxOptions.accessToken)
       .build()
 

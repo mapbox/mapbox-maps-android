@@ -5,6 +5,7 @@ plugins {
 
 android {
   compileSdk = libs.versions.autoCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.testapp.auto"
   defaultConfig {
     minSdk = libs.versions.autoMinSdkVersion.get().toInt()
     targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()
@@ -39,16 +40,16 @@ dependencies {
   implementation(libs.kotlin)
   implementation(libs.androidx.appCompat)
   implementation(libs.androidx.coreKtx)
-  implementation(libs.googleMaterialDesign)
-  implementation(libs.androidx.constraintLayout)
-  implementation(libs.androidx.startup)
+  implementation(appsLibs.googleMaterialDesign)
+  implementation(appsLibs.androidx.constraintLayout)
+  implementation(appsLibs.androidx.startup)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(libs.googlePlayServicesLocation)
+  implementation(appsLibs.googlePlayServicesLocation)
 
   androidTestUtil(libs.androidx.orchestrator)
 

@@ -5,6 +5,7 @@ plugins {
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.extension.compose"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
@@ -64,7 +65,6 @@ dependencies {
   dependencies {
     compileOnly(project(":maps-sdk"))
     implementation(platform(libs.compose.bom))
-    implementation(libs.mapbox.javaGeoJSON)
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
     implementation(libs.bundles.base.dependencies)

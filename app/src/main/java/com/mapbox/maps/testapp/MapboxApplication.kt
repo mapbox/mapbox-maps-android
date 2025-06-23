@@ -1,7 +1,7 @@
 package com.mapbox.maps.testapp
 
+import android.app.Application
 import android.os.StrictMode
-import androidx.multidex.MultiDexApplication
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.geofencing.GeofencingError
@@ -15,7 +15,7 @@ import com.mapbox.maps.testapp.examples.geofence.ExtendedGeofencingActivity
 /**
  * Application class of the test application.
  **/
-class MapboxApplication : MultiDexApplication() {
+class MapboxApplication : Application() {
 
   @MapboxExperimental
   private val geofencingObserver: GeofencingObserver = object : GeofencingObserver {

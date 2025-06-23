@@ -56,12 +56,16 @@ android {
       } else {
         signingConfigs.getByName("debug")
       }
-      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+      proguardFiles(
+        getDefaultProguardFile("proguard-android.txt"),
+        "proguard-rules.pro",
+        "mapbox-services-proguard-rules.pro",
+        "retrofit2-proguard-rules.pro"
+      )
     }
     getByName("debug") {
       isMinifyEnabled = false
       signingConfig = signingConfigs.getByName("debug")
-      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
     }
   }
 
@@ -95,19 +99,17 @@ android {
 dependencies {
   implementation(project(":maps-sdk"))
   implementation(libs.kotlin)
-  implementation(libs.mapbox.javaTurf)
-  implementation(libs.mapbox.javaGeoJSON)
-  implementation(libs.mapbox.services)
   implementation(libs.androidx.appCompat)
   implementation(libs.androidx.coreKtx)
-  implementation(libs.androidx.recyclerView)
-  implementation(libs.androidx.constraintLayout)
-  implementation(libs.androidx.multidex)
-  implementation(libs.androidx.lifecycleKtx)
-  implementation(libs.googleMaterialDesign)
-  implementation(libs.squareRetrofit)
-  implementation(libs.androidx.fragmentTest)
-  implementation(libs.squareRetrofitGsonConverter)
+  implementation(appsLibs.androidx.recyclerView)
+  implementation(appsLibs.androidx.constraintLayout)
+  implementation(appsLibs.androidx.lifecycleKtx)
+  implementation(appsLibs.googleMaterialDesign)
+  implementation(appsLibs.androidx.fragmentTest)
+  implementation(appsLibs.mapbox.turf)
+  implementation(appsLibs.mapbox.services)
+  implementation(appsLibs.square.retrofit)
+  implementation(appsLibs.square.retrofit.gsonConverter)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
@@ -115,13 +117,13 @@ dependencies {
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(libs.googlePlayServicesLocation)
+  implementation(appsLibs.googlePlayServicesLocation)
 
   // Maps SDK does not provide this dependency so adding explicitly to make use of
   // async view inflation for view annotation manager example
   implementation(libs.asyncInflater)
 
-  debugImplementation(libs.squareLeakCanary)
+  debugImplementation(appsLibs.squareLeakCanary)
   debugImplementation(libs.androidx.testMonitor)
   androidTestUtil(libs.androidx.orchestrator)
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)

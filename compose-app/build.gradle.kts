@@ -6,6 +6,7 @@ plugins {
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.compose.testapp"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
@@ -25,12 +26,16 @@ android {
       isMinifyEnabled = true
       // For local testing only, should use a different keystore if used besides testing.
       signingConfig = signingConfigs.getByName("debug")
-      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+      proguardFiles(
+        getDefaultProguardFile("proguard-android.txt"),
+        "proguard-rules.pro",
+        "mapbox-services-proguard-rules.pro",
+        "retrofit2-proguard-rules.pro"
+      )
     }
     getByName("debug") {
       isMinifyEnabled = false
       signingConfig = signingConfigs.getByName("debug")
-      proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
     }
   }
 
@@ -64,25 +69,23 @@ dependencies {
   implementation(platform(libs.compose.bom))
   implementation(libs.compose.ui)
   implementation(libs.compose.material)
-  implementation(libs.androidx.activityCompose)
-  implementation(libs.googleMaterialDesign)
-  implementation(libs.compose.uiToolingPreview)
-  implementation(libs.compose.uiTooling)
-  implementation(libs.mapbox.javaTurf)
-  implementation(libs.mapbox.services)
+  implementation(appsLibs.androidx.activityCompose)
+  implementation(appsLibs.compose.uiToolingPreview)
+  implementation(appsLibs.compose.uiTooling)
+  implementation(appsLibs.googleMaterialDesign)
+  implementation(appsLibs.mapbox.turf)
+  implementation(appsLibs.mapbox.services)
 
-  implementation(libs.squareRetrofit)
   implementation(libs.androidx.appCompat)
   implementation(libs.androidx.coreKtx)
-  implementation(libs.androidx.multidex)
-  implementation(libs.googlePlayServicesLocation)
+  implementation(appsLibs.googlePlayServicesLocation)
   androidTestUtil(libs.androidx.orchestrator)
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
   androidTestImplementation(libs.androidx.testJUnit)
   androidTestImplementation(libs.androidx.uiAutomator)
   testImplementation(libs.junit)
   detektPlugins(libs.detektFormatting)
-  debugImplementation(libs.squareLeakCanary)
+  debugImplementation(appsLibs.squareLeakCanary)
 }
 
 project.apply {

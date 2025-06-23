@@ -4,6 +4,7 @@ plugins {
 
 android {
   compileSdk = libs.versions.autoCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.extension.androidauto"
   defaultConfig {
     minSdk = libs.versions.autoMinSdkVersion.get().toInt()
     targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()

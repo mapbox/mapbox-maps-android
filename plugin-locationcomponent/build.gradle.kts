@@ -26,7 +26,7 @@ dependencies {
   implementation(project(":sdk-base"))
   implementation(project(":extension-style"))
   implementation(libs.bundles.base.dependencies)
-  implementation(libs.mapbox.javaGeoJSON)
+  implementation(libs.mapbox.geoJSON)
   implementation(libs.coroutines)
 
   testImplementation(libs.bundles.base.dependenciesTests)

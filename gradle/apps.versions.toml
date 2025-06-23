@@ -1,0 +1,42 @@
+# This file contains dependencies only used in the test apps.
+# Upgrading this dependencies is not a breaking change for the Mapbox Maps SDK for Android.
+
+
+[versions]
+mapboxJavaServices = "7.4.0"
+squareRetrofit = "2.9.0"
+
+androidxRecyclerView = "1.1.0"
+androidxConstraintLayout = "2.0.0"
+androidxLifecycle = "2.3.0"
+androidxFragmentTesting = "1.6.0"
+androidxActivityCompose = "1.4.0"
+androidxStartup = "1.1.1"
+
+materialDesign = "1.2.0"
+googlePlayServicesLocation = "18.0.0"
+
+squareLeakCanary = "2.9.1"
+
+
+[libraries]
+mapbox-turf = { module = "com.mapbox.mapboxsdk:mapbox-sdk-turf", version.ref = "mapboxJavaServices" }
+mapbox-services = { module = "com.mapbox.mapboxsdk:mapbox-sdk-services", version.ref = "mapboxJavaServices" }
+
+square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "squareRetrofit" }
+square-retrofit-gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "squareRetrofit" }
+
+androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerView" }
+androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintLayout" }
+androidx-lifecycleKtx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-fragmentTest = { module = "androidx.fragment:fragment-testing", version.ref = "androidxFragmentTesting" }
+androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidxStartup" }
+
+googleMaterialDesign = { module = "com.google.android.material:material", version.ref = "materialDesign" }
+googlePlayServicesLocation = { module = "com.google.android.gms:play-services-location", version.ref = "googlePlayServicesLocation" }
+
+compose-uiTooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-uiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview" }
+
+squareLeakCanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "squareLeakCanary" }

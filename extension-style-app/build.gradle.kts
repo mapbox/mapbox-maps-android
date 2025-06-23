@@ -6,6 +6,7 @@ plugins {
 
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
+  namespace = "com.mapbox.maps.extension.testapp"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()

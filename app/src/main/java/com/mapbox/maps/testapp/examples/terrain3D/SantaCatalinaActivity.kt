@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.LineString
@@ -111,12 +112,14 @@ class SantaCatalinaActivity : AppCompatActivity() {
    * propagates the linestring geometry as high order function.
    */
   private fun executeDirectionsRequestForRoute(animateRoute: (LineString) -> Unit) {
-    val client = MapboxDirections.builder()
-      .origin(POINT_START)
-      .destination(POINT_END)
+    val routeOptions = RouteOptions.builder()
+      .coordinatesList(listOf(POINT_START, POINT_END))
       .overview(DirectionsCriteria.OVERVIEW_SIMPLIFIED)
       .profile(DirectionsCriteria.PROFILE_WALKING)
       .steps(true)
+      .build()
+    val client = MapboxDirections.builder()
+      .routeOptions(routeOptions)
       .accessToken(MapboxOptions.accessToken)
       .build()
     client.enqueueCall(object : Callback<DirectionsResponse> {

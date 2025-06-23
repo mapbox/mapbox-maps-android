@@ -12,6 +12,9 @@ dependencyResolutionManagement {
     create("commonLibs") {
       from(files("gradle/commonlibs.versions.toml"))
     }
+    create("appsLibs") {
+      from(files("gradle/apps.versions.toml"))
+    }
   }
 }
 

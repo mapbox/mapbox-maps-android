@@ -10,6 +10,7 @@ import com.mapbox.api.directions.v5.DirectionsCriteria.GEOMETRY_POLYLINE
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.LegStep
+import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_5
 import com.mapbox.geojson.Feature
@@ -93,14 +94,17 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
    * Build and execute the Mapbox Directions API request
    */
   private fun requestDirectionRoute() {
+    val routeOptions =
+      RouteOptions.builder()
+        .coordinatesList(listOf(PARIS_ORIGIN_POINT, TULLINS_DESTINATION_POINT))
+        .overview(DirectionsCriteria.OVERVIEW_FULL)
+        .profile(DirectionsCriteria.PROFILE_DRIVING)
+        .geometries(GEOMETRY_POLYLINE)
+        .alternatives(true)
+        .steps(true)
+        .build()
     mapboxDirectionsClient = MapboxDirections.builder()
-      .origin(PARIS_ORIGIN_POINT)
-      .destination(TULLINS_DESTINATION_POINT)
-      .overview(DirectionsCriteria.OVERVIEW_FULL)
-      .profile(DirectionsCriteria.PROFILE_DRIVING)
-      .geometries(GEOMETRY_POLYLINE)
-      .alternatives(true)
-      .steps(true)
+      .routeOptions(routeOptions)
       .accessToken(MapboxOptions.accessToken)
       .build()
 

@@ -91,7 +91,7 @@ public class NavigationSimulationActivity : ComponentActivity() {
               AnnotationUtils.loadStringFromAssets(
                 this@NavigationSimulationActivity,
                 NAVIGATION_ROUTE_JSON_NAME
-              )
+              )!!
             ).routes()[0].geometry()!!,
             Constants.PRECISION_6
           ).also {
