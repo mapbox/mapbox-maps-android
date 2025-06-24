@@ -1,8 +1,6 @@
 plugins {
   id("com.mapbox.gradle.library")
   id("com.jaredsburrows.license")
-  // FIXME https://mapbox.atlassian.net/browse/MAPSAND-794
-  //id("com.mapbox.android.sdk.versions")
 }
 
 mapboxLibrary {
