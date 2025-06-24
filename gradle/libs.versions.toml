@@ -36,7 +36,7 @@ japicmp = "0.4.6"
 mapboxGlNative = "11.14.0-SNAPSHOT-06-24--04-30.git-d373f44"
 mapboxCommon = "24.14.0-SNAPSHOT-06-24--04-30.git-d373f44"
 
-mapboxBase = "0.11.0"
+mapboxBase = "0.12.0"
 mapboxGestures = "0.8.0"
 mapboxGeoJSON = "5.4.1"
 

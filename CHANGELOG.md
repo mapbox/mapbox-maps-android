@@ -7,6 +7,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 * Provide depth range used for rendering 3D content to custom layers.
+
+## Bug fixes 🐞
+* Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
+
+## Dependencies
+* Update Mapbox Base Android library to [v0.12.0](https://github.com/mapbox/mapbox-base-android/releases/tag/v0.12.0).
+
 # 11.13.1 June 18, 2025
 
 ## Bug fixes 🐞
