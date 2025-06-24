@@ -30,7 +30,12 @@ android {
 
   // moving generated KSP files from build folder to `src/<variant_name>/ksp`
   afterEvaluate {
+    val shouldGenerateKsp = project.hasProperty("generate-ksp")
+
     tasks.withType(KspTaskJvm::class.java).all {
+      // Make KSP tasks optional - only run when explicitly requested
+      enabled = shouldGenerateKsp
+      
       val generatedKspFilesFolder = destination
       var lastFolder = generatedKspFilesFolder.toPath().fileName.toString()
       // We handle "debug" and "release" build types as equal so remove them
@@ -45,7 +50,11 @@ android {
       val destinationPath = projectDir.resolve("src/$lastFolder/ksp")
       // dropping first 3 symbols which are `ksp`
       val variantName = name.drop(3)
+
       val copyTask = tasks.register("moveKsp${variantName}Task", Sync::class.java) {
+        // Only run if KSP generation is enabled
+        enabled = shouldGenerateKsp
+
         val sourcePath = "${generatedKspFilesFolder.absolutePath}${File.separator}kotlin"
         // make sure we always execute this task when KSP build folder is not empty
         outputs.upToDateWhen {
@@ -63,9 +72,20 @@ android {
           generatedKspFilesFolder.resolve("classes").mkdir()
         }
       }
-      tasks.findByName("compile${variantName}")!!.dependsOn(copyTask)
-      tasks.named("dokkaHtml") {
-        dependsOn("moveKspReleaseKotlinTask", "kspReleaseKotlin")
+
+      // Always create the classes directory for metalava, regardless of KSP generation
+      val createClassesDirTask = tasks.register("createKspClassesDir${variantName}") {
+        doLast {
+          generatedKspFilesFolder.resolve("classes").mkdirs()
+        }
+      }
+
+      if (shouldGenerateKsp) {
+        // If KSP generation is enabled, add the copy task as a dependency to the compile task
+        tasks.findByName("compile${variantName}")?.dependsOn(copyTask)
+      } else {
+        // If KSP generation is disabled, still create the classes directory for metalava
+        tasks.findByName("compile${variantName}")?.dependsOn(createClassesDirTask)
       }
     }
   }
