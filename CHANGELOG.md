@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update Mapbox Base Android library to [v0.12.0](https://github.com/mapbox/mapbox-base-android/releases/tag/v0.12.0).
+* Update Mapbox Gestures Android library to [v0.9.1](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.9.1).
 
 # 11.13.1 June 18, 2025
 
