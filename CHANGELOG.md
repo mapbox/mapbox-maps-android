@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 * Provide depth range used for rendering 3D content to custom layers.
+* Added new `split` expression, which returns an array of substrings from a string, split by a delimiter parameter.
 
 ## Bug fixes 🐞
 * Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
