@@ -1560,6 +1560,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_split() {
+    val expression = split {
+      // test builder function
+      split {}
+    }
+    assertEquals("assert split expression", "[split, [split]]", expression.toString())
+  }
+
+  @Test
+  fun expression_split() {
+    val expression = Expression.split(Expression.literal("abc"))
+    assertEquals("assert split expression", "[split, abc]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_sqrt() {
     val expression = sqrt {
       // test builder function

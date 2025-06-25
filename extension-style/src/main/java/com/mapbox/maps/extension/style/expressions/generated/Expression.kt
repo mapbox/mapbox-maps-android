@@ -894,6 +894,13 @@ class Expression : Value {
     }
 
     /**
+     * Returns an array of substrings from a string, split by a delimiter parameter.
+     */
+    fun split(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
+      this@ExpressionBuilder.arguments.add(Expression.split(block))
+    }
+
+    /**
      * Returns the square root of the input.
      */
     fun sqrt(block: ExpressionBuilder.() -> Unit): ExpressionBuilder = apply {
@@ -3416,6 +3423,24 @@ class Expression : Value {
      */
     fun slice(block: ExpressionBuilder.() -> Unit): Expression =
       ExpressionBuilder("slice").apply(block).build()
+
+    /**
+     * Returns an array of substrings from a string, split by a delimiter parameter.
+     */
+    @JvmStatic
+    fun split(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("split")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "split".
+     */
+    fun split(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("split").apply(block).build()
 
     /**
      * Returns the square root of the input.

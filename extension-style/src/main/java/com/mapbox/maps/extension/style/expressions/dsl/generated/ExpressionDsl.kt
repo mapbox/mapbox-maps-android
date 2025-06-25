@@ -451,6 +451,11 @@ fun skyRadialProgress(): Expression = Expression.skyRadialProgress()
 fun slice(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.slice(block)
 
 /**
+ * Returns an array of substrings from a string, split by a delimiter parameter.
+ */
+fun split(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.split(block)
+
+/**
  * Returns the square root of the input.
  */
 fun sqrt(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.sqrt(block)
