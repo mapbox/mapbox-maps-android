@@ -348,6 +348,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sin(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression skyRadialProgress();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression slice(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression split(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression step(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -513,6 +514,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sin(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression skyRadialProgress();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression slice(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression split(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression step(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -755,6 +757,8 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression skyRadialProgress();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression slice(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression slice(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression split(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression split(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sqrt(double value);
@@ -920,6 +924,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sin(double value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder skyRadialProgress();
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder slice(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
+    method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder split(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sqrt(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder sqrt(double value);
     method public final com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder step(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
