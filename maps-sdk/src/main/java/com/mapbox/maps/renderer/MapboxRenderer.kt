@@ -127,7 +127,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
    * Must be called on the render thread.
    */
   @MapboxExperimental
-  @RenderThread
+  @UiThread
   fun resetThreadServiceType() {
     map?.resetThreadServiceType()
   }
