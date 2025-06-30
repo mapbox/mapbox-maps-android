@@ -39,7 +39,7 @@ android {
     versionName = project.property("TEST_APP_VERSION_NAME") as String
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments["clearPackageData"] = "true"
+    testInstrumentationRunnerArguments += mapOf("clearPackageData" to "true")
     ndk {
       val abi: String =
         if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
@@ -80,7 +80,6 @@ android {
 
   buildFeatures {
     viewBinding = true
-    buildConfig = true
   }
 
   testOptions {

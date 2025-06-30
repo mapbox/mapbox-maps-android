@@ -30,7 +30,6 @@ class RenderHandlerThreadTest {
   @After
   fun cleanUp() {
     unmockkStatic("com.mapbox.maps.MapboxLogger")
-    renderHandlerThread.stop()
   }
 
   @Test
@@ -86,19 +85,19 @@ class RenderHandlerThreadTest {
 
   @Test
   fun postThreadNotStarted() {
-    val action = mockk<Runnable>(relaxed = true)
+    val action = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    renderHandlerThread.post(action)
+    renderHandlerThread.post { action() }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verifyNo { action.run() }
+    verifyNo { action.invoke() }
   }
 
   @Test
   fun postThreadStopped() {
-    val actionOne = mockk<Runnable>(relaxed = true)
-    val actionTwo = mockk<Runnable>(relaxed = true)
-    val actionThree = mockk<Runnable>(relaxed = true)
-    val actionFour = mockk<Runnable>(relaxed = true)
+    val actionOne = mockk<() -> Unit>(relaxed = true)
+    val actionTwo = mockk<() -> Unit>(relaxed = true)
+    val actionThree = mockk<() -> Unit>(relaxed = true)
+    val actionFour = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.apply {
       start()
@@ -107,7 +106,7 @@ class RenderHandlerThreadTest {
         actionTwo,
         50
       )
-      Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(40))
+      Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
       stop()
       post(actionThree)
       postDelayed(
@@ -116,17 +115,17 @@ class RenderHandlerThreadTest {
       )
     }
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
-    verify { actionOne.run() }
+    verify { actionOne.invoke() }
     // action two skipped because of using HandlerThread#quit() and not quitSafely()
-    verifyNo { actionTwo.run() }
-    verifyNo { actionThree.run() }
-    verifyNo { actionFour.run() }
+    verifyNo { actionTwo.invoke() }
+    verifyNo { actionThree.invoke() }
+    verifyNo { actionFour.invoke() }
   }
 
   @Test
   fun postThreadStarted() {
-    val actionOne = mockk<Runnable>(relaxed = true)
-    val actionTwo = mockk<Runnable>(relaxed = true)
+    val actionOne = mockk<() -> Unit>(relaxed = true)
+    val actionTwo = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.apply {
       start()
@@ -134,7 +133,7 @@ class RenderHandlerThreadTest {
       postDelayed(actionTwo, 50)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
-    verify { actionOne.run() }
-    verify { actionTwo.run() }
+    verify { actionOne.invoke() }
+    verify { actionTwo.invoke() }
   }
 }

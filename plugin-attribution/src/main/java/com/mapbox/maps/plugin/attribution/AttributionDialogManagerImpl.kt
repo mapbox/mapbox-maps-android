@@ -192,9 +192,9 @@ class AttributionDialogManagerImpl(
   private fun prepareDialogBuilder(): AlertDialog.Builder {
     // using way from AOSP to determine if current theme used is AppCompat, see
     // https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:appcompat/appcompat/src/main/java/androidx/appcompat/app/AppCompatDelegateImpl.java;l=908
-    val a = context.obtainStyledAttributes(androidx.appcompat.R.styleable.AppCompatTheme)
+    val a = context.obtainStyledAttributes(R.styleable.AppCompatTheme)
     val appCompatThemeUsed = try {
-      a.hasValue(androidx.appcompat.R.styleable.AppCompatTheme_windowActionBar)
+      a.hasValue(R.styleable.AppCompatTheme_windowActionBar)
     } catch (_: Throwable) {
       false
     }
@@ -204,7 +204,7 @@ class AttributionDialogManagerImpl(
       AlertDialog.Builder(
         // explicitly use Day-Night AppCompat theme if non AppCompat theme is used in activity
         // noting that using ContextThemeWrapper should make sure we apply our theme on top of base one
-        ContextThemeWrapper(context, androidx.appcompat.R.style.Theme_AppCompat_DayNight_Dialog_Alert)
+        ContextThemeWrapper(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert)
       )
     }
     a.recycle()

@@ -41,8 +41,10 @@ gradlePlugin {
 
 kotlin {
   explicitApi()
-  compilerOptions {
-    allWarningsAsErrors = true
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+  kotlinOptions {
+    kotlinOptions.allWarningsAsErrors = true
   }
 }
 
