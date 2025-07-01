@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
 
 ## Dependencies
+* Update gl-native to v11.14.0-beta.1, common to 24.14.0-beta.1.
 * Update Mapbox Base Android library to [v0.12.0](https://github.com/mapbox/mapbox-base-android/releases/tag/v0.12.0).
 * Update Mapbox Gestures Android library to [v0.9.1](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.9.1).
 
