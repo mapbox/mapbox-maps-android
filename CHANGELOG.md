@@ -2,6 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 11.13.2
+
+## Dependencies
+* Update gl-native to v11.13.2, common to 24.13.2.
+
 # 11.13.1 June 18, 2025
 
 ## Bug fixes 🐞
