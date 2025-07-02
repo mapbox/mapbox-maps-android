@@ -92,9 +92,9 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
 
   private fun Project.configureJacocoForVariant(variant: Variant) {
     val variantName = variant.name
-    val capitalizedVariant = variantName.capitalize(Locale.ROOT)
+    val capitalizedVariant = variantName.replaceFirstChar { it.uppercase(Locale.ROOT) }
     val testTaskName = "test${capitalizedVariant}UnitTest"
-    val reportTaskName = "jacoco${testTaskName.capitalize(Locale.ROOT)}Report"
+    val reportTaskName = "jacoco${testTaskName.replaceFirstChar { it.uppercase(Locale.ROOT) }}Report"
 
     tasks.register<JacocoReport>(reportTaskName) {
       dependsOn(testTaskName)
@@ -118,10 +118,10 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
         )
       }
 
-      val javaClasses = fileTree("$buildDir/intermediates/javac/$variantName") {
+      val javaClasses = fileTree(layout.buildDirectory.dir("intermediates/javac/$variantName")) {
         exclude(this@MapboxJacocoExtension.excludes)
       }
-      val kotlinClasses = fileTree("$buildDir/tmp/kotlin-classes/$variantName") {
+      val kotlinClasses = fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/$variantName")) {
         exclude(this@MapboxJacocoExtension.excludes)
       }
 
@@ -137,7 +137,7 @@ public abstract class MapboxJacocoExtension @Inject constructor(objects: ObjectF
       )
 
       executionData.setFrom(
-        fileTree(buildDir) {
+        fileTree(layout.buildDirectory) {
           include(
             "jacoco/$testTaskName.exec",
             "outputs/unit_test_code_coverage/${variantName}UnitTest/$testTaskName.exec"

@@ -39,13 +39,8 @@ android {
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
-    if (project.hasProperty("android.injected.invoked.from.ide")) {
-      buildConfigField("boolean", "RUN_FROM_IDE", "true")
-    } else {
-      buildConfigField("boolean", "RUN_FROM_IDE", "false")
-    }
     ndk {
       val abi: String =
         if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
@@ -55,9 +50,28 @@ android {
     }
   }
 
+  buildTypes {
+    debug {
+      if (project.hasProperty("android.injected.invoked.from.ide")) {
+        buildConfigField("boolean", "RUN_FROM_IDE", "true")
+      } else {
+        buildConfigField("boolean", "RUN_FROM_IDE", "false")
+      }
+    }
+  }
+
   testOptions {
     unitTests.apply {
       isIncludeAndroidResources = true
+    }
+    unitTests.all {
+      /*
+      Allow Mockk to do deep reflection to access nonpublic members for the packages listed.
+      https://github.com/mockk/mockk/blob/master/doc/md/jdk16-access-exceptions.md
+       */
+      it.jvmArgs(
+        "--add-opens", "java.base/java.util.concurrent.locks=ALL-UNNAMED",
+      )
     }
     animationsDisabled = true
     if (!project.hasProperty("android.injected.invoked.from.ide")) {

@@ -46,7 +46,7 @@ android {
       if (lastFolder.isBlank()) {
         lastFolder = "main"
       }
-      lastFolder = lastFolder.decapitalize(Locale.US)
+      lastFolder = lastFolder.replaceFirstChar { it.lowercase(Locale.ROOT) }
       val destinationPath = projectDir.resolve("src/$lastFolder/ksp")
       // dropping first 3 symbols which are `ksp`
       val variantName = name.drop(3)

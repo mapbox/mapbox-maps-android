@@ -1,5 +1,6 @@
 package com.mapbox.maps.gradle.plugins.extensions
 
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
 import com.mapbox.maps.gradle.plugins.internal.getVersionCatalog
 import com.mapbox.maps.gradle.plugins.internal.newInstance
@@ -10,6 +11,7 @@ import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.property
 import javax.inject.Inject
+import com.android.build.api.dsl.LibraryExtension as ApiLibraryExtension
 
 public abstract class MapboxLibraryExtension @Inject constructor(objects: ObjectFactory) :
   MapboxDependenciesExtension(objects) {
@@ -53,11 +55,15 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
 
   override fun applyTo(project: Project) {
     project.applyRequiredPlugins()
-    val libraryExtension = project.extensions.getByType(LibraryExtension::class.java)
     super.applyTo(project)
-    libraryExtension.configurePublicResource(project)
-    libraryExtension.setMinCompileSdkVersion(project)
-    dokka.applyTo(project, libraryExtension)
+
+    val androidComponentsExtension = project.extensions.getByType(LibraryAndroidComponentsExtension::class.java)
+    androidComponentsExtension.finalizeDsl { libraryExtension: ApiLibraryExtension ->
+      libraryExtension.enableBuildConfig()
+      libraryExtension.configurePublicResource(project)
+      libraryExtension.setMinCompileSdkVersion(project)
+    }
+    dokka.applyTo(project, project.extensions.getByType(LibraryExtension::class.java))
     // we allow to disable jApiCmp so first we have to evaluate
     project.afterEvaluate {
       if (jApiCmpEnabledProperty.getOrElse(true)) {
@@ -81,14 +87,14 @@ public abstract class MapboxLibraryExtension @Inject constructor(objects: Object
   }
 }
 
-private fun LibraryExtension.configurePublicResource(project: Project) {
+private fun ApiLibraryExtension.configurePublicResource(project: Project) {
   sourceSets.all {
     // limit amount of exposed library resources
     res.srcDir("${project.projectDir}/src/$name/res-public")
   }
 }
 
-private fun LibraryExtension.setMinCompileSdkVersion(project: Project) {
+private fun ApiLibraryExtension.setMinCompileSdkVersion(project: Project) {
   val androidMinCompileSdkVersion =
     project.getVersionCatalog().findVersion("androidMinCompileSdkVersion")
   if (androidMinCompileSdkVersion.isPresent) {
@@ -98,4 +104,8 @@ private fun LibraryExtension.setMinCompileSdkVersion(project: Project) {
   } else {
     project.logger.warn("androidMinCompileSdkVersion not found in versions catalog, skip setting minCompileSdkVersion..")
   }
+}
+
+private fun ApiLibraryExtension.enableBuildConfig() {
+  buildFeatures.buildConfig = true
 }

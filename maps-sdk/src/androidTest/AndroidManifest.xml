@@ -10,6 +10,7 @@
         <activity
             android:name="com.mapbox.maps.EmptyActivity"
             android:screenOrientation="portrait"
-            android:label="@string/test_app_name" />
+            android:label="@string/test_app_name"
+            android:exported="true" />
     </application>
 </manifest>
