@@ -59,6 +59,17 @@ internal class AttributionPluginImpl(
   }
 
   /**
+   * Set the content description for the attribution view.
+   *
+   * @param contentDescription the content description text
+   */
+  override fun setContentDescription(contentDescription: CharSequence?) {
+    if (::attributionView.isInitialized) {
+      attributionView.setContentDescription(contentDescription)
+    }
+  }
+
+  /**
    * Set a custom AttributionDialogManager that is invoked when the attribution view is clicked.
    */
   override fun setCustomAttributionDialogManager(dialogManager: AttributionDialogManager) {

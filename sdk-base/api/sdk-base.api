@@ -1790,6 +1790,7 @@ public final class com/mapbox/maps/plugin/attribution/AttributionParserConfig {
 
 public abstract interface class com/mapbox/maps/plugin/attribution/AttributionPlugin : com/mapbox/maps/plugin/LifecyclePlugin, com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/attribution/generated/AttributionSettingsInterface {
 	public abstract fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
+	public abstract fun setContentDescription (Ljava/lang/CharSequence;)V
 	public abstract fun setCustomAttributionDialogManager (Lcom/mapbox/maps/plugin/attribution/AttributionDialogManager;)V
 }
 
@@ -1800,15 +1801,21 @@ public final class com/mapbox/maps/plugin/attribution/AttributionPlugin$DefaultI
 	public static fun onPluginView (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;Landroid/view/View;)V
 	public static fun onStart (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;)V
 	public static fun onStop (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;)V
+	public static fun setContentDescription (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;Ljava/lang/CharSequence;)V
 }
 
 public abstract interface class com/mapbox/maps/plugin/attribution/AttributionView {
 	public abstract fun requestLayout ()V
 	public abstract fun setAttributionMargins (IIII)V
+	public abstract fun setContentDescription (Ljava/lang/CharSequence;)V
 	public abstract fun setEnable (Z)V
 	public abstract fun setGravity (I)V
 	public abstract fun setIconColor (I)V
 	public abstract fun setViewOnClickListener (Landroid/view/View$OnClickListener;)V
+}
+
+public final class com/mapbox/maps/plugin/attribution/AttributionView$DefaultImpls {
+	public static fun setContentDescription (Lcom/mapbox/maps/plugin/attribution/AttributionView;Ljava/lang/CharSequence;)V
 }
 
 public abstract interface class com/mapbox/maps/plugin/attribution/OnAttributionClickListener {
