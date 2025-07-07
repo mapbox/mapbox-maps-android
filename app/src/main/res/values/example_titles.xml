@@ -68,6 +68,7 @@
     <string name="activity_custom_layer">Custom Layer</string>
     <string name="activity_native_custom_layer">Native Custom Layer</string>
     <string name="activity_triangle_custom_layer">Triangle Custom Layer</string>
+    <string name="activity_globe_custom_layer">Globe Custom Layer</string>
     <string name="activity_overlay">Map overlay</string>
     <string name="activity_localization">Localization Plugin</string>
     <string name="activity_transparent_bg">Transparent background</string>

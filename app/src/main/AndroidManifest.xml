@@ -876,6 +876,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.customlayer.globe.GlobeCustomLayerActivity"
+            android:description="@string/description_globe_custom_layer"
+            android:exported="true"
+            android:label="@string/activity_globe_custom_layer">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_custom_layer" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.TransparentBackgroundActivity"
             android:description="@string/description_transparent_bg"
             android:exported="true"
