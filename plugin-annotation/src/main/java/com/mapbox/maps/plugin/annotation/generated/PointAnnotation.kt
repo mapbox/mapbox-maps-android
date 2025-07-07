@@ -117,7 +117,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
       value?.let {
-        return IconAnchor.valueOf(it.asString.uppercase(Locale.US))
+        return IconAnchor.valueOf(it.asString.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -278,7 +278,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_TEXT_FIT)
       value?.let {
-        return IconTextFit.valueOf(it.asString.uppercase(Locale.US))
+        return IconTextFit.valueOf(it.asString.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -373,7 +373,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
       value?.let {
-        return TextAnchor.valueOf(it.asString.uppercase(Locale.US))
+        return TextAnchor.valueOf(it.asString.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -439,7 +439,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
       value?.let {
-        return TextJustify.valueOf(it.asString.uppercase(Locale.US))
+        return TextJustify.valueOf(it.asString.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }
@@ -699,7 +699,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
       value?.let {
-        return TextTransform.valueOf(it.asString.uppercase(Locale.US))
+        return TextTransform.valueOf(it.asString.uppercase(Locale.US).replace('-', '_'))
       }
       return null
     }

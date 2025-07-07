@@ -45,6 +45,8 @@ import com.mapbox.maps.extension.compose.annotation.generated.withCircleColor
 import com.mapbox.maps.extension.compose.annotation.generated.withLineColor
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
 import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
@@ -224,6 +226,7 @@ public class AnnotationTests {
         point = SINGLE_POINT
       ) {
         iconImage = icon
+        iconAnchor = IconAnchor.BOTTOM_LEFT
         interactionsState.onClicked {
           clickedAnnotation = it
           true
@@ -238,6 +241,7 @@ public class AnnotationTests {
     composeTestRule.onNodeWithTag(testTag).performClick()
     composeTestRule.waitUntil { clickedAnnotation != null }
     assertEquals(SINGLE_POINT, clickedAnnotation!!.point)
+    assertEquals(IconAnchor.BOTTOM_LEFT, clickedAnnotation!!.iconAnchor)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
     composeTestRule.waitUntil(timeoutMillis = 5000L) { longClickedAnnotation != null }
@@ -259,6 +263,7 @@ public class AnnotationTests {
         annotations = CLUSTER_POINTS.map {
           PointAnnotationOptions()
             .withIconImage("bitmap")
+            .withTextAnchor(TextAnchor.TOP_LEFT)
             .withPoint(it)
         },
         annotationConfig = AnnotationConfig(
@@ -297,6 +302,7 @@ public class AnnotationTests {
     composeTestRule.onNodeWithTag(testTag).performClick()
     composeTestRule.waitUntil { clickedAnnotation != null }
     assertEquals(CLUSTER_POINTS[2], clickedAnnotation!!.point)
+    assertEquals(TextAnchor.TOP_LEFT, clickedAnnotation!!.textAnchor)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
     composeTestRule.waitUntil(5000L) { longClickedAnnotation != null }
