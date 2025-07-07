@@ -6,11 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update license to reflect license changes in underlying modules.
-* Fix exception when accessing enum properties in annotations.
 
 # 11.14.0-rc.1
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
+
+## Bug fixes 🐞
+* Fix exception when accessing enum properties in annotations.
 
 # 11.14.0-beta.1 July 02, 2025
 
