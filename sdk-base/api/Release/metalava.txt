@@ -1748,12 +1748,14 @@ package com.mapbox.maps.plugin.attribution {
 
   public interface AttributionPlugin extends com.mapbox.maps.plugin.ViewPlugin com.mapbox.maps.plugin.attribution.generated.AttributionSettingsInterface com.mapbox.maps.plugin.LifecyclePlugin {
     method public com.mapbox.maps.plugin.delegates.MapAttributionDelegate getMapAttributionDelegate();
+    method public default void setContentDescription(CharSequence? contentDescription);
     method public void setCustomAttributionDialogManager(com.mapbox.maps.plugin.attribution.AttributionDialogManager dialogManager);
   }
 
   public interface AttributionView {
     method public void requestLayout();
     method public void setAttributionMargins(@Px int left, @Px int top, @Px int right, @Px int bottom);
+    method public default void setContentDescription(CharSequence? contentDescription);
     method public void setEnable(boolean enabled);
     method public void setGravity(int gravity);
     method public void setIconColor(@ColorInt int color);

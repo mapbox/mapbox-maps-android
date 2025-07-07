@@ -16,6 +16,15 @@ interface AttributionPlugin : ViewPlugin, LifecyclePlugin, AttributionSettingsIn
   fun setCustomAttributionDialogManager(dialogManager: AttributionDialogManager)
 
   /**
+   * Set the content description for the attribution view.
+   *
+   * @param contentDescription the content description text
+   */
+  fun setContentDescription(contentDescription: CharSequence?) {
+    // Default empty implementation for backward compatibility
+  }
+
+  /**
    * Get the instance of MapAttributionDelegate
    */
   fun getMapAttributionDelegate(): MapAttributionDelegate

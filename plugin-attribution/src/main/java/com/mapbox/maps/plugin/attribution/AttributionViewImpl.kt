@@ -27,6 +27,8 @@ class AttributionViewImpl @JvmOverloads constructor(
       ViewGroup.LayoutParams.WRAP_CONTENT,
       ViewGroup.LayoutParams.WRAP_CONTENT
     )
+    // Set default content description for accessibility
+    contentDescription = context.getString(R.string.mapbox_attributionsDialogTitle)
   }
 
   /**
@@ -77,6 +79,15 @@ class AttributionViewImpl @JvmOverloads constructor(
       marginStart = left
       marginEnd = right
     }
+  }
+
+  /**
+   * Set the content description for accessibility.
+   *
+   * @param contentDescription the content description text
+   */
+  override fun setContentDescription(contentDescription: CharSequence?) {
+    super<AppCompatImageView>.setContentDescription(contentDescription)
   }
 
   /**

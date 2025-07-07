@@ -45,6 +45,15 @@ interface AttributionView {
   fun setViewOnClickListener(listener: View.OnClickListener)
 
   /**
+   * Set the content description for accessibility.
+   *
+   * @param contentDescription the content description text
+   */
+  fun setContentDescription(contentDescription: CharSequence?) {
+    // Default empty implementation for backward compatibility
+  }
+
+  /**
    * Call this when something has changed which has invalidated the
    * layout of this view. This will schedule a layout pass of the view
    * tree.
