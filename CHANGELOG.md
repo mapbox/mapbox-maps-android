@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update license to reflect license changes in underlying modules.
+* Fix exception when accessing enum properties in annotations.
 
 # 11.14.0-rc.1
 ## Features ✨ and improvements 🏁
