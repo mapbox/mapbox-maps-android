@@ -13,6 +13,7 @@ import android.view.View
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.*
 import com.mapbox.maps.MapboxLifecycleObserver
+import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 
 /**
@@ -55,12 +56,19 @@ internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
       object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun onStart() {
+          logI(TAG, "onStart is called, MapboxLifecycleObserver will be notified.")
           observer.onStart()
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
         fun onStop() {
           observer.onStop()
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        fun onResume() {
+          logI(TAG, "onResume is called, MapboxLifecycleObserver will be notified.")
+          observer.onResume()
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

@@ -141,6 +141,7 @@ public abstract interface annotation class com/mapbox/maps/MapboxExperimental : 
 public abstract interface class com/mapbox/maps/MapboxLifecycleObserver {
 	public abstract fun onDestroy ()V
 	public abstract fun onLowMemory ()V
+	public abstract fun onResume ()V
 	public abstract fun onStart ()V
 	public abstract fun onStop ()V
 }

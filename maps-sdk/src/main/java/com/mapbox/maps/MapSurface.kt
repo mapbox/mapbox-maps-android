@@ -230,6 +230,13 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   }
 
   /**
+   * Called when the activity is resumed
+   */
+  override fun onResume() {
+    mapController.onResume()
+  }
+
+  /**
    * Called to dispose the renderer
    */
   override fun onDestroy() {

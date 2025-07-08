@@ -76,6 +76,12 @@ internal abstract class MapboxRendererTest {
   }
 
   @Test
+  fun onResumeTest() {
+    mapboxRenderer.onResume()
+    verify { renderThread.resume() }
+  }
+
+  @Test
   fun setValidMaximumFpsTest() {
     mapboxRenderer.setMaximumFps(10)
     verify(exactly = 1) { renderThread.setUserRefreshRate(10) }

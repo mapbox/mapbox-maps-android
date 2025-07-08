@@ -198,6 +198,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     MapProvider.flushPendingEvents()
   }
 
+  override fun onResume() {
+    renderer.onResume()
+  }
+
   override fun onDestroy() {
     if (lifecycleState == LifecycleState.STATE_DESTROYED) {
       return
