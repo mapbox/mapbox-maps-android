@@ -58,6 +58,12 @@ class MapViewTest {
   }
 
   @Test
+  fun resume() {
+    mapView.onResume()
+    verify { mapController.onResume() }
+  }
+
+  @Test
   fun onDestroy() {
     mapView.onDestroy()
     verify { mapController.onDestroy() }

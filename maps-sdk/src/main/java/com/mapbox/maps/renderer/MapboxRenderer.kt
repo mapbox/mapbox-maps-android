@@ -145,6 +145,11 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
     renderFrameCancelable = map?.subscribe(renderFrameFinishedCallback)
   }
 
+  @UiThread
+  fun onResume() {
+    renderThread.resume()
+  }
+
   @RenderThread
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {

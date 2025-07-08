@@ -23,4 +23,9 @@ interface MapboxLifecycleObserver {
    * Called to reduce memory use
    */
   fun onLowMemory()
+
+  /**
+   * Called when the activity is resumed
+   */
+  fun onResume()
 }

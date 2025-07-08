@@ -121,6 +121,7 @@ package com.mapbox.maps {
   public interface MapboxLifecycleObserver {
     method public void onDestroy();
     method public void onLowMemory();
+    method public void onResume();
     method public void onStart();
     method public void onStop();
   }

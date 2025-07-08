@@ -144,6 +144,17 @@ class MapControllerTest {
     }
   }
 
+  @Test
+  fun onResume() {
+    every { mockRenderer.onResume() } just Runs
+
+    testMapController.onResume()
+
+    verifySequence {
+      mockRenderer.onResume()
+    }
+  }
+
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @Test
   fun onStartDeliversUpdatedStyle() {

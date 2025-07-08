@@ -53,11 +53,12 @@ internal fun MapViewLifecycle(mapView: MapView) {
 private fun MapView.lifecycleEventObserver(): LifecycleEventObserver =
   LifecycleEventObserver { _, event ->
     when (event) {
-      Lifecycle.Event.ON_CREATE, Lifecycle.Event.ON_PAUSE, Lifecycle.Event.ON_RESUME, Lifecycle.Event.ON_DESTROY -> {
+      Lifecycle.Event.ON_CREATE, Lifecycle.Event.ON_PAUSE, Lifecycle.Event.ON_DESTROY -> {
         // no-ops, onDestroy handled in DisposeEffect.onDispose
       }
       Lifecycle.Event.ON_START -> this.onStart()
       Lifecycle.Event.ON_STOP -> this.onStop()
+      Lifecycle.Event.ON_RESUME -> this.onResume()
 
       else -> throw IllegalStateException()
     }

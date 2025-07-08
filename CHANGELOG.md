@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.14.0-rc.1
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
+* Added `MapView.onResume()` which should be called in `onResume()` of the host activity or fragment to resume the map view if `plugin-lifecycle` is not used.
 
 ## Bug fixes 🐞
 * Fix exception when accessing enum properties in annotations.

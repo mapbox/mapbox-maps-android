@@ -24,6 +24,10 @@ import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
@@ -713,11 +717,15 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     logI(TAG, "Renderer paused")
   }
 
+  @OptIn(DelicateCoroutinesApi::class)
   @UiThread
   fun resume() {
     paused = false
     logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
-    mapboxRenderer.resetThreadServiceType()
+    GlobalScope.launch {
+      delay(RESET_THREAD_SERVICE_TYPE_DELAY_MS)
+      mapboxRenderer.resetThreadServiceType()
+    }
     // schedule render if we resume not after first create (e.g. bring map back to front)
     renderPreparedGuardedRun(::postPrepareRenderFrame)
   }
@@ -787,5 +795,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
      * rescheduling configuration with that delay in order not to overflood handler thread message queue.
      */
     internal const val RETRY_DELAY_MS = 50L
+    /**
+     * Delay before calling resetThreadServiceType() on resume to ensure CPU affinity is properly set.
+     * This delay helps address timing issues where CPU affinity might not be set immediately
+     * when coming back from background.
+     */
+    internal const val RESET_THREAD_SERVICE_TYPE_DELAY_MS = 300L
   }
 }

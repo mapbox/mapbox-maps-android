@@ -86,6 +86,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun onDestroy ()V
 	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
 	public fun onLowMemory ()V
+	public fun onResume ()V
 	public fun onSizeChanged (II)V
 	public fun onStart ()V
 	public fun onStop ()V
@@ -126,6 +127,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
 	public fun onInterceptTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun onLowMemory ()V
+	public fun onResume ()V
 	public fun onSizeChanged (II)V
 	public fun onSizeChanged (IIII)V
 	public fun onStart ()V

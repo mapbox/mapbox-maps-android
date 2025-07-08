@@ -250,6 +250,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   /**
+   * You must call this method from the parent's Activity#onResume() or Fragment#onResume()
+   * @see android.app.Activity.onResume
+   * @see android.app.Fragment.onResume
+   */
+  override fun onResume() {
+    mapController.onResume()
+  }
+
+  /**
    * You must call this method from the parent's Activity#onLowMemory() or Fragment#onLowMemory()
    * @see android.app.Activity.onLowMemory
    * @see android.app.Fragment.onLowMemory
