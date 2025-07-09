@@ -16,6 +16,7 @@ public final class com/mapbox/maps/plugin/attribution/AttributionViewImpl : andr
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun setAttributionMargins (IIII)V
+	public fun setContentDescription (Ljava/lang/CharSequence;)V
 	public fun setEnable (Z)V
 	public fun setGravity (I)V
 	public fun setIconColor (I)V

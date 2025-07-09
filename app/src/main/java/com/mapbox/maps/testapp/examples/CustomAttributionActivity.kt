@@ -46,6 +46,8 @@ class CustomAttributionActivity : AppCompatActivity() {
       checkedTextView.setOnClickListener { checkedTextView.toggle() }
     }
     val attributionPlugin = binding.mapView.attribution
+    // set custom content description for the attribution plugin.
+    attributionPlugin.setContentDescription("Show Mapbox Attributions")
     binding.customAttributionFab.setOnClickListener {
       Toast.makeText(this, R.string.custom_attribution_custom, Toast.LENGTH_LONG).show()
       val config = AttributionParserConfig(

@@ -72,4 +72,24 @@ class AttributionViewImplTest {
     attributionView.setViewOnClickListener(mockk())
     assertTrue(attributionView.hasOnClickListeners())
   }
+
+  @Test
+  fun setContentDescription() {
+    val customDescription = "Custom attribution description"
+    attributionView.setContentDescription(customDescription)
+    assertEquals(customDescription, attributionView.contentDescription)
+  }
+
+  @Test
+  fun setContentDescriptionWithNull() {
+    attributionView.setContentDescription(null)
+    assertNull(attributionView.contentDescription)
+  }
+
+  @Test
+  fun defaultContentDescription() {
+    // Default content description should be set from string resource
+    assertNotNull(attributionView.contentDescription)
+    assertTrue(attributionView.contentDescription.isNotEmpty())
+  }
 }

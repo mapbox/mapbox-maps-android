@@ -105,4 +105,17 @@ class AttributionPluginImplImplTest {
   fun mapAttributionDelegate() {
     assertEquals(mapAttributionDelegate, attributionPlugin.getMapAttributionDelegate())
   }
+
+  @Test
+  fun setContentDescription() {
+    val customDescription = "Custom attribution content description"
+    attributionPlugin.setContentDescription(customDescription)
+    verify { attributionView.setContentDescription(customDescription) }
+  }
+
+  @Test
+  fun setContentDescriptionWithNull() {
+    attributionPlugin.setContentDescription(null)
+    verify { attributionView.setContentDescription(null) }
+  }
 }
