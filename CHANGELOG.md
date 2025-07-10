@@ -6,8 +6,15 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
 
-# 11.13.2
+## Bug fixes 🐞
+* Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
 
+## Dependencies
+* Update gl-native to v11.13.3, common to 24.13.3.
+* Update Mapbox Base Android library to [v0.12.0](https://github.com/mapbox/mapbox-base-android/releases/tag/v0.12.0).
+* Update Mapbox Gestures Android library to [v0.9.1](https://github.com/mapbox/mapbox-gestures-android/releases/tag/v0.9.1).
+
+# 11.13.2, July 3, 2025
 ## Dependencies
 * Update gl-native to v11.13.2, common to 24.13.2.
 

@@ -38,8 +38,8 @@ japicmp = "0.4.6"
 mapboxGlNative = "11.13.2"
 mapboxCommon = "24.13.2"
 
-mapboxBase = "0.11.0"
-mapboxGestures = "0.8.0"
+mapboxBase = "0.12.0"
+mapboxGestures = "0.9.1"
 mapboxJavaServices = "5.4.1"
 
 androidXTestMonitor = "1.6.1"
