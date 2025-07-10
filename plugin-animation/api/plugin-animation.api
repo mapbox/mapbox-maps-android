@@ -1,4 +1,8 @@
 public final class com/mapbox/maps/plugin/animation/CameraAnimationsUtils {
+	public static final synthetic fun calculateCameraAnimationHint (Landroid/animation/AnimatorSet;Ljava/util/List;Lcom/mapbox/maps/CameraState;)Lcom/mapbox/maps/CameraAnimationHint;
+	public static final synthetic fun calculateCameraAnimationHint (Ljava/util/List;Ljava/util/List;Lcom/mapbox/maps/CameraState;)Lcom/mapbox/maps/CameraAnimationHint;
+	public static synthetic fun calculateCameraAnimationHint$default (Landroid/animation/AnimatorSet;Ljava/util/List;Lcom/mapbox/maps/CameraState;ILjava/lang/Object;)Lcom/mapbox/maps/CameraAnimationHint;
+	public static synthetic fun calculateCameraAnimationHint$default (Ljava/util/List;Ljava/util/List;Lcom/mapbox/maps/CameraState;ILjava/lang/Object;)Lcom/mapbox/maps/CameraAnimationHint;
 	public static final synthetic fun createCameraAnimationPlugin ()Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;
 	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/common/Cancelable;
 	public static final fun easeTo (Lcom/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/common/Cancelable;

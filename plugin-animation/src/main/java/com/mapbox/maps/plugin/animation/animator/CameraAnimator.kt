@@ -4,7 +4,9 @@ import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
@@ -126,15 +128,35 @@ abstract class CameraAnimator<out T> (
   /**
    * @throws UnsupportedOperationException if this animator does not support this method
    */
-  internal fun getAnimatedValueAt(fraction: Float): T {
-    if (startValue == null || targets.size > 1) {
+  internal fun getAnimatedValueAt(fraction: Float, startCameraState: CameraState? = null): T {
+    if (targets.size != 1) {
       throw UnsupportedOperationException(
-        "getAnimatedValueAt() is only supported for single target animations with a start value."
+        "getAnimatedValueAt() is only supported for single target animations."
       )
     }
+    if (startValue == null && startCameraState == null) {
+      throw UnsupportedOperationException(
+        "getAnimatedValueAt() is only supported for animators with a startValue " +
+          "or a non-null current camera state must be provided."
+      )
+    }
+    val resolvedStartValue = startValue ?: startCameraState!!.startValue as? T
+    if (resolvedStartValue == null) {
+      throw UnsupportedOperationException("Could not resolve start value for animator")
+    }
     val interpolation = interpolator.getInterpolation(fraction)
-    return evaluator.evaluate(interpolation, startValue, targets.last())
+    return evaluator.evaluate(interpolation, resolvedStartValue, targets.last())
   }
+
+  private val CameraState.startValue
+    get() = when (type) {
+      CameraAnimatorType.CENTER -> center
+      CameraAnimatorType.ZOOM -> zoom
+      CameraAnimatorType.ANCHOR -> ScreenCoordinate(0.0, 0.0)
+      CameraAnimatorType.PADDING -> padding
+      CameraAnimatorType.BEARING -> bearing
+      CameraAnimatorType.PITCH -> pitch
+    }
 
   /**
    * Handle immediate animation(when duration and startDelay of the animation is 0)
