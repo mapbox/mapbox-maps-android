@@ -21,6 +21,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
 * Handle getSharedPreferences exceptions in SettingsServiceHelper
+* Fixed placement for point symbols with symbol-z-offset
+* Fixed some icons being skipped in rare cases
+* Fixed text/icon intersections for optional texts/icons in some cases
+* Fix Dynamic View Annotations caches rebuilding on line-trim-offset updates
+* Fix symbol z-offset not working with fixed fill-extrusion-height
+* Fix potential race conditions in the sprite loader
 
 ## Dependencies
 * Update gl-native to v11.14.0-beta.1, common to 24.14.0-beta.1.
