@@ -2,7 +2,9 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 11.13.3
+# main
+
+# 11.13.3 July 11, 2025
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
 
