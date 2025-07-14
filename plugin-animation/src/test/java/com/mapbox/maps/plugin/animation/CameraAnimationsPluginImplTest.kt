@@ -1352,6 +1352,89 @@ class CameraAnimationsPluginImplTest {
     assertEquals(EdgeInsets(1.0, 2.0, 3.0, 4.0), edgeInsets)
   }
 
+  @Test
+  fun useCameraStateValuesIfStartValueIsNotSet() {
+    val cachedCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(50.0, 50.0))
+      .pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0)
+      .padding(EdgeInsets(50.0, 50.0, 50.0, 50.0))
+      .anchor(ScreenCoordinate(50.0, 50.0))
+      .build()
+    cameraAnimationsPluginImpl.onCameraMove(cachedCameraOptions.toCameraState())
+
+    val mapCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(51.0, 51.0))
+      .pitch(51.0)
+      .bearing(51.0)
+      .zoom(5.1)
+      .padding(EdgeInsets(51.0, 51.0, 51.0, 51.0))
+      .build()
+
+    every { mapCameraManagerDelegate.cameraState } returns mapCameraOptions.toCameraState()
+
+    val centerAnimator = spyk(
+      cameraAnimationsPluginImpl.createCenterAnimator(
+        cameraAnimatorOptions(Point.fromLngLat(52.0, 52.0))
+      )
+    )
+    val bearingAnimator = spyk(
+      cameraAnimationsPluginImpl.createBearingAnimator(
+        cameraAnimatorOptions(60.0)
+      )
+    )
+    val zoomAnimator = spyk(
+      cameraAnimationsPluginImpl.createZoomAnimator(
+        cameraAnimatorOptions(15.0)
+      )
+    )
+    val pitchAnimator = spyk(
+      cameraAnimationsPluginImpl.createPitchAnimator(
+        cameraAnimatorOptions(40.0)
+      )
+    )
+    val anchorAnimator = spyk(
+      cameraAnimationsPluginImpl.createAnchorAnimator(
+        cameraAnimatorOptions(ScreenCoordinate(52.0, 52.0))
+      )
+    )
+    val paddingAnimator = spyk(
+      cameraAnimationsPluginImpl.createPaddingAnimator(
+        cameraAnimatorOptions(EdgeInsets(52.0, 52.0, 52.0, 52.0))
+      )
+    )
+    cameraAnimationsPluginImpl.registerAnimators(
+      centerAnimator, bearingAnimator, zoomAnimator, pitchAnimator, anchorAnimator, paddingAnimator,
+    )
+
+    centerAnimator.start()
+    bearingAnimator.start()
+    zoomAnimator.start()
+    pitchAnimator.start()
+    anchorAnimator.start()
+    paddingAnimator.start()
+
+    verify {
+      centerAnimator.setObjectValues(mapCameraOptions.center, Point.fromLngLat(52.0, 52.0))
+    }
+    verify { bearingAnimator.setObjectValues(mapCameraOptions.bearing, 60.0) }
+    verify { zoomAnimator.setObjectValues(mapCameraOptions.zoom, 15.0) }
+    verify { pitchAnimator.setObjectValues(mapCameraOptions.pitch, 40.0) }
+    verify {
+      anchorAnimator.setObjectValues(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(52.0, 52.0)
+      )
+    }
+    verify {
+      paddingAnimator.setObjectValues(
+        mapCameraOptions.padding,
+        EdgeInsets(52.0, 52.0, 52.0, 52.0),
+      )
+    }
+  }
+
   class LifecycleListener : CameraAnimationsLifecycleListener {
     var starting = false
     var interrupting = false
