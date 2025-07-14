@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix exception when accessing enum properties in annotations.
+* Fix an issue where instant animation might not have been executed in case of launching multiple animations within a single frame.
 
 ## Dependencies
 * Update gl-native to [v11.14.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0-rc.1), common to [24.14.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0-rc.1).
