@@ -276,12 +276,12 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
       return false
     }
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> center ?: mapCameraManagerDelegate.cameraState.center
-      CameraAnimatorType.ZOOM -> zoom ?: mapCameraManagerDelegate.cameraState.zoom
-      CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> padding ?: mapCameraManagerDelegate.cameraState.padding
-      CameraAnimatorType.BEARING -> bearing ?: mapCameraManagerDelegate.cameraState.bearing
-      CameraAnimatorType.PITCH -> pitch ?: mapCameraManagerDelegate.cameraState.pitch
+      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.cameraState.center
+      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.cameraState.zoom
+      CameraAnimatorType.ANCHOR -> ScreenCoordinate(0.0, 0.0)
+      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.cameraState.padding
+      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
+      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
     }.also {
       if (debugMode) {
         logI(
