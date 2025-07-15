@@ -24,10 +24,6 @@ import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
@@ -717,15 +713,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     logI(TAG, "Renderer paused")
   }
 
-  @OptIn(DelicateCoroutinesApi::class)
   @UiThread
   fun resume() {
     paused = false
     logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
-    GlobalScope.launch {
-      delay(RESET_THREAD_SERVICE_TYPE_DELAY_MS)
-      mapboxRenderer.resetThreadServiceType()
-    }
+    postNonRenderEvent(
+      RenderEvent({
+        mapboxRenderer.resetThreadServiceType()
+      }, false),
+      RESET_THREAD_SERVICE_TYPE_DELAY_MS
+    )
     // schedule render if we resume not after first create (e.g. bring map back to front)
     renderPreparedGuardedRun(::postPrepareRenderFrame)
   }
