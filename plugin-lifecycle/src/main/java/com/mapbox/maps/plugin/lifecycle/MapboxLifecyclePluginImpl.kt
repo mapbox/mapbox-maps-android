@@ -31,6 +31,7 @@ internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
     val viewLifecycleRegistry = ViewLifecycleOwner(
       view = mapView
     )
+    logI(TAG, "registerLifecycleObserver is called")
 
     val componentCallback = object : ComponentCallbacks2 {
       override fun onConfigurationChanged(newConfig: Configuration) {
@@ -62,6 +63,7 @@ internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
 
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
         fun onStop() {
+          logI(TAG, "onStop is called, MapboxLifecycleObserver will be notified.")
           observer.onStop()
         }
 
@@ -73,6 +75,7 @@ internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
+          logI(TAG, "onDestroy is called, MapboxLifecycleObserver will be notified.")
           observer.onDestroy()
           viewLifecycleRegistry.lifecycle.removeObserver(this)
           viewLifecycleRegistry.cleanUp()
