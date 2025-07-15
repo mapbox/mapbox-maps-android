@@ -2,6 +2,8 @@
 package com.mapbox.maps.plugin.animation {
 
   public final class CameraAnimationsUtils {
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.CameraAnimationHint! calculateCameraAnimationHint(android.animation.AnimatorSet, java.util.List<? extends java.lang.Float> fractions, com.mapbox.maps.CameraState? startCameraState = null);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.JvmSynthetic public static <T extends com.mapbox.maps.plugin.animation.animator.CameraAnimator<?>> com.mapbox.maps.CameraAnimationHint! calculateCameraAnimationHint(java.util.List<? extends T>, java.util.List<? extends java.lang.Float> fractions, com.mapbox.maps.CameraState? startCameraState = null);
     method public static com.mapbox.common.Cancelable easeTo(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
     method public static com.mapbox.common.Cancelable easeTo(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.CameraOptions cameraOptions, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
     method public static com.mapbox.common.Cancelable easeTo(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.CameraOptions cameraOptions);
