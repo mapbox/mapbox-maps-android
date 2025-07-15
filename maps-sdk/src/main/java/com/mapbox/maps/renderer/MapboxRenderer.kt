@@ -147,7 +147,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
 
   @UiThread
   fun onResume() {
-    renderThread.resume()
+    renderThread.scheduleThreadServiceTypeReset()
   }
 
   @RenderThread

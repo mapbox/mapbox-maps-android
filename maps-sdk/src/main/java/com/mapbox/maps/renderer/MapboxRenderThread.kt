@@ -707,6 +707,24 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  /**
+   * Schedules a resetThreadServiceType on the render thread after a specified delay.
+   * This method is called on resume to ensure CPU affinity is properly set
+   * when coming back from background, addressing timing issues where CPU affinity
+   * might not be immediately available.
+   */
+  @OptIn(MapboxExperimental::class)
+  fun scheduleThreadServiceTypeReset() {
+    logI(TAG, "Scheduling thread service type reset with delay")
+    postNonRenderEvent(
+      RenderEvent({
+        logI(TAG, "Executing thread service type reset")
+        mapboxRenderer.resetThreadServiceType()
+      }, false),
+      RESET_THREAD_SERVICE_TYPE_DELAY_MS
+    )
+  }
+
   @UiThread
   fun pause() {
     paused = true
@@ -717,12 +735,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun resume() {
     paused = false
     logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
-    postNonRenderEvent(
-      RenderEvent({
-        mapboxRenderer.resetThreadServiceType()
-      }, false),
-      RESET_THREAD_SERVICE_TYPE_DELAY_MS
-    )
     // schedule render if we resume not after first create (e.g. bring map back to front)
     renderPreparedGuardedRun(::postPrepareRenderFrame)
   }

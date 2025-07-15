@@ -78,7 +78,7 @@ internal abstract class MapboxRendererTest {
   @Test
   fun onResumeTest() {
     mapboxRenderer.onResume()
-    verify { renderThread.resume() }
+    verify { renderThread.scheduleThreadServiceTypeReset() }
   }
 
   @Test
