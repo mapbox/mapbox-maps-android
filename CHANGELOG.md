@@ -11,6 +11,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix exception when accessing enum properties in annotations.
 
+## Dependencies
+* Update gl-native to [v11.14.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0-rc.1), common to [24.14.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0-rc.1).
+
 # 11.14.0-beta.1 July 02, 2025
 
 ## Features ✨ and improvements 🏁
