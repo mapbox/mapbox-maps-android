@@ -146,6 +146,10 @@ public abstract interface class com/mapbox/maps/MapboxLifecycleObserver {
 	public abstract fun onStop ()V
 }
 
+public final class com/mapbox/maps/MapboxLifecycleObserver$DefaultImpls {
+	public static fun onResume (Lcom/mapbox/maps/MapboxLifecycleObserver;)V
+}
+
 public final class com/mapbox/maps/MapboxLocationComponentException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 }
