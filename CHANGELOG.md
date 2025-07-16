@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
-# 11.14.0-rc.1
+
+# 11.14.0-rc.1 July 16, 2025
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
 * Added `MapView.onResume()` which should be called in `onResume()` of the host activity or fragment to resume the map view if `plugin-lifecycle` is not used.
@@ -14,6 +15,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.14.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0-rc.1), common to [24.14.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0-rc.1).
+
 
 # 11.14.0-beta.1 July 02, 2025
 
