@@ -4,8 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-## Dependencies
-* Update license to reflect license changes in underlying modules.
+
+# 11.14.0
+## Bug fixes 🐞
+* [compose] Avoid excessive debug logging on SourceState, which can result in Out Of Memory in extreme cases. Avoid appending geojson data in `GeoJsonSourceState.toString()` override.
+
 
 # 11.14.0-rc.1
 ## Features ✨ and improvements 🏁

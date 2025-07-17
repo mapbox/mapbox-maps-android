@@ -368,7 +368,7 @@ public class GeoJsonSourceState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "GeoJsonSourceState(sourceId=$sourceId,  data=$data, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, autoMaxZoom=$autoMaxZoom, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
+    "GeoJsonSourceState(sourceId=$sourceId, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, autoMaxZoom=$autoMaxZoom, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.
