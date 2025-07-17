@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.14.0
+## Bug fixes 🐞
+* [compose] Avoid excessive debug logging on SourceState, which can result in Out Of Memory in extreme cases. Avoid appending geojson data in `GeoJsonSourceState.toString()` override.
+
 # 11.14.0-rc.1 July 16, 2025
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.

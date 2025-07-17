@@ -114,7 +114,7 @@ public abstract class SourceState internal constructor(
   }
 
   internal fun attachToLayer(layerId: String, mapboxMap: MapboxMap) {
-    logD(TAG, "$this attachToLayer: layerId=$layerId")
+    logD(TAG, "$sourceType - $sourceId attachToLayer: layerId=$layerId")
     this.mapboxMap?.let {
       if (it !== mapboxMap) {
         logW(TAG, "The source state should not be used across multiple map instances!")
@@ -128,7 +128,7 @@ public abstract class SourceState internal constructor(
   }
 
   internal fun detachFromLayer(layerId: String, mapboxMap: MapboxMap) {
-    logD(TAG, "$this detachFromLayer: layerId=$layerId")
+    logD(TAG, "$sourceType $sourceId detachFromLayer: layerId=$layerId")
     associatedLayers.remove(layerId)
     if (associatedLayers.isEmpty() && !sourceAddedExternally) {
       detachFrom(mapboxMap)
@@ -149,7 +149,7 @@ public abstract class SourceState internal constructor(
       - the source was added outside of compose (e.g. MapEffect)
       - there was a previous SourceState with the same id already added
        */
-      logW(TAG, "Source [$this] already exists. This might lead to conflicting states.")
+      logW(TAG, "Source [$sourceId] already exists. This might lead to conflicting states.")
       sourceAddedExternally = true
       true
     } else {
@@ -185,9 +185,9 @@ public abstract class SourceState internal constructor(
    * @return false if the source was already added or if it failed to be added.
    */
   private fun addSource(mapboxMap: MapboxMap, cachedProperties: Map<String, Value>): Boolean {
-    logD(TAG, "Adding source: $this")
+    logD(TAG, "Adding source: $sourceType - $sourceId")
     if (mapboxMap.styleSourceExists(sourceId)) {
-      logW(TAG, "Source already exists: $this")
+      logW(TAG, "Source already exists: $sourceId")
       throw IllegalStateException("Source $sourceId already exists in map $mapboxMap")
     }
     // Merge the cachedProperties from gl-native with the ones we are aware of:
@@ -210,7 +210,7 @@ public abstract class SourceState internal constructor(
         false
       },
       {
-        logD(TAG, "Added source: $this")
+        logD(TAG, "Added source: $sourceType - $sourceId")
         if (isGeoJsonSource && geoJSONData != GeoJSONData.DEFAULT) {
           // Set the GeoJSON data after the source is added
           // Note that if the source was a pre-existing one outside of compose we will override it
@@ -320,7 +320,7 @@ public abstract class SourceState internal constructor(
   }
 
   private fun removeSource(mapboxMap: MapboxMap) {
-    logD(TAG, "Removing source: $this")
+    logD(TAG, "Removing $sourceType source: $sourceId")
     mapboxMap.removeStyleSourceUnchecked(sourceId).onError {
       logE(TAG, "Failed to remove $sourceType Source $sourceId: $it")
     }
