@@ -40,6 +40,12 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.plus
 import java.util.concurrent.CopyOnWriteArraySet
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -55,6 +61,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   private val cameraChangedCoalescedCallback: CameraChangedCoalescedCallback
   private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
+
+  /**
+   * Lifecycle-aware coroutine scope that follows the MapView/MapSurface lifecycle.
+   * This scope is created when the MapController is constructed and cancelled when destroyed.
+   * Can be used for any background operations that should be tied to the map lifecycle.
+   */
+  internal val lifecycleScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) + CoroutineName(
+    "MapControllerLifecycleScope"
+  )
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
@@ -207,6 +222,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_DESTROYED
+
+    // Cancel the lifecycle coroutine scope to prevent memory leaks
+    lifecycleScope.cancel()
+
     pluginRegistry.onDestroy()
     nativeObserver.onDestroy()
     renderer.onDestroy()

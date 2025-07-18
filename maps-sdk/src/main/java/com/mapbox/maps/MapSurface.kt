@@ -11,6 +11,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.*
 import com.mapbox.maps.renderer.widget.Widget
+import kotlinx.coroutines.launch
 
 /**
  * A [MapSurface] provides an embeddable map interface.
@@ -86,11 +87,22 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    */
   fun surfaceCreated() {
     renderer.surfaceCreated()
-    // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
-    @Suppress("DEPRECATION")
-    val screenRefreshRate = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
-      ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
-    mapController.setScreenRefreshRate(screenRefreshRate)
+    // Set default refresh rate immediately to ensure map controller has a valid value
+    mapController.setScreenRefreshRate(MapView.DEFAULT_FPS)
+    // Retrieve screen refresh rate off the main thread to prevent ANR
+    mapController.lifecycleScope.launch {
+      safeSystemCallWithCallback(
+        fallback = MapView.DEFAULT_FPS,
+        logTag = TAG,
+        operation = {
+          @Suppress("DEPRECATION")
+          (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
+            ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
+        }
+      ) { screenRefreshRate ->
+        mapController.setScreenRefreshRate(screenRefreshRate)
+      }
+    }
   }
 
   /**
@@ -293,4 +305,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * @return created plugin instance or null if no plugin is found for given id.
    */
   override fun <T : MapPlugin> getPlugin(id: String): T? = mapController.getPlugin(id)
+
+  private companion object {
+    private const val TAG = "MapSurface"
+  }
 }

@@ -9,6 +9,13 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.verifyNo
 import io.mockk.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -17,6 +24,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 class MapViewTest {
 
@@ -24,13 +32,22 @@ class MapViewTest {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
 
+  private val testScheduler = TestCoroutineScheduler()
+  private val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+  private val mainTestDispatcher = UnconfinedTestDispatcher(testScheduler, "MainTestDispatcher")
+  private val testScope = CoroutineScope(testDispatcher)
+
   @Before
   fun setUp() {
+    Dispatchers.setMain(mainTestDispatcher)
     mockkConstructor(DebugOptionsController::class)
     every { anyConstructed<DebugOptionsController>().options = any() } just Runs
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
     every { mapController.mapboxMap } returns mapboxMap
+    // Use test scope for lifecycleScope
+    every { mapController.lifecycleScope } returns testScope
+
     mapView = MapView(
       mockk(relaxed = true),
       mockk(relaxed = true),
@@ -38,17 +55,22 @@ class MapViewTest {
     )
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+    every { logW(any(), any()) } just Runs
+    every { logE(any(), any()) } just Runs
   }
 
   @After
   fun cleanUp() {
+    Dispatchers.resetMain()
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
   fun start() {
     mapView.onStart()
+
     verify { mapController.onStart() }
+    verify { mapController.setScreenRefreshRate(MapView.DEFAULT_FPS) }
   }
 
   @Test

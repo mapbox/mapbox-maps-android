@@ -15,11 +15,20 @@ import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 class MapSurfaceTest {
 
@@ -30,13 +39,27 @@ class MapSurfaceTest {
   private lateinit var mapboxSurfaceRenderer: MapboxSurfaceRenderer
   private lateinit var surface: Surface
 
+  private val testScheduler = TestCoroutineScheduler()
+  private val testDispatcher = UnconfinedTestDispatcher(testScheduler)
+  private val mainTestDispatcher = UnconfinedTestDispatcher(testScheduler, "MainTestDispatcher")
+  private val testScope = CoroutineScope(testDispatcher)
+
   @Before
   fun setUp() {
+    Dispatchers.setMain(mainTestDispatcher)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
+    every { logW(any(), any()) } just Runs
+    every { logE(any(), any()) } just Runs
+
     context = mockk(relaxUnitFun = true)
     mapInitOptions = mockk(relaxUnitFun = true)
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
     surface = mockk(relaxed = true)
+
+    // Use test scope for lifecycleScope
+    every { mapController.lifecycleScope } returns testScope
 
     mapSurface = MapSurface(
       context,
@@ -45,6 +68,12 @@ class MapSurfaceTest {
       mapboxSurfaceRenderer,
       mapController
     )
+  }
+
+  @After
+  fun cleanUp() {
+    Dispatchers.resetMain()
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
@@ -57,20 +86,31 @@ class MapSurfaceTest {
     val display: Display = mockk()
     val windowManager: WindowManager = mockk()
     val refreshRate = 100f
+    @Suppress("DEPRECATION")
     every { windowManager.defaultDisplay } returns display
     every { display.refreshRate } returns refreshRate
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
+
     mapSurface.surfaceCreated()
+
     verifyOnce { mapboxSurfaceRenderer.surfaceCreated() }
-    verifyOnce { mapController.setScreenRefreshRate(refreshRate.toInt()) }
+    // Verify the immediate default setting is called
+    verifySequence {
+      mapController.setScreenRefreshRate(MapView.DEFAULT_FPS)
+      mapController.lifecycleScope
+      mapController.setScreenRefreshRate(refreshRate.toInt())
+    }
   }
 
   @Test
   fun testSurfaceCreatedWithNoWindowManager() {
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns null
+
     mapSurface.surfaceCreated()
+
     verifyOnce { mapboxSurfaceRenderer.surfaceCreated() }
-    verifyOnce { mapController.setScreenRefreshRate(MapView.DEFAULT_FPS) }
+    // Verify the immediate default setting is called
+    verify { mapController.setScreenRefreshRate(MapView.DEFAULT_FPS) }
   }
 
   @Test

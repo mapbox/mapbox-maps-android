@@ -26,6 +26,7 @@ import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
+import kotlinx.coroutines.launch
 import java.nio.IntBuffer
 import kotlin.math.hypot
 
@@ -228,9 +229,21 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStart
    */
   override fun onStart() {
-    // display should not be null at this point but to be sure we will fallback to DEFAULT_FPS
-    val screenRefreshRate = display?.refreshRate?.toInt() ?: DEFAULT_FPS
-    mapController.setScreenRefreshRate(screenRefreshRate)
+    // Set default refresh rate immediately to ensure map controller has a valid value
+    mapController.setScreenRefreshRate(DEFAULT_FPS)
+    // Retrieve screen refresh rate off the main thread to prevent ANR
+    mapController.lifecycleScope.launch {
+      safeSystemCallWithCallback(
+        fallback = DEFAULT_FPS,
+        logTag = TAG,
+        operation = {
+          display?.refreshRate?.toInt() ?: DEFAULT_FPS
+        }
+      ) { screenRefreshRate ->
+        mapController.setScreenRefreshRate(screenRefreshRate)
+      }
+    }
+
     mapController.onStart()
     if (debugOptionsControllerDelegate.isInitialized()) {
       debugOptionsController.started = true
@@ -553,6 +566,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmSynthetic
     internal const val DEFAULT_FPS = 60
+
+    private const val TAG = "MapView"
 
     /**
      * Static method to check if [MapView] could properly render on this device.
