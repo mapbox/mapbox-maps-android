@@ -10,14 +10,21 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Avoid excessive debug logging on SourceState, which can result in Out Of Memory in extreme cases. Avoid appending geojson data in `GeoJsonSourceState.toString()` override.
 
 
-# 11.14.0-rc.1
+# 11.14.0-rc.1 July 16, 2025
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
 * Added `MapView.onResume()` which should be called in `onResume()` of the host activity or fragment to resume the map view if `plugin-lifecycle` is not used.
+* Improved zoom animation performance by preloading target tiles and reducing unnecessary intermediate tile processing, resulting in smoother camera transitions and reduced frame rate drops.
 
 ## Bug fixes 🐞
 * Fix exception when accessing enum properties in annotations.
 * Fix an issue where instant animation might not have been executed in case of launching multiple animations within a single frame.
+* Fix potential data race in Mapbox token initialization
+* Minor fixes in `TileStore` service
+* Fixed an issue where View Annotations would disappear when rotating and tilting the `MapView` with `allowOverlapWithPuck=false` due to incorrect intersection calculations with off-screen location pucks.
+
+## Dependencies
+* Update gl-native to v11.14.0-rc.1 and common to 24.14.0-rc.1.
 
 # 11.14.0-beta.1 July 02, 2025
 
