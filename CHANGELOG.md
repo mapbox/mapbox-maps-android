@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.13.4
+# 11.13.4 21 July, 2025
 ## Bug fixes 🐞
 * Fix an issue where instant animation might not have been executed in case of launching multiple animations within a single frame.
 
