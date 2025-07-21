@@ -4,21 +4,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.13.4
+## Bug fixes 🐞
+* Fix an issue where instant animation might not have been executed in case of launching multiple animations within a single frame.
+
 # 11.13.3 July 11, 2025
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
-* Added `MapView.onResume()` which should be called in `onResume()` of the host activity or fragment to resume the map view if `plugin-lifecycle` is not used.
-
-## Bug fixes 🐞
-* Fix exception when accessing enum properties in annotations.
-* Fix an issue where instant animation might not have been executed in case of launching multiple animations within a single frame.
-
-# 11.14.0-beta.1 July 02, 2025
-
-## Features ✨ and improvements 🏁
-* Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
-* Provide depth range used for rendering 3D content to custom layers.
-* Added new `split` expression, which returns an array of substrings from a string, split by a delimiter parameter.
 
 ## Bug fixes 🐞
 * Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
