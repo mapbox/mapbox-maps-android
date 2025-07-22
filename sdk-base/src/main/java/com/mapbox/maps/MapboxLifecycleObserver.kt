@@ -27,5 +27,7 @@ interface MapboxLifecycleObserver {
   /**
    * Called when the activity is resumed
    */
-  fun onResume()
+  fun onResume() {
+    // Default empty implementation for backward compatibility
+  }
 }

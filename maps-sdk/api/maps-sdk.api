@@ -16,6 +16,7 @@ public abstract interface class com/mapbox/maps/MapControllable : com/mapbox/map
 }
 
 public final class com/mapbox/maps/MapControllable$DefaultImpls {
+	public static fun onResume (Lcom/mapbox/maps/MapControllable;)V
 	public static synthetic fun queueEvent$default (Lcom/mapbox/maps/MapControllable;Ljava/lang/Runnable;ZILjava/lang/Object;)V
 }
 
