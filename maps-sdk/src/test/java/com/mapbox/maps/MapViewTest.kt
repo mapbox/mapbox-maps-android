@@ -244,4 +244,15 @@ class MapViewTest {
     mapView.removeRendererSetupErrorListener(listener)
     verify { mapController.removeRendererSetupErrorListener(listener) }
   }
+
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
+  @Test
+  fun scheduleThreadServiceTypeReset() {
+    val renderThread = mockk<com.mapbox.maps.renderer.MapboxRenderThread>(relaxUnitFun = true)
+    val renderer = mockk<com.mapbox.maps.renderer.MapboxRenderer>(relaxed = true)
+    every { mapController.renderer } returns renderer
+    every { renderer.renderThread } returns renderThread
+    mapView.scheduleThreadServiceTypeReset()
+    verify { renderThread.scheduleThreadServiceTypeReset() }
+  }
 }
