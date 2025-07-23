@@ -138,6 +138,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public final fun removePlugin (Ljava/lang/String;)V
 	public fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
+	public final fun scheduleThreadServiceTypeReset ()V
 	public final fun setDebugOptions (Ljava/util/Set;)V
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V

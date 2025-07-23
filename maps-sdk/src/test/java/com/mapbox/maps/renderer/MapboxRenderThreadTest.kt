@@ -26,6 +26,7 @@ import org.robolectric.Shadows
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowChoreographer
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.Condition
@@ -1081,5 +1082,23 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
     idleHandler()
     every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
+  }
+
+  @OptIn(com.mapbox.maps.MapboxExperimental::class)
+  @Test
+  fun scheduleThreadServiceTypeResetCallsRendererOnMainThread() {
+    initRenderThread()
+
+    // Verify resetThreadServiceType was not called initially
+    verify(exactly = 0) { mapboxRenderer.resetThreadServiceType() }
+
+    // Schedule the thread service type reset
+    mapboxRenderThread.scheduleThreadServiceTypeReset()
+
+    // Advance time by the delay amount (300ms) and process delayed main thread tasks
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+    // Verify that resetThreadServiceType was called exactly once on the renderer
+    verify(exactly = 1) { mapboxRenderer.resetThreadServiceType() }
   }
 }

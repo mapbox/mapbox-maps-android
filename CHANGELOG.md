@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.14.0
+## Features ✨ and improvements 🏁
+* Added experimental `MapView.scheduleThreadServiceTypeReset()` to reset the renderer thread service type to Interactive. This experimental API is intended for edge cases involving custom lifecycle management or specific scenarios where the default lifecycle behavior is insufficient.
+
 ## Bug fixes 🐞
 * [compose] Avoid excessive debug logging on SourceState, which can result in Out Of Memory in extreme cases. Avoid appending geojson data in `GeoJsonSourceState.toString()` override.
 

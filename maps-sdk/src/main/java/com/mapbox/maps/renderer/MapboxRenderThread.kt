@@ -4,6 +4,8 @@ import android.opengl.EGL14
 import android.opengl.EGLContext
 import android.opengl.EGLSurface
 import android.opengl.GLES20
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.os.Trace
 import android.view.Choreographer
@@ -86,6 +88,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @OptIn(MapboxExperimental::class)
   internal var renderThreadStatsRecorder: RenderThreadStatsRecorder? = null
+
+  /**
+   * Handler for posting tasks to the main thread.
+   */
+  private val mainHandler by lazy {
+    Handler(Looper.getMainLooper())
+  }
 
   /**
    * We track moment when native renderer is prepared.
@@ -708,21 +717,19 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   /**
-   * Schedules a resetThreadServiceType on the render thread after a specified delay.
-   * This method is called on resume to ensure CPU affinity is properly set
+   * Schedules a resetThreadServiceType on the main thread after a specified delay.
+   * This method is called to ensure CPU affinity is properly set
    * when coming back from background, addressing timing issues where CPU affinity
    * might not be immediately available.
    */
   @OptIn(MapboxExperimental::class)
   fun scheduleThreadServiceTypeReset() {
     logI(TAG, "Scheduling thread service type reset with delay")
-    postNonRenderEvent(
-      RenderEvent({
-        logI(TAG, "Executing thread service type reset")
-        mapboxRenderer.resetThreadServiceType()
-      }, false),
-      RESET_THREAD_SERVICE_TYPE_DELAY_MS
-    )
+    mainHandler.postDelayed({
+      // log current thread name to help debug
+      logI(TAG, "Executing thread service type reset from ${Thread.currentThread().name} thread")
+      mapboxRenderer.resetThreadServiceType()
+    }, RESET_THREAD_SERVICE_TYPE_DELAY_MS)
   }
 
   @UiThread

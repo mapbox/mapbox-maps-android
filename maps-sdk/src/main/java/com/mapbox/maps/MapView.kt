@@ -512,6 +512,21 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)
 
   /**
+   * Schedules a thread service type reset on the render thread after a specified delay.
+   * This method is called to ensure CPU affinity is properly set
+   * when coming back from background, addressing timing issues where CPU affinity
+   * might not be immediately available.
+   * **Note:** This is a delicate API that should only be used when you experience
+   * performance issues after returning from background. Improper usage may not
+   * provide any benefits or could potentially affect rendering performance.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  fun scheduleThreadServiceTypeReset() {
+    mapController.renderer.renderThread.scheduleThreadServiceTypeReset()
+  }
+
+  /**
    * Add an instance of [RendererSetupErrorListener].
    *
    * Please note that errors could be already reported from the renderer during [MapView] creation
