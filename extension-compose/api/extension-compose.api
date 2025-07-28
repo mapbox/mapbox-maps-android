@@ -196,6 +196,10 @@ public final class com/mapbox/maps/extension/compose/annotation/IconImageKt {
 	public static final fun rememberIconImage (Ljava/lang/Object;Landroidx/compose/ui/graphics/painter/Painter;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/extension/compose/annotation/IconImage;
 }
 
+public final class com/mapbox/maps/extension/compose/annotation/MarkerKt {
+	public static final fun Marker-YiRMAXg (Lcom/mapbox/geojson/Point;JJLandroidx/compose/ui/graphics/Color;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt {
 	public static final fun ViewAnnotation (Lcom/mapbox/maps/ViewAnnotationOptions;Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }

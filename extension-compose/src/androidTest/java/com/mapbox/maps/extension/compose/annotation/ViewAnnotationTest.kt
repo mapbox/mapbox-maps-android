@@ -14,7 +14,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
+import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.internal.utils.CityLocations.HELSINKI
@@ -91,6 +93,49 @@ public class ViewAnnotationTest {
       Text(VIEW_ANNOTATION_TEXT)
     }
     composeTestRule.onNodeWithText(VIEW_ANNOTATION_TEXT).assertDoesNotExist()
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  public fun testMarker() {
+    var viewAnnotationCount = 0
+
+    composeTestRule.setContent {
+      MapboxMap(
+        Modifier
+          .fillMaxSize()
+          .testTag(MAP_TEST_TAG),
+        mapViewportState = rememberMapViewportState {
+          setCameraOptions {
+            zoom(ZOOM)
+            center(HELSINKI)
+          }
+        },
+        mapState = rememberMapState(),
+      ) {
+        Marker(
+          point = HELSINKI,
+          text = VIEW_ANNOTATION_TEXT
+        )
+
+        // Use MapEffect to access ViewAnnotationManager and count annotations
+        MapEffect(Unit) { mapView ->
+          viewAnnotationCount = mapView.viewAnnotationManager.annotations.size
+        }
+      }
+    }
+    composeTestRule.waitForIdle()
+
+    // Test that the Marker actually adds a ViewAnnotation to the map
+    composeTestRule.waitUntil(timeoutMillis = VIEW_APPEAR_TIMEOUT_MS, condition = {
+      viewAnnotationCount > 0
+    })
+
+    // Verify that exactly one view annotation was added by the Marker
+    assert(viewAnnotationCount == 1) { "Expected 1 view annotation, got $viewAnnotationCount" }
+
+    // Verify the map node exists
+    composeTestRule.onNodeWithTag(MAP_TEST_TAG).assertExists()
   }
 
   private fun setMapContent(

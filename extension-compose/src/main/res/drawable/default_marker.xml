@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/default_marker_outer" />
+    <item android:drawable="@drawable/default_marker_inner" />
+    <item android:drawable="@drawable/default_marker_outer_stroke" />
+    <item android:drawable="@drawable/default_marker_inner_stroke" />
+</layer-list>

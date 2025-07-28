@@ -44,6 +44,17 @@
                 android:value="@string/category_basic" />
         </activity>
         <activity
+            android:name=".examples.annotation.MarkersActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_markers"
+            android:exported="true"
+            android:label="@string/activity_markers"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
+        <activity
             android:name=".examples.annotation.CircleAnnotationActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_circle_annotation"

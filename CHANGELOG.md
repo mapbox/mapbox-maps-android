@@ -21,6 +21,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
 * Added `MapView.onResume()` which should be called in `onResume()` of the host activity or fragment to resume the map view if `plugin-lifecycle` is not used.
 * Improved zoom animation performance by preloading target tiles and reducing unnecessary intermediate tile processing, resulting in smoother camera transitions and reduced frame rate drops.
+* Introduce experimental `Marker` convenience API in Jetpack Compose. Use `Marker` to quickly add a `ViewAnnotation` pin at the specified coordinates with custom text, color, and stroke.
 
 ## Bug fixes 🐞
 * Fix exception when accessing enum properties in annotations.
