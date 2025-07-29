@@ -6,10 +6,29 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.14.0
 ## Features ✨ and improvements 🏁
+* Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
+* Provide depth range used for rendering 3D content to custom layers.
+* Added new `split` expression, which returns an array of substrings from a string, split by a delimiter parameter.
 * Added experimental `MapView.scheduleThreadServiceTypeReset()` to reset the renderer thread service type to Interactive. This experimental API is intended for edge cases involving custom lifecycle management or specific scenarios where the default lifecycle behavior is insufficient.
+* Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
+* Added `MapView.onResume()` which should be called in `onResume()` of the host activity or fragment to resume the map view if `plugin-lifecycle` is not used.
 
 ## Bug fixes 🐞
 * [compose] Avoid excessive debug logging on SourceState, which can result in Out Of Memory in extreme cases. Avoid appending geojson data in `GeoJsonSourceState.toString()` override.
+* Fix exception when accessing enum properties in annotations.
+* Fix an issue where instant animation might not have been executed in case of launching multiple animations within a single frame.
+* Apply obfuscation rules for generated `@MapboxModule` with `enableConfiguration = true`
+* Handle getSharedPreferences exceptions in SettingsServiceHelper
+* Fixed placement for point symbols with symbol-z-offset
+* Fixed some icons being skipped in rare cases
+* Fixed text/icon intersections for optional texts/icons in some cases
+* Fix Dynamic View Annotations caches rebuilding on line-trim-offset updates
+* Fix symbol z-offset not working with fixed fill-extrusion-height
+* Fix potential race conditions in the sprite loader
+
+## Dependencies
+* Update gl-native to [v11.14.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0), common to [24.14.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0).
+
 
 # 11.14.0-rc.1 July 16, 2025
 ## Features ✨ and improvements 🏁
