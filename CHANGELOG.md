@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.14.0
+
+# 11.14.0 July 30, 2025
 ## Features ✨ and improvements 🏁
 * Added new `FillLayer.fillPatternCrossFade`, `FillExtrusionLayer.fillExtrusionPatternCrossFade`, `LineLayer.fillExtrusionPatternCrossFade` properties.
 * Provide depth range used for rendering 3D content to custom layers.
@@ -28,6 +29,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.14.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0), common to [24.14.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.0).
+
 
 
 # 11.14.0-rc.1 July 16, 2025
