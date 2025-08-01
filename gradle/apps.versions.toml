@@ -3,7 +3,7 @@
 
 
 [versions]
-mapboxJavaServices = "7.4.0"
+mapboxJavaServices = "7.5.0"
 squareRetrofit = "2.9.0"
 
 androidxRecyclerView = "1.1.0"

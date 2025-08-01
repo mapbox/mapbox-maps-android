@@ -38,7 +38,7 @@ mapboxCommon = "24.15.0-SNAPSHOT-08-01--04-40.git-1471842"
 
 mapboxBase = "0.12.0"
 mapboxGestures = "0.9.1"
-mapboxGeoJSON = "5.4.1"
+mapboxGeoJSON = "7.5.0"
 
 androidXTestMonitor = "1.6.1"
 androidxAnnotation = "1.1.0"

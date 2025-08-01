@@ -7,6 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix potential ANR (Application Not Responding) issue when retrieving display refresh rate during map initialization by offloading the system call to a background thread with proper timeout and fallback handling.
 
+## Dependencies
+* Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0).
+
 
 # 11.14.0 July 30, 2025
 ## Features ✨ and improvements 🏁
