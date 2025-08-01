@@ -36,6 +36,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to v11.14.0, common to 24.14.0.
 
 
+
 # 11.14.0-rc.1 July 16, 2025
 ## Features ✨ and improvements 🏁
 * Added `setContentDescription()` method to `AttributionPlugin` and `AttributionView` interfaces to programmatically set accessibility content description for the attribution button.
