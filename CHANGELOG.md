@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0).
+# 11.14.1 August 07, 2025
 
 
 # 11.14.0 July 30, 2025
