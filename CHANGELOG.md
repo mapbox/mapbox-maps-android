@@ -9,7 +9,15 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0).
+
+
 # 11.14.1 August 07, 2025
+
+## Bug fixes 🐞
+* Fix missing map loaded event in case vector tile is not found
+
+## Dependencies
+* Update gl-native to v11.14.1, common to 24.14.1.
 
 
 # 11.14.0 July 30, 2025
