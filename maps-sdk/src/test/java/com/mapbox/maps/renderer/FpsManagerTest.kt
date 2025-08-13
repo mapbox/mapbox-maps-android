@@ -40,6 +40,7 @@ class FpsManagerTest {
     pauseHandler()
     idleHandler(vsyncCount = 10) {
       assert(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
   }
 
@@ -50,6 +51,7 @@ class FpsManagerTest {
     val frameRenderedPattern = mutableListOf<Boolean>()
     idleHandler(vsyncCount = 10) {
       frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
     Assert.assertArrayEquals(
       arrayOf(
@@ -68,6 +70,7 @@ class FpsManagerTest {
     val frameRenderedPattern = mutableListOf<Boolean>()
     idleHandler(vsyncCount = vsyncCount) {
       frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
     Assert.assertArrayEquals(
       Array(vsyncCount) { it == 8 || it == 17 },
@@ -83,6 +86,7 @@ class FpsManagerTest {
     val frameRenderedPattern = mutableListOf<Boolean>()
     idleHandler(vsyncCount = vsyncCount) {
       frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
     Assert.assertArrayEquals(
       // 6 frames should be rendered in total during 2 seconds with 3 FPS
@@ -99,6 +103,7 @@ class FpsManagerTest {
     val frameRenderedPattern = mutableListOf<Boolean>()
     idleHandler(vsyncCount = vsyncCount) {
       frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
     Assert.assertArrayEquals(
       Array(vsyncCount) { it == 59 || it == 119 },
@@ -114,11 +119,97 @@ class FpsManagerTest {
     val frameRenderedPattern = mutableListOf<Boolean>()
     idleHandler(vsyncCount = vsyncCount) {
       frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
     }
     Assert.assertArrayEquals(
       Array(vsyncCount) { true },
       frameRenderedPattern.toTypedArray()
     )
+  }
+
+  @Test
+  fun userRefreshRateSameAsScreenRefreshRateTest() {
+    fpsManager.setUserRefreshRate(SCREEN_FPS)
+    pauseHandler()
+    val frameRenderedPattern = mutableListOf<Boolean>()
+    idleHandler(vsyncCount = 5 * SCREEN_FPS) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
+    }
+    Assert.assertArrayEquals(
+      Array(5 * SCREEN_FPS) { true },
+      frameRenderedPattern.toTypedArray()
+    )
+  }
+
+  @Test
+  fun `user refresh rate changes mid render with listener`() {
+    val fpsValueArray = mutableListOf<Double>()
+    val fpsChangedListener = OnFpsChangedListener {
+      fpsValueArray.add(it)
+    }
+    fpsManager.fpsChangedListener = fpsChangedListener
+    pauseHandler()
+    val frameRenderedPattern = mutableListOf<Boolean>()
+    val vsyncCount = 90
+
+    // First set user refresh rate to be the same as screen refresh rate
+    fpsManager.setUserRefreshRate(SCREEN_FPS)
+    idleHandler(vsyncCount = vsyncCount) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
+    }
+    Assert.assertArrayEquals(
+      Array(vsyncCount) { true },
+      frameRenderedPattern.toTypedArray()
+    )
+    Assert.assertEquals(1, fpsValueArray.size)
+    Assert.assertEquals(SCREEN_FPS.toDouble(), fpsValueArray.last(), EPS)
+
+    frameRenderedPattern.clear()
+
+    // Now change the user refresh ratio to be half of the screen refresh rate
+    fpsManager.setUserRefreshRate(SCREEN_FPS / 2)
+    // That triggers a new listener with the FPS value for the remaining 30 frames out of the 90 above
+    Assert.assertEquals(2, fpsValueArray.size)
+    Assert.assertEquals(SCREEN_FPS.toDouble(), fpsValueArray.last(), EPS)
+
+    // Now render vsyncCount frames with the new user refresh rate
+    idleHandler(vsyncCount = vsyncCount) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
+    }
+    Assert.assertArrayEquals(
+      // We expect every other frame to be rendered (user SCREEN_FPS/2 FPS)
+      Array(vsyncCount) { it % 2 != 0 },
+      frameRenderedPattern.toTypedArray()
+    )
+    Assert.assertEquals(3, fpsValueArray.size)
+    Assert.assertEquals(SCREEN_FPS / 2.0, fpsValueArray.last(), EPS)
+
+    frameRenderedPattern.clear()
+
+    // Reset user refresh rate to be the same as screen one
+    fpsManager.setUserRefreshRate(SCREEN_FPS)
+    // That triggers a new listener with the FPS value for the remaining 30 frames out of the 90 above
+    Assert.assertEquals(4, fpsValueArray.size)
+    Assert.assertEquals(SCREEN_FPS / 2.0, fpsValueArray.last(), EPS)
+
+    idleHandler(vsyncCount = vsyncCount) {
+      frameRenderedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
+    }
+    Assert.assertArrayEquals(
+      Array(vsyncCount) { true },
+      frameRenderedPattern.toTypedArray()
+    )
+    Assert.assertEquals(5, fpsValueArray.size)
+    Assert.assertEquals(SCREEN_FPS.toDouble(), fpsValueArray.last(), EPS)
+
+    fpsManager.onSurfaceDestroyed()
+    // One last FPS value for the remaining 30 frames out of the 90 above
+    Assert.assertEquals(6, fpsValueArray.size)
+    Assert.assertEquals(SCREEN_FPS.toDouble(), fpsValueArray.last(), EPS)
   }
 
   @Test
@@ -184,12 +275,11 @@ class FpsManagerTest {
   private fun pauseHandler() = Shadows.shadowOf(Looper.getMainLooper()).pause()
 
   private fun idleHandler(vsyncCount: Int, actionOnVsync: ((Long) -> Unit)) {
-    for (i in 0 until vsyncCount) {
-      Choreographer.getInstance().postFrameCallback { frameTimeNs ->
-        actionOnVsync.invoke(frameTimeNs)
-      }
-      Shadows.shadowOf(Looper.getMainLooper())
-        .idleFor(CHOREOGRAPHER_POST_FRAME_CALLBACK_DELAY_MS.toLong(), TimeUnit.MILLISECONDS)
+    val choreographer = Choreographer.getInstance()
+    val looper = Shadows.shadowOf(Looper.getMainLooper())
+    repeat(vsyncCount) {
+      choreographer.postFrameCallback(actionOnVsync)
+      looper.idleFor(CHOREOGRAPHER_POST_FRAME_CALLBACK_DELAY_MS.toLong(), TimeUnit.MILLISECONDS)
     }
   }
 

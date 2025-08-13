@@ -39,10 +39,7 @@ internal class FpsManager(
     }
     this.screenRefreshRate = screenRefreshRate
     screenRefreshPeriodNs = ONE_SECOND_NS / screenRefreshRate
-    if (userRefreshRate != USER_DEFINED_REFRESH_RATE_NOT_SET) {
-      userToScreenRefreshRateRatio = (userRefreshRate.toDouble() / screenRefreshRate).coerceIn(0.0, 1.0)
-      logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
-    }
+    updateUserToScreenRefreshRatio()
     if (LOG_STATISTICS) {
       logI(
         TAG,
@@ -56,11 +53,19 @@ internal class FpsManager(
     if (userRefreshRate != refreshRate) {
       userRefreshRate = refreshRate
       logI(TAG, "User set max FPS to $userRefreshRate")
-      if (screenRefreshRate != SCREEN_METRICS_NOT_DEFINED) {
-        userToScreenRefreshRateRatio = (userRefreshRate.toDouble() / screenRefreshRate).coerceIn(0.0, 1.0)
-        logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
-      }
+      updateUserToScreenRefreshRatio()
     }
+  }
+
+  private fun updateUserToScreenRefreshRatio() {
+    if (userRefreshRate == USER_DEFINED_REFRESH_RATE_NOT_SET || screenRefreshRate == SCREEN_METRICS_NOT_DEFINED) {
+      logI(TAG, "userToScreenRefreshRateRatio is not set (userRefreshRate=$userRefreshRate, screenRefreshRate=$screenRefreshRate)")
+      return
+    }
+    userToScreenRefreshRateRatio = (userRefreshRate.toDouble() / screenRefreshRate).coerceIn(0.0, 1.0)
+    logI(TAG, "User defined ratio is $userToScreenRefreshRateRatio")
+    // After changing the ratio we need to reset counters
+    calculateFpsAndReset()
   }
 
   /**
@@ -130,7 +135,7 @@ internal class FpsManager(
     previousFrameTimeNs = frameTimeNs
     // we always increase choreographer tick by one + add number of skipped frames for consistent results
     choreographerTicks += skippedNow + 1
-    if (skippedNow > 0 && LOG_STATISTICS) {
+    if (LOG_STATISTICS && skippedNow > 0) {
       logW(
         TAG,
         "Skipped $skippedNow VSYNC pulses since last actual render," +
@@ -173,7 +178,7 @@ internal class FpsManager(
     if (LOG_STATISTICS) {
       logI(
         TAG,
-        "Performing pacing, current index=$drawnFrameIndex," +
+        "Performing pacing, current index=$drawnFrameIndex, choreographerTicks=$choreographerTicks," +
           " previous drawn=$previousDrawnFrameIndex, proceed with rendering=${drawnFrameIndex > previousDrawnFrameIndex}"
       )
     }
