@@ -4,6 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.15.0-beta.1 August 12, 2025
+
 ## Bug fixes 🐞
 * Fix potential ANR (Application Not Responding) issue when retrieving display refresh rate during map initialization by offloading the system call to a background thread with proper timeout and fallback handling.
 
