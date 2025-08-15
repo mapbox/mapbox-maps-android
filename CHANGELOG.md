@@ -4,10 +4,12 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.14.2
+
+# 11.14.2 August 15, 2025
 
 ## Bug fixes 🐞
 * Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
+
 
 
 # 11.14.1 August 07, 2025

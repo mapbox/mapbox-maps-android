@@ -30,9 +30,9 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-gestures:11.14.1'
+  implementation 'com.mapbox.plugin:maps-gestures:11.14.2'
     // Mapbox Maps Gestures Plugin depends on the Mapbox Maps Animation Plugin
-  implementation 'com.mapbox.plugin:maps-animation:11.14.1'
+  implementation 'com.mapbox.plugin:maps-animation:11.14.2'
 }
 ```
 
