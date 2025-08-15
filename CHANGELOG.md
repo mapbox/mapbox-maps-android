@@ -20,6 +20,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to v11.15.0-beta.1, common to 24.15.0-beta.1.
 * Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0).
 
+# 11.14.2 August 15, 2025
 
 # 11.14.1 August 07, 2025
 
