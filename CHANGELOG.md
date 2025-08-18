@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.15.0-beta.2 August 15, 2025
+## Bug fixes 🐞
+* Fix tile border debug feature flickering on globe
+
 # 11.15.0-beta.1 August 12, 2025
 ## Features ✨ and improvements 🏁
 * Enable camera animation hint during zoom out animations 
