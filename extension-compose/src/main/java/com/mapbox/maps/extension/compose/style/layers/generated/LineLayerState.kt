@@ -35,6 +35,10 @@ public class LineLayerState
 private constructor(
   initialLineCap: LineCapValue,
   initialLineCrossSlope: DoubleValue,
+  initialLineCutoutOpacity: DoubleValue,
+  initialLineCutoutOpacityTransition: Transition,
+  initialLineCutoutWidth: DoubleValue,
+  initialLineCutoutWidthTransition: Transition,
   initialLineElevationReference: LineElevationReferenceValue,
   initialLineJoin: LineJoinValue,
   initialLineMiterLimit: DoubleValue,
@@ -93,6 +97,10 @@ private constructor(
   public constructor() : this(
     initialLineCap = LineCapValue.INITIAL,
     initialLineCrossSlope = DoubleValue.INITIAL,
+    initialLineCutoutOpacity = DoubleValue.INITIAL,
+    initialLineCutoutOpacityTransition = Transition.INITIAL,
+    initialLineCutoutWidth = DoubleValue.INITIAL,
+    initialLineCutoutWidthTransition = Transition.INITIAL,
     initialLineElevationReference = LineElevationReferenceValue.INITIAL,
     initialLineJoin = LineJoinValue.INITIAL,
     initialLineMiterLimit = DoubleValue.INITIAL,
@@ -164,6 +172,38 @@ private constructor(
    */
   @MapboxExperimental
   public var lineCrossSlope: DoubleValue by lineCrossSlopeState
+
+  @MapboxExperimental
+  private val lineCutoutOpacityState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutOpacity)
+  /**
+   *  The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var lineCutoutOpacity: DoubleValue by lineCutoutOpacityState
+
+  @MapboxExperimental
+  private val lineCutoutOpacityTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutOpacityTransition)
+  /**
+   *  Defines the transition of [lineCutoutOpacity].
+   */
+  @MapboxExperimental
+  public var lineCutoutOpacityTransition: Transition by lineCutoutOpacityTransitionState
+
+  @MapboxExperimental
+  private val lineCutoutWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutWidth)
+  /**
+   *  The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
+   */
+  @MapboxExperimental
+  public var lineCutoutWidth: DoubleValue by lineCutoutWidthState
+
+  @MapboxExperimental
+  private val lineCutoutWidthTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutWidthTransition)
+  /**
+   *  Defines the transition of [lineCutoutWidth].
+   */
+  @MapboxExperimental
+  public var lineCutoutWidthTransition: Transition by lineCutoutWidthTransitionState
 
   @MapboxExperimental
   private val lineElevationReferenceState: MutableState<LineElevationReferenceValue> = mutableStateOf(initialLineElevationReference)
@@ -484,6 +524,10 @@ private constructor(
   internal fun UpdateProperties(layerNode: LayerNode) {
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCapState, "line-cap")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCrossSlopeState, "line-cross-slope")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityState, "line-cutout-opacity")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityTransitionState, "line-cutout-opacity-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthState, "line-cutout-width")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthTransitionState, "line-cutout-width-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineElevationReferenceState, "line-elevation-reference")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineJoinState, "line-join")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineMiterLimitState, "line-miter-limit")

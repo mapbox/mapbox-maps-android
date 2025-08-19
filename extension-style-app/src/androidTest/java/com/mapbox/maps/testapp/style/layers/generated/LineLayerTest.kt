@@ -119,6 +119,116 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineCutoutOpacityTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineCutoutOpacity(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineCutoutOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutOpacityAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineCutoutOpacity(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineCutoutOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutOpacity!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineCutoutOpacityTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineCutoutOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutOpacityTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineCutoutOpacityTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineCutoutOpacityTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutWidthTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineCutoutWidth(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineCutoutWidth!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutWidthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineCutoutWidth(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineCutoutWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutWidth!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineCutoutWidthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineCutoutWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutWidthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineCutoutWidthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineCutoutWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineElevationReferenceTest() {
     val layer = lineLayer("id", "source") {
       lineElevationReference(LineElevationReference.NONE)
@@ -1427,6 +1537,12 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineCapAsExpression should not be null", LineLayer.defaultLineCapAsExpression)
     assertNotNull("defaultLineCrossSlope should not be null", LineLayer.defaultLineCrossSlope)
     assertNotNull("defaultLineCrossSlopeAsExpression should not be null", LineLayer.defaultLineCrossSlopeAsExpression)
+    assertNotNull("defaultLineCutoutOpacity should not be null", LineLayer.defaultLineCutoutOpacity)
+    assertNotNull("defaultLineCutoutOpacityAsExpression should not be null", LineLayer.defaultLineCutoutOpacityAsExpression)
+    assertNotNull("defaultLineCutoutOpacityTransition should not be null", LineLayer.defaultLineCutoutOpacityTransition)
+    assertNotNull("defaultLineCutoutWidth should not be null", LineLayer.defaultLineCutoutWidth)
+    assertNotNull("defaultLineCutoutWidthAsExpression should not be null", LineLayer.defaultLineCutoutWidthAsExpression)
+    assertNotNull("defaultLineCutoutWidthTransition should not be null", LineLayer.defaultLineCutoutWidthTransition)
     assertNotNull("defaultLineElevationReference should not be null", LineLayer.defaultLineElevationReference)
     assertNotNull("defaultLineElevationReferenceAsExpression should not be null", LineLayer.defaultLineElevationReferenceAsExpression)
     assertNotNull("defaultLineJoin should not be null", LineLayer.defaultLineJoin)
@@ -1516,6 +1632,8 @@ class LineLayerTest : BaseStyleTest() {
     }
     val lineCapTestValue = LineCap.BUTT
     val lineCrossSlopeTestValue = 1.0
+    val lineCutoutOpacityTestValue = 1.0
+    val lineCutoutWidthTestValue = 1.0
     val lineElevationReferenceTestValue = LineElevationReference.NONE
     val lineJoinTestValue = LineJoin.BEVEL
     val lineMiterLimitTestValue = 1.0
@@ -1578,6 +1696,8 @@ class LineLayerTest : BaseStyleTest() {
       filter(filterTestValue)
       lineCap(lineCapTestValue)
       lineCrossSlope(lineCrossSlopeTestValue)
+      lineCutoutOpacity(lineCutoutOpacityTestValue)
+      lineCutoutWidth(lineCutoutWidthTestValue)
       lineElevationReference(lineElevationReferenceTestValue)
       lineJoin(lineJoinTestValue)
       lineMiterLimit(lineMiterLimitTestValue)
@@ -1624,6 +1744,8 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(lineCapTestValue, cachedLayer.lineCap)
     assertEquals(lineCrossSlopeTestValue, cachedLayer.lineCrossSlope)
+    assertEquals(lineCutoutOpacityTestValue, cachedLayer.lineCutoutOpacity)
+    assertEquals(lineCutoutWidthTestValue, cachedLayer.lineCutoutWidth)
     assertEquals(lineElevationReferenceTestValue, cachedLayer.lineElevationReference)
     assertEquals(lineJoinTestValue, cachedLayer.lineJoin)
     assertEquals(lineMiterLimitTestValue, cachedLayer.lineMiterLimit)

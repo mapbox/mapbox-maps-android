@@ -25,6 +25,8 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 public class PolylineAnnotationGroupState private constructor(
   initialLineCap: LineCap?,
   initialLineCrossSlope: Double?,
+  initialLineCutoutOpacity: Double?,
+  initialLineCutoutWidth: Double?,
   initialLineElevationReference: LineElevationReference?,
   initialLineJoin: LineJoin?,
   initialLineMiterLimit: Double?,
@@ -62,6 +64,8 @@ public class PolylineAnnotationGroupState private constructor(
   public constructor() : this(
     initialLineCap = null,
     initialLineCrossSlope = null,
+    initialLineCutoutOpacity = null,
+    initialLineCutoutWidth = null,
     initialLineElevationReference = null,
     initialLineJoin = null,
     initialLineMiterLimit = null,
@@ -110,6 +114,16 @@ public class PolylineAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var lineCrossSlope: Double? by mutableStateOf(initialLineCrossSlope)
+  /**
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var lineCutoutOpacity: Double? by mutableStateOf(initialLineCutoutOpacity)
+  /**
+   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
+   */
+  @MapboxExperimental
+  public var lineCutoutWidth: Double? by mutableStateOf(initialLineCutoutWidth)
   /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
@@ -259,6 +273,16 @@ public class PolylineAnnotationGroupState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
+  private fun UpdateLineCutoutOpacity(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineCutoutOpacity = lineCutoutOpacity
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
+  private fun UpdateLineCutoutWidth(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineCutoutWidth = lineCutoutWidth
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateLineElevationReference(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineElevationReference = lineElevationReference
   }
@@ -399,6 +423,8 @@ public class PolylineAnnotationGroupState private constructor(
   internal fun UpdateProperties(annotationManager: PolylineAnnotationManager) {
     UpdateLineCap(annotationManager)
     UpdateLineCrossSlope(annotationManager)
+    UpdateLineCutoutOpacity(annotationManager)
+    UpdateLineCutoutWidth(annotationManager)
     UpdateLineElevationReference(annotationManager)
     UpdateLineJoin(annotationManager)
     UpdateLineMiterLimit(annotationManager)
