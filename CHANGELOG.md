@@ -10,6 +10,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
 
+## Dependencies
+* Update gl-native to v11.14.2, common to 24.14.2.
+
 
 
 # 11.14.1 August 07, 2025
