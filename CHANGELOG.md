@@ -6,10 +6,19 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.15.0-beta.3 August 18, 2025
 
+## Bug fixes 🐞
+* Fix incorrect background color of icons when non-default color-theme is used
+
+## Dependencies
+* Update gl-native to v11.15.0-beta.3, common to 24.15.0-beta.3.
+
 # 11.15.0-beta.2 August 15, 2025
 
 ## Bug fixes 🐞
 * Fix tile border debug feature flickering on globe
+
+## Dependencies
+* Update gl-native to v11.15.0-beta.2, common to 24.15.0-beta.2.
 
 # 11.15.0-rc.1
 
@@ -17,11 +26,19 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
 
 # 11.15.0-beta.1 August 12, 2025
+## Features ✨ and improvements 🏁
+* Enable camera animation hint during zoom out animations 
 
 ## Bug fixes 🐞
 * Fix potential ANR (Application Not Responding) issue when retrieving display refresh rate during map initialization by offloading the system call to a background thread with proper timeout and fallback handling.
+* Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
+* Fixed image only `text-field`
+* Make 2D Location Indicator bbox available only for visible puck positions
+* Fix potential data race in mapbox token initialization
+* Minor fixes in `TileStore` service
 
 ## Dependencies
+* Update gl-native to v11.15.0-beta.1, common to 24.15.0-beta.1.
 * Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0).
 
 # 11.14.1 August 07, 2025
