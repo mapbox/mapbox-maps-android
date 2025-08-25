@@ -5,7 +5,6 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
-import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -92,8 +91,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     this.contextMode = mapInitOptions.mapOptions.contextMode
-    logI(TAG, "Registering asset file source factory")
-    AssetManagerProvider().initialize(mapInitOptions.context.assets)
     this.nativeMap = MapProvider.getNativeMapWrapper(
       mapInitOptions,
       renderer,
