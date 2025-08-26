@@ -39,7 +39,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.15.0-beta.1, common to 24.15.0-beta.1.
-* Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0).
+* Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0) which bumps GSON to v2.13.1 to address [CVE-2025-53864](https://nvd.nist.gov/vuln/detail/CVE-2025-53864). If your project uses AGP 7.0, you might need to add the following snippet to your `build.gradle` or upgrade to AGP 8.0+ ([more details](https://issuetracker.google.com/issues/342522142#comment8)):
+```
+configurations {
+    all {
+        exclude group: 'com.google.errorprone', module: 'error_prone_annotations'
+    }
+}
+```
 
 # 11.14.1 August 07, 2025
 
