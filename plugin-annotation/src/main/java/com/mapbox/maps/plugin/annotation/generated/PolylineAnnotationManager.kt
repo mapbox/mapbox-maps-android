@@ -256,6 +256,62 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineCutoutOpacity property
+   *
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  var lineCutoutOpacity: Double?
+    /**
+     * Get the LineCutoutOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineCutoutOpacity
+    }
+    /**
+     * Set the LineCutoutOpacity property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity").value
+      }
+      setLayerProperty(wrappedValue, "line-cutout-opacity")
+    }
+
+  /**
+   * The LineCutoutWidth property
+   *
+   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
+   */
+  @MapboxExperimental
+  var lineCutoutWidth: Double?
+    /**
+     * Get the LineCutoutWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineCutoutWidth
+    }
+    /**
+     * Set the LineCutoutWidth property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").value
+      }
+      setLayerProperty(wrappedValue, "line-cutout-width")
+    }
+
+  /**
    * The LineElevationReference property
    *
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".

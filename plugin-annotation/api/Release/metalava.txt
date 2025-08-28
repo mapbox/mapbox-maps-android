@@ -1294,6 +1294,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getLineColorString();
     method public String? getLineColorUseTheme();
     method public Double? getLineCrossSlope();
+    method public Double? getLineCutoutOpacity();
+    method public Double? getLineCutoutWidth();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
@@ -1335,6 +1337,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineColorString(String?);
     method public void setLineColorUseTheme(String?);
     method public void setLineCrossSlope(Double?);
+    method public void setLineCutoutOpacity(Double?);
+    method public void setLineCutoutWidth(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
     method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
@@ -1375,6 +1379,8 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? lineColorString;
     property public final String? lineColorUseTheme;
     property public final Double? lineCrossSlope;
+    property public final Double? lineCutoutOpacity;
+    property public final Double? lineCutoutWidth;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
