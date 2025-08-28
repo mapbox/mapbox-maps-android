@@ -6,6 +6,16 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
 
+# 11.15.0-rc.1 August 28, 2025
+
+## Bug fixes 🐞
+* Fix bug where View Annotation is not displayed at zoom levels > 22
+* Fix potential crash caused by a race condition
+* Fix the alignment of the text and icon when using the text-anchor property.
+
+## Dependencies
+* Update gl-native to v11.15.0-rc.1, common to 24.15.0-rc.1.
+
 # 11.15.0-beta.3 August 18, 2025
 
 ## Bug fixes 🐞
@@ -21,12 +31,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v11.15.0-beta.2, common to 24.15.0-beta.2.
-
-
-# 11.15.0-rc.1 August 28, 2025
-
-## Bug fixes 🐞
-* Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
 
 
 # 11.15.0-beta.1 August 12, 2025
