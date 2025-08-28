@@ -9,9 +9,30 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common.
 
+# 11.15.0-rc.1 August 28, 2025
+
+## Bug fixes 🐞
+* Fix bug where View Annotation is not displayed at zoom levels > 22
+* Fix potential crash caused by a race condition
+* Fix the alignment of the text and icon when using the text-anchor property.
+
+## Dependencies
+* Update gl-native to v11.15.0-rc.1, common to 24.15.0-rc.1.
+
+# 11.15.0-beta.3 August 18, 2025
+
+## Bug fixes 🐞
+* Fix incorrect background color of icons when non-default color-theme is used
+
+## Dependencies
+* Update gl-native to v11.15.0-beta.3, common to 24.15.0-beta.3.
+
 # 11.15.0-beta.2 August 15, 2025
 ## Bug fixes 🐞
 * Fix tile border debug feature flickering on globe
+
+## Dependencies
+* Update gl-native to v11.15.0-beta.2, common to 24.15.0-beta.2.
 
 # 11.15.0-beta.1 August 12, 2025
 ## Features ✨ and improvements 🏁
