@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.14.3 August 29, 2025
 
+## Bug fixes 🐞
+* Fix a bug where Dynamic View Annotations disappeared in corner cases
+* Fix a bug where location indicator layer disappeared in certain configurations
+* Fix potential crash caused by a race condition
+
 ## Dependencies
 * Update gl-native to [v11.14.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.3), common to [24.14.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.3).
 
