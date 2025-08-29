@@ -9,6 +9,16 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common.
 
+# 11.14.3 August 29, 2025
+
+## Bug fixes 🐞
+* Fix a bug where Dynamic View Annotations disappeared in corner cases
+* Fix a bug where location indicator layer disappeared in certain configurations
+* Fix potential crash caused by a race condition
+
+## Dependencies
+* Update gl-native to v11.14.3, common to 24.14.3
+
 # 11.15.0-rc.1 August 28, 2025
 
 ## Bug fixes 🐞
