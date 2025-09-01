@@ -46,6 +46,13 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to v11.15.0-beta.2, common to 24.15.0-beta.2.
 
+
+# 11.15.0-rc.1 August 28, 2025
+
+## Bug fixes 🐞
+* Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
+
+
 # 11.15.0-beta.1 August 12, 2025
 ## Features ✨ and improvements 🏁
 * Enable camera animation hint during zoom out animations 
