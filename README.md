@@ -7,7 +7,12 @@
 The Mapbox Maps SDK for Android is a public library for displaying interactive, thoroughly customizable maps in native Android. It takes map styles that conform to the [Mapbox Style Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/), applies them to vector tiles that conform to the [Mapbox Vector Tile Specification](https://github.com/mapbox/vector-tile-spec), and renders them using OpenGL.
 
 ## Getting Started
-This README is intended for developers who are interested in contributing to the Mapbox Maps SDK for Android. Please visit https://docs.mapbox.com/android/beta/maps/guides/ for general information and instructions on using the Maps SDK in your Android application.
+This README is intended for developers who are interested in contributing to the Mapbox Maps SDK for Android. Please visit https://docs.mapbox.com/android/maps/guides/ for general information and instructions on using the Maps SDK in your Android application.
+
+## 16 KB Page Size Support
+Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix.
+
+For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 ## Developing
 If you are interested in contributing to the Maps SDK, please see the [DEVELOPING.md](DEVELOPING.md) file for information on setting up, running and building the SDK.
