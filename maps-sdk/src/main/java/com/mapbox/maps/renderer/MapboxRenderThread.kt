@@ -370,6 +370,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
   }
 
+  /**
+   * Keep a [Choreographer.FrameCallback] to [swapBuffers] to avoid creating a new one on every time.
+   */
+  private val swapBuffersFunc = Choreographer.FrameCallback { swapBuffers() }
+
   @OptIn(MapboxExperimental::class)
   private fun draw(frameTimeNanos: Long) {
     if (!fpsManager.preRender(frameTimeNanos, renderThreadStatsRecorder?.isRecording == true)) {
@@ -407,9 +412,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // when we're syncing view annotations with the map -
       // we swap buffers the next frame to achieve better synchronization with view annotations update
       // that always happens 1 frame later
-      Choreographer.getInstance().postFrameCallback {
-        swapBuffers()
-      }
+      Choreographer.getInstance().postFrameCallback(swapBuffersFunc)
       // explicit flush as we will not be doing any drawing until buffer swap for the next frame -
       // we send commands to GPU this frame as we should have some free time and perform buffer swap asap on the next frame
       // note that this doesn't block the calling thread, it merely signals the driver that we might not be sending any additional commands.
