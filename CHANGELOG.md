@@ -12,6 +12,14 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common.
 
+# 11.14.4 September 03, 2025
+
+## Features ✨ and improvements 🏁
+* Performance optimizations for View Annotations.
+
+## Dependencies
+* Update gl-native to v11.14.4, common to 24.14.4.
+
 # 11.14.3 August 29, 2025
 
 ## Bug fixes 🐞
