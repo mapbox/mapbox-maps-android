@@ -224,7 +224,9 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperties(String importId, java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> configs);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleImportConfigProperty(String importId, String config, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperties(String layerId, com.mapbox.bindgen.Value properties);
+    method @AnyThread @CallSuper @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable setStyleLayerPropertiesAsync(String layerId, com.mapbox.bindgen.Value properties, com.mapbox.maps.AsyncOperationResultCallback callback);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
+    method @AnyThread @CallSuper @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable setStyleLayerPropertyAsync(String layerId, String property, com.mapbox.bindgen.Value value, com.mapbox.maps.AsyncOperationResultCallback callback);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, String property, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLights(com.mapbox.bindgen.Value lights);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjection(com.mapbox.bindgen.Value properties);
