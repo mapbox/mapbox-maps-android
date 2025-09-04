@@ -5,6 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
+* Expose experimental `MapboxMap.setStyleLayerPropertiesAsync` and `MapboxMap.setStyleLayerPropertyAsync` (also available through `Style`) to allow setting properties from a any thread and asynchronously.
 
 # 11.15.0-rc.1 August 28, 2025
 

@@ -8,6 +8,7 @@ import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 
 /**
@@ -581,6 +582,45 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   }
 
   /**
+   * Sets a value to a style layer property asynchronously.
+   *
+   * This method provides asynchronous argument parsing which is beneficial when working with
+   * large or complex style expressions that could block the main thread during parsing.
+   * The operation is performed on a background thread and the callback is invoked on the
+   * main thread once the operation completes.
+   *
+   * Values will be applied asynchronously at some moment in the future. If multiple calls
+   * to this method are made, the corresponding values will be applied in the same order
+   * as the calls were made.
+   *
+   * Note: This method should be used only if the given argument is a massive expression
+   * and its parsing would block the main thread otherwise. For simple property values,
+   * prefer the synchronous [setStyleLayerProperty] method.
+   *
+   * If the style is modified during this asynchronous method call, the scheduled layer
+   * property change will still be applied as long as a layer with the original name and
+   * type still exists.
+   *
+   * @param layerId A style layer identifier.
+   * @param property The style layer property name.
+   * @param value The style layer property value.
+   * @param callback Called once the request is complete or an error occurred.
+   *
+   * @return A [Cancelable] object that can be used to cancel the asynchronous operation.
+   */
+  @MapboxExperimental
+  @CallSuper
+  @AnyThread
+  open fun setStyleLayerPropertyAsync(
+    layerId: String,
+    property: String,
+    value: Value,
+    callback: AsyncOperationResultCallback
+  ): Cancelable {
+    return styleManager.setStyleLayerPropertyAsync(layerId, property, value, callback)
+  }
+
+  /**
    * Gets style layer properties.
    *
    * @return The style layer properties or a string describing an error if the operation was not successful.
@@ -608,6 +648,48 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   open fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
     ThreadChecker.throwIfNotMainThread()
     return styleManager.setStyleLayerProperties(layerId, properties)
+  }
+
+  /**
+   * Experimental. Sets style layer properties asynchronously.
+   *
+   * This method can be used to perform batch update for a style layer properties with asynchronous
+   * argument parsing which is beneficial when working with large or complex style expressions that
+   * could block the main thread during parsing. The operation is performed on a background thread
+   * and the callback is invoked on the main thread once the operation completes.
+   *
+   * Properties will be applied asynchronously at some moment in the future. If multiple calls
+   * to this method are made, the corresponding properties will be applied in the same order
+   * as the calls were made.
+   *
+   * Note: This method should be used only if the given arguments contain massive expressions
+   * and their parsing would block the main thread otherwise. For simple property values,
+   * prefer the synchronous [setStyleLayerProperties] method.
+   *
+   * The structure of the provided [properties] value must conform to a format for a corresponding
+   * [layer type](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/).
+   * Modification of a layer [id](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#id) and/or
+   * a [layer type](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#type) is not allowed.
+   *
+   * If the style is modified during this asynchronous method call, the scheduled layer
+   * properties change will still be applied as long as a layer with the original name and
+   * type still exists.
+   *
+   * @param layerId A style layer identifier.
+   * @param properties A map of style layer properties.
+   * @param callback Called once the request is complete or an error occurred.
+   *
+   * @return A [Cancelable] object that can be used to cancel the asynchronous operation.
+   */
+  @CallSuper
+  @AnyThread
+  @MapboxExperimental
+  open fun setStyleLayerPropertiesAsync(
+    layerId: String,
+    properties: Value,
+    callback: AsyncOperationResultCallback
+  ): Cancelable {
+    return styleManager.setStyleLayerPropertiesAsync(layerId, properties, callback)
   }
 
   /**

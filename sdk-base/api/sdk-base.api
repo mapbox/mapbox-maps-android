@@ -248,7 +248,9 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun setStyleImportConfigProperties (Ljava/lang/String;Ljava/util/HashMap;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleImportConfigProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleLayerProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleLayerPropertiesAsync (Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/AsyncOperationResultCallback;)Lcom/mapbox/common/Cancelable;
 	public fun setStyleLayerProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleLayerPropertyAsync (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/AsyncOperationResultCallback;)Lcom/mapbox/common/Cancelable;
 	public fun setStyleLightProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleLights (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleProjection (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
