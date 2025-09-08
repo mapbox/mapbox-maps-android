@@ -2635,6 +2635,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Mode
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public static final field GROUND Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
+	public static final field HD_ROAD_MARKUP Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public static final field SEA Lcom/mapbox/maps/extension/compose/style/layers/generated/ModelElevationReferenceValue;
 	public fun <init> (Lcom/mapbox/bindgen/Value;)V
 	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V

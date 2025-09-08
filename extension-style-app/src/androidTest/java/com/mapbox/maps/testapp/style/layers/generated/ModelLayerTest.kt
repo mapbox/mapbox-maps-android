@@ -519,14 +519,18 @@ class ModelLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun modelOpacityAsExpressionTest() {
-    val expression = literal(1.0)
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
     val layer = modelLayer("id", "source") {
       modelOpacity(expression)
     }
     setupLayer(layer)
 
-    assertEquals(1.0, layer.modelOpacityAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.modelOpacity!!, 1E-5)
+    assertEquals(expression.toString(), layer.modelOpacityAsExpression.toString())
+    assertEquals(null, layer.modelOpacity)
   }
 
   @Test

@@ -453,12 +453,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    */
   @MapboxExperimental
   val modelColor: String?
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      *
      * Use static method [ModelLayer.defaultModelColor] to get the default property.
      *
@@ -472,7 +472,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * Use static method [ModelLayer.defaultModelColor] to set the default property.
    *
@@ -485,7 +485,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * This is an Expression representation of "model-color".
    *
@@ -493,7 +493,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelColorAsExpression: Expression?
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      *
      * Get the ModelColor property as an Expression
      *
@@ -503,7 +503,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValue("model-color")
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * Use static method [ModelLayer.defaultModelColorAsExpression] to set the default property.
    *
@@ -516,12 +516,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    */
   @MapboxExperimental
   val modelColorAsColorInt: Int?
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      *
      * Use static method [ModelLayer.defaultModelColorAsColorInt] to get the default property.
      *
@@ -536,7 +536,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * Use static method [ModelLayer.defaultModelColorAsColorInt] to set the default property.
    *
@@ -642,12 +642,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelColorMixIntensity: Double?
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelColorMixIntensity] to get the default property.
      *
@@ -658,7 +658,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelColorMixIntensity] to set the default property.
    *
@@ -671,7 +671,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "model-color-mix-intensity".
    *
@@ -679,7 +679,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelColorMixIntensityAsExpression: Expression?
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
      *
      * Get the ModelColorMixIntensity property as an Expression
      *
@@ -689,7 +689,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValueAsExpressionOrLiteralExpression("model-color-mix-intensity")
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelColorMixIntensityAsExpression] to set the default property.
    *
@@ -739,12 +739,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelCutoffFadeRange: Double?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelCutoffFadeRange] to get the default property.
      *
@@ -755,7 +755,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelCutoffFadeRange] to set the default property.
    *
@@ -768,7 +768,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "model-cutoff-fade-range".
    *
@@ -776,7 +776,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelCutoffFadeRangeAsExpression: Expression?
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * Get the ModelCutoffFadeRange property as an Expression
      *
@@ -786,7 +786,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValueAsExpressionOrLiteralExpression("model-cutoff-fade-range")
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelCutoffFadeRangeAsExpression] to set the default property.
    *
@@ -865,12 +865,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    */
   @MapboxExperimental
   val modelEmissiveStrength: Double?
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      *
      * Use static method [ModelLayer.defaultModelEmissiveStrength] to get the default property.
      *
@@ -881,7 +881,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * Use static method [ModelLayer.defaultModelEmissiveStrength] to set the default property.
    *
@@ -894,7 +894,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * This is an Expression representation of "model-emissive-strength".
    *
@@ -902,7 +902,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelEmissiveStrengthAsExpression: Expression?
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      *
      * Get the ModelEmissiveStrength property as an Expression
      *
@@ -912,7 +912,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValueAsExpressionOrLiteralExpression("model-emissive-strength")
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * Use static method [ModelLayer.defaultModelEmissiveStrengthAsExpression] to set the default property.
    *
@@ -1059,12 +1059,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val modelOpacity: Double?
     /**
-     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+     * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
      *
      * Use static method [ModelLayer.defaultModelOpacity] to get the default property.
      *
@@ -1075,7 +1075,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelOpacity] to set the default property.
    *
@@ -1088,7 +1088,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "model-opacity".
    *
@@ -1096,7 +1096,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelOpacityAsExpression: Expression?
     /**
-     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+     * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
      *
      * Get the ModelOpacity property as an Expression
      *
@@ -1106,7 +1106,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValueAsExpressionOrLiteralExpression("model-opacity")
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * Use static method [ModelLayer.defaultModelOpacityAsExpression] to set the default property.
    *
@@ -1410,12 +1410,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    */
   @MapboxExperimental
   val modelScale: List<Double>?
     /**
-     * The scale of the model. Default value: [1,1,1].
+     * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
      *
      * Use static method [ModelLayer.defaultModelScale] to get the default property.
      *
@@ -1426,7 +1426,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * Use static method [ModelLayer.defaultModelScale] to set the default property.
    *
@@ -1439,7 +1439,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * This is an Expression representation of "model-scale".
    *
@@ -1447,7 +1447,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   @MapboxExperimental
   val modelScaleAsExpression: Expression?
     /**
-     * The scale of the model. Default value: [1,1,1].
+     * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
      *
      * Get the ModelScale property as an Expression
      *
@@ -1457,7 +1457,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValueAsExpressionOrLiteralExpression("model-scale")
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * Use static method [ModelLayer.defaultModelScaleAsExpression] to set the default property.
    *
@@ -1924,12 +1924,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      */
     @MapboxExperimental
     val defaultModelColor: String?
       /**
-       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
        *
        * Get the default value of ModelColor property
        *
@@ -1943,7 +1943,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      *
      * This is an Expression representation of "model-color".
      *
@@ -1963,12 +1963,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+     * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      */
     @MapboxExperimental
     val defaultModelColorAsColorInt: Int?
       /**
-       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+       * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
        *
        * Get the default value of ModelColor property as color int.
        *
@@ -2023,12 +2023,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelColorMixIntensity: Double?
       /**
-       * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+       * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of ModelColorMixIntensity property
        *
@@ -2039,7 +2039,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+     * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "model-color-mix-intensity".
      *
@@ -2074,12 +2074,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-color-mix-intensity-transition").silentUnwrap()
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelCutoffFadeRange: Double?
       /**
-       * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+       * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of ModelCutoffFadeRange property
        *
@@ -2090,7 +2090,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+     * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "model-cutoff-fade-range".
      *
@@ -2155,12 +2155,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      */
     @MapboxExperimental
     val defaultModelEmissiveStrength: Double?
       /**
-       * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+       * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
        *
        * Get the default value of ModelEmissiveStrength property
        *
@@ -2171,7 +2171,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+     * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      *
      * This is an Expression representation of "model-emissive-strength".
      *
@@ -2257,12 +2257,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-height-based-emissive-strength-multiplier-transition").silentUnwrap()
 
     /**
-     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+     * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultModelOpacity: Double?
       /**
-       * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+       * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of ModelOpacity property
        *
@@ -2273,7 +2273,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+     * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "model-opacity".
      *
@@ -2449,12 +2449,12 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "model-roughness-transition").silentUnwrap()
 
     /**
-     * The scale of the model. Default value: [1,1,1].
+     * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
      */
     @MapboxExperimental
     val defaultModelScale: List<Double>?
       /**
-       * The scale of the model. Default value: [1,1,1].
+       * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
        *
        * Get the default value of ModelScale property
        *
@@ -2465,7 +2465,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The scale of the model. Default value: [1,1,1].
+     * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
      *
      * This is an Expression representation of "model-scale".
      *
@@ -2779,7 +2779,7 @@ interface ModelLayerDsl {
   fun modelCastShadows(modelCastShadows: Expression): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * @param modelColor value of modelColor
    */
@@ -2787,7 +2787,7 @@ interface ModelLayerDsl {
   fun modelColor(modelColor: String = "#ffffff"): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * @param modelColor value of modelColor as Expression
    */
@@ -2795,7 +2795,7 @@ interface ModelLayerDsl {
   fun modelColor(modelColor: Expression): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * @param modelColor value of modelColor
    */
@@ -2803,7 +2803,7 @@ interface ModelLayerDsl {
   fun modelColor(@ColorInt modelColor: Int): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * Set the ModelColor property transition options
    *
@@ -2813,7 +2813,7 @@ interface ModelLayerDsl {
   fun modelColorTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    *
    * DSL for [modelColorTransition].
    */
@@ -2837,7 +2837,7 @@ interface ModelLayerDsl {
   fun modelColorUseTheme(modelColorUseTheme: Expression): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity
    */
@@ -2845,7 +2845,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensity(modelColorMixIntensity: Double = 0.0): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity as Expression
    */
@@ -2853,7 +2853,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensity(modelColorMixIntensity: Expression): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * Set the ModelColorMixIntensity property transition options
    *
@@ -2863,7 +2863,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensityTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    *
    * DSL for [modelColorMixIntensityTransition].
    */
@@ -2871,7 +2871,7 @@ interface ModelLayerDsl {
   fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange
    */
@@ -2879,7 +2879,7 @@ interface ModelLayerDsl {
   fun modelCutoffFadeRange(modelCutoffFadeRange: Double = 0.0): ModelLayer
 
   /**
-   * This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange as Expression
    */
@@ -2903,7 +2903,7 @@ interface ModelLayerDsl {
   fun modelElevationReference(modelElevationReference: Expression): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength
    */
@@ -2911,7 +2911,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrength(modelEmissiveStrength: Double = 0.0): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength as Expression
    */
@@ -2919,7 +2919,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrength(modelEmissiveStrength: Expression): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * Set the ModelEmissiveStrength property transition options
    *
@@ -2929,7 +2929,7 @@ interface ModelLayerDsl {
   fun modelEmissiveStrengthTransition(options: StyleTransition): ModelLayer
 
   /**
-   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    *
    * DSL for [modelEmissiveStrengthTransition].
    */
@@ -2971,7 +2971,7 @@ interface ModelLayerDsl {
   fun modelHeightBasedEmissiveStrengthMultiplierTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * @param modelOpacity value of modelOpacity
    */
@@ -2979,7 +2979,7 @@ interface ModelLayerDsl {
   fun modelOpacity(modelOpacity: Double = 1.0): ModelLayer
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * @param modelOpacity value of modelOpacity as Expression
    */
@@ -2987,7 +2987,7 @@ interface ModelLayerDsl {
   fun modelOpacity(modelOpacity: Expression): ModelLayer
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * Set the ModelOpacity property transition options
    *
@@ -2997,7 +2997,7 @@ interface ModelLayerDsl {
   fun modelOpacityTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    *
    * DSL for [modelOpacityTransition].
    */
@@ -3089,7 +3089,7 @@ interface ModelLayerDsl {
   fun modelRoughnessTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * @param modelScale value of modelScale
    */
@@ -3097,7 +3097,7 @@ interface ModelLayerDsl {
   fun modelScale(modelScale: List<Double> = listOf(1.0, 1.0, 1.0)): ModelLayer
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * @param modelScale value of modelScale as Expression
    */
@@ -3105,7 +3105,7 @@ interface ModelLayerDsl {
   fun modelScale(modelScale: Expression): ModelLayer
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * Set the ModelScale property transition options
    *
@@ -3115,7 +3115,7 @@ interface ModelLayerDsl {
   fun modelScaleTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The scale of the model. Default value: [1,1,1].
+   * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    *
    * DSL for [modelScaleTransition].
    */

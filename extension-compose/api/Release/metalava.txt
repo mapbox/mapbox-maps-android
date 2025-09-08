@@ -3176,6 +3176,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue GROUND;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue HD_ROAD_MARKUP;
     field public static final com.mapbox.maps.extension.compose.style.layers.generated.ModelElevationReferenceValue SEA;
   }
 

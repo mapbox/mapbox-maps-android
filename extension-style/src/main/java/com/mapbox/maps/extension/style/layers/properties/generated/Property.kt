@@ -1853,15 +1853,20 @@ class ModelElevationReference private constructor(override val value: String) : 
    */
   companion object {
     /**
-     * Elevated rendering is enabled. Use this mode to elevate lines relative to the sea level.
+     * Elevated rendering is enabled. Use this mode to elevate models relative to the sea level.
      */
     @JvmField
     val SEA = ModelElevationReference("sea")
     /**
-     * Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them.
+     * Elevated rendering is enabled. Use this mode to elevate models relative to the ground's height below them.
      */
     @JvmField
     val GROUND = ModelElevationReference("ground")
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features that should exist only on top of road polygons.
+     */
+    @JvmField
+    val HD_ROAD_MARKUP = ModelElevationReference("hd-road-markup")
 
     /**
      * Utility function to get [ModelElevationReference] instance from given [value].
@@ -1871,6 +1876,7 @@ class ModelElevationReference private constructor(override val value: String) : 
       return when (value) {
         "SEA" -> SEA
         "GROUND" -> GROUND
+        "HD_ROAD_MARKUP" -> HD_ROAD_MARKUP
         else -> throw RuntimeException("ModelElevationReference.valueOf does not support [$value]")
       }
     }

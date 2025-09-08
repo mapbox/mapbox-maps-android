@@ -5339,6 +5339,7 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/L
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference$Companion;
 	public static final field GROUND Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
+	public static final field HD_ROAD_MARKUP Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
 	public static final field SEA Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelElevationReference;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getValue ()Ljava/lang/String;

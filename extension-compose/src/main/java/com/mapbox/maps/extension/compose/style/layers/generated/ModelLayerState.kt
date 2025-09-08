@@ -149,7 +149,7 @@ private constructor(
   @MapboxExperimental
   private val modelColorState: MutableState<ColorValue> = mutableStateOf(initialModelColor)
   /**
-   *  The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Default value: "#ffffff".
+   *  The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    */
   @MapboxExperimental
   public var modelColor: ColorValue by modelColorState
@@ -173,7 +173,7 @@ private constructor(
   @MapboxExperimental
   private val modelColorMixIntensityState: MutableState<DoubleValue> = mutableStateOf(initialModelColorMixIntensity)
   /**
-   *  Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Default value: 0. Value range: [0, 1]
+   *  Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   public var modelColorMixIntensity: DoubleValue by modelColorMixIntensityState
@@ -189,7 +189,7 @@ private constructor(
   @MapboxExperimental
   private val modelCutoffFadeRangeState: MutableState<DoubleValue> = mutableStateOf(initialModelCutoffFadeRange)
   /**
-   *  This parameter defines the range for the fade-out effect before an automatic content cutoff  on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
+   *  This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   public var modelCutoffFadeRange: DoubleValue by modelCutoffFadeRangeState
@@ -205,7 +205,7 @@ private constructor(
   @MapboxExperimental
   private val modelEmissiveStrengthState: MutableState<DoubleValue> = mutableStateOf(initialModelEmissiveStrength)
   /**
-   *  Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
+   *  Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    */
   @MapboxExperimental
   public var modelEmissiveStrength: DoubleValue by modelEmissiveStrengthState
@@ -237,7 +237,7 @@ private constructor(
   @MapboxExperimental
   private val modelOpacityState: MutableState<DoubleValue> = mutableStateOf(initialModelOpacity)
   /**
-   *  The opacity of the model layer. Default value: 1. Value range: [0, 1]
+   *  The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   public var modelOpacity: DoubleValue by modelOpacityState
@@ -293,7 +293,7 @@ private constructor(
   @MapboxExperimental
   private val modelScaleState: MutableState<DoubleListValue> = mutableStateOf(initialModelScale)
   /**
-   *  The scale of the model. Default value: [1,1,1].
+   *  The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    */
   @MapboxExperimental
   public var modelScale: DoubleListValue by modelScaleState

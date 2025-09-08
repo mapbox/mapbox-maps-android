@@ -2076,16 +2076,22 @@ public data class ModelElevationReferenceValue(public override val value: Value)
     public val DEFAULT: ModelElevationReferenceValue = ModelElevationReferenceValue(Value.nullValue())
 
     /**
-     * Elevated rendering is enabled. Use this mode to elevate lines relative to the sea level.
+     * Elevated rendering is enabled. Use this mode to elevate models relative to the sea level.
      */
     @JvmField
     public val SEA: ModelElevationReferenceValue = ModelElevationReferenceValue(Value("sea"))
 
     /**
-     * Elevated rendering is enabled. Use this mode to elevate lines relative to the ground's height below them.
+     * Elevated rendering is enabled. Use this mode to elevate models relative to the ground's height below them.
      */
     @JvmField
     public val GROUND: ModelElevationReferenceValue = ModelElevationReferenceValue(Value("ground"))
+
+    /**
+     * Elevated rendering is enabled. Use this mode to describe additive and stackable features that should exist only on top of road polygons.
+     */
+    @JvmField
+    public val HD_ROAD_MARKUP: ModelElevationReferenceValue = ModelElevationReferenceValue(Value("hd-road-markup"))
   }
 }
 

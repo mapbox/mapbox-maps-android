@@ -6534,6 +6534,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     property public String value;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference.Companion Companion;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference GROUND;
+    field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference HD_ROAD_MARKUP;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.ModelElevationReference SEA;
   }
 
