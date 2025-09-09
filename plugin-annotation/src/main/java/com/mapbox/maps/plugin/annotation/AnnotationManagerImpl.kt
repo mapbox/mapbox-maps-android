@@ -623,6 +623,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      */
     override fun asyncHandleClick(point: Point, continueToNextListener: () -> Unit) {
       if (couldSkipClick()) {
+        // If click won't be handled, we should continue to next listener
+        // Otherwise, listeners such as OnMapClickListener won't be invoked with annotation managers.
+        continueToNextListener()
         return
       }
       try {

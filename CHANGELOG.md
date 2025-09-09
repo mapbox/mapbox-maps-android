@@ -3,6 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 
+# 10.19.1
+
+## Bug fixes 🐞
+* Fixed map clicks being blocked by annotation managers with no click listeners
+
 # 10.19.0 December 13, 2024
 ## Features ✨ and improvements 🏁
 * Publish Mapbox Maps Android artifacts using NDK 27 and [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes).
