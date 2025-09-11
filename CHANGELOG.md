@@ -3,12 +3,18 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+
+# 11.15.0
+
 ## Features ✨ and improvements 🏁
 * Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
 * Expose experimental `MapboxMap.setStyleLayerPropertiesAsync` and `MapboxMap.setStyleLayerPropertyAsync` (also available through `Style`) to allow setting properties from a any thread and asynchronously.
 
 ## Bug fixes 🐞
 * Fix flyTo animation when zoom property is null or not changed
+
+## Dependencies
+* Update gl-native to [v11.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0), common to [24.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0).
 
 # 11.15.0-rc.1 August 28, 2025
 
