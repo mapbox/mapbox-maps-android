@@ -7,9 +7,18 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.logD
+import com.mapbox.maps.logE
 import com.mapbox.maps.logW
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.ANCHOR
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.BEARING
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.CENTER
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.PADDING
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.PITCH
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.ZOOM
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -18,7 +27,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  */
 @OptIn(MapboxExperimental::class)
 @SuppressLint("Recycle")
-abstract class CameraAnimator<out T> (
+abstract class CameraAnimator<out T>(
   /**
    * [TypeEvaluator] for generic type
    */
@@ -34,10 +43,12 @@ abstract class CameraAnimator<out T> (
    */
   var owner = cameraAnimatorOptions.owner
     internal set
+
   /**
    * Start animation value, will use current map value option from [CameraOptions] if null.
    */
   val startValue = cameraAnimatorOptions.startValue
+
   /**
    * Sets the values to animate between for this animation (except start value).
    */
@@ -73,6 +84,78 @@ abstract class CameraAnimator<out T> (
   final override fun setObjectValues(vararg values: Any?) {
     super.setObjectValues(*values)
   }
+
+  /**
+   * Update object values if animator is not [skipped], has [targets], start value and can not be skipped.
+   *
+   * @param getStartCameraState provider for [CameraState]
+   */
+  fun updateObjectValues(getStartCameraState: () -> CameraState) {
+    if (skipped) {
+      return
+    }
+    if (targets.isEmpty()) {
+      logE(
+        CameraAnimationsPluginImpl.Companion.TAG,
+        "Skipped animation ${type.name} with no targets!"
+      )
+      skipped = true
+      return
+    }
+
+    val cameraCurrentValue = defaultStartValue(getStartCameraState)
+    val resolvedStartValue = startValue ?: cameraCurrentValue
+    if (DEBUG_MODE) {
+      logD(
+        CameraAnimationsPluginImpl.Companion.TAG,
+        "Animation ${type.name}(${hashCode()}): automatically setting start value $resolvedStartValue."
+      )
+    }
+    val animationObjectValues = resolveAnimationObjectValues(resolvedStartValue)
+    if ((evaluator is CameraTypeEvaluator) &&
+      evaluator.canSkip(cameraCurrentValue, resolvedStartValue, animationObjectValues)
+    ) {
+      skipped = true
+      if (DEBUG_MODE) {
+        logD(
+          CameraAnimationsPluginImpl.Companion.TAG,
+          "Animation ${type.name}(${hashCode()}) was skipped."
+        )
+      }
+      return
+    }
+    setObjectValues(*animationObjectValues)
+  }
+
+  /**
+   * Provide a default start value for animation in case it is not provided by [cameraAnimatorOptions]
+   *
+   * @param cameraState current camera state
+   */
+  private inline fun defaultStartValue(cameraState: () -> CameraState): Any = run {
+    when (type) {
+      CENTER -> cameraState().center
+      ZOOM -> cameraState().zoom
+      ANCHOR -> ZERO_SCREEN_COORDINATE
+      PADDING -> cameraState().padding
+      BEARING -> cameraState().bearing
+      PITCH -> cameraState().pitch
+    }
+  }
+
+  /**
+   * Resolve animation object values to provide to [setObjectValues] and animate over
+   *
+   * @param startValue start value resolved by [cameraAnimatorOptions] or [defaultStartValue]
+   */
+  open fun resolveAnimationObjectValues(startValue: Any): Array<*> =
+    Array(targets.size + 1) { index ->
+      if (index == 0) {
+        startValue
+      } else {
+        targets[index - 1]
+      }
+    }
 
   /**
    * Set the animator evaluator
@@ -140,23 +223,14 @@ abstract class CameraAnimator<out T> (
           "or a non-null current camera state must be provided."
       )
     }
-    val resolvedStartValue = startValue ?: startCameraState!!.startValue as? T
+    val resolvedStartValue =
+      startValue ?: startCameraState?.let { defaultStartValue { startCameraState } } as? T
     if (resolvedStartValue == null) {
       throw UnsupportedOperationException("Could not resolve start value for animator")
     }
     val interpolation = interpolator.getInterpolation(fraction)
     return evaluator.evaluate(interpolation, resolvedStartValue, targets.last())
   }
-
-  private val CameraState.startValue
-    get() = when (type) {
-      CameraAnimatorType.CENTER -> center
-      CameraAnimatorType.ZOOM -> zoom
-      CameraAnimatorType.ANCHOR -> ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> padding
-      CameraAnimatorType.BEARING -> bearing
-      CameraAnimatorType.PITCH -> pitch
-    }
 
   /**
    * Handle immediate animation(when duration and startDelay of the animation is 0)
@@ -329,5 +403,7 @@ abstract class CameraAnimator<out T> (
    */
   companion object {
     private const val TAG = "Mbgl-CameraAnimator"
+    private const val DEBUG_MODE = false
+    private val ZERO_SCREEN_COORDINATE = ScreenCoordinate(0.0, 0.0)
   }
 }

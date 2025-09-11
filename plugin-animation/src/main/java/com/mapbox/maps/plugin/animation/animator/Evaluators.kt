@@ -15,7 +15,7 @@ object Evaluators {
   /**
    * Type evaluator for Point data
    */
-  val POINT = TypeEvaluator<Point> { fraction, startValue, endValue ->
+  val POINT: TypeEvaluator<Point> = CameraTypeEvaluator { fraction, startValue, endValue ->
     // If fraction is 1 or 0 then return `endValue`/`startValue` directly without creating new Point
     if (fraction == 1F) {
       endValue
@@ -38,7 +38,7 @@ object Evaluators {
   /**
    * Type evaluator for Double data
    */
-  val DOUBLE = TypeEvaluator<Double> { fraction, startValue, endValue ->
+  val DOUBLE: TypeEvaluator<Double> = CameraTypeEvaluator { fraction, startValue, endValue ->
     // If fraction is 1 or 0 then return `endValue`/`startValue` directly without creating new Double
     if (fraction == 1F) {
       endValue
@@ -59,7 +59,7 @@ object Evaluators {
   /**
    * Type evaluator for EdgeInsets data
    */
-  val EDGE_INSET = TypeEvaluator { fraction, startValue: EdgeInsets?, endValue: EdgeInsets? ->
+  val EDGE_INSET: TypeEvaluator<EdgeInsets> = CameraTypeEvaluator { fraction, startValue: EdgeInsets?, endValue: EdgeInsets? ->
     // We have seen in the wild that under some conditions we get null values. So let's guard
     // against possible null start/end
     val nonNullEnd = if (endValue != null) {
@@ -71,7 +71,7 @@ object Evaluators {
 
     // If fraction is 1 then we can return the `endValue` directly without creating new EdgeInsets
     if (fraction == 1F) {
-      return@TypeEvaluator nonNullEnd
+      return@CameraTypeEvaluator nonNullEnd
     }
     val nonNullStart = if (startValue != null) {
       startValue
@@ -82,7 +82,7 @@ object Evaluators {
 
     // If fraction is 0 then we can return the `startValue` directly without creating new EdgeInsets
     if (fraction == 0F) {
-      return@TypeEvaluator nonNullStart
+      return@CameraTypeEvaluator nonNullStart
     }
 
     val topDelta = nonNullEnd.top - nonNullStart.top
@@ -106,7 +106,7 @@ object Evaluators {
   /**
    * Type evaluator for ScreenCoordinate data
    */
-  val SCREEN_COORDINATE = TypeEvaluator<ScreenCoordinate> { fraction, startValue, endValue ->
+  val SCREEN_COORDINATE: TypeEvaluator<ScreenCoordinate> = CameraTypeEvaluator { fraction, startValue, endValue ->
     // If fraction is 1 or 0 then return `endValue`/`startValue` directly without creating new ScreenCoordinate
     if (fraction == 1F) {
       endValue

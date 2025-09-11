@@ -424,7 +424,7 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun `two same immediate animations, second is skipped`() {
-    var cameraPosition = CameraOptions.Builder().build()
+    var cameraPosition = CameraOptions.Builder().bearing(0.0).build()
     every {
       mapCameraManagerDelegate.cameraState
     } answers {
@@ -464,6 +464,11 @@ class CameraAnimationsPluginImplTest {
   fun `animation skipped if camera already has target value`() {
     val cameraPosition = CameraOptions.Builder().bearing(10.0).build().toCameraState()
     // Make sure current camera animations plugin has the right initial value
+    every {
+      mapCameraManagerDelegate.cameraState
+    } answers {
+      cameraPosition
+    }
     cameraAnimationsPluginImpl.onCameraMove(cameraPosition)
 
     val cameraAnimatorOptions = cameraAnimatorOptions(10.0) {
@@ -1631,14 +1636,17 @@ class RegisterCameraCenterAnimatorUsingShortestPathTest(
     val cameraCenterAnimator = mockk<CameraCenterAnimator> {
       every { addInternalListener(capture(internalListenerSlot)) } just runs
       every { canceled } returns false
+      every { skipped } returns true
       every { targets } returns testTargets
-      arrayOf(Point.fromLngLat(170.0, 0.0), Point.fromLngLat(-90.0, 0.0))
       every { startValue } returns testStartValue
       every { useShortestPath } returns shortestPathEnabled
       every { type } returns CameraAnimatorType.CENTER
       every { setObjectValues(*varargAllNullable { argValues.add(it); true }) } just runs
       every { isRunning } returns false
       every { addInternalUpdateListener(any()) } just runs
+      every { updateObjectValues(any()) } answers {
+        argValues.addAll(expectedObjectValues)
+      }
     }
     cameraAnimationsPluginImpl.registerAnimators(cameraCenterAnimator)
 

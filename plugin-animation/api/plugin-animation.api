@@ -79,12 +79,22 @@ public abstract class com/mapbox/maps/plugin/animation/animator/CameraAnimator :
 	public final fun removeAllUpdateListeners ()V
 	public final fun removeListener (Landroid/animation/Animator$AnimatorListener;)V
 	public final fun removeUpdateListener (Landroid/animation/ValueAnimator$AnimatorUpdateListener;)V
+	public fun resolveAnimationObjectValues (Ljava/lang/Object;)[Ljava/lang/Object;
 	public final fun setEvaluator (Landroid/animation/TypeEvaluator;)V
 	public final fun setObjectValues ([Ljava/lang/Object;)V
 	public final fun start ()V
+	public final fun updateObjectValues (Lkotlin/jvm/functions/Function0;)V
 }
 
 public final class com/mapbox/maps/plugin/animation/animator/CameraAnimator$Companion {
+}
+
+public abstract interface class com/mapbox/maps/plugin/animation/animator/CameraTypeEvaluator : android/animation/TypeEvaluator {
+	public abstract fun canSkip (Ljava/lang/Object;Ljava/lang/Object;[Ljava/lang/Object;)Z
+}
+
+public final class com/mapbox/maps/plugin/animation/animator/CameraTypeEvaluator$DefaultImpls {
+	public static fun canSkip (Lcom/mapbox/maps/plugin/animation/animator/CameraTypeEvaluator;Ljava/lang/Object;Ljava/lang/Object;[Ljava/lang/Object;)Z
 }
 
 public final class com/mapbox/maps/plugin/animation/animator/Evaluators {

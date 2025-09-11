@@ -12,6 +12,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common.
 
+# 11.15.0
+
+## Bug fixes 🐞
+* Fix flyTo animation when zoom property is null or not changed
+
 # 11.14.4 September 03, 2025
 
 ## Features ✨ and improvements 🏁
