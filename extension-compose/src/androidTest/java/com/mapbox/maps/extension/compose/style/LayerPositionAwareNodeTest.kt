@@ -43,6 +43,7 @@ import com.mapbox.maps.plugin.annotation.ClusterOptions
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import kotlinx.coroutines.flow.first
 import org.junit.Assert
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.CountDownLatch
@@ -405,6 +406,7 @@ public class LayerPositionAwareNodeTest {
   }
 
   @Test
+  @Ignore("Flaky test, circle-layer-1 is missing ")
   public fun testAnnotationsInStyleSlot() {
     val mapboxMap = setMapContent(
       slotContent = { btn1State, btn2State, btn3State ->

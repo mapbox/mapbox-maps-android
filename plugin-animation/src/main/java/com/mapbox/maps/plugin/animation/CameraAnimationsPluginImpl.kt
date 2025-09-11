@@ -18,7 +18,6 @@ import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.MapCameraPlugin
-import com.mapbox.maps.plugin.animation.CameraTransform.wrapCoordinate
 import com.mapbox.maps.plugin.animation.animator.CameraAnchorAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
@@ -33,9 +32,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import com.mapbox.maps.threading.AnimationThreadController.postOnMainThread
 import com.mapbox.maps.threading.AnimationThreadController.usingBackgroundThread
-import com.mapbox.maps.util.MathUtils
 import com.mapbox.maps.util.isEmpty
-import java.util.Objects
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -154,6 +151,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapProjectionDelegate: MapProjectionDelegate
+  private val getCurrentCameraState = {
+    mapCameraManagerDelegate.cameraState
+  }
 
   /**
    * Factory to provide animators for the default animations like easeTo, scaleBy, moveBy, rotateBy, pitchBy
@@ -270,95 +270,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     }
   }
 
-  // Returns true if values were applied to animator, false if animation was skipped.
-  private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {
-    if (cameraAnimator.targets.isEmpty()) {
-      logE(
-        TAG,
-        "Skipped animation ${cameraAnimator.type.name} with no targets!"
-      )
-      return false
-    }
-    val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.cameraState.center
-      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.cameraState.zoom
-      CameraAnimatorType.ANCHOR -> ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.cameraState.padding
-      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
-      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
-    }.also {
-      if (debugMode) {
-        logI(
-          TAG,
-          "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
-        )
-      }
-    }
-    val animationObjectValues =
-      if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
-        MathUtils.prepareOptimalBearingPath(
-          DoubleArray(cameraAnimator.targets.size + 1) { index ->
-            if (index == 0) {
-              startValue as Double
-            } else {
-              cameraAnimator.targets[index - 1]
-            }
-          }
-        ).toTypedArray()
-      } else if (cameraAnimator is CameraCenterAnimator && cameraAnimator.useShortestPath) {
-        // assemble the original targets by inserting the start point
-        val originalTargets: List<Point> = listOf(startValue as Point) + cameraAnimator.targets
-        // Build the reversed target list with wrapped coordinates
-        val mutableTargetReversedList = mutableListOf<Point>()
-        originalTargets.map { it.wrapCoordinate() }.reversed().forEach {
-          if (mutableTargetReversedList.isEmpty()) {
-            // insert the raw end point
-            mutableTargetReversedList.add(it)
-          } else {
-            // calculate the previous point
-            mutableTargetReversedList.add(
-              CameraTransform.unwrapForShortestPath(
-                start = it,
-                end = mutableTargetReversedList.last()
-              )
-            )
-          }
-        }
-        mutableTargetReversedList.reversed().toTypedArray()
-      } else {
-        Array(cameraAnimator.targets.size + 1) { index ->
-          if (index == 0) {
-            startValue
-          } else {
-            cameraAnimator.targets[index - 1]
-          }
-        }
-      }
-    if (skipRedundantAnimator(animationObjectValues, cameraAnimator.type)) {
-      if (debugMode) {
-        logI(
-          TAG,
-          "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}) was skipped."
-        )
-      }
-      return false
-    }
-    cameraAnimator.setObjectValues(*animationObjectValues)
-    return true
-  }
-
-  private fun skipRedundantAnimator(
-    animationObjectValues: Array<out Any?>,
-    type: CameraAnimatorType
-  ) = when (type) {
-    CameraAnimatorType.ANCHOR -> false // anchor animations are never skipped
-    CameraAnimatorType.CENTER -> animationObjectValues.all { Objects.equals(center, it) }
-    CameraAnimatorType.ZOOM -> animationObjectValues.all { Objects.equals(zoom, it) }
-    CameraAnimatorType.PADDING -> animationObjectValues.all { Objects.equals(padding, it) }
-    CameraAnimatorType.BEARING -> animationObjectValues.all { Objects.equals(bearing, it) }
-    CameraAnimatorType.PITCH -> animationObjectValues.all { Objects.equals(pitch, it) }
-  }
-
   private fun registerInternalListener(animator: CameraAnimator<*>) {
     postOnAnimatorThread {
       animator.addInternalListener(object : Animator.AnimatorListener {
@@ -383,9 +294,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
             if (startingAnimator.canceled) {
               return
             }
-            if (!updateAnimatorValues(startingAnimator)) {
+            startingAnimator.updateObjectValues(getCurrentCameraState)
+            if (startingAnimator.skipped) {
               // animation was skipped - camera values are already applied
-              startingAnimator.skipped = true
               return
             }
             lifecycleListeners.forEach {

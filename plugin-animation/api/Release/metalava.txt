@@ -68,9 +68,11 @@ package com.mapbox.maps.plugin.animation.animator {
     method public final void removeAllUpdateListeners();
     method public final void removeListener(android.animation.Animator.AnimatorListener? listener);
     method public final void removeUpdateListener(android.animation.ValueAnimator.AnimatorUpdateListener? listener);
+    method public Object![] resolveAnimationObjectValues(Object startValue);
     method public final void setEvaluator(android.animation.TypeEvaluator<T!>? value);
     method public final void setObjectValues(java.lang.Object?... values);
     method public final void start();
+    method public final void updateObjectValues(kotlin.jvm.functions.Function0<com.mapbox.maps.CameraState> getStartCameraState);
     property public final String? owner;
     property public final T? startValue;
     property public final T![] targets;
@@ -79,6 +81,10 @@ package com.mapbox.maps.plugin.animation.animator {
   }
 
   public static final class CameraAnimator.Companion {
+  }
+
+  public fun interface CameraTypeEvaluator<T> extends android.animation.TypeEvaluator<T> {
+    method public default boolean canSkip(Object cameraCurrentValue, Object startValue, Object![] values);
   }
 
   public final class Evaluators {

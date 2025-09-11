@@ -433,12 +433,18 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         }
       },
       CameraZoomAnimator(
-        evaluator = { fraction, _, _ ->
-          val safeFraction = fraction.getSafeFraction()
-          // s: The distance traveled along the flight path, measured in
-          // ρ-screenfuls.
-          val s = safeFraction * S
-          startZoom + (1 / w(s)).scaleZoom()
+        evaluator = object : CameraTypeEvaluator<Double> {
+          override fun canSkip(cameraCurrentValue: Any, startValue: Any, values: Array<*>): Boolean {
+            return S == 0.0
+          }
+
+          override fun evaluate(fraction: Float, startValue: Double, endValue: Double): Double {
+            val safeFraction = fraction.getSafeFraction()
+            // s: The distance traveled along the flight path, measured in
+            // ρ-screenfuls.
+            val s = safeFraction * S
+            return startZoom + (1 / w(s)).scaleZoom()
+          }
         },
         options = cameraAnimatorOptions(endZoom) {
           startValue(startZoom)

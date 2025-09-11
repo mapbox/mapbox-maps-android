@@ -15,7 +15,7 @@ internal class CameraAnchorAnimator(
   options: CameraAnimatorOptions<ScreenCoordinate>,
   block: (ValueAnimator.() -> Unit)? = null
 ) : CameraAnimator<ScreenCoordinate>(
-  Evaluators.SCREEN_COORDINATE,
+  anchorEvaluator,
   options
 ) {
 
@@ -27,4 +27,15 @@ internal class CameraAnchorAnimator(
    * Animator type.
    */
   override val type = CameraAnimatorType.ANCHOR
+
+  private companion object {
+    private val anchorEvaluator = object : CameraTypeEvaluator<ScreenCoordinate> {
+      override fun canSkip(cameraCurrentValue: Any, startValue: Any, values: Array<*>) = false
+      override fun evaluate(
+        fraction: Float,
+        startValue: ScreenCoordinate?,
+        endValue: ScreenCoordinate?,
+      ) = Evaluators.SCREEN_COORDINATE.evaluate(fraction, startValue, endValue)
+    }
+  }
 }
