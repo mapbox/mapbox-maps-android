@@ -4,7 +4,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.15.0
+
+# 11.15.0 September 11, 2025
 
 ## Features ✨ and improvements 🏁
 * Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
@@ -15,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0), common to [24.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0).
+
 
 # 11.15.0-rc.1 August 28, 2025
 
