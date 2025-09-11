@@ -7,19 +7,20 @@ import com.mapbox.maps.MapDebugOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.verifyNo
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
-@Ignore("Ignoring this test as it is flaky and requires two runs to pass")
 class DebugOptionsControllerTest {
   private val mapboxMap: MapboxMap = mockk(relaxed = true)
   private val cameraDebugView: CameraDebugView = mockk(relaxed = true)
@@ -29,12 +30,18 @@ class DebugOptionsControllerTest {
 
   @Before
   fun setUp() {
+    clearAllMocks()
     every { mapView.context } returns mockk(relaxed = true)
     every { cameraDebugView.parent } returns null
     every { paddingDebugView.parent } returns null
 
     debugOptionsController =
       DebugOptionsController(mapView, mapboxMap, { cameraDebugView }, { paddingDebugView })
+  }
+
+  @After
+  fun tearDown() {
+    unmockkAll()
   }
 
   @Test
@@ -45,6 +52,8 @@ class DebugOptionsControllerTest {
     debugOptionsController.started = true
     debugOptionsController.options = setOf(MapViewDebugOptions.CAMERA, MapViewDebugOptions.PADDING)
 
+    // Verify the callback was captured, then invoke it
+    verify { mapboxMap.subscribeCameraChangedCoalesced(any()) }
     val onCameraChangeCoalescedListener = onCameraChangeCoalescedListenerSlot.captured
     onCameraChangeCoalescedListener.run(mockk(relaxed = true))
 
