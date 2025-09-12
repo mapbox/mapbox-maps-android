@@ -21,14 +21,14 @@ dependencies {
   compileOnly(libs.lintApi)
   compileOnly(libs.lintChecks)
   compileOnly(libs.kotlin)
-  
+
   testImplementation(libs.junit)
   testImplementation(libs.lint)
   testImplementation(libs.lintTests)
   testImplementation(libs.testUtils)
 }
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
 

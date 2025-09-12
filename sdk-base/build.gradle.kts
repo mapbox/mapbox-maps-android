@@ -4,7 +4,7 @@ import java.util.Locale
 plugins {
   id("com.mapbox.gradle.library")
   id("com.jaredsburrows.license")
-  //id("com.mapbox.maps.token") #mapbox-android-gradle-plugins/issues/29
+  // id("com.mapbox.maps.token") #mapbox-android-gradle-plugins/issues/29
   id("kotlin-parcelize")
   id("com.google.devtools.ksp").version("${libs.versions.kotlin.get()}-${libs.versions.ksp.get()}")
 }
@@ -35,7 +35,7 @@ android {
     tasks.withType(KspTaskJvm::class.java).all {
       // Make KSP tasks optional - only run when explicitly requested
       enabled = shouldGenerateKsp
-      
+
       val generatedKspFilesFolder = destination
       var lastFolder = generatedKspFilesFolder.toPath().fileName.toString()
       // We handle "debug" and "release" build types as equal so remove them
@@ -74,7 +74,7 @@ android {
       }
 
       // Always create the classes directory for metalava, regardless of KSP generation
-      val createClassesDirTask = tasks.register("createKspClassesDir${variantName}") {
+      val createClassesDirTask = tasks.register("createKspClassesDir$variantName") {
         doLast {
           generatedKspFilesFolder.resolve("classes").mkdirs()
         }
@@ -82,10 +82,10 @@ android {
 
       if (shouldGenerateKsp) {
         // If KSP generation is enabled, add the copy task as a dependency to the compile task
-        tasks.findByName("compile${variantName}")?.dependsOn(copyTask)
+        tasks.findByName("compile$variantName")?.dependsOn(copyTask)
       } else {
         // If KSP generation is disabled, still create the classes directory for metalava
-        tasks.findByName("compile${variantName}")?.dependsOn(createClassesDirTask)
+        tasks.findByName("compile$variantName")?.dependsOn(createClassesDirTask)
       }
     }
   }
@@ -121,7 +121,7 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")

@@ -3,7 +3,6 @@ plugins {
   id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
-
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   namespace = "com.mapbox.maps.compose.testapp"
@@ -88,7 +87,7 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

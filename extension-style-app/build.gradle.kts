@@ -3,7 +3,6 @@ plugins {
   id("com.mapbox.maps.token")
 }
 
-
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   namespace = "com.mapbox.maps.extension.testapp"
@@ -28,7 +27,6 @@ android {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
   }
-
 }
 
 dependencies {
@@ -45,10 +43,10 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }
 
-val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
-the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"
+val localPath: String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
+the<com.mapbox.AccessTokenExtension>().file = "$localPath/src/main/res/values/developer-config.xml"

@@ -27,6 +27,6 @@ dependencies {
   testImplementation(libs.testUtils)
 }
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

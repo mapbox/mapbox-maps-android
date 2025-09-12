@@ -2,7 +2,6 @@ plugins {
   id("com.mapbox.gradle.application")
 }
 
-
 android {
   compileSdk = libs.versions.autoCompileSdkVersion.get().toInt()
   namespace = "com.mapbox.maps.testapp.auto"
@@ -61,7 +60,7 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
 }

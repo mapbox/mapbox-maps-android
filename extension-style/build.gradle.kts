@@ -33,7 +33,7 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle")
+  from("$rootDir/gradle/ktlint.gradle.kts")
   from("$rootDir/gradle/lint.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
   from("$rootDir/gradle/dependency-updates.gradle")
