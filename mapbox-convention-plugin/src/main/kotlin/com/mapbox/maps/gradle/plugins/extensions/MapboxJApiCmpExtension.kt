@@ -9,6 +9,9 @@ import japicmp.model.JApiField
 import japicmp.model.JApiMethod
 import javassist.CtMethod
 import me.champeau.gradle.japicmp.JapicmpTask
+import me.champeau.gradle.japicmp.report.RichReportData
+import me.champeau.gradle.japicmp.report.RichReportRenderer
+import me.champeau.gradle.japicmp.report.Severity
 import me.champeau.gradle.japicmp.report.Violation
 import me.champeau.gradle.japicmp.report.stdrules.AbstractRecordingSeenMembers
 import me.champeau.gradle.japicmp.report.stdrules.BinaryIncompatibleRule
@@ -21,6 +24,7 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.Exec
 import org.gradle.kotlin.dsl.property
 import org.gradle.language.base.plugins.LifecycleBasePlugin
+import java.io.File
 import java.nio.file.Files
 import javax.inject.Inject
 
@@ -198,13 +202,41 @@ public abstract class MapboxJApiCmpExtension @Inject constructor(objects: Object
         addDefaultRules.set(true)
         addSetupRule(RecordSeenMembersSetup::class.java)
         addRule(InternalFilterRule::class.java)
-        destinationDir.set(rootProject.layout.buildDirectory.dir("reports/japi/"))
-        reportName.set("${project.path.drop(1)}.html")
+        destinationDir.set(rootProject.layout.projectDirectory.dir("japicmp-report/"))
+        reportName.set("${project.path.drop(1)}.txt")
+        renderer(CompatibilityReportRenderer::class.java)
       }
 
       htmlOutputFile.set(
         rootProject.layout.buildDirectory.file("reports/japi/raw/${project.path.drop(1)}.html")
       )
+    }
+  }
+
+  /**
+   * Custom renderer to write compatibility violations to a file.
+   */
+  internal class CompatibilityReportRenderer : RichReportRenderer {
+    override fun render(
+      destinationDir: File?,
+      data: RichReportData?
+    ) {
+      // we only care about breaking changes
+      // otherwise report might be noisy since japicmp will report info and accepted changes too
+      val violations = data?.violations?.map { it.value }?.flatten()
+        ?.filter { it.severity == Severity.error }
+        ?.sortedBy { it.toString() }
+
+      if (violations.isNullOrEmpty()) {
+        // remove destination file as it'll be empty otherwise
+        destinationDir?.delete()
+        return
+      }
+      destinationDir?.bufferedWriter().use { writer ->
+        violations.forEach { violation ->
+          writer?.appendLine(violation.toString())
+        }
+      }
     }
   }
 
