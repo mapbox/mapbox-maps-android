@@ -720,7 +720,7 @@ class PointAnnotationManager(
   /**
    * The IconSizeScaleRange property
    *
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    */
   @MapboxExperimental
   var iconSizeScaleRange: List<Double>?
@@ -1590,7 +1590,7 @@ class PointAnnotationManager(
   /**
    * The TextSizeScaleRange property
    *
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    */
   @MapboxExperimental
   var textSizeScaleRange: List<Double>?

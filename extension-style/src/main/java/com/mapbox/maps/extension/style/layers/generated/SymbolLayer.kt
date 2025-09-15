@@ -927,12 +927,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    */
   @MapboxExperimental
   val iconSizeScaleRange: List<Double>?
     /**
-     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      *
      * Use static method [SymbolLayer.defaultIconSizeScaleRange] to get the default property.
      *
@@ -943,7 +943,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * Use static method [SymbolLayer.defaultIconSizeScaleRange] to set the default property.
    *
@@ -956,7 +956,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * This is an Expression representation of "icon-size-scale-range".
    *
@@ -964,7 +964,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   @MapboxExperimental
   val iconSizeScaleRangeAsExpression: Expression?
     /**
-     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      *
      * Get the IconSizeScaleRange property as an Expression
      *
@@ -974,7 +974,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       getPropertyValueAsExpressionOrLiteralExpression("icon-size-scale-range")
 
   /**
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * Use static method [SymbolLayer.defaultIconSizeScaleRangeAsExpression] to set the default property.
    *
@@ -2649,12 +2649,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    */
   @MapboxExperimental
   val textSizeScaleRange: List<Double>?
     /**
-     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      *
      * Use static method [SymbolLayer.defaultTextSizeScaleRange] to get the default property.
      *
@@ -2665,7 +2665,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * Use static method [SymbolLayer.defaultTextSizeScaleRange] to set the default property.
    *
@@ -2678,7 +2678,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * This is an Expression representation of "text-size-scale-range".
    *
@@ -2686,7 +2686,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   @MapboxExperimental
   val textSizeScaleRangeAsExpression: Expression?
     /**
-     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      *
      * Get the TextSizeScaleRange property as an Expression
      *
@@ -2696,7 +2696,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       getPropertyValueAsExpressionOrLiteralExpression("text-size-scale-range")
 
   /**
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * Use static method [SymbolLayer.defaultTextSizeScaleRangeAsExpression] to set the default property.
    *
@@ -5596,12 +5596,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      */
     @MapboxExperimental
     val defaultIconSizeScaleRange: List<Double>?
       /**
-       * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+       * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
        *
        * Get the default value of IconSizeScaleRange property
        *
@@ -5612,7 +5612,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      *
      * This is an Expression representation of "icon-size-scale-range".
      *
@@ -6715,12 +6715,12 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      */
     @MapboxExperimental
     val defaultTextSizeScaleRange: List<Double>?
       /**
-       * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+       * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
        *
        * Get the default value of TextSizeScaleRange property
        *
@@ -6731,7 +6731,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+     * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
      *
      * This is an Expression representation of "text-size-scale-range".
      *
@@ -8296,7 +8296,7 @@ interface SymbolLayerDsl {
   fun iconSize(iconSize: Expression): SymbolLayer
 
   /**
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * @param iconSizeScaleRange value of iconSizeScaleRange
    */
@@ -8304,7 +8304,7 @@ interface SymbolLayerDsl {
   fun iconSizeScaleRange(iconSizeScaleRange: List<Double> = listOf(0.8, 2.0)): SymbolLayer
 
   /**
-   * Defines the minimum and maximum scaling factors for icon related properties like `icon-size`, `icon-halo-width`, `icon-halo-blur` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `icon-size`, `icon-halo-width`, `icon-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * @param iconSizeScaleRange value of iconSizeScaleRange as Expression
    */
@@ -8722,7 +8722,7 @@ interface SymbolLayerDsl {
   fun textSize(textSize: Expression): SymbolLayer
 
   /**
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * @param textSizeScaleRange value of textSizeScaleRange
    */
@@ -8730,7 +8730,7 @@ interface SymbolLayerDsl {
   fun textSizeScaleRange(textSizeScaleRange: List<Double> = listOf(0.8, 2.0)): SymbolLayer
 
   /**
-   * Defines the minimum and maximum scaling factors for text related properties like `text-size`, `text-max-width`, `text-halo-width`, `font-size` Default value: [0.8,2]. Value range: [0.1, 10]
+   * Limits the possible scaling range for `text-size`, `text-halo-width`, `text-halo-blur` properties to be within [min-scale, max-scale] Default value: [0.8,2]. Minimum value: [0.1,0.1]. Maximum value: [10,10].
    *
    * @param textSizeScaleRange value of textSizeScaleRange as Expression
    */
