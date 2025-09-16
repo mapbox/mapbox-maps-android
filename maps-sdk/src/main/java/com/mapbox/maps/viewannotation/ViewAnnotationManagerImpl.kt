@@ -801,7 +801,7 @@ internal class ViewAnnotationManagerImpl(
           viewAnnotationsLayout.addView(viewAnnotation.view, viewAnnotation.viewLayoutParams)
           updateVisibilityAndNotifyUpdateListeners(
             viewAnnotation,
-            if (viewAnnotation.view.visibility == View.VISIBLE) {
+            if (viewAnnotation.view.isVisible) {
               ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
             } else {
               ViewAnnotationVisibility.INVISIBLE
@@ -816,11 +816,13 @@ internal class ViewAnnotationManagerImpl(
             viewAnnotation,
             ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
           )
+          notifyPositionListeners(viewAnnotation, descriptor, positionChanged = true)
+        } else {
+          notifyPositionListeners(viewAnnotation, descriptor)
         }
 
         notifyAnchorListeners(viewAnnotation, descriptor)
         notifyAnchorCoordinateListeners(viewAnnotation, descriptor)
-        notifyPositionListeners(viewAnnotation, descriptor)
         viewAnnotation.positionDescriptor = descriptor
 
         // reorder Z index with the iteration order to keep selected annotations on top of others
@@ -852,9 +854,11 @@ internal class ViewAnnotationManagerImpl(
 
   private fun notifyPositionListeners(
     viewAnnotation: ViewAnnotation,
-    newPositionDescriptor: DelegatingViewAnnotationPositionDescriptor
+    newPositionDescriptor: DelegatingViewAnnotationPositionDescriptor,
+    positionChanged: Boolean = false,
   ) {
     if (
+      positionChanged ||
       viewAnnotation.positionDescriptor?.leftTopCoordinate != newPositionDescriptor.leftTopCoordinate ||
       viewAnnotation.positionDescriptor?.width != newPositionDescriptor.width ||
       viewAnnotation.positionDescriptor?.height != newPositionDescriptor.height

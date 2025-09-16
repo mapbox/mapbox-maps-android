@@ -10,7 +10,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose experimental `MapboxMap.setStyleLayerPropertiesAsync` and `MapboxMap.setStyleLayerPropertyAsync` (also available through `Style`) to allow setting properties from a any thread and asynchronously.
 
 ## Bug fixes 🐞
-* MapboxTracing was deprecated and moved to package com.mapbox.common.
+* MapboxTracing was deprecated and moved to package com.mapbox.common. 
+* Fixed incorrect positioning of map marker annotations, when coordinates do not change.
 
 # 11.15.0
 
