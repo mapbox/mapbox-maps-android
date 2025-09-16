@@ -389,12 +389,13 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   }
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
-    animator.addInternalUpdateListener {
-      postOnMainThread { onAnimationUpdateInternal(animator, it) }
-    }
+    // Since we have the `animator` we can constructor the update listener once here instead of
+    // every time the animator is updated.
+    val updateInternalFun = { onAnimationUpdateInternal(animator) }
+    animator.addInternalUpdateListener { postOnMainThread(updateInternalFun) }
   }
 
-  private fun onAnimationUpdateInternal(animator: CameraAnimator<*>, valueAnimator: ValueAnimator) {
+  private fun onAnimationUpdateInternal(animator: CameraAnimator<*>) {
     // add current animator to queue-set if was not present
     runningAnimatorsQueue.add(animator)
 
@@ -402,7 +403,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     updateCameraValue(animator, animator.animatedValue, cameraOptionsBuilder)
 
     if (animator.type == CameraAnimatorType.ANCHOR) {
-      anchor = valueAnimator.animatedValue as ScreenCoordinate
+      anchor = animator.animatedValue as ScreenCoordinate
     }
 
     // commit applies changes immediately
@@ -912,6 +913,19 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     }
   }
 
+  /**
+   * Convenient property to clean up highLevelAnimatorSet listener on animation end.
+   * This is reused to avoid recreating new listener each time.
+   */
+  private val clearHighLevelAnimatorSetListener = object : AnimatorListenerAdapter() {
+    override fun onAnimationEnd(animation: Animator) {
+      // Make sure we only clean the current highLevelAnimatorSet
+      if (highLevelAnimatorSet?.animatorSet === animation) {
+        highLevelAnimatorSet = null
+      }
+    }
+  }
+
   private fun startHighLevelAnimation(
     animators: Array<CameraAnimator<*>>,
     animationOptions: MapAnimationOptions?,
@@ -941,23 +955,14 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
       animationOptions?.interpolator?.let {
         interpolator = it
       }
-      animatorListener?.let {
-        // listeners in Android SDK use non thread safe lists
-        postOnAnimatorThread {
-          addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-              postOnMainThread {
-                commitChanges()
-              }
-
-              if (highLevelAnimatorSet?.animatorSet === animation) {
-                highLevelAnimatorSet = null
-              }
-            }
-          })
+      // listeners in Android SDK use non thread safe lists
+      postOnAnimatorThread {
+        addListener(clearHighLevelAnimatorSetListener)
+        animatorListener?.let {
           addListener(it)
         }
       }
+
       playTogether(*animators)
     }
     animatorSet.calculateCameraAnimationHint(cameraAnimationHintFractions)?.let {
