@@ -5,18 +5,43 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
-## Features ✨ and improvements 🏁
-* Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
-* Expose experimental `MapboxMap.setStyleLayerPropertiesAsync` and `MapboxMap.setStyleLayerPropertyAsync` (also available through `Style`) to allow setting properties from a any thread and asynchronously.
 
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common. 
 * Fixed incorrect positioning of map marker annotations, when coordinates do not change.
 
-# 11.15.0
+# 11.15.0 September 11, 2025
+
+## Features ✨ and improvements 🏁
+* Expose `LineLayer.lineCutoutOpacity` and `LineLayer.lineCutoutWidth` to make route lines visible through obstructing 3D buildings and other aboveground features.
+* Expose experimental `MapboxMap.setStyleLayerPropertiesAsync` and `MapboxMap.setStyleLayerPropertyAsync` (also available through `Style`) to allow setting properties from a any thread and asynchronously.
+* Improve performance of the zooming-out animation
 
 ## Bug fixes 🐞
 * Fix flyTo animation when zoom property is null or not changed
+* Fix `MapInteraction` for 2D and 3D location puck indicator
+* Fix ViewAnnotation disappears when interacting with location puck at different camera positions due to incorrect 2D puck bounding box calculation
+* Fix a bug where Dynamic View Annotations disappeared in corner cases
+* Fix bug where View Annotation is not displayed at zoom levels > 22
+* Fix potential crash caused by a race condition
+* Fix the alignment of the text and icon when using the text-anchor property.
+* Fix incorrect background color of icons when non-default color-theme is used
+* Fix tile border debug feature flickering on globe projection
+* Fix potential ANR (Application Not Responding) issue when retrieving display refresh rate during map initialization by offloading the system call to a background thread with proper timeout and fallback handling.
+* Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
+* Allow to create text-field without any text
+* Fix potential data race in mapbox token initialization
+
+## Dependencies
+* Update gl-native to [v11.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0), common to [24.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0).
+* Update Mapbox GeoJSON library to [v7.5.0](https://github.com/mapbox/mapbox-java/releases/tag/v7.5.0) which bumps GSON to v2.13.1 to address [CVE-2025-53864](https://nvd.nist.gov/vuln/detail/CVE-2025-53864). If your project uses AGP 7.0, you might need to add the following snippet to your `build.gradle` or upgrade to AGP 8.0+ ([more details](https://issuetracker.google.com/issues/342522142#comment8)):
+```
+configurations {
+    all {
+        exclude group: 'com.google.errorprone', module: 'error_prone_annotations'
+    }
+}
+```
 
 # 11.14.4 September 03, 2025
 
@@ -56,7 +81,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.15.0-beta.2 August 15, 2025
 ## Bug fixes 🐞
-* Fix tile border debug feature flickering on globe
+* Fix tile border debug feature flickering on globe projection
 
 ## Dependencies
 * Update gl-native to v11.15.0-beta.2, common to 24.15.0-beta.2.
@@ -70,15 +95,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.15.0-beta.1 August 12, 2025
 ## Features ✨ and improvements 🏁
-* Enable camera animation hint during zoom out animations 
+* Improve performance during zoom out camera animations
 
 ## Bug fixes 🐞
 * Fix potential ANR (Application Not Responding) issue when retrieving display refresh rate during map initialization by offloading the system call to a background thread with proper timeout and fallback handling.
 * Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
-* Fixed image only `text-field`
-* Make 2D Location Indicator bbox available only for visible puck positions
+* Fixed `text-field` to be created without any text but with an image only
+* Fix ViewAnnotation disappears when interacting with location puck at different camera positions due to incorrect 2D puck bounding box calculation
 * Fix potential data race in mapbox token initialization
-* Minor fixes in `TileStore` service
 
 ## Dependencies
 * Update gl-native to v11.15.0-beta.1, common to 24.15.0-beta.1.
