@@ -377,9 +377,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
                 AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
               }
             }
-            if (runningAnimatorsQueue.isEmpty()) {
-              commitChanges()
-            }
           } ?: throw MapboxCameraAnimationException(
             "Could not finish animation as it must be an instance of CameraAnimator and not null!"
           )
@@ -399,22 +396,24 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     // add current animator to queue-set if was not present
     runningAnimatorsQueue.add(animator)
 
-    // set current animator value in any case
-    updateCameraValue(animator, animator.animatedValue, cameraOptionsBuilder)
-
+    // Anchor animator is a special case. It won't affect the camera by itself so we cache the value
+    // and apply it to the other animators.
     if (animator.type == CameraAnimatorType.ANCHOR) {
       anchor = animator.animatedValue as ScreenCoordinate
-    }
+    } else {
+      // set current animator value to the camera options builder
+      updateCameraValue(animator, animator.animatedValue, cameraOptionsBuilder)
 
-    // commit applies changes immediately
-    // this helps to avoid camera animations jitter noticeable on high zoom levels using location puck following mode.
-    commitChanges()
+      // commit applies changes immediately
+      // this helps to avoid camera animations jitter noticeable on high zoom levels using location puck following mode.
+      commitChanges()
+    }
   }
 
   private fun commitChanges() {
     performMapJump(cameraOptionsBuilder.anchor(anchor).build())
-    // reset values
-    cameraOptionsBuilder = CameraOptions.Builder()
+    // reset values so it can be reused
+    cameraOptionsBuilder.clear()
   }
 
   private fun cancelAnimatorSet() {

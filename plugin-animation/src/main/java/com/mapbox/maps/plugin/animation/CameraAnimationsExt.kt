@@ -340,11 +340,11 @@ internal fun updateCameraValue(
  * Convenience method to clear camera options so it can be reused instead of creating
  * new [CameraOptions.Builder].
  */
-private fun CameraOptions.Builder.clear() {
+internal fun CameraOptions.Builder.clear() {
   center(null)
-    .padding(null)
-    .anchor(null)
-    .zoom(null)
-    .bearing(null)
-    .pitch(null)
+  padding(null)
+  anchor(null)
+  zoom(null)
+  bearing(null)
+  pitch(null)
 }
