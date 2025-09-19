@@ -11,6 +11,8 @@ import com.mapbox.maps.interactions.FeatureStateKey
 import com.mapbox.maps.interactions.FeaturesetFeature
 import com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature
 import com.mapbox.maps.interactions.standard.generated.StandardBuildingsState
+import com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature
+import com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState
 import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature
 import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState
 import com.mapbox.maps.interactions.standard.generated.StandardPoiFeature
@@ -61,6 +63,19 @@ public sealed interface FeaturesetFeatureScope {
     init: StandardBuildingsState.Builder.() -> Unit,
   ) {
     setFeatureState(StandardBuildingsState(init)) { }
+  }
+
+  /**
+   * Extension function allowing to set the [StandardLandmarkIconsState] for [StandardLandmarkIconsFeature]
+   * in the most convenient way.
+   *
+   * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
+   * Refer to [setFeatureState] if the callback is required.
+   */
+  public fun StandardLandmarkIconsFeature.setStandardLandmarkIconsState(
+    init: StandardLandmarkIconsState.Builder.() -> Unit,
+  ) {
+    setFeatureState(StandardLandmarkIconsState(init)) { }
   }
 
   /**

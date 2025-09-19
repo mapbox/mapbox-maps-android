@@ -1442,6 +1442,7 @@ public abstract interface class com/mapbox/maps/extension/compose/style/interact
 	public abstract fun resetFeatureStates (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun setFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun setStandardBuildingsState (Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun setStandardLandmarkIconsState (Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardPlaceLabelsState (Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardPoiState (Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
 }
@@ -1451,6 +1452,7 @@ public final class com/mapbox/maps/extension/compose/style/interactions/generate
 	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static fun setStandardBuildingsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature;Lkotlin/jvm/functions/Function1;)V
+	public static fun setStandardLandmarkIconsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardPlaceLabelsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardPoiState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
 }
@@ -4273,6 +4275,27 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Vec
 	public static final fun rememberVectorSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/VectorSourceState;
 }
 
+public final class com/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue {
+	public static final field CIRCLE Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public static final field NONE Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPresetNameOrNull ()Ljava/lang/String;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue$Companion {
+}
+
 public class com/mapbox/maps/extension/compose/style/standard/BaseStandardStyleState {
 	protected fun <init> (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;)V
 	public synthetic fun <init> (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/RainState;Lcom/mapbox/maps/extension/compose/style/precipitations/generated/SnowState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -4310,6 +4333,27 @@ public abstract class com/mapbox/maps/extension/compose/style/standard/BaseStyle
 	public final fun setShowTransitLabels (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 }
 
+public final class com/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public static final field DEFAULT_COLOR Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public static final field SINGLE Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPresetNameOrNull ()Ljava/lang/String;
+	public final fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/standard/LightPresetValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue$Companion;
 	public static final field DAWN Lcom/mapbox/maps/extension/compose/style/standard/LightPresetValue;
@@ -4338,6 +4382,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/MapboxStanda
 	public static final fun MapboxStandardSatelliteStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
 	public static final fun MapboxStandardSatelliteStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleConfigurationState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MapboxStandardSatelliteStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/maps/extension/compose/style/atmosphere/generated/AtmosphereState;Lcom/mapbox/maps/extension/compose/style/terrain/generated/TerrainState;Lcom/mapbox/maps/extension/compose/style/lights/LightsState;Lcom/mapbox/maps/TransitionOptions;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MapboxStandardSatelliteStyle (Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lcom/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleState;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/standard/MapboxStandardStyleKt {
@@ -4348,20 +4393,102 @@ public final class com/mapbox/maps/extension/compose/style/standard/MapboxStanda
 
 public final class com/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleConfigurationState : com/mapbox/maps/extension/compose/style/standard/BaseStyleConfigurationState {
 	public fun <init> ()V
+	public final fun getBackgroundPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public final fun getColorAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public final fun getColorMotorways ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPlaceLabelHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPlaceLabelSelect ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPlaceLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorRoadLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorRoads ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTrunks ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getDensityPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRoadsBrightness ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getShowAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowPedestrianRoads ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowRoadsAndTransit ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun setBackgroundPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;)V
+	public final fun setColorAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;)V
+	public final fun setColorMotorways (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPlaceLabelHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPlaceLabelSelect (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPlaceLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorRoadLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorRoads (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTrunks (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setDensityPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRoadsBrightness (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setShowAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowPedestrianRoads (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowRoadsAndTransit (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 }
 
+public final class com/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleState : com/mapbox/maps/extension/compose/style/standard/BaseStandardStyleState {
+	public fun <init> ()V
+	public final fun getConfigurationsState ()Lcom/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleConfigurationState;
+	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;
+	public final fun setConfigurationsState (Lcom/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleConfigurationState;)V
+	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/interactions/StyleInteractionsState;)V
+}
+
+public final class com/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleStateKt {
+	public static final fun rememberStandardSatelliteStyleState (Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/standard/StandardSatelliteStyleState;
+}
+
 public final class com/mapbox/maps/extension/compose/style/standard/StandardStyleConfigurationState : com/mapbox/maps/extension/compose/style/standard/BaseStyleConfigurationState {
 	public fun <init> ()V
+	public final fun getBackgroundPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;
+	public final fun getColorAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorBuildingHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorBuildingSelect ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorGreenspace ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
+	public final fun getColorMotorways ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPlaceLabelHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPlaceLabelSelect ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPlaceLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorRoadLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorRoads ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorTrunks ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorWater ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getDensityPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getRoadsBrightness ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getShow3dObjects ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShowAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShowLandmarkIconLabels ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowLandmarkIcons ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShowPedestrianRoads ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getTheme ()Lcom/mapbox/maps/extension/compose/style/standard/ThemeValue;
+	public final fun getThemeData ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun setBackgroundPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/standard/BackgroundPointOfInterestLabelsValue;)V
+	public final fun setColorAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorBuildingHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorBuildingSelect (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorGreenspace (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;)V
+	public final fun setColorMotorways (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPlaceLabelHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPlaceLabelSelect (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPlaceLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorRoadLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorRoads (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorTrunks (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorWater (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setDensityPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setRoadsBrightness (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setShow3dObjects (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShowAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShowLandmarkIconLabels (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowLandmarkIcons (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShowPedestrianRoads (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setTheme (Lcom/mapbox/maps/extension/compose/style/standard/ThemeValue;)V
+	public final fun setThemeData (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/standard/StandardStyleState : com/mapbox/maps/extension/compose/style/standard/BaseStandardStyleState {
@@ -4408,6 +4535,10 @@ public final class com/mapbox/maps/extension/compose/style/standard/generated/St
 	public static synthetic fun onFeaturesetClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onFeaturesetLongClicked (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public static synthetic fun onFeaturesetLongClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun onLandmarkIconsClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public static synthetic fun onLandmarkIconsClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun onLandmarkIconsLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public static synthetic fun onLandmarkIconsLongClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onLayerClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public static synthetic fun onLayerClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onLayerLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;

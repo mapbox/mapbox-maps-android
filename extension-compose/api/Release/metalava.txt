@@ -1721,6 +1721,7 @@ package com.mapbox.maps.extension.compose.style.interactions.generated {
 
 }));
     method public default void setStandardBuildingsState(com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,kotlin.Unit> init);
+    method public default void setStandardLandmarkIconsState(com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState.Builder,kotlin.Unit> init);
     method public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
     method public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
   }
@@ -5018,6 +5019,25 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
 
 package com.mapbox.maps.extension.compose.style.standard {
 
+  @androidx.compose.runtime.Immutable public final class BackgroundPointOfInterestLabelsValue {
+    ctor public BackgroundPointOfInterestLabelsValue(com.mapbox.bindgen.Value value);
+    ctor public BackgroundPointOfInterestLabelsValue(String value);
+    ctor public BackgroundPointOfInterestLabelsValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue copy(com.mapbox.bindgen.Value value);
+    method public String? getPresetNameOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final String? presetNameOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue CIRCLE;
+    field public static final com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue NONE;
+  }
+
+  public static final class BackgroundPointOfInterestLabelsValue.Companion {
+  }
+
   @androidx.compose.runtime.Stable public class BaseStandardStyleState {
     ctor protected BaseStandardStyleState(com.mapbox.maps.extension.compose.style.projection.generated.Projection initialProjection, com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState initialAtmosphereState, com.mapbox.maps.extension.compose.style.precipitations.generated.RainState initialRainState, com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState initialSnowState, com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState initialTerrainState = com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState.INITIAL, com.mapbox.maps.extension.compose.style.lights.LightsState initialLightsState = com.mapbox.maps.extension.compose.style.lights.LightsState.INITIAL, com.mapbox.maps.TransitionOptions initialStyleTransition);
     method public final com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState getAtmosphereState();
@@ -5063,6 +5083,25 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showPointOfInterestLabels;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showRoadLabels;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showTransitLabels;
+  }
+
+  @androidx.compose.runtime.Immutable public final class ColorModePointOfInterestLabelsValue {
+    ctor public ColorModePointOfInterestLabelsValue(com.mapbox.bindgen.Value value);
+    ctor public ColorModePointOfInterestLabelsValue(String value);
+    ctor public ColorModePointOfInterestLabelsValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue copy(com.mapbox.bindgen.Value value);
+    method public String? getPresetNameOrNull();
+    method public com.mapbox.bindgen.Value getValue();
+    property public final String? presetNameOrNull;
+    property public final com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue DEFAULT_COLOR;
+    field public static final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue SINGLE;
+  }
+
+  public static final class ColorModePointOfInterestLabelsValue.Companion {
   }
 
   @androidx.compose.runtime.Immutable public final class LightPresetValue {
@@ -5119,6 +5158,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     
     })
 }), com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState? styleInteractionsState = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState,kotlin.Unit> init);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.style.MapboxStyleComposable public static void MapboxStandardSatelliteStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.imports.StyleImportsScope,kotlin.Unit>? styleImportsContent = null, kotlin.jvm.functions.Function0<kotlin.Unit>? topSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? middleSlot = null, kotlin.jvm.functions.Function0<kotlin.Unit>? bottomSlot = null, com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleState standardSatelliteStyleState = rememberStandardSatelliteStyleState());
   }
 
   public final class MapboxStandardStyleKt {
@@ -5143,25 +5183,144 @@ package com.mapbox.maps.extension.compose.style.standard {
 
   @androidx.compose.runtime.Stable public final class StandardSatelliteStyleConfigurationState extends com.mapbox.maps.extension.compose.style.standard.BaseStyleConfigurationState {
     ctor public StandardSatelliteStyleConfigurationState();
+    method public com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue getBackgroundPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorAdminBoundaries();
+    method public com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue getColorModePointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorMotorways();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabelHighlight();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabelSelect();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoadLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoads();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorTrunks();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDensityPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getRoadsBrightness();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowAdminBoundaries();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPedestrianRoads();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowRoadsAndTransit();
+    method public void setBackgroundPointOfInterestLabels(com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue);
+    method public void setColorAdminBoundaries(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorModePointOfInterestLabels(com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue);
+    method public void setColorMotorways(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPlaceLabelHighlight(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPlaceLabelSelect(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPlaceLabels(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPointOfInterestLabels(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorRoadLabels(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorRoads(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTrunks(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setDensityPointOfInterestLabels(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setRoadsBrightness(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setShowAdminBoundaries(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowPedestrianRoads(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowRoadsAndTransit(com.mapbox.maps.extension.compose.style.BooleanValue);
+    property public final com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue backgroundPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorAdminBoundaries;
+    property public final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue colorModePointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorMotorways;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabelHighlight;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabelSelect;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoadLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoads;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorTrunks;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue densityPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue roadsBrightness;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showAdminBoundaries;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showPedestrianRoads;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showRoadsAndTransit;
   }
 
+  @androidx.compose.runtime.Stable public final class StandardSatelliteStyleState extends com.mapbox.maps.extension.compose.style.standard.BaseStandardStyleState {
+    ctor public StandardSatelliteStyleState();
+    method public com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState getConfigurationsState();
+    method public com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState? getInteractionsState();
+    method public void setConfigurationsState(com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState);
+    method public void setInteractionsState(com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState?);
+    property public final com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleConfigurationState configurationsState;
+    property public final com.mapbox.maps.extension.compose.style.interactions.StyleInteractionsState? interactionsState;
+  }
+
+  public final class StandardSatelliteStyleStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleState rememberStandardSatelliteStyleState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.standard.StandardSatelliteStyleState,kotlin.Unit> init = {});
+  }
+
   @androidx.compose.runtime.Stable public final class StandardStyleConfigurationState extends com.mapbox.maps.extension.compose.style.standard.BaseStyleConfigurationState {
     ctor public StandardStyleConfigurationState();
+    method public com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue getBackgroundPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorAdminBoundaries();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorBuildingHighlight();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorBuildingSelect();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorGreenspace();
+    method public com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue getColorModePointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorMotorways();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabelHighlight();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabelSelect();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoadLabels();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoads();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorTrunks();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorWater();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getDensityPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getRoadsBrightness();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dObjects();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowAdminBoundaries();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowLandmarkIconLabels();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowLandmarkIcons();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPedestrianRoads();
     method public com.mapbox.maps.extension.compose.style.standard.ThemeValue getTheme();
+    method public com.mapbox.maps.extension.compose.style.StringValue getThemeData();
+    method public void setBackgroundPointOfInterestLabels(com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue);
+    method public void setColorAdminBoundaries(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorBuildingHighlight(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorBuildingSelect(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorGreenspace(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorModePointOfInterestLabels(com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue);
+    method public void setColorMotorways(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPlaceLabelHighlight(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPlaceLabelSelect(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPlaceLabels(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorPointOfInterestLabels(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorRoadLabels(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorRoads(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorTrunks(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorWater(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setDensityPointOfInterestLabels(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setRoadsBrightness(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setShow3dObjects(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowAdminBoundaries(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowLandmarkIconLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowLandmarkIcons(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowPedestrianRoads(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setTheme(com.mapbox.maps.extension.compose.style.standard.ThemeValue);
+    method public void setThemeData(com.mapbox.maps.extension.compose.style.StringValue);
+    property public final com.mapbox.maps.extension.compose.style.standard.BackgroundPointOfInterestLabelsValue backgroundPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorAdminBoundaries;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorBuildingHighlight;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorBuildingSelect;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorGreenspace;
+    property public final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue colorModePointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorMotorways;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabelHighlight;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabelSelect;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoadLabels;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoads;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorTrunks;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorWater;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue densityPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue roadsBrightness;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showAdminBoundaries;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showLandmarkIconLabels;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showLandmarkIcons;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showPedestrianRoads;
     property public final com.mapbox.maps.extension.compose.style.standard.ThemeValue theme;
+    property public final com.mapbox.maps.extension.compose.style.StringValue themeData;
   }
 
   @androidx.compose.runtime.Stable public final class StandardStyleState extends com.mapbox.maps.extension.compose.style.standard.BaseStandardStyleState {
@@ -5207,6 +5366,8 @@ package com.mapbox.maps.extension.compose.style.standard.generated {
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onBuildingsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onFeaturesetClicked(String id, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onFeaturesetLongClicked(String id, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLandmarkIconsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLandmarkIconsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLayerClicked(String id, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLayerLongClicked(String id, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onMapClicked(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);

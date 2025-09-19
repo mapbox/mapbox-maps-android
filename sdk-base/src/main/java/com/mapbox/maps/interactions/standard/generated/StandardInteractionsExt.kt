@@ -224,4 +224,75 @@ fun LongClickInteraction.Companion.standardBuildings(
     )
   }
 }
+/**
+ * Create the [ClickInteraction] for Mapbox Standard Style `landmark-icons` featureset and an optional [importId].
+ *
+ * When several [ClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+ *
+ * @param importId optional style import id. Defaults to NULL.
+ * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+ * @param onClick callback triggered when the `landmark-icons` featureset is clicked.
+ */
+@JvmOverloads
+fun ClickInteraction.Companion.standardLandmarkIcons(
+  importId: String? = null,
+  filter: Value? = null,
+  radius: Double? = null,
+  onClick: (StandardLandmarkIconsFeature, InteractionContext) -> Boolean
+): MapInteraction {
+  return ClickInteraction(
+    FeaturesetDescriptor(
+      /* featuresetId */ StandardLandmarkIcons.FEATURESET_ID,
+      /* importId */ importId ?: TypedFeaturesetDescriptor.DEFAULT_IMPORT_ID,
+      /* layerId */null
+    ),
+    filter,
+    radius,
+    onClick
+  ) { feature, featuresetFeatureId, state ->
+    StandardLandmarkIconsFeature(
+      id = featuresetFeatureId,
+      importId = importId,
+      originalFeature = feature,
+      state = StandardLandmarkIconsState(state)
+    )
+  }
+}
+
+/**
+ * Create the [LongClickInteraction] for Mapbox Standard Style `landmark-icons` featureset and an optional [importId].
+ *
+ * When several [LongClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+ *
+ * @param importId optional style import id. Defaults to NULL.
+ * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+ * @param onLongClick callback triggered when the `landmark-icons` featureset is long clicked.
+ */
+@JvmOverloads
+fun LongClickInteraction.Companion.standardLandmarkIcons(
+  importId: String? = null,
+  filter: Value? = null,
+  radius: Double? = null,
+  onLongClick: (StandardLandmarkIconsFeature, InteractionContext) -> Boolean
+): MapInteraction {
+  return LongClickInteraction(
+    FeaturesetDescriptor(
+      /* featuresetId */ StandardLandmarkIcons.FEATURESET_ID,
+      /* importId */ importId ?: TypedFeaturesetDescriptor.DEFAULT_IMPORT_ID,
+      /* layerId */null
+    ),
+    filter,
+    radius,
+    onLongClick
+  ) { feature, featuresetFeatureId, state ->
+    StandardLandmarkIconsFeature(
+      id = featuresetFeatureId,
+      importId = importId,
+      originalFeature = feature,
+      state = StandardLandmarkIconsState(state)
+    )
+  }
+}
 // End of generated file.

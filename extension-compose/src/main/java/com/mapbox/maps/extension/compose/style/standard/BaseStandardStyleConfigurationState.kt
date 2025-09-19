@@ -89,6 +89,136 @@ public data class LightPresetValue(public val value: Value) {
 }
 
 /**
+ * Define the color mode for Point of Interest labels style import config for [MapboxStandardStyle].
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+public data class ColorModePointOfInterestLabelsValue(public val value: Value) {
+  /**
+   * Construct the [ColorModePointOfInterestLabelsValue] with [String].
+   */
+  public constructor(value: String) : this(Value(value))
+
+  /**
+   * Construct the [ColorModePointOfInterestLabelsValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Get the name of the [ColorModePointOfInterestLabelsValue] as [String], or null if it's not a constant(e.g. an expression).
+   */
+  public val presetNameOrNull: String?
+    get() = value.contents as? String
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: ColorModePointOfInterestLabelsValue =
+      ColorModePointOfInterestLabelsValue(Value.valueOf("ColorModePointOfInterestLabelsValue.INITIAL"))
+
+    /**
+     * Default value for [ColorModePointOfInterestLabelsValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: ColorModePointOfInterestLabelsValue = ColorModePointOfInterestLabelsValue(Value.nullValue())
+
+    /**
+     * Use the default POI label colors.
+     */
+    @JvmField
+    public val DEFAULT_COLOR: ColorModePointOfInterestLabelsValue = ColorModePointOfInterestLabelsValue("default")
+
+    /**
+     * Set a single custom color for POI labels.
+     */
+    @JvmField
+    public val SINGLE: ColorModePointOfInterestLabelsValue = ColorModePointOfInterestLabelsValue("single")
+  }
+}
+
+/**
+ * Define the background shape for Point of Interest labels style import config for [MapboxStandardStyle].
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+public data class BackgroundPointOfInterestLabelsValue(public val value: Value) {
+  /**
+   * Construct the [BackgroundPointOfInterestLabelsValue] with [String].
+   */
+  public constructor(value: String) : this(Value(value))
+
+  /**
+   * Construct the [BackgroundPointOfInterestLabelsValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Get the name of the [BackgroundPointOfInterestLabelsValue] as [String], or null if it's not a constant(e.g. an expression).
+   */
+  public val presetNameOrNull: String?
+    get() = value.contents as? String
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: BackgroundPointOfInterestLabelsValue =
+      BackgroundPointOfInterestLabelsValue(Value.valueOf("BackgroundPointOfInterestLabelsValue.INITIAL"))
+
+    /**
+     * Default value for [BackgroundPointOfInterestLabelsValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: BackgroundPointOfInterestLabelsValue = BackgroundPointOfInterestLabelsValue(Value.nullValue())
+
+    /**
+     * Circle background shape for POI labels.
+     */
+    @JvmField
+    public val CIRCLE: BackgroundPointOfInterestLabelsValue = BackgroundPointOfInterestLabelsValue("circle")
+
+    /**
+     * No background shape for POI labels.
+     */
+    @JvmField
+    public val NONE: BackgroundPointOfInterestLabelsValue = BackgroundPointOfInterestLabelsValue("none")
+  }
+}
+
+/**
  * The state holder for the base [MapboxStandardStyle]'s & [MapboxStandardSatelliteStyle]'s configurations.
  */
 @Stable
@@ -140,5 +270,70 @@ public abstract class BaseStyleConfigurationState protected constructor(
     internal const val CONFIG_SHOW_TRANSIT_LABELS = "showTransitLabels"
     internal const val CONFIG_LIGHT_PRESET = "lightPreset"
     internal const val CONFIG_FONT = "font"
+  }
+}
+
+/**
+ * Define the theme style import config for [MapboxStandardStyle].
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+public data class ThemeValue(public val value: Value) {
+  /**
+   * Construct the [ThemeValue] with [String].
+   */
+  public constructor(value: String) : this(Value(value))
+
+  /**
+   * Construct the [ThemeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * Get the name of the [ThemeValue] as [String], or null if it's not a constant(e.g. an expression).
+   */
+  public val presetNameOrNull: String?
+    get() = value.contents as? String
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  internal val notInitial: Boolean
+    get() = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: ThemeValue =
+      ThemeValue(Value.valueOf("ThemeValue.INITIAL"))
+
+    /**
+     * The theme for "default".
+     */
+    @JvmField
+    public val DEFAULT: ThemeValue = ThemeValue("default")
+
+    /**
+     * The theme for "faded".
+     */
+    @JvmField
+    public val FADED: ThemeValue = ThemeValue("faded")
+
+    /**
+     * The theme for "monochrome".
+     */
+    @JvmField
+    public val MONOCHROME: ThemeValue = ThemeValue("monochrome")
   }
 }

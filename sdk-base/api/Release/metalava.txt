@@ -913,6 +913,14 @@ package com.mapbox.maps.interactions.standard.generated {
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public static com.mapbox.maps.MapInteraction standardPlaceLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
@@ -929,6 +937,52 @@ package com.mapbox.maps.interactions.standard.generated {
     method public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+  }
+
+  public final class StandardLandmarkIcons extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState,com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature> {
+    ctor public StandardLandmarkIcons(String? importId = null);
+    ctor public StandardLandmarkIcons();
+    method public com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public String? getImportId();
+    method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
+    property public final String? importId;
+  }
+
+  public final class StandardLandmarkIconsFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState> {
+    ctor public StandardLandmarkIconsFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState state);
+    method public String? getLandmarkId();
+    method public String? getName();
+    method public String? getNameEn();
+    method public String? getShortName();
+    method public String? getShortNameEn();
+    method public String? getType();
+    property public final String? landmarkId;
+    property public final String? name;
+    property public final String? nameEn;
+    property public final String? shortName;
+    property public final String? shortNameEn;
+    property public final String? type;
+  }
+
+  public final class StandardLandmarkIconsState extends com.mapbox.maps.interactions.FeatureState {
+  }
+
+  public static final class StandardLandmarkIconsState.Builder extends com.mapbox.maps.interactions.FeatureState.Builder {
+    ctor public StandardLandmarkIconsState.Builder();
+    method public com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState build();
+  }
+
+  public final class StandardLandmarkIconsStateKey extends com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState> {
+    field public static final com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsStateKey.Companion Companion;
+  }
+
+  public static final class StandardLandmarkIconsStateKey.Companion {
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsStateKey create(String key);
+  }
+
+  public final class StandardLandmarkIconsStateKt {
+    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState! StandardLandmarkIconsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState.Builder,? extends kotlin.Unit> init);
   }
 
   public final class StandardPlaceLabels extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState,com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature> {

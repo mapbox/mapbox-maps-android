@@ -909,6 +909,16 @@ public final class com/mapbox/maps/interactions/standard/generated/StandardInter
 	public static final fun standardBuildings (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static synthetic fun standardBuildings$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
 	public static synthetic fun standardBuildings$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/ClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardLandmarkIcons (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardLandmarkIcons$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardLandmarkIcons$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun standardPlaceLabels (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun standardPlaceLabels (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static final fun standardPlaceLabels (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
@@ -929,6 +939,53 @@ public final class com/mapbox/maps/interactions/standard/generated/StandardInter
 	public static final fun standardPoi (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static synthetic fun standardPoi$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
 	public static synthetic fun standardPoi$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIcons : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
+	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsState;
+	public synthetic fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;
+	public final fun getImportId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature : com/mapbox/maps/interactions/FeaturesetFeature {
+	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsState;)V
+	public final fun getLandmarkId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNameEn ()Ljava/lang/String;
+	public final fun getShortName ()Ljava/lang/String;
+	public final fun getShortNameEn ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsState : com/mapbox/maps/interactions/FeatureState {
+	public fun getInternalState ()Lcom/mapbox/bindgen/Value;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsState$Builder : com/mapbox/maps/interactions/FeatureState$Builder {
+	public fun <init> ()V
+	public synthetic fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun build ()Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsState;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsStateKey : com/mapbox/maps/interactions/FeatureStateKey {
+	public static final field Companion Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsStateKey$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsStateKey$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsStateKey;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsStateKt {
+	public static final synthetic fun StandardLandmarkIconsState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsState;
 }
 
 public final class com/mapbox/maps/interactions/standard/generated/StandardPlaceLabels : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {

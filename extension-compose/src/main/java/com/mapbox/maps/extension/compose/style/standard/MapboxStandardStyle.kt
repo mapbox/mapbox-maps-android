@@ -1,3 +1,5 @@
+// This file is generated and will be overwritten automatically.
+
 package com.mapbox.maps.extension.compose.style.standard
 
 import androidx.compose.runtime.Composable
@@ -66,34 +68,28 @@ public fun MapboxStandardStyle(
         importConfig(importId = "basemap") {
           with(standardStyleConfigurationState) {
             if (showLandmarkIcons.isNotInitial()) {
-              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICON, showLandmarkIcons.value)
+              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICONS, showLandmarkIcons.value)
             }
             if (showPlaceLabels.isNotInitial()) {
-              config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
+              config(StandardStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
             }
             if (showRoadLabels.isNotInitial()) {
-              config(BaseStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
+              config(StandardStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
             }
             if (showPointOfInterestLabels.isNotInitial()) {
-              config(
-                BaseStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
-                showPointOfInterestLabels.value
-              )
+              config(StandardStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS, showPointOfInterestLabels.value)
             }
             if (showTransitLabels.isNotInitial()) {
-              config(
-                BaseStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
-                showTransitLabels.value
-              )
+              config(StandardStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS, showTransitLabels.value)
             }
             if (lightPreset.notInitial) {
-              config(BaseStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
+              config(StandardStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
             }
             if (font.isNotInitial()) {
-              config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
+              config(StandardStyleConfigurationState.CONFIG_FONT, font.value)
             }
             if (show3dObjects.isNotInitial()) {
-              config(StandardStyleConfigurationState.CONFIG_SHOW_3D_OBJECTS, show3dObjects.value)
+              config(StandardStyleConfigurationState.CONFIG_SHOW3D_OBJECTS, show3dObjects.value)
             }
             if (theme.notInitial) {
               config(StandardStyleConfigurationState.CONFIG_THEME, theme.value)
@@ -157,14 +153,14 @@ public fun MapboxStandardStyle(
 }
 
 /**
- * The convenient composable function to set a Mapbox Standard style to the map, with available slots
- * and config options.
+ * The convenient composable function to set a [Mapbox Standard](https://docs.mapbox.com/map-styles/standard/guides/) is a general-purpose style with 3D visualization. to the map, with available slots
+ * and comprehensive config options.
  *
  * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
- * @param topSlot The content to be set to the top slot of the Mapbox Standard style.
- * @param middleSlot The content to be set to the middle slot of the Mapbox Standard style.
- * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard style.
- * @param standardStyleState The state holder for the experimental Mapbox Standard Style.
+ * @param topSlot The content to be set to the top slot of the [Mapbox Standard](https://docs.mapbox.com/map-styles/standard/guides/) is a general-purpose style with 3D visualization..
+ * @param middleSlot The content to be set to the middle slot of the [Mapbox Standard](https://docs.mapbox.com/map-styles/standard/guides/) is a general-purpose style with 3D visualization..
+ * @param bottomSlot The content to be set to the bottom slot of the [Mapbox Standard](https://docs.mapbox.com/map-styles/standard/guides/) is a general-purpose style with 3D visualization..
+ * @param standardStyleState The state holder for the Mapbox Standard Style.
  */
 @Composable
 @MapboxStyleComposable
@@ -187,38 +183,95 @@ public fun MapboxStandardStyle(
       styleImportsConfig = styleImportsConfig {
         importConfig(importId = "basemap") {
           with(standardStyleState.configurationsState) {
-            if (showLandmarkIcons.isNotInitial()) {
-              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICON, showLandmarkIcons.value)
-            }
-            if (showPlaceLabels.isNotInitial()) {
-              config(BaseStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
-            }
-            if (showRoadLabels.isNotInitial()) {
-              config(BaseStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
-            }
-            if (showPointOfInterestLabels.isNotInitial()) {
-              config(
-                BaseStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS,
-                showPointOfInterestLabels.value
-              )
-            }
-            if (showTransitLabels.isNotInitial()) {
-              config(
-                BaseStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS,
-                showTransitLabels.value
-              )
-            }
-            if (lightPreset.notInitial) {
-              config(BaseStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
-            }
-            if (font.isNotInitial()) {
-              config(BaseStyleConfigurationState.CONFIG_FONT, font.value)
-            }
-            if (show3dObjects.isNotInitial()) {
-              config(StandardStyleConfigurationState.CONFIG_SHOW_3D_OBJECTS, show3dObjects.value)
-            }
             if (theme.notInitial) {
               config(StandardStyleConfigurationState.CONFIG_THEME, theme.value)
+            }
+            if (lightPreset.notInitial) {
+              config(StandardStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
+            }
+            if (font.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_FONT, font.value)
+            }
+            if (showPointOfInterestLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS, showPointOfInterestLabels.value)
+            }
+            if (showTransitLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS, showTransitLabels.value)
+            }
+            if (showPlaceLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
+            }
+            if (showRoadLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
+            }
+            if (showPedestrianRoads.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_PEDESTRIAN_ROADS, showPedestrianRoads.value)
+            }
+            if (show3dObjects.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW3D_OBJECTS, show3dObjects.value)
+            }
+            if (backgroundPointOfInterestLabels.notInitial) {
+              config(StandardStyleConfigurationState.CONFIG_BACKGROUND_POINT_OF_INTEREST_LABELS, backgroundPointOfInterestLabels.value)
+            }
+            if (colorAdminBoundaries.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_ADMIN_BOUNDARIES, colorAdminBoundaries.value)
+            }
+            if (colorBuildingHighlight.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_BUILDING_HIGHLIGHT, colorBuildingHighlight.value)
+            }
+            if (colorBuildingSelect.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_BUILDING_SELECT, colorBuildingSelect.value)
+            }
+            if (colorGreenspace.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_GREENSPACE, colorGreenspace.value)
+            }
+            if (colorModePointOfInterestLabels.notInitial) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_MODE_POINT_OF_INTEREST_LABELS, colorModePointOfInterestLabels.value)
+            }
+            if (colorMotorways.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_MOTORWAYS, colorMotorways.value)
+            }
+            if (colorPlaceLabelHighlight.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_PLACE_LABEL_HIGHLIGHT, colorPlaceLabelHighlight.value)
+            }
+            if (colorPlaceLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_PLACE_LABELS, colorPlaceLabels.value)
+            }
+            if (colorPlaceLabelSelect.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_PLACE_LABEL_SELECT, colorPlaceLabelSelect.value)
+            }
+            if (colorPointOfInterestLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_POINT_OF_INTEREST_LABELS, colorPointOfInterestLabels.value)
+            }
+            if (colorRoadLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_ROAD_LABELS, colorRoadLabels.value)
+            }
+            if (colorRoads.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_ROADS, colorRoads.value)
+            }
+            if (colorTrunks.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_TRUNKS, colorTrunks.value)
+            }
+            if (colorWater.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_WATER, colorWater.value)
+            }
+            if (densityPointOfInterestLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_DENSITY_POINT_OF_INTEREST_LABELS, densityPointOfInterestLabels.value)
+            }
+            if (roadsBrightness.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_ROADS_BRIGHTNESS, roadsBrightness.value)
+            }
+            if (showAdminBoundaries.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_ADMIN_BOUNDARIES, showAdminBoundaries.value)
+            }
+            if (showLandmarkIconLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICON_LABELS, showLandmarkIconLabels.value)
+            }
+            if (showLandmarkIcons.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICONS, showLandmarkIcons.value)
+            }
+            if (themeData.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_THEME_DATA, themeData.value)
             }
           }
         }

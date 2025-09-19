@@ -34,6 +34,7 @@ import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardSatelliteStyle
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.extension.compose.style.standard.ThemeValue
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardSatelliteStyleState
 import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.extension.style.utils.transition
 
@@ -48,7 +49,7 @@ public class StandardStyleActivity : ComponentActivity() {
         mutableStateOf(false)
       }
       var enableLandmarkIcons by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
       }
       var enablePlaceLabels by remember {
         mutableStateOf(true)
@@ -78,6 +79,9 @@ public class StandardStyleActivity : ComponentActivity() {
         mutableStateOf(true)
       }
       var enablePedestrianRoads by remember {
+        mutableStateOf(true)
+      }
+      var enableAdminBoundaries by remember {
         mutableStateOf(true)
       }
 
@@ -294,7 +298,7 @@ public class StandardStyleActivity : ComponentActivity() {
                     modifier = Modifier.padding(6.dp),
                     text = "selectedStyle:${
                       if (isStandardSatellite) {
-                        "STND_SATELLITE"
+                        "SATELLITE"
                       } else {
                         "STANDARD"
                       }
@@ -307,41 +311,18 @@ public class StandardStyleActivity : ComponentActivity() {
               ) {
                 FloatingActionButton(
                   modifier = Modifier
-                      .defaultMinSize(
-                          minWidth = ButtonDefaults.MinWidth,
-                          minHeight = ButtonDefaults.MinHeight
-                      )
-                      .padding(end = 4.dp),
-                  onClick = {
-                    if (isStandardSatellite) {
-                      enableRoadsAndTransit = !enableRoadsAndTransit
-                    }
-                  },
-                  shape = RoundedCornerShape(16.dp),
-                  backgroundColor = if (!isStandardSatellite) Color.Gray else MaterialTheme.colors.secondary,
-                ) {
-                  Text(
-                    modifier = Modifier.padding(6.dp),
-                    text = "roadsAndTransit: $enableRoadsAndTransit"
-                  )
-                }
-                FloatingActionButton(
-                  modifier = Modifier
                     .defaultMinSize(
                       minWidth = ButtonDefaults.MinWidth,
                       minHeight = ButtonDefaults.MinHeight
                     ),
                   onClick = {
-                    if (isStandardSatellite) {
-                      enablePedestrianRoads = !enablePedestrianRoads
-                    }
+                    enableAdminBoundaries = !enableAdminBoundaries
                   },
                   shape = RoundedCornerShape(16.dp),
-                  backgroundColor = if (!isStandardSatellite) Color.Gray else MaterialTheme.colors.secondary,
                 ) {
                   Text(
                     modifier = Modifier.padding(6.dp),
-                    text = "pedestrianRoads: $enablePedestrianRoads"
+                    text = "enableAdminBoundaries: $enableAdminBoundaries"
                   )
                 }
               }
@@ -361,22 +342,22 @@ public class StandardStyleActivity : ComponentActivity() {
             {
               if (isStandardSatellite) {
                 MapboxStandardSatelliteStyle(
-                  styleTransition = remember {
-                    transition {
+                  standardSatelliteStyleState = rememberStandardSatelliteStyleState {
+                    styleTransition = transition {
                       duration(1_000)
                       enablePlacementTransitions(true)
                     }
+                    configurationsState.apply {
+                      showPlaceLabels = BooleanValue(enablePlaceLabels)
+                      showRoadLabels = BooleanValue(enableRoadLabels)
+                      showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)
+                      showTransitLabels = BooleanValue(enableTransitLabels)
+                      lightPreset = selectedLightPreset
+                      font = StringValue(selectedFont)
+                      showAdminBoundaries = BooleanValue(enableAdminBoundaries)
+                    }
                   }
-                ) {
-                  showPlaceLabels = BooleanValue(enablePlaceLabels)
-                  showRoadLabels = BooleanValue(enableRoadLabels)
-                  showPointOfInterestLabels = BooleanValue(enablePointOfInterestLabels)
-                  showTransitLabels = BooleanValue(enableTransitLabels)
-                  lightPreset = selectedLightPreset
-                  font = StringValue(selectedFont)
-                  showRoadsAndTransit = BooleanValue(enableRoadsAndTransit)
-                  showPedestrianRoads = BooleanValue(enablePedestrianRoads)
-                }
+                )
               } else {
                 MapboxStandardStyle(
                   standardStyleState = rememberStandardStyleState {
@@ -385,6 +366,10 @@ public class StandardStyleActivity : ComponentActivity() {
                         highlight(true)
                       }
                       return@onBuildingsClicked true
+                    }
+                    interactionsState.onLandmarkIconsClicked { clickedLandmarkIcon, _ ->
+                      println("Feature name: ${clickedLandmarkIcon.name}")
+                      return@onLandmarkIconsClicked true
                     }
                     styleTransition = transition {
                       duration(1_000)
@@ -400,6 +385,7 @@ public class StandardStyleActivity : ComponentActivity() {
                       font = StringValue(selectedFont)
                       theme = selectedTheme
                       show3dObjects = BooleanValue(enable3dObjects)
+                      showAdminBoundaries = BooleanValue(enableAdminBoundaries)
                     }
                   }
                 )

@@ -1,3 +1,5 @@
+// This file is generated and will be overwritten automatically.
+
 package com.mapbox.maps.extension.compose.style.standard
 
 import androidx.compose.runtime.Composable
@@ -298,5 +300,117 @@ public fun MapboxStandardSatelliteStyle(
     standardSatelliteStyleConfigurationState = remember {
       StandardSatelliteStyleConfigurationState()
     }.apply(init)
+  )
+}
+
+/**
+ * The convenient composable function to set a Mapbox Standard Satellite style. to the map, with available slots
+ * and comprehensive config options.
+ *
+ * @param styleImportsContent The style imports to be added to the current style, note layers and annotations shouldn't be added to this block.
+ * @param topSlot The content to be set to the top slot of the Mapbox Standard Satellite style..
+ * @param middleSlot The content to be set to the middle slot of the Mapbox Standard Satellite style..
+ * @param bottomSlot The content to be set to the bottom slot of the Mapbox Standard Satellite style..
+ * @param standardSatelliteStyleState The state holder for the Mapbox Standard Satellite Style.
+ */
+@Composable
+@MapboxStyleComposable
+public fun MapboxStandardSatelliteStyle(
+  styleImportsContent: (@Composable @MapboxStyleImportComposable StyleImportsScope.() -> Unit)? = null,
+  topSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  middleSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  bottomSlot: (@Composable @MapboxMapComposable () -> Unit)? = null,
+  standardSatelliteStyleState: StandardSatelliteStyleState = rememberStandardSatelliteStyleState(),
+) {
+  GenericStyle(
+    style = Style.STANDARD_SATELLITE,
+    styleImportsContent = styleImportsContent,
+    slotsContent = slotsContent {
+      topSlot?.let { slot("top", it) }
+      middleSlot?.let { slot("middle", it) }
+      bottomSlot?.let { slot("bottom", it) }
+    },
+    styleState = rememberStyleState {
+      styleImportsConfig = styleImportsConfig {
+        importConfig(importId = "basemap") {
+          with(standardSatelliteStyleState.configurationsState) {
+            if (lightPreset.notInitial) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_LIGHT_PRESET, lightPreset.value)
+            }
+            if (font.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_FONT, font.value)
+            }
+            if (showPointOfInterestLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_POINT_OF_INTEREST_LABELS, showPointOfInterestLabels.value)
+            }
+            if (showTransitLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_TRANSIT_LABELS, showTransitLabels.value)
+            }
+            if (showPlaceLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_PLACE_LABELS, showPlaceLabels.value)
+            }
+            if (showRoadLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ROAD_LABELS, showRoadLabels.value)
+            }
+            if (showRoadsAndTransit.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ROADS_AND_TRANSIT, showRoadsAndTransit.value)
+            }
+            if (showPedestrianRoads.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_PEDESTRIAN_ROADS, showPedestrianRoads.value)
+            }
+            if (backgroundPointOfInterestLabels.notInitial) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_BACKGROUND_POINT_OF_INTEREST_LABELS, backgroundPointOfInterestLabels.value)
+            }
+            if (colorAdminBoundaries.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_ADMIN_BOUNDARIES, colorAdminBoundaries.value)
+            }
+            if (colorModePointOfInterestLabels.notInitial) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_MODE_POINT_OF_INTEREST_LABELS, colorModePointOfInterestLabels.value)
+            }
+            if (colorMotorways.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_MOTORWAYS, colorMotorways.value)
+            }
+            if (colorPlaceLabelHighlight.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_PLACE_LABEL_HIGHLIGHT, colorPlaceLabelHighlight.value)
+            }
+            if (colorPlaceLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_PLACE_LABELS, colorPlaceLabels.value)
+            }
+            if (colorPlaceLabelSelect.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_PLACE_LABEL_SELECT, colorPlaceLabelSelect.value)
+            }
+            if (colorPointOfInterestLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_POINT_OF_INTEREST_LABELS, colorPointOfInterestLabels.value)
+            }
+            if (colorRoadLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_ROAD_LABELS, colorRoadLabels.value)
+            }
+            if (colorRoads.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_ROADS, colorRoads.value)
+            }
+            if (colorTrunks.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_COLOR_TRUNKS, colorTrunks.value)
+            }
+            if (densityPointOfInterestLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_DENSITY_POINT_OF_INTEREST_LABELS, densityPointOfInterestLabels.value)
+            }
+            if (roadsBrightness.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_ROADS_BRIGHTNESS, roadsBrightness.value)
+            }
+            if (showAdminBoundaries.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_SHOW_ADMIN_BOUNDARIES, showAdminBoundaries.value)
+            }
+          }
+        }
+      }
+      this.projection = standardSatelliteStyleState.projection
+      this.atmosphereState = standardSatelliteStyleState.atmosphereState
+      this.terrainState = standardSatelliteStyleState.terrainState
+      this.lightsState = standardSatelliteStyleState.lightsState
+      this.styleTransition = standardSatelliteStyleState.styleTransition
+      if (standardSatelliteStyleState.interactionsState != null) {
+        this.styleInteractionsState = standardSatelliteStyleState.interactionsState!!
+      }
+    }
   )
 }
