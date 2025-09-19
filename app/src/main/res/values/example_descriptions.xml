@@ -114,4 +114,5 @@
     <string name="description_precipitation">Showcase rain and snow effects.</string>
     <string name="description_color_theme">Showcase color theme.</string>
     <string name="description_elevated_line">Showcase line elevation</string>
+    <string name="description_data_join">Showcase join JSON data with vector tiles and style it.</string>
 </resources>

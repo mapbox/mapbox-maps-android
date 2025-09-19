@@ -116,4 +116,5 @@
     <string name="activity_precipitation">Precipitations example</string>
     <string name="activity_color_theme">Color theme example</string>
     <string name="activity_elevated_line">Elevated line example</string>
+    <string name="activity_join_data">Join local JSON data with vector tiles</string>
 </resources>
