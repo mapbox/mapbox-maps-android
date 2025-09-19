@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.gestures
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -845,7 +844,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       }
     }
 
-    screenHeight = Resources.getSystem().displayMetrics.heightPixels.toDouble()
+    screenHeight = context.resources.displayMetrics.heightPixels.toDouble()
     startZoom = mapCameraManagerDelegate.cameraState.zoom
 
     cancelTransitionsIfRequired()

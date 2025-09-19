@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.viewport
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,10 @@ import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.ImageHolder
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
@@ -41,7 +43,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   private lateinit var viewportButton: Button
   private lateinit var followPuckViewportState: FollowPuckViewportState
   private lateinit var overviewViewportState: OverviewViewportState
-  private val pixelDensity = Resources.getSystem().displayMetrics.density
+  private val pixelDensity by lazy { resources.displayMetrics.density }
   private lateinit var simulateRouteLocationProvider: SimulateRouteLocationProvider
 
   private val overviewPadding: EdgeInsets by lazy {

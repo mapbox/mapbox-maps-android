@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common. 
 * Fixed incorrect positioning of map marker annotations, when coordinates do not change.
+* Fix incorrect display height for zooming gesture on secondary displays.
 
 # 11.15.0 September 11, 2025
 
