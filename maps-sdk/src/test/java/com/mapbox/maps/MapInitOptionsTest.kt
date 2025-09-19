@@ -56,6 +56,7 @@ class MapInitOptionsTest {
       mapboxMapOptions.mapOptions.glyphsRasterizationOptions!!.fontFamily
     )
     assertEquals(1f, mapboxMapOptions.mapOptions.pixelRatio)
+    assertEquals(1f, mapboxMapOptions.mapOptions.scaleFactor)
     assertEquals(
       ConstrainMode.HEIGHT_ONLY,
       mapboxMapOptions.mapOptions.constrainMode
