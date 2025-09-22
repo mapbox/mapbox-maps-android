@@ -157,7 +157,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    mapView = MapView(this, MapInitOptions(this))
+    mapView = MapView(this, MapInitOptions(this, styleUri = Style.TRAFFIC_DAY))
     setContentView(mapView)
 
     lifecycleScope.launch {
@@ -173,7 +173,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
         )
       }
       mapView.mapboxMap.loadStyle(
-        style(Style.STANDARD) {
+        style(Style.TRAFFIC_DAY) {
         // Show the route line on the map
         +geoJsonSource(GEOJSON_SOURCE_ID) {
           geometry(routePoints)

@@ -53,7 +53,7 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
       mapboxMap.setCamera(
         cameraOptions {
           center(Point.fromLngLat(-122.40276277449118, 37.79608281254676))
-          zoom(4.0)
+          zoom(15.7)
           bearing(359.63)
           pitch(60.0)
         }

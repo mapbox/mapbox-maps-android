@@ -29,7 +29,7 @@ public object ExamplesProvider {
     // We use this activity package name in case the `applicationId`/`packageName` is different
     val packageName = ExampleOverviewActivity::class.java.`package`!!.name
     val categoryKey = context.getString(R.string.category)
-    return appPackageInfo.activities.orEmpty().filter { info ->
+    return appPackageInfo.activities.filter { info ->
       info.labelRes != 0 && info.name.startsWith(packageName) && info.name != ExampleOverviewActivity::class.java.name
     }.mapNotNull { info ->
       info.metaData?.getString(categoryKey)?.let {

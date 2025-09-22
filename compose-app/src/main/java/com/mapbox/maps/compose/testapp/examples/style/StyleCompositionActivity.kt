@@ -66,7 +66,7 @@ public class StyleCompositionActivity : ComponentActivity() {
       }
 
       var styleUri by remember {
-        mutableStateOf(Style.STANDARD)
+        mutableStateOf(Style.LIGHT)
       }
 
       var centerLocation by rememberSaveable {

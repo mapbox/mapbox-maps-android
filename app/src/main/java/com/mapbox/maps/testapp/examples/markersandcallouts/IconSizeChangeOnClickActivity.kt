@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -38,7 +37,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
 
     mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      styleExtension = style(Style.STANDARD) {
+      styleExtension = style(Style.DARK) {
         +geoJsonSource("marker-source") {
           featureCollection(
             FeatureCollection.fromFeatures(markerCoordinates.map { Feature.fromGeometry(it) })
@@ -55,7 +54,6 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           iconImage("my-marker-image")
           iconAllowOverlap(true)
           iconOffset(listOf(0.0, -9.0))
-          iconEmissiveStrength(1.0)
         }
         // Add the selected marker source and layer
         +geoJsonSource("selected-marker") {
@@ -67,14 +65,9 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           iconImage("my-marker-image")
           iconAllowOverlap(true)
           iconOffset(listOf(0.0, -9.0))
-          iconEmissiveStrength(1.0)
         }
       }
-    ) {
-      mapboxMap.addOnMapClickListener(this@IconSizeChangeOnClickActivity)
-      mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
-      mapboxMap.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("night"))
-    }
+    ) { mapboxMap.addOnMapClickListener(this@IconSizeChangeOnClickActivity) }
   }
 
   override fun onMapClick(point: Point): Boolean {

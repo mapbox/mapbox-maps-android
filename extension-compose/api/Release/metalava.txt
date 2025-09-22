@@ -959,7 +959,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public androidx.compose.ui.graphics.Color? getLineColor();
     method public String? getLineColorUseTheme();
     method public Double? getLineCrossSlope();
-    method public Double? getLineCutoutFadeWidth();
     method public Double? getLineCutoutOpacity();
     method public Double? getLineCutoutWidth();
     method public java.util.List<java.lang.Double>? getLineDasharray();
@@ -997,7 +996,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineColor(androidx.compose.ui.graphics.Color?);
     method public void setLineColorUseTheme(String?);
     method public void setLineCrossSlope(Double?);
-    method public void setLineCutoutFadeWidth(Double?);
     method public void setLineCutoutOpacity(Double?);
     method public void setLineCutoutWidth(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
@@ -1035,7 +1033,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final androidx.compose.ui.graphics.Color? lineColor;
     property public final String? lineColorUseTheme;
     property public final Double? lineCrossSlope;
-    property public final Double? lineCutoutFadeWidth;
     property public final Double? lineCutoutOpacity;
     property public final Double? lineCutoutWidth;
     property public final java.util.List<java.lang.Double>? lineDasharray;
@@ -2853,8 +2850,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getLineColorTransition();
     method public com.mapbox.maps.extension.compose.style.StringValue getLineColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCrossSlope();
-    method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCutoutFadeWidth();
-    method public com.mapbox.maps.extension.compose.style.Transition getLineCutoutFadeWidthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCutoutOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getLineCutoutOpacityTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCutoutWidth();
@@ -2911,8 +2906,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setLineCrossSlope(com.mapbox.maps.extension.compose.style.DoubleValue);
-    method public void setLineCutoutFadeWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
-    method public void setLineCutoutFadeWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineCutoutOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineCutoutOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineCutoutWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -2969,8 +2962,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition lineColorTransition;
     property public final com.mapbox.maps.extension.compose.style.StringValue lineColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCrossSlope;
-    property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCutoutFadeWidth;
-    property public final com.mapbox.maps.extension.compose.style.Transition lineCutoutFadeWidthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCutoutOpacity;
     property public final com.mapbox.maps.extension.compose.style.Transition lineCutoutOpacityTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCutoutWidth;

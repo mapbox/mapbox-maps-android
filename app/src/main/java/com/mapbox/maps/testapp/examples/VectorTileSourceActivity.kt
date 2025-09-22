@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
@@ -22,21 +21,21 @@ class VectorTileSourceActivity : AppCompatActivity() {
     val binding = ActivityStyleVectorSourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.mapView.mapboxMap.loadStyle(
-      style(Style.STANDARD) {
+      style(Style.LIGHT) {
         +vectorSource("terrain-data") {
           url("mapbox://mapbox.mapbox-terrain-v2")
         }
-        +lineLayer("terrain-data", "terrain-data") {
-          sourceLayer("contour")
-          lineJoin(LineJoin.ROUND)
-          lineCap(LineCap.ROUND)
-          lineColor(Color.parseColor("#ff69b4"))
-          lineWidth(1.9)
-          slot("middle")
-        }
+        +layerAtPosition(
+          lineLayer("terrain-data", "terrain-data") {
+            sourceLayer("contour")
+            lineJoin(LineJoin.ROUND)
+            lineCap(LineCap.ROUND)
+            lineColor(Color.parseColor("#ff69b4"))
+            lineWidth(1.9)
+          },
+          below = "road-label-simple"
+        )
       }
-    ) {
-      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
-    }
+    )
   }
 }

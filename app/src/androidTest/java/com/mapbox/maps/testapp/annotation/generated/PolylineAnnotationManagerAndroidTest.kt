@@ -66,18 +66,6 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun testLineCutoutFadeWidth() {
-    rule.runOnUiThread {
-      val expectedValue = 1.0
-      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-      polylineAnnotationManager.lineCutoutFadeWidth = expectedValue
-      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutFadeWidth)
-      polylineAnnotationManager.lineCutoutFadeWidth = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width").silentUnwrap(), polylineAnnotationManager.lineCutoutFadeWidth)
-    }
-  }
-
-  @Test
   fun testLineCutoutOpacity() {
     rule.runOnUiThread {
       val expectedValue = 1.0

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -45,7 +44,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
 
     mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      styleExtension = style(Style.STANDARD) {
+      styleExtension = style(Style.LIGHT) {
         +geoJsonSource(sourceId) {
           featureCollection(
             FeatureCollection.fromFeatures(
@@ -69,10 +68,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
           iconOffset(listOf(0.0, -9.0))
         }
       }
-    ) {
-      mapboxMap.addOnMapClickListener(this@MapOverlayActivity)
-      mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
-    }
+    ) { mapboxMap.addOnMapClickListener(this@MapOverlayActivity) }
     mapOverlayPlugin = binding.mapView.mapboxOverlay
       .apply {
         registerMapOverlayCoordinatesProvider(provider)

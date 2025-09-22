@@ -19,7 +19,6 @@ import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -263,7 +262,6 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  @Ignore("with robolectric after 4.13 this test fails when run in a class but not separately")
   fun needViewAnnotationSyncMapSynchronized() {
     initRenderThread()
     provideValidSurface()
@@ -291,7 +289,6 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  @Ignore("with robolectric after 4.13 this test fails when run in a class but not separately")
   fun needViewAnnotationSyncMapFixedDelay() {
     initRenderThread()
     provideValidSurface()
@@ -996,7 +993,6 @@ class MapboxRenderThreadTest {
   }
 
   @Test(timeout = 10000) // Added timeout to ensure that if test fails, test does not hang forever.
-  @Ignore("with robolectric after 4.13 this test fails when run in a class but not separately")
   fun newAndroidSurfaceArriveWhenWaitingVsyncTest() {
     initRenderThread()
     val choreographerCallbackDelayMs = 16L

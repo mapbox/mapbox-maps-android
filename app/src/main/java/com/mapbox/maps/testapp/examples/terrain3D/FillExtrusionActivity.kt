@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples.terrain3D
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
@@ -50,7 +49,7 @@ class FillExtrusionActivity : AppCompatActivity() {
     val extrudeFilter = eq(get("extrude"), literal("true"))
 
     mapboxMap.loadStyle(
-      style(style = Style.STANDARD) {
+      style(style = Style.LIGHT) {
         +fillExtrusionLayer("3d-buildings", "composite") {
           sourceLayer("building")
           filter(
@@ -86,7 +85,6 @@ class FillExtrusionActivity : AppCompatActivity() {
         }
       }
     ) {
-      mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
       setupLights3D(it)
     }
   }

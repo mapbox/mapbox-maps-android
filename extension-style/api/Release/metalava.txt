@@ -3083,9 +3083,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineColorUseThemeAsExpression();
     method public Double? getLineCrossSlope();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineCrossSlopeAsExpression();
-    method public Double? getLineCutoutFadeWidth();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineCutoutFadeWidthAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getLineCutoutFadeWidthTransition();
     method public Double? getLineCutoutOpacity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineCutoutOpacityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineCutoutOpacityTransition();
@@ -3184,10 +3181,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression lineColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCrossSlope(double lineCrossSlope);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCrossSlope(com.mapbox.maps.extension.style.expressions.generated.Expression lineCrossSlope);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidth(double lineCutoutFadeWidth);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutFadeWidth);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(double lineCutoutOpacity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutOpacity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3294,9 +3287,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineColorUseThemeAsExpression;
     property public final Double? lineCrossSlope;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineCrossSlopeAsExpression;
-    property public final Double? lineCutoutFadeWidth;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineCutoutFadeWidthAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? lineCutoutFadeWidthTransition;
     property public final Double? lineCutoutOpacity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineCutoutOpacityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineCutoutOpacityTransition;
@@ -3395,9 +3385,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineColorUseThemeAsExpression();
     method public Double? getDefaultLineCrossSlope();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineCrossSlopeAsExpression();
-    method public Double? getDefaultLineCutoutFadeWidth();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineCutoutFadeWidthAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineCutoutFadeWidthTransition();
     method public Double? getDefaultLineCutoutOpacity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineCutoutOpacityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineCutoutOpacityTransition();
@@ -3487,9 +3474,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineColorUseThemeAsExpression;
     property public final Double? defaultLineCrossSlope;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineCrossSlopeAsExpression;
-    property public final Double? defaultLineCutoutFadeWidth;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineCutoutFadeWidthAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineCutoutFadeWidthTransition;
     property public final Double? defaultLineCutoutOpacity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineCutoutOpacityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineCutoutOpacityTransition;
@@ -3587,10 +3571,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression lineColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCrossSlope(double lineCrossSlope);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCrossSlope(com.mapbox.maps.extension.style.expressions.generated.Expression lineCrossSlope);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidth(double lineCutoutFadeWidth = 0.4);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutFadeWidth);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(double lineCutoutOpacity = 0.3);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutOpacity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);

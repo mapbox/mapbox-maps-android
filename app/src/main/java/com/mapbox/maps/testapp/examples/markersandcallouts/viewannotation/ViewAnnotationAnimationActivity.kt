@@ -11,11 +11,11 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationOptions
@@ -49,7 +49,7 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    val mapView = MapView(this, mapInitOptions = MapInitOptions(this, styleUri = Style.LIGHT))
     setContentView(mapView)
 
     lifecycleScope.launch {
@@ -70,7 +70,7 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
       // initialize the mapview
       mapView.mapboxMap.apply {
         loadStyle(
-          style(Style.STANDARD) {
+          style(Style.LIGHT) {
           // source for displaying the route
           +geoJsonSource(SOURCE_ID) {
             featureCollection(featureCollection)
@@ -82,7 +82,6 @@ class ViewAnnotationAnimationActivity : AppCompatActivity() {
           }
         }
         ) {
-          mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
           // center camera around SF airport
           setCamera(
             CameraOptions.Builder()

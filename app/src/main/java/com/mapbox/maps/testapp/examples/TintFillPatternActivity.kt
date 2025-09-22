@@ -69,8 +69,7 @@ class TintFillPatternActivity : AppCompatActivity() {
   }
 
   private fun changeBitmapColor(sourceBitmap: Bitmap, @ColorInt color: Int): Bitmap {
-    val config = sourceBitmap.config ?: return sourceBitmap
-    val resultBitmap: Bitmap = sourceBitmap.copy(config, true)
+    val resultBitmap: Bitmap = sourceBitmap.copy(sourceBitmap.config, true)
     val paint = Paint()
     paint.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
     val canvas = Canvas(resultBitmap)

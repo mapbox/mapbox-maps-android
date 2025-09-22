@@ -2,11 +2,10 @@ package com.mapbox.maps.testapp.examples.style
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.addLayer
+import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
@@ -35,7 +34,7 @@ class ThirdPartyVectorSourceActivity : AppCompatActivity() {
         .build()
     )
 
-    mapboxMap.loadStyle(Style.STANDARD) {
+    mapboxMap.loadStyle(Style.LIGHT) {
       it.addSource(
         vectorSource(SOURCE_ID) {
           tiles(listOf("https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333"))
@@ -43,8 +42,7 @@ class ThirdPartyVectorSourceActivity : AppCompatActivity() {
           maxzoom(14)
         }
       )
-
-      it.addLayer(
+      it.addLayerBelow(
         lineLayer(LAYER_ID, SOURCE_ID) {
           sourceLayer(SOURCE_LAYER_ID)
           lineCap(LineCap.ROUND)
@@ -52,10 +50,9 @@ class ThirdPartyVectorSourceActivity : AppCompatActivity() {
           lineOpacity(0.6)
           lineColor(Expression.rgb(53.0, 175.0, 109.0))
           lineWidth(2.0)
-          slot("middle")
-        }
+        },
+        BELOW_LAYER_ID
       )
-      mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
     }
   }
 
@@ -64,5 +61,6 @@ class ThirdPartyVectorSourceActivity : AppCompatActivity() {
     const val LAYER_ID = SOURCE_ID
     const val TAG = SOURCE_ID
     const val SOURCE_LAYER_ID = "sequence"
+    const val BELOW_LAYER_ID = "road-label-simple"
   }
 }

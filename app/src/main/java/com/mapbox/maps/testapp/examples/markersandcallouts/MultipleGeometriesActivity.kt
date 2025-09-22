@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.eq
@@ -29,13 +28,12 @@ class MultipleGeometriesActivity : AppCompatActivity() {
 
     mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      Style.STANDARD
+      Style.LIGHT
     ) {
       createGeoJsonSource(it)
       addPolygonLayer(it)
       addLineStringLayer(it)
       addPointLayer(it)
-      mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
     }
   }
 

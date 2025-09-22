@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -25,12 +24,8 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var locationPermissionHelper: LocationPermissionHelper
-  private var lastStyleTheme = StyleTheme.DARK
+  private var lastStyleUri = Style.DARK
   private lateinit var binding: ActivityLocationLayerBasicPulsingCircleBinding
-  private enum class StyleTheme {
-    LIGHT,
-    DARK
-  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -50,7 +45,9 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
   private fun onMapReady() {
     mapboxMap.loadStyle(
       Style.STANDARD
-    )
+    ) {
+      lastStyleUri = it.styleURI
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -62,7 +59,7 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.action_map_style_change -> {
-        toggleMapStyle()
+        loadNewStyle()
         return true
       }
       R.id.action_component_disable -> {
@@ -96,32 +93,11 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
     }
   }
 
-  private fun toggleMapStyle() {
-    if (lastStyleTheme == StyleTheme.DARK) {
-      binding.mapView.mapboxMap.setStyleImportConfigProperty(
-        "basemap",
-        "theme",
-        Value.valueOf("monochrome")
-      )
-      binding.mapView.mapboxMap.setStyleImportConfigProperty(
-        "basemap",
-        "lightPreset",
-        Value.valueOf("day")
-      )
-      lastStyleTheme = StyleTheme.LIGHT
-    } else {
-      binding.mapView.mapboxMap.setStyleImportConfigProperty(
-        "basemap",
-        "theme",
-        Value.valueOf("monochrome")
-      )
-      binding.mapView.mapboxMap.setStyleImportConfigProperty(
-        "basemap",
-        "lightPreset",
-        Value.valueOf("night")
-      )
-      lastStyleTheme = StyleTheme.DARK
-    }
+  private fun loadNewStyle() {
+    val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
+    mapboxMap.loadStyle(
+      styleUrl
+    ) { lastStyleUri = styleUrl }
   }
 
   override fun onRequestPermissionsResult(

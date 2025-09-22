@@ -160,7 +160,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     }
 
     private StyleContract.StyleExtension createStyle() {
-        StyleExtensionImpl.Builder builder = new StyleExtensionImpl.Builder(Style.STANDARD);
+        StyleExtensionImpl.Builder builder = new StyleExtensionImpl.Builder(Style.TRAFFIC_DAY);
 
         // Add a image source
         builder.addSource(

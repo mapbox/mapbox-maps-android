@@ -1017,7 +1017,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineColorString ()Ljava/lang/String;
 	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineCrossSlope ()Ljava/lang/Double;
-	public final fun getLineCutoutFadeWidth ()Ljava/lang/Double;
 	public final fun getLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getLineCutoutWidth ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
@@ -1060,7 +1059,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineColorString (Ljava/lang/String;)V
 	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineCrossSlope (Ljava/lang/Double;)V
-	public final fun setLineCutoutFadeWidth (Ljava/lang/Double;)V
 	public final fun setLineCutoutOpacity (Ljava/lang/Double;)V
 	public final fun setLineCutoutWidth (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V

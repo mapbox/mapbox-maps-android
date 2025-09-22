@@ -6,18 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.MapboxOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.ConstrainMode
-import com.mapbox.maps.GlyphsRasterizationMode
-import com.mapbox.maps.GlyphsRasterizationOptions
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
-import com.mapbox.maps.TileStoreUsageMode
-import com.mapbox.maps.applyDefaultParams
-import com.mapbox.maps.mapsOptions
-import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.*
+import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
 import com.mapbox.maps.testapp.databinding.ActivityMapViewCustomizationBinding
@@ -49,8 +39,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     // all options provided in xml file - so we just load style
-    // But you can also add your style to the map layout with xml attribute `app:mapbox_styleUri="mapbox://styles/mapbox/standard"`
-    binding.mapView.mapboxMap.loadStyle(Style.STANDARD)
+    // But you can also add your style to the map layout with xml attribute `app:mapbox_styleUri="mapbox://styles/mapbox/dark-v11"`
+    binding.mapView.mapboxMap.loadStyle(Style.DARK)
     configureMapViewFromCode()
 
     // Reset to original state
@@ -91,7 +81,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
     // set MapInitOptions together with desired style
     val mapInitOptions =
-      MapInitOptions(this, mapOptions, plugins, initialCameraOptions, true, Style.STANDARD_SATELLITE)
+      MapInitOptions(this, mapOptions, plugins, initialCameraOptions, true, Style.SATELLITE)
 
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapInitOptions)

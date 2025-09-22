@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import android.view.MotionEvent
-import androidx.test.core.app.ApplicationProvider
 import com.mapbox.maps.debugoptions.DebugOptionsController
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
@@ -50,8 +49,8 @@ class MapViewTest {
     every { mapController.lifecycleScope } returns testScope
 
     mapView = MapView(
-      ApplicationProvider.getApplicationContext(),
-      null,
+      mockk(relaxed = true),
+      mockk(relaxed = true),
       mapController,
     )
     mockkStatic("com.mapbox.maps.MapboxLogger")

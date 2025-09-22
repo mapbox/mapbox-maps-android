@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.getLayer
@@ -22,7 +21,7 @@ class ShowHideLayersActivity : AppCompatActivity() {
     val binding = ActivityShowHideLayersBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.mapView.mapboxMap.loadStyle(
-      style(Style.STANDARD) {
+      style(Style.LIGHT) {
         +vectorSource(SOURCE_ID) {
           url(SOURCE_URL)
         }
@@ -33,9 +32,7 @@ class ShowHideLayersActivity : AppCompatActivity() {
           circleColor(Color.argb(255, 55, 148, 179))
         }
       }
-    ) {
-      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
-    }
+    )
     binding.fabLayerToggle.setOnClickListener {
       binding.mapView.mapboxMap.getStyle {
         it.getLayer(LAYER_ID)?.let { layer ->

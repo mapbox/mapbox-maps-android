@@ -27,7 +27,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      styleExtension = style(Style.STANDARD_SATELLITE) {
+      styleExtension = style(Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
           url(TERRAIN_URL_TILE_RESOURCE)
           // 514 specifies padded DEM tile and provides better performance than 512 tiles.

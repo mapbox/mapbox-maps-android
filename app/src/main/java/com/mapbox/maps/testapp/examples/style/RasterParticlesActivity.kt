@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.style
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
@@ -37,7 +36,7 @@ class RasterParticlesActivity : AppCompatActivity() {
     mapView.gestures.doubleTapToZoomInEnabled = false
     mapView.gestures.doubleTouchToZoomOutEnabled = false
     mapView.mapboxMap.loadStyle(
-      styleExtension = style(Style.STANDARD) {
+      styleExtension = style(Style.DARK) {
         +rasterArraySource(RASTER_ARRAY_SOURCE_ID) {
           url(RASTER_ARRAY_TILE_JSON_URL)
           tileSize(512)
@@ -173,10 +172,7 @@ class RasterParticlesActivity : AppCompatActivity() {
           )
         }
       }
-    ) {
-      mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
-      mapView.mapboxMap.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("night"))
-    }
+    )
   }
 
   private companion object {

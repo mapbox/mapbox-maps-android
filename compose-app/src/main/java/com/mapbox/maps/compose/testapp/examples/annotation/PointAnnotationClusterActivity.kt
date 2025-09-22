@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -25,9 +26,7 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
-import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
-import com.mapbox.maps.extension.compose.style.standard.ThemeValue
-import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
+import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
@@ -65,13 +64,7 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
               }
             },
             style = {
-              MapboxStandardStyle(
-                standardStyleState = rememberStandardStyleState {
-                  configurationsState.apply {
-                    theme = ThemeValue.MONOCHROME
-                  }
-                }
-              )
+              MapStyle(style = Style.LIGHT)
             }
           ) {
             PointAnnotationGroup(

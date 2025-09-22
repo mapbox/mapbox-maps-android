@@ -14,7 +14,6 @@ import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.RouteOptions
-import com.mapbox.bindgen.Value
 import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.Feature
@@ -28,6 +27,7 @@ import com.mapbox.maps.coroutine.awaitCameraForCoordinates
 import com.mapbox.maps.coroutine.awaitStyle
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.addLayer
+import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
@@ -71,10 +71,9 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     binding = ActivityDdsMovingIconWithTrailingLineBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.mapView.mapboxMap.loadStyle(
-      Style.STANDARD
+      Style.LIGHT
     ) { // Use the Mapbox Directions API to get a directions route
       getRoute()
-      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
     }
   }
 
@@ -245,14 +244,14 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
    * this LineLayer doesn't block the street name.
    */
   private fun initDotLinePath(style: Style) {
-    style.addLayer(
+    style.addLayerBelow(
       lineLayer(LINE_LAYER_ID, LINE_SOURCE_ID) {
         lineColor("#F13C6E")
         lineCap(LineCap.ROUND)
         lineJoin(LineJoin.ROUND)
         lineWidth(4.0)
-        slot("middle")
-      }
+      },
+      below = "road-label-simple"
     )
   }
 

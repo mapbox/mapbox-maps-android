@@ -123,7 +123,7 @@ class SpinningGlobeActivity : AppCompatActivity() {
 
     mapboxMap = mapView.mapboxMap.apply {
       loadStyle(
-        style(Style.STANDARD_SATELLITE) {
+        style(Style.SATELLITE) {
           +atmosphere { }
           +projection(ProjectionName.GLOBE)
         }

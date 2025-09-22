@@ -1,6 +1,6 @@
 package com.mapbox.maps.testapp.examples.terrain3D
 
-import android.animation.TimeAnimator
+import android.animation.*
 import android.graphics.Color.rgb
 import android.os.Bundle
 import android.view.Window
@@ -13,15 +13,9 @@ import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.image.image
-import com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer
-import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
-import com.mapbox.maps.extension.style.layers.generated.lineLayer
-import com.mapbox.maps.extension.style.layers.generated.locationIndicatorLayer
+import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.addSource
@@ -67,7 +61,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
 
     // load satellite style and add terrain with a line layer to visualize the route
     mapboxMap.loadStyle(
-      style(style = Style.STANDARD_SATELLITE) {
+      style(style = Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
           url(TERRAIN_URL_TILE_RESOURCE)
           // 514 specifies padded DEM tile and provides better performance than 512 tiles.
@@ -76,11 +70,13 @@ class SantaCatalinaActivity : AppCompatActivity() {
         +terrain(SOURCE) {
           exaggeration(TERRAIN_EXEGERATION)
         }
-        +lineLayer(LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
-          lineColor(rgb(255, 79, 60))
-          lineWidth(5.0)
-          slot("middle")
-        }
+        +layerAtPosition(
+          lineLayer(LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
+            lineColor(rgb(255, 79, 60))
+            lineWidth(5.0)
+          },
+          above = LAYER_ABOVE_ID
+        )
         +locationIndicatorLayer(LOCATION_LAYER_ID) {
           topImage(FOREGROUND_ICON)
           bearingImage(BACKGROUND_ICON)
@@ -250,6 +246,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
     private const val TERRAIN_EXEGERATION = 1.7
     private const val FOREGROUND_ICON = "mapbox-location-icon"
     private const val BACKGROUND_ICON = "mapbox-location-stroke-icon"
+    private const val LAYER_ABOVE_ID = "bridge-motorway-trunk-2"
     private const val LAYER_ROAD_ID = "road-label"
 
     // Camera animation constants

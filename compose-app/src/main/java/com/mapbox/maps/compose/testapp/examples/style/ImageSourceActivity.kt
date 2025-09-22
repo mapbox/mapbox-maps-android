@@ -10,20 +10,17 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.res.imageResource
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxDelicateApi
+import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.extension.compose.style.PointListValue
 import com.mapbox.maps.extension.compose.style.layers.generated.RasterLayer
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberImageSourceState
-import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
-import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
-import com.mapbox.maps.extension.compose.style.standard.ThemeValue
-import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
@@ -49,14 +46,7 @@ public class ImageSourceActivity : ComponentActivity() {
               }
             },
             style = {
-              MapboxStandardStyle(
-                standardStyleState = rememberStandardStyleState {
-                  configurationsState.apply {
-                    theme = ThemeValue.MONOCHROME
-                    lightPreset = LightPresetValue.NIGHT
-                  }
-                }
-              )
+              MapStyle(style = Style.DARK)
             }
           ) {
             @OptIn(MapboxDelicateApi::class)
@@ -74,9 +64,7 @@ public class ImageSourceActivity : ComponentActivity() {
                   Point.fromLngLat(-80.11725, 25.76795)
                 )
               }
-            ) {
-              rasterEmissiveStrength = DoubleValue(1.0)
-            }
+            )
           }
         }
       }

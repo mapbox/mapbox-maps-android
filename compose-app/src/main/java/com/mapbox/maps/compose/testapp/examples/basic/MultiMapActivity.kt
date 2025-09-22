@@ -15,16 +15,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.mapbox.geojson.Point
+import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.ViewAnnotation
-import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
-import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
-import com.mapbox.maps.extension.compose.style.standard.ThemeValue
-import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
+import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import kotlinx.coroutines.delay
@@ -66,14 +64,7 @@ public class MultiMapActivity : ComponentActivity() {
                 }
               },
               style = {
-                MapboxStandardStyle(
-                  standardStyleState = rememberStandardStyleState {
-                    configurationsState.apply {
-                      theme = ThemeValue.MONOCHROME
-                      lightPreset = LightPresetValue.NIGHT
-                    }
-                  }
-                )
+                MapStyle(style = Style.DARK)
               }
             ) {
               viewAnnotationList1.forEachIndexed { index, point ->
@@ -98,13 +89,7 @@ public class MultiMapActivity : ComponentActivity() {
                 }
               },
               style = {
-                MapboxStandardStyle(
-                  standardStyleState = rememberStandardStyleState {
-                    configurationsState.apply {
-                      theme = ThemeValue.MONOCHROME
-                    }
-                  }
-                )
+                MapStyle(style = Style.LIGHT)
               }
             ) {
               viewAnnotationList2.forEachIndexed { index, point ->

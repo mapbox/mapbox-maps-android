@@ -35,8 +35,6 @@ public class LineLayerState
 private constructor(
   initialLineCap: LineCapValue,
   initialLineCrossSlope: DoubleValue,
-  initialLineCutoutFadeWidth: DoubleValue,
-  initialLineCutoutFadeWidthTransition: Transition,
   initialLineCutoutOpacity: DoubleValue,
   initialLineCutoutOpacityTransition: Transition,
   initialLineCutoutWidth: DoubleValue,
@@ -99,8 +97,6 @@ private constructor(
   public constructor() : this(
     initialLineCap = LineCapValue.INITIAL,
     initialLineCrossSlope = DoubleValue.INITIAL,
-    initialLineCutoutFadeWidth = DoubleValue.INITIAL,
-    initialLineCutoutFadeWidthTransition = Transition.INITIAL,
     initialLineCutoutOpacity = DoubleValue.INITIAL,
     initialLineCutoutOpacityTransition = Transition.INITIAL,
     initialLineCutoutWidth = DoubleValue.INITIAL,
@@ -176,22 +172,6 @@ private constructor(
    */
   @MapboxExperimental
   public var lineCrossSlope: DoubleValue by lineCrossSlopeState
-
-  @MapboxExperimental
-  private val lineCutoutFadeWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutFadeWidth)
-  /**
-   *  The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
-   */
-  @MapboxExperimental
-  public var lineCutoutFadeWidth: DoubleValue by lineCutoutFadeWidthState
-
-  @MapboxExperimental
-  private val lineCutoutFadeWidthTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutFadeWidthTransition)
-  /**
-   *  Defines the transition of [lineCutoutFadeWidth].
-   */
-  @MapboxExperimental
-  public var lineCutoutFadeWidthTransition: Transition by lineCutoutFadeWidthTransitionState
 
   @MapboxExperimental
   private val lineCutoutOpacityState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutOpacity)
@@ -544,8 +524,6 @@ private constructor(
   internal fun UpdateProperties(layerNode: LayerNode) {
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCapState, "line-cap")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCrossSlopeState, "line-cross-slope")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutFadeWidthState, "line-cutout-fade-width")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutFadeWidthTransitionState, "line-cutout-fade-width-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityState, "line-cutout-opacity")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityTransitionState, "line-cutout-opacity-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthState, "line-cutout-width")

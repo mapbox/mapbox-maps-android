@@ -182,7 +182,7 @@ public class StyleImportsActivity : ComponentActivity() {
                   if (showSatelliteImport) {
                     StyleImport(
                       importId = SATELLITE_STYLE_IMPORT_ID,
-                      style = Style.STANDARD_SATELLITE,
+                      style = Style.SATELLITE,
                       styleImportState = rememberStyleImportState()
                     )
                   }

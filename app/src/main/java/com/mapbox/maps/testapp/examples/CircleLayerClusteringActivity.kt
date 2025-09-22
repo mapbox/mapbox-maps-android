@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -42,7 +41,7 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     val mapboxMap = mapView.mapboxMap
 
     mapboxMap.loadStyle(
-      styleExtension = style(Style.STANDARD) {
+      styleExtension = style(Style.LIGHT) {
         +transition {
             duration(0)
             delay(0)
@@ -56,7 +55,6 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
             .zoom(3.0)
             .build()
         )
-        mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
 
         addClusteredGeoJsonSource(it)
 

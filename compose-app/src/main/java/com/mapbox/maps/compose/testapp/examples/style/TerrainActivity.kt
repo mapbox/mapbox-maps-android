@@ -105,7 +105,7 @@ public class TerrainActivity : ComponentActivity() {
             },
             style = {
               GenericStyle(
-                style = Style.STANDARD_SATELLITE,
+                style = Style.SATELLITE_STREETS,
                 styleState = rememberStyleState {
                   terrainState = currentTerrainState
                 },

@@ -35,7 +35,7 @@ class GlobeFlyToActivity : AppCompatActivity(), OnMapClickListener {
     setContentView(mapView)
     mapboxMap = mapView.mapboxMap
     mapboxMap.loadStyle(
-      style(Style.STANDARD_SATELLITE) {
+      style(Style.SATELLITE_STREETS) {
         +projection(ProjectionName.GLOBE)
         +atmosphere {
           color(rgb(220, 159, 159)) // Pink fog / lower atmosphere
