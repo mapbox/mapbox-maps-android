@@ -38,7 +38,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
         .build()
     )
     binding.mapView.mapboxMap.loadStyle(
-      styleExtension = style(Style.OUTDOORS) {
+      styleExtension = style(Style.STANDARD) {
         +skyLayer("sky") {
           skyType(SkyType.GRADIENT)
           skyGradient(

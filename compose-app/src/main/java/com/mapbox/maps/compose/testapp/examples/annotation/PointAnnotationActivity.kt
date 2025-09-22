@@ -17,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
@@ -26,7 +25,9 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.compose.annotation.rememberIconImage
-import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.ThemeValue
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.logD
 
 /**
@@ -80,7 +81,13 @@ public class PointAnnotationActivity : ComponentActivity() {
               }
             },
             style = {
-              MapStyle(style = Style.LIGHT)
+              MapboxStandardStyle(
+                standardStyleState = rememberStandardStyleState {
+                  configurationsState.apply {
+                    theme = ThemeValue.MONOCHROME
+                  }
+                }
+              )
             }
           ) {
             val marker =

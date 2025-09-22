@@ -80,8 +80,7 @@ class ViewAnnotationShowcaseActivity :
         addOnMapLongClickListener(this@ViewAnnotationShowcaseActivity)
         binding.fabStyleToggle.setOnClickListener {
           when (style?.styleURI) {
-            Style.STANDARD -> loadStyle(prepareStyle(Style.SATELLITE_STREETS, bitmap))
-            Style.SATELLITE_STREETS -> loadStyle(prepareStyle(Style.STANDARD_SATELLITE, bitmap))
+            Style.STANDARD -> loadStyle(prepareStyle(Style.STANDARD_SATELLITE, bitmap))
             Style.STANDARD_SATELLITE -> loadStyle(prepareStyle(Style.STANDARD, bitmap))
           }
         }
@@ -116,7 +115,7 @@ class ViewAnnotationShowcaseActivity :
     +geoJsonSource(SOURCE_ID) {
       featureCollection(FeatureCollection.fromFeatures(pointList))
     }
-    if (styleUri == Style.SATELLITE_STREETS) {
+    if (styleUri == Style.STANDARD_SATELLITE) {
       +rasterDemSource(TERRAIN_SOURCE) {
         url(TERRAIN_URL_TILE_RESOURCE)
       }

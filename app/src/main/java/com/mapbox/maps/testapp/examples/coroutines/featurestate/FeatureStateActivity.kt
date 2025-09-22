@@ -180,7 +180,7 @@ class FeatureStateActivity : AppCompatActivity() {
     e.toString()
   }
 
-  private fun createStyle() = style(style = Style.TRAFFIC_DAY) {
+  private fun createStyle() = style(style = Style.STANDARD) {
     +geoJsonSource(id = SOURCE_ID) {
       data(GEOJSON_URL)
       cluster(false)

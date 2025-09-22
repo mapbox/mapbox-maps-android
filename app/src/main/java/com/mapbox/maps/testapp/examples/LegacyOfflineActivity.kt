@@ -108,6 +108,6 @@ class LegacyOfflineActivity : AppCompatActivity() {
     private const val TAG = "Offline"
     private const val zoom = 16.0
     private val point: Point = Point.fromLngLat(57.818901, 20.071357)
-    private const val styleUrl = Style.SATELLITE
+    private const val styleUrl = Style.STANDARD_SATELLITE
   }
 }

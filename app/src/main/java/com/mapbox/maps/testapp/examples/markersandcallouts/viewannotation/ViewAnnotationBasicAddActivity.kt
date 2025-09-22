@@ -10,9 +10,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.animation.flyTo
-import com.mapbox.maps.plugin.gestures.*
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
@@ -47,8 +49,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
         addOnMapClickListener(this@ViewAnnotationBasicAddActivity)
         binding.fabStyleToggle.setOnClickListener {
           when (style?.styleURI) {
-            Style.STANDARD -> loadStyle(Style.SATELLITE_STREETS)
-            Style.SATELLITE_STREETS -> loadStyle(Style.STANDARD_SATELLITE)
+            Style.STANDARD -> loadStyle(Style.STANDARD_SATELLITE)
             Style.STANDARD_SATELLITE -> loadStyle(Style.STANDARD)
           }
         }

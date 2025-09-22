@@ -87,13 +87,13 @@ class OfflineActivity : AppCompatActivity() {
     OfflineSwitch.getInstance().isMapboxStackConnected = false
     logInfoMessage("Mapbox network stack disabled.")
     lifecycleScope.launch {
-      updateButton("VIEW SATELLITE STREET MAP") {
+      updateButton("VIEW STANDARD SATELLITE MAP") {
         val context = this@OfflineActivity
         // create a Mapbox MapView
         // Note that the MapView will use the current tile store set in MapboxOptions.mapsOptions.tileStore
         // It must be the same TileStore that is used to create the tile regions. (i.e. the
         // tileStorePath must be consistent).
-        val mapView = MapView(context, MapInitOptions(context, styleUri = Style.SATELLITE_STREETS))
+        val mapView = MapView(context, MapInitOptions(context, styleUri = Style.STANDARD_SATELLITE))
         binding.container.addView(mapView)
 
         mapView.mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
@@ -168,15 +168,15 @@ class OfflineActivity : AppCompatActivity() {
     // the data eviction algorithm and are not considered when calculating the disk cache size.
     cancelables.add(
       offlineManager.loadStylePack(
-        Style.SATELLITE_STREETS,
+        Style.STANDARD_SATELLITE,
         // Build Style pack load options
         StylePackLoadOptions.Builder()
           .glyphsRasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
-          .metadata(Value(STYLE_PACK_SATELLITE_STREET_METADATA))
+          .metadata(Value(STYLE_PACK_STANDARD_SATELLITE_METADATA))
           .build(),
         { progress ->
           // Update the download progress to UI
-          updateSatelliteStreetStylePackDownloadProgress(
+          updateSatelliteStandardStylePackDownloadProgress(
             progress.completedResourceCount,
             progress.requiredResourceCount,
             "StylePackLoadProgress: $progress"
@@ -253,7 +253,7 @@ class OfflineActivity : AppCompatActivity() {
     val tilesetDescriptors = listOf(
       offlineManager.createTilesetDescriptor(
         TilesetDescriptorOptions.Builder()
-          .styleURI(Style.SATELLITE_STREETS)
+          .styleURI(Style.STANDARD_SATELLITE)
           .pixelRatio(resources.displayMetrics.density)
           .minZoom(0)
           .maxZoom(16)
@@ -309,10 +309,10 @@ class OfflineActivity : AppCompatActivity() {
     prepareCancelButton()
   }
 
-  private fun allResourcesDownloadLoaded(): Boolean = binding.satelliteStreetsStylePackDownloadProgress.max > 0 &&
+  private fun allResourcesDownloadLoaded(): Boolean = binding.satelliteStandardStylePackDownloadProgress.max > 0 &&
     binding.standardStylePackDownloadProgress.max > 0 &&
     binding.tilePackDownloadProgress.max > 0 &&
-    binding.satelliteStreetsStylePackDownloadProgress.progress == binding.satelliteStreetsStylePackDownloadProgress.max &&
+    binding.satelliteStandardStylePackDownloadProgress.progress == binding.satelliteStandardStylePackDownloadProgress.max &&
     binding.standardStylePackDownloadProgress.progress == binding.standardStylePackDownloadProgress.max &&
     binding.tilePackDownloadProgress.progress == binding.tilePackDownloadProgress.max
 
@@ -346,7 +346,7 @@ class OfflineActivity : AppCompatActivity() {
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
     // not a part of the existing style pack. The resources still exists as disk cache.
-    offlineManager.removeStylePack(Style.SATELLITE_STREETS)
+    offlineManager.removeStylePack(Style.STANDARD_SATELLITE)
     offlineManager.removeStylePack(Style.STANDARD)
 
     MapboxMap.clearData {
@@ -365,14 +365,14 @@ class OfflineActivity : AppCompatActivity() {
     }
 
     // Reset progressbar.
-    updateSatelliteStreetStylePackDownloadProgress(0, 0)
+    updateSatelliteStandardStylePackDownloadProgress(0, 0)
     updateStandardStylePackDownloadProgress(0, 0)
     updateTileRegionDownloadProgress(0, 0)
   }
 
-  private fun updateSatelliteStreetStylePackDownloadProgress(progress: Long, max: Long, message: String? = null) {
-    binding.satelliteStreetsStylePackDownloadProgress.max = max.toInt()
-    binding.satelliteStreetsStylePackDownloadProgress.progress = progress.toInt()
+  private fun updateSatelliteStandardStylePackDownloadProgress(progress: Long, max: Long, message: String? = null) {
+    binding.satelliteStandardStylePackDownloadProgress.max = max.toInt()
+    binding.satelliteStandardStylePackDownloadProgress.progress = progress.toInt()
     message?.let {
       offlineLogsAdapter.addLog(OfflineLog.StylePackProgress(it))
     }
@@ -476,7 +476,7 @@ class OfflineActivity : AppCompatActivity() {
     private const val ZOOM = 12.0
     private val TOKYO = Point.fromLngLat(139.769305, 35.682027)
     private const val TILE_REGION_ID = "myTileRegion"
-    private const val STYLE_PACK_SATELLITE_STREET_METADATA = "my-satellite-street-style-pack"
+    private const val STYLE_PACK_STANDARD_SATELLITE_METADATA = "my-standard-satellite-style-pack"
     private const val STYLE_PACK_STANDARD_METADATA = "my-standard-style-pack"
     private const val TILE_REGION_METADATA = "my-offline-region"
   }

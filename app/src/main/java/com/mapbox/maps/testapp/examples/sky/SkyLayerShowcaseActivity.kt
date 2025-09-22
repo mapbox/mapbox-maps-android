@@ -50,7 +50,7 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
     setContentView(binding.root)
     applyControls()
     binding.mapView.mapboxMap.loadStyle(
-      styleExtension = style(Style.SATELLITE_STREETS) {
+      styleExtension = style(Style.STANDARD_SATELLITE) {
         +skyLayer(SKY_LAYER) {
           skyType(skyType)
           when (skyType) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
@@ -30,16 +31,14 @@ class DrawPolygonActivity : AppCompatActivity() {
       START_CAMERA_POSITION
     )
     binding.mapView.mapboxMap.loadStyle(
-      style(style = Style.LIGHT) {
+      style(style = Style.STANDARD) {
         +geoJsonSource(SOURCE_ID) {
           data(SOURCE_URL)
         }
-        +layerAtPosition(
-          fillLayer(LAYER_ID, SOURCE_ID) {
-            fillColor(Color.parseColor("#0080ff")).fillOpacity(0.5)
-          },
-          below = SETTLEMENT_LABEL
-        )
+        +fillLayer(LAYER_ID, SOURCE_ID) {
+          fillColor(Color.parseColor("#0080ff")).fillOpacity(0.5)
+          slot("middle")
+        }
         +lineLayer(
           TOP_LAYER_ID, SOURCE_ID
         ) {
@@ -47,7 +46,9 @@ class DrawPolygonActivity : AppCompatActivity() {
           lineWidth(3.0)
         }
       }
-    )
+    ) {
+      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
+    }
     binding.patternFab.setOnClickListener {
       binding.mapView.mapboxMap.getStyle { style ->
         val bitmap = ContextCompat.getDrawable(this@DrawPolygonActivity, R.drawable.pattern)

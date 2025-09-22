@@ -5,7 +5,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.CustomLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.customLayer
@@ -28,14 +30,11 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      style(Style.MAPBOX_STREETS) {
-        +layerAtPosition(
-          customLayer(
-            layerId = CUSTOM_LAYER_ID,
-            host = TriangleCustomLayer()
-          ),
-          below = "building"
-        )
+      style(Style.STANDARD) {
+        +customLayer(
+          layerId = CUSTOM_LAYER_ID,
+          host = TriangleCustomLayer()
+        ).slot("middle")
         // triangle is floating when using default ProjectionName.GLOBE
         +projection(ProjectionName.MERCATOR)
       }

@@ -2,11 +2,11 @@ package com.mapbox.maps.testapp.examples.globe
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
-import com.mapbox.maps.extension.style.layers.addLayerAbove
-import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.HeatmapLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
@@ -34,19 +34,21 @@ class HeatmapLayerGlobeActivity : AppCompatActivity() {
 
     mapboxMap = binding.mapView.mapboxMap.apply {
       loadStyle(
-        style(Style.DARK) {
+        style(Style.STANDARD) {
           +projection(ProjectionName.GLOBE)
         }
       ) { style ->
         addRuntimeLayers(style)
+        mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
+        mapboxMap.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("night"))
       }
     }
   }
 
   private fun addRuntimeLayers(style: Style) {
     style.addSource(createEarthquakeSource())
-    style.addLayerAbove(createHeatmapLayer(), "waterway-label")
-    style.addLayerBelow(createCircleLayer(), HEATMAP_LAYER_ID)
+    style.addLayer(createHeatmapLayer())
+    style.addLayer(createCircleLayer())
   }
 
   private fun createEarthquakeSource(): GeoJsonSource {
@@ -155,6 +157,7 @@ class HeatmapLayerGlobeActivity : AppCompatActivity() {
           }
         }
       )
+      slot("middle")
     }
   }
 
@@ -245,6 +248,7 @@ class HeatmapLayerGlobeActivity : AppCompatActivity() {
       )
       circleStrokeColor("white")
       circleStrokeWidth(0.1)
+      slot("middle")
     }
   }
 

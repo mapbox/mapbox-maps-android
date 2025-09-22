@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
@@ -37,7 +38,7 @@ class MultiDisplayActivity : AppCompatActivity() {
     binding = ActivityMultiDisplayBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.mapView.mapboxMap.loadStyle(
-      style(Style.DARK) {
+      style(Style.STANDARD) {
         +image(
           IMAGE_ID,
           ContextCompat.getDrawable(
@@ -53,7 +54,10 @@ class MultiDisplayActivity : AppCompatActivity() {
           iconAllowOverlap(true)
         }
       }
-    )
+    ) {
+      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
+      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("night"))
+    }
 
     binding.displayOnSecondDisplayButton.setOnClickListener {
       displayMapInSecondaryScreen()

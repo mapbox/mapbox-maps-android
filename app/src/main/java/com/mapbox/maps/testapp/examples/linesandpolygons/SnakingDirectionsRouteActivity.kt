@@ -11,6 +11,7 @@ import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.LegStep
 import com.mapbox.api.directions.v5.models.RouteOptions
+import com.mapbox.bindgen.Value
 import com.mapbox.common.MapboxOptions
 import com.mapbox.core.constants.Constants.PRECISION_5
 import com.mapbox.geojson.Feature
@@ -50,7 +51,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     binding.mapView.mapboxMap.loadStyle(
-      style(Style.LIGHT) {
+      style(Style.STANDARD) {
         +image(
           ICON_ID,
           ContextCompat.getDrawable(
@@ -87,7 +88,10 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
           below = LAYER_ID
         )
       }
-    ) { requestDirectionRoute() }
+    ) {
+      requestDirectionRoute()
+      binding.mapView.mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
+    }
   }
 
   /**

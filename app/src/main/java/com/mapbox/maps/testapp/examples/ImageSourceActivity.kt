@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
@@ -22,7 +23,7 @@ class ImageSourceActivity : AppCompatActivity() {
     val map = binding.mapView.mapboxMap
 
     map.loadStyle(
-      style(style = Style.DARK) {
+      style(style = Style.STANDARD) {
         +imageSource(ID_IMAGE_SOURCE) {
           coordinates(
             listOf(
@@ -33,11 +34,15 @@ class ImageSourceActivity : AppCompatActivity() {
             )
           )
         }
-        +rasterLayer(ID_IMAGE_LAYER, ID_IMAGE_SOURCE) {}
+        +rasterLayer(ID_IMAGE_LAYER, ID_IMAGE_SOURCE) {
+          rasterEmissiveStrength(1.0)
+        }
       }
     ) {
       val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
       imageSource.updateImage(bitmapFromDrawableRes(R.drawable.miami_beach))
+      map.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
+      map.setStyleImportConfigProperty("basemap", "lightPreset", Value.valueOf("night"))
     }
   }
 

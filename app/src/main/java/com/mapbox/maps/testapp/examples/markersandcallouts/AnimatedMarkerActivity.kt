@@ -42,7 +42,7 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
 
     val mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      style(Style.SATELLITE_STREETS) {
+      style(Style.STANDARD_SATELLITE) {
         +image(
           "marker_icon",
           ContextCompat.getDrawable(this@AnimatedMarkerActivity, R.drawable.ic_red_marker)!!.toBitmap()

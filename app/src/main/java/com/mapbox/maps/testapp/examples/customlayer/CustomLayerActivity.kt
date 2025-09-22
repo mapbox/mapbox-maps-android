@@ -5,10 +5,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.CustomLayer
-import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.customLayer
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
@@ -27,14 +28,11 @@ class CustomLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
     mapboxMap = binding.mapView.mapboxMap
     mapboxMap.loadStyle(
-      style(Style.MAPBOX_STREETS) {
-        +layerAtPosition(
-          customLayer(
-            layerId = CUSTOM_LAYER_ID,
-            host = ExampleCustomLayer()
-          ),
-          below = "building"
-        )
+      style(Style.STANDARD) {
+        +customLayer(
+          layerId = CUSTOM_LAYER_ID,
+          host = ExampleCustomLayer()
+        ).slot("top")
       }
     ) {
       mapboxMap.setCamera(
@@ -61,9 +59,8 @@ class CustomLayerActivity : AppCompatActivity() {
         style.removeStyleLayer(CUSTOM_LAYER_ID)
         binding.fab.setImageResource(R.drawable.ic_layers)
       } else {
-        style.addLayerBelow(
-          CustomLayer(CUSTOM_LAYER_ID, ExampleCustomLayer()),
-          below = "building"
+        style.addLayer(
+          CustomLayer(CUSTOM_LAYER_ID, ExampleCustomLayer()).slot("bottom")
         )
         binding.fab.setImageResource(R.drawable.ic_layers_clear)
       }

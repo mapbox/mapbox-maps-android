@@ -17,13 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
-import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.ThemeValue
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 
 /**
  * Example to showcase usage of PolygonAnnotation with Jetpack Compose.
@@ -58,7 +59,13 @@ public class PolygonAnnotationActivity : ComponentActivity() {
               }
             },
             style = {
-              MapStyle(style = Style.LIGHT)
+              MapboxStandardStyle(
+                standardStyleState = rememberStandardStyleState {
+                  configurationsState.apply {
+                    theme = ThemeValue.MONOCHROME
+                  }
+                }
+              )
             },
           ) {
             PolygonAnnotation(

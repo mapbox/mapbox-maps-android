@@ -45,7 +45,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this, MapInitOptions(context = this, styleUri = Style.SATELLITE_STREETS))
+    val mapView = MapView(this, MapInitOptions(context = this, styleUri = Style.STANDARD_SATELLITE))
     setContentView(mapView)
     mapboxMap = mapView.mapboxMap
     mapboxMap.getStyle {

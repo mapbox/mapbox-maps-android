@@ -30,7 +30,7 @@ class GlobeActivity : AppCompatActivity() {
         }
       )
       loadStyle(
-        style(Style.SATELLITE_STREETS) {
+        style(Style.STANDARD_SATELLITE) {
           +atmosphere { }
           +projection(ProjectionName.GLOBE)
         }

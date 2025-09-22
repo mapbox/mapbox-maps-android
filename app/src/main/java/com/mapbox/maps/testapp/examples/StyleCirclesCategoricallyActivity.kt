@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Value
 import com.mapbox.common.MapboxOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -33,7 +34,7 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
     setContentView(mapView)
     mapboxMap = mapView.mapboxMap
     mapboxMap.loadStyle(
-      style(Style.LIGHT) {
+      style(Style.STANDARD) {
 
         +vectorSource("ethnicity-source") {
           url("http://api.mapbox.com/v4/examples.8fgz4egr.json?access_token=" + MapboxOptions.accessToken)
@@ -66,7 +67,9 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
           )
         }
       }
-    )
+    ) {
+      mapboxMap.setStyleImportConfigProperty("basemap", "theme", Value.valueOf("monochrome"))
+    }
 
     mapboxMap.setCamera(
       CameraOptions.Builder()
