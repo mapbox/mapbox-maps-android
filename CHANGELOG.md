@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.16.0-beta.1
+
 ## Features ✨ and improvements 🏁
 * Added support for `LandmarkIcons` featureset in Mapbox Standard Style. Query and interact with landmark building icons that appear on the map, accessing properties including landmark ID, name, type, and localized names through the `StandardLandmarkIconsFeature` class.
 * Enhanced `MapboxStandardStyle()` and `MapboxStandardSatelliteStyle()` Compose functions with comprehensive configuration options:
@@ -19,6 +22,9 @@ Mapbox welcomes participation and contributions from everyone.
 * MapboxTracing was deprecated and moved to package com.mapbox.common. 
 * Fixed incorrect positioning of map marker annotations, when coordinates do not change.
 * Fix incorrect display height for zooming gesture on secondary displays.
+
+## Dependencies
+* Update gl-native to [v11.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1), common to [24.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1).
 
 # 11.15.0 September 11, 2025
 
