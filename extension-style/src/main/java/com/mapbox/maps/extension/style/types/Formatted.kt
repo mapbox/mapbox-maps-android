@@ -67,7 +67,7 @@ class Formatted : ArrayList<FormattedSection>() {
     fun fromProperty(list: ArrayList<*>): Formatted {
       val formatted = Formatted()
 
-      if (list.removeFirst() == "format") {
+      if (list.removeAt(0) == "format") {
         list.forEachIndexed { index, element ->
           when (element) {
             is String -> {
@@ -77,7 +77,7 @@ class Formatted : ArrayList<FormattedSection>() {
                 when (key) {
                   "text-color" -> {
                     val colorExpressionList = optionsMap[key] as ArrayList<*>
-                    if (colorExpressionList.removeFirst() == "rgba") {
+                    if (colorExpressionList.removeAt(0) == "rgba") {
                       formattedSection.textColor = ColorUtils.rgbaExpressionToColorString(
                         rgba {
                           literal(colorExpressionList[0] as Double)
@@ -91,7 +91,7 @@ class Formatted : ArrayList<FormattedSection>() {
                   "font-scale" -> formattedSection.fontScale = optionsMap[key] as Double
                   "text-font" -> {
                     val textFontExpressionList = optionsMap[key] as ArrayList<*>
-                    if (textFontExpressionList.removeFirst() == "literal") {
+                    if (textFontExpressionList.removeAt(0) == "literal") {
                       @Suppress("UNCHECKED_CAST")
                       formattedSection.fontStack =
                         textFontExpressionList.last() as ArrayList<String>

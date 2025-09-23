@@ -32,7 +32,7 @@ internal class CameraCenterAnimator internal constructor(
       val originalTargets: List<Point> = listOf(startValue as Point) + targets
       // Build the reversed target list with wrapped coordinates
       val mutableTargetReversedList = mutableListOf<Point>()
-      originalTargets.map { it.wrapCoordinate() }.reversed().forEach {
+      originalTargets.map { it.wrapCoordinate() }.asReversed().forEach {
         if (mutableTargetReversedList.isEmpty()) {
           // insert the raw end point
           mutableTargetReversedList.add(it)
@@ -46,7 +46,7 @@ internal class CameraCenterAnimator internal constructor(
           )
         }
       }
-      mutableTargetReversedList.reversed().toTypedArray()
+      mutableTargetReversedList.asReversed().toTypedArray()
     } else {
       super.resolveAnimationObjectValues(startValue)
     }

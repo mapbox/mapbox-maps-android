@@ -531,6 +531,7 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
     ) {
 
       val intent = Intent(appContext, ExtendedGeofencingActivity::class.java).apply {
+        action = Intent.ACTION_VIEW
         flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         putExtra(NOTIFICATION_FEATURE_ID, featureId)
         putExtra(NOTIFICATION_FEATURE_TYPE, featureType)
