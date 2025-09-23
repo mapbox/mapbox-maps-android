@@ -25,6 +25,7 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 public class PolylineAnnotationGroupState private constructor(
   initialLineCap: LineCap?,
   initialLineCrossSlope: Double?,
+  initialLineCutoutFadeWidth: Double?,
   initialLineCutoutOpacity: Double?,
   initialLineCutoutWidth: Double?,
   initialLineElevationReference: LineElevationReference?,
@@ -64,6 +65,7 @@ public class PolylineAnnotationGroupState private constructor(
   public constructor() : this(
     initialLineCap = null,
     initialLineCrossSlope = null,
+    initialLineCutoutFadeWidth = null,
     initialLineCutoutOpacity = null,
     initialLineCutoutWidth = null,
     initialLineElevationReference = null,
@@ -114,6 +116,11 @@ public class PolylineAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var lineCrossSlope: Double? by mutableStateOf(initialLineCrossSlope)
+  /**
+   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var lineCutoutFadeWidth: Double? by mutableStateOf(initialLineCutoutFadeWidth)
   /**
    * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
    */
@@ -273,6 +280,11 @@ public class PolylineAnnotationGroupState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
+  private fun UpdateLineCutoutFadeWidth(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineCutoutFadeWidth = lineCutoutFadeWidth
+  }
+  @Composable
+  @OptIn(MapboxExperimental::class)
   private fun UpdateLineCutoutOpacity(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineCutoutOpacity = lineCutoutOpacity
   }
@@ -423,6 +435,7 @@ public class PolylineAnnotationGroupState private constructor(
   internal fun UpdateProperties(annotationManager: PolylineAnnotationManager) {
     UpdateLineCap(annotationManager)
     UpdateLineCrossSlope(annotationManager)
+    UpdateLineCutoutFadeWidth(annotationManager)
     UpdateLineCutoutOpacity(annotationManager)
     UpdateLineCutoutWidth(annotationManager)
     UpdateLineElevationReference(annotationManager)

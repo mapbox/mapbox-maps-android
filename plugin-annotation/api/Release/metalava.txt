@@ -1294,6 +1294,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getLineColorString();
     method public String? getLineColorUseTheme();
     method public Double? getLineCrossSlope();
+    method public Double? getLineCutoutFadeWidth();
     method public Double? getLineCutoutOpacity();
     method public Double? getLineCutoutWidth();
     method public java.util.List<java.lang.Double>? getLineDasharray();
@@ -1337,6 +1338,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineColorString(String?);
     method public void setLineColorUseTheme(String?);
     method public void setLineCrossSlope(Double?);
+    method public void setLineCutoutFadeWidth(Double?);
     method public void setLineCutoutOpacity(Double?);
     method public void setLineCutoutWidth(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
@@ -1379,6 +1381,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? lineColorString;
     property public final String? lineColorUseTheme;
     property public final Double? lineCrossSlope;
+    property public final Double? lineCutoutFadeWidth;
     property public final Double? lineCutoutOpacity;
     property public final Double? lineCutoutWidth;
     property public final java.util.List<java.lang.Double>? lineDasharray;

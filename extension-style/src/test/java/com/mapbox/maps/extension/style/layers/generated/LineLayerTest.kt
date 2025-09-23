@@ -295,6 +295,113 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineCutoutFadeWidthSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidth(testValue)
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineCutoutFadeWidthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineCutoutFadeWidth?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidth(expression)
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineCutoutFadeWidthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineCutoutFadeWidthAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutFadeWidth!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineCutoutFadeWidthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineCutoutFadeWidthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width-transition") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun lineCutoutOpacitySet() {
     val layer = lineLayer("id", "source") {}
     val testValue = 1.0
@@ -3404,6 +3511,50 @@ class LineLayerTest {
     assertEquals(1.0, LineLayer.defaultLineCrossSlopeAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, LineLayer.defaultLineCrossSlope!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope") }
+  }
+
+  @Test
+  fun defaultLineCutoutFadeWidthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutFadeWidth?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineCutoutFadeWidthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineCutoutFadeWidthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun defaultLineCutoutFadeWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineCutoutFadeWidth!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun defaultLineCutoutFadeWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutFadeWidthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width-transition") }
   }
 
   @Test
