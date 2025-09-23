@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.16.0-beta.1 September 23, 2025
+
 # 11.16.0-beta.1
 
 ## Features ✨ and improvements 🏁
