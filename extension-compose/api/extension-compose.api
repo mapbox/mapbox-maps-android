@@ -768,6 +768,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getLineColorUseTheme ()Ljava/lang/String;
 	public final fun getLineCrossSlope ()Ljava/lang/Double;
+	public final fun getLineCutoutFadeWidth ()Ljava/lang/Double;
 	public final fun getLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getLineCutoutWidth ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
@@ -805,6 +806,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setLineColorUseTheme (Ljava/lang/String;)V
 	public final fun setLineCrossSlope (Ljava/lang/Double;)V
+	public final fun setLineCutoutFadeWidth (Ljava/lang/Double;)V
 	public final fun setLineCutoutOpacity (Ljava/lang/Double;)V
 	public final fun setLineCutoutWidth (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
@@ -2410,6 +2412,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun getLineColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getLineCrossSlope ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineCutoutFadeWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineCutoutFadeWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineCutoutOpacity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineCutoutOpacityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineCutoutWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
@@ -2466,6 +2470,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun setLineColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setLineCrossSlope (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineCutoutFadeWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineCutoutFadeWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineCutoutOpacity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineCutoutOpacityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineCutoutWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V

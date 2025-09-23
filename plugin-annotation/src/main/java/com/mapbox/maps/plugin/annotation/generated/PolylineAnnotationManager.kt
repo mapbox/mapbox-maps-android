@@ -256,6 +256,34 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineCutoutFadeWidth property
+   *
+   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  var lineCutoutFadeWidth: Double?
+    /**
+     * Get the LineCutoutFadeWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineCutoutFadeWidth
+    }
+    /**
+     * Set the LineCutoutFadeWidth property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width").value
+      }
+      setLayerProperty(wrappedValue, "line-cutout-fade-width")
+    }
+
+  /**
    * The LineCutoutOpacity property
    *
    * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]

@@ -18,6 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
   - **Road appearance**: Adjust road brightness, show/hide pedestrian roads and transit networks
   - **Administrative boundaries**: Toggle boundary visibility and customize colors
   - **3D objects**: Control visibility of buildings, landmarks, and trees with `show3dObjects`
+* Expose `LineLayer.lineCutoutFadeWidth` to control route line cutout fade width.
 
 ## Bug fixes 🐞
 * MapboxTracing was deprecated and moved to package com.mapbox.common. 

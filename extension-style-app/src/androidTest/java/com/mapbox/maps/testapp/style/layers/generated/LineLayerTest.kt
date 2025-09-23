@@ -119,6 +119,61 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineCutoutFadeWidthTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineCutoutFadeWidth(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineCutoutFadeWidth!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutFadeWidthAsExpressionTest() {
+    val expression = literal(1.0)
+    val layer = lineLayer("id", "source") {
+      lineCutoutFadeWidth(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(1.0, layer.lineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutFadeWidth!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutFadeWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineCutoutFadeWidthTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineCutoutFadeWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineCutoutFadeWidthTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineCutoutFadeWidthTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineCutoutFadeWidthTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineCutoutOpacityTest() {
     val testValue = 1.0
     val layer = lineLayer("id", "source") {
@@ -1537,6 +1592,9 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineCapAsExpression should not be null", LineLayer.defaultLineCapAsExpression)
     assertNotNull("defaultLineCrossSlope should not be null", LineLayer.defaultLineCrossSlope)
     assertNotNull("defaultLineCrossSlopeAsExpression should not be null", LineLayer.defaultLineCrossSlopeAsExpression)
+    assertNotNull("defaultLineCutoutFadeWidth should not be null", LineLayer.defaultLineCutoutFadeWidth)
+    assertNotNull("defaultLineCutoutFadeWidthAsExpression should not be null", LineLayer.defaultLineCutoutFadeWidthAsExpression)
+    assertNotNull("defaultLineCutoutFadeWidthTransition should not be null", LineLayer.defaultLineCutoutFadeWidthTransition)
     assertNotNull("defaultLineCutoutOpacity should not be null", LineLayer.defaultLineCutoutOpacity)
     assertNotNull("defaultLineCutoutOpacityAsExpression should not be null", LineLayer.defaultLineCutoutOpacityAsExpression)
     assertNotNull("defaultLineCutoutOpacityTransition should not be null", LineLayer.defaultLineCutoutOpacityTransition)
@@ -1632,6 +1690,7 @@ class LineLayerTest : BaseStyleTest() {
     }
     val lineCapTestValue = LineCap.BUTT
     val lineCrossSlopeTestValue = 1.0
+    val lineCutoutFadeWidthTestValue = 1.0
     val lineCutoutOpacityTestValue = 1.0
     val lineCutoutWidthTestValue = 1.0
     val lineElevationReferenceTestValue = LineElevationReference.NONE
@@ -1696,6 +1755,7 @@ class LineLayerTest : BaseStyleTest() {
       filter(filterTestValue)
       lineCap(lineCapTestValue)
       lineCrossSlope(lineCrossSlopeTestValue)
+      lineCutoutFadeWidth(lineCutoutFadeWidthTestValue)
       lineCutoutOpacity(lineCutoutOpacityTestValue)
       lineCutoutWidth(lineCutoutWidthTestValue)
       lineElevationReference(lineElevationReferenceTestValue)
@@ -1744,6 +1804,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(lineCapTestValue, cachedLayer.lineCap)
     assertEquals(lineCrossSlopeTestValue, cachedLayer.lineCrossSlope)
+    assertEquals(lineCutoutFadeWidthTestValue, cachedLayer.lineCutoutFadeWidth)
     assertEquals(lineCutoutOpacityTestValue, cachedLayer.lineCutoutOpacity)
     assertEquals(lineCutoutWidthTestValue, cachedLayer.lineCutoutWidth)
     assertEquals(lineElevationReferenceTestValue, cachedLayer.lineElevationReference)
