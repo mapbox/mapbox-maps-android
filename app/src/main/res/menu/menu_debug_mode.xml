@@ -45,5 +45,9 @@
         android:checkable="true"
         android:checked="true"
         android:title="@string/toggle_padding_overlay" />
+    <item
+        android:id="@+id/menu_debug_mode_info"
+        android:checkable="false"
+        android:title="@string/show_map_info" />
 
 </menu>
