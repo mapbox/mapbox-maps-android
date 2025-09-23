@@ -502,10 +502,11 @@ class ScaleBarImpl : ScaleBar, View {
       scaleBarWidgetWeakReference.get()?.let {
         when (msg.what) {
           MSG_RENDER_CONTINUOUS -> {
-            if (it.reusableCanvas == null) {
+            val reusableCanvas = it.reusableCanvas
+            if (reusableCanvas == null) {
               it.invalidate()
             } else {
-              it.draw(it.reusableCanvas)
+              it.draw(reusableCanvas)
             }
             sendEmptyMessageDelayed(MSG_RENDER_CONTINUOUS, it.settings.refreshInterval)
           }

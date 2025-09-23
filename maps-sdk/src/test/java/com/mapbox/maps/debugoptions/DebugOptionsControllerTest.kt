@@ -1,5 +1,6 @@
 package com.mapbox.maps.debugoptions
 
+import androidx.test.core.app.ApplicationProvider
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.CameraChangedCoalescedCallback
@@ -31,7 +32,7 @@ class DebugOptionsControllerTest {
   @Before
   fun setUp() {
     clearAllMocks()
-    every { mapView.context } returns mockk(relaxed = true)
+    every { mapView.context } returns ApplicationProvider.getApplicationContext()
     every { cameraDebugView.parent } returns null
     every { paddingDebugView.parent } returns null
 

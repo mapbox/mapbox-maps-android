@@ -92,8 +92,8 @@ internal class CrossView(
     strokeWidth = 1f.toDP(context)
   }
 
-  override fun onDraw(canvas: Canvas?) {
-    canvas?.apply {
+  override fun onDraw(canvas: Canvas) {
+    canvas.apply {
       val midY = height / 2f
       val midX = width / 2f
       drawLine(0f, midY, width.toFloat(), midY, greenPaint)

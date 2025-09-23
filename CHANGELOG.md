@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.16.0-beta.1
 
 ## Features ✨ and improvements 🏁
+* Update target and compile SDK version to 35 
 * Added support for `LandmarkIcons` featureset in Mapbox Standard Style. Query and interact with landmark building icons that appear on the map, accessing properties including landmark ID, name, type, and localized names through the `StandardLandmarkIconsFeature` class.
 * Enhanced `MapboxStandardStyle()` and `MapboxStandardSatelliteStyle()` Compose functions with comprehensive configuration options:
   - **Color customization**: Set custom colors for roads, motorways, water, greenspaces, administrative boundaries, and more

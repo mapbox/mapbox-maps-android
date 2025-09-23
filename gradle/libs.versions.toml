@@ -1,17 +1,17 @@
 [versions]
 # Versions
 androidMinSdkVersion = "21"
-androidTargetSdkVersion = "33"
-androidCompileSdkVersion = "33"
+androidTargetSdkVersion = "35"
+androidCompileSdkVersion = "35"
 androidMinCompileSdkVersion = "31"
 
 autoMinSdkVersion = "23"
-autoTargetSdkVersion = "33"
-autoCompileSdkVersion = "33"
+autoTargetSdkVersion = "35"
+autoCompileSdkVersion = "35"
 
 exampleMinSdkVersion = "23"
-exampleTargetSdkVersion = "34"
-exampleCompileSdkVersion = "34"
+exampleTargetSdkVersion = "35"
+exampleCompileSdkVersion = "35"
 
 # Plugins
 pluginJacoco = "0.8.12"
@@ -64,7 +64,7 @@ googleCarAppLibrary = "1.2.0"
 kotlinCoroutines = "1.6.1"
 junit = "4.13.2"
 mockk = "1.13.5"
-robolectric = "4.10.3"
+robolectric = "4.14"
 robolectricEgl = "gl1.1-android-2.1_r1"
 lint = "30.4.2"
 hamcrest = "2.1"

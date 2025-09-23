@@ -205,7 +205,7 @@ class ExampleOverviewActivity : AppCompatActivity() {
     // We use this activity package name in case the `applicationId`/`packageName` is different
     val packageName = ExampleOverviewActivity::class.java.`package`!!.name
     val categoryKey = getString(R.string.category)
-    for (info in appPackageInfo.activities) {
+    for (info in appPackageInfo.activities.orEmpty()) {
       if (info.labelRes != 0 && info.name.startsWith(packageName) &&
         info.name != ExampleOverviewActivity::class.java.name
       ) {

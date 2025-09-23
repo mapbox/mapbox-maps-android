@@ -69,11 +69,11 @@ allprojects {
 
 // hack to fix unit test, see https://github.com/robolectric/robolectric/issues/5131#issuecomment-509631890.
 subprojects {
-  tasks.withType<Test>().configureEach {
+  tasks.withType<Test> {
     maxParallelForks = 2
-    setForkEvery(80)
-    setMaxHeapSize("2048m")
-    setMinHeapSize("1024m")
+    forkEvery = 80
+    maxHeapSize = "2048m"
+    minHeapSize = "1024m"
   }
 }
 

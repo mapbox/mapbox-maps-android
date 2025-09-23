@@ -6,6 +6,7 @@ import android.os.Looper
 import android.util.Pair
 import android.view.Gravity
 import android.widget.FrameLayout
+import androidx.test.core.app.ApplicationProvider
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINUOUS
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_ON_DEMAND
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
@@ -26,7 +27,6 @@ import org.robolectric.annotation.LooperMode
 @Config(shadows = [ShadowProjection::class])
 class ScaleBarImplTest {
   private lateinit var scaleBarView: ScaleBarImpl
-  private val context: Context = mockk(relaxed = true)
   private val scaleBarSettings = ScaleBarSettings {
     enabled = true
     position = Gravity.TOP or Gravity.START
@@ -50,6 +50,7 @@ class ScaleBarImplTest {
 
   @Before
   fun setUp() {
+    val context = ApplicationProvider.getApplicationContext<Context>()
     scaleBarView = ScaleBarImpl(context)
     val layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
     scaleBarView.layoutParams = layoutParams
@@ -153,10 +154,10 @@ class ScaleBarImplGetDistanceTextTest(
   private val expectedDistanceText: String
 ) {
   private lateinit var scaleBarView: ScaleBarImpl
-  private val context: Context = mockk(relaxed = true)
 
   @Before
   fun setUp() {
+    val context = ApplicationProvider.getApplicationContext<Context>()
     scaleBarView = ScaleBarImpl(context)
     val layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
     scaleBarView.layoutParams = layoutParams
@@ -202,10 +203,10 @@ class ScaleBarImplScaleBarSegmentsTest(
   private val scaleTable: List<Pair<Int, Int>>,
 ) {
   private lateinit var scaleBarView: ScaleBarImpl
-  private val context: Context = mockk(relaxed = true)
 
   @Before
   fun setUp() {
+    val context = ApplicationProvider.getApplicationContext<Context>()
     scaleBarView = ScaleBarImpl(context)
     val layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
     scaleBarView.layoutParams = layoutParams
