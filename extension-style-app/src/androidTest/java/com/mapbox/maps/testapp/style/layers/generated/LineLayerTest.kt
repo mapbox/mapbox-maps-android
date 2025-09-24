@@ -1451,7 +1451,7 @@ class LineLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun lineTrimFadeRangeTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     val layer = lineLayer("id", "source") {
       lineTrimFadeRange(testValue)
     }
@@ -1469,13 +1469,13 @@ class LineLayerTest : BaseStyleTest() {
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.lineTrimFadeRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.lineTrimFadeRange!!)
+    assertEquals(listOf(0.5, 0.5), layer.lineTrimFadeRange!!)
   }
 
   @Test
   @UiThreadTest
   fun lineTrimOffsetTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     val layer = lineLayer("id", "source") {
       lineTrimOffset(testValue)
     }
@@ -1493,7 +1493,7 @@ class LineLayerTest : BaseStyleTest() {
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.lineTrimOffsetAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.lineTrimOffset!!)
+    assertEquals(listOf(0.5, 0.5), layer.lineTrimOffset!!)
   }
 
   @Test
@@ -1742,8 +1742,8 @@ class LineLayerTest : BaseStyleTest() {
     val lineTranslateAnchorTestValue = LineTranslateAnchor.MAP
     val lineTrimColorTestValue = "rgba(0, 0, 0, 1)"
     val lineTrimColorUseThemeTestValue = "default"
-    val lineTrimFadeRangeTestValue = listOf(0.0, 1.0)
-    val lineTrimOffsetTestValue = listOf(0.0, 1.0)
+    val lineTrimFadeRangeTestValue = listOf(0.5, 0.5)
+    val lineTrimOffsetTestValue = listOf(0.5, 0.5)
     val lineWidthTestValue = 1.0
 
     val minZoomTestValue = 10.0

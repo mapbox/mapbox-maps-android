@@ -383,7 +383,7 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun iconSizeScaleRangeTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     val layer = symbolLayer("id", "source") {
       iconSizeScaleRange(testValue)
     }
@@ -401,7 +401,7 @@ class SymbolLayerTest : BaseStyleTest() {
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.iconSizeScaleRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.iconSizeScaleRange!!)
+    assertEquals(listOf(5.0, 5.0), layer.iconSizeScaleRange!!)
   }
 
   @Test
@@ -1209,7 +1209,7 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun textSizeScaleRangeTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     val layer = symbolLayer("id", "source") {
       textSizeScaleRange(testValue)
     }
@@ -1227,7 +1227,7 @@ class SymbolLayerTest : BaseStyleTest() {
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.textSizeScaleRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.textSizeScaleRange!!)
+    assertEquals(listOf(5.0, 5.0), layer.textSizeScaleRange!!)
   }
 
   @Test
@@ -2851,7 +2851,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconRotateTestValue = 1.0
     val iconRotationAlignmentTestValue = IconRotationAlignment.MAP
     val iconSizeTestValue = 1.0
-    val iconSizeScaleRangeTestValue = listOf(0.0, 1.0)
+    val iconSizeScaleRangeTestValue = listOf(5.0, 5.0)
     val iconTextFitTestValue = IconTextFit.NONE
     val iconTextFitPaddingTestValue = listOf(0.0, 1.0, 2.0, 3.0)
     val symbolAvoidEdgesTestValue = true
@@ -2897,7 +2897,7 @@ class SymbolLayerTest : BaseStyleTest() {
     val textRotateTestValue = 1.0
     val textRotationAlignmentTestValue = TextRotationAlignment.MAP
     val textSizeTestValue = 1.0
-    val textSizeScaleRangeTestValue = listOf(0.0, 1.0)
+    val textSizeScaleRangeTestValue = listOf(5.0, 5.0)
     val textTransformTestValue = TextTransform.NONE
     val textVariableAnchorTestValue = listOf("center", "left")
     val textWritingModeTestValue = listOf("horizontal", "vertical")

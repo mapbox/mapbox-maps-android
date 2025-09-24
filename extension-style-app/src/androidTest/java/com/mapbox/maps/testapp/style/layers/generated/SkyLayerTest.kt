@@ -187,7 +187,7 @@ class SkyLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun skyAtmosphereSunTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     val layer = skyLayer("id") {
       skyAtmosphereSun(testValue)
     }
@@ -205,7 +205,7 @@ class SkyLayerTest : BaseStyleTest() {
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.skyAtmosphereSunAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.skyAtmosphereSun!!)
+    assertEquals(listOf(180.0, 90.0), layer.skyAtmosphereSun!!)
   }
 
   @Test
@@ -300,7 +300,7 @@ class SkyLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun skyGradientCenterTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     val layer = skyLayer("id") {
       skyGradientCenter(testValue)
     }
@@ -318,7 +318,7 @@ class SkyLayerTest : BaseStyleTest() {
     setupLayer(layer)
 
     assertEquals(expression.toString(), layer.skyGradientCenterAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.skyGradientCenter!!)
+    assertEquals(listOf(180.0, 90.0), layer.skyGradientCenter!!)
   }
 
   @Test
@@ -497,7 +497,7 @@ class SkyLayerTest : BaseStyleTest() {
     val skyAtmosphereColorUseThemeTestValue = "default"
     val skyAtmosphereHaloColorTestValue = "rgba(0, 0, 0, 1)"
     val skyAtmosphereHaloColorUseThemeTestValue = "default"
-    val skyAtmosphereSunTestValue = listOf(0.0, 1.0)
+    val skyAtmosphereSunTestValue = listOf(180.0, 90.0)
     val skyAtmosphereSunIntensityTestValue = 1.0
     val skyGradientTestValue = interpolate {
       linear()
@@ -522,7 +522,7 @@ class SkyLayerTest : BaseStyleTest() {
       }
     }
     val skyGradientUseThemeTestValue = "default"
-    val skyGradientCenterTestValue = listOf(0.0, 1.0)
+    val skyGradientCenterTestValue = listOf(180.0, 90.0)
     val skyGradientRadiusTestValue = 1.0
     val skyOpacityTestValue = 1.0
     val skyTypeTestValue = SkyType.GRADIENT

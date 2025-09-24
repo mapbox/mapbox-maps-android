@@ -3143,20 +3143,20 @@ class LineLayerTest {
   @Test
   fun lineTrimFadeRangeSet() {
     val layer = lineLayer("id", "source") {}
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     layer.bindTo(style)
     layer.lineTrimFadeRange(testValue)
     verify { style.setStyleLayerProperty("id", "line-trim-fade-range", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+    assertEquals(valueSlot.captured.toString(), "[0.5, 0.5]")
   }
 
   @Test
   fun lineTrimFadeRangeGet() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
     val layer = lineLayer("id", "source") { }
     layer.bindTo(style)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.5, 0.5)
     assertEquals(expectedValue.toString(), layer.lineTrimFadeRange?.toString())
     verify { style.getStyleLayerProperty("id", "line-trim-fade-range") }
   }
@@ -3199,31 +3199,31 @@ class LineLayerTest {
 
   @Test
   fun lineTrimFadeRangeAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.5, 0.5))
     val layer = lineLayer("id", "source") { }
     layer.bindTo(style)
-    assertEquals("[literal, [0.0, 1.0]]", layer.lineTrimFadeRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.lineTrimFadeRange!!)
+    assertEquals("[literal, [0.5, 0.5]]", layer.lineTrimFadeRangeAsExpression.toString())
+    assertEquals(listOf(0.5, 0.5), layer.lineTrimFadeRange!!)
     verify { style.getStyleLayerProperty("id", "line-trim-fade-range") }
   }
 
   @Test
   fun lineTrimOffsetSet() {
     val layer = lineLayer("id", "source") {}
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     layer.bindTo(style)
     layer.lineTrimOffset(testValue)
     verify { style.setStyleLayerProperty("id", "line-trim-offset", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+    assertEquals(valueSlot.captured.toString(), "[0.5, 0.5]")
   }
 
   @Test
   fun lineTrimOffsetGet() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
     val layer = lineLayer("id", "source") { }
     layer.bindTo(style)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.5, 0.5)
     assertEquals(expectedValue.toString(), layer.lineTrimOffset?.toString())
     verify { style.getStyleLayerProperty("id", "line-trim-offset") }
   }
@@ -3266,11 +3266,11 @@ class LineLayerTest {
 
   @Test
   fun lineTrimOffsetAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.5, 0.5))
     val layer = lineLayer("id", "source") { }
     layer.bindTo(style)
-    assertEquals("[literal, [0.0, 1.0]]", layer.lineTrimOffsetAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.lineTrimOffset!!)
+    assertEquals("[literal, [0.5, 0.5]]", layer.lineTrimOffsetAsExpression.toString())
+    assertEquals(listOf(0.5, 0.5), layer.lineTrimOffset!!)
     verify { style.getStyleLayerProperty("id", "line-trim-offset") }
   }
 
@@ -4655,9 +4655,9 @@ class LineLayerTest {
 
   @Test
   fun defaultLineTrimFadeRangeTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.5, 0.5)
     assertEquals(expectedValue.toString(), LineLayer.defaultLineTrimFadeRange?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range") }
   }
@@ -4678,17 +4678,17 @@ class LineLayerTest {
 
   @Test
   fun defaultLineTrimFadeRangeAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
-    assertEquals("[literal, [0.0, 1.0]]", LineLayer.defaultLineTrimFadeRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), LineLayer.defaultLineTrimFadeRange!!)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.5, 0.5))
+    assertEquals("[literal, [0.5, 0.5]]", LineLayer.defaultLineTrimFadeRangeAsExpression.toString())
+    assertEquals(listOf(0.5, 0.5), LineLayer.defaultLineTrimFadeRange!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-fade-range") }
   }
 
   @Test
   fun defaultLineTrimOffsetTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(0.5, 0.5)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.5, 0.5)
     assertEquals(expectedValue.toString(), LineLayer.defaultLineTrimOffset?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset") }
   }
@@ -4709,9 +4709,9 @@ class LineLayerTest {
 
   @Test
   fun defaultLineTrimOffsetAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
-    assertEquals("[literal, [0.0, 1.0]]", LineLayer.defaultLineTrimOffsetAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), LineLayer.defaultLineTrimOffset!!)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.5, 0.5))
+    assertEquals("[literal, [0.5, 0.5]]", LineLayer.defaultLineTrimOffsetAsExpression.toString())
+    assertEquals(listOf(0.5, 0.5), LineLayer.defaultLineTrimOffset!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset") }
   }
 

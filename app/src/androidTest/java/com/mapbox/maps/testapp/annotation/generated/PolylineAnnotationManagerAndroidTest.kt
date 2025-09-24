@@ -394,7 +394,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTrimFadeRange() {
     rule.runOnUiThread {
-      val expectedValue = listOf(0.0, 1.0)
+      val expectedValue = listOf(0.5, 0.5)
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
       polylineAnnotationManager.lineTrimFadeRange = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineTrimFadeRange)
@@ -406,7 +406,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTrimOffset() {
     rule.runOnUiThread {
-      val expectedValue = listOf(0.0, 1.0)
+      val expectedValue = listOf(0.5, 0.5)
       val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
       polylineAnnotationManager.lineTrimOffset = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineTrimOffset)

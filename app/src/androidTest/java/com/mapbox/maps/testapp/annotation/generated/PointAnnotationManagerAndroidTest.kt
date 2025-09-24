@@ -186,15 +186,10 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconSizeScaleRange() {
     rule.runOnUiThread {
-      val expectedValue = listOf(0.1, 10.0)
+      val expectedValue = listOf(5.0, 5.0)
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
       pointAnnotationManager.iconSizeScaleRange = expectedValue
-
-      // Use delta comparison for floating point precision
-      val actualValue = pointAnnotationManager.iconSizeScaleRange!!
-      assertEquals(expectedValue.size, actualValue.size)
-      assertEquals(expectedValue[0], actualValue[0], 0.001)
-      assertEquals(expectedValue[1], actualValue[1], 0.001)
+      assertEquals(expectedValue, pointAnnotationManager.iconSizeScaleRange)
       pointAnnotationManager.iconSizeScaleRange = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range").silentUnwrap(), pointAnnotationManager.iconSizeScaleRange)
     }
@@ -544,15 +539,10 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextSizeScaleRange() {
     rule.runOnUiThread {
-      val expectedValue = listOf(0.1, 10.0)
+      val expectedValue = listOf(5.0, 5.0)
       val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
       pointAnnotationManager.textSizeScaleRange = expectedValue
-
-      // Use delta comparison for floating point precision
-      val actualValue = pointAnnotationManager.textSizeScaleRange!!
-      assertEquals(expectedValue.size, actualValue.size)
-      assertEquals(expectedValue[0], actualValue[0], 0.001)
-      assertEquals(expectedValue[1], actualValue[1], 0.001)
+      assertEquals(expectedValue, pointAnnotationManager.textSizeScaleRange)
       pointAnnotationManager.textSizeScaleRange = null
       assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range").silentUnwrap(), pointAnnotationManager.textSizeScaleRange)
     }

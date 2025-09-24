@@ -358,29 +358,29 @@ class DirectionalLightTest {
   @Test
   fun directionSet() {
     val light = directionalLight("id") {
-      direction(listOf(0.0, 1.0))
+      direction(listOf(180.0, 45.0))
     }
     style.setLights(listOf(light))
     verify { style.setStyleLights(capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("direction=[0.0, 1.0]"))
+    assertTrue(valueSlot.captured.toString().contains("direction=[180.0, 45.0]"))
   }
 
   @Test
   fun directionSetAfterInitialization() {
     val light = directionalLight("id") { }
     style.setLights(listOf(light))
-    light.direction(listOf(0.0, 1.0))
+    light.direction(listOf(180.0, 45.0))
     verify { style.setStyleLightProperty("id", "direction", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("[0.0, 1.0]"))
+    assertTrue(valueSlot.captured.toString().contains("[180.0, 45.0]"))
   }
 
   @Test
   fun directionGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(180.0, 45.0))
 
     val light = directionalLight("id") { }
     style.setLights(listOf(light))
-    assertEquals(listOf(0.0, 1.0).toString(), light.direction!!.toString())
+    assertEquals(listOf(180.0, 45.0).toString(), light.direction!!.toString())
     verify { style.getStyleLightProperty("id", "direction") }
   }
   // Expression Tests
@@ -435,11 +435,11 @@ class DirectionalLightTest {
 
   @Test
   fun directionAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(180.0, 45.0))
     val light = directionalLight("id") { }
     style.setLights(listOf(light))
-    assertEquals("[literal, [0.0, 1.0]]", light.directionAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), light.direction)
+    assertEquals("[literal, [180.0, 45.0]]", light.directionAsExpression.toString())
+    assertEquals(listOf(180.0, 45.0), light.direction)
     verify { style.getStyleLightProperty("id", "direction") }
   }
 

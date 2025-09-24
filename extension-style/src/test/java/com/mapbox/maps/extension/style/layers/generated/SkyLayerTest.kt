@@ -481,20 +481,20 @@ class SkyLayerTest {
   @Test
   fun skyAtmosphereSunSet() {
     val layer = skyLayer("id") {}
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     layer.bindTo(style)
     layer.skyAtmosphereSun(testValue)
     verify { style.setStyleLayerProperty("id", "sky-atmosphere-sun", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+    assertEquals(valueSlot.captured.toString(), "[180.0, 90.0]")
   }
 
   @Test
   fun skyAtmosphereSunGet() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
     val layer = skyLayer("id") { }
     layer.bindTo(style)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(180.0, 90.0)
     assertEquals(expectedValue.toString(), layer.skyAtmosphereSun?.toString())
     verify { style.getStyleLayerProperty("id", "sky-atmosphere-sun") }
   }
@@ -537,11 +537,11 @@ class SkyLayerTest {
 
   @Test
   fun skyAtmosphereSunAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(180.0, 90.0))
     val layer = skyLayer("id") { }
     layer.bindTo(style)
-    assertEquals("[literal, [0.0, 1.0]]", layer.skyAtmosphereSunAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.skyAtmosphereSun!!)
+    assertEquals("[literal, [180.0, 90.0]]", layer.skyAtmosphereSunAsExpression.toString())
+    assertEquals(listOf(180.0, 90.0), layer.skyAtmosphereSun!!)
     verify { style.getStyleLayerProperty("id", "sky-atmosphere-sun") }
   }
 
@@ -732,20 +732,20 @@ class SkyLayerTest {
   @Test
   fun skyGradientCenterSet() {
     val layer = skyLayer("id") {}
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     layer.bindTo(style)
     layer.skyGradientCenter(testValue)
     verify { style.setStyleLayerProperty("id", "sky-gradient-center", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+    assertEquals(valueSlot.captured.toString(), "[180.0, 90.0]")
   }
 
   @Test
   fun skyGradientCenterGet() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
     val layer = skyLayer("id") { }
     layer.bindTo(style)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(180.0, 90.0)
     assertEquals(expectedValue.toString(), layer.skyGradientCenter?.toString())
     verify { style.getStyleLayerProperty("id", "sky-gradient-center") }
   }
@@ -788,11 +788,11 @@ class SkyLayerTest {
 
   @Test
   fun skyGradientCenterAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(180.0, 90.0))
     val layer = skyLayer("id") { }
     layer.bindTo(style)
-    assertEquals("[literal, [0.0, 1.0]]", layer.skyGradientCenterAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.skyGradientCenter!!)
+    assertEquals("[literal, [180.0, 90.0]]", layer.skyGradientCenterAsExpression.toString())
+    assertEquals(listOf(180.0, 90.0), layer.skyGradientCenter!!)
     verify { style.getStyleLayerProperty("id", "sky-gradient-center") }
   }
 
@@ -1245,9 +1245,9 @@ class SkyLayerTest {
 
   @Test
   fun defaultSkyAtmosphereSunTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(180.0, 90.0)
     assertEquals(expectedValue.toString(), SkyLayer.defaultSkyAtmosphereSun?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-atmosphere-sun") }
   }
@@ -1268,9 +1268,9 @@ class SkyLayerTest {
 
   @Test
   fun defaultSkyAtmosphereSunAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
-    assertEquals("[literal, [0.0, 1.0]]", SkyLayer.defaultSkyAtmosphereSunAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), SkyLayer.defaultSkyAtmosphereSun!!)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(180.0, 90.0))
+    assertEquals("[literal, [180.0, 90.0]]", SkyLayer.defaultSkyAtmosphereSunAsExpression.toString())
+    assertEquals(listOf(180.0, 90.0), SkyLayer.defaultSkyAtmosphereSun!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-atmosphere-sun") }
   }
 
@@ -1369,9 +1369,9 @@ class SkyLayerTest {
 
   @Test
   fun defaultSkyGradientCenterTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(180.0, 90.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(180.0, 90.0)
     assertEquals(expectedValue.toString(), SkyLayer.defaultSkyGradientCenter?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-gradient-center") }
   }
@@ -1392,9 +1392,9 @@ class SkyLayerTest {
 
   @Test
   fun defaultSkyGradientCenterAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
-    assertEquals("[literal, [0.0, 1.0]]", SkyLayer.defaultSkyGradientCenterAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), SkyLayer.defaultSkyGradientCenter!!)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(180.0, 90.0))
+    assertEquals("[literal, [180.0, 90.0]]", SkyLayer.defaultSkyGradientCenterAsExpression.toString())
+    assertEquals(listOf(180.0, 90.0), SkyLayer.defaultSkyGradientCenter!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("sky", "sky-gradient-center") }
   }
 

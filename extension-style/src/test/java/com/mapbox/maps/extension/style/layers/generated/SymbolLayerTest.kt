@@ -972,20 +972,20 @@ class SymbolLayerTest {
   @Test
   fun iconSizeScaleRangeSet() {
     val layer = symbolLayer("id", "source") {}
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     layer.bindTo(style)
     layer.iconSizeScaleRange(testValue)
     verify { style.setStyleLayerProperty("id", "icon-size-scale-range", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+    assertEquals(valueSlot.captured.toString(), "[5.0, 5.0]")
   }
 
   @Test
   fun iconSizeScaleRangeGet() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(5.0, 5.0)
     assertEquals(expectedValue.toString(), layer.iconSizeScaleRange?.toString())
     verify { style.getStyleLayerProperty("id", "icon-size-scale-range") }
   }
@@ -1028,11 +1028,11 @@ class SymbolLayerTest {
 
   @Test
   fun iconSizeScaleRangeAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(5.0, 5.0))
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
-    assertEquals("[literal, [0.0, 1.0]]", layer.iconSizeScaleRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.iconSizeScaleRange!!)
+    assertEquals("[literal, [5.0, 5.0]]", layer.iconSizeScaleRangeAsExpression.toString())
+    assertEquals(listOf(5.0, 5.0), layer.iconSizeScaleRange!!)
     verify { style.getStyleLayerProperty("id", "icon-size-scale-range") }
   }
 
@@ -3077,20 +3077,20 @@ class SymbolLayerTest {
   @Test
   fun textSizeScaleRangeSet() {
     val layer = symbolLayer("id", "source") {}
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     layer.bindTo(style)
     layer.textSizeScaleRange(testValue)
     verify { style.setStyleLayerProperty("id", "text-size-scale-range", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+    assertEquals(valueSlot.captured.toString(), "[5.0, 5.0]")
   }
 
   @Test
   fun textSizeScaleRangeGet() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(5.0, 5.0)
     assertEquals(expectedValue.toString(), layer.textSizeScaleRange?.toString())
     verify { style.getStyleLayerProperty("id", "text-size-scale-range") }
   }
@@ -3133,11 +3133,11 @@ class SymbolLayerTest {
 
   @Test
   fun textSizeScaleRangeAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(5.0, 5.0))
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
-    assertEquals("[literal, [0.0, 1.0]]", layer.textSizeScaleRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), layer.textSizeScaleRange!!)
+    assertEquals("[literal, [5.0, 5.0]]", layer.textSizeScaleRangeAsExpression.toString())
+    assertEquals(listOf(5.0, 5.0), layer.textSizeScaleRange!!)
     verify { style.getStyleLayerProperty("id", "text-size-scale-range") }
   }
 
@@ -6477,9 +6477,9 @@ class SymbolLayerTest {
 
   @Test
   fun defaultIconSizeScaleRangeTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(5.0, 5.0)
     assertEquals(expectedValue.toString(), SymbolLayer.defaultIconSizeScaleRange?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range") }
   }
@@ -6500,9 +6500,9 @@ class SymbolLayerTest {
 
   @Test
   fun defaultIconSizeScaleRangeAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
-    assertEquals("[literal, [0.0, 1.0]]", SymbolLayer.defaultIconSizeScaleRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), SymbolLayer.defaultIconSizeScaleRange!!)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(5.0, 5.0))
+    assertEquals("[literal, [5.0, 5.0]]", SymbolLayer.defaultIconSizeScaleRangeAsExpression.toString())
+    assertEquals(listOf(5.0, 5.0), SymbolLayer.defaultIconSizeScaleRange!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-size-scale-range") }
   }
 
@@ -7492,9 +7492,9 @@ class SymbolLayerTest {
 
   @Test
   fun defaultTextSizeScaleRangeTest() {
-    val testValue = listOf(0.0, 1.0)
+    val testValue = listOf(5.0, 5.0)
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(5.0, 5.0)
     assertEquals(expectedValue.toString(), SymbolLayer.defaultTextSizeScaleRange?.toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range") }
   }
@@ -7515,9 +7515,9 @@ class SymbolLayerTest {
 
   @Test
   fun defaultTextSizeScaleRangeAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
-    assertEquals("[literal, [0.0, 1.0]]", SymbolLayer.defaultTextSizeScaleRangeAsExpression.toString())
-    assertEquals(listOf(0.0, 1.0), SymbolLayer.defaultTextSizeScaleRange!!)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(5.0, 5.0))
+    assertEquals("[literal, [5.0, 5.0]]", SymbolLayer.defaultTextSizeScaleRangeAsExpression.toString())
+    assertEquals(listOf(5.0, 5.0), SymbolLayer.defaultTextSizeScaleRange!!)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-size-scale-range") }
   }
 

@@ -106,10 +106,10 @@ class DirectionalLightTest : BaseStyleTest() {
   @UiThreadTest
   fun directionTest() {
     val light = directionalLight {
-      direction(listOf(0.0, 1.0))
+      direction(listOf(180.0, 45.0))
     }
     setupLight(ambientLight { }, light)
-    assertEquals(listOf(0.0, 1.0), light.direction)
+    assertEquals(listOf(180.0, 45.0), light.direction)
   }
   // Add Expression Test
   @Test
