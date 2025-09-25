@@ -182,14 +182,15 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
     if (!readyForSnapshot.get()) {
       logE(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
-    }
-    val legacyMode = snapshotLegacyModeEnabled
-    renderThread.queueRenderEvent(
-      RenderEvent(
-        runnable = { listener.onSnapshotReady(performSnapshot(legacyMode)) },
-        needRender = true,
+    } else {
+      val legacyMode = snapshotLegacyModeEnabled
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          runnable = { listener.onSnapshotReady(performSnapshot(legacyMode)) },
+          needRender = true,
+        )
       )
-    )
+    }
   }
 
   @AnyThread

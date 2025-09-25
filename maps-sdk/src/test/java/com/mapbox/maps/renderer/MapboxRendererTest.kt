@@ -257,7 +257,7 @@ internal abstract class MapboxRendererTest {
     }
     val event = slot<RenderEvent>()
     every { renderThread.queueRenderEvent(capture(event)) } answers {
-      handler.post(event.captured.runnable!!)
+      throw AssertionError("Render event should not be queued when not ready for snapshot")
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(false)
