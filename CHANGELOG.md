@@ -5,14 +5,16 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+## Features ✨ and improvements 🏁
+* Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
+
 ## Bug fixes 🐞
 * Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
 
 # 11.16.0-beta.1 September 23, 2025
 
 ## Features ✨ and improvements 🏁
-* Update target and compile SDK version to 35 
-* Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
+* Update target and compile SDK version to 35
 * Added support for `LandmarkIcons` featureset in Mapbox Standard Style. Query and interact with landmark building icons that appear on the map, accessing properties including landmark ID, name, type, and localized names through the `StandardLandmarkIconsFeature` class.
 * Enhanced `MapboxStandardStyle()` and `MapboxStandardSatelliteStyle()` Compose functions with comprehensive configuration options:
   - **Color customization**: Set custom colors for roads, motorways, water, greenspaces, administrative boundaries, and more
@@ -22,11 +24,14 @@ Mapbox welcomes participation and contributions from everyone.
   - **Administrative boundaries**: Toggle boundary visibility and customize colors
   - **3D objects**: Control visibility of buildings, landmarks, and trees with `show3dObjects`
 * Expose `LineLayer.lineCutoutFadeWidth` to control route line cutout fade width.
+* `com.mapbox.maps.MapboxTracing` was deprecated and moved to package `com.mapbox.common.MapboxTracing`.
 
 ## Bug fixes 🐞
-* MapboxTracing was deprecated and moved to package com.mapbox.common. 
-* Fixed incorrect positioning of map marker annotations, when coordinates do not change.
+* Fix incorrect positioning of map marker annotations, when coordinates do not change.
 * Fix incorrect display height for zooming gesture on secondary displays.
+* Fix some feature state-related bugs.
+* Fix precision issue in hillshade causing terrain with steps.
+* Fix incorrect Asset File Source initialization.
 
 ## Dependencies
 * Update gl-native to [v11.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1), common to [24.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1).
@@ -52,6 +57,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix frames skipped when calling `mapView.setMaximumFps(..)` multiple times.
 * Allow to create text-field without any text
 * Fix potential data race in mapbox token initialization
+* Fix cronet request cancel due to connect timeout & reduce objects created.
 
 ## Dependencies
 * Update gl-native to [v11.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0), common to [24.15.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.0).
