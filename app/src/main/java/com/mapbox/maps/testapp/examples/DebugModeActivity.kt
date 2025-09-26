@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
@@ -18,6 +19,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
@@ -237,11 +240,56 @@ class DebugModeActivity : AppCompatActivity() {
       R.id.menu_debug_mode_padding_overlay -> {
         item.isChecked = toggleDebugOptions(MapViewDebugOptions.PADDING)
       }
+      R.id.menu_debug_mode_info -> {
+        showMapInfo()
+      }
       else -> {
         return super.onOptionsItemSelected(item)
       }
     }
     return true
+  }
+
+  private fun showMapInfo() {
+    // Get style information
+    val styleInfo = extractStyleInfo()
+    val styleMessage = """
+Style URL: ${styleInfo.styleURL}
+Modified: ${styleInfo.modifiedDate}
+SDK Compatibility:
+${styleInfo.sdkCompatibility}
+    """.trimIndent()
+
+    AlertDialog.Builder(this)
+      .setTitle("Style Info")
+      .setMessage(styleMessage)
+      .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+      .show()
+  }
+
+  private fun extractStyleInfo(): StyleInfo {
+    val style = mapboxMap.style
+    val styleJSON = style?.styleJSON ?: return StyleInfo("Unknown", "Unknown", "Unknown")
+
+    return runCatching {
+      val parsedStyle = Gson().fromJson(styleJSON, StyleJson::class.java)
+
+      val modifiedDate = parsedStyle.modified ?: "Unknown"
+
+      val sdkCompatibility = parsedStyle.metadata?.compatibility?.let { compatibility ->
+        val compatibilityParts = mutableListOf<String>()
+        compatibility.ios?.let { compatibilityParts.add("iOS: $it") }
+        compatibility.android?.let { compatibilityParts.add("Android: $it") }
+        compatibility.js?.let { compatibilityParts.add("JS: $it") }
+
+        if (compatibilityParts.isEmpty()) "Unknown" else compatibilityParts.joinToString("\n")
+      } ?: "Unknown"
+
+      val styleURL = parsedStyle.metadata?.origin?.takeIf { it.isNotBlank() }
+        ?: style.styleURI ?: "Unknown"
+
+      StyleInfo(modifiedDate, sdkCompatibility, styleURL)
+    }.getOrElse { StyleInfo("Unknown", "Unknown", "Unknown") }
   }
 
   private fun toggleDebugOptions(option: MapViewDebugOptions): Boolean {
@@ -343,3 +391,36 @@ class HexSpotlightView(context: Context, private val shape: List<Vec2>) : View(c
     return path
   }
 }
+
+data class StyleInfo(
+  val modifiedDate: String,
+  val sdkCompatibility: String,
+  val styleURL: String
+)
+
+data class StyleJson(
+  @SerializedName("modified")
+  val modified: String?,
+
+  @SerializedName("metadata")
+  val metadata: Metadata?
+)
+
+data class Metadata(
+  @SerializedName("mapbox:origin")
+  val origin: String?,
+
+  @SerializedName("mapbox:compatibility")
+  val compatibility: Compatibility?
+)
+
+data class Compatibility(
+  @SerializedName("ios")
+  val ios: String?,
+
+  @SerializedName("android")
+  val android: String?,
+
+  @SerializedName("js")
+  val js: String?
+)

@@ -130,6 +130,7 @@
     <string name="toggle_depth_buffer">Depth Buffer</string>
     <string name="toggle_camera_overlay">Camera state</string>
     <string name="toggle_padding_overlay">Padding overlay</string>
+    <string name="show_map_info">Style Info</string>
     <string name="fps">%1$s FPS</string>
 
     <string name="change_language_instruction">Make sure that the device\'s default language is not English</string>
