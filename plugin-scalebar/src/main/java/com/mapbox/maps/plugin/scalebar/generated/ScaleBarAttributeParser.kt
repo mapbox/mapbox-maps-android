@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
+import com.mapbox.maps.plugin.DistanceUnits
 import com.mapbox.maps.plugin.scalebar.LocaleUnitResolver
 import com.mapbox.maps.plugin.scalebar.R
 
@@ -38,6 +39,7 @@ internal object ScaleBarAttributeParser {
         textBorderWidth = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_scaleBarTextBorderWidth, 2f * pixelRatio)
         textSize = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_scaleBarTextSize, 8f * pixelRatio)
         isMetricUnits = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_scaleBarIsMetricUnits, LocaleUnitResolver.isMetricSystem)
+        distanceUnits = DistanceUnits.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_scaleBarDistanceUnits, LocaleUnitResolver.distanceUnits.ordinal)]
         refreshInterval = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_scaleBarRefreshInterval, 15).toLong()
         showTextBorder = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_scaleBarShowTextBorder, true)
         ratio = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_scaleBarRatio, 0.5f)

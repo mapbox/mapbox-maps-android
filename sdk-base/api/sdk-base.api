@@ -1118,6 +1118,36 @@ public abstract interface class com/mapbox/maps/plugin/ContextBinder {
 	public abstract fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
 }
 
+public final class com/mapbox/maps/plugin/DistanceUnits : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/maps/plugin/DistanceUnits$Companion;
+	public static final field IMPERIAL Lcom/mapbox/maps/plugin/DistanceUnits;
+	public static final field METRIC Lcom/mapbox/maps/plugin/DistanceUnits;
+	public static final field NAUTICAL Lcom/mapbox/maps/plugin/DistanceUnits;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOrdinal ()I
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/DistanceUnits;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/plugin/DistanceUnits$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/DistanceUnits;
+	public final fun values ()Ljava/util/List;
+}
+
+public final class com/mapbox/maps/plugin/DistanceUnits$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/DistanceUnits;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/plugin/DistanceUnits;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class com/mapbox/maps/plugin/InvalidPluginConfigurationException : java/lang/Exception {
 	public fun <init> (Ljava/lang/String;)V
 }
@@ -3045,10 +3075,11 @@ public final class com/mapbox/maps/plugin/scalebar/ScaleBarPlugin$DefaultImpls {
 
 public final class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (ZIFFFFIIIFFFFFZJZFZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ZIFFFFIIIFFFFFZJZFZLcom/mapbox/maps/plugin/DistanceUnits;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBorderWidth ()F
+	public final fun getDistanceUnits ()Lcom/mapbox/maps/plugin/DistanceUnits;
 	public final fun getEnabled ()Z
 	public final fun getHeight ()F
 	public final fun getMarginBottom ()F
@@ -3077,6 +3108,7 @@ public final class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings$Bu
 	public fun <init> ()V
 	public final fun build ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
 	public final fun getBorderWidth ()F
+	public final fun getDistanceUnits ()Lcom/mapbox/maps/plugin/DistanceUnits;
 	public final fun getEnabled ()Z
 	public final fun getHeight ()F
 	public final fun getMarginBottom ()F
@@ -3097,6 +3129,8 @@ public final class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings$Bu
 	public final fun isMetricUnits ()Z
 	public final fun setBorderWidth (F)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings$Builder;
 	public final synthetic fun setBorderWidth (F)V
+	public final fun setDistanceUnits (Lcom/mapbox/maps/plugin/DistanceUnits;)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings$Builder;
+	public final synthetic fun setDistanceUnits (Lcom/mapbox/maps/plugin/DistanceUnits;)V
 	public final fun setEnabled (Z)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings$Builder;
 	public final synthetic fun setEnabled (Z)V
 	public final fun setHeight (F)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings$Builder;
@@ -3147,6 +3181,7 @@ public abstract class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings
 	public fun <init> ()V
 	protected abstract fun applySettings ()V
 	public fun getBorderWidth ()F
+	public fun getDistanceUnits ()Lcom/mapbox/maps/plugin/DistanceUnits;
 	public fun getEnabled ()Z
 	public fun getHeight ()F
 	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
@@ -3168,6 +3203,7 @@ public abstract class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings
 	public fun getUseContinuousRendering ()Z
 	public fun isMetricUnits ()Z
 	public fun setBorderWidth (F)V
+	public fun setDistanceUnits (Lcom/mapbox/maps/plugin/DistanceUnits;)V
 	public fun setEnabled (Z)V
 	public fun setHeight (F)V
 	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;)V
@@ -3200,6 +3236,7 @@ public final class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsDat
 
 public abstract interface class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsInterface {
 	public abstract fun getBorderWidth ()F
+	public abstract fun getDistanceUnits ()Lcom/mapbox/maps/plugin/DistanceUnits;
 	public abstract fun getEnabled ()Z
 	public abstract fun getHeight ()F
 	public abstract fun getMarginBottom ()F
@@ -3220,6 +3257,7 @@ public abstract interface class com/mapbox/maps/plugin/scalebar/generated/ScaleB
 	public abstract fun getUseContinuousRendering ()Z
 	public abstract fun isMetricUnits ()Z
 	public abstract fun setBorderWidth (F)V
+	public abstract fun setDistanceUnits (Lcom/mapbox/maps/plugin/DistanceUnits;)V
 	public abstract fun setEnabled (Z)V
 	public abstract fun setHeight (F)V
 	public abstract fun setMarginBottom (F)V

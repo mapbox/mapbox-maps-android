@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.plugin.scalebar.generated
 
+import com.mapbox.maps.plugin.DistanceUnits
+
 /**
  * Abstract settings class for ScaleBarPlugin.
  *
@@ -236,6 +238,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
   /**
    * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. Default value: true.
    */
+  @Deprecated(message = "Use distanceUnits instead.")
   override var isMetricUnits: Boolean
     get() {
       return this.internalSettings.isMetricUnits
@@ -243,6 +246,20 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     set(value) {
       if (this.internalSettings.isMetricUnits != value) {
         this.internalSettings = this.internalSettings.toBuilder().setIsMetricUnits(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * Supported distance unit types. Default value: "metric".
+   */
+  override var distanceUnits: DistanceUnits
+    get() {
+      return this.internalSettings.distanceUnits
+    }
+    set(value) {
+      if (this.internalSettings.distanceUnits != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setDistanceUnits(value).build()
         applySettings()
       }
     }

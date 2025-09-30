@@ -44,8 +44,12 @@
     <!-- Defines text size of the scale bar. -->
     <public name="mapbox_scaleBarTextSize" type="attr" />
 
-    <!-- Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. -->
+    <!-- Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units.
+         {@deprecated Use distanceUnits instead.} -->
     <public name="mapbox_scaleBarIsMetricUnits" type="attr" />
+
+    <!-- Supported distance unit types. -->
+    <public name="mapbox_scaleBarDistanceUnits" type="attr" />
 
     <!-- Configures minimum refresh interval, in millisecond, default is 15. -->
     <public name="mapbox_scaleBarRefreshInterval" type="attr" />

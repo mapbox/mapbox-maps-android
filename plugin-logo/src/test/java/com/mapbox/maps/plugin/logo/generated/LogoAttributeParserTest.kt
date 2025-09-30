@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.logo.R
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -77,7 +78,7 @@ class LogoAttributeParserTest {
 
   @Test
   fun positionTest() {
-    every { typedArray.getInt(any(), any()) } returns 100
+    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_logoGravity, any()) } returns 100
     val settings = LogoAttributeParser.parseLogoSettings(context, attrs, 1.2f)
     assertEquals(100, settings.position)
   }

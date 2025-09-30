@@ -11,6 +11,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
 
+* Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
+
 # 11.16.0-beta.1 September 23, 2025
 
 ## Features ✨ and improvements 🏁

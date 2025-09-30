@@ -7,6 +7,7 @@ import android.view.Gravity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
+import com.mapbox.maps.plugin.DistanceUnits
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -106,6 +107,11 @@ class ScaleBarAttributeParserTest : BaseMapTest() {
       "isMetricUnits test failed..",
       false,
       mapView.scalebar.getSettings().isMetricUnits
+    )
+    assertEquals(
+      "distanceUnits test failed..",
+      DistanceUnits.IMPERIAL,
+      mapView.scalebar.getSettings().distanceUnits
     )
     assertEquals(
       "refreshInterval test failed..",

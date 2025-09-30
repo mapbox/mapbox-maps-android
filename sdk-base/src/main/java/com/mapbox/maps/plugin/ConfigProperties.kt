@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Parcelable
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapboxExperimental
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -216,5 +217,79 @@ enum class ModelElevationReference(val value: String) {
    */
   GROUND("ground"),
 }
+
+/**
+ * Supported distance unit types.
+ *
+ * @param value String value of this property
+ */
+@Parcelize
+class DistanceUnits(val value: String) : Parcelable {
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is DistanceUnits &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "DistanceUnits(value=$value)"
+
+  /**
+   * Returns the ordinal of this constant.
+   */
+  @IgnoredOnParcel
+  val ordinal: Int = when (this.value) {
+    "metric" -> 0
+    "imperial" -> 1
+    "nautical" -> 2
+    else -> -1
+  }
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Metric units using meters and kilometers. The scale bar will automatically choose between meters and kilometers based on the distance being displayed for optimal readability.
+     */
+     @JvmField
+    val METRIC = DistanceUnits("metric")
+    /**
+     * Imperial units using feet for short distances and miles for longer distances.  The scale bar will display distances in feet for small distances and automatically switch to miles for longer distances.
+     */
+     @JvmField
+    val IMPERIAL = DistanceUnits("imperial")
+    /**
+     * Nautical units using fathoms for short distances and nautical miles for longer distances. The scale bar will display distances in fathoms for small distances and automatically switch to nautical miles for longer distances. Commonly used for marine and aviation navigation.
+     */
+     @JvmField
+    val NAUTICAL = DistanceUnits("nautical")
+
+    /**
+     * Utility function to get [DistanceUnits] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): DistanceUnits {
+      return when (value) {
+        "METRIC" -> METRIC
+        "IMPERIAL" -> IMPERIAL
+        "NAUTICAL" -> NAUTICAL
+        else -> throw RuntimeException("DistanceUnits.valueOf does not support [$value]")
+      }
+    }
+
+    /**
+     * Returns an array containing the constants of this type, in the order they're declared. This method may be used to iterate over the constants.
+     */
+     fun values(): List<DistanceUnits> = listOf(METRIC, IMPERIAL, NAUTICAL)
+  }
+ }
 
 // End of generated file.

@@ -66,8 +66,18 @@
         <attr name="mapbox_scaleBarTextBorderWidth" format="dimension"/>
         <!-- Defines text size of the scale bar. -->
         <attr name="mapbox_scaleBarTextSize" format="dimension"/>
-        <!-- Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. -->
+        <!-- Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units.
+            {@deprecated Use distanceUnits instead.} -->
         <attr name="mapbox_scaleBarIsMetricUnits" format="boolean"/>
+        <!-- Supported distance unit types. -->
+        <attr name="mapbox_scaleBarDistanceUnits" format="enum">
+          <!-- Metric units using meters and kilometers. The scale bar will automatically choose between meters and kilometers based on the distance being displayed for optimal readability. -->
+          <enum name="metric" value="0"/>
+          <!-- Imperial units using feet for short distances and miles for longer distances.  The scale bar will display distances in feet for small distances and automatically switch to miles for longer distances. -->
+          <enum name="imperial" value="1"/>
+          <!-- Nautical units using fathoms for short distances and nautical miles for longer distances. The scale bar will display distances in fathoms for small distances and automatically switch to nautical miles for longer distances. Commonly used for marine and aviation navigation. -->
+          <enum name="nautical" value="2"/>
+        </attr>
         <!-- Configures minimum refresh interval, in millisecond, default is 15. -->
         <attr name="mapbox_scaleBarRefreshInterval" format="integer"/>
         <!-- Configures whether to show the text border or not, default is true. -->

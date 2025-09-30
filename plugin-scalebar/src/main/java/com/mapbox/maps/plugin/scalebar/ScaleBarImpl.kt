@@ -14,6 +14,7 @@ import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
 import androidx.core.util.component1
 import androidx.core.util.component2
+import com.mapbox.maps.plugin.DistanceUnits
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
@@ -87,6 +88,7 @@ class ScaleBarImpl : ScaleBar, View {
     }
 
   private val refreshHandler: RefreshHandler
+
   private val decimalFormat = DecimalFormat("0.#")
   private var isScaleBarVisible = false
   private var reusableCanvas: Canvas? = null
@@ -99,8 +101,18 @@ class ScaleBarImpl : ScaleBar, View {
       textPaint.color = value.textColor
       textPaint.textSize = value.textSize
       strokePaint.textSize = value.textSize
-      scaleTable = if (value.isMetricUnits) metricTable else imperialTable
-      unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
+      scaleTable = when (value.distanceUnits) {
+        DistanceUnits.METRIC -> metricTable
+        DistanceUnits.IMPERIAL -> imperialTable
+        DistanceUnits.NAUTICAL -> nauticalTable
+        else -> metricTable
+      }
+      unit = when (value.distanceUnits) {
+        DistanceUnits.METRIC -> METER_UNIT
+        DistanceUnits.IMPERIAL -> FEET_UNIT
+        DistanceUnits.NAUTICAL -> FATHOM_UNIT
+        else -> METER_UNIT
+      }
       strokePaint.strokeWidth = if (value.showTextBorder) value.textBorderWidth else 0F
       enable = value.enabled
       useContinuousRendering = value.useContinuousRendering
@@ -135,7 +147,11 @@ class ScaleBarImpl : ScaleBar, View {
     set(value) {
       // We want to store imperial value but we're getting meters so transform it before checking
       // if it's different
-      val valueCandidate = if (settings.isMetricUnits) value else value * FEET_PER_METER
+      val valueCandidate = when (settings.distanceUnits) {
+        DistanceUnits.METRIC -> value
+        DistanceUnits.IMPERIAL, DistanceUnits.NAUTICAL -> value * FEET_PER_METER
+        else -> value
+      }
       if (field != valueCandidate) {
         field = valueCandidate
         if (useContinuousRendering) {
@@ -479,12 +495,20 @@ class ScaleBarImpl : ScaleBar, View {
   internal fun getDistanceText(distance: Float, unit: String): String = when {
     distance == 0F -> "0"
     METER_UNIT == unit -> {
-      if (distance < KILOMETER) decimalFormat.format(distance) + unit
-      else decimalFormat.format(distance * 1.0 / KILOMETER) + KILOMETER_UNIT
+      if (distance < KILOMETER) decimalFormat.format(distance) + METER_UNIT
+      else decimalFormat.format(distance * 1f / KILOMETER) + KILOMETER_UNIT
+    }
+    FEET_UNIT == unit -> {
+      if (distance < FEET_PER_MILE * 0.2) decimalFormat.format(distance) + FEET_UNIT
+      else decimalFormat.format(distance * 1f / FEET_PER_MILE) + MILE_UNIT
+    }
+    FATHOM_UNIT == unit -> {
+      if (distance < FEET_PER_NAUTICAL_MILE * 0.2) decimalFormat.format(distance / FEET_PER_FATHOM) + FATHOM_UNIT
+      else decimalFormat.format(distance * 1f / FEET_PER_NAUTICAL_MILE) + NAUTICAL_MILE_UNIT
     }
     else -> {
-      if (distance < FEET_PER_MILE) decimalFormat.format(distance) + unit
-      else decimalFormat.format(distance * 1.0 / FEET_PER_MILE) + MILE_UNIT
+      if (distance < KILOMETER) decimalFormat.format(distance) + METER_UNIT
+      else decimalFormat.format(distance * 1f / KILOMETER) + KILOMETER_UNIT
     }
   }
 

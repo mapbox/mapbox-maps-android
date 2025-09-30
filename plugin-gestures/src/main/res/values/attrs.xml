@@ -36,7 +36,8 @@
         <attr name="mapbox_gesturesRotateDecelerationEnabled" format="boolean"/>
         <!-- Whether a deceleration animation following a scroll gesture is enabled. True by default. -->
         <attr name="mapbox_gesturesScrollDecelerationEnabled" format="boolean"/>
-        <!-- Whether rotate threshold increases when pinching to zoom. true by default. -->
+        <!-- Whether rotate threshold increases when pinching to zoom. true by default.
+            {@deprecated This property has no effect} -->
         <attr name="mapbox_gesturesIncreaseRotateThresholdWhenPinchingToZoom" format="boolean"/>
         <!-- Whether pinch to zoom threshold increases when rotating. true by default. -->
         <attr name="mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating" format="boolean"/>

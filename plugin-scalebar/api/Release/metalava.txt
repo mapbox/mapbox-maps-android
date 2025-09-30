@@ -2,7 +2,9 @@
 package com.mapbox.maps.plugin.scalebar {
 
   public final class LocaleUnitResolver {
+    method public com.mapbox.maps.plugin.DistanceUnits getDistanceUnits();
     method public boolean isMetricSystem();
+    property public final com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public final boolean isMetricSystem;
     field public static final com.mapbox.maps.plugin.scalebar.LocaleUnitResolver INSTANCE;
   }

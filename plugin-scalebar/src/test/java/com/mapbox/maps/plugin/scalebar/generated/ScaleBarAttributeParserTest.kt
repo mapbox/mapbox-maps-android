@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.DistanceUnits
+import com.mapbox.maps.plugin.scalebar.R
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -77,7 +79,7 @@ class ScaleBarAttributeParserTest {
 
   @Test
   fun positionTest() {
-    every { typedArray.getInt(any(), any()) } returns 100
+    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_scaleBarGravity, any()) } returns 100
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
     assertEquals(100, settings.position)
   }
@@ -193,6 +195,27 @@ class ScaleBarAttributeParserTest {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
     assertEquals(false, settings.isMetricUnits)
+  }
+
+  @Test
+  fun distanceUnitsTestMETRIC() {
+    every { typedArray.getInt(any(), any()) } returns DistanceUnits.METRIC.ordinal
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
+    assertEquals(DistanceUnits.METRIC, settings.distanceUnits)
+  }
+
+  @Test
+  fun distanceUnitsTestIMPERIAL() {
+    every { typedArray.getInt(any(), any()) } returns DistanceUnits.IMPERIAL.ordinal
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
+    assertEquals(DistanceUnits.IMPERIAL, settings.distanceUnits)
+  }
+
+  @Test
+  fun distanceUnitsTestNAUTICAL() {
+    every { typedArray.getInt(any(), any()) } returns DistanceUnits.NAUTICAL.ordinal
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
+    assertEquals(DistanceUnits.NAUTICAL, settings.distanceUnits)
   }
 
   @Test

@@ -5,15 +5,9 @@ package com.mapbox.maps.plugin.scalebar.generated
 import android.graphics.Color
 import android.os.Parcelable
 import android.view.Gravity
-import java.util.Objects
-import kotlin.Any
-import kotlin.Boolean
-import kotlin.Float
-import kotlin.Int
-import kotlin.Long
-import kotlin.Unit
-import kotlin.jvm.JvmSynthetic
+import com.mapbox.maps.plugin.DistanceUnits
 import kotlinx.parcelize.Parcelize
+import java.util.Objects
 
 /**
  * Shows the scale bar on the map.
@@ -108,7 +102,12 @@ public class ScaleBarSettings private constructor(
    * Could be set to True to produce correct GPU frame metrics when running gfxinfo command. Default
    * value: false.
    */
-  public val useContinuousRendering: Boolean
+  public val useContinuousRendering: Boolean,
+
+  /**
+   * The type of the distance unit the scale bar displays in. Default value: "metric".
+   */
+  public val distanceUnits: DistanceUnits
 ) : Parcelable {
   /**
    * Overloaded toString function.
@@ -120,7 +119,7 @@ public class ScaleBarSettings private constructor(
       textBarMargin=$textBarMargin, textBorderWidth=$textBorderWidth, textSize=$textSize,
       isMetricUnits=$isMetricUnits, refreshInterval=$refreshInterval,
       showTextBorder=$showTextBorder, ratio=$ratio,
-      useContinuousRendering=$useContinuousRendering)""".trimIndent()
+      useContinuousRendering=$useContinuousRendering, distanceUnits=$distanceUnits)""".trimIndent()
 
   /**
    * Overloaded equals function.
@@ -139,7 +138,8 @@ public class ScaleBarSettings private constructor(
         textBorderWidth.compareTo(other.textBorderWidth) == 0 &&
         textSize.compareTo(other.textSize) == 0 && isMetricUnits == other.isMetricUnits &&
         refreshInterval == other.refreshInterval && showTextBorder == other.showTextBorder &&
-        ratio.compareTo(other.ratio) == 0 && useContinuousRendering == other.useContinuousRendering
+        ratio.compareTo(other.ratio) == 0 && useContinuousRendering == other.useContinuousRendering &&
+        distanceUnits == other.distanceUnits
   }
 
   /**
@@ -148,7 +148,7 @@ public class ScaleBarSettings private constructor(
   public override fun hashCode(): Int = Objects.hash(enabled, position, marginLeft, marginTop,
       marginRight, marginBottom, textColor, primaryColor, secondaryColor, borderWidth, height,
       textBarMargin, textBorderWidth, textSize, isMetricUnits, refreshInterval, showTextBorder,
-      ratio, useContinuousRendering)
+      ratio, useContinuousRendering, distanceUnits)
 
   /**
    * Convert to Builder allowing to change class properties.
@@ -161,6 +161,7 @@ public class ScaleBarSettings private constructor(
       .setIsMetricUnits(isMetricUnits) .setRefreshInterval(refreshInterval)
       .setShowTextBorder(showTextBorder) .setRatio(ratio)
       .setUseContinuousRendering(useContinuousRendering)
+      .setDistanceUnits(distanceUnits)
 
   /**
    * Composes and builds a [ScaleBarSettings] object.
@@ -294,6 +295,12 @@ public class ScaleBarSettings private constructor(
      */
     @set:JvmSynthetic
     public var useContinuousRendering: Boolean = false
+
+    /**
+     * The type of the distance unit the scale bar displays in. Default value: "metric".
+     */
+    @set:JvmSynthetic
+    public var distanceUnits: DistanceUnits = DistanceUnits.METRIC
 
     /**
      * Setter for enabled: whether the scale is visible on the map. Default value: true.
@@ -466,8 +473,10 @@ public class ScaleBarSettings private constructor(
      * @param isMetricUnits
      * @return Builder
      */
+    @Deprecated(message = "Use setDistanceUnits() instead.")
     public fun setIsMetricUnits(isMetricUnits: Boolean): Builder {
       this.isMetricUnits = isMetricUnits
+      this.distanceUnits = if (isMetricUnits) DistanceUnits.METRIC else DistanceUnits.IMPERIAL
       return this
     }
 
@@ -523,6 +532,18 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
+     * The type of the distance unit the scale bar displays in. Default value: "metric".
+     *
+     * @param units
+     * @return Builder
+     */
+    public fun setDistanceUnits(units: DistanceUnits): Builder {
+      this.distanceUnits = units
+      this.isMetricUnits = units == DistanceUnits.METRIC
+      return this
+    }
+
+    /**
      * Returns a [ScaleBarSettings] reference to the object being constructed by the builder.
      *
      * @return ScaleBarSettings
@@ -530,7 +551,7 @@ public class ScaleBarSettings private constructor(
     public fun build(): ScaleBarSettings = ScaleBarSettings(enabled, position, marginLeft,
         marginTop, marginRight, marginBottom, textColor, primaryColor, secondaryColor, borderWidth,
         height, textBarMargin, textBorderWidth, textSize, isMetricUnits, refreshInterval,
-        showTextBorder, ratio, useContinuousRendering)
+        showTextBorder, ratio, useContinuousRendering, distanceUnits)
   }
 }
 

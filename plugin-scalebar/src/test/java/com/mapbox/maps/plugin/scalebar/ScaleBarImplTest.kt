@@ -7,6 +7,7 @@ import android.util.Pair
 import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.test.core.app.ApplicationProvider
+import com.mapbox.maps.plugin.DistanceUnits
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINUOUS
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_ON_DEMAND
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
@@ -42,7 +43,7 @@ class ScaleBarImplTest {
     textBarMargin = 8f
     textBorderWidth = 2f
     textSize = 8f
-    isMetricUnits = true
+    distanceUnits = DistanceUnits.METRIC
     refreshInterval = 15
     showTextBorder = true
     ratio = 0.5f
@@ -77,8 +78,10 @@ class ScaleBarImplTest {
   @Test
   fun scaleTable() {
     assertEquals(metricTable, scaleBarView.scaleTable)
-    scaleBarView.settings = scaleBarSettings.toBuilder().setIsMetricUnits(false).build()
+    scaleBarView.settings = scaleBarSettings.toBuilder().setDistanceUnits(DistanceUnits.IMPERIAL).build()
     assertEquals(imperialTable, scaleBarView.scaleTable)
+    scaleBarView.settings = scaleBarSettings.toBuilder().setDistanceUnits(DistanceUnits.NAUTICAL).build()
+    assertEquals(nauticalTable, scaleBarView.scaleTable)
   }
 
   @Test
@@ -149,7 +152,7 @@ class ScaleBarImplTest {
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ScaleBarImplGetDistanceTextTest(
-  private val isMetricUnits: Boolean,
+  private val units: DistanceUnits,
   private val distance: Float,
   private val expectedDistanceText: String
 ) {
@@ -165,41 +168,56 @@ class ScaleBarImplGetDistanceTextTest(
 
   private companion object {
     @JvmStatic
-    @ParameterizedRobolectricTestRunner.Parameters(name = "isMetric: {0}, distance: {1}")
+    @ParameterizedRobolectricTestRunner.Parameters(name = "units: {0}, distance: {1}")
     fun data() = listOf(
-      arrayOf(true, 0F, "0"),
-      arrayOf(true, 0.1F, "0.1 m"),
-      arrayOf(true, 0.5F, "0.5 m"),
-      arrayOf(true, 100F, "100 m"),
-      arrayOf(true, 999F, "999 m"),
-      arrayOf(true, 1000F, "1 km"),
-      arrayOf(true, 1001F, "1 km"),
-      arrayOf(true, 4444F, "4.4 km"),
-      arrayOf(true, 5555F, "5.6 km"),
-      arrayOf(true, 10000F, "10 km"),
-      arrayOf(false, 0F, "0"),
-      arrayOf(false, 0.1F, "0.1 ft"),
-      arrayOf(false, 0.5F, "0.5 ft"),
-      arrayOf(false, 100F, "100 ft"),
-      arrayOf(false, 5279F, "5279 ft"),
-      arrayOf(false, 5280F, "1 mi"),
-      arrayOf(false, 6000F, "1.1 mi"),
-      arrayOf(false, 10000F, "1.9 mi"),
-      arrayOf(false, 10560F, "2 mi"),
-      arrayOf(false, 52800F, "10 mi"),
-    )
+      arrayOf(DistanceUnits.METRIC, 0F, "0"),
+      arrayOf(DistanceUnits.METRIC, 0.1F, "0.1 m"),
+      arrayOf(DistanceUnits.METRIC, 0.5F, "0.5 m"),
+      arrayOf(DistanceUnits.METRIC, 100F, "100 m"),
+      arrayOf(DistanceUnits.METRIC, 999F, "999 m"),
+      arrayOf(DistanceUnits.METRIC, 1000F, "1 km"),
+      arrayOf(DistanceUnits.METRIC, 1001F, "1 km"),
+      arrayOf(DistanceUnits.METRIC, 4444F, "4.4 km"),
+      arrayOf(DistanceUnits.METRIC, 5555F, "5.6 km"),
+      arrayOf(DistanceUnits.METRIC, 10000F, "10 km"),
+      arrayOf(DistanceUnits.IMPERIAL, 0F, "0"),
+      arrayOf(DistanceUnits.IMPERIAL, 0.1F, "0.1 ft"),
+      arrayOf(DistanceUnits.IMPERIAL, 0.5F, "0.5 ft"),
+      arrayOf(DistanceUnits.IMPERIAL, 100F, "100 ft"),
+      arrayOf(DistanceUnits.IMPERIAL, 5279F, "1 mi"),
+      arrayOf(DistanceUnits.IMPERIAL, 5280F, "1 mi"),
+      arrayOf(DistanceUnits.IMPERIAL, 6000F, "1.1 mi"),
+      arrayOf(DistanceUnits.IMPERIAL, 10000F, "1.9 mi"),
+      arrayOf(DistanceUnits.IMPERIAL, 10560F, "2 mi"),
+      arrayOf(DistanceUnits.IMPERIAL, 52800F, "10 mi"),
+      arrayOf(DistanceUnits.NAUTICAL, 0F, "0"),
+      arrayOf(DistanceUnits.NAUTICAL, 0.6F, "0.1 fth"),
+      arrayOf(DistanceUnits.NAUTICAL, 3F, "0.5 fth"),
+      arrayOf(DistanceUnits.NAUTICAL, 600F, "100 fth"),
+      arrayOf(DistanceUnits.NAUTICAL, 6075F, "1 nmi"),
+      arrayOf(DistanceUnits.NAUTICAL, 6076.12F, "1 nmi"),
+      arrayOf(DistanceUnits.NAUTICAL, 6685F, "1.1 nmi"),
+      arrayOf(DistanceUnits.NAUTICAL, 11545F, "1.9 nmi"),
+      arrayOf(DistanceUnits.NAUTICAL, 12152.24F, "2 nmi"),
+      arrayOf(DistanceUnits.NAUTICAL, 60761.2F, "10 nmi"),
+      )
   }
 
   @Test
   fun getDistanceText() {
-    val unit = if (isMetricUnits) METER_UNIT else FEET_UNIT
+    val unit = when (units) {
+      DistanceUnits.METRIC -> METER_UNIT
+      DistanceUnits.IMPERIAL -> FEET_UNIT
+      DistanceUnits.NAUTICAL -> FATHOM_UNIT
+      else -> METER_UNIT
+    }
     assertEquals(expectedDistanceText, scaleBarView.getDistanceText(distance, unit))
   }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ScaleBarImplScaleBarSegmentsTest(
-  private val isMetricUnits: Boolean,
+  private val units: DistanceUnits,
   private val scaleTable: List<Pair<Int, Int>>,
 ) {
   private lateinit var scaleBarView: ScaleBarImpl
@@ -214,18 +232,24 @@ class ScaleBarImplScaleBarSegmentsTest(
 
   private companion object {
     @JvmStatic
-    @ParameterizedRobolectricTestRunner.Parameters(name = "isMetric: {0}")
+    @ParameterizedRobolectricTestRunner.Parameters(name = "units: {0}")
     fun data() = listOf(
-      arrayOf(true, metricTable),
-      arrayOf(false, imperialTable),
+      arrayOf(DistanceUnits.METRIC, metricTable),
+      arrayOf(DistanceUnits.IMPERIAL, imperialTable),
+      arrayOf(DistanceUnits.NAUTICAL, nauticalTable),
     )
   }
 
   @Test
   fun `verify below and above scale bar segments`() {
-    scaleBarView.settings = scaleBarView.settings.toBuilder().setIsMetricUnits(isMetricUnits).build()
+    scaleBarView.settings = scaleBarView.settings.toBuilder().setDistanceUnits(units).build()
     scaleBarView.distancePerPixel = 0.01F
-    val unit = if (isMetricUnits) METER_UNIT else FEET_UNIT
+    val unit = when (units) {
+      DistanceUnits.METRIC -> METER_UNIT
+      DistanceUnits.IMPERIAL -> FEET_UNIT
+      DistanceUnits.NAUTICAL -> FATHOM_UNIT
+      else -> METER_UNIT
+    }
     // Special case where max distance is smaller than the first entry segment in the table
     val belowFirstUnitBarDistance = (scaleTable[0].first.toFloat() / scaleTable[0].second) - 0.1F
     val result =

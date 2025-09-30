@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.plugin.scalebar.generated
 
+import com.mapbox.maps.plugin.DistanceUnits
+
 /**
  * Interface that defines the public settings interface for ScaleBarPlugin.
  */
@@ -93,7 +95,13 @@ interface ScaleBarSettingsInterface {
   /**
    * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. Default value: true.
    */
+  @Deprecated(message = "Use distanceUnits instead.")
   var isMetricUnits: Boolean
+
+  /**
+   * Supported distance unit types. Default value: "metric".
+   */
+  var distanceUnits: DistanceUnits
 
   /**
    * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.

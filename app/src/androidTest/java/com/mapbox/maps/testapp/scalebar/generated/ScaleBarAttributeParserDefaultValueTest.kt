@@ -99,6 +99,11 @@ class ScaleBarAttributeParserDefaultValueTest : BaseMapTest() {
       mapView.scalebar.getSettings().isMetricUnits
     )
     assertEquals(
+      "distanceUnits test failed..",
+      LocaleUnitResolver.distanceUnits,
+      mapView.scalebar.getSettings().distanceUnits
+    )
+    assertEquals(
       "refreshInterval test failed..",
       15,
       mapView.scalebar.getSettings().refreshInterval

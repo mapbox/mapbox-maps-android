@@ -5,6 +5,7 @@
 package com.mapbox.maps.plugin.scalebar.generated
 
 import android.os.Parcelable
+import com.mapbox.maps.plugin.DistanceUnits
 import com.tobrun.datacompat.annotation.DataCompat
 import com.tobrun.datacompat.annotation.Default
 import kotlinx.parcelize.Parcelize
@@ -110,6 +111,12 @@ private data class ScaleBarSettingsData(
    */
   @Default("true")
   var isMetricUnits: Boolean,
+
+  /**
+   * Supported distance unit types. Default value: "metric".
+   */
+  @Default("DistanceUnits.METRIC")
+  var distanceUnits: DistanceUnits,
 
   /**
    * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.

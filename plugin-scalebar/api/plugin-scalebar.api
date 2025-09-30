@@ -1,5 +1,6 @@
 public final class com/mapbox/maps/plugin/scalebar/LocaleUnitResolver {
 	public static final field INSTANCE Lcom/mapbox/maps/plugin/scalebar/LocaleUnitResolver;
+	public final fun getDistanceUnits ()Lcom/mapbox/maps/plugin/DistanceUnits;
 	public final fun isMetricSystem ()Z
 }
 

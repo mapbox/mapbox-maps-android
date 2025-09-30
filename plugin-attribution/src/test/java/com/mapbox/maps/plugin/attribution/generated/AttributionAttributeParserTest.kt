@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.attribution.R
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -86,7 +87,7 @@ class AttributionAttributeParserTest {
 
   @Test
   fun positionTest() {
-    every { typedArray.getInt(any(), any()) } returns 100
+    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_attributionGravity, any()) } returns 100
     val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
     assertEquals(100, settings.position)
   }

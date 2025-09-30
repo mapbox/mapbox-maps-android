@@ -5,10 +5,14 @@ import android.util.Pair
 internal const val FEET_PER_METER = 3.2808F
 internal const val KILOMETER = 1000
 internal const val FEET_PER_MILE = 5280
+internal const val FEET_PER_FATHOM = 6
+internal const val FEET_PER_NAUTICAL_MILE = 6076.12F
 internal const val METER_UNIT = " m"
 internal const val FEET_UNIT = " ft"
+internal const val FATHOM_UNIT = " fth"
 internal const val KILOMETER_UNIT = " km"
 internal const val MILE_UNIT = " mi"
+internal const val NAUTICAL_MILE_UNIT = " nmi"
 internal val metricTable = listOf(
   Pair(1, 2),
   Pair(2, 2),
@@ -91,4 +95,33 @@ internal val imperialTable = listOf(
   Pair(6000 * FEET_PER_MILE, 3),
   Pair(8000 * FEET_PER_MILE, 2),
   Pair(10000 * FEET_PER_MILE, 2)
+)
+internal var nauticalTable = listOf(
+  Pair(1 * FEET_PER_FATHOM, 2),
+  Pair(2 * FEET_PER_FATHOM, 2),
+  Pair(3 * FEET_PER_FATHOM, 3),
+  Pair(5 * FEET_PER_FATHOM, 2),
+  Pair(10 * FEET_PER_FATHOM, 2),
+  Pair(20 * FEET_PER_FATHOM, 2),
+  Pair(30 * FEET_PER_FATHOM, 3),
+  Pair(50 * FEET_PER_FATHOM, 2),
+  Pair(100 * FEET_PER_FATHOM, 2),
+  Pair(200 * FEET_PER_FATHOM, 2),
+  Pair((0.5 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((1 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((2 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((3 * FEET_PER_NAUTICAL_MILE).toInt(), 3),
+  Pair((5 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((10 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((20 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((30 * FEET_PER_NAUTICAL_MILE).toInt(), 3),
+  Pair((50 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((100 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((200 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((300 * FEET_PER_NAUTICAL_MILE).toInt(), 3),
+  Pair((500 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((1000 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((2000 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
+  Pair((3000 * FEET_PER_NAUTICAL_MILE).toInt(), 3),
+  Pair((5000 * FEET_PER_NAUTICAL_MILE).toInt(), 2),
 )

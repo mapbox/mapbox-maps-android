@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.scalebar
 
+import com.mapbox.maps.plugin.DistanceUnits
 import java.util.*
 
 /**
@@ -15,6 +16,14 @@ object LocaleUnitResolver {
         ImperialCountryCode.US, ImperialCountryCode.LIBERIA, ImperialCountryCode.MYANMAR -> false
         else -> true
       }
+    }
+
+  /**
+   * @return distance units for user country
+   */
+  val distanceUnits: DistanceUnits
+    get() {
+      return if (isMetricSystem) DistanceUnits.METRIC else DistanceUnits.IMPERIAL
     }
 
   /**

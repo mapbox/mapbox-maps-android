@@ -18,6 +18,7 @@
     mapbox:mapbox_scaleBarTextBorderWidth = "10dp"
     mapbox:mapbox_scaleBarTextSize = "10dp"
     mapbox:mapbox_scaleBarIsMetricUnits = "false"
+    mapbox:mapbox_scaleBarDistanceUnits = "imperial"
     mapbox:mapbox_scaleBarRefreshInterval = "1000000"
     mapbox:mapbox_scaleBarShowTextBorder = "false"
     mapbox:mapbox_scaleBarRatio = "0.9"

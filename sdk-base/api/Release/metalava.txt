@@ -1117,6 +1117,24 @@ package com.mapbox.maps.plugin {
     method public void bind(android.content.Context context, android.util.AttributeSet? attrs, float pixelRatio);
   }
 
+  @kotlinx.parcelize.Parcelize public final class DistanceUnits implements android.os.Parcelable {
+    ctor public DistanceUnits(String value);
+    method public int getOrdinal();
+    method public String getValue();
+    method public static com.mapbox.maps.plugin.DistanceUnits valueOf(String value);
+    property public final int ordinal;
+    property public final String value;
+    field public static final com.mapbox.maps.plugin.DistanceUnits.Companion Companion;
+    field public static final com.mapbox.maps.plugin.DistanceUnits IMPERIAL;
+    field public static final com.mapbox.maps.plugin.DistanceUnits METRIC;
+    field public static final com.mapbox.maps.plugin.DistanceUnits NAUTICAL;
+  }
+
+  public static final class DistanceUnits.Companion {
+    method public com.mapbox.maps.plugin.DistanceUnits valueOf(String value);
+    method public java.util.List<com.mapbox.maps.plugin.DistanceUnits> values();
+  }
+
   public final class InvalidPluginConfigurationException extends java.lang.Exception {
     ctor public InvalidPluginConfigurationException(String exceptionMessage);
   }
@@ -3047,6 +3065,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
 
   @kotlinx.parcelize.Parcelize public final class ScaleBarSettings implements android.os.Parcelable {
     method public float getBorderWidth();
+    method public com.mapbox.maps.plugin.DistanceUnits getDistanceUnits();
     method public boolean getEnabled();
     method public float getHeight();
     method public float getMarginBottom();
@@ -3067,6 +3086,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public boolean isMetricUnits();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder toBuilder();
     property public final float borderWidth;
+    property public final com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public final boolean enabled;
     property public final float height;
     property public final boolean isMetricUnits;
@@ -3091,6 +3111,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     ctor public ScaleBarSettings.Builder();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings build();
     method public float getBorderWidth();
+    method public com.mapbox.maps.plugin.DistanceUnits getDistanceUnits();
     method public boolean getEnabled();
     method public float getHeight();
     method public float getMarginBottom();
@@ -3110,9 +3131,10 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public boolean getUseContinuousRendering();
     method public boolean isMetricUnits();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setBorderWidth(float borderWidth);
+    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits units);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setEnabled(boolean enabled);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setHeight(float height);
-    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
+    method @Deprecated public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginBottom(float marginBottom);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginLeft(float marginLeft);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginRight(float marginRight);
@@ -3129,6 +3151,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setTextSize(float textSize);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setUseContinuousRendering(boolean useContinuousRendering);
     property public final float borderWidth;
+    property public final com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public final boolean enabled;
     property public final float height;
     property public final boolean isMetricUnits;
@@ -3153,6 +3176,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     ctor public ScaleBarSettingsBase();
     method protected abstract void applySettings();
     method public float getBorderWidth();
+    method public com.mapbox.maps.plugin.DistanceUnits getDistanceUnits();
     method public boolean getEnabled();
     method public float getHeight();
     method protected abstract com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings getInternalSettings();
@@ -3172,8 +3196,9 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public int getTextColor();
     method public float getTextSize();
     method public boolean getUseContinuousRendering();
-    method public boolean isMetricUnits();
+    method @Deprecated public boolean isMetricUnits();
     method public void setBorderWidth(float);
+    method public void setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits);
     method public void setEnabled(boolean);
     method public void setHeight(float);
     method protected abstract void setInternalSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings);
@@ -3181,7 +3206,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public void setMarginLeft(float);
     method public void setMarginRight(float);
     method public void setMarginTop(float);
-    method public void setMetricUnits(boolean);
+    method @Deprecated public void setMetricUnits(boolean);
     method public void setPosition(int);
     method public void setPrimaryColor(int);
     method public void setRatio(float);
@@ -3195,10 +3220,11 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public void setUseContinuousRendering(boolean);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder,kotlin.Unit> block);
     property public float borderWidth;
+    property public com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public boolean enabled;
     property public float height;
     property protected abstract com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings internalSettings;
-    property public boolean isMetricUnits;
+    property @Deprecated public boolean isMetricUnits;
     property public float marginBottom;
     property public float marginLeft;
     property public float marginRight;
@@ -3218,6 +3244,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
 
   public interface ScaleBarSettingsInterface {
     method public float getBorderWidth();
+    method public com.mapbox.maps.plugin.DistanceUnits getDistanceUnits();
     method public boolean getEnabled();
     method public float getHeight();
     method public float getMarginBottom();
@@ -3236,15 +3263,16 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public int getTextColor();
     method public float getTextSize();
     method public boolean getUseContinuousRendering();
-    method public boolean isMetricUnits();
+    method @Deprecated public boolean isMetricUnits();
     method public void setBorderWidth(float);
+    method public void setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits);
     method public void setEnabled(boolean);
     method public void setHeight(float);
     method public void setMarginBottom(float);
     method public void setMarginLeft(float);
     method public void setMarginRight(float);
     method public void setMarginTop(float);
-    method public void setMetricUnits(boolean);
+    method @Deprecated public void setMetricUnits(boolean);
     method public void setPosition(int);
     method public void setPrimaryColor(int);
     method public void setRatio(float);
@@ -3258,9 +3286,10 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public void setUseContinuousRendering(boolean);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder,kotlin.Unit> block);
     property public abstract float borderWidth;
+    property public abstract com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public abstract boolean enabled;
     property public abstract float height;
-    property public abstract boolean isMetricUnits;
+    property @Deprecated public abstract boolean isMetricUnits;
     property public abstract float marginBottom;
     property public abstract float marginLeft;
     property public abstract float marginRight;
