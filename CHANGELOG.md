@@ -71,6 +71,15 @@ configurations {
     }
 }
 ```
+# 11.14.7 September 29, 2025
+
+## Dependencies
+* Update gl-native to [v11.14.7](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.7), common to [24.14.7](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.7).
+
+# 11.14.6 September 18, 2025
+
+## Dependencies
+* Update gl-native to [v11.14.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.6), common to [24.14.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.14.6).
 
 # 11.14.4 September 03, 2025
 
