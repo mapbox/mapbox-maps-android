@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.15.2 October 02, 2025
+## Features ✨ and improvements 🏁
+* Reduce number of allocations for network requests.
+
+## Dependencies
+* Update gl-native to [v11.15.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.2), common to [24.15.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.2).
+
 # 11.15.1 September 26, 2025
 ## Features ✨ and improvements 🏁
 * Rewrite OpenGL Buffer Management for Performance
