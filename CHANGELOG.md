@@ -29,6 +29,7 @@ Mapbox welcomes participation and contributions from everyone.
 * `com.mapbox.maps.MapboxTracing` was deprecated and moved to package `com.mapbox.common.MapboxTracing`.
 
 ## Bug fixes 🐞
+* Fix incorrect color rendering for gradients and interpolations with zero alpha channel.
 * Fix incorrect positioning of map marker annotations, when coordinates do not change.
 * Fix incorrect display height for zooming gesture on secondary displays.
 * Fix some feature state-related bugs.
