@@ -8,6 +8,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
 
+# 11.16.0-rc.1 October 07, 2025
+## Dependencies
+* Update gl-native to [v11.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1), common to [v24.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1).
+
 ## Bug fixes 🐞
 * Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
 
