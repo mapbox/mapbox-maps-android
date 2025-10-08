@@ -3,9 +3,11 @@
 Mapbox welcomes participation and contributions from everyone.
 
 
-# 10.19.1
+
+# 10.19.1 October 08, 2025
 ## Bug fixes 🐞
 * Fixed map clicks being blocked by annotation managers with no click listeners
+
 
 # 10.19.0 December 13, 2024
 ## Features ✨ and improvements 🏁
