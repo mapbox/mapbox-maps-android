@@ -9,12 +9,12 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.16.0-rc.1 October 07, 2025
 
 ## Features ✨ and improvements 🏁
-* Mark tile import APIs as experimental
+* Mark tile import APIs as experimental.
 
 ## Bug fixes 🐞
-* Fix `var` expressions that did not work properly with config expressions
-* Fix cutout disappearing at certain zoom and pitch levels with orthographic camera
-* Fix potential crashes when updating style layer properties
+* Fix `var` expressions that did not work properly with config expressions.
+* Fix cutout disappearing at certain zoom and pitch levels with orthographic camera.
+* Fix potential crashes when updating style layer properties.
 
 ## Dependencies
 * Update gl-native to [v11.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1), common to [v24.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1).
