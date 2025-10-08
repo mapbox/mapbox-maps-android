@@ -7,11 +7,17 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.16.0-rc.1 October 07, 2025
-## Dependencies
-* Update gl-native to [v11.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1), common to [v24.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1).
+
+## Features ✨ and improvements 🏁
+* Mark tile import APIs as experimental
 
 ## Bug fixes 🐞
-* Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
+* Fix `var` expressions that did not work properly with config expressions
+* Fix cutout disappearing at certain zoom and pitch levels with orthographic camera
+* Fix potential crashes when updating style layer properties
+
+## Dependencies
+* Update gl-native to [v11.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1), common to [v24.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1).
 
 # 11.16.0-beta.1 September 23, 2025
 
@@ -35,6 +41,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix some feature state-related bugs.
 * Fix precision issue in hillshade causing terrain with steps.
 * Fix incorrect Asset File Source initialization.
+* Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
 
 ## Dependencies
 * Update gl-native to [v11.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1), common to [24.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1).
