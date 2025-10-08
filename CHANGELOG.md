@@ -8,14 +8,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
 
+## Bug fixes 🐞
+* Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
+
 # 11.16.0-rc.1 October 07, 2025
 ## Dependencies
 * Update gl-native to [v11.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1), common to [v24.16.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.1).
-
-## Bug fixes 🐞
-* Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
-
-* Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
 
 # 11.16.0-beta.1 September 23, 2025
 
@@ -39,6 +37,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix some feature state-related bugs.
 * Fix precision issue in hillshade causing terrain with steps.
 * Fix incorrect Asset File Source initialization.
+* Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
 
 ## Dependencies
 * Update gl-native to [v11.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1), common to [24.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1).
