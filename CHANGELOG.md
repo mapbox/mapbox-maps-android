@@ -4,7 +4,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 10.19.1
-
 ## Bug fixes 🐞
 * Fixed map clicks being blocked by annotation managers with no click listeners
 
