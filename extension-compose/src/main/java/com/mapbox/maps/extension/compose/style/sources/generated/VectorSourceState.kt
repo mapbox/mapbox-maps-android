@@ -164,10 +164,12 @@ public class VectorSourceState private constructor(
   private val promoteIdState: MutableState<PromoteIdValue> = mutableStateOf(promoteId)
 
   /**
-   * A property to use as a feature id (for feature state). Either a property name, or
-   * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
-   * source, the same property is used across all its source layers. If specified as an object
-   * only specified source layers will have id overriden, others will fallback to original feature id
+   * A property to use as a feature id (for feature state). It can be a property
+   * name, or an expression to evaluate as the ID, or an object of the form `{<sourceLayer>:
+   * <propertyName/expression>}`. The expression can only be feature dependent if it is used. If specified as a
+   * string for a vector tile source, the same property is used across all its source layers.
+   * If specified as an object only specified source layers will have id overriden, others will fallback
+   * to original feature id
    */
   public var promoteId: PromoteIdValue by promoteIdState
 
