@@ -5,6 +5,16 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 
+# 0.6.0 October 10, 2025
+
+## Features ✨ and improvements 🏁
+* Support NDK 27 builds - now published as `maps-androidauto-ndk27` variant
+* Updated Maps SDK dependency compatibility to v10.19.+
+
+## Dependencies
+* Android Auto car library `androidx.car.app:app:1.2.+`
+Supports any version of [Mapbox Maps 10.5.0](https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v10) and newer.
+
 # 0.5.0 November 16, 2022
 
 ## Features ✨ and improvements 🏁
