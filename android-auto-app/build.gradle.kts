@@ -29,12 +29,14 @@ android {
 }
 
 dependencies {
-  implementation(project(":extension-androidauto"))
+//  implementation(project(":extension-androidauto"))
   implementation(libs.googleCarAppLibrary)
+  implementation("com.mapbox.maps:android:10.18.1")
+  implementation("com.mapbox.extension:maps-androidauto:0.5.0")
 
   // Please review the compatibility guide. This app is showcasing the latest features with latest Maps SDK main branch.
   // https://github.com/mapbox/mapbox-maps-android/tree/main/extension-androidauto#compatibility-with-maps-sdk-v11
-  implementation(project(":maps-sdk"))
+//  implementation(project(":maps-sdk"))
 
   implementation(libs.kotlin)
   implementation(libs.androidx.appCompat)
