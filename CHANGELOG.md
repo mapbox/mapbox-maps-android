@@ -10,6 +10,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
+* Fix `ConcurrentModificationException` if `detectors` list was modified in `AndroidGesturesManager` while processing events.
+
+## Dependencies
+* Update Mapbox Gestures for Android to 0.9.2
 
 # 11.16.0-rc.1 October 07, 2025
 
