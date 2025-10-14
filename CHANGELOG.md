@@ -10,8 +10,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.16.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.2), common to [v24.16.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.2).
 
-## Features ✨ and improvements 🏁
-* Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
 
 ## Bug fixes 🐞
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
