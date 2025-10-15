@@ -7,15 +7,18 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.16.0-rc.2 October 14, 2025
-## Dependencies
-* Update gl-native to [v11.16.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.2), common to [v24.16.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.2).
 
+## Features ✨ and improvements 🏁
+* Add zoom expression support for line-cutout-width property.
+* TileStore improvements.
 
 ## Bug fixes 🐞
 * Fix `ConcurrentModificationException` if `detectors` list was modified in `AndroidGesturesManager` while processing events.
+* Fix 3D models disappearing randomly during fast zoom interactions.
 
 ## Dependencies
-* Update Mapbox Gestures for Android to 0.9.2
+* Update gl-native to [v11.16.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.2), common to [v24.16.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-rc.2).
+* Update Mapbox Gestures for Android to 0.9.2.
 
 # 11.16.0-rc.1 October 07, 2025
 
