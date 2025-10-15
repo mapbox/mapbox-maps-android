@@ -25,9 +25,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.16.0-rc.1 October 07, 2025
 
-## Features ✨ and improvements 🏁
-* Mark tile import APIs as experimental.
-
 ## Bug fixes 🐞
 * Fix `var` expressions that did not work properly with config expressions.
 * Fix cutout disappearing at certain zoom and pitch levels with orthographic camera.
