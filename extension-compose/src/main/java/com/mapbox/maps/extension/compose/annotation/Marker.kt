@@ -10,6 +10,8 @@ import android.text.TextPaint
 import android.text.TextUtils
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,6 +62,7 @@ import java.lang.ref.WeakReference
  * @param innerColor The inner color of the [Marker]
  * @param stroke The color of optional strokes. Pass null to remove the strokes.
  * @param text A text to be displayed with the [Marker]
+ * @param onClick Optional callback to be invoked when the marker is clicked
  */
 @Composable
 @MapboxMapComposable
@@ -69,7 +72,8 @@ public fun Marker(
   color: Color = Color(0xffcfdaf7),
   innerColor: Color = Color(0xffffffff),
   stroke: Color? = Color(0xff3a59fa),
-  text: String? = null
+  text: String? = null,
+  onClick: (() -> Unit)? = null
 ) {
   val stableOptions = remember(point) {
     viewAnnotationOptions {
@@ -87,7 +91,17 @@ public fun Marker(
   ) {
     Column(
       modifier = Modifier
-        .size(width = 120.dp, height = 100.dp),
+        .size(width = 120.dp, height = 100.dp)
+        .run {
+          if (onClick != null) {
+            clickable(
+              indication = null,
+              interactionSource = remember { MutableInteractionSource() }
+            ) { onClick() }
+          } else {
+            this
+          }
+        },
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Top
     ) {

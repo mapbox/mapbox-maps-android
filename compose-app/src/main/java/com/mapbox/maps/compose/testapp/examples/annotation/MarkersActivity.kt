@@ -47,7 +47,7 @@ public class MarkersActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      val tappedPoints = remember { mutableStateListOf<Point>() }
+      val clickedPoints = remember { mutableStateListOf<Point>() }
       var markerColor by remember { mutableStateOf(Color(0xffcfdaf7)) }
       var strokeColor by remember { mutableStateOf(Color(0xff3a59fa)) }
       var showStroke by remember { mutableStateOf(true) }
@@ -81,11 +81,11 @@ public class MarkersActivity : ComponentActivity() {
               MapboxStandardStyle(
                 standardStyleState = rememberStandardStyleState {
                   interactionsState.onMapClicked { context ->
-                    tappedPoints.add(context.coordinateInfo.coordinate)
+                    clickedPoints.add(context.coordinateInfo.coordinate)
                     return@onMapClicked true
                   }
                   interactionsState.onMapLongClicked { _ ->
-                    tappedPoints.clear()
+                    clickedPoints.clear()
                     return@onMapLongClicked true
                   }
                 }
@@ -96,14 +96,20 @@ public class MarkersActivity : ComponentActivity() {
               point = HELSINKI,
               color = markerColor,
               stroke = if (showStroke) strokeColor else null,
-              text = if (showText) "Central Helsinki" else null
+              text = if (showText) "Central Helsinki" else null,
+              onClick = {
+                markerColor = getRandomColor()
+              }
             )
-            tappedPoints.forEach { it ->
+            clickedPoints.forEach { it ->
               Marker(
                 point = it,
                 color = markerColor,
                 stroke = if (showStroke) strokeColor else null,
-                text = if (showText) String.format("%.3f, %.3f", it.latitude(), it.longitude()) else null
+                text = if (showText) String.format("%.3f, %.3f", it.latitude(), it.longitude()) else null,
+                onClick = {
+                  markerColor = getRandomColor()
+                }
               )
             }
           }
@@ -144,7 +150,7 @@ private fun SelectionBox(
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
       Text(
-        text = "Tap map to add a Marker",
+        text = "Click to add a marker or change marker color",
         color = Color.White,
         modifier = Modifier.padding(bottom = 4.dp)
       )
@@ -239,3 +245,10 @@ private val colorOptions = listOf(
   Color.Red, Color.Green, Color(0xff4264fb), Color.Yellow, Color.Magenta, Color.Cyan,
   Color.Black, Color.White, Color.Gray, Color(0xff0f38bf)
 )
+
+/**
+ * Get a random color from the available color options
+ */
+private fun getRandomColor(): Color {
+  return colorOptions.random()
+}

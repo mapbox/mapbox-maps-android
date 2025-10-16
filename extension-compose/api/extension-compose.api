@@ -197,7 +197,7 @@ public final class com/mapbox/maps/extension/compose/annotation/IconImageKt {
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/MarkerKt {
-	public static final fun Marker-YiRMAXg (Lcom/mapbox/geojson/Point;JJLandroidx/compose/ui/graphics/Color;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Marker-_2sGejQ (Lcom/mapbox/geojson/Point;JJLandroidx/compose/ui/graphics/Color;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt {

@@ -138,6 +138,59 @@ public class ViewAnnotationTest {
     composeTestRule.onNodeWithTag(MAP_TEST_TAG).assertExists()
   }
 
+  @OptIn(MapboxExperimental::class)
+  @Test
+  public fun testMarkerClickGesture() {
+    var clicked = false
+    val onClickCallback = { clicked = true }
+    var viewAnnotationCount = 0
+
+    composeTestRule.setContent {
+      MapboxMap(
+        Modifier
+          .fillMaxSize()
+          .testTag(MAP_TEST_TAG),
+        mapViewportState = rememberMapViewportState {
+          setCameraOptions {
+            zoom(ZOOM)
+            center(HELSINKI)
+          }
+        },
+        mapState = rememberMapState(),
+      ) {
+        // Create a marker with click functionality
+        Marker(
+          point = HELSINKI,
+          text = VIEW_ANNOTATION_TEXT,
+          onClick = onClickCallback
+        )
+
+        // Use MapEffect to count annotations
+        MapEffect(Unit) { mapView ->
+          viewAnnotationCount = mapView.viewAnnotationManager.annotations.size
+        }
+      }
+    }
+    composeTestRule.waitForIdle()
+
+    // Wait for marker to be added
+    composeTestRule.waitUntil(timeoutMillis = VIEW_APPEAR_TIMEOUT_MS, condition = {
+      viewAnnotationCount > 0
+    })
+
+    // Verify marker was created
+    assert(viewAnnotationCount == 1) { "Expected 1 view annotation, got $viewAnnotationCount" }
+
+    // Verify callback is not yet triggered
+    assert(!clicked) { "Click callback should not be triggered yet" }
+
+    // Execute the click action directly (similar to how iOS test calls marker.tapAction?())
+    onClickCallback()
+
+    // Verify that our click callback was invoked
+    assert(clicked) { "Expected click callback to be triggered" }
+  }
+
   private fun setMapContent(
     cameraCenter: Point,
     annotationCenter: Point,

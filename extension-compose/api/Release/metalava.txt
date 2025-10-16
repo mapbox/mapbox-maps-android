@@ -173,7 +173,7 @@ package com.mapbox.maps.extension.compose.annotation {
   }
 
   public final class MarkerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void Marker(com.mapbox.geojson.Point point, long color = Color(4291812087), long innerColor = Color(4294967295), androidx.compose.ui.graphics.Color? stroke = Color(4282014202), String? text = null);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void Marker(com.mapbox.geojson.Point point, long color = Color(4291812087), long innerColor = Color(4294967295), androidx.compose.ui.graphics.Color? stroke = Color(4282014202), String? text = null, kotlin.jvm.functions.Function0<kotlin.Unit>? onClick = null);
   }
 
   public final class ViewAnnotationKt {
