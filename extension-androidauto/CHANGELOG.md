@@ -5,6 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 
+# 0.6.1 October 17, 2025
+
+## Bug fixes 🐞
+* Fix NDK27 variant dependency - now correctly depends on `com.mapbox.maps:android-ndk27` instead of non-NDK27 variant
+
 # 0.6.0 October 10, 2025
 
 ## Features ✨ and improvements 🏁

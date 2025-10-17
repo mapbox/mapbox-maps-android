@@ -34,8 +34,9 @@ android {
 }
 
 dependencies {
-  api(Dependencies.androidAutoMapboxMapSdk)
-  testImplementation(Dependencies.androidAutoMapboxMapSdk)
+  val ndkMajorSuffix = project.findProperty("ndkMajor")?.toString()?.run { "-ndk$this" } ?: ""
+  api("com.mapbox.maps:android${ndkMajorSuffix}:${Versions.androidAutoMapboxMapSdk}")
+  testImplementation("com.mapbox.maps:android${ndkMajorSuffix}:${Versions.androidAutoMapboxMapSdk}")
 
   api(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)
