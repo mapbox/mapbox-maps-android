@@ -6,9 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.16.0
+
+# 11.16.0 October 21, 2025
 ## Bug fixes 🐞
 * Fix location request leak when setting custom location provider after updating settings
+
+## Dependencies
+* Update gl-native to [v11.16.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0), common to [v24.16.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0).
+
 
 # 11.16.0-rc.2 October 14, 2025
 
