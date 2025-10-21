@@ -51,11 +51,11 @@ allprojects {
 
 // In your build.gradle, add the compose extension with your other dependencies.
 dependencies {
-  implementation 'com.mapbox.extension:maps-compose:11.16.0-rc.1'
+  implementation 'com.mapbox.extension:maps-compose:11.16.0'
 
   // Pick your versions of Android Mapbox Map SDK
   // Note that Compose extension is compatible with Maps SDK v11.0+.
-  implementation 'com.mapbox.maps:android:11.16.0-rc.1'
+  implementation 'com.mapbox.maps:android:11.16.0'
 }
 ```
 
@@ -122,7 +122,7 @@ You can set the initial map style with `MapStyle` composable function and the in
 
 ### Use raw `MapboxMap` methods through `MapEffect` or `DisposableMapEffect`
 
-Mapbox Compose Extension is built around the `MapView` in the base maps SDK. It's unlikely that we will be able to cover the full API surface in this wrapper, so we expose the reference to the raw `MapView` so that you can use all the API surface inside a `MapEffect`. 
+Mapbox Compose Extension is built around the `MapView` in the base maps SDK. It's unlikely that we will be able to cover the full API surface in this wrapper, so we expose the reference to the raw `MapView` so that you can use all the API surface inside a `MapEffect`.
 
 Please note that using raw `MapView` APIs in `MapEffect` might introduce internal state changes that interferes with the Compose states, and might result in unexpected behaviours, please use it with caution.
 
@@ -234,7 +234,7 @@ The following example showcases adding one circle annotation to the map:
               true
             }
           circleRadius = 20.0
-          circleColor = Color.Blue 
+          circleColor = Color.Blue
         }
       }
     }
@@ -274,7 +274,7 @@ Adding multiple Annotations to the map using `AnnotationGroup` is more efficient
                 Toast.LENGTH_SHORT
               ).show()
               true
-            }             
+            }
         }
       }
     }
@@ -388,7 +388,7 @@ The following example showcases adding `ViewAnnotation` that holds a `Button` to
   }
 ```
 
-### Configure Map ornaments(Compass, ScaleBar, Attribution, Logo) 
+### Configure Map ornaments(Compass, ScaleBar, Attribution, Logo)
 
 The Map ornaments are introduced as composable functions within dedicated scope and can be set to the MapboxMap composable function.
 
@@ -472,9 +472,9 @@ The following example showcases how to change the `GesturesSettings` through hoi
 
 The map style can be set through `MapboxStyleComposable`, currently we expose following Style composable functions:
 
-* `GenericStyle` for all the available style features as weakly typed APIs, it has full flexibility to control any style/slot/positioned layers and style import configs, but alternative strongly typed APIs should be preferred for safety and convenience to use. 
+* `GenericStyle` for all the available style features as weakly typed APIs, it has full flexibility to control any style/slot/positioned layers and style import configs, but alternative strongly typed APIs should be preferred for safety and convenience to use.
 * `MapStyle` for simple loading style use cases if you don't need slots position your layer according to the layerIds defined in the style json.
-* `MapboxStandardStyle` for the default Mapbox Standard Style, it exposes available slots to position runtime-added layers and style import configs as strongly typed API. 
+* `MapboxStandardStyle` for the default Mapbox Standard Style, it exposes available slots to position runtime-added layers and style import configs as strongly typed API.
 
 #### Runtime styling with layers and sources
 
@@ -486,7 +486,7 @@ The layers can be added to the style/map as `MapboxMapComposable` functions.
 The sources are exposed as source state, which can be hoisted outside of the map and be shared with multiple layers. Please note the source state can not be shared across multiple map instances.
 
 Please also note that the layer id and source id are automatically generated and remembered by default, so that you can reuse the layers in different places without `layerId already exist` error.
-In case if you need the layer/source id later for other purpose, e.g. query rendered features, you can provide your own id and reuse later.  
+In case if you need the layer/source id later for other purpose, e.g. query rendered features, you can provide your own id and reuse later.
 
 The following example showcases how to work with runtime styling with composable functions:
 

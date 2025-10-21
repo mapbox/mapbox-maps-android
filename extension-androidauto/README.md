@@ -33,7 +33,7 @@ allprojects {
 // In your build.gradle, add the extension with your other dependencies.
 dependencies {
   // Note that the Mapbox Android Auto Extension depends on the entire Mapbox Maps SDK, it will bring the whole Mapbox Maps SDK with the same version as transitive dependency.
-  implementation 'com.mapbox.extension:maps-androidauto:11.16.0-rc.1'
+  implementation 'com.mapbox.extension:maps-androidauto:11.16.0'
 }
 ```
 
@@ -177,7 +177,7 @@ The Android Auto extension before v0.5.0 is released separately from the Android
 |----------------------------|------------|-----------------------------|
 | Xiaomi animations          | ✅          | v10.9+                      |
 | Logo Widget                | ✅          | v10.4+                      |
-| Compass Widget             | ✅          | v10.4+                      | 
+| Compass Widget             | ✅          | v10.4+                      |
 | Map rendering              | ✅          | v10.0+                      |
 | Runtime styling            | ✅          | v10.0+                      |
 | Camera animation           | ✅          | v10.0+                      |
