@@ -8,9 +8,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
 * Add click gesture support to `Marker` composable with `onClick` parameter
-
-## Bug fixes 🐞
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
+
+# 11.16.0
+## Bug fixes 🐞
+* Fix location request leak when setting custom location provider after updating settings
 
 # 11.16.0-rc.2 October 14, 2025
 
