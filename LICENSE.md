@@ -270,6 +270,12 @@ License: [Chromium and built-in dependencies](https://storage.cloud.google.com/c
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the error-prone annotations.
+
+License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Experimental annotation.
 
 URL: [https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0](https://developer.android.com/jetpack/androidx/releases/annotation#1.3.0)
@@ -278,9 +284,17 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the Gradle License Plugin.
+
+URL: [https://github.com/jaredsburrows/gradle-license-plugin](https://github.com/jaredsburrows/gradle-license-plugin)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Gson.
 
-License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+License: [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
@@ -469,14 +483,6 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 Mapbox Maps Android uses portions of the VersionedParcelable.
 
 URL: [http://developer.android.com/tools/extras/support-library.html](http://developer.android.com/tools/extras/support-library.html)
-
-License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the Gradle License Plugin.
-
-URL: [https://github.com/jaredsburrows/gradle-license-plugin](https://github.com/jaredsburrows/gradle-license-plugin)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
