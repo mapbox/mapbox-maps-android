@@ -8,11 +8,40 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.16.0 October 21, 2025
+
+## Features ✨ and improvements 🏁
+* Add zoom expression support for line-cutout-width property.
+* TileStore improvements.
+* Update target and compile SDK version to 35
+* Added support for `LandmarkIcons` featureset in Mapbox Standard Style. Query and interact with landmark building icons that appear on the map, accessing properties including landmark ID, name, type, and localized names through the `StandardLandmarkIconsFeature` class.
+* Enhanced `MapboxStandardStyle()` and `MapboxStandardSatelliteStyle()` Compose functions with comprehensive configuration options:
+  - **Color customization**: Set custom colors for roads, motorways, water, greenspaces, administrative boundaries, and more
+  - **Landmark icons**: Control visibility of landmark building icons and labels (`showLandmarkIcons`, `showLandmarkIconLabels`)
+  - **Point-of-interest styling**: Configure POI label backgrounds, colors, and density
+  - **Road appearance**: Adjust road brightness, show/hide pedestrian roads and transit networks
+  - **Administrative boundaries**: Toggle boundary visibility and customize colors
+  - **3D objects**: Control visibility of buildings, landmarks, and trees with `show3dObjects`
+* Expose `LineLayer.lineCutoutFadeWidth` to control route line cutout fade width.
+* `com.mapbox.maps.MapboxTracing` was deprecated and moved to package `com.mapbox.common.MapboxTracing`.
+
 ## Bug fixes 🐞
 * Fix location request leak when setting custom location provider after updating settings
+* Fix `ConcurrentModificationException` if `detectors` list was modified in `AndroidGesturesManager` while processing events.
+* Fix 3D models disappearing randomly during fast zoom interactions.
+* Fix `var` expressions that did not work properly with config expressions.
+* Fix cutout disappearing at certain zoom and pitch levels with orthographic camera.
+* Fix potential crashes when updating style layer properties.
+* Fix incorrect color rendering for gradients and interpolations with zero alpha channel.
+* Fix incorrect positioning of map marker annotations, when coordinates do not change.
+* Fix incorrect display height for zooming gesture on secondary displays.
+* Fix some feature state-related bugs.
+* Fix precision issue in hillshade causing terrain with steps.
+* Fix incorrect Asset File Source initialization.
+* Fix an issue where `MapView#snapshot` listener was invoked twice when the map was not ready.
 
 ## Dependencies
 * Update gl-native to [v11.16.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0), common to [v24.16.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0).
+* Update Mapbox Gestures for Android to 0.9.2.
 
 
 # 11.16.0-rc.2 October 14, 2025
