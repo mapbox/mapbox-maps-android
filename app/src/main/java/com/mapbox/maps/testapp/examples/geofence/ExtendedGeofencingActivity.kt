@@ -427,10 +427,10 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
       geofencing.getFeature(featureId) {
         it.value?.let { geofenceState ->
 
-          val geofencingEvent = GeofencingEvent.Builder().apply {
-            feature = geofenceState.feature
+          val geofencingEvent = GeofencingEvent.Builder(
+            feature = geofenceState.feature,
             timestamp = geofenceState.timestamp ?: Date()
-          }.build()
+          ).build()
           when (featureType) {
             NOTIFICATION_FEATURE_EXIT -> observer.onExit(geofencingEvent)
             NOTIFICATION_FEATURE_ENTRY -> observer.onEntry(geofencingEvent)
