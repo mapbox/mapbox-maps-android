@@ -4411,6 +4411,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardSate
 	public final fun getColorRoads ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTrunks ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getDensityPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFuelingStationModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getRoadsBrightness ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getShowAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowPedestrianRoads ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
@@ -4427,6 +4428,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardSate
 	public final fun setColorRoads (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTrunks (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setDensityPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFuelingStationModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setRoadsBrightness (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setShowAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowPedestrianRoads (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
@@ -4463,6 +4465,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getColorTrunks ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorWater ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getDensityPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getFuelingStationModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getRoadsBrightness ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getShow3dObjects ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
@@ -4487,6 +4490,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setColorTrunks (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorWater (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setDensityPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setFuelingStationModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setRoadsBrightness (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setShow3dObjects (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V

@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.StringValue
 
 /**
  * The state holder for the StandardSatelliteState's configurations.
@@ -29,6 +30,7 @@ public class StandardSatelliteStyleConfigurationState private constructor(
   initialColorRoads: ColorValue,
   initialColorTrunks: ColorValue,
   initialDensityPointOfInterestLabels: DoubleValue,
+  initialFuelingStationModePointOfInterestLabels: StringValue,
   initialRoadsBrightness: DoubleValue,
   initialShowAdminBoundaries: BooleanValue
 ) : BaseStyleConfigurationState() {
@@ -51,6 +53,7 @@ public class StandardSatelliteStyleConfigurationState private constructor(
     initialColorRoads = ColorValue.INITIAL,
     initialColorTrunks = ColorValue.INITIAL,
     initialDensityPointOfInterestLabels = DoubleValue.INITIAL,
+    initialFuelingStationModePointOfInterestLabels = StringValue.INITIAL,
     initialRoadsBrightness = DoubleValue.INITIAL,
     initialShowAdminBoundaries = BooleanValue.INITIAL
   )
@@ -126,6 +129,11 @@ public class StandardSatelliteStyleConfigurationState private constructor(
   public var densityPointOfInterestLabels: DoubleValue by mutableStateOf(initialDensityPointOfInterestLabels)
 
   /**
+   * Control the visibility of fuel and electric charging station POI labels. Default displays both types.
+   */
+  public var fuelingStationModePointOfInterestLabels: StringValue by mutableStateOf(initialFuelingStationModePointOfInterestLabels)
+
+  /**
    * Control how bright road network appear in dark styles.
    */
   public var roadsBrightness: DoubleValue by mutableStateOf(initialRoadsBrightness)
@@ -156,6 +164,7 @@ public class StandardSatelliteStyleConfigurationState private constructor(
     internal const val CONFIG_COLOR_ROADS = "colorRoads"
     internal const val CONFIG_COLOR_TRUNKS = "colorTrunks"
     internal const val CONFIG_DENSITY_POINT_OF_INTEREST_LABELS = "densityPointOfInterestLabels"
+    internal const val CONFIG_FUELING_STATION_MODE_POINT_OF_INTEREST_LABELS = "fuelingStationModePointOfInterestLabels"
     internal const val CONFIG_ROADS_BRIGHTNESS = "roadsBrightness"
     internal const val CONFIG_SHOW_ADMIN_BOUNDARIES = "showAdminBoundaries"
   }

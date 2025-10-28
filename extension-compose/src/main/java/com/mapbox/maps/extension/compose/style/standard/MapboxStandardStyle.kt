@@ -258,6 +258,9 @@ public fun MapboxStandardStyle(
             if (densityPointOfInterestLabels.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_DENSITY_POINT_OF_INTEREST_LABELS, densityPointOfInterestLabels.value)
             }
+            if (fuelingStationModePointOfInterestLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_FUELING_STATION_MODE_POINT_OF_INTEREST_LABELS, fuelingStationModePointOfInterestLabels.value)
+            }
             if (roadsBrightness.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_ROADS_BRIGHTNESS, roadsBrightness.value)
             }

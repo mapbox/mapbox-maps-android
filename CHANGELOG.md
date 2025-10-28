@@ -12,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
 * Add click gesture support to `Marker` composable with `onClick` parameter
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
+* Added `fuelingStationModePointOfInterestLabels` configuration option to Mapbox Standard and Standard Satellite styles. Control the visibility of fuel station and electric charging station POI labels with options: "default" (shows both), "fuel" (fuel stations only), "electric" (charging stations only), or "none" (hides both).
 
 
 # 11.16.0 October 21, 2025

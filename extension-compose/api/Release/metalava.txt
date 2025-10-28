@@ -5204,6 +5204,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoads();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorTrunks();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getDensityPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.StringValue getFuelingStationModePointOfInterestLabels();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getRoadsBrightness();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowAdminBoundaries();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPedestrianRoads();
@@ -5220,6 +5221,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setColorRoads(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTrunks(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setDensityPointOfInterestLabels(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setFuelingStationModePointOfInterestLabels(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setRoadsBrightness(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setShowAdminBoundaries(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowPedestrianRoads(com.mapbox.maps.extension.compose.style.BooleanValue);
@@ -5236,6 +5238,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoads;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorTrunks;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue densityPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.StringValue fuelingStationModePointOfInterestLabels;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue roadsBrightness;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showAdminBoundaries;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showPedestrianRoads;
@@ -5274,6 +5277,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorTrunks();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorWater();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getDensityPointOfInterestLabels();
+    method public com.mapbox.maps.extension.compose.style.StringValue getFuelingStationModePointOfInterestLabels();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getRoadsBrightness();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dObjects();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowAdminBoundaries();
@@ -5298,6 +5302,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setColorTrunks(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorWater(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setDensityPointOfInterestLabels(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setFuelingStationModePointOfInterestLabels(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setRoadsBrightness(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setShow3dObjects(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowAdminBoundaries(com.mapbox.maps.extension.compose.style.BooleanValue);
@@ -5322,6 +5327,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorTrunks;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorWater;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue densityPointOfInterestLabels;
+    property public final com.mapbox.maps.extension.compose.style.StringValue fuelingStationModePointOfInterestLabels;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue roadsBrightness;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showAdminBoundaries;

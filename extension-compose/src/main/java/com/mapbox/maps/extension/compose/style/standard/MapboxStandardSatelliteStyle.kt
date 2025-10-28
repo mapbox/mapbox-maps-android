@@ -394,6 +394,9 @@ public fun MapboxStandardSatelliteStyle(
             if (densityPointOfInterestLabels.isNotInitial()) {
               config(StandardSatelliteStyleConfigurationState.CONFIG_DENSITY_POINT_OF_INTEREST_LABELS, densityPointOfInterestLabels.value)
             }
+            if (fuelingStationModePointOfInterestLabels.isNotInitial()) {
+              config(StandardSatelliteStyleConfigurationState.CONFIG_FUELING_STATION_MODE_POINT_OF_INTEREST_LABELS, fuelingStationModePointOfInterestLabels.value)
+            }
             if (roadsBrightness.isNotInitial()) {
               config(StandardSatelliteStyleConfigurationState.CONFIG_ROADS_BRIGHTNESS, roadsBrightness.value)
             }
