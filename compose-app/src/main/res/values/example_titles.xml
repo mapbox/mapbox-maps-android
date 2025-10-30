@@ -28,6 +28,7 @@
     <string name="activity_standard_style">Standard style</string>
     <string name="activity_clip_layer">Clip layer example</string>
     <string name="activity_interactions">Interactions example</string>
+    <string name="activity_appearances">Appearances</string>
     <string name="activity_precipitations">Precipitations example</string>
     <string name="activity_color_theme">Color theme example</string>
     <string name="activity_elevated_line">Elevated line example</string>
