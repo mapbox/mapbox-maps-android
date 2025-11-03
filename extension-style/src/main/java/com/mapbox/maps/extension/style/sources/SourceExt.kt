@@ -14,6 +14,7 @@ import com.mapbox.maps.TileCacheBudgetInTiles
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 
 /**
@@ -43,7 +44,7 @@ fun MapboxStyleManager.getSource(sourceId: String): Source? {
         .also { it.delegate = this }
 
       else -> {
-        logW("StyleSourcePlugin", "Source type: $type unknown.")
+        logE("StyleSourcePlugin", "Source type: $type unknown.")
         null
       }
     }

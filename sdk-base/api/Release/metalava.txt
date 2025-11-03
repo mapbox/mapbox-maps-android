@@ -131,9 +131,7 @@ package com.mapbox.maps {
   }
 
   public final class MapboxLogger {
-    method public static boolean isLoggableD();
     method public static void logD(String tag, String message);
-    method public static inline void logD(String tag, kotlin.jvm.functions.Function0<java.lang.String> message);
     method public static void logE(String tag, String message);
     method public static void logI(String tag, String message);
     method public static void logW(String tag, String message);

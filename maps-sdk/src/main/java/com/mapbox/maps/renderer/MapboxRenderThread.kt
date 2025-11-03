@@ -18,6 +18,7 @@ import com.mapbox.common.MapboxTracing
 import com.mapbox.common.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.maps.ContextMode
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
@@ -287,7 +288,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       if (eglOk) {
         eglContextCreated = true
       } else {
-        logW(TAG, "EGL was not configured, please check logs above.")
+        logE(TAG, "EGL was not configured, please check logs above.")
         renderNotSupported = true
         return false
       }
@@ -326,10 +327,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun checkEglContextCurrent(): Boolean {
     val eglContextAttached = eglCore.makeCurrent(eglSurface)
     if (!eglContextAttached) {
-      logW(
-        TAG,
-        "EGL was configured but context could not be made current. Trying again in a moment...",
-      )
+      logW(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
       postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
       return false
     }
@@ -746,10 +744,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun resume() {
     paused = false
-    logI(
-      TAG,
-      "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}"
-    )
+    logI(TAG, "Renderer resumed, renderThreadPrepared=$renderThreadPrepared, surface.isValid=${surface?.isValid}")
     // schedule render if we resume not after first create (e.g. bring map back to front)
     renderPreparedGuardedRun(::postPrepareRenderFrame)
   }

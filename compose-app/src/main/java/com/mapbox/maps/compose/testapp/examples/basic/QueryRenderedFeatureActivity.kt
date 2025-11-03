@@ -135,7 +135,7 @@ public class QueryRenderedFeatureActivity : ComponentActivity() {
       logD(TAG, "Clicked outside of building")
       return null
     }
-    logD(TAG) { "Feature properties: ${selectedBuildings.first().properties}" }
+    logD(TAG, "Feature properties: ${selectedBuildings.first().properties}")
     return (selectedBuildings.first().geometry as? Polygon)?.coordinates()?.toList()
   }
 

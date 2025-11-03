@@ -1,11 +1,11 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.util.Log
 import androidx.annotation.RestrictTo
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.logE
-import com.mapbox.maps.logW
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ModelSourceWrapper(
@@ -42,7 +42,7 @@ internal class ModelSourceWrapper(
     this.style = style
     val expected = style.addStyleSource(sourceId, toValue())
     expected.error?.let {
-      logW(TAG, "Add source failed, $sourceProperties")
+      Log.e(TAG, sourceProperties.toString())
       throw MapboxLocationComponentException("Add source failed: $it")
     }
   }

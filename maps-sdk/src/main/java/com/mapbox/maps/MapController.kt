@@ -317,7 +317,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   internal fun setScreenRefreshRate(refreshRate: Int) {
     if (refreshRate <= 0) {
-      logW(TAG, "Invalid refresh rate $refreshRate. It must be positive!")
+      logE(
+        TAG,
+        "Screen refresh rate could not be <= 0! " +
+          "Setting max fps and fps counter will not work properly."
+      )
       return
     }
     renderer.renderThread.setScreenRefreshRate(refreshRate)

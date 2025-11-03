@@ -295,6 +295,327 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineCutoutFadeWidthSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidth(testValue)
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineCutoutFadeWidthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineCutoutFadeWidth?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidth(expression)
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineCutoutFadeWidthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineCutoutFadeWidthAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutFadeWidth!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineCutoutFadeWidthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineCutoutFadeWidthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width-transition") }
+  }
+
+  @Test
+  fun lineCutoutFadeWidthTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutFadeWidthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineCutoutOpacitySet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineCutoutOpacity(testValue)
+    verify { style.setStyleLayerProperty("id", "line-cutout-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineCutoutOpacityGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineCutoutOpacity?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineCutoutOpacityAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutOpacity(expression)
+    verify { style.setStyleLayerProperty("id", "line-cutout-opacity", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineCutoutOpacityAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineCutoutOpacityAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
+  }
+
+  @Test
+  fun lineCutoutOpacityAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineCutoutOpacityAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
+  }
+
+  @Test
+  fun lineCutoutOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineCutoutOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutOpacity!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
+  }
+
+  @Test
+  fun lineCutoutOpacityTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutOpacityTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-cutout-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineCutoutOpacityTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineCutoutOpacityTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-opacity-transition") }
+  }
+
+  @Test
+  fun lineCutoutOpacityTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutOpacityTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-cutout-opacity-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineCutoutWidthSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineCutoutWidth(testValue)
+    verify { style.setStyleLayerProperty("id", "line-cutout-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineCutoutWidthGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineCutoutWidth?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineCutoutWidthAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutWidth(expression)
+    verify { style.setStyleLayerProperty("id", "line-cutout-width", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineCutoutWidthAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineCutoutWidthAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
+  }
+
+  @Test
+  fun lineCutoutWidthAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineCutoutWidthAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
+  }
+
+  @Test
+  fun lineCutoutWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineCutoutWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineCutoutWidth!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
+  }
+
+  @Test
+  fun lineCutoutWidthTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutWidthTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-cutout-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineCutoutWidthTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineCutoutWidthTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-cutout-width-transition") }
+  }
+
+  @Test
+  fun lineCutoutWidthTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineCutoutWidthTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-cutout-width-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun lineElevationReferenceSet() {
     val layer = lineLayer("id", "source") {}
     layer.bindTo(style)
@@ -1447,327 +1768,6 @@ class LineLayerTest {
       delay(200)
     }
     verify { style.setStyleLayerProperty("id", "line-color-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineCutoutFadeWidthSet() {
-    val layer = lineLayer("id", "source") {}
-    val testValue = 1.0
-    layer.bindTo(style)
-    layer.lineCutoutFadeWidth(testValue)
-    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "1.0")
-  }
-
-  @Test
-  fun lineCutoutFadeWidthGet() {
-    val testValue = 1.0
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    val expectedValue = 1.0
-    assertEquals(expectedValue.toString(), layer.lineCutoutFadeWidth?.toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
-  }
-  // Expression Tests
-
-  @Test
-  fun lineCutoutFadeWidthAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutFadeWidth(expression)
-    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun lineCutoutFadeWidthAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.lineCutoutFadeWidthAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
-  }
-
-  @Test
-  fun lineCutoutFadeWidthAsExpressionGetNull() {
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.lineCutoutFadeWidthAsExpression)
-    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
-  }
-
-  @Test
-  fun lineCutoutFadeWidthAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(1.0, layer.lineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.lineCutoutFadeWidth!!, 1E-5)
-    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width") }
-  }
-
-  @Test
-  fun lineCutoutFadeWidthTransitionSet() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutFadeWidthTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineCutoutFadeWidthTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.lineCutoutFadeWidthTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-fade-width-transition") }
-  }
-
-  @Test
-  fun lineCutoutFadeWidthTransitionSetDsl() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutFadeWidthTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "line-cutout-fade-width-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineCutoutOpacitySet() {
-    val layer = lineLayer("id", "source") {}
-    val testValue = 1.0
-    layer.bindTo(style)
-    layer.lineCutoutOpacity(testValue)
-    verify { style.setStyleLayerProperty("id", "line-cutout-opacity", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "1.0")
-  }
-
-  @Test
-  fun lineCutoutOpacityGet() {
-    val testValue = 1.0
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    val expectedValue = 1.0
-    assertEquals(expectedValue.toString(), layer.lineCutoutOpacity?.toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
-  }
-  // Expression Tests
-
-  @Test
-  fun lineCutoutOpacityAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutOpacity(expression)
-    verify { style.setStyleLayerProperty("id", "line-cutout-opacity", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun lineCutoutOpacityAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.lineCutoutOpacityAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
-  }
-
-  @Test
-  fun lineCutoutOpacityAsExpressionGetNull() {
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.lineCutoutOpacityAsExpression)
-    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
-  }
-
-  @Test
-  fun lineCutoutOpacityAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(1.0, layer.lineCutoutOpacityAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.lineCutoutOpacity!!, 1E-5)
-    verify { style.getStyleLayerProperty("id", "line-cutout-opacity") }
-  }
-
-  @Test
-  fun lineCutoutOpacityTransitionSet() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutOpacityTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "line-cutout-opacity-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineCutoutOpacityTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.lineCutoutOpacityTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-opacity-transition") }
-  }
-
-  @Test
-  fun lineCutoutOpacityTransitionSetDsl() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutOpacityTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "line-cutout-opacity-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineCutoutWidthSet() {
-    val layer = lineLayer("id", "source") {}
-    val testValue = 1.0
-    layer.bindTo(style)
-    layer.lineCutoutWidth(testValue)
-    verify { style.setStyleLayerProperty("id", "line-cutout-width", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "1.0")
-  }
-
-  @Test
-  fun lineCutoutWidthGet() {
-    val testValue = 1.0
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    val expectedValue = 1.0
-    assertEquals(expectedValue.toString(), layer.lineCutoutWidth?.toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
-  }
-  // Expression Tests
-
-  @Test
-  fun lineCutoutWidthAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutWidth(expression)
-    verify { style.setStyleLayerProperty("id", "line-cutout-width", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun lineCutoutWidthAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.lineCutoutWidthAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
-  }
-
-  @Test
-  fun lineCutoutWidthAsExpressionGetNull() {
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.lineCutoutWidthAsExpression)
-    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
-  }
-
-  @Test
-  fun lineCutoutWidthAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    val layer = lineLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(1.0, layer.lineCutoutWidthAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.lineCutoutWidth!!, 1E-5)
-    verify { style.getStyleLayerProperty("id", "line-cutout-width") }
-  }
-
-  @Test
-  fun lineCutoutWidthTransitionSet() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutWidthTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "line-cutout-width-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineCutoutWidthTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.lineCutoutWidthTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "line-cutout-width-transition") }
-  }
-
-  @Test
-  fun lineCutoutWidthTransitionSetDsl() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineCutoutWidthTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "line-cutout-width-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
 
@@ -3514,6 +3514,138 @@ class LineLayerTest {
   }
 
   @Test
+  fun defaultLineCutoutFadeWidthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutFadeWidth?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineCutoutFadeWidthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineCutoutFadeWidthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun defaultLineCutoutFadeWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineCutoutFadeWidth!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
+  }
+
+  @Test
+  fun defaultLineCutoutFadeWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutFadeWidthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width-transition") }
+  }
+
+  @Test
+  fun defaultLineCutoutOpacityTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutOpacity?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineCutoutOpacityAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineCutoutOpacityAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity") }
+  }
+
+  @Test
+  fun defaultLineCutoutOpacityAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineCutoutOpacityAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineCutoutOpacity!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity") }
+  }
+
+  @Test
+  fun defaultLineCutoutOpacityTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutOpacityTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity-transition") }
+  }
+
+  @Test
+  fun defaultLineCutoutWidthTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutWidth?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineCutoutWidthAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineCutoutWidthAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width") }
+  }
+
+  @Test
+  fun defaultLineCutoutWidthAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineCutoutWidthAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineCutoutWidth!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width") }
+  }
+
+  @Test
+  fun defaultLineCutoutWidthTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutWidthTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width-transition") }
+  }
+
+  @Test
   fun defaultLineElevationReferenceTest() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("none")
 
@@ -3990,138 +4122,6 @@ class LineLayerTest {
 
     assertEquals(transition.toValue().toString(), LineLayer.defaultLineColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-color-transition") }
-  }
-
-  @Test
-  fun defaultLineCutoutFadeWidthTest() {
-    val testValue = 1.0
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = 1.0
-    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutFadeWidth?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultLineCutoutFadeWidthAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), LineLayer.defaultLineCutoutFadeWidthAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
-  }
-
-  @Test
-  fun defaultLineCutoutFadeWidthAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    assertEquals(1.0, LineLayer.defaultLineCutoutFadeWidthAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, LineLayer.defaultLineCutoutFadeWidth!!, 1E-5)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width") }
-  }
-
-  @Test
-  fun defaultLineCutoutFadeWidthTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutFadeWidthTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width-transition") }
-  }
-
-  @Test
-  fun defaultLineCutoutOpacityTest() {
-    val testValue = 1.0
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = 1.0
-    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutOpacity?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultLineCutoutOpacityAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), LineLayer.defaultLineCutoutOpacityAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity") }
-  }
-
-  @Test
-  fun defaultLineCutoutOpacityAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    assertEquals(1.0, LineLayer.defaultLineCutoutOpacityAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, LineLayer.defaultLineCutoutOpacity!!, 1E-5)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity") }
-  }
-
-  @Test
-  fun defaultLineCutoutOpacityTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutOpacityTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity-transition") }
-  }
-
-  @Test
-  fun defaultLineCutoutWidthTest() {
-    val testValue = 1.0
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = 1.0
-    assertEquals(expectedValue.toString(), LineLayer.defaultLineCutoutWidth?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultLineCutoutWidthAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), LineLayer.defaultLineCutoutWidthAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width") }
-  }
-
-  @Test
-  fun defaultLineCutoutWidthAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
-    assertEquals(1.0, LineLayer.defaultLineCutoutWidthAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, LineLayer.defaultLineCutoutWidth!!, 1E-5)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width") }
-  }
-
-  @Test
-  fun defaultLineCutoutWidthTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), LineLayer.defaultLineCutoutWidthTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width-transition") }
   }
 
   @Test

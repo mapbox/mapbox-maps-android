@@ -15,6 +15,7 @@ import com.mapbox.maps.NativeMapImpl
 import com.mapbox.maps.RenderFrameFinishedCallback
 import com.mapbox.maps.RenderModeType
 import com.mapbox.maps.Size
+import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.gl.PixelReader
 import java.util.concurrent.TimeUnit
@@ -152,7 +153,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   @RenderThread
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {
-      logW(TAG, "Could not take map snapshot because map is not ready yet.")
+      logE(TAG, "Could not take map snapshot because map is not ready yet.")
       return null
     }
     val lock = ReentrantLock()
@@ -179,7 +180,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   @AnyThread
   fun snapshot(listener: OnSnapshotReady) {
     if (!readyForSnapshot.get()) {
-      logW(TAG, "Could not take map snapshot because map is not ready yet.")
+      logE(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
     } else {
       val legacyMode = snapshotLegacyModeEnabled
@@ -195,7 +196,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   @AnyThread
   fun setMaximumFps(fps: Int) {
     if (fps <= 0) {
-      logW(TAG, "Maximum FPS could not be <= 0, ignoring $fps value.")
+      logE(TAG, "Maximum FPS could not be <= 0, ignoring $fps value.")
       return
     }
     renderThread.setUserRefreshRate(fps)
@@ -210,7 +211,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   @RenderThread
   private fun performSnapshot(legacyMode: Boolean): Bitmap? {
     if (width == 0 && height == 0) {
-      logW(TAG, "Could not take map snapshot because map is not ready yet.")
+      logE(TAG, "Could not take map snapshot because map is not ready yet.")
       return null
     }
 

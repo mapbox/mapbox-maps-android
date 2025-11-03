@@ -73,7 +73,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
             put("message", "setStyleGeoJSONSourceData error: ${nativeExpected?.error ?: nativeException?.message}")
           }.toString()
           val errorTime = Date()
-          logW(TAG, "set GeoJSON data error: $errorJsonString")
+          logE(TAG, errorJsonString)
           mainHandler.post {
             style.mapLoadingErrorDelegate.sendMapLoadingError(
               MapLoadingError(

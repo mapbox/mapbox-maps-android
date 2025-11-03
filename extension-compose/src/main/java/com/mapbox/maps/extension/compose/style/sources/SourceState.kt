@@ -297,7 +297,7 @@ public abstract class SourceState internal constructor(
       logD(TAG, "settingProperty: name=$name, value=$value ...")
       mapboxMap.setStyleSourceProperty(sourceId, name, value)
         .onError { error ->
-          logW(TAG, "Failed to set source property $name as $value on $sourceId: $error")
+          logE(TAG, "Failed to set source property $name as $value on $sourceId: $error")
         }.onValue {
           logD(TAG, "settingProperty: name=$name, value=$value executed")
         }
@@ -322,7 +322,7 @@ public abstract class SourceState internal constructor(
   private fun removeSource(mapboxMap: MapboxMap) {
     logD(TAG, "Removing $sourceType source: $sourceId")
     mapboxMap.removeStyleSourceUnchecked(sourceId).onError {
-      logW(TAG, "Failed to remove $sourceType Source $sourceId: $it")
+      logE(TAG, "Failed to remove $sourceType Source $sourceId: $it")
     }
   }
 

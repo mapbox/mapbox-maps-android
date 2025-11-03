@@ -16,7 +16,7 @@ import com.mapbox.maps.extension.compose.style.ImportConfigs
 import com.mapbox.maps.extension.compose.style.StyleColorTheme
 import com.mapbox.maps.extension.compose.style.internal.MapStyleNode
 import com.mapbox.maps.logD
-import com.mapbox.maps.logW
+import com.mapbox.maps.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -56,8 +56,8 @@ internal class StyleImportNode(
             config = config?.configs,
             importPosition = getRelativePositionInfo()
           )
-        }.onError { error ->
-          logW(TAG, "addStyleImport error: $error")
+        }.onError {
+          logE(TAG, it)
         }.onValue {
           logD(TAG, "added StyleImport($importId, $style, $config, null)")
         }

@@ -4,8 +4,6 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
-import com.mapbox.maps.logI
-import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -83,16 +81,16 @@ internal class AtmosphereStateApplier internal constructor(
                   mapboxMap.setStyleAtmosphere(Value.valueOf(hashMapOf())).onValue {
                     atmosphereSet = true
                     mapboxMap.setStyleAtmosphereProperty(name, value).onError {
-                      logW(TAG, "Failed to set atmosphere property $name as $value: $error")
+                      logE(TAG, "Failed to set atmosphere property $name as $value: $error")
                     }.onValue {
                       logD(TAG, "settingProperty: name=$name, value=$value executed")
                     }
                   }.onError {
-                    logW(TAG, "Failed to set atmosphere with no properties, error = $it")
-                    logI(TAG, "settingProperty: name=$name, value=$value ignored")
+                    logE(TAG, "Failed to set atmosphere with no properties, error = $it")
+                    logE(TAG, "settingProperty: name=$name, value=$value ignored")
                   }
                 } else {
-                  logW(TAG, "Failed to set atmosphere property $name as $value: $error")
+                  logE(TAG, "Failed to set atmosphere property $name as $value: $error")
                 }
               }.onValue {
                 logD(TAG, "settingProperty: name=$name, value=$value executed")

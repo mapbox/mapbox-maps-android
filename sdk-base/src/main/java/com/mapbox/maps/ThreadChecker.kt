@@ -75,7 +75,7 @@ object ThreadChecker {
       val buildConfigClass = Class.forName("$packageName.BuildConfig")
       debug = buildConfigClass.getField(DEBUG_FIELD).getBoolean(null)
     } catch (exception: Exception) {
-      logW(TAG, "$DEBUG_LOOKUP_FAILED ${exception.localizedMessage}")
+      logI(TAG, "$DEBUG_LOOKUP_FAILED ${exception.localizedMessage}")
     }
     return debug
   }

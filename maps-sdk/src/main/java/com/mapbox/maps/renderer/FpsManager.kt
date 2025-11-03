@@ -204,15 +204,12 @@ internal class FpsManager(
           "VSYNC based FPS is $fps, missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
         )
       } else {
-        val averageRenderTimeNs =
-          frameRenderTimeAccumulatedNs.toDouble() / (choreographerTicks - choreographerSkips)
-        val fps =
-          String.format("%.2f", screenRefreshPeriodNs / averageRenderTimeNs * screenRefreshRate)
+        val averageRenderTimeNs = frameRenderTimeAccumulatedNs.toDouble() / (choreographerTicks - choreographerSkips)
         logI(
           TAG,
           "VSYNC based FPS is $fps," +
             " average core rendering time is ${averageRenderTimeNs / ONE_MILLISECOND_NS} ms" +
-            " (or $fps FPS)," +
+            " (or ${String.format("%.2f", screenRefreshPeriodNs / averageRenderTimeNs * screenRefreshRate)} FPS)," +
             " missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
         )
       }
