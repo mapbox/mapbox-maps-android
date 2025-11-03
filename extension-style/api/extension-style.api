@@ -1621,8 +1621,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public fun fillExtrusionBaseAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillExtrusionBaseAlignment;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionBaseTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionBaseTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
-	public fun fillExtrusionCastShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
-	public fun fillExtrusionCastShadows (Z)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionColor (I)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public fun fillExtrusionColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1714,8 +1712,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getFillExtrusionBaseAlignmentAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionBaseAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionBaseTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
-	public final fun getFillExtrusionCastShadows ()Ljava/lang/Boolean;
-	public final fun getFillExtrusionCastShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getFillExtrusionColor ()Ljava/lang/String;
 	public final fun getFillExtrusionColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getFillExtrusionColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -1817,8 +1813,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public final fun getDefaultFillExtrusionBaseAlignmentAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionBaseAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionBaseTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
-	public final fun getDefaultFillExtrusionCastShadows ()Ljava/lang/Boolean;
-	public final fun getDefaultFillExtrusionCastShadowsAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultFillExtrusionColor ()Ljava/lang/String;
 	public final fun getDefaultFillExtrusionColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultFillExtrusionColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -1909,8 +1903,6 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun fillExtrusionBaseAlignment (Lcom/mapbox/maps/extension/style/layers/properties/generated/FillExtrusionBaseAlignment;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionBaseTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionBaseTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
-	public abstract fun fillExtrusionCastShadows (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
-	public abstract fun fillExtrusionCastShadows (Z)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionColor (I)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public abstract fun fillExtrusionColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -1998,7 +1990,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/FillExtrusio
 	public static synthetic fun fillExtrusionAmbientOcclusionWallRadius$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionBase$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionBaseAlignment$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/FillExtrusionBaseAlignment;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
-	public static synthetic fun fillExtrusionCastShadows$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionColor$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionCutoffFadeRange$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
 	public static synthetic fun fillExtrusionEdgeRadius$default (Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/FillExtrusionLayer;
@@ -2625,6 +2616,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getLineCutoutOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineCutoutOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getLineCutoutWidth ()Ljava/lang/Double;
+	public final fun getLineCutoutWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getLineCutoutWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDasharrayAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
@@ -2725,6 +2719,10 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineCutoutOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineCutoutOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineCutoutOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineCutoutWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineCutoutWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineCutoutWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineCutoutWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineDasharray (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineDasharray (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineDepthOcclusionFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2835,6 +2833,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getDefaultLineCutoutOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineCutoutOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultLineCutoutWidth ()Ljava/lang/Double;
+	public final fun getDefaultLineCutoutWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultLineCutoutWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineDasharray ()Ljava/util/List;
 	public final fun getDefaultLineDasharrayAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineDepthOcclusionFactor ()Ljava/lang/Double;
@@ -2934,6 +2935,10 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineCutoutOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineCutoutOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineCutoutOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineCutoutWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineCutoutWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineCutoutWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineCutoutWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineDasharray (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineDasharray (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineDepthOcclusionFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -3018,6 +3023,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayerDsl
 	public static synthetic fun lineColor$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineCutoutFadeWidth$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineCutoutOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public static synthetic fun lineCutoutWidth$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineDepthOcclusionFactor$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineElevationReference$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -4173,12 +4179,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public final fun getIconColor ()Ljava/lang/String;
 	public final fun getIconColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getIconColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getIconColorBrightnessMax ()Ljava/lang/Double;
-	public final fun getIconColorBrightnessMaxAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getIconColorBrightnessMin ()Ljava/lang/Double;
-	public final fun getIconColorBrightnessMinAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getIconColorContrast ()Ljava/lang/Double;
-	public final fun getIconColorContrastAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconColorSaturation ()Ljava/lang/Double;
 	public final fun getIconColorSaturationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIconColorSaturationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4243,8 +4243,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun getLayerId ()Ljava/lang/String;
 	public fun getMaxZoom ()Ljava/lang/Double;
 	public fun getMinZoom ()Ljava/lang/Double;
-	public final fun getOcclusionOpacityMode ()Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
-	public final fun getOcclusionOpacityModeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public fun getSlot ()Ljava/lang/String;
 	public final fun getSourceId ()Ljava/lang/String;
 	public final fun getSourceLayer ()Ljava/lang/String;
@@ -4353,12 +4351,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun iconColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun iconColorBrightnessMax (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun iconColorBrightnessMax (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun iconColorBrightnessMin (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun iconColorBrightnessMin (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun iconColorContrast (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun iconColorContrast (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorSaturation (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorSaturation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun iconColorSaturationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4434,8 +4426,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer 
 	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun occlusionOpacityMode (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public fun occlusionOpacityMode (Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public synthetic fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4559,12 +4549,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultIconColor ()Ljava/lang/String;
 	public final fun getDefaultIconColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultIconColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getDefaultIconColorBrightnessMax ()Ljava/lang/Double;
-	public final fun getDefaultIconColorBrightnessMaxAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getDefaultIconColorBrightnessMin ()Ljava/lang/Double;
-	public final fun getDefaultIconColorBrightnessMinAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getDefaultIconColorContrast ()Ljava/lang/Double;
-	public final fun getDefaultIconColorContrastAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconColorSaturation ()Ljava/lang/Double;
 	public final fun getDefaultIconColorSaturationAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultIconColorSaturationTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -4628,8 +4612,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayer$
 	public final fun getDefaultIconTranslateTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
-	public final fun getDefaultOcclusionOpacityMode ()Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
-	public final fun getDefaultOcclusionOpacityModeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getDefaultSymbolAvoidEdgesAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
@@ -4738,12 +4720,6 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun iconColor (I)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun iconColorBrightnessMax (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun iconColorBrightnessMax (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun iconColorBrightnessMin (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun iconColorBrightnessMin (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun iconColorContrast (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun iconColorContrast (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorSaturation (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorSaturation (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun iconColorSaturationTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4817,8 +4793,6 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun iconTranslateTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun occlusionOpacityMode (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public abstract fun occlusionOpacityMode (Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun slot (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun sourceLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public abstract fun symbolAvoidEdges (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4935,9 +4909,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayerD
 	public static synthetic fun iconAllowOverlap$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconAnchor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconColor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public static synthetic fun iconColorBrightnessMax$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public static synthetic fun iconColorBrightnessMin$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public static synthetic fun iconColorContrast$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconColorSaturation$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconHaloBlur$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -4960,7 +4931,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/SymbolLayerD
 	public static synthetic fun iconTextFitPadding$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconTranslate$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun iconTranslateAnchor$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/IconTranslateAnchor;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
-	public static synthetic fun occlusionOpacityMode$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolAvoidEdges$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolElevationReference$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
 	public static synthetic fun symbolPlacement$default (Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolPlacement;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/SymbolLayer;
@@ -5425,21 +5395,6 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/M
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ModelType$Companion {
 	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ModelType;
-}
-
-public final class com/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
-	public static final field ANCHOR Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
-	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode$Companion;
-	public static final field PIXEL Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
-}
-
-public final class com/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode$Companion {
-	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
 }
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ProjectionName : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
@@ -6403,13 +6358,10 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun getGenerateId ()Ljava/lang/Boolean;
 	public final fun getLineMetrics ()Ljava/lang/Boolean;
 	public final fun getMaxzoom ()Ljava/lang/Long;
-	public final fun getMinzoom ()Ljava/lang/Long;
 	public final fun getPrefetchZoomDelta ()Ljava/lang/Long;
 	public final fun getPromoteId ()Lcom/mapbox/maps/extension/style/types/PromoteId;
 	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTolerance ()Ljava/lang/Double;
-	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
-	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
@@ -6454,8 +6406,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public static synthetic fun lineMetrics$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun maxzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public static synthetic fun maxzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
-	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
-	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
 	public final fun promoteId (Lcom/mapbox/maps/extension/style/types/PromoteId;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource$Builder;
@@ -6476,7 +6426,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun getDefaultGenerateId ()Ljava/lang/Boolean;
 	public final fun getDefaultLineMetrics ()Ljava/lang/Boolean;
 	public final fun getDefaultMaxzoom ()Ljava/lang/Long;
-	public final fun getDefaultMinzoom ()Ljava/lang/Long;
 	public final fun getDefaultPrefetchZoomDelta ()Ljava/lang/Long;
 	public final fun getDefaultTolerance ()Ljava/lang/Double;
 }
@@ -6528,7 +6477,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterArray
 	public final fun getTileSize ()Ljava/lang/Long;
 	public final fun getTiles ()Ljava/util/List;
 	public final fun getUrl ()Ljava/lang/String;
-	public final fun getVolatile ()Ljava/lang/Boolean;
 	public final fun maxzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public static synthetic fun maxzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
@@ -6536,8 +6484,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterArray
 	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public final fun tiles (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
-	public final fun volatile (Z)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
-	public static synthetic fun volatile$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource;
 }
 
 public final class com/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder {
@@ -6558,14 +6504,11 @@ public final class com/mapbox/maps/extension/style/sources/generated/RasterArray
 	public static synthetic fun tileSize$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public final fun tiles (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
-	public final fun volatile (Z)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
-	public static synthetic fun volatile$default (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;
 }
 
 public final class com/mapbox/maps/extension/style/sources/generated/RasterArraySource$Companion {
 	public final fun getDefaultMaxzoom ()Ljava/lang/Long;
 	public final fun getDefaultMinzoom ()Ljava/lang/Long;
-	public final fun getDefaultVolatile ()Ljava/lang/Boolean;
 }
 
 public final class com/mapbox/maps/extension/style/sources/generated/RasterArraySource$RasterDataLayer {

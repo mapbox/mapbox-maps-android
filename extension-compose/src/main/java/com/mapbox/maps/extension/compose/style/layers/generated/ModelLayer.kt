@@ -16,12 +16,10 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 
 /**
- * A 3D model
+ * A layer to render 3D Models.
  *
  * This composable function inserts a [ModelLayer] to the map. For convenience, if there's
  * no need to hoist the [modelLayerState], use `ModelLayer(sourceState, layerId, init)` with trailing lambda instead.
- *
- * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#model)
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
@@ -29,7 +27,7 @@ import com.mapbox.maps.extension.compose.style.sources.SourceState
  */
 @Composable
 @MapboxMapComposable
-@OptIn(MapboxExperimental::class)
+@MapboxExperimental
 public fun ModelLayer(
   sourceState: SourceState,
   layerId: String = remember {
@@ -77,11 +75,9 @@ public fun ModelLayer(
 }
 
 /**
- * A 3D model
+ * A layer to render 3D Models.
  *
  * This composable function inserts a [ModelLayer] to the map.
- *
- * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers#model)
  *
  * @param sourceState the source that drives this layer.
  * @param layerId the ID of the layer, by default, a random id will be generated with UUID.
@@ -89,6 +85,7 @@ public fun ModelLayer(
  */
 @Composable
 @MapboxMapComposable
+@MapboxExperimental
 public inline fun ModelLayer(
   sourceState: SourceState,
   layerId: String = remember {

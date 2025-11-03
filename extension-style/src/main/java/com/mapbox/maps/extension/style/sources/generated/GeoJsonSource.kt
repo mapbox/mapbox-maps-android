@@ -73,7 +73,7 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
             put("message", "setStyleGeoJSONSourceData error: ${nativeExpected?.error ?: nativeException?.message}")
           }.toString()
           val errorTime = Date()
-          logW(TAG, "set GeoJSON data error: $errorJsonString")
+          logE(TAG, errorJsonString)
           mainHandler.post {
             style.mapLoadingErrorDelegate.sendMapLoadingError(
               MapLoadingError(
@@ -181,28 +181,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      * @return Long
      */
     get() = getPropertyValue("maxzoom")
-
-  /**
-   * Minimum zoom level at which to create vector tiles
-   * Default value: 0.
-   */
-  fun minzoom(value: Long = 0L): GeoJsonSource = apply {
-    setProperty(PropertyValue("minzoom", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * Minimum zoom level at which to create vector tiles
-   * Default value: 0.
-   */
-  val minzoom: Long?
-    /**
-     * Get the Minzoom property
-     *
-     * Use static method [GeoJsonSource.defaultMinzoom] to get the default property.
-     *
-     * @return Long
-     */
-    get() = getPropertyValue("minzoom")
 
   /**
    * Contains an attribution to be displayed when the map is shown to a user.
@@ -377,11 +355,10 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
   /**
    * When set to true, the maxZoom property is ignored and is instead calculated automatically based on
-   * the largest bounding box from the geojson features. This resolves rendering artifacts for features that use
+   * the largest bounding box from the geoJSON features. This resolves rendering artifacts for features that use
    * wide blur (e.g. fill extrusion ground flood light or circle layer) and would bring performance improvement
    * on lower zoom levels, especially for geoJSON sources that update data frequently. However, it can lead
-   * to flickering and precision loss on zoom levels above 19. This option is not supported in
-   * combination with clustering.
+   * to flickering and precision loss on zoom levels above 19.
    * Default value: false.
    */
   @MapboxExperimental
@@ -555,15 +532,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
      */
     fun maxzoom(value: Long = 18L): Builder = apply {
       val propertyValue = PropertyValue("maxzoom", TypeUtils.wrapToValue(value))
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * Minimum zoom level at which to create vector tiles
-     * Default value: 0.
-     */
-    fun minzoom(value: Long = 0L): Builder = apply {
-      val propertyValue = PropertyValue("minzoom", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -745,11 +713,10 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
 
     /**
      * When set to true, the maxZoom property is ignored and is instead calculated automatically based on
-     * the largest bounding box from the geojson features. This resolves rendering artifacts for features that use
+     * the largest bounding box from the geoJSON features. This resolves rendering artifacts for features that use
      * wide blur (e.g. fill extrusion ground flood light or circle layer) and would bring performance improvement
      * on lower zoom levels, especially for geoJSON sources that update data frequently. However, it can lead
-     * to flickering and precision loss on zoom levels above 19. This option is not supported in
-     * combination with clustering.
+     * to flickering and precision loss on zoom levels above 19.
      * Default value: false.
      */
     @MapboxExperimental
@@ -867,18 +834,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
        * @return Long
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "maxzoom").silentUnwrap()
-
-    /**
-     * Minimum zoom level at which to create vector tiles
-     * Default value: 0.
-     */
-    val defaultMinzoom: Long?
-      /**
-       * Get the Minzoom property
-       *
-       * @return Long
-       */
-      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "minzoom").silentUnwrap()
 
     /**
      * Size of the tile buffer on each side. A value of 0 produces no buffer. A

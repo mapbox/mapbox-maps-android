@@ -108,21 +108,6 @@ class MapboxMap :
       return nativeMap.getCameraState()
     }
 
-  /**
-   * Indoor manager for controlling indoor map floor display.
-   *
-   * Provides access to indoor mapping features, allowing you to select floors
-   * and listen to indoor state updates.
-   *
-   * @return the [IndoorManager] instance.
-   */
-  @MapboxExperimental
-  val indoor: IndoorManager
-    get() {
-      checkNativeMap("indoor")
-      return nativeMap.getIndoorManager()
-    }
-
   @get:JvmSynthetic @set:JvmSynthetic
   internal var cameraAnimationsPlugin: CameraAnimationsPlugin? = null
   @get:JvmSynthetic @set:JvmSynthetic
@@ -896,7 +881,7 @@ class MapboxMap :
       maxZoom,
       offset
     ).getValueOrElse {
-      logW(
+      logE(
         TAG,
         "Error occurred in synchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
       )
@@ -933,7 +918,7 @@ class MapboxMap :
           maxZoom,
           offset
         ).getValueOrElse {
-          logW(
+          logE(
             TAG,
             "Error occurred in asynchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
           )
@@ -2681,7 +2666,7 @@ class MapboxMap :
         callback
       )
     } ?: Cancelable { }.also {
-      logW(TAG, "setFeatureState called but featuresetFeature.id is NULL!")
+      logE(TAG, "setFeatureState called but featuresetFeature.id is NULL!")
     }
   }
 
@@ -2744,7 +2729,7 @@ class MapboxMap :
         }
       }
     } ?: Cancelable { }.also {
-      logW(TAG, "getFeatureState called but featuresetFeature.id is NULL!")
+      logE(TAG, "getFeatureState called but featuresetFeature.id is NULL!")
     }
   }
 
@@ -2812,7 +2797,7 @@ class MapboxMap :
         callback
       )
     } ?: Cancelable { }.also {
-      logW(TAG, "removeFeatureState called but featuresetFeature.id is NULL!")
+      logE(TAG, "removeFeatureState called but featuresetFeature.id is NULL!")
     }
   }
 
@@ -2926,81 +2911,6 @@ class MapboxMap :
         )
       }
     }
-  }
-
-  /**
-   * Sets a feature state expression that applies to features within the specified featureset.
-   *
-   * All feature states with expressions that evaluate to true will be applied to the feature.
-   * Feature states from later added feature state expressions have higher priority. Regular feature states have higher priority than feature state expressions.
-   * The final feature state is determined by applying states in order from lower to higher priority. As a result, multiple expressions that set states with different keys can affect the same features simultaneously.
-   * If an expression is added for a feature set, properties from that feature set are used, not the properties from original sources.
-   *
-   * Note that updates to feature state expressions are asynchronous, so changes made by this method might not be
-   * immediately visible and will have some delay. The displayed data will not be affected immediately.
-   *
-   * @param featureStateExpressionId Unique identifier for the state expression.
-   * @param featureset The featureset descriptor that specifies which featureset the expression applies to.
-   * @param expression The expression to evaluate for the state. Should return boolean.
-   * @param state The `state` object with properties to update with their respective new values.
-   * @param callback The `feature state operation callback` called when the operation completes.
-   *
-   */
-  @MapboxExperimental
-  @MapboxDelicateApi
-  override fun <FS : FeatureState> setFeatureStateExpression(
-    featureStateExpressionId: Int,
-    featureset: TypedFeaturesetDescriptor<FS, *>,
-    expression: Value,
-    state: FS,
-    callback: FeatureStateOperationCallback,
-  ) {
-    checkNativeMap("setFeatureStateExpression")
-    nativeMap.setFeatureStateExpression(
-      featureStateExpressionId,
-      featureset.toFeaturesetDescriptor(),
-      expression,
-      state.internalState,
-      callback
-    )
-  }
-
-  /**
-   * Removes a specific feature state expression.
-   *
-   * Remove a specific expression from the feature state expressions based on the expression ID.
-   *
-   * Note that updates to feature state expressions are asynchronous, so changes made by this method might not be
-   * immediately visible and will have some delay.
-   *
-   * @param featureStateExpressionId The unique identifier of the expression to remove.
-   * @param callback The `feature state operation callback` called when the operation completes.
-   */
-  @MapboxExperimental
-  @MapboxDelicateApi
-  override fun removeFeatureStateExpression(
-    featureStateExpressionId: Int,
-    callback: FeatureStateOperationCallback,
-  ) {
-    checkNativeMap("removeFeatureStateExpression")
-    nativeMap.removeFeatureStateExpression(featureStateExpressionId, callback)
-  }
-
-  /**
-   * Reset all feature state expressions.
-   *
-   * Note that updates to feature state expressions are asynchronous, so changes made by this method might not be
-   * immediately visible and will have some delay.
-   *
-   * @param callback The `feature state operation callback` called when the operation completes.
-   */
-  @MapboxExperimental
-  @MapboxDelicateApi
-  override fun resetFeatureStateExpressions(
-    callback: FeatureStateOperationCallback,
-  ) {
-    checkNativeMap("resetFeatureStateExpressions")
-    nativeMap.resetFeatureStateExpressions(callback)
   }
 
   /**

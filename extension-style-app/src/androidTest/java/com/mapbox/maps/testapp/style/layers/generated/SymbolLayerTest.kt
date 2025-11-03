@@ -1409,78 +1409,6 @@ class SymbolLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun iconColorBrightnessMaxTest() {
-    val testValue = 1.0
-    val layer = symbolLayer("id", "source") {
-      iconColorBrightnessMax(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue, layer.iconColorBrightnessMax!!, 1E-5)
-  }
-
-  @Test
-  @UiThreadTest
-  fun iconColorBrightnessMaxAsExpressionTest() {
-    val expression = literal(1.0)
-    val layer = symbolLayer("id", "source") {
-      iconColorBrightnessMax(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(1.0, layer.iconColorBrightnessMaxAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.iconColorBrightnessMax!!, 1E-5)
-  }
-
-  @Test
-  @UiThreadTest
-  fun iconColorBrightnessMinTest() {
-    val testValue = 1.0
-    val layer = symbolLayer("id", "source") {
-      iconColorBrightnessMin(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue, layer.iconColorBrightnessMin!!, 1E-5)
-  }
-
-  @Test
-  @UiThreadTest
-  fun iconColorBrightnessMinAsExpressionTest() {
-    val expression = literal(1.0)
-    val layer = symbolLayer("id", "source") {
-      iconColorBrightnessMin(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(1.0, layer.iconColorBrightnessMinAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.iconColorBrightnessMin!!, 1E-5)
-  }
-
-  @Test
-  @UiThreadTest
-  fun iconColorContrastTest() {
-    val testValue = 1.0
-    val layer = symbolLayer("id", "source") {
-      iconColorContrast(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue, layer.iconColorContrast!!, 1E-5)
-  }
-
-  @Test
-  @UiThreadTest
-  fun iconColorContrastAsExpressionTest() {
-    val expression = literal(1.0)
-    val layer = symbolLayer("id", "source") {
-      iconColorContrast(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(1.0, layer.iconColorContrastAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.iconColorContrast!!, 1E-5)
-  }
-
-  @Test
-  @UiThreadTest
   fun iconColorSaturationTest() {
     val testValue = 1.0
     val layer = symbolLayer("id", "source") {
@@ -2064,29 +1992,6 @@ class SymbolLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.iconTranslateAnchorAsExpression.toString())
     assertEquals(IconTranslateAnchor.MAP, layer.iconTranslateAnchor!!)
-  }
-
-  @Test
-  @UiThreadTest
-  fun occlusionOpacityModeTest() {
-    val layer = symbolLayer("id", "source") {
-      occlusionOpacityMode(OcclusionOpacityMode.ANCHOR)
-    }
-    setupLayer(layer)
-    assertEquals(OcclusionOpacityMode.ANCHOR, layer.occlusionOpacityMode)
-  }
-
-  @Test
-  @UiThreadTest
-  fun occlusionOpacityModeAsExpressionTest() {
-    val expression = literal("anchor")
-    val layer = symbolLayer("id", "source") {
-      occlusionOpacityMode(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.occlusionOpacityModeAsExpression.toString())
-    assertEquals(OcclusionOpacityMode.ANCHOR, layer.occlusionOpacityMode!!)
   }
 
   @Test
@@ -2855,12 +2760,6 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconColorUseTheme should not be null", SymbolLayer.defaultIconColorUseTheme)
     assertNotNull("defaultIconColorUseThemeAsExpression should not be null", SymbolLayer.defaultIconColorUseThemeAsExpression)
     assertNotNull("defaultIconColorTransition should not be null", SymbolLayer.defaultIconColorTransition)
-    assertNotNull("defaultIconColorBrightnessMax should not be null", SymbolLayer.defaultIconColorBrightnessMax)
-    assertNotNull("defaultIconColorBrightnessMaxAsExpression should not be null", SymbolLayer.defaultIconColorBrightnessMaxAsExpression)
-    assertNotNull("defaultIconColorBrightnessMin should not be null", SymbolLayer.defaultIconColorBrightnessMin)
-    assertNotNull("defaultIconColorBrightnessMinAsExpression should not be null", SymbolLayer.defaultIconColorBrightnessMinAsExpression)
-    assertNotNull("defaultIconColorContrast should not be null", SymbolLayer.defaultIconColorContrast)
-    assertNotNull("defaultIconColorContrastAsExpression should not be null", SymbolLayer.defaultIconColorContrastAsExpression)
     assertNotNull("defaultIconColorSaturation should not be null", SymbolLayer.defaultIconColorSaturation)
     assertNotNull("defaultIconColorSaturationAsExpression should not be null", SymbolLayer.defaultIconColorSaturationAsExpression)
     // Icon color saturation transition will be added in future versions
@@ -2894,8 +2793,6 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconTranslateTransition should not be null", SymbolLayer.defaultIconTranslateTransition)
     assertNotNull("defaultIconTranslateAnchor should not be null", SymbolLayer.defaultIconTranslateAnchor)
     assertNotNull("defaultIconTranslateAnchorAsExpression should not be null", SymbolLayer.defaultIconTranslateAnchorAsExpression)
-    assertNotNull("defaultOcclusionOpacityMode should not be null", SymbolLayer.defaultOcclusionOpacityMode)
-    assertNotNull("defaultOcclusionOpacityModeAsExpression should not be null", SymbolLayer.defaultOcclusionOpacityModeAsExpression)
     assertNotNull("defaultSymbolZOffset should not be null", SymbolLayer.defaultSymbolZOffset)
     assertNotNull("defaultSymbolZOffsetAsExpression should not be null", SymbolLayer.defaultSymbolZOffsetAsExpression)
     assertNotNull("defaultSymbolZOffsetTransition should not be null", SymbolLayer.defaultSymbolZOffsetTransition)
@@ -3006,9 +2903,6 @@ class SymbolLayerTest : BaseStyleTest() {
     val textWritingModeTestValue = listOf("horizontal", "vertical")
     val iconColorTestValue = "rgba(0, 0, 0, 1)"
     val iconColorUseThemeTestValue = "default"
-    val iconColorBrightnessMaxTestValue = 1.0
-    val iconColorBrightnessMinTestValue = 1.0
-    val iconColorContrastTestValue = 1.0
     val iconColorSaturationTestValue = 1.0
     val iconEmissiveStrengthTestValue = 1.0
     val iconHaloBlurTestValue = 1.0
@@ -3020,7 +2914,6 @@ class SymbolLayerTest : BaseStyleTest() {
     val iconOpacityTestValue = 1.0
     val iconTranslateTestValue = listOf(0.0, 1.0)
     val iconTranslateAnchorTestValue = IconTranslateAnchor.MAP
-    val occlusionOpacityModeTestValue = OcclusionOpacityMode.ANCHOR
     val symbolZOffsetTestValue = 1.0
     val textColorTestValue = "rgba(0, 0, 0, 1)"
     val textColorUseThemeTestValue = "default"
@@ -3088,9 +2981,6 @@ class SymbolLayerTest : BaseStyleTest() {
       textWritingMode(textWritingModeTestValue)
       iconColor(iconColorTestValue)
       iconColorUseTheme(iconColorUseThemeTestValue)
-      iconColorBrightnessMax(iconColorBrightnessMaxTestValue)
-      iconColorBrightnessMin(iconColorBrightnessMinTestValue)
-      iconColorContrast(iconColorContrastTestValue)
       iconColorSaturation(iconColorSaturationTestValue)
       iconEmissiveStrength(iconEmissiveStrengthTestValue)
       iconHaloBlur(iconHaloBlurTestValue)
@@ -3102,7 +2992,6 @@ class SymbolLayerTest : BaseStyleTest() {
       iconOpacity(iconOpacityTestValue)
       iconTranslate(iconTranslateTestValue)
       iconTranslateAnchor(iconTranslateAnchorTestValue)
-      occlusionOpacityMode(occlusionOpacityModeTestValue)
       symbolZOffset(symbolZOffsetTestValue)
       textColor(textColorTestValue)
       textColorUseTheme(textColorUseThemeTestValue)
@@ -3175,9 +3064,6 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(textWritingModeTestValue, cachedLayer.textWritingMode)
     assertEquals(iconColorTestValue, cachedLayer.iconColor)
     assertEquals(iconColorUseThemeTestValue, cachedLayer.iconColorUseTheme)
-    assertEquals(iconColorBrightnessMaxTestValue, cachedLayer.iconColorBrightnessMax)
-    assertEquals(iconColorBrightnessMinTestValue, cachedLayer.iconColorBrightnessMin)
-    assertEquals(iconColorContrastTestValue, cachedLayer.iconColorContrast)
     assertEquals(iconColorSaturationTestValue, cachedLayer.iconColorSaturation)
     assertEquals(iconEmissiveStrengthTestValue, cachedLayer.iconEmissiveStrength)
     assertEquals(iconHaloBlurTestValue, cachedLayer.iconHaloBlur)
@@ -3189,7 +3075,6 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(iconOpacityTestValue, cachedLayer.iconOpacity)
     assertEquals(iconTranslateTestValue, cachedLayer.iconTranslate)
     assertEquals(iconTranslateAnchorTestValue, cachedLayer.iconTranslateAnchor)
-    assertEquals(occlusionOpacityModeTestValue, cachedLayer.occlusionOpacityMode)
     assertEquals(symbolZOffsetTestValue, cachedLayer.symbolZOffset)
     assertEquals(textColorTestValue, cachedLayer.textColor)
     assertEquals(textColorUseThemeTestValue, cachedLayer.textColorUseTheme)

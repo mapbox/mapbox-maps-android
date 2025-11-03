@@ -47,7 +47,6 @@ private constructor(
   initialFillExtrusionBase: DoubleValue,
   initialFillExtrusionBaseTransition: Transition,
   initialFillExtrusionBaseAlignment: FillExtrusionBaseAlignmentValue,
-  initialFillExtrusionCastShadows: BooleanValue,
   initialFillExtrusionColor: ColorValue,
   initialFillExtrusionColorUseTheme: StringValue,
   initialFillExtrusionColorTransition: Transition,
@@ -107,7 +106,6 @@ private constructor(
     initialFillExtrusionBase = DoubleValue.INITIAL,
     initialFillExtrusionBaseTransition = Transition.INITIAL,
     initialFillExtrusionBaseAlignment = FillExtrusionBaseAlignmentValue.INITIAL,
-    initialFillExtrusionCastShadows = BooleanValue.INITIAL,
     initialFillExtrusionColor = ColorValue.INITIAL,
     initialFillExtrusionColorUseTheme = StringValue.INITIAL,
     initialFillExtrusionColorTransition = Transition.INITIAL,
@@ -254,12 +252,6 @@ private constructor(
    */
   @MapboxExperimental
   public var fillExtrusionBaseAlignment: FillExtrusionBaseAlignmentValue by fillExtrusionBaseAlignmentState
-
-  private val fillExtrusionCastShadowsState: MutableState<BooleanValue> = mutableStateOf(initialFillExtrusionCastShadows)
-  /**
-   *  Enable/Disable shadow casting for this layer Default value: true.
-   */
-  public var fillExtrusionCastShadows: BooleanValue by fillExtrusionCastShadowsState
 
   private val fillExtrusionColorState: MutableState<ColorValue> = mutableStateOf(initialFillExtrusionColor)
   /**
@@ -542,7 +534,6 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionBaseState, "fill-extrusion-base")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionBaseTransitionState, "fill-extrusion-base-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionBaseAlignmentState, "fill-extrusion-base-alignment")
-    ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionCastShadowsState, "fill-extrusion-cast-shadows")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionColorState, "fill-extrusion-color")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionColorUseThemeState, "fill-extrusion-color-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, fillExtrusionColorTransitionState, "fill-extrusion-color-transition")

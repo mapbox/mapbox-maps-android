@@ -1353,58 +1353,6 @@ class IconTranslateAnchor private constructor(override val value: String) : Laye
     }
   }
 }
-// OCCLUSION_OPACITY_MODE: Specify how opacity in case of being occluded should be applied
-/**
- * Specify how opacity in case of being occluded should be applied
- *
- * @param value String value of this property
- */
-class OcclusionOpacityMode private constructor(override val value: String) : LayerProperty {
-
-  /**
-   * Indicates whether some other object is "equal to" this one.
-   */
-  override fun equals(other: Any?) = other is OcclusionOpacityMode &&
-    value == other.value
-
-  /**
-   * Returns a hash code value for the object.
-   */
-  override fun hashCode() = value.hashCode()
-
-  /**
-   * Returns a String for the object.
-   */
-  override fun toString() = "OcclusionOpacityMode(value=$value)"
-
-  /**
-   * Static methods and variables.
-   */
-  companion object {
-    /**
-     * Whole symbol is treated as occluded if it's anchor point is occluded
-     */
-    @JvmField
-    val ANCHOR = OcclusionOpacityMode("anchor")
-    /**
-     * Occlusion is applied on a per-pixel basis
-     */
-    @JvmField
-    val PIXEL = OcclusionOpacityMode("pixel")
-
-    /**
-     * Utility function to get [OcclusionOpacityMode] instance from given [value].
-     */
-    @JvmStatic
-    fun valueOf(value: String): OcclusionOpacityMode {
-      return when (value) {
-        "ANCHOR" -> ANCHOR
-        "PIXEL" -> PIXEL
-        else -> throw RuntimeException("OcclusionOpacityMode.valueOf does not support [$value]")
-      }
-    }
-  }
-}
 // TEXT_TRANSLATE_ANCHOR: Controls the frame of reference for `text-translate`.
 /**
  * Controls the frame of reference for `text-translate`.
@@ -1881,6 +1829,7 @@ class HillshadeIlluminationAnchor private constructor(override val value: String
  *
  * @param value String value of this property
  */
+@MapboxExperimental
 class ModelElevationReference private constructor(override val value: String) : LayerProperty {
 
   /**
@@ -1939,6 +1888,7 @@ class ModelElevationReference private constructor(override val value: String) : 
  *
  * @param value String value of this property
  */
+@MapboxExperimental
 class ModelScaleMode private constructor(override val value: String) : LayerProperty {
 
   /**
@@ -1991,6 +1941,7 @@ class ModelScaleMode private constructor(override val value: String) : LayerProp
  *
  * @param value String value of this property
  */
+@MapboxExperimental
 class ModelType private constructor(override val value: String) : LayerProperty {
 
   /**

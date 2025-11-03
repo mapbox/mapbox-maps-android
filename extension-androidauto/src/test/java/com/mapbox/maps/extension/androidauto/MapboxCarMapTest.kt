@@ -41,7 +41,6 @@ class MapboxCarMapTest {
   fun setup() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    every { logD(any(), any<String>()) } just Runs
     mockkObject(MapSurfaceProvider)
     every { MapSurfaceProvider.create(any(), any(), any()) } returns testMapSurface
   }

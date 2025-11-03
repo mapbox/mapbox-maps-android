@@ -493,9 +493,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> getClusterLongClickListeners();
     method public Boolean? getIconAllowOverlap();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
-    method public Double? getIconColorBrightnessMax();
-    method public Double? getIconColorBrightnessMin();
-    method public Double? getIconColorContrast();
     method @ColorInt public Integer? getIconColorInt();
     method public Double? getIconColorSaturation();
     method public String? getIconColorString();
@@ -528,7 +525,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
-    method public com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode? getOcclusionOpacityMode();
     method public String? getSlot();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
@@ -577,9 +573,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setIconAllowOverlap(Boolean?);
     method public void setIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor?);
-    method public void setIconColorBrightnessMax(Double?);
-    method public void setIconColorBrightnessMin(Double?);
-    method public void setIconColorContrast(Double?);
     method public void setIconColorInt(@ColorInt Integer?);
     method public void setIconColorSaturation(Double?);
     method public void setIconColorString(String?);
@@ -612,7 +605,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     method public void setMaxZoom(Double?);
     method public void setMinZoom(Double?);
-    method public void setOcclusionOpacityMode(com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode?);
     method public void setSlot(String?);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
@@ -662,9 +654,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> clusterLongClickListeners;
     property public final Boolean? iconAllowOverlap;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
-    property public final Double? iconColorBrightnessMax;
-    property public final Double? iconColorBrightnessMin;
-    property public final Double? iconColorContrast;
     property @ColorInt public final Integer? iconColorInt;
     property public final Double? iconColorSaturation;
     property public final String? iconColorString;
@@ -697,7 +686,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public final Double? maxZoom;
     property public final Double? minZoom;
-    property public final com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode? occlusionOpacityMode;
     property public final String? slot;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
@@ -1237,7 +1225,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
     method public String? getLineColorUseTheme();
-    method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
     method public Double? getLineOffset();
@@ -1257,7 +1244,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineColorInt(@ColorInt Integer?);
     method public void setLineColorString(String?);
     method public void setLineColorUseTheme(String?);
-    method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
     method public void setLineOffset(Double?);
@@ -1276,7 +1262,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property @ColorInt public final Integer? lineColorInt;
     property public final String? lineColorString;
     property public final String? lineColorUseTheme;
-    property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
     property public final Double? lineOffset;
@@ -1311,6 +1296,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineCrossSlope();
     method public Double? getLineCutoutFadeWidth();
     method public Double? getLineCutoutOpacity();
+    method public Double? getLineCutoutWidth();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
@@ -1354,6 +1340,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineCrossSlope(Double?);
     method public void setLineCutoutFadeWidth(Double?);
     method public void setLineCutoutOpacity(Double?);
+    method public void setLineCutoutWidth(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
     method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
@@ -1396,6 +1383,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineCrossSlope;
     property public final Double? lineCutoutFadeWidth;
     property public final Double? lineCutoutOpacity;
+    property public final Double? lineCutoutWidth;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
@@ -1450,7 +1438,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineBorderWidth();
     method public String? getLineColor();
     method public String? getLineColorUseTheme();
-    method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
     method public Double? getLineOffset();
@@ -1466,7 +1453,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineBorderWidth(Double?);
     method public void setLineColor(String?);
     method public void setLineColorUseTheme(String?);
-    method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
     method public void setLineOffset(Double?);
@@ -1486,7 +1472,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(String lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(@ColorInt int lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColorUseTheme(String lineColorUseTheme);
-    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineEmissiveStrength(double lineEmissiveStrength);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineGapWidth(double lineGapWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin lineJoin);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineOffset(double lineOffset);
@@ -1502,7 +1487,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineBorderWidth;
     property public final String? lineColor;
     property public final String? lineColorUseTheme;
-    property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
     property public final Double? lineOffset;
@@ -1518,7 +1502,6 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_LINE_BORDER_WIDTH = "line-border-width";
     field public static final String PROPERTY_LINE_COLOR = "line-color";
     field public static final String PROPERTY_LINE_COLOR_USE_THEME = "line-color-use-theme";
-    field public static final String PROPERTY_LINE_EMISSIVE_STRENGTH = "line-emissive-strength";
     field public static final String PROPERTY_LINE_GAP_WIDTH = "line-gap-width";
     field public static final String PROPERTY_LINE_JOIN = "line-join";
     field public static final String PROPERTY_LINE_OFFSET = "line-offset";

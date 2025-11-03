@@ -5,7 +5,6 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.widget.FrameLayout
-import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.Projection
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -41,7 +40,6 @@ class ScaleBarPluginTest {
   private val context: Context = mockk(relaxed = true)
   private val typedArray: TypedArray = mockk(relaxUnitFun = true)
   private val drawable = mockk<Drawable>(relaxed = true)
-  private val cancelable = mockk<Cancelable>(relaxUnitFun = true)
 
   @Before
   fun setUp() {
@@ -65,7 +63,6 @@ class ScaleBarPluginTest {
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
     every { scaleBarView.pixelRatio } returns 1.5f
-    every { mapListenerManagerDelegate.subscribeCameraChangedCoalesced(any()) } returns cancelable
 
     scaleBarPlugin = ScaleBarPluginImpl { scaleBarView }
     scaleBarPlugin.onDelegateProvider(delegateProvider)
@@ -88,14 +85,12 @@ class ScaleBarPluginTest {
   fun setEnabled_true() {
     scaleBarPlugin.enabled = true
     assertEquals(true, scaleBarPlugin.getSettings().enabled)
-    verify(atLeast = 1) { mapListenerManagerDelegate.subscribeCameraChangedCoalesced(any()) }
   }
 
   @Test
   fun setEnabled_false() {
     scaleBarPlugin.enabled = false
     assertEquals(false, scaleBarPlugin.getSettings().enabled)
-    verify { cancelable.cancel() }
   }
 
   @Test
@@ -117,32 +112,5 @@ class ScaleBarPluginTest {
     scaleBarPlugin.useContinuousRendering = true
     verify { scaleBarPlugin.useContinuousRendering = true }
     verify { scaleBarView.useContinuousRendering = true }
-  }
-
-  @Test
-  fun updateSettings_disable() {
-    assertEquals(true, scaleBarPlugin.getSettings().enabled)
-    scaleBarPlugin.updateSettings { enabled = false }
-    verify { cancelable.cancel() }
-    verify { scaleBarView.enable = false }
-    assertEquals(false, scaleBarPlugin.getSettings().enabled)
-  }
-
-  @Test
-  fun updateSettings_enable() {
-    scaleBarPlugin.enabled = false
-    scaleBarPlugin.updateSettings { enabled = true }
-    verify(atLeast = 2) { mapListenerManagerDelegate.subscribeCameraChangedCoalesced(any()) }
-    verify { scaleBarView.enable = true }
-    assertEquals(true, scaleBarPlugin.getSettings().enabled)
-  }
-
-  @Test
-  fun updateSettings_enableUnchanged() {
-    assertEquals(true, scaleBarPlugin.getSettings().enabled)
-    scaleBarPlugin.updateSettings { marginLeft = 20f }
-    // listener remains active (only subscribed once during initialize)
-    verify(exactly = 1) { mapListenerManagerDelegate.subscribeCameraChangedCoalesced(any()) }
-    assertEquals(true, scaleBarPlugin.getSettings().enabled)
   }
 }

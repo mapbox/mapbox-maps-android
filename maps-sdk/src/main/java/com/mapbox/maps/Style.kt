@@ -102,32 +102,6 @@ class Style internal constructor(
   }
 
   /**
-   * Sets a value to a style source property for a source that belongs to a specific style import.
-   *
-   * This method allows modification of source properties within imported styles, enabling
-   * fine-grained control over sources from different style fragments or imports.
-   * If `importId` is empty, this method falls back to updating the root style.
-   *
-   * @param importId An identifier of the style import containing the target source.
-   * @param sourceId A style source identifier.
-   * @param property The style source property name.
-   * @param value The style source property value.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
-   */
-  @MapboxExperimental
-  @MainThread
-  override fun setStyleSourceProperty(
-    importId: String,
-    sourceId: String,
-    property: String,
-    value: Value
-  ): Expected<String, None> {
-    checkNativeStyle("setStyleSourceProperty")
-    return super.setStyleSourceProperty(importId, sourceId, property, value)
-  }
-
-  /**
    * Returns the map style's transition options. By default, the style parser will attempt
    * to read the style default transition options, if any, fallbacking to an immediate transition
    * otherwise. Transition options can be overridden via [setStyleTransition], but the options are

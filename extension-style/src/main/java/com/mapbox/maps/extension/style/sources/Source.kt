@@ -13,7 +13,6 @@ import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.generated.RasterArraySource
 import com.mapbox.maps.extension.style.utils.unwrap
 import com.mapbox.maps.logE
-import com.mapbox.maps.logW
 
 /**
  * Base class for sources.
@@ -144,9 +143,8 @@ abstract class Source(
         }
         stylePropertyValue.unwrap()
       } catch (e: RuntimeException) {
-        logW(TAG, "Get source property $propertyName failed: ${e.message}")
-        val propertyValue = styleManager.getStyleSourceProperty(sourceId, propertyName)
-        logW(TAG, "Value returned: ${propertyValue.value.toJson()}")
+        Log.e(TAG, "Get source property $propertyName failed: ${e.message}")
+        Log.e(TAG, "Value returned: ${styleManager.getStyleSourceProperty(sourceId, propertyName).value.toJson()}")
         null
       }
     }

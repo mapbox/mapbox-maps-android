@@ -38,6 +38,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.InteractionContext
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
@@ -72,6 +73,8 @@ import java.util.Date
  * even when GeofenceActivity or the whole app is closed.
  * [MapboxApplication.ENABLE_BACKGROUND_GEOFENCING] flag turns ON/OFF showcase of background behavior of the geofence engine.
  */
+
+@com.mapbox.annotation.MapboxExperimental
 class ExtendedGeofencingActivity : AppCompatActivity() {
 
   private var requestNotificationPermissionLauncher: ActivityResultLauncher<String> =
@@ -210,6 +213,7 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
   }
 
   @SuppressLint("SetTextI18n")
+  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -499,7 +503,7 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
     private const val CUSTOM_GEOFENCE_RADIUS = 500
     private const val ISOCHRONE_CONTOURS_MINUTES = 5
     private const val ISOCHRONE_DENOISE = .4f
-    private const val DWELL_TIME = 1
+    private const val DWELL_TIME = 0.5
     private const val LAYER_OPACITY = 0.6
     private const val LAYER_OUTLINE_COLOR = "#000"
     private const val DARK_BLUE = "#4264fb"

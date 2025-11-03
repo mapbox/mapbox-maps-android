@@ -4,8 +4,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
+import com.mapbox.maps.logE
 import com.mapbox.maps.logI
-import com.mapbox.maps.logW
 import java.util.*
 
 /**
@@ -18,7 +18,7 @@ import java.util.*
 internal fun setMapLanguage(locale: Locale, style: MapboxStyleManager, layerIds: List<String>?) {
   val convertedLocale = "name_${locale.language}"
   if (!isSupportedLanguage(convertedLocale)) {
-    logW(TAG, "Locale: $locale is not supported.")
+    logE(TAG, "Locale: $locale is not supported.")
     return
   }
 
@@ -82,7 +82,7 @@ private fun localizeTextFieldExpression(
       value
     )
   } ?: run {
-    logW(TAG, "An error ${expected.error} occurred when converting $localizedTextFieldExpressionAsJson to a Value!")
+    logE(TAG, "An error ${expected.error} occurred when converting $localizedTextFieldExpressionAsJson to a Value!")
   }
 }
 

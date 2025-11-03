@@ -245,37 +245,6 @@ class RasterArraySourceTest {
   }
 
   @Test
-  fun volatileSet() {
-    val testSource = rasterArraySource("testId") {
-      volatile(true)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("volatile=true"))
-  }
-
-  @Test
-  fun volatileSetAfterBind() {
-    val testSource = rasterArraySource("testId") {}
-    testSource.bindTo(style)
-    testSource.volatile(true)
-
-    verify { style.setStyleSourceProperty("testId", "volatile", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "true")
-  }
-
-  @Test
-  fun volatileGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-    val testSource = rasterArraySource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(true.toString(), testSource.volatile?.toString())
-    verify { style.getStyleSourceProperty("testId", "volatile") }
-  }
-
-  @Test
   fun tileCacheBudgetSet() {
     val testSource = rasterArraySource("testId") {
       tileCacheBudget(TileCacheBudget(TileCacheBudgetInMegabytes(100)))
@@ -323,14 +292,6 @@ class RasterArraySourceTest {
 
     assertEquals(1L.toString(), RasterArraySource.defaultMaxzoom?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("raster-array", "maxzoom") }
-  }
-
-  @Test
-  fun defaultVolatileGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-
-    assertEquals(true.toString(), RasterArraySource.defaultVolatile?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("raster-array", "volatile") }
   }
 }
 

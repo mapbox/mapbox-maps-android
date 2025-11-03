@@ -33,10 +33,7 @@ abstract class AttributionSettingsBase : AttributionSettingsInterface {
    * @param block the receiver function of AttributionSettings
    */
   override fun updateSettings(block: AttributionSettings.Builder.() -> Unit) {
-    val newSettings = this.internalSettings.toBuilder().apply(block).build()
-    // Trigger the enabled setter to ensure custom logic (e.g., listener management) is executed
-    this.enabled = newSettings.enabled
-    this.internalSettings = newSettings
+    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
     applySettings()
   }
 

@@ -46,13 +46,5 @@ internal object MapboxMapsAndroidLogger {
     }
   }
 
-  internal fun internalIsLoggableD(): Boolean {
-    return try {
-      LogConfiguration.getLoggingLevel() == LoggingLevel.DEBUG
-    } catch (e: UnsatisfiedLinkError) {
-      false
-    }
-  }
-
   internal const val SDK_IDENTIFIER = "maps-android"
 }

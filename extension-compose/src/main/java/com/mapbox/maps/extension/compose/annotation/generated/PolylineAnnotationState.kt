@@ -25,7 +25,6 @@ public class PolylineAnnotationState private constructor(
   initialLineBorderColor: Color?,
   initialLineBorderWidth: Double?,
   initialLineColor: Color?,
-  initialLineEmissiveStrength: Double?,
   initialLineGapWidth: Double?,
   initialLineOffset: Double?,
   initialLineOpacity: Double?,
@@ -43,7 +42,6 @@ public class PolylineAnnotationState private constructor(
     initialLineBorderColor = null,
     initialLineBorderWidth = null,
     initialLineColor = null,
-    initialLineEmissiveStrength = null,
     initialLineGapWidth = null,
     initialLineOffset = null,
     initialLineOpacity = null,
@@ -83,10 +81,6 @@ public class PolylineAnnotationState private constructor(
    * The color with which the line will be drawn. Default value: "#000000".
    */
   public var lineColor: Color? by mutableStateOf(initialLineColor)
-  /**
-   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
-   */
-  public var lineEmissiveStrength: Double? by mutableStateOf(initialLineEmissiveStrength)
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    */
@@ -179,16 +173,6 @@ public class PolylineAnnotationState private constructor(
     )
   }
   @Composable
-  private fun UpdateLineEmissiveStrength(
-    annotationNode: PolylineAnnotationNode
-  ) {
-    annotationNode.annotationManager.update(
-      annotationNode.annotation.also { annotation ->
-        annotation.lineEmissiveStrength = lineEmissiveStrength
-      }
-    )
-  }
-  @Composable
   private fun UpdateLineGapWidth(
     annotationNode: PolylineAnnotationNode
   ) {
@@ -269,7 +253,6 @@ public class PolylineAnnotationState private constructor(
     UpdateLineBorderColor(annotationNode)
     UpdateLineBorderWidth(annotationNode)
     UpdateLineColor(annotationNode)
-    UpdateLineEmissiveStrength(annotationNode)
     UpdateLineGapWidth(annotationNode)
     UpdateLineOffset(annotationNode)
     UpdateLineOpacity(annotationNode)

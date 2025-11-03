@@ -62,10 +62,6 @@ class PolylineAnnotationManager(
         layer.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
         dragLayer.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
       }
-      PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH -> {
-        layer.lineEmissiveStrength(get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH))
-        dragLayer.lineEmissiveStrength(get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH))
-      }
       PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH -> {
         layer.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
         dragLayer.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
@@ -110,7 +106,6 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
-   * PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
@@ -143,7 +138,6 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
-   * PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
@@ -259,6 +253,90 @@ class PolylineAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope").value
       }
       setLayerProperty(wrappedValue, "line-cross-slope")
+    }
+
+  /**
+   * The LineCutoutFadeWidth property
+   *
+   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  var lineCutoutFadeWidth: Double?
+    /**
+     * Get the LineCutoutFadeWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineCutoutFadeWidth
+    }
+    /**
+     * Set the LineCutoutFadeWidth property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width").value
+      }
+      setLayerProperty(wrappedValue, "line-cutout-fade-width")
+    }
+
+  /**
+   * The LineCutoutOpacity property
+   *
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  var lineCutoutOpacity: Double?
+    /**
+     * Get the LineCutoutOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineCutoutOpacity
+    }
+    /**
+     * Set the LineCutoutOpacity property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity").value
+      }
+      setLayerProperty(wrappedValue, "line-cutout-opacity")
+    }
+
+  /**
+   * The LineCutoutWidth property
+   *
+   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
+   */
+  @MapboxExperimental
+  var lineCutoutWidth: Double?
+    /**
+     * Get the LineCutoutWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.lineCutoutWidth
+    }
+    /**
+     * Set the LineCutoutWidth property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").value
+      }
+      setLayerProperty(wrappedValue, "line-cutout-width")
     }
 
   /**
@@ -685,62 +763,6 @@ class PolylineAnnotationManager(
     }
 
   /**
-   * The LineCutoutFadeWidth property
-   *
-   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
-   */
-  @MapboxExperimental
-  var lineCutoutFadeWidth: Double?
-    /**
-     * Get the LineCutoutFadeWidth property
-     *
-     * @return property wrapper value around Double
-     */
-    get(): Double? {
-      return layer.lineCutoutFadeWidth
-    }
-    /**
-     * Set the LineCutoutFadeWidth property
-     * @param value property wrapper value around Double
-     */
-    set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
-      } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width").value
-      }
-      setLayerProperty(wrappedValue, "line-cutout-fade-width")
-    }
-
-  /**
-   * The LineCutoutOpacity property
-   *
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
-   */
-  @MapboxExperimental
-  var lineCutoutOpacity: Double?
-    /**
-     * Get the LineCutoutOpacity property
-     *
-     * @return property wrapper value around Double
-     */
-    get(): Double? {
-      return layer.lineCutoutOpacity
-    }
-    /**
-     * Set the LineCutoutOpacity property
-     * @param value property wrapper value around Double
-     */
-    set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
-      } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity").value
-      }
-      setLayerProperty(wrappedValue, "line-cutout-opacity")
-    }
-
-  /**
    * The LineDasharray property
    *
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
@@ -770,7 +792,7 @@ class PolylineAnnotationManager(
   /**
    * The LineDepthOcclusionFactor property
    *
-   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
+   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
    */
   var lineDepthOcclusionFactor: Double?
     /**
@@ -795,37 +817,30 @@ class PolylineAnnotationManager(
     }
 
   /**
-   * The default lineEmissiveStrength for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   * The LineEmissiveStrength property
    *
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    */
   var lineEmissiveStrength: Double?
     /**
-     * Get the lineEmissiveStrength property.
+     * Get the LineEmissiveStrength property
      *
      * @return property wrapper value around Double
      */
-    get() {
-      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
-      value?.let {
-        return it.asString.toDouble()
-      }
-      return null
+    get(): Double? {
+      return layer.lineEmissiveStrength
     }
     /**
-     * Set the lineEmissiveStrength property.
-     *
-     * @param value constant property value for Double
+     * Set the LineEmissiveStrength property
+     * @param value property wrapper value around Double
      */
     set(value) {
-      if (value != null) {
-        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH, value)
-        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
       } else {
-        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").value
       }
-      // Update child annotation property if not being set.
-      update(annotations)
+      setLayerProperty(wrappedValue, "line-emissive-strength")
     }
 
   /**
@@ -1461,7 +1476,6 @@ class PolylineAnnotationManager(
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_COLOR] = false
-    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OFFSET] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OPACITY] = false

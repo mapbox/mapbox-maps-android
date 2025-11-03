@@ -36,8 +36,7 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
    * @param block the receiver function of GesturesSettings
    */
   override fun updateSettings(block: GesturesSettings.Builder.() -> Unit) {
-    val newSettings = this.internalSettings.toBuilder().apply(block).build()
-    this.internalSettings = newSettings
+    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
     applySettings()
   }
 

@@ -453,30 +453,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun fillExtrusionCastShadowsTest() {
-    val testValue = true
-    val layer = fillExtrusionLayer("id", "source") {
-      fillExtrusionCastShadows(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.fillExtrusionCastShadows?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun fillExtrusionCastShadowsAsExpressionTest() {
-    val expression = literal(true)
-    val layer = fillExtrusionLayer("id", "source") {
-      fillExtrusionCastShadows(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.fillExtrusionCastShadowsAsExpression.toString())
-    assertEquals(true, layer.fillExtrusionCastShadows!!)
-  }
-
-  @Test
-  @UiThreadTest
   fun fillExtrusionColorTest() {
     val testValue = "rgba(0, 0, 0, 1)"
     val layer = fillExtrusionLayer("id", "source") {
@@ -1478,8 +1454,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertNotNull("defaultFillExtrusionBaseTransition should not be null", FillExtrusionLayer.defaultFillExtrusionBaseTransition)
     assertNotNull("defaultFillExtrusionBaseAlignment should not be null", FillExtrusionLayer.defaultFillExtrusionBaseAlignment)
     assertNotNull("defaultFillExtrusionBaseAlignmentAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression)
-    assertNotNull("defaultFillExtrusionCastShadows should not be null", FillExtrusionLayer.defaultFillExtrusionCastShadows)
-    assertNotNull("defaultFillExtrusionCastShadowsAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionCastShadowsAsExpression)
     assertNotNull("defaultFillExtrusionColor should not be null", FillExtrusionLayer.defaultFillExtrusionColor)
     assertNotNull("defaultFillExtrusionColorAsExpression should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsExpression)
     assertNotNull("defaultFillExtrusionColorAsColorInt should not be null", FillExtrusionLayer.defaultFillExtrusionColorAsColorInt)
@@ -1555,7 +1529,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     val fillExtrusionAmbientOcclusionWallRadiusTestValue = 1.0
     val fillExtrusionBaseTestValue = 1.0
     val fillExtrusionBaseAlignmentTestValue = FillExtrusionBaseAlignment.TERRAIN
-    val fillExtrusionCastShadowsTestValue = true
     val fillExtrusionColorTestValue = "rgba(0, 0, 0, 1)"
     val fillExtrusionColorUseThemeTestValue = "default"
     val fillExtrusionCutoffFadeRangeTestValue = 1.0
@@ -1593,7 +1566,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
       fillExtrusionAmbientOcclusionWallRadius(fillExtrusionAmbientOcclusionWallRadiusTestValue)
       fillExtrusionBase(fillExtrusionBaseTestValue)
       fillExtrusionBaseAlignment(fillExtrusionBaseAlignmentTestValue)
-      fillExtrusionCastShadows(fillExtrusionCastShadowsTestValue)
       fillExtrusionColor(fillExtrusionColorTestValue)
       fillExtrusionColorUseTheme(fillExtrusionColorUseThemeTestValue)
       fillExtrusionCutoffFadeRange(fillExtrusionCutoffFadeRangeTestValue)
@@ -1636,7 +1608,6 @@ class FillExtrusionLayerTest : BaseStyleTest() {
     assertEquals(fillExtrusionAmbientOcclusionWallRadiusTestValue, cachedLayer.fillExtrusionAmbientOcclusionWallRadius)
     assertEquals(fillExtrusionBaseTestValue, cachedLayer.fillExtrusionBase)
     assertEquals(fillExtrusionBaseAlignmentTestValue, cachedLayer.fillExtrusionBaseAlignment)
-    assertEquals(fillExtrusionCastShadowsTestValue, cachedLayer.fillExtrusionCastShadows)
     assertEquals(fillExtrusionColorTestValue, cachedLayer.fillExtrusionColor)
     assertEquals(fillExtrusionColorUseThemeTestValue, cachedLayer.fillExtrusionColorUseTheme)
     assertEquals(fillExtrusionCutoffFadeRangeTestValue, cachedLayer.fillExtrusionCutoffFadeRange)

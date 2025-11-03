@@ -84,9 +84,6 @@ private constructor(
   initialIconColor: ColorValue,
   initialIconColorUseTheme: StringValue,
   initialIconColorTransition: Transition,
-  initialIconColorBrightnessMax: DoubleValue,
-  initialIconColorBrightnessMin: DoubleValue,
-  initialIconColorContrast: DoubleValue,
   initialIconColorSaturation: DoubleValue,
   initialIconColorSaturationTransition: Transition,
   initialIconEmissiveStrength: DoubleValue,
@@ -107,7 +104,6 @@ private constructor(
   initialIconTranslate: DoubleListValue,
   initialIconTranslateTransition: Transition,
   initialIconTranslateAnchor: IconTranslateAnchorValue,
-  initialOcclusionOpacityMode: OcclusionOpacityModeValue,
   initialSymbolZOffset: DoubleValue,
   initialSymbolZOffsetTransition: Transition,
   initialTextColor: ColorValue,
@@ -189,9 +185,6 @@ private constructor(
     initialIconColor = ColorValue.INITIAL,
     initialIconColorUseTheme = StringValue.INITIAL,
     initialIconColorTransition = Transition.INITIAL,
-    initialIconColorBrightnessMax = DoubleValue.INITIAL,
-    initialIconColorBrightnessMin = DoubleValue.INITIAL,
-    initialIconColorContrast = DoubleValue.INITIAL,
     initialIconColorSaturation = DoubleValue.INITIAL,
     initialIconColorSaturationTransition = Transition.INITIAL,
     initialIconEmissiveStrength = DoubleValue.INITIAL,
@@ -212,7 +205,6 @@ private constructor(
     initialIconTranslate = DoubleListValue.INITIAL,
     initialIconTranslateTransition = Transition.INITIAL,
     initialIconTranslateAnchor = IconTranslateAnchorValue.INITIAL,
-    initialOcclusionOpacityMode = OcclusionOpacityModeValue.INITIAL,
     initialSymbolZOffset = DoubleValue.INITIAL,
     initialSymbolZOffsetTransition = Transition.INITIAL,
     initialTextColor = ColorValue.INITIAL,
@@ -544,24 +536,6 @@ private constructor(
    */
   public var iconColorTransition: Transition by iconColorTransitionState
 
-  private val iconColorBrightnessMaxState: MutableState<DoubleValue> = mutableStateOf(initialIconColorBrightnessMax)
-  /**
-   *  Increase or reduce the brightness of the symbols. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
-   */
-  public var iconColorBrightnessMax: DoubleValue by iconColorBrightnessMaxState
-
-  private val iconColorBrightnessMinState: MutableState<DoubleValue> = mutableStateOf(initialIconColorBrightnessMin)
-  /**
-   *  Increase or reduce the brightness of the symbols. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
-   */
-  public var iconColorBrightnessMin: DoubleValue by iconColorBrightnessMinState
-
-  private val iconColorContrastState: MutableState<DoubleValue> = mutableStateOf(initialIconColorContrast)
-  /**
-   *  Increase or reduce the contrast of the symbol icon. Default value: 0. Value range: [-1, 1]
-   */
-  public var iconColorContrast: DoubleValue by iconColorContrastState
-
   private val iconColorSaturationState: MutableState<DoubleValue> = mutableStateOf(initialIconColorSaturation)
   /**
    *  Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
@@ -683,12 +657,6 @@ private constructor(
    *  Controls the frame of reference for `icon-translate`. Default value: "map".
    */
   public var iconTranslateAnchor: IconTranslateAnchorValue by iconTranslateAnchorState
-
-  private val occlusionOpacityModeState: MutableState<OcclusionOpacityModeValue> = mutableStateOf(initialOcclusionOpacityMode)
-  /**
-   *  Specify how opacity in case of being occluded should be applied Default value: "anchor".
-   */
-  public var occlusionOpacityMode: OcclusionOpacityModeValue by occlusionOpacityModeState
 
   @MapboxExperimental
   private val symbolZOffsetState: MutableState<DoubleValue> = mutableStateOf(initialSymbolZOffset)
@@ -905,9 +873,6 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, iconColorState, "icon-color")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconColorUseThemeState, "icon-color-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconColorTransitionState, "icon-color-transition")
-    ActionWhenNotInitial(layerNode.setPropertyAction, iconColorBrightnessMaxState, "icon-color-brightness-max")
-    ActionWhenNotInitial(layerNode.setPropertyAction, iconColorBrightnessMinState, "icon-color-brightness-min")
-    ActionWhenNotInitial(layerNode.setPropertyAction, iconColorContrastState, "icon-color-contrast")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconColorSaturationState, "icon-color-saturation")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconColorSaturationTransitionState, "icon-color-saturation-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconEmissiveStrengthState, "icon-emissive-strength")
@@ -928,7 +893,6 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, iconTranslateState, "icon-translate")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconTranslateTransitionState, "icon-translate-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, iconTranslateAnchorState, "icon-translate-anchor")
-    ActionWhenNotInitial(layerNode.setPropertyAction, occlusionOpacityModeState, "occlusion-opacity-mode")
     ActionWhenNotInitial(layerNode.setPropertyAction, symbolZOffsetState, "symbol-z-offset")
     ActionWhenNotInitial(layerNode.setPropertyAction, symbolZOffsetTransitionState, "symbol-z-offset-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, textColorState, "text-color")

@@ -131,9 +131,7 @@ package com.mapbox.maps {
   }
 
   public final class MapboxLogger {
-    method public static boolean isLoggableD();
     method public static void logD(String tag, String message);
-    method public static inline void logD(String tag, kotlin.jvm.functions.Function0<java.lang.String> message);
     method public static void logE(String tag, String message);
     method public static void logI(String tag, String message);
     method public static void logW(String tag, String message);
@@ -239,7 +237,6 @@ package com.mapbox.maps {
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSnowProperty(String property, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperties(String sourceId, com.mapbox.bindgen.Value properties);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperty(String sourceId, String property, com.mapbox.bindgen.Value value);
-    method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperty(String importId, String sourceId, String property, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrain(com.mapbox.bindgen.Value properties);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrainProperty(String property, com.mapbox.bindgen.Value value);
     method @CallSuper @MainThread public void setStyleTransition(com.mapbox.maps.TransitionOptions transitionOptions);
@@ -763,10 +760,10 @@ package com.mapbox.maps.extension.style {
 
 package com.mapbox.maps.geofencing {
 
-  public interface MapGeofencingConsent {
-    method public boolean getUserConsent();
-    method public void setUserConsent(boolean isConsentGiven, com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback callback);
-    method public boolean shouldShowConsent();
+  @com.mapbox.annotation.MapboxExperimental @com.mapbox.maps.MapboxExperimental public interface MapGeofencingConsent {
+    method @com.mapbox.maps.MapboxExperimental public boolean getUserConsent();
+    method @com.mapbox.maps.MapboxExperimental public void setUserConsent(boolean isConsentGiven, com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback callback);
+    method @com.mapbox.maps.MapboxExperimental public boolean shouldShowConsent();
   }
 
 }
@@ -1797,7 +1794,7 @@ package com.mapbox.maps.plugin.attribution {
   }
 
   public final class AttributionParserConfig {
-    ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true, boolean withMapboxGeofencingConsent = true);
+    ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true, @com.mapbox.maps.MapboxExperimental boolean withMapboxGeofencingConsent = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true);
@@ -2240,20 +2237,8 @@ package com.mapbox.maps.plugin.delegates {
   public interface MapFeatureStateDelegate {
     method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, String? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback);
-    method @com.mapbox.maps.MapboxExperimental public void removeFeatureStateExpression(int featureStateExpressionId, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
-
-
-}));
-    method @com.mapbox.maps.MapboxExperimental public void resetFeatureStateExpressions(com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
-
-
-}));
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String? sourceLayerId = null, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
-    method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> void setFeatureStateExpression(int featureStateExpressionId, com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> featureset, com.mapbox.bindgen.Value expression, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
-
-
-}));
   }
 
   @com.mapbox.maps.MapboxExperimental public interface MapInteractionDelegate {

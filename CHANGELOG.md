@@ -6,62 +6,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Breaking changes ⚠️
-* Remove line-cutout-width and change line-cutout-opacity default to 1.0
-
-# 11.17.0
-## Features ✨ and improvements 🏁
-* Promote Geofencing APIs to stable, remove `MapboxExperimental` annotations from Geofencing APIs.
-
-# 11.17.0-rc.1 November 20, 2025
-
-# 11.17.0-rc.1
-## Features ✨ and improvements 🏁
-* Promote `ModelLayer` to stable.
-* Add `SymbolLayer.occlusionOpacityMode`, `SymbolLayer.iconColorBrightnessMax`, `SymbolLayer.iconColorBrightnessMin`, `SymbolLayer.iconColorContrast` properties.
-* Add `FillExtrusionLayer.castShadows` property.
-* Add `GeoJsonSource.minZoom` property.
-* Add `RasterArraySource.volatile` experimental property.
-* Make `line-emissive-strength` property data-driven.
-* Add experimental `MapboxMap.setFeatureStateExpression()`, `removeFeatureStateExpression()`, and `resetFeatureStateExpressions()` APIs to efficiently update feature state for multiple features at once using expressions.
-
-## Bug fixes 🐞
-* Fix camera listener not unsubscribed when disabling ScaleBar via `updateSettings { enabled = false }`
-
-## Dependencies
-* Update gl-native to [v11.17.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-rc.1), common to [v24.17.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-rc.1).
-
-
-# 11.17.0-beta.2 November 14, 2025
-## Features ✨ and improvements 🏁
-* Improved error reporting for offline tile region downloads on Android.
-* Enhanced reliability of network connections by improving how Cronet timeouts are handled.
-
-## Bug fixes 🐞
-* Fixed a crash when switching map styles quickly.
-* Fixed a threading bug to eliminate 3D rendering issues and instability.
-* Internal fixes and performance improvements.
-
-## Dependencies
-* Update gl-native to [v11.17.0-beta.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.2), common to [v24.17.0-beta.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.2).
-
-# 11.16.4 November 14, 2025
-## Bug fixes 🐞
-* Internal fixes and performance improvements.
-
-## Dependencies
-* Update gl-native to [v11.16.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.4), common to [v24.16.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.4).
-
-
-# 11.16.3 November 13, 2025
-## Bug fixes 🐞
-* Internal fixes and performance improvements.
-* Fix multiple crashes during style switches.
-
-## Dependencies
-* Update gl-native to [v11.16.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.3), common to [v24.16.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.3).
-
-# 11.17.0-beta.1 November 05, 2025
-## Breaking changes ⚠️
 * Require passing required argument to the constructor of experimental `GeofencingState.Builder`, `GeofencingError.Builder`, `GeofencingEvent.Builder` and `GeofencingOptions.Builder` APIs.
 
 ## Features ✨ and improvements 🏁
@@ -69,39 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add click gesture support to `Marker` composable with `onClick` parameter
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
 * Added `fuelingStationModePointOfInterestLabels` configuration option to Mapbox Standard and Standard Satellite styles. Control the visibility of fuel station and electric charging station POI labels with options: "default" (shows both), "fuel" (fuel stations only), "electric" (charging stations only), or "none" (hides both).
-* Introduce experimental support for Appearances. The Appearances layer property defines sets of appearance objects used to quickly change the visual styling of a layer based on a condition using feature-state. See `AppearancesActivity` in example application for further details.
-* Memory allocation improvements
 
-## Bug fixes 🐞
- * Fix multiple crashes during style switches related to terrain rendering, texture management, and image cleanup.
- * Fix line patterns not elevating properly on HD roads.
- * Fix rendering of TileStore tiles when TileStore is used as disk cache and user is offline.
- * Fix performance regression for `distance` and `within` expressions when processing large GeoJSON datasets.
- * Fix GeoJSON tiled model disappearance during fast zoom interactions.
- * Fix rendering issues when switching between globe and mercator projections.
- * Logging improvements to reduce noise and duplication.
-
-## Dependencies
-* Update gl-native to [v11.17.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.1), common to [v24.17.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.1).
-
-# 11.16.2 October 31, 2025
-
-## Bug fixes 🐞
-* Fix crash on 3D/satellite styles switching
-
-## Dependencies
-* Update gl-native to [v11.16.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.2), common to [v24.16.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.2).
-
-
-# 11.16.1 October 28, 2025
-
-## Bug fixes 🐞
-* Fix crash on frequent style switching
-* Fix iteration over GeoJSON children for `distance` and `within` expression to results in performance spike
-* Fix crash on day/night switch incorrect texture release order
-
-## Dependencies
-* Update gl-native to [v11.16.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.1), common to [v24.16.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.1).
 
 # 11.16.0 October 21, 2025
 ## Bug fixes 🐞
