@@ -14,6 +14,26 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
 * Added `fuelingStationModePointOfInterestLabels` configuration option to Mapbox Standard and Standard Satellite styles. Control the visibility of fuel station and electric charging station POI labels with options: "default" (shows both), "fuel" (fuel stations only), "electric" (charging stations only), or "none" (hides both).
 
+# 11.16.2 October 31, 2025
+
+## Bug fixes 🐞
+* Fix crash on 3D/satellite styles switching
+
+## Dependencies
+* Update gl-native to [v11.16.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.2), common to [v24.16.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.2).
+
+
+# 11.16.1 October 28, 2025
+
+## Bug fixes 🐞
+* Fix crash on frequent style switching
+* Fix iteration over GeoJSON children for `distance` and `within` expression to results in performance spike
+* Fix crash on day/night switch incorrect texture release order
+
+## Dependencies
+* Update gl-native to [v11.16.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.1), common to [v24.16.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.1).
+
+
 
 # 11.16.0 October 21, 2025
 ## Bug fixes 🐞
