@@ -351,7 +351,8 @@ internal class EglConfigChooserTest(
     every { logE(any(), any()) } just Runs
     every { logI(any(), any()) } just Runs
     every { logW(any(), any()) } just Runs
-    every { logD(any(), any()) } just Runs
+    every { logD(any(), any<String>()) } just Runs
+    every { isLoggableD() } returns true
     mockkObject(EGLConfigChooser.Companion)
     every { EGLConfigChooser.inEmulator() } returns false
 

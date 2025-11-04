@@ -13,6 +13,7 @@ import android.view.View
 import androidx.annotation.RestrictTo
 import androidx.lifecycle.*
 import com.mapbox.maps.MapboxLifecycleObserver
+import com.mapbox.maps.logD
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 
@@ -31,7 +32,7 @@ internal class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
     val viewLifecycleRegistry = ViewLifecycleOwner(
       view = mapView
     )
-    logI(TAG, "registerLifecycleObserver is called")
+    logD(TAG, "registerLifecycleObserver is called")
 
     val componentCallback = object : ComponentCallbacks2 {
       override fun onConfigurationChanged(newConfig: Configuration) {

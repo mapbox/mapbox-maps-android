@@ -11,7 +11,7 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.unwrap
-import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 
 /**
  * Extension function to get a Layer provided by the Style Extension by layer id.
@@ -56,7 +56,7 @@ fun MapboxStyleManager.getLayer(layerId: String): Layer? {
     "raster-particle" -> RasterParticleLayer(layerId, source)
     "clip" -> ClipLayer(layerId, source)
     else -> {
-      logE(TAG, "Layer type: $type unknown.")
+      logW(TAG, "Layer type: $type unknown.")
       null
     }
   }?.also { result ->
@@ -75,7 +75,7 @@ fun MapboxStyleManager.getLayer(layerId: String): Layer? {
 inline fun <reified T : Layer> MapboxStyleManager.getLayerAs(layerId: String): T? {
   val layer = getLayer(layerId) as? T
   if (layer == null) {
-    logE(TAG, "Given layerId = $layerId is not requested type in Layer")
+    logW(TAG, "Given layerId = $layerId is not requested type in Layer")
     return null
   }
   return layer

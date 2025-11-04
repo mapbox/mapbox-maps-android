@@ -6,6 +6,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.precipitations.generated.removeSnow
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -85,16 +86,16 @@ internal class SnowStateApplier internal constructor(
                   mapboxMap.setStyleSnow(Value.valueOf(hashMapOf())).onValue {
                     snowSet = true
                     mapboxMap.setStyleSnowProperty(name, value).onError {
-                      logE(TAG, "Failed to set snow property $name as $value: $error")
+                      logW(TAG, "Failed to set snow property $name as $value: $error")
                     }.onValue {
                       logD(TAG, "settingProperty: name=$name, value=$value executed")
                     }
                   }.onError {
-                    logE(TAG, "Failed to set snow with no properties, error = $it")
-                    logE(TAG, "settingProperty: name=$name, value=$value ignored")
+                    logW(TAG, "Failed to set snow with no properties, error = $it")
+                    logW(TAG, "settingProperty: name=$name, value=$value ignored")
                   }
                 } else {
-                  logE(TAG, "Failed to set snow property $name as $value: $error")
+                  logW(TAG, "Failed to set snow property $name as $value: $error")
                 }
               }.onValue {
                 logD(TAG, "settingProperty: name=$name, value=$value executed")

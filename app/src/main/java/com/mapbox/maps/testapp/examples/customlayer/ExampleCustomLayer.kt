@@ -35,9 +35,11 @@ class ExampleCustomLayer : CustomLayerHost {
   }
 
   override fun initialize() {
-    val maxAttrib = IntArray(1)
-    GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS, maxAttrib, 0)
-    logD(TAG, "Max vertex attributes: ${maxAttrib[0]}")
+    logD(TAG) {
+      val maxAttrib = IntArray(1)
+      GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS, maxAttrib, 0)
+      "Max vertex attributes: ${maxAttrib[0]}"
+    }
 
     // load and compile shaders
     vertexShader = loadShader(

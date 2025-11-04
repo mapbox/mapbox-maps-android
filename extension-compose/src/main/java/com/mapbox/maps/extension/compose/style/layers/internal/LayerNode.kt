@@ -12,7 +12,6 @@ import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.extension.compose.style.internal.StyleSlotNode
 import com.mapbox.maps.extension.compose.style.sources.SourceState
 import com.mapbox.maps.logD
-import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineScope
 
@@ -106,7 +105,7 @@ internal class LayerNode(
           parameters = Value(parameters),
           position = layerPosition
         ).onError { error ->
-          logE(TAG, "Failed to add layer: $error")
+          logW(TAG, "Failed to add layer: $error")
         }.onValue {
           logD(TAG, "Added layer: $parameters")
           attachSource()
@@ -122,7 +121,7 @@ internal class LayerNode(
         properties = Value(parameters),
         layerPosition = layerPosition
       ).onError {
-        logE(TAG, "Failed to add persistent layer: $it")
+        logW(TAG, "Failed to add persistent layer: $it")
       }.onValue {
         logD(TAG, "Added persistent layer: $parameters")
         attachSource()

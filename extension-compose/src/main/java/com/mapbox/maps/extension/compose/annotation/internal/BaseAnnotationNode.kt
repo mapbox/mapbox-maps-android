@@ -8,7 +8,7 @@ import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.internal.StyleLifecycleAwareNode
 import com.mapbox.maps.extension.compose.style.internal.StyleSlotNode
 import com.mapbox.maps.logD
-import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineScope
 
 internal abstract class BaseAnnotationNode(
@@ -27,7 +27,7 @@ internal abstract class BaseAnnotationNode(
       if (parent is StyleSlotNode) {
         getLayerIds().forEach { layerId ->
           mapboxStyleManager.setStyleLayerProperty(layerId, "slot", Value(parent.slotName)).onError {
-            logE(TAG, "Failed to set slot property for layer $layerId: $it")
+            logW(TAG, "Failed to set slot property for layer $layerId: $it")
           }
         }
       }

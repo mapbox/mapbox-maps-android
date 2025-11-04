@@ -15,7 +15,6 @@ import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logW
-import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.animator.CameraAnchorAnimator

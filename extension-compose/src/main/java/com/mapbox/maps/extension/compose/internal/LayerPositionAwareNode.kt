@@ -4,7 +4,7 @@ import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.compose.style.internal.StyleLayerPositionNode
 import com.mapbox.maps.logD
-import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 
 /**
@@ -45,8 +45,8 @@ internal interface LayerPositionAwareNode {
         TAG,
         "Failed to move layer $associatedLayers.last() to $layerPosition: $error"
       )
-      logE(TAG, "Available layers in style:")
-      styleManager.styleLayers.forEach { logE(TAG, "\t ${it.id}") }
+      val layers = styleManager.styleLayers.joinToString(separator = "\t ") { it.id }
+      logI(TAG, "Available layers in style: $layers")
     }
 
     if (associatedLayers.size > 1) {

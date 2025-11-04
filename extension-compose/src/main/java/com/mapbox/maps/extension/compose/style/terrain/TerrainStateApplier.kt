@@ -6,6 +6,7 @@ import com.mapbox.maps.extension.compose.style.sources.generated.RasterDemSource
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -95,7 +96,7 @@ internal class TerrainStateApplier internal constructor(
             mapboxMap.setStyleTerrainProperty(name, value).onValue {
               logD(TAG, "settingProperty: name=$name, value=$value executed")
             }.onError { error ->
-              logE(TAG, "Failed to set terrain property $name as $value: $error")
+              logW(TAG, "Failed to set terrain property $name as $value: $error")
             }
           }
         }

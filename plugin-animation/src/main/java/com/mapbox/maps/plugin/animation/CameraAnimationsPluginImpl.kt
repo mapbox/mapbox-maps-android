@@ -440,7 +440,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
         if (animator is CameraAnimator<*>) {
           registerInternalListener(animator)
         } else {
-          logE(TAG, "All animators must be CameraAnimator's to be registered!")
+          logW(TAG, "All animators must be CameraAnimator's to be registered!")
           return@postOnMainThread
         }
       }
@@ -472,7 +472,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
             animator.removeInternalUpdateListener()
           }
         } else {
-          logE(TAG, "All animators must be CameraAnimator's to be unregistered!")
+          logW(TAG, "All animators must be CameraAnimator's to be unregistered!")
           return@postOnMainThread
         }
       }
@@ -870,7 +870,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
         }
         cameraAnimators.add(cameraAnimator)
       } else {
-        logE(TAG, "All animators must be CameraAnimator's to be played together!")
+        logW(TAG, "All animators must be CameraAnimator's to be played together!")
       }
     }
     registerAnimators(*cameraAnimators.toTypedArray())
@@ -902,7 +902,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
         }
         cameraAnimators.add(cameraAnimator)
       } else {
-        logE(TAG, "All animators must be CameraAnimator's to be played sequentially!")
+        logW(TAG, "All animators must be CameraAnimator's to be played sequentially!")
       }
     }
     registerAnimators(*cameraAnimators.toTypedArray())

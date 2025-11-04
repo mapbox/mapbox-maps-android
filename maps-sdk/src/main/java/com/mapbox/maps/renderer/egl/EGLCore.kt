@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.Surface
 import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapView
+import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -138,7 +139,7 @@ internal class EGLCore(
       EGL14.eglDestroySurface(eglDisplay, eglSurface)
       logI(TAG, "EGL surface was destroyed.")
     } else {
-      logI(TAG, "EGL surface was already destroyed before.")
+      logW(TAG, "EGL surface was already destroyed before.")
     }
   }
 
@@ -184,7 +185,7 @@ internal class EGLCore(
     if (eglCreatePbufferSurfaceError != null || eglSurface == null) {
       return eglNoSurface
     }
-    logI(TAG, "Created PBuffer, w = $width, h = $height")
+    logD(TAG, "Created PBuffer, w = $width, h = $height")
     return eglSurface
   }
 

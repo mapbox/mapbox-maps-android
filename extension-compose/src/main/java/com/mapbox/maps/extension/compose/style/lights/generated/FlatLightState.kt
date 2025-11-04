@@ -25,7 +25,7 @@ import com.mapbox.maps.extension.compose.style.StringValue
 import com.mapbox.maps.extension.compose.style.Transition
 import com.mapbox.maps.extension.compose.style.internal.ValueParceler
 import com.mapbox.maps.logD
-import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.TypeParceler
 import java.util.Objects
@@ -158,7 +158,7 @@ public class FlatLightState internal constructor(
       logD(TAG, "update Flat light property: $id, $name, $value")
       setStyleLightProperty(id, name, value.value)
         .onError {
-          logE(TAG, it)
+          logW(TAG, "update Flat light property error: $it")
         }
     }
   }

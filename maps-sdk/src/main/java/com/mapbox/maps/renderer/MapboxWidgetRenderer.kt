@@ -6,6 +6,7 @@ import android.opengl.GLES20
 import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.CopyOnWriteArraySet
@@ -185,7 +186,7 @@ internal class MapboxWidgetRenderer(
     if (!eglContextCreated) {
       eglContextCreated = eglCore.prepareEgl()
       if (!eglContextCreated) {
-        logE(TAG, "Widget EGL was not configured, please check logs above.")
+        logW(TAG, "Widget EGL was not configured, please check logs above.")
         return
       }
     }

@@ -45,7 +45,6 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeaturesetFeature
-import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
@@ -562,7 +561,7 @@ internal constructor(
     } else if (dragAnnotationMap.remove(annotation.id) != null) {
       updateDragSource()
     } else {
-      logE(
+      logW(
         TAG,
         "Can't delete annotation: $annotation, the annotation isn't an active annotation."
       )
@@ -607,7 +606,7 @@ internal constructor(
   private fun updateDragSource() {
     val style = delegateProvider.mapStyleManagerDelegate
     if (!style.styleSourceExists(dragSource.sourceId) || !style.styleLayerExists(dragLayer.layerId)) {
-      logE(
+      logW(
         TAG,
         "Can't update dragSource: drag source or layer has not been added to style."
       )
@@ -624,7 +623,7 @@ internal constructor(
   private fun updateSource() {
     val style = delegateProvider.mapStyleManagerDelegate
     if (!style.styleSourceExists(source.sourceId) || !style.styleLayerExists(layer.layerId)) {
-      logE(TAG, "Can't update source: source or layer has not been added to style.")
+      logW(TAG, "Can't update source: source or layer has not been added to style.")
       return
     }
     addIconToStyle(style, annotationMap.values)
@@ -695,7 +694,7 @@ internal constructor(
       }
 
       else -> {
-        logE(
+        logW(
           TAG,
           "Can't update annotation: $annotation, the annotation isn't an active annotation."
         )
@@ -722,7 +721,7 @@ internal constructor(
         }
 
         else -> {
-          logE(
+          logW(
             TAG,
             "Can't update annotation: $it, the annotation isn't an active annotation."
           )
@@ -799,7 +798,7 @@ internal constructor(
       }
 
       else -> {
-        logE(
+        logW(
           TAG,
           "Can't select annotation: $annotation, the annotation isn't an active annotation."
         )
@@ -896,7 +895,7 @@ internal constructor(
               }
 
               else -> {
-                logE(
+                logW(
                   TAG,
                   "The queried id: $id, doesn't belong to an active annotation."
                 )

@@ -7,8 +7,7 @@ import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.types.StyleTransition
 import com.mapbox.maps.extension.style.utils.unwrap
-import com.mapbox.maps.logE
-import kotlin.collections.HashMap
+import com.mapbox.maps.logW
 
 /**
  * Base class for all light implementations.
@@ -63,8 +62,8 @@ abstract class Light internal constructor() {
       return try {
         it.getStyleLightProperty(lightId, propertyName).unwrap(clazz)
       } catch (e: RuntimeException) {
-        logE(TAG, "Get light property $propertyName failed: ${e.message}")
-        logE(TAG, it.getStyleLightProperty(lightId, propertyName).toString())
+        logW(TAG, "Get light property $propertyName failed: ${e.message}")
+        logW(TAG, it.getStyleLightProperty(lightId, propertyName).toString())
         null
       }
     }
@@ -86,8 +85,8 @@ abstract class Light internal constructor() {
         val delay = styleLightProperty["delay"]?.contents as Long
         StyleTransition.Builder().delay(delay).duration(duration).build()
       } catch (e: RuntimeException) {
-        logE(TAG, "Get light property failed: ${e.message}")
-        logE(TAG, it.getStyleLightProperty(lightId, transitionName).toString())
+        logW(TAG, "Get light property failed: ${e.message}")
+        logW(TAG, it.getStyleLightProperty(lightId, transitionName).toString())
         null
       }
     }

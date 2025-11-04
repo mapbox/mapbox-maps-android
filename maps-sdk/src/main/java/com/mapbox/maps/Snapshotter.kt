@@ -285,7 +285,7 @@ open class Snapshotter {
       null,
       null
     ).getValueOrElse {
-      logE(
+      logW(
         TAG,
         "Error occurred in synchronous cameraForCoordinates: $it, empty cameraState will be returned"
       )
@@ -375,7 +375,7 @@ open class Snapshotter {
     if (anchorPoint != null) {
       drawAttribution(overlay.canvas, measure, anchorPoint)
     } else {
-      logE(
+      logW(
         TAG,
         "Could not generate attribution for snapshot size: ${overlay.canvas.width}x${overlay.canvas.height}." + " You are required to provide your own attribution for the used sources: ${overlay.attributions}"
       )

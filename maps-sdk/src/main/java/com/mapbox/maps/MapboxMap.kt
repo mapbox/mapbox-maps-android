@@ -881,7 +881,7 @@ class MapboxMap :
       maxZoom,
       offset
     ).getValueOrElse {
-      logE(
+      logW(
         TAG,
         "Error occurred in synchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
       )
@@ -918,7 +918,7 @@ class MapboxMap :
           maxZoom,
           offset
         ).getValueOrElse {
-          logE(
+          logW(
             TAG,
             "Error occurred in asynchronous cameraForCoordinates(coordinates: $coordinates, camera: $camera, coordinatesPadding: $coordinatesPadding, maxZoom: $maxZoom, offset: $offset, mapSize: ${nativeMap.getSize()}): $it, empty cameraState will be returned"
           )
@@ -2666,7 +2666,7 @@ class MapboxMap :
         callback
       )
     } ?: Cancelable { }.also {
-      logE(TAG, "setFeatureState called but featuresetFeature.id is NULL!")
+      logW(TAG, "setFeatureState called but featuresetFeature.id is NULL!")
     }
   }
 
@@ -2729,7 +2729,7 @@ class MapboxMap :
         }
       }
     } ?: Cancelable { }.also {
-      logE(TAG, "getFeatureState called but featuresetFeature.id is NULL!")
+      logW(TAG, "getFeatureState called but featuresetFeature.id is NULL!")
     }
   }
 
@@ -2797,7 +2797,7 @@ class MapboxMap :
         callback
       )
     } ?: Cancelable { }.also {
-      logE(TAG, "removeFeatureState called but featuresetFeature.id is NULL!")
+      logW(TAG, "removeFeatureState called but featuresetFeature.id is NULL!")
     }
   }
 

@@ -86,12 +86,12 @@ internal object MapProvider {
       )
     EventsService.getOrCreate(eventsServerOptions).flush { expected ->
       expected.error?.let { error ->
-        logE(MapController.TAG, "EventsService flush error: $error")
+        logW(MapController.TAG, "EventsService flush error: $error")
       }
     }
     TelemetryService.getOrCreate().flush { expected ->
       expected.error?.let { error ->
-        logE(MapController.TAG, "TelemetryService flush error: $error")
+        logW(MapController.TAG, "TelemetryService flush error: $error")
       }
     }
   }

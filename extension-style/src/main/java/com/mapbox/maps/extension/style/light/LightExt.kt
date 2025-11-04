@@ -10,7 +10,7 @@ import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.light.generated.AmbientLight
 import com.mapbox.maps.extension.style.light.generated.DirectionalLight
 import com.mapbox.maps.extension.style.light.generated.FlatLight
-import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import kotlin.collections.HashMap
 
 /**
@@ -101,7 +101,7 @@ fun MapboxStyleManager.getLight(lightId: String): Light? {
     "directional" -> DirectionalLight(lightId)
     "flat" -> FlatLight(lightId)
     else -> {
-      logE(TAG, "Light type: $type unknown.")
+      logW(TAG, "Light type: $type unknown.")
       null
     }
   }?.also { result ->

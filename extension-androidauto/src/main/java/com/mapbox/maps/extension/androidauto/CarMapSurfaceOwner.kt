@@ -7,8 +7,8 @@ import androidx.car.app.SurfaceCallback
 import androidx.car.app.SurfaceContainer
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapSurface
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.logD
 import com.mapbox.maps.logI
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -48,17 +48,17 @@ internal class CarMapSurfaceOwner(
 
   internal fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
     carMapObservers.add(mapboxCarMapObserver)
-    logI(TAG, "registerObserver + 1 = ${carMapObservers.size}")
+    logD(TAG, "registerObserver + 1 = ${carMapObservers.size}")
 
     mapboxCarMapSurface?.let { carMapSurface ->
       mapboxCarMapObserver.onAttached(carMapSurface)
     }
     ifNonNull(mapboxCarMapSurface, visibleArea, visibleEdgeInsets) { _, area, edge ->
-      logI(TAG, "registerObserver visibleAreaChanged")
+      logD(TAG, "registerObserver visibleAreaChanged")
       mapboxCarMapObserver.onVisibleAreaChanged(area, edge)
     }
     ifNonNull(mapboxCarMapSurface, stableArea, stableEdgeInsets) { _, area, edge ->
-      logI(TAG, "registerObserver stableAreaChanged")
+      logD(TAG, "registerObserver stableAreaChanged")
       mapboxCarMapObserver.onStableAreaChanged(area, edge)
     }
   }
@@ -66,7 +66,7 @@ internal class CarMapSurfaceOwner(
   internal fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
     carMapObservers.remove(mapboxCarMapObserver)
     mapboxCarMapSurface?.let { mapboxCarMapObserver.onDetached(it) }
-    logI(TAG, "unregisterObserver - 1 = ${carMapObservers.size}")
+    logD(TAG, "unregisterObserver - 1 = ${carMapObservers.size}")
   }
 
   internal fun clearObservers() {
@@ -131,7 +131,7 @@ internal class CarMapSurfaceOwner(
    * @see SurfaceCallback.onVisibleAreaChanged
    */
   override fun onVisibleAreaChanged(visibleArea: Rect) {
-    logI(TAG, "onVisibleAreaChanged visibleArea:$visibleArea")
+    logI(TAG, "onVisibleAreaChanged visibleArea:$visibleArea $visibleEdgeInsets")
     this.visibleArea = visibleArea
     notifyVisibleAreaChanged()
   }
@@ -140,7 +140,7 @@ internal class CarMapSurfaceOwner(
     this.visibleEdgeInsets = visibleArea?.edgeInsets()
     this.visibleCenter = visibleCenter()
     ifNonNull(mapboxCarMapSurface, visibleArea, visibleEdgeInsets) { _, area, edge ->
-      logI(TAG, "notifyVisibleAreaChanged $area $edge")
+      logD(TAG, "notifyVisibleAreaChanged $area $edge")
       carMapObservers.forEach {
         it.onVisibleAreaChanged(area, edge)
       }
@@ -154,11 +154,11 @@ internal class CarMapSurfaceOwner(
    * @see SurfaceCallback.onStableAreaChanged
    */
   override fun onStableAreaChanged(stableArea: Rect) {
-    logI(TAG, "onStableAreaChanged stableArea:$stableArea")
+    logI(TAG, "onStableAreaChanged stableArea:$stableArea $stableEdgeInsets")
     this.stableEdgeInsets = stableArea.edgeInsets()
     this.stableArea = stableArea
     ifNonNull(mapboxCarMapSurface, stableArea, stableEdgeInsets) { _, area, edge ->
-      logI(TAG, "notifyStableAreaChanged $area $edge")
+      logD(TAG, "notifyStableAreaChanged $area $edge")
       carMapObservers.forEach {
         it.onStableAreaChanged(area, edge)
       }
@@ -171,7 +171,7 @@ internal class CarMapSurfaceOwner(
    * @see SurfaceCallback.onScroll
    */
   override fun onScroll(distanceX: Float, distanceY: Float) {
-    logI(TAG, "onScroll $distanceX, $distanceY")
+    logD(TAG, "onScroll $distanceX, $distanceY")
     val carMapSurface = mapboxCarMapSurface ?: return
     gestureHandler?.onScroll(carMapSurface, visibleCenter, distanceX, distanceY)
   }
@@ -182,7 +182,7 @@ internal class CarMapSurfaceOwner(
    * @see SurfaceCallback.onFling
    */
   override fun onFling(velocityX: Float, velocityY: Float) {
-    logI(TAG, "onFling $velocityX, $velocityY")
+    logD(TAG, "onFling $velocityX, $velocityY")
     val carMapSurface = mapboxCarMapSurface ?: return
     gestureHandler?.onFling(carMapSurface, velocityX, velocityY)
   }
@@ -193,7 +193,7 @@ internal class CarMapSurfaceOwner(
    * @see SurfaceCallback.onScale
    */
   override fun onScale(focusX: Float, focusY: Float, scaleFactor: Float) {
-    logI(TAG, "onScroll $focusX, $focusY, $scaleFactor")
+    logD(TAG, "onScroll $focusX, $focusY, $scaleFactor")
     val carMapSurface = mapboxCarMapSurface ?: return
     gestureHandler?.onScale(carMapSurface, focusX, focusY, scaleFactor)
   }
