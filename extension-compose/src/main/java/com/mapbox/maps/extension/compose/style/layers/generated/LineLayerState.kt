@@ -35,12 +35,6 @@ public class LineLayerState
 private constructor(
   initialLineCap: LineCapValue,
   initialLineCrossSlope: DoubleValue,
-  initialLineCutoutFadeWidth: DoubleValue,
-  initialLineCutoutFadeWidthTransition: Transition,
-  initialLineCutoutOpacity: DoubleValue,
-  initialLineCutoutOpacityTransition: Transition,
-  initialLineCutoutWidth: DoubleValue,
-  initialLineCutoutWidthTransition: Transition,
   initialLineElevationReference: LineElevationReferenceValue,
   initialLineJoin: LineJoinValue,
   initialLineMiterLimit: DoubleValue,
@@ -58,6 +52,12 @@ private constructor(
   initialLineColor: ColorValue,
   initialLineColorUseTheme: StringValue,
   initialLineColorTransition: Transition,
+  initialLineCutoutFadeWidth: DoubleValue,
+  initialLineCutoutFadeWidthTransition: Transition,
+  initialLineCutoutOpacity: DoubleValue,
+  initialLineCutoutOpacityTransition: Transition,
+  initialLineCutoutWidth: DoubleValue,
+  initialLineCutoutWidthTransition: Transition,
   initialLineDasharray: DoubleListValue,
   initialLineDepthOcclusionFactor: DoubleValue,
   initialLineDepthOcclusionFactorTransition: Transition,
@@ -99,12 +99,6 @@ private constructor(
   public constructor() : this(
     initialLineCap = LineCapValue.INITIAL,
     initialLineCrossSlope = DoubleValue.INITIAL,
-    initialLineCutoutFadeWidth = DoubleValue.INITIAL,
-    initialLineCutoutFadeWidthTransition = Transition.INITIAL,
-    initialLineCutoutOpacity = DoubleValue.INITIAL,
-    initialLineCutoutOpacityTransition = Transition.INITIAL,
-    initialLineCutoutWidth = DoubleValue.INITIAL,
-    initialLineCutoutWidthTransition = Transition.INITIAL,
     initialLineElevationReference = LineElevationReferenceValue.INITIAL,
     initialLineJoin = LineJoinValue.INITIAL,
     initialLineMiterLimit = DoubleValue.INITIAL,
@@ -122,6 +116,12 @@ private constructor(
     initialLineColor = ColorValue.INITIAL,
     initialLineColorUseTheme = StringValue.INITIAL,
     initialLineColorTransition = Transition.INITIAL,
+    initialLineCutoutFadeWidth = DoubleValue.INITIAL,
+    initialLineCutoutFadeWidthTransition = Transition.INITIAL,
+    initialLineCutoutOpacity = DoubleValue.INITIAL,
+    initialLineCutoutOpacityTransition = Transition.INITIAL,
+    initialLineCutoutWidth = DoubleValue.INITIAL,
+    initialLineCutoutWidthTransition = Transition.INITIAL,
     initialLineDasharray = DoubleListValue.INITIAL,
     initialLineDepthOcclusionFactor = DoubleValue.INITIAL,
     initialLineDepthOcclusionFactorTransition = Transition.INITIAL,
@@ -176,54 +176,6 @@ private constructor(
    */
   @MapboxExperimental
   public var lineCrossSlope: DoubleValue by lineCrossSlopeState
-
-  @MapboxExperimental
-  private val lineCutoutFadeWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutFadeWidth)
-  /**
-   *  The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
-   */
-  @MapboxExperimental
-  public var lineCutoutFadeWidth: DoubleValue by lineCutoutFadeWidthState
-
-  @MapboxExperimental
-  private val lineCutoutFadeWidthTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutFadeWidthTransition)
-  /**
-   *  Defines the transition of [lineCutoutFadeWidth].
-   */
-  @MapboxExperimental
-  public var lineCutoutFadeWidthTransition: Transition by lineCutoutFadeWidthTransitionState
-
-  @MapboxExperimental
-  private val lineCutoutOpacityState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutOpacity)
-  /**
-   *  The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
-   */
-  @MapboxExperimental
-  public var lineCutoutOpacity: DoubleValue by lineCutoutOpacityState
-
-  @MapboxExperimental
-  private val lineCutoutOpacityTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutOpacityTransition)
-  /**
-   *  Defines the transition of [lineCutoutOpacity].
-   */
-  @MapboxExperimental
-  public var lineCutoutOpacityTransition: Transition by lineCutoutOpacityTransitionState
-
-  @MapboxExperimental
-  private val lineCutoutWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutWidth)
-  /**
-   *  The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   */
-  @MapboxExperimental
-  public var lineCutoutWidth: DoubleValue by lineCutoutWidthState
-
-  @MapboxExperimental
-  private val lineCutoutWidthTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutWidthTransition)
-  /**
-   *  Defines the transition of [lineCutoutWidth].
-   */
-  @MapboxExperimental
-  public var lineCutoutWidthTransition: Transition by lineCutoutWidthTransitionState
 
   @MapboxExperimental
   private val lineElevationReferenceState: MutableState<LineElevationReferenceValue> = mutableStateOf(initialLineElevationReference)
@@ -336,6 +288,54 @@ private constructor(
    *  Defines the transition of [lineColor].
    */
   public var lineColorTransition: Transition by lineColorTransitionState
+
+  @MapboxExperimental
+  private val lineCutoutFadeWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutFadeWidth)
+  /**
+   *  The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var lineCutoutFadeWidth: DoubleValue by lineCutoutFadeWidthState
+
+  @MapboxExperimental
+  private val lineCutoutFadeWidthTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutFadeWidthTransition)
+  /**
+   *  Defines the transition of [lineCutoutFadeWidth].
+   */
+  @MapboxExperimental
+  public var lineCutoutFadeWidthTransition: Transition by lineCutoutFadeWidthTransitionState
+
+  @MapboxExperimental
+  private val lineCutoutOpacityState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutOpacity)
+  /**
+   *  The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   */
+  @MapboxExperimental
+  public var lineCutoutOpacity: DoubleValue by lineCutoutOpacityState
+
+  @MapboxExperimental
+  private val lineCutoutOpacityTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutOpacityTransition)
+  /**
+   *  Defines the transition of [lineCutoutOpacity].
+   */
+  @MapboxExperimental
+  public var lineCutoutOpacityTransition: Transition by lineCutoutOpacityTransitionState
+
+  @MapboxExperimental
+  private val lineCutoutWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutWidth)
+  /**
+   *  The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
+   */
+  @MapboxExperimental
+  public var lineCutoutWidth: DoubleValue by lineCutoutWidthState
+
+  @MapboxExperimental
+  private val lineCutoutWidthTransitionState: MutableState<Transition> = mutableStateOf(initialLineCutoutWidthTransition)
+  /**
+   *  Defines the transition of [lineCutoutWidth].
+   */
+  @MapboxExperimental
+  public var lineCutoutWidthTransition: Transition by lineCutoutWidthTransitionState
 
   private val lineDasharrayState: MutableState<DoubleListValue> = mutableStateOf(initialLineDasharray)
   /**
@@ -544,12 +544,6 @@ private constructor(
   internal fun UpdateProperties(layerNode: LayerNode) {
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCapState, "line-cap")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCrossSlopeState, "line-cross-slope")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutFadeWidthState, "line-cutout-fade-width")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutFadeWidthTransitionState, "line-cutout-fade-width-transition")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityState, "line-cutout-opacity")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityTransitionState, "line-cutout-opacity-transition")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthState, "line-cutout-width")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthTransitionState, "line-cutout-width-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineElevationReferenceState, "line-elevation-reference")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineJoinState, "line-join")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineMiterLimitState, "line-miter-limit")
@@ -567,6 +561,12 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, lineColorState, "line-color")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineColorUseThemeState, "line-color-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineColorTransitionState, "line-color-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutFadeWidthState, "line-cutout-fade-width")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutFadeWidthTransitionState, "line-cutout-fade-width-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityState, "line-cutout-opacity")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutOpacityTransitionState, "line-cutout-opacity-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthState, "line-cutout-width")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineCutoutWidthTransitionState, "line-cutout-width-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineDasharrayState, "line-dasharray")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineDepthOcclusionFactorState, "line-depth-occlusion-factor")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineDepthOcclusionFactorTransitionState, "line-depth-occlusion-factor-transition")

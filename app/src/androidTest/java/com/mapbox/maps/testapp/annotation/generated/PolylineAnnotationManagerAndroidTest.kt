@@ -66,42 +66,6 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun testLineCutoutFadeWidth() {
-    rule.runOnUiThread {
-      val expectedValue = 1.0
-      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-      polylineAnnotationManager.lineCutoutFadeWidth = expectedValue
-      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutFadeWidth)
-      polylineAnnotationManager.lineCutoutFadeWidth = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width").silentUnwrap(), polylineAnnotationManager.lineCutoutFadeWidth)
-    }
-  }
-
-  @Test
-  fun testLineCutoutOpacity() {
-    rule.runOnUiThread {
-      val expectedValue = 1.0
-      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-      polylineAnnotationManager.lineCutoutOpacity = expectedValue
-      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutOpacity)
-      polylineAnnotationManager.lineCutoutOpacity = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity").silentUnwrap(), polylineAnnotationManager.lineCutoutOpacity)
-    }
-  }
-
-  @Test
-  fun testLineCutoutWidth() {
-    rule.runOnUiThread {
-      val expectedValue = 1.0
-      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-      polylineAnnotationManager.lineCutoutWidth = expectedValue
-      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutWidth)
-      polylineAnnotationManager.lineCutoutWidth = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").silentUnwrap(), polylineAnnotationManager.lineCutoutWidth)
-    }
-  }
-
-  @Test
   fun testLineElevationReference() {
     rule.runOnUiThread {
       val expectedValue = LineElevationReference.NONE
@@ -238,6 +202,42 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
         null,
         polylineAnnotationManager.lineColorString
       )
+    }
+  }
+
+  @Test
+  fun testLineCutoutFadeWidth() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineCutoutFadeWidth = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutFadeWidth)
+      polylineAnnotationManager.lineCutoutFadeWidth = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width").silentUnwrap(), polylineAnnotationManager.lineCutoutFadeWidth)
+    }
+  }
+
+  @Test
+  fun testLineCutoutOpacity() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineCutoutOpacity = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutOpacity)
+      polylineAnnotationManager.lineCutoutOpacity = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity").silentUnwrap(), polylineAnnotationManager.lineCutoutOpacity)
+    }
+  }
+
+  @Test
+  fun testLineCutoutWidth() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineCutoutWidth = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutWidth)
+      polylineAnnotationManager.lineCutoutWidth = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").silentUnwrap(), polylineAnnotationManager.lineCutoutWidth)
     }
   }
 
