@@ -5,6 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.17.0-beta.1 November 05, 2025
 ## Breaking changes ⚠️
 * Require passing required argument to the constructor of experimental `GeofencingState.Builder`, `GeofencingError.Builder`, `GeofencingEvent.Builder` and `GeofencingOptions.Builder` APIs.
 
@@ -13,6 +15,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Add click gesture support to `Marker` composable with `onClick` parameter
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
 * Added `fuelingStationModePointOfInterestLabels` configuration option to Mapbox Standard and Standard Satellite styles. Control the visibility of fuel station and electric charging station POI labels with options: "default" (shows both), "fuel" (fuel stations only), "electric" (charging stations only), or "none" (hides both).
+
+
+## Dependencies
+* Update gl-native to [v11.17.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.1), common to [v24.17.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.1).
 
 
 # 11.16.0 October 21, 2025
