@@ -189,4 +189,8 @@
     <string name="color_theme_reset">Reset</string>
     <string name="color_theme_monochrome">Monochrome</string>
     <string name="color_theme_toggle_atmosphere">Use theme color for Atmosphere</string>
+
+    <!-- Indoor -->
+    <string name="activity_indoor">Indoor Manager</string>
+    <string name="description_indoor">Example showcasing indoor floor selection and state updates</string>
 </resources>

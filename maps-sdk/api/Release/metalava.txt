@@ -223,6 +223,7 @@ package com.mapbox.maps {
     method public com.mapbox.common.Cancelable getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, long offset = 0L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public com.mapbox.common.Cancelable getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public com.mapbox.common.Cancelable getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
+    method public com.mapbox.maps.IndoorManager getIndoor();
     method public com.mapbox.maps.MapOptions getMapOptions();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
@@ -346,6 +347,7 @@ package com.mapbox.maps {
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public void whenSizeReady(kotlin.jvm.functions.Function0<kotlin.Unit> action);
     property public com.mapbox.maps.CameraState cameraState;
+    property public final com.mapbox.maps.IndoorManager indoor;
     property public final com.mapbox.maps.Style? style;
     field public static final com.mapbox.maps.MapboxMap.Companion Companion;
   }

@@ -746,6 +746,12 @@ internal class NativeMapImpl(val map: Map) {
     return map.viewAnnotationAvoidLayers
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
+  fun getIndoorManager(): IndoorManager {
+    return map.indoorManager
+  }
+
   // ///// START INTERACTIONS /////////
 
   fun addInteraction(interaction: Interaction): Cancelable {

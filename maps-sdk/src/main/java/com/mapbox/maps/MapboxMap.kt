@@ -108,6 +108,21 @@ class MapboxMap :
       return nativeMap.getCameraState()
     }
 
+  /**
+   * Indoor manager for controlling indoor map floor display.
+   *
+   * Provides access to indoor mapping features, allowing you to select floors
+   * and listen to indoor state updates.
+   *
+   * @return the [IndoorManager] instance.
+   */
+  @MapboxExperimental
+  val indoor: IndoorManager
+    get() {
+      checkNativeMap("indoor")
+      return nativeMap.getIndoorManager()
+    }
+
   @get:JvmSynthetic @set:JvmSynthetic
   internal var cameraAnimationsPlugin: CameraAnimationsPlugin? = null
   @get:JvmSynthetic @set:JvmSynthetic
