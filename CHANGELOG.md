@@ -15,6 +15,18 @@ Mapbox welcomes participation and contributions from everyone.
 * Add click gesture support to `Marker` composable with `onClick` parameter
 * Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
 * Added `fuelingStationModePointOfInterestLabels` configuration option to Mapbox Standard and Standard Satellite styles. Control the visibility of fuel station and electric charging station POI labels with options: "default" (shows both), "fuel" (fuel stations only), "electric" (charging stations only), or "none" (hides both).
+* Introduce experimental support for Appearances. The Appearances layer property defines sets of appearance objects used to quickly change the visual styling of a layer based on a condition using feature-state. See `AppearancesActivity` in example application for further details.
+* Memory allocation improvements
+
+## Bug fixes 🐞
+ * Fix multiple crashes during style switches related to terrain rendering, texture management, and image cleanup.
+ * Fix line patterns not elevating properly on HD roads.
+ * Fix rendering of TileStore tiles when TileStore is used as disk cache and user is offline.
+ * Fix performance regression for `distance` and `within` expressions when processing large GeoJSON datasets.
+ * Fix GeoJSON tiled model disappearance during fast zoom interactions.
+ * Fix rendering issues when switching between globe and mercator projections.
+ * Logging improvements to reduce noise and duplication.
+
 
 ## Dependencies
 * Update gl-native to [v11.17.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.1), common to [v24.17.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.1).
