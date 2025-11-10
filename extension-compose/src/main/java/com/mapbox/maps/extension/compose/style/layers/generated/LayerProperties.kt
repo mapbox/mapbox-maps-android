@@ -1503,6 +1503,59 @@ public data class IconTranslateAnchorValue(public override val value: Value) : H
 }
 
 /**
+ * Specify how opacity in case of being occluded should be applied Default value: "anchor".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+public data class OcclusionOpacityModeValue(public override val value: Value) : HoldsValue {
+  /**
+   * Construct the [OcclusionOpacityModeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: OcclusionOpacityModeValue = OcclusionOpacityModeValue(Value.valueOf("OcclusionOpacityModeValue.INITIAL"))
+
+    /**
+     * Default value for [OcclusionOpacityModeValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: OcclusionOpacityModeValue = OcclusionOpacityModeValue(Value.nullValue())
+
+    /**
+     * Whole symbol is treated as occluded if it's anchor point is occluded
+     */
+    @JvmField
+    public val ANCHOR: OcclusionOpacityModeValue = OcclusionOpacityModeValue(Value("anchor"))
+
+    /**
+     * Occlusion is applied on a per-pixel basis
+     */
+    @JvmField
+    public val PIXEL: OcclusionOpacityModeValue = OcclusionOpacityModeValue(Value("pixel"))
+  }
+}
+
+/**
  * Controls the frame of reference for `text-translate`. Default value: "map".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
@@ -2041,7 +2094,6 @@ public data class HillshadeIlluminationAnchorValue(public override val value: Va
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class ModelElevationReferenceValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ModelElevationReferenceValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -2101,7 +2153,6 @@ public data class ModelElevationReferenceValue(public override val value: Value)
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class ModelScaleModeValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ModelScaleModeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
@@ -2155,7 +2206,6 @@ public data class ModelScaleModeValue(public override val value: Value) : HoldsV
  * @param value the property wrapped in [Value] to be used with native renderer.
  */
 @Immutable
-@MapboxExperimental
 public data class ModelTypeValue(public override val value: Value) : HoldsValue {
   /**
    * Construct the [ModelTypeValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).

@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
+import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.IdGenerator.generateRandomSourceId
 import com.mapbox.maps.extension.compose.style.LongValue
@@ -69,6 +70,7 @@ public class RasterArraySourceState private constructor(
   tileSize: LongValue,
   attribution: StringValue,
   rasterLayers: RasterLayers,
+  volatile: BooleanValue,
   tileCacheBudget: TileCacheBudget,
 ) : SourceState(
   sourceId = sourceId,
@@ -89,6 +91,7 @@ public class RasterArraySourceState private constructor(
     tileSize = LongValue.INITIAL,
     attribution = StringValue.INITIAL,
     rasterLayers = RasterLayers.INITIAL,
+    volatile = BooleanValue.INITIAL,
     tileCacheBudget = TileCacheBudget.INITIAL,
   )
 
@@ -157,6 +160,14 @@ public class RasterArraySourceState private constructor(
    */
   public var rasterLayers: RasterLayers by rasterLayersState
 
+  private val volatileState: MutableState<BooleanValue> = mutableStateOf(volatile)
+
+  /**
+   * A setting to determine whether a source's tiles are cached locally.
+   * Default value: false.
+   */
+  public var volatile: BooleanValue by volatileState
+
   private val tileCacheBudgetState: MutableState<TileCacheBudget> = mutableStateOf(tileCacheBudget)
 
   /**
@@ -177,6 +188,7 @@ public class RasterArraySourceState private constructor(
     ActionWhenNotInitial(setBuilderPropertyAction, tileSizeState, "tileSize")
     ActionWhenNotInitial(setBuilderPropertyAction, attributionState, "attribution")
     ActionWhenNotInitial(setBuilderPropertyAction, rasterLayersState, "rasterLayers")
+    ActionWhenNotInitial(setBuilderPropertyAction, volatileState, "volatile")
     ActionWhenNotInitial(setPropertyAction, tileCacheBudgetState, "tile-cache-budget")
   }
 
@@ -190,6 +202,7 @@ public class RasterArraySourceState private constructor(
       ("tileSize" to tileSize.value).takeIf { tileSize.isNotInitial() },
       ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
       ("rasterLayers" to rasterLayers.value).takeIf { rasterLayers.isNotInitial() },
+      ("volatile" to volatile.value).takeIf { volatile.isNotInitial() },
       ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.isNotInitial() },
     ).toMap()
 
@@ -211,6 +224,7 @@ public class RasterArraySourceState private constructor(
     if (tileSize != other.tileSize) return false
     if (attribution != other.attribution) return false
     if (rasterLayers != other.rasterLayers) return false
+    if (volatile != other.volatile) return false
     if (tileCacheBudget != other.tileCacheBudget) return false
 
     return true
@@ -230,6 +244,7 @@ public class RasterArraySourceState private constructor(
       tileSize,
       attribution,
       rasterLayers,
+      volatile,
       tileCacheBudget,
     )
   }
@@ -238,7 +253,7 @@ public class RasterArraySourceState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "RasterArraySourceState(sourceId=$sourceId, url=$url, tiles=$tiles, bounds=$bounds, minZoom=$minZoom, maxZoom=$maxZoom, tileSize=$tileSize, attribution=$attribution, rasterLayers=$rasterLayers, tileCacheBudget=$tileCacheBudget)"
+    "RasterArraySourceState(sourceId=$sourceId, url=$url, tiles=$tiles, bounds=$bounds, minZoom=$minZoom, maxZoom=$maxZoom, tileSize=$tileSize, attribution=$attribution, rasterLayers=$rasterLayers, volatile=$volatile, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.
@@ -262,6 +277,7 @@ public class RasterArraySourceState private constructor(
           tileSize = holder.savedProperties["tileSize"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
           attribution = holder.savedProperties["attribution"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
           rasterLayers = holder.savedProperties["rasterLayers"]?.let { RasterLayers(it.second) } ?: RasterLayers.INITIAL,
+          volatile = holder.savedProperties["volatile"]?.let { BooleanValue(it.second) } ?: BooleanValue.INITIAL,
           tileCacheBudget = holder.savedProperties["tile-cache-budget"]?.let { TileCacheBudget(it.second) } ?: TileCacheBudget.INITIAL,
         )
       }

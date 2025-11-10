@@ -152,6 +152,28 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun minzoomTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+      minzoom(1L)
+    }
+    setupSource(testSource)
+    assertEquals(1L, testSource.minzoom)
+  }
+
+  @Test
+  @UiThreadTest
+  fun minzoomAfterBindTest() {
+    val testSource = geoJsonSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.minzoom(1L)
+    assertEquals(1L, testSource.minzoom)
+  }
+
+  @Test
+  @UiThreadTest
   fun attributionTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
@@ -614,6 +636,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @UiThreadTest
   fun defaultSourcePropertiesTest() {
     assertNotNull("defaultMaxzoom should not be null", GeoJsonSource.defaultMaxzoom)
+    assertNotNull("defaultMinzoom should not be null", GeoJsonSource.defaultMinzoom)
     assertNotNull("defaultBuffer should not be null", GeoJsonSource.defaultBuffer)
     assertNotNull("defaultTolerance should not be null", GeoJsonSource.defaultTolerance)
     assertNotNull("defaultCluster should not be null", GeoJsonSource.defaultCluster)

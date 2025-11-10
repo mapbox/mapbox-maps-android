@@ -405,6 +405,9 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public fun getClusterLongClickListeners ()Ljava/util/List;
 	public final fun getIconAllowOverlap ()Ljava/lang/Boolean;
 	public final fun getIconAnchor ()Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;
+	public final fun getIconColorBrightnessMax ()Ljava/lang/Double;
+	public final fun getIconColorBrightnessMin ()Ljava/lang/Double;
+	public final fun getIconColorContrast ()Ljava/lang/Double;
 	public final fun getIconColorInt ()Ljava/lang/Integer;
 	public final fun getIconColorSaturation ()Ljava/lang/Double;
 	public final fun getIconColorString ()Ljava/lang/String;
@@ -437,6 +440,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public fun getLayerFilter ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getMaxZoom ()Ljava/lang/Double;
 	public final fun getMinZoom ()Ljava/lang/Double;
+	public final fun getOcclusionOpacityMode ()Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;
 	public final fun getSlot ()Ljava/lang/String;
 	public final fun getSymbolAvoidEdges ()Ljava/lang/Boolean;
 	public final fun getSymbolElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;
@@ -486,6 +490,9 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public fun removeClusterLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnClusterLongClickListener;)Z
 	public final fun setIconAllowOverlap (Ljava/lang/Boolean;)V
 	public final fun setIconAnchor (Lcom/mapbox/maps/extension/style/layers/properties/generated/IconAnchor;)V
+	public final fun setIconColorBrightnessMax (Ljava/lang/Double;)V
+	public final fun setIconColorBrightnessMin (Ljava/lang/Double;)V
+	public final fun setIconColorContrast (Ljava/lang/Double;)V
 	public final fun setIconColorInt (Ljava/lang/Integer;)V
 	public final fun setIconColorSaturation (Ljava/lang/Double;)V
 	public final fun setIconColorString (Ljava/lang/String;)V
@@ -518,6 +525,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PointAnnotationMa
 	public fun setLayerFilter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
 	public final fun setMaxZoom (Ljava/lang/Double;)V
 	public final fun setMinZoom (Ljava/lang/Double;)V
+	public final fun setOcclusionOpacityMode (Lcom/mapbox/maps/extension/style/layers/properties/generated/OcclusionOpacityMode;)V
 	public final fun setSlot (Ljava/lang/String;)V
 	public final fun setSymbolAvoidEdges (Ljava/lang/Boolean;)V
 	public final fun setSymbolElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/SymbolElevationReference;)V

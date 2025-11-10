@@ -374,6 +374,9 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Boolean? getIconAllowOverlap();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
     method public androidx.compose.ui.graphics.Color? getIconColor();
+    method public Double? getIconColorBrightnessMax();
+    method public Double? getIconColorBrightnessMin();
+    method public Double? getIconColorContrast();
     method public Double? getIconColorSaturation();
     method public String? getIconColorUseTheme();
     method public Double? getIconEmissiveStrength();
@@ -402,6 +405,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState getInteractionsState();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode? getOcclusionOpacityMode();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? getSymbolPlacement();
@@ -447,6 +451,9 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setIconAllowOverlap(Boolean?);
     method public void setIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor?);
     method public void setIconColor(androidx.compose.ui.graphics.Color?);
+    method public void setIconColorBrightnessMax(Double?);
+    method public void setIconColorBrightnessMin(Double?);
+    method public void setIconColorContrast(Double?);
     method public void setIconColorSaturation(Double?);
     method public void setIconColorUseTheme(String?);
     method public void setIconEmissiveStrength(Double?);
@@ -475,6 +482,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setInteractionsState(com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState);
     method public void setMaxZoom(Double?);
     method public void setMinZoom(Double?);
+    method public void setOcclusionOpacityMode(com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode?);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
     method public void setSymbolPlacement(com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement?);
@@ -520,6 +528,9 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Boolean? iconAllowOverlap;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
     property public final androidx.compose.ui.graphics.Color? iconColor;
+    property public final Double? iconColorBrightnessMax;
+    property public final Double? iconColorBrightnessMin;
+    property public final Double? iconColorContrast;
     property public final Double? iconColorSaturation;
     property public final String? iconColorUseTheme;
     property public final Double? iconEmissiveStrength;
@@ -548,6 +559,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroupInteractionsState interactionsState;
     property public final Double? maxZoom;
     property public final Double? minZoom;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode? occlusionOpacityMode;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement? symbolPlacement;
@@ -2223,6 +2235,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getFillExtrusionBase();
     method public com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue getFillExtrusionBaseAlignment();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionBaseTransition();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getFillExtrusionCastShadows();
     method public com.mapbox.maps.extension.compose.style.ColorValue getFillExtrusionColor();
     method public com.mapbox.maps.extension.compose.style.Transition getFillExtrusionColorTransition();
     method public com.mapbox.maps.extension.compose.style.StringValue getFillExtrusionColorUseTheme();
@@ -2276,6 +2289,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setFillExtrusionBase(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setFillExtrusionBaseAlignment(com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue);
     method public void setFillExtrusionBaseTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setFillExtrusionCastShadows(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setFillExtrusionColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setFillExtrusionColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setFillExtrusionColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
@@ -2329,6 +2343,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue fillExtrusionBase;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.FillExtrusionBaseAlignmentValue fillExtrusionBaseAlignment;
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionBaseTransition;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue fillExtrusionCastShadows;
     property public final com.mapbox.maps.extension.compose.style.ColorValue fillExtrusionColor;
     property public final com.mapbox.maps.extension.compose.style.Transition fillExtrusionColorTransition;
     property public final com.mapbox.maps.extension.compose.style.StringValue fillExtrusionColorUseTheme;
@@ -3175,7 +3190,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ModelElevationReferenceValue {
+  @androidx.compose.runtime.Immutable public final class ModelElevationReferenceValue {
     ctor public ModelElevationReferenceValue(com.mapbox.bindgen.Value value);
     ctor public ModelElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -3194,17 +3209,17 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public final class ModelLayerKt {
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ModelLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void ModelLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("model")
 }), com.mapbox.maps.extension.compose.style.layers.generated.ModelLayerState modelLayerState = remember({ 
     return <init>()
 }));
-    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void ModelLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static inline void ModelLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("model")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.layers.generated.ModelLayerState,kotlin.Unit> init);
   }
 
-  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class ModelLayerState {
+  @androidx.compose.runtime.Stable public final class ModelLayerState {
     ctor public ModelLayerState();
     method public com.mapbox.maps.extension.compose.style.layers.Filter getFilter();
     method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
@@ -3310,7 +3325,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.generated.VisibilityValue visibility;
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ModelScaleModeValue {
+  @androidx.compose.runtime.Immutable public final class ModelScaleModeValue {
     ctor public ModelScaleModeValue(com.mapbox.bindgen.Value value);
     ctor public ModelScaleModeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -3327,7 +3342,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class ModelScaleModeValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class ModelTypeValue {
+  @androidx.compose.runtime.Immutable public final class ModelTypeValue {
     ctor public ModelTypeValue(com.mapbox.bindgen.Value value);
     ctor public ModelTypeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();
@@ -3342,6 +3357,23 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   }
 
   public static final class ModelTypeValue.Companion {
+  }
+
+  @androidx.compose.runtime.Immutable public final class OcclusionOpacityModeValue {
+    ctor public OcclusionOpacityModeValue(com.mapbox.bindgen.Value value);
+    ctor public OcclusionOpacityModeValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue ANCHOR;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue PIXEL;
+  }
+
+  public static final class OcclusionOpacityModeValue.Companion {
   }
 
   public final class RasterLayerKt {
@@ -3653,6 +3685,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.BooleanValue getIconAllowOverlap();
     method public com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue getIconAnchor();
     method public com.mapbox.maps.extension.compose.style.ColorValue getIconColor();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIconColorBrightnessMax();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIconColorBrightnessMin();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getIconColorContrast();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIconColorSaturation();
     method public com.mapbox.maps.extension.compose.style.Transition getIconColorSaturationTransition();
     method public com.mapbox.maps.extension.compose.style.Transition getIconColorTransition();
@@ -3691,6 +3726,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue getOcclusionOpacityMode();
     method public com.mapbox.maps.extension.compose.style.StringValue getSourceLayer();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue getSymbolElevationReference();
@@ -3748,6 +3784,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setIconAllowOverlap(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setIconAnchor(com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue);
     method public void setIconColor(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setIconColorBrightnessMax(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIconColorBrightnessMin(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setIconColorContrast(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIconColorSaturation(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIconColorSaturationTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setIconColorTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3786,6 +3825,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setOcclusionOpacityMode(com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue);
     method public void setSourceLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setSymbolAvoidEdges(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue);
@@ -3843,6 +3883,9 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue iconAllowOverlap;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.IconAnchorValue iconAnchor;
     property public final com.mapbox.maps.extension.compose.style.ColorValue iconColor;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue iconColorBrightnessMax;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue iconColorBrightnessMin;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue iconColorContrast;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue iconColorSaturation;
     property public final com.mapbox.maps.extension.compose.style.Transition iconColorSaturationTransition;
     property public final com.mapbox.maps.extension.compose.style.Transition iconColorTransition;
@@ -3881,6 +3924,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.OcclusionOpacityModeValue occlusionOpacityMode;
     property public final com.mapbox.maps.extension.compose.style.StringValue sourceLayer;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue symbolAvoidEdges;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.SymbolElevationReferenceValue symbolElevationReference;
@@ -4706,6 +4750,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public com.mapbox.maps.extension.compose.style.BooleanValue getGenerateId();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getLineMetrics();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
+    method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getPrefetchZoomDelta();
     method public com.mapbox.maps.extension.compose.style.sources.PromoteIdValue getPromoteId();
     method public com.mapbox.maps.extension.compose.style.sources.TileCacheBudget getTileCacheBudget();
@@ -4722,6 +4767,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public void setGenerateId(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setLineMetrics(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setPrefetchZoomDelta(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setPromoteId(com.mapbox.maps.extension.compose.style.sources.PromoteIdValue);
     method public void setTileCacheBudget(com.mapbox.maps.extension.compose.style.sources.TileCacheBudget);
@@ -4738,6 +4784,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue generateId;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue lineMetrics;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
+    property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue prefetchZoomDelta;
     property public final com.mapbox.maps.extension.compose.style.sources.PromoteIdValue promoteId;
     property public final com.mapbox.maps.extension.compose.style.sources.TileCacheBudget tileCacheBudget;
@@ -4792,6 +4839,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public com.mapbox.maps.extension.compose.style.LongValue getTileSize();
     method public com.mapbox.maps.extension.compose.style.StringListValue getTiles();
     method public com.mapbox.maps.extension.compose.style.StringValue getUrl();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getVolatile();
     method public void setAttribution(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setBounds(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
@@ -4801,6 +4849,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method public void setTileSize(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setTiles(com.mapbox.maps.extension.compose.style.StringListValue);
     method public void setUrl(com.mapbox.maps.extension.compose.style.StringValue);
+    method public void setVolatile(com.mapbox.maps.extension.compose.style.BooleanValue);
     property public final com.mapbox.maps.extension.compose.style.StringValue attribution;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue bounds;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
@@ -4810,6 +4859,7 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     property public final com.mapbox.maps.extension.compose.style.LongValue tileSize;
     property public final com.mapbox.maps.extension.compose.style.StringListValue tiles;
     property public final com.mapbox.maps.extension.compose.style.StringValue url;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue volatile;
     field public static final com.mapbox.maps.extension.compose.style.sources.generated.RasterArraySourceState.Companion Companion;
   }
 

@@ -18,13 +18,14 @@ import com.mapbox.maps.extension.style.utils.silentUnwrap
 import java.util.*
 
 /**
- * A layer to render 3D Models.
+ * A 3D model
+ *
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/layers/#model)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source
  */
 @UiThread
-@MapboxExperimental
 class ModelLayer(override val layerId: String, val sourceId: String) : ModelLayerDsl, Layer() {
   init {
     internalSourceId = sourceId
@@ -238,7 +239,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    */
-  @MapboxExperimental
   val modelId: String?
     /**
      * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
@@ -258,7 +258,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelId value of modelId
    */
-  @MapboxExperimental
   override fun modelId(modelId: String): ModelLayer = apply {
     val propertyValue = PropertyValue("model-id", modelId)
     setProperty(propertyValue)
@@ -270,7 +269,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-id".
    *
    */
-  @MapboxExperimental
   val modelIdAsExpression: Expression?
     /**
      * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
@@ -289,7 +287,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelId value of modelId as Expression
    */
-  @MapboxExperimental
   override fun modelId(modelId: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-id", modelId)
     setProperty(propertyValue)
@@ -298,7 +295,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
    */
-  @MapboxExperimental
   val modelAmbientOcclusionIntensity: Double?
     /**
      * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
@@ -318,7 +314,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelAmbientOcclusionIntensity value of modelAmbientOcclusionIntensity
    */
-  @MapboxExperimental
   override fun modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensity: Double): ModelLayer = apply {
     val propertyValue = PropertyValue("model-ambient-occlusion-intensity", modelAmbientOcclusionIntensity)
     setProperty(propertyValue)
@@ -330,7 +325,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-ambient-occlusion-intensity".
    *
    */
-  @MapboxExperimental
   val modelAmbientOcclusionIntensityAsExpression: Expression?
     /**
      * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
@@ -349,7 +343,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelAmbientOcclusionIntensity value of modelAmbientOcclusionIntensity as Expression
    */
-  @MapboxExperimental
   override fun modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensity: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-ambient-occlusion-intensity", modelAmbientOcclusionIntensity)
     setProperty(propertyValue)
@@ -358,7 +351,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelAmbientOcclusionIntensity.
    */
-  @MapboxExperimental
   val modelAmbientOcclusionIntensityTransition: StyleTransition?
     /**
      * Get the ModelAmbientOcclusionIntensity property transition options
@@ -378,7 +370,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun modelAmbientOcclusionIntensityTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-ambient-occlusion-intensity-transition", options)
     setProperty(propertyValue)
@@ -387,7 +378,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelAmbientOcclusionIntensityTransition].
    */
-  @MapboxExperimental
   override fun modelAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelAmbientOcclusionIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -395,7 +385,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Enable/Disable shadow casting for this layer Default value: true.
    */
-  @MapboxExperimental
   val modelCastShadows: Boolean?
     /**
      * Enable/Disable shadow casting for this layer Default value: true.
@@ -415,7 +404,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelCastShadows value of modelCastShadows
    */
-  @MapboxExperimental
   override fun modelCastShadows(modelCastShadows: Boolean): ModelLayer = apply {
     val propertyValue = PropertyValue("model-cast-shadows", modelCastShadows)
     setProperty(propertyValue)
@@ -427,7 +415,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-cast-shadows".
    *
    */
-  @MapboxExperimental
   val modelCastShadowsAsExpression: Expression?
     /**
      * Enable/Disable shadow casting for this layer Default value: true.
@@ -446,7 +433,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelCastShadows value of modelCastShadows as Expression
    */
-  @MapboxExperimental
   override fun modelCastShadows(modelCastShadows: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-cast-shadows", modelCastShadows)
     setProperty(propertyValue)
@@ -455,7 +441,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    */
-  @MapboxExperimental
   val modelColor: String?
     /**
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
@@ -478,7 +463,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelColor value of modelColor
    */
-  @MapboxExperimental
   override fun modelColor(modelColor: String): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color", modelColor)
     setProperty(propertyValue)
@@ -490,7 +474,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-color".
    *
    */
-  @MapboxExperimental
   val modelColorAsExpression: Expression?
     /**
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
@@ -509,7 +492,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelColor value of modelColor as Expression
    */
-  @MapboxExperimental
   override fun modelColor(modelColor: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color", modelColor)
     setProperty(propertyValue)
@@ -518,7 +500,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
    */
-  @MapboxExperimental
   val modelColorAsColorInt: Int?
     /**
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
@@ -542,7 +523,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelColor value of modelColor
    */
-  @MapboxExperimental
   override fun modelColor(@ColorInt modelColor: Int): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color", colorIntToRgbaExpression(modelColor))
     setProperty(propertyValue)
@@ -551,7 +531,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelColor.
    */
-  @MapboxExperimental
   val modelColorTransition: StyleTransition?
     /**
      * Get the ModelColor property transition options
@@ -571,7 +550,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for String
    */
-  @MapboxExperimental
   override fun modelColorTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color-transition", options)
     setProperty(propertyValue)
@@ -580,7 +558,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelColorTransition].
    */
-  @MapboxExperimental
   override fun modelColorTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelColorTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -644,7 +621,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   val modelColorMixIntensity: Double?
     /**
      * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
@@ -664,7 +640,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity
    */
-  @MapboxExperimental
   override fun modelColorMixIntensity(modelColorMixIntensity: Double): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color-mix-intensity", modelColorMixIntensity)
     setProperty(propertyValue)
@@ -676,7 +651,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-color-mix-intensity".
    *
    */
-  @MapboxExperimental
   val modelColorMixIntensityAsExpression: Expression?
     /**
      * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
@@ -695,7 +669,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity as Expression
    */
-  @MapboxExperimental
   override fun modelColorMixIntensity(modelColorMixIntensity: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color-mix-intensity", modelColorMixIntensity)
     setProperty(propertyValue)
@@ -704,7 +677,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelColorMixIntensity.
    */
-  @MapboxExperimental
   val modelColorMixIntensityTransition: StyleTransition?
     /**
      * Get the ModelColorMixIntensity property transition options
@@ -724,7 +696,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun modelColorMixIntensityTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-color-mix-intensity-transition", options)
     setProperty(propertyValue)
@@ -733,7 +704,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelColorMixIntensityTransition].
    */
-  @MapboxExperimental
   override fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelColorMixIntensityTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -741,7 +711,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
    */
-  @MapboxExperimental
   val modelCutoffFadeRange: Double?
     /**
      * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
@@ -761,7 +730,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange
    */
-  @MapboxExperimental
   override fun modelCutoffFadeRange(modelCutoffFadeRange: Double): ModelLayer = apply {
     val propertyValue = PropertyValue("model-cutoff-fade-range", modelCutoffFadeRange)
     setProperty(propertyValue)
@@ -773,7 +741,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-cutoff-fade-range".
    *
    */
-  @MapboxExperimental
   val modelCutoffFadeRangeAsExpression: Expression?
     /**
      * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
@@ -792,7 +759,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange as Expression
    */
-  @MapboxExperimental
   override fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-cutoff-fade-range", modelCutoffFadeRange)
     setProperty(propertyValue)
@@ -801,7 +767,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
    */
-  @MapboxExperimental
   val modelElevationReference: ModelElevationReference?
     /**
      * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
@@ -824,7 +789,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelElevationReference value of modelElevationReference
    */
-  @MapboxExperimental
   override fun modelElevationReference(modelElevationReference: ModelElevationReference): ModelLayer = apply {
     val propertyValue = PropertyValue("model-elevation-reference", modelElevationReference)
     setProperty(propertyValue)
@@ -836,7 +800,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-elevation-reference".
    *
    */
-  @MapboxExperimental
   val modelElevationReferenceAsExpression: Expression?
     /**
      * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
@@ -858,7 +821,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelElevationReference value of modelElevationReference as Expression
    */
-  @MapboxExperimental
   override fun modelElevationReference(modelElevationReference: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-elevation-reference", modelElevationReference)
     setProperty(propertyValue)
@@ -867,7 +829,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
    */
-  @MapboxExperimental
   val modelEmissiveStrength: Double?
     /**
      * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
@@ -887,7 +848,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength
    */
-  @MapboxExperimental
   override fun modelEmissiveStrength(modelEmissiveStrength: Double): ModelLayer = apply {
     val propertyValue = PropertyValue("model-emissive-strength", modelEmissiveStrength)
     setProperty(propertyValue)
@@ -899,7 +859,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-emissive-strength".
    *
    */
-  @MapboxExperimental
   val modelEmissiveStrengthAsExpression: Expression?
     /**
      * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
@@ -918,7 +877,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength as Expression
    */
-  @MapboxExperimental
   override fun modelEmissiveStrength(modelEmissiveStrength: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-emissive-strength", modelEmissiveStrength)
     setProperty(propertyValue)
@@ -927,7 +885,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelEmissiveStrength.
    */
-  @MapboxExperimental
   val modelEmissiveStrengthTransition: StyleTransition?
     /**
      * Get the ModelEmissiveStrength property transition options
@@ -947,7 +904,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun modelEmissiveStrengthTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-emissive-strength-transition", options)
     setProperty(propertyValue)
@@ -956,7 +912,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   override fun modelEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelEmissiveStrengthTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -964,7 +919,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
    */
-  @MapboxExperimental
   val modelHeightBasedEmissiveStrengthMultiplier: List<Double>?
     /**
      * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
@@ -984,7 +938,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier
    */
-  @MapboxExperimental
   override fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: List<Double>): ModelLayer = apply {
     val propertyValue = PropertyValue("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier)
     setProperty(propertyValue)
@@ -996,7 +949,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-height-based-emissive-strength-multiplier".
    *
    */
-  @MapboxExperimental
   val modelHeightBasedEmissiveStrengthMultiplierAsExpression: Expression?
     /**
      * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
@@ -1015,7 +967,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier as Expression
    */
-  @MapboxExperimental
   override fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-height-based-emissive-strength-multiplier", modelHeightBasedEmissiveStrengthMultiplier)
     setProperty(propertyValue)
@@ -1024,7 +975,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelHeightBasedEmissiveStrengthMultiplier.
    */
-  @MapboxExperimental
   val modelHeightBasedEmissiveStrengthMultiplierTransition: StyleTransition?
     /**
      * Get the ModelHeightBasedEmissiveStrengthMultiplier property transition options
@@ -1044,7 +994,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   override fun modelHeightBasedEmissiveStrengthMultiplierTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-height-based-emissive-strength-multiplier-transition", options)
     setProperty(propertyValue)
@@ -1053,7 +1002,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelHeightBasedEmissiveStrengthMultiplierTransition].
    */
-  @MapboxExperimental
   override fun modelHeightBasedEmissiveStrengthMultiplierTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelHeightBasedEmissiveStrengthMultiplierTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1061,7 +1009,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
    */
-  @MapboxExperimental
   val modelOpacity: Double?
     /**
      * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
@@ -1081,7 +1028,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelOpacity value of modelOpacity
    */
-  @MapboxExperimental
   override fun modelOpacity(modelOpacity: Double): ModelLayer = apply {
     val propertyValue = PropertyValue("model-opacity", modelOpacity)
     setProperty(propertyValue)
@@ -1093,7 +1039,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-opacity".
    *
    */
-  @MapboxExperimental
   val modelOpacityAsExpression: Expression?
     /**
      * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
@@ -1112,7 +1057,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelOpacity value of modelOpacity as Expression
    */
-  @MapboxExperimental
   override fun modelOpacity(modelOpacity: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-opacity", modelOpacity)
     setProperty(propertyValue)
@@ -1121,7 +1065,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelOpacity.
    */
-  @MapboxExperimental
   val modelOpacityTransition: StyleTransition?
     /**
      * Get the ModelOpacity property transition options
@@ -1141,7 +1084,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun modelOpacityTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-opacity-transition", options)
     setProperty(propertyValue)
@@ -1150,7 +1092,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelOpacityTransition].
    */
-  @MapboxExperimental
   override fun modelOpacityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelOpacityTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1158,7 +1099,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Enable/Disable shadow receiving for this layer Default value: true.
    */
-  @MapboxExperimental
   val modelReceiveShadows: Boolean?
     /**
      * Enable/Disable shadow receiving for this layer Default value: true.
@@ -1178,7 +1118,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelReceiveShadows value of modelReceiveShadows
    */
-  @MapboxExperimental
   override fun modelReceiveShadows(modelReceiveShadows: Boolean): ModelLayer = apply {
     val propertyValue = PropertyValue("model-receive-shadows", modelReceiveShadows)
     setProperty(propertyValue)
@@ -1190,7 +1129,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-receive-shadows".
    *
    */
-  @MapboxExperimental
   val modelReceiveShadowsAsExpression: Expression?
     /**
      * Enable/Disable shadow receiving for this layer Default value: true.
@@ -1209,7 +1147,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelReceiveShadows value of modelReceiveShadows as Expression
    */
-  @MapboxExperimental
   override fun modelReceiveShadows(modelReceiveShadows: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-receive-shadows", modelReceiveShadows)
     setProperty(propertyValue)
@@ -1218,7 +1155,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
    */
-  @MapboxExperimental
   val modelRotation: List<Double>?
     /**
      * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
@@ -1238,7 +1174,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelRotation value of modelRotation
    */
-  @MapboxExperimental
   override fun modelRotation(modelRotation: List<Double>): ModelLayer = apply {
     val propertyValue = PropertyValue("model-rotation", modelRotation)
     setProperty(propertyValue)
@@ -1250,7 +1185,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-rotation".
    *
    */
-  @MapboxExperimental
   val modelRotationAsExpression: Expression?
     /**
      * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
@@ -1269,7 +1203,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelRotation value of modelRotation as Expression
    */
-  @MapboxExperimental
   override fun modelRotation(modelRotation: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-rotation", modelRotation)
     setProperty(propertyValue)
@@ -1278,7 +1211,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelRotation.
    */
-  @MapboxExperimental
   val modelRotationTransition: StyleTransition?
     /**
      * Get the ModelRotation property transition options
@@ -1298,7 +1230,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   override fun modelRotationTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-rotation-transition", options)
     setProperty(propertyValue)
@@ -1307,7 +1238,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelRotationTransition].
    */
-  @MapboxExperimental
   override fun modelRotationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelRotationTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1315,7 +1245,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
    */
-  @MapboxExperimental
   val modelRoughness: Double?
     /**
      * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
@@ -1335,7 +1264,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelRoughness value of modelRoughness
    */
-  @MapboxExperimental
   override fun modelRoughness(modelRoughness: Double): ModelLayer = apply {
     val propertyValue = PropertyValue("model-roughness", modelRoughness)
     setProperty(propertyValue)
@@ -1347,7 +1275,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-roughness".
    *
    */
-  @MapboxExperimental
   val modelRoughnessAsExpression: Expression?
     /**
      * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
@@ -1366,7 +1293,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelRoughness value of modelRoughness as Expression
    */
-  @MapboxExperimental
   override fun modelRoughness(modelRoughness: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-roughness", modelRoughness)
     setProperty(propertyValue)
@@ -1375,7 +1301,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelRoughness.
    */
-  @MapboxExperimental
   val modelRoughnessTransition: StyleTransition?
     /**
      * Get the ModelRoughness property transition options
@@ -1395,7 +1320,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun modelRoughnessTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-roughness-transition", options)
     setProperty(propertyValue)
@@ -1404,7 +1328,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelRoughnessTransition].
    */
-  @MapboxExperimental
   override fun modelRoughnessTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelRoughnessTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1412,7 +1335,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
    */
-  @MapboxExperimental
   val modelScale: List<Double>?
     /**
      * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
@@ -1432,7 +1354,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelScale value of modelScale
    */
-  @MapboxExperimental
   override fun modelScale(modelScale: List<Double>): ModelLayer = apply {
     val propertyValue = PropertyValue("model-scale", modelScale)
     setProperty(propertyValue)
@@ -1444,7 +1365,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-scale".
    *
    */
-  @MapboxExperimental
   val modelScaleAsExpression: Expression?
     /**
      * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
@@ -1463,7 +1383,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelScale value of modelScale as Expression
    */
-  @MapboxExperimental
   override fun modelScale(modelScale: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-scale", modelScale)
     setProperty(propertyValue)
@@ -1472,7 +1391,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelScale.
    */
-  @MapboxExperimental
   val modelScaleTransition: StyleTransition?
     /**
      * Get the ModelScale property transition options
@@ -1492,7 +1410,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   override fun modelScaleTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-scale-transition", options)
     setProperty(propertyValue)
@@ -1501,7 +1418,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelScaleTransition].
    */
-  @MapboxExperimental
   override fun modelScaleTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelScaleTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1509,7 +1425,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
    */
-  @MapboxExperimental
   val modelScaleMode: ModelScaleMode?
     /**
      * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
@@ -1532,7 +1447,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelScaleMode value of modelScaleMode
    */
-  @MapboxExperimental
   override fun modelScaleMode(modelScaleMode: ModelScaleMode): ModelLayer = apply {
     val propertyValue = PropertyValue("model-scale-mode", modelScaleMode)
     setProperty(propertyValue)
@@ -1544,7 +1458,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-scale-mode".
    *
    */
-  @MapboxExperimental
   val modelScaleModeAsExpression: Expression?
     /**
      * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
@@ -1566,7 +1479,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelScaleMode value of modelScaleMode as Expression
    */
-  @MapboxExperimental
   override fun modelScaleMode(modelScaleMode: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-scale-mode", modelScaleMode)
     setProperty(propertyValue)
@@ -1575,7 +1487,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
    */
-  @MapboxExperimental
   val modelTranslation: List<Double>?
     /**
      * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
@@ -1595,7 +1506,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelTranslation value of modelTranslation
    */
-  @MapboxExperimental
   override fun modelTranslation(modelTranslation: List<Double>): ModelLayer = apply {
     val propertyValue = PropertyValue("model-translation", modelTranslation)
     setProperty(propertyValue)
@@ -1607,7 +1517,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-translation".
    *
    */
-  @MapboxExperimental
   val modelTranslationAsExpression: Expression?
     /**
      * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
@@ -1626,7 +1535,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelTranslation value of modelTranslation as Expression
    */
-  @MapboxExperimental
   override fun modelTranslation(modelTranslation: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-translation", modelTranslation)
     setProperty(propertyValue)
@@ -1635,7 +1543,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Transition options for ModelTranslation.
    */
-  @MapboxExperimental
   val modelTranslationTransition: StyleTransition?
     /**
      * Get the ModelTranslation property transition options
@@ -1655,7 +1562,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   override fun modelTranslationTransition(options: StyleTransition): ModelLayer = apply {
     val propertyValue = PropertyValue("model-translation-transition", options)
     setProperty(propertyValue)
@@ -1664,7 +1570,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * DSL for [modelTranslationTransition].
    */
-  @MapboxExperimental
   override fun modelTranslationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer = apply {
     modelTranslationTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -1672,7 +1577,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   /**
    * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
    */
-  @MapboxExperimental
   val modelType: ModelType?
     /**
      * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
@@ -1695,7 +1599,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelType value of modelType
    */
-  @MapboxExperimental
   override fun modelType(modelType: ModelType): ModelLayer = apply {
     val propertyValue = PropertyValue("model-type", modelType)
     setProperty(propertyValue)
@@ -1707,7 +1610,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    * This is an Expression representation of "model-type".
    *
    */
-  @MapboxExperimental
   val modelTypeAsExpression: Expression?
     /**
      * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
@@ -1729,7 +1631,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
    *
    * @param modelType value of modelType as Expression
    */
-  @MapboxExperimental
   override fun modelType(modelType: Expression): ModelLayer = apply {
     val propertyValue = PropertyValue("model-type", modelType)
     setProperty(propertyValue)
@@ -1797,7 +1698,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
      */
-    @MapboxExperimental
     val defaultModelId: String?
       /**
        * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
@@ -1816,7 +1716,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-id".
      *
      */
-    @MapboxExperimental
     val defaultModelIdAsExpression: Expression?
       /**
        * Get default value of the ModelId property as an Expression
@@ -1836,7 +1735,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
      */
-    @MapboxExperimental
     val defaultModelAmbientOcclusionIntensity: Double?
       /**
        * Intensity of the ambient occlusion if present in the 3D model. Default value: 1. Value range: [0, 1]
@@ -1855,7 +1753,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-ambient-occlusion-intensity".
      *
      */
-    @MapboxExperimental
     val defaultModelAmbientOcclusionIntensityAsExpression: Expression?
       /**
        * Get default value of the ModelAmbientOcclusionIntensity property as an Expression
@@ -1875,7 +1772,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelAmbientOcclusionIntensity.
      */
-    @MapboxExperimental
     val defaultModelAmbientOcclusionIntensityTransition: StyleTransition?
       /**
        * Get the ModelAmbientOcclusionIntensity property transition options
@@ -1887,7 +1783,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Enable/Disable shadow casting for this layer Default value: true.
      */
-    @MapboxExperimental
     val defaultModelCastShadows: Boolean?
       /**
        * Enable/Disable shadow casting for this layer Default value: true.
@@ -1906,7 +1801,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-cast-shadows".
      *
      */
-    @MapboxExperimental
     val defaultModelCastShadowsAsExpression: Expression?
       /**
        * Get default value of the ModelCastShadows property as an Expression
@@ -1926,7 +1820,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      */
-    @MapboxExperimental
     val defaultModelColor: String?
       /**
        * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
@@ -1948,7 +1841,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-color".
      *
      */
-    @MapboxExperimental
     val defaultModelColorAsExpression: Expression?
       /**
        * Get default value of the ModelColor property as an Expression
@@ -1965,7 +1857,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
      */
-    @MapboxExperimental
     val defaultModelColorAsColorInt: Int?
       /**
        * The tint color of the model layer. model-color-mix-intensity (defaults to 0) defines tint(mix) intensity - this means that, this color is not used unless model-color-mix-intensity gets value greater than 0. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: "#ffffff".
@@ -1985,7 +1876,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelColor.
      */
-    @MapboxExperimental
     val defaultModelColorTransition: StyleTransition?
       /**
        * Get the ModelColor property transition options
@@ -2025,7 +1915,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
      */
-    @MapboxExperimental
     val defaultModelColorMixIntensity: Double?
       /**
        * Intensity of model-color (on a scale from 0 to 1) in color mix with original 3D model's colors. Higher number will present a higher model-color contribution in mix. Expressions that depend on measure-light are not supported when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 1]
@@ -2044,7 +1933,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-color-mix-intensity".
      *
      */
-    @MapboxExperimental
     val defaultModelColorMixIntensityAsExpression: Expression?
       /**
        * Get default value of the ModelColorMixIntensity property as an Expression
@@ -2064,7 +1952,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelColorMixIntensity.
      */
-    @MapboxExperimental
     val defaultModelColorMixIntensityTransition: StyleTransition?
       /**
        * Get the ModelColorMixIntensity property transition options
@@ -2076,7 +1963,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
      */
-    @MapboxExperimental
     val defaultModelCutoffFadeRange: Double?
       /**
        * This parameter defines the range for the fade-out effect before an automatic content cutoff on pitched map views. The automatic cutoff range is calculated according to the minimum required zoom level of the source and layer. The fade range is expressed in relation to the height of the map view. A value of 1.0 indicates that the content is faded to the same extent as the map's height in pixels, while a value close to zero represents a sharp cutoff. When the value is set to 0.0, the cutoff is completely disabled. Note: The property has no effect on the map if terrain is enabled. Default value: 0. Value range: [0, 1]
@@ -2095,7 +1981,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-cutoff-fade-range".
      *
      */
-    @MapboxExperimental
     val defaultModelCutoffFadeRangeAsExpression: Expression?
       /**
        * Get default value of the ModelCutoffFadeRange property as an Expression
@@ -2115,7 +2000,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
      */
-    @MapboxExperimental
     val defaultModelElevationReference: ModelElevationReference?
       /**
        * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
@@ -2137,7 +2021,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-elevation-reference".
      *
      */
-    @MapboxExperimental
     val defaultModelElevationReferenceAsExpression: Expression?
       /**
        * Get default value of the ModelElevationReference property as an Expression
@@ -2157,7 +2040,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
      */
-    @MapboxExperimental
     val defaultModelEmissiveStrength: Double?
       /**
        * Strength of the emission. There is no emission for value 0. For value 1.0, only emissive component (no shading) is displayed and values above 1.0 produce light contribution to surrounding area, for some of the parts (e.g. doors). Expressions that depend on measure-light are only supported as a global layer value (and not for each feature) when using GeoJSON or vector tile as the model layer source. Default value: 0. Value range: [0, 5]
@@ -2176,7 +2058,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-emissive-strength".
      *
      */
-    @MapboxExperimental
     val defaultModelEmissiveStrengthAsExpression: Expression?
       /**
        * Get default value of the ModelEmissiveStrength property as an Expression
@@ -2196,7 +2077,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelEmissiveStrength.
      */
-    @MapboxExperimental
     val defaultModelEmissiveStrengthTransition: StyleTransition?
       /**
        * Get the ModelEmissiveStrength property transition options
@@ -2208,7 +2088,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
      */
-    @MapboxExperimental
     val defaultModelHeightBasedEmissiveStrengthMultiplier: List<Double>?
       /**
        * Emissive strength multiplier along model height (gradient begin, gradient end, value at begin, value at end, gradient curve power (logarithmic scale, curve power = pow(10, val)). Default value: [1,1,1,1,0].
@@ -2227,7 +2106,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-height-based-emissive-strength-multiplier".
      *
      */
-    @MapboxExperimental
     val defaultModelHeightBasedEmissiveStrengthMultiplierAsExpression: Expression?
       /**
        * Get default value of the ModelHeightBasedEmissiveStrengthMultiplier property as an Expression
@@ -2247,7 +2125,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelHeightBasedEmissiveStrengthMultiplier.
      */
-    @MapboxExperimental
     val defaultModelHeightBasedEmissiveStrengthMultiplierTransition: StyleTransition?
       /**
        * Get the ModelHeightBasedEmissiveStrengthMultiplier property transition options
@@ -2259,7 +2136,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
      */
-    @MapboxExperimental
     val defaultModelOpacity: Double?
       /**
        * The opacity of the model layer. Except for zoom, expressions that are data-driven are not supported if using GeoJSON or vector tile as the model layer source. Default value: 1. Value range: [0, 1]
@@ -2278,7 +2154,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-opacity".
      *
      */
-    @MapboxExperimental
     val defaultModelOpacityAsExpression: Expression?
       /**
        * Get default value of the ModelOpacity property as an Expression
@@ -2298,7 +2173,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelOpacity.
      */
-    @MapboxExperimental
     val defaultModelOpacityTransition: StyleTransition?
       /**
        * Get the ModelOpacity property transition options
@@ -2310,7 +2184,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Enable/Disable shadow receiving for this layer Default value: true.
      */
-    @MapboxExperimental
     val defaultModelReceiveShadows: Boolean?
       /**
        * Enable/Disable shadow receiving for this layer Default value: true.
@@ -2329,7 +2202,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-receive-shadows".
      *
      */
-    @MapboxExperimental
     val defaultModelReceiveShadowsAsExpression: Expression?
       /**
        * Get default value of the ModelReceiveShadows property as an Expression
@@ -2349,7 +2221,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
      */
-    @MapboxExperimental
     val defaultModelRotation: List<Double>?
       /**
        * The rotation of the model in euler angles [lon, lat, z]. Default value: [0,0,0]. The unit of modelRotation is in degrees.
@@ -2368,7 +2239,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-rotation".
      *
      */
-    @MapboxExperimental
     val defaultModelRotationAsExpression: Expression?
       /**
        * Get default value of the ModelRotation property as an Expression
@@ -2388,7 +2258,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelRotation.
      */
-    @MapboxExperimental
     val defaultModelRotationTransition: StyleTransition?
       /**
        * Get the ModelRotation property transition options
@@ -2400,7 +2269,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
      */
-    @MapboxExperimental
     val defaultModelRoughness: Double?
       /**
        * Material roughness. Material is fully smooth for value 0, and fully rough for value 1. Affects only layers using batched-model source. Default value: 1. Value range: [0, 1]
@@ -2419,7 +2287,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-roughness".
      *
      */
-    @MapboxExperimental
     val defaultModelRoughnessAsExpression: Expression?
       /**
        * Get default value of the ModelRoughness property as an Expression
@@ -2439,7 +2306,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelRoughness.
      */
-    @MapboxExperimental
     val defaultModelRoughnessTransition: StyleTransition?
       /**
        * Get the ModelRoughness property transition options
@@ -2451,7 +2317,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
      */
-    @MapboxExperimental
     val defaultModelScale: List<Double>?
       /**
        * The scale of the model. Expressions that are zoom-dependent are not supported if using GeoJSON or vector tile as the model layer source. Default value: [1,1,1].
@@ -2470,7 +2335,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-scale".
      *
      */
-    @MapboxExperimental
     val defaultModelScaleAsExpression: Expression?
       /**
        * Get default value of the ModelScale property as an Expression
@@ -2490,7 +2354,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelScale.
      */
-    @MapboxExperimental
     val defaultModelScaleTransition: StyleTransition?
       /**
        * Get the ModelScale property transition options
@@ -2502,7 +2365,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
      */
-    @MapboxExperimental
     val defaultModelScaleMode: ModelScaleMode?
       /**
        * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
@@ -2524,7 +2386,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-scale-mode".
      *
      */
-    @MapboxExperimental
     val defaultModelScaleModeAsExpression: Expression?
       /**
        * Get default value of the ModelScaleMode property as an Expression
@@ -2544,7 +2405,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
      */
-    @MapboxExperimental
     val defaultModelTranslation: List<Double>?
       /**
        * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
@@ -2563,7 +2423,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-translation".
      *
      */
-    @MapboxExperimental
     val defaultModelTranslationAsExpression: Expression?
       /**
        * Get default value of the ModelTranslation property as an Expression
@@ -2583,7 +2442,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Transition options for ModelTranslation.
      */
-    @MapboxExperimental
     val defaultModelTranslationTransition: StyleTransition?
       /**
        * Get the ModelTranslation property transition options
@@ -2595,7 +2453,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     /**
      * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
      */
-    @MapboxExperimental
     val defaultModelType: ModelType?
       /**
        * Defines rendering behavior of model in respect to other 3D scene objects. Default value: "common-3d".
@@ -2617,7 +2474,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
      * This is an Expression representation of "model-type".
      *
      */
-    @MapboxExperimental
     val defaultModelTypeAsExpression: Expression?
       /**
        * Get default value of the ModelType property as an Expression
@@ -2642,7 +2498,6 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
  * Separated the DSL receiver class to this interface to avoid IDE code suggestion for
  * property getters.
  */
-@MapboxExperimental
 @LayersDsl
 interface ModelLayerDsl {
   /**
@@ -2717,7 +2572,6 @@ interface ModelLayerDsl {
    *
    * @param modelId value of modelId
    */
-  @MapboxExperimental
   fun modelId(modelId: String = ""): ModelLayer
 
   /**
@@ -2725,7 +2579,6 @@ interface ModelLayerDsl {
    *
    * @param modelId value of modelId as Expression
    */
-  @MapboxExperimental
   fun modelId(modelId: Expression): ModelLayer
 
   /**
@@ -2733,7 +2586,6 @@ interface ModelLayerDsl {
    *
    * @param modelAmbientOcclusionIntensity value of modelAmbientOcclusionIntensity
    */
-  @MapboxExperimental
   fun modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensity: Double = 1.0): ModelLayer
 
   /**
@@ -2741,7 +2593,6 @@ interface ModelLayerDsl {
    *
    * @param modelAmbientOcclusionIntensity value of modelAmbientOcclusionIntensity as Expression
    */
-  @MapboxExperimental
   fun modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensity: Expression): ModelLayer
 
   /**
@@ -2751,7 +2602,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun modelAmbientOcclusionIntensityTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -2759,7 +2609,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelAmbientOcclusionIntensityTransition].
    */
-  @MapboxExperimental
   fun modelAmbientOcclusionIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -2767,7 +2616,6 @@ interface ModelLayerDsl {
    *
    * @param modelCastShadows value of modelCastShadows
    */
-  @MapboxExperimental
   fun modelCastShadows(modelCastShadows: Boolean = true): ModelLayer
 
   /**
@@ -2775,7 +2623,6 @@ interface ModelLayerDsl {
    *
    * @param modelCastShadows value of modelCastShadows as Expression
    */
-  @MapboxExperimental
   fun modelCastShadows(modelCastShadows: Expression): ModelLayer
 
   /**
@@ -2783,7 +2630,6 @@ interface ModelLayerDsl {
    *
    * @param modelColor value of modelColor
    */
-  @MapboxExperimental
   fun modelColor(modelColor: String = "#ffffff"): ModelLayer
 
   /**
@@ -2791,7 +2637,6 @@ interface ModelLayerDsl {
    *
    * @param modelColor value of modelColor as Expression
    */
-  @MapboxExperimental
   fun modelColor(modelColor: Expression): ModelLayer
 
   /**
@@ -2799,7 +2644,6 @@ interface ModelLayerDsl {
    *
    * @param modelColor value of modelColor
    */
-  @MapboxExperimental
   fun modelColor(@ColorInt modelColor: Int): ModelLayer
 
   /**
@@ -2809,7 +2653,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for String
    */
-  @MapboxExperimental
   fun modelColorTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -2817,7 +2660,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelColorTransition].
    */
-  @MapboxExperimental
   fun modelColorTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -2841,7 +2683,6 @@ interface ModelLayerDsl {
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity
    */
-  @MapboxExperimental
   fun modelColorMixIntensity(modelColorMixIntensity: Double = 0.0): ModelLayer
 
   /**
@@ -2849,7 +2690,6 @@ interface ModelLayerDsl {
    *
    * @param modelColorMixIntensity value of modelColorMixIntensity as Expression
    */
-  @MapboxExperimental
   fun modelColorMixIntensity(modelColorMixIntensity: Expression): ModelLayer
 
   /**
@@ -2859,7 +2699,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun modelColorMixIntensityTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -2867,7 +2706,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelColorMixIntensityTransition].
    */
-  @MapboxExperimental
   fun modelColorMixIntensityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -2875,7 +2713,6 @@ interface ModelLayerDsl {
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange
    */
-  @MapboxExperimental
   fun modelCutoffFadeRange(modelCutoffFadeRange: Double = 0.0): ModelLayer
 
   /**
@@ -2883,7 +2720,6 @@ interface ModelLayerDsl {
    *
    * @param modelCutoffFadeRange value of modelCutoffFadeRange as Expression
    */
-  @MapboxExperimental
   fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer
 
   /**
@@ -2891,7 +2727,6 @@ interface ModelLayerDsl {
    *
    * @param modelElevationReference value of modelElevationReference
    */
-  @MapboxExperimental
   fun modelElevationReference(modelElevationReference: ModelElevationReference = ModelElevationReference.GROUND): ModelLayer
 
   /**
@@ -2899,7 +2734,6 @@ interface ModelLayerDsl {
    *
    * @param modelElevationReference value of modelElevationReference as Expression
    */
-  @MapboxExperimental
   fun modelElevationReference(modelElevationReference: Expression): ModelLayer
 
   /**
@@ -2907,7 +2741,6 @@ interface ModelLayerDsl {
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength
    */
-  @MapboxExperimental
   fun modelEmissiveStrength(modelEmissiveStrength: Double = 0.0): ModelLayer
 
   /**
@@ -2915,7 +2748,6 @@ interface ModelLayerDsl {
    *
    * @param modelEmissiveStrength value of modelEmissiveStrength as Expression
    */
-  @MapboxExperimental
   fun modelEmissiveStrength(modelEmissiveStrength: Expression): ModelLayer
 
   /**
@@ -2925,7 +2757,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun modelEmissiveStrengthTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -2933,7 +2764,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelEmissiveStrengthTransition].
    */
-  @MapboxExperimental
   fun modelEmissiveStrengthTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -2941,7 +2771,6 @@ interface ModelLayerDsl {
    *
    * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier
    */
-  @MapboxExperimental
   fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: List<Double> = listOf(1.0, 1.0, 1.0, 1.0, 0.0)): ModelLayer
 
   /**
@@ -2949,7 +2778,6 @@ interface ModelLayerDsl {
    *
    * @param modelHeightBasedEmissiveStrengthMultiplier value of modelHeightBasedEmissiveStrengthMultiplier as Expression
    */
-  @MapboxExperimental
   fun modelHeightBasedEmissiveStrengthMultiplier(modelHeightBasedEmissiveStrengthMultiplier: Expression): ModelLayer
 
   /**
@@ -2959,7 +2787,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   fun modelHeightBasedEmissiveStrengthMultiplierTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -2967,7 +2794,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelHeightBasedEmissiveStrengthMultiplierTransition].
    */
-  @MapboxExperimental
   fun modelHeightBasedEmissiveStrengthMultiplierTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -2975,7 +2801,6 @@ interface ModelLayerDsl {
    *
    * @param modelOpacity value of modelOpacity
    */
-  @MapboxExperimental
   fun modelOpacity(modelOpacity: Double = 1.0): ModelLayer
 
   /**
@@ -2983,7 +2808,6 @@ interface ModelLayerDsl {
    *
    * @param modelOpacity value of modelOpacity as Expression
    */
-  @MapboxExperimental
   fun modelOpacity(modelOpacity: Expression): ModelLayer
 
   /**
@@ -2993,7 +2817,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun modelOpacityTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -3001,7 +2824,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelOpacityTransition].
    */
-  @MapboxExperimental
   fun modelOpacityTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -3009,7 +2831,6 @@ interface ModelLayerDsl {
    *
    * @param modelReceiveShadows value of modelReceiveShadows
    */
-  @MapboxExperimental
   fun modelReceiveShadows(modelReceiveShadows: Boolean = true): ModelLayer
 
   /**
@@ -3017,7 +2838,6 @@ interface ModelLayerDsl {
    *
    * @param modelReceiveShadows value of modelReceiveShadows as Expression
    */
-  @MapboxExperimental
   fun modelReceiveShadows(modelReceiveShadows: Expression): ModelLayer
 
   /**
@@ -3025,7 +2845,6 @@ interface ModelLayerDsl {
    *
    * @param modelRotation value of modelRotation
    */
-  @MapboxExperimental
   fun modelRotation(modelRotation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
@@ -3033,7 +2852,6 @@ interface ModelLayerDsl {
    *
    * @param modelRotation value of modelRotation as Expression
    */
-  @MapboxExperimental
   fun modelRotation(modelRotation: Expression): ModelLayer
 
   /**
@@ -3043,7 +2861,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   fun modelRotationTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -3051,7 +2868,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelRotationTransition].
    */
-  @MapboxExperimental
   fun modelRotationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -3059,7 +2875,6 @@ interface ModelLayerDsl {
    *
    * @param modelRoughness value of modelRoughness
    */
-  @MapboxExperimental
   fun modelRoughness(modelRoughness: Double = 1.0): ModelLayer
 
   /**
@@ -3067,7 +2882,6 @@ interface ModelLayerDsl {
    *
    * @param modelRoughness value of modelRoughness as Expression
    */
-  @MapboxExperimental
   fun modelRoughness(modelRoughness: Expression): ModelLayer
 
   /**
@@ -3077,7 +2891,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun modelRoughnessTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -3085,7 +2898,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelRoughnessTransition].
    */
-  @MapboxExperimental
   fun modelRoughnessTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -3093,7 +2905,6 @@ interface ModelLayerDsl {
    *
    * @param modelScale value of modelScale
    */
-  @MapboxExperimental
   fun modelScale(modelScale: List<Double> = listOf(1.0, 1.0, 1.0)): ModelLayer
 
   /**
@@ -3101,7 +2912,6 @@ interface ModelLayerDsl {
    *
    * @param modelScale value of modelScale as Expression
    */
-  @MapboxExperimental
   fun modelScale(modelScale: Expression): ModelLayer
 
   /**
@@ -3111,7 +2921,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   fun modelScaleTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -3119,7 +2928,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelScaleTransition].
    */
-  @MapboxExperimental
   fun modelScaleTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -3127,7 +2935,6 @@ interface ModelLayerDsl {
    *
    * @param modelScaleMode value of modelScaleMode
    */
-  @MapboxExperimental
   fun modelScaleMode(modelScaleMode: ModelScaleMode = ModelScaleMode.MAP): ModelLayer
 
   /**
@@ -3135,7 +2942,6 @@ interface ModelLayerDsl {
    *
    * @param modelScaleMode value of modelScaleMode as Expression
    */
-  @MapboxExperimental
   fun modelScaleMode(modelScaleMode: Expression): ModelLayer
 
   /**
@@ -3143,7 +2949,6 @@ interface ModelLayerDsl {
    *
    * @param modelTranslation value of modelTranslation
    */
-  @MapboxExperimental
   fun modelTranslation(modelTranslation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
@@ -3151,7 +2956,6 @@ interface ModelLayerDsl {
    *
    * @param modelTranslation value of modelTranslation as Expression
    */
-  @MapboxExperimental
   fun modelTranslation(modelTranslation: Expression): ModelLayer
 
   /**
@@ -3161,7 +2965,6 @@ interface ModelLayerDsl {
    *
    * @param options transition options for List<Double>
    */
-  @MapboxExperimental
   fun modelTranslationTransition(options: StyleTransition): ModelLayer
 
   /**
@@ -3169,7 +2972,6 @@ interface ModelLayerDsl {
    *
    * DSL for [modelTranslationTransition].
    */
-  @MapboxExperimental
   fun modelTranslationTransition(block: StyleTransition.Builder.() -> Unit): ModelLayer
 
   /**
@@ -3177,7 +2979,6 @@ interface ModelLayerDsl {
    *
    * @param modelType value of modelType
    */
-  @MapboxExperimental
   fun modelType(modelType: ModelType = ModelType.COMMON_3D): ModelLayer
 
   /**
@@ -3185,14 +2986,12 @@ interface ModelLayerDsl {
    *
    * @param modelType value of modelType as Expression
    */
-  @MapboxExperimental
   fun modelType(modelType: Expression): ModelLayer
 }
 
 /**
  * DSL function for creating a [ModelLayer].
  */
-@MapboxExperimental
 fun modelLayer(layerId: String, sourceId: String, block: ModelLayerDsl.() -> Unit): ModelLayer = ModelLayer(layerId, sourceId).apply(block)
 
 // End of generated file.

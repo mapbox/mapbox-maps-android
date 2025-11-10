@@ -3579,6 +3579,207 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun iconColorBrightnessMaxSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconColorBrightnessMax(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-color-brightness-max", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconColorBrightnessMaxGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconColorBrightnessMax?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-max") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconColorBrightnessMaxAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorBrightnessMax(expression)
+    verify { style.setStyleLayerProperty("id", "icon-color-brightness-max", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconColorBrightnessMaxAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconColorBrightnessMaxAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-max") }
+  }
+
+  @Test
+  fun iconColorBrightnessMaxAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconColorBrightnessMaxAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-max") }
+  }
+
+  @Test
+  fun iconColorBrightnessMaxAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconColorBrightnessMaxAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconColorBrightnessMax!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-max") }
+  }
+
+  @Test
+  fun iconColorBrightnessMinSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconColorBrightnessMin(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-color-brightness-min", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconColorBrightnessMinGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconColorBrightnessMin?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-min") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconColorBrightnessMinAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorBrightnessMin(expression)
+    verify { style.setStyleLayerProperty("id", "icon-color-brightness-min", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconColorBrightnessMinAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconColorBrightnessMinAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-min") }
+  }
+
+  @Test
+  fun iconColorBrightnessMinAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconColorBrightnessMinAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-min") }
+  }
+
+  @Test
+  fun iconColorBrightnessMinAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconColorBrightnessMinAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconColorBrightnessMin!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-color-brightness-min") }
+  }
+
+  @Test
+  fun iconColorContrastSet() {
+    val layer = symbolLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.iconColorContrast(testValue)
+    verify { style.setStyleLayerProperty("id", "icon-color-contrast", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun iconColorContrastGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.iconColorContrast?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-contrast") }
+  }
+  // Expression Tests
+
+  @Test
+  fun iconColorContrastAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.iconColorContrast(expression)
+    verify { style.setStyleLayerProperty("id", "icon-color-contrast", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun iconColorContrastAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.iconColorContrastAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "icon-color-contrast") }
+  }
+
+  @Test
+  fun iconColorContrastAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.iconColorContrastAsExpression)
+    verify { style.getStyleLayerProperty("id", "icon-color-contrast") }
+  }
+
+  @Test
+  fun iconColorContrastAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.iconColorContrastAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.iconColorContrast!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "icon-color-contrast") }
+  }
+
+  @Test
   fun iconColorSaturationSet() {
     val layer = symbolLayer("id", "source") {}
     val testValue = 1.0
@@ -4735,6 +4936,74 @@ class SymbolLayerTest {
     assertEquals(IconTranslateAnchor.MAP.value, layer.iconTranslateAnchorAsExpression.toString())
     assertEquals(IconTranslateAnchor.MAP, layer.iconTranslateAnchor)
     verify { style.getStyleLayerProperty("id", "icon-translate-anchor") }
+  }
+
+  @Test
+  fun occlusionOpacityModeSet() {
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.occlusionOpacityMode(OcclusionOpacityMode.ANCHOR)
+    verify { style.setStyleLayerProperty("id", "occlusion-opacity-mode", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "anchor")
+  }
+
+  @Test
+  fun occlusionOpacityModeGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("anchor")
+
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(OcclusionOpacityMode.ANCHOR, layer.occlusionOpacityMode)
+    verify { style.getStyleLayerProperty("id", "occlusion-opacity-mode") }
+  }
+  // Expression Tests
+
+  @Test
+  fun occlusionOpacityModeAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = symbolLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.occlusionOpacityMode(expression)
+    verify { style.setStyleLayerProperty("id", "occlusion-opacity-mode", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun occlusionOpacityModeAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.occlusionOpacityModeAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "occlusion-opacity-mode") }
+  }
+
+  @Test
+  fun occlusionOpacityModeAsExpressionGetNull() {
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.occlusionOpacityModeAsExpression)
+    verify { style.getStyleLayerProperty("id", "occlusion-opacity-mode") }
+  }
+
+  @Test
+  fun occlusionOpacityModeAsExpressionGetFromLiteral() {
+    val value = "anchor"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = symbolLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.occlusionOpacityModeAsExpression?.toString())
+    assertEquals(OcclusionOpacityMode.ANCHOR.value, layer.occlusionOpacityModeAsExpression.toString())
+    assertEquals(OcclusionOpacityMode.ANCHOR, layer.occlusionOpacityMode)
+    verify { style.getStyleLayerProperty("id", "occlusion-opacity-mode") }
   }
 
   @Test
@@ -7701,6 +7970,99 @@ class SymbolLayerTest {
   }
 
   @Test
+  fun defaultIconColorBrightnessMaxTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconColorBrightnessMax?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-max") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconColorBrightnessMaxAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconColorBrightnessMaxAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-max") }
+  }
+
+  @Test
+  fun defaultIconColorBrightnessMaxAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconColorBrightnessMaxAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconColorBrightnessMax!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-max") }
+  }
+
+  @Test
+  fun defaultIconColorBrightnessMinTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconColorBrightnessMin?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-min") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconColorBrightnessMinAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconColorBrightnessMinAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-min") }
+  }
+
+  @Test
+  fun defaultIconColorBrightnessMinAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconColorBrightnessMinAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconColorBrightnessMin!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-min") }
+  }
+
+  @Test
+  fun defaultIconColorContrastTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), SymbolLayer.defaultIconColorContrast?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-contrast") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultIconColorContrastAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultIconColorContrastAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-contrast") }
+  }
+
+  @Test
+  fun defaultIconColorContrastAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, SymbolLayer.defaultIconColorContrastAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, SymbolLayer.defaultIconColorContrast!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-contrast") }
+  }
+
+  @Test
   fun defaultIconColorSaturationTest() {
     val testValue = 1.0
     every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
@@ -8167,6 +8529,39 @@ class SymbolLayerTest {
     assertEquals(IconTranslateAnchor.MAP.value, SymbolLayer.defaultIconTranslateAnchorAsExpression.toString())
     assertEquals(IconTranslateAnchor.MAP, SymbolLayer.defaultIconTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor") }
+  }
+
+  @Test
+  fun defaultOcclusionOpacityModeTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("anchor")
+
+    assertEquals(OcclusionOpacityMode.ANCHOR, SymbolLayer.defaultOcclusionOpacityMode)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "occlusion-opacity-mode") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultOcclusionOpacityModeAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), SymbolLayer.defaultOcclusionOpacityModeAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "occlusion-opacity-mode") }
+  }
+
+  @Test
+  fun defaultOcclusionOpacityModeAsExpressionGetFromLiteral() {
+    val value = "anchor"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), SymbolLayer.defaultOcclusionOpacityModeAsExpression?.toString())
+    assertEquals(OcclusionOpacityMode.ANCHOR.value, SymbolLayer.defaultOcclusionOpacityModeAsExpression.toString())
+    assertEquals(OcclusionOpacityMode.ANCHOR, SymbolLayer.defaultOcclusionOpacityMode)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "occlusion-opacity-mode") }
   }
 
   @Test

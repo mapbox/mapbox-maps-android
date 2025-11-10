@@ -148,6 +148,28 @@ class RasterArraySourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun volatileTest() {
+    val testSource = rasterArraySource(SOURCE_ID) {
+      url(TEST_URI)
+      volatile(true)
+    }
+    setupSource(testSource)
+    assertEquals(true, testSource.volatile)
+  }
+
+  @Test
+  @UiThreadTest
+  fun volatileAfterBindTest() {
+    val testSource = rasterArraySource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.volatile(true)
+    assertEquals(true, testSource.volatile)
+  }
+
+  @Test
+  @UiThreadTest
   fun tileCacheBudgetTest() {
     val testSource = rasterArraySource(SOURCE_ID) {
       url(TEST_URI)
@@ -179,6 +201,7 @@ class RasterArraySourceTest : BaseStyleTest() {
   fun defaultSourcePropertiesTest() {
     assertNotNull("defaultMinzoom should not be null", RasterArraySource.defaultMinzoom)
     assertNotNull("defaultMaxzoom should not be null", RasterArraySource.defaultMaxzoom)
+    assertNotNull("defaultVolatile should not be null", RasterArraySource.defaultVolatile)
   }
 
   private companion object {

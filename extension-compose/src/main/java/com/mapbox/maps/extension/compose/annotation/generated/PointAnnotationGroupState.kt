@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlig
 import com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment
 import com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit
 import com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder
@@ -79,6 +80,9 @@ public class PointAnnotationGroupState private constructor(
   initialTextVariableAnchor: List<String>?,
   initialTextWritingMode: List<String>?,
   initialIconColor: Color?,
+  initialIconColorBrightnessMax: Double?,
+  initialIconColorBrightnessMin: Double?,
+  initialIconColorContrast: Double?,
   initialIconColorSaturation: Double?,
   initialIconEmissiveStrength: Double?,
   initialIconHaloBlur: Double?,
@@ -89,6 +93,7 @@ public class PointAnnotationGroupState private constructor(
   initialIconOpacity: Double?,
   initialIconTranslate: List<Double>?,
   initialIconTranslateAnchor: IconTranslateAnchor?,
+  initialOcclusionOpacityMode: OcclusionOpacityMode?,
   initialSymbolZOffset: Double?,
   initialTextColor: Color?,
   initialTextEmissiveStrength: Double?,
@@ -154,6 +159,9 @@ public class PointAnnotationGroupState private constructor(
     initialTextVariableAnchor = null,
     initialTextWritingMode = null,
     initialIconColor = null,
+    initialIconColorBrightnessMax = null,
+    initialIconColorBrightnessMin = null,
+    initialIconColorContrast = null,
     initialIconColorSaturation = null,
     initialIconEmissiveStrength = null,
     initialIconHaloBlur = null,
@@ -164,6 +172,7 @@ public class PointAnnotationGroupState private constructor(
     initialIconOpacity = null,
     initialIconTranslate = null,
     initialIconTranslateAnchor = null,
+    initialOcclusionOpacityMode = null,
     initialSymbolZOffset = null,
     initialTextColor = null,
     initialTextEmissiveStrength = null,
@@ -375,6 +384,18 @@ public class PointAnnotationGroupState private constructor(
    */
   public var iconColor: Color? by mutableStateOf(initialIconColor)
   /**
+   * Increase or reduce the brightness of the symbols. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
+   */
+  public var iconColorBrightnessMax: Double? by mutableStateOf(initialIconColorBrightnessMax)
+  /**
+   * Increase or reduce the brightness of the symbols. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
+   */
+  public var iconColorBrightnessMin: Double? by mutableStateOf(initialIconColorBrightnessMin)
+  /**
+   * Increase or reduce the contrast of the symbol icon. Default value: 0. Value range: [-1, 1]
+   */
+  public var iconColorContrast: Double? by mutableStateOf(initialIconColorContrast)
+  /**
    * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
    */
   public var iconColorSaturation: Double? by mutableStateOf(initialIconColorSaturation)
@@ -414,6 +435,10 @@ public class PointAnnotationGroupState private constructor(
    * Controls the frame of reference for `icon-translate`. Default value: "map".
    */
   public var iconTranslateAnchor: IconTranslateAnchor? by mutableStateOf(initialIconTranslateAnchor)
+  /**
+   * Specify how opacity in case of being occluded should be applied Default value: "anchor".
+   */
+  public var occlusionOpacityMode: OcclusionOpacityMode? by mutableStateOf(initialOcclusionOpacityMode)
   /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
@@ -679,6 +704,18 @@ public class PointAnnotationGroupState private constructor(
     annotationManager.iconColorString = iconColor?.toArgb()?.let { ColorUtils.colorToRgbaString(it) }
   }
   @Composable
+  private fun UpdateIconColorBrightnessMax(annotationManager: PointAnnotationManager) {
+    annotationManager.iconColorBrightnessMax = iconColorBrightnessMax
+  }
+  @Composable
+  private fun UpdateIconColorBrightnessMin(annotationManager: PointAnnotationManager) {
+    annotationManager.iconColorBrightnessMin = iconColorBrightnessMin
+  }
+  @Composable
+  private fun UpdateIconColorContrast(annotationManager: PointAnnotationManager) {
+    annotationManager.iconColorContrast = iconColorContrast
+  }
+  @Composable
   private fun UpdateIconColorSaturation(annotationManager: PointAnnotationManager) {
     annotationManager.iconColorSaturation = iconColorSaturation
   }
@@ -717,6 +754,10 @@ public class PointAnnotationGroupState private constructor(
   @Composable
   private fun UpdateIconTranslateAnchor(annotationManager: PointAnnotationManager) {
     annotationManager.iconTranslateAnchor = iconTranslateAnchor
+  }
+  @Composable
+  private fun UpdateOcclusionOpacityMode(annotationManager: PointAnnotationManager) {
+    annotationManager.occlusionOpacityMode = occlusionOpacityMode
   }
   @Composable
   @OptIn(MapboxExperimental::class)
@@ -836,6 +877,9 @@ public class PointAnnotationGroupState private constructor(
     UpdateTextVariableAnchor(annotationManager)
     UpdateTextWritingMode(annotationManager)
     UpdateIconColor(annotationManager)
+    UpdateIconColorBrightnessMax(annotationManager)
+    UpdateIconColorBrightnessMin(annotationManager)
+    UpdateIconColorContrast(annotationManager)
     UpdateIconColorSaturation(annotationManager)
     UpdateIconEmissiveStrength(annotationManager)
     UpdateIconHaloBlur(annotationManager)
@@ -846,6 +890,7 @@ public class PointAnnotationGroupState private constructor(
     UpdateIconOpacity(annotationManager)
     UpdateIconTranslate(annotationManager)
     UpdateIconTranslateAnchor(annotationManager)
+    UpdateOcclusionOpacityMode(annotationManager)
     UpdateSymbolZOffset(annotationManager)
     UpdateTextColor(annotationManager)
     UpdateTextEmissiveStrength(annotationManager)
