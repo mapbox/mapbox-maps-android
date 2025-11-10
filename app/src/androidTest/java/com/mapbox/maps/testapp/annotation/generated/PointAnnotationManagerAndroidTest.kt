@@ -600,6 +600,42 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testIconColorBrightnessMax() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconColorBrightnessMax = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconColorBrightnessMax)
+      pointAnnotationManager.iconColorBrightnessMax = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-max").silentUnwrap(), pointAnnotationManager.iconColorBrightnessMax)
+    }
+  }
+
+  @Test
+  fun testIconColorBrightnessMin() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconColorBrightnessMin = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconColorBrightnessMin)
+      pointAnnotationManager.iconColorBrightnessMin = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-min").silentUnwrap(), pointAnnotationManager.iconColorBrightnessMin)
+    }
+  }
+
+  @Test
+  fun testIconColorContrast() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.iconColorContrast = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.iconColorContrast)
+      pointAnnotationManager.iconColorContrast = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-contrast").silentUnwrap(), pointAnnotationManager.iconColorContrast)
+    }
+  }
+
+  @Test
   fun testIconColorSaturation() {
     rule.runOnUiThread {
       val expectedValue = 1.0
@@ -720,6 +756,19 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
       pointAnnotationManager.iconTranslateAnchor = null
       val expectedDefaultValue = IconTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
       assertEquals(expectedDefaultValue, pointAnnotationManager.iconTranslateAnchor)
+    }
+  }
+
+  @Test
+  fun testOcclusionOpacityMode() {
+    rule.runOnUiThread {
+      val expectedValue = OcclusionOpacityMode.ANCHOR
+      val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
+      pointAnnotationManager.occlusionOpacityMode = expectedValue
+      assertEquals(expectedValue, pointAnnotationManager.occlusionOpacityMode)
+      pointAnnotationManager.occlusionOpacityMode = null
+      val expectedDefaultValue = OcclusionOpacityMode.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "occlusion-opacity-mode").silentUnwrap<String>()!!.uppercase(Locale.US).replace('-', '_'))
+      assertEquals(expectedDefaultValue, pointAnnotationManager.occlusionOpacityMode)
     }
   }
 

@@ -292,7 +292,7 @@ private constructor(
   @MapboxExperimental
   private val lineCutoutFadeWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutFadeWidth)
   /**
-   *  The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   *  The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    */
   @MapboxExperimental
   public var lineCutoutFadeWidth: DoubleValue by lineCutoutFadeWidthState
@@ -308,7 +308,7 @@ private constructor(
   @MapboxExperimental
   private val lineCutoutOpacityState: MutableState<DoubleValue> = mutableStateOf(initialLineCutoutOpacity)
   /**
-   *  The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   *  The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   public var lineCutoutOpacity: DoubleValue by lineCutoutOpacityState
@@ -345,7 +345,7 @@ private constructor(
 
   private val lineDepthOcclusionFactorState: MutableState<DoubleValue> = mutableStateOf(initialLineDepthOcclusionFactor)
   /**
-   *  Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   *  This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    */
   public var lineDepthOcclusionFactor: DoubleValue by lineDepthOcclusionFactorState
 

@@ -924,6 +924,62 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
+   * Enable/Disable shadow casting for this layer Default value: true.
+   */
+  val fillExtrusionCastShadows: Boolean?
+    /**
+     * Enable/Disable shadow casting for this layer Default value: true.
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionCastShadows] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("fill-extrusion-cast-shadows")
+    }
+
+  /**
+   * Enable/Disable shadow casting for this layer Default value: true.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionCastShadows] to set the default property.
+   *
+   * @param fillExtrusionCastShadows value of fillExtrusionCastShadows
+   */
+  override fun fillExtrusionCastShadows(fillExtrusionCastShadows: Boolean): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-cast-shadows", fillExtrusionCastShadows)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Enable/Disable shadow casting for this layer Default value: true.
+   *
+   * This is an Expression representation of "fill-extrusion-cast-shadows".
+   *
+   */
+  val fillExtrusionCastShadowsAsExpression: Expression?
+    /**
+     * Enable/Disable shadow casting for this layer Default value: true.
+     *
+     * Get the FillExtrusionCastShadows property as an Expression
+     *
+     * Use static method [FillExtrusionLayer.defaultFillExtrusionCastShadowsAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-cast-shadows")
+
+  /**
+   * Enable/Disable shadow casting for this layer Default value: true.
+   *
+   * Use static method [FillExtrusionLayer.defaultFillExtrusionCastShadowsAsExpression] to set the default property.
+   *
+   * @param fillExtrusionCastShadows value of fillExtrusionCastShadows as Expression
+   */
+  override fun fillExtrusionCastShadows(fillExtrusionCastShadows: Expression): FillExtrusionLayer = apply {
+    val propertyValue = PropertyValue("fill-extrusion-cast-shadows", fillExtrusionCastShadows)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
    */
   val fillExtrusionColor: String?
@@ -3084,6 +3140,43 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
+     * Enable/Disable shadow casting for this layer Default value: true.
+     */
+    val defaultFillExtrusionCastShadows: Boolean?
+      /**
+       * Enable/Disable shadow casting for this layer Default value: true.
+       *
+       * Get the default value of FillExtrusionCastShadows property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cast-shadows").silentUnwrap()
+      }
+
+    /**
+     * Enable/Disable shadow casting for this layer Default value: true.
+     *
+     * This is an Expression representation of "fill-extrusion-cast-shadows".
+     *
+     */
+    val defaultFillExtrusionCastShadowsAsExpression: Expression?
+      /**
+       * Get default value of the FillExtrusionCastShadows property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cast-shadows").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultFillExtrusionCastShadows?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
      */
     val defaultFillExtrusionColor: String?
@@ -4344,6 +4437,20 @@ interface FillExtrusionLayerDsl {
    */
   @MapboxExperimental
   fun fillExtrusionBaseAlignment(fillExtrusionBaseAlignment: Expression): FillExtrusionLayer
+
+  /**
+   * Enable/Disable shadow casting for this layer Default value: true.
+   *
+   * @param fillExtrusionCastShadows value of fillExtrusionCastShadows
+   */
+  fun fillExtrusionCastShadows(fillExtrusionCastShadows: Boolean = true): FillExtrusionLayer
+
+  /**
+   * Enable/Disable shadow casting for this layer Default value: true.
+   *
+   * @param fillExtrusionCastShadows value of fillExtrusionCastShadows as Expression
+   */
+  fun fillExtrusionCastShadows(fillExtrusionCastShadows: Expression): FillExtrusionLayer
 
   /**
    * The base color of the extruded fill. The extrusion's surfaces will be shaded differently based on this color in combination with the root `light` settings. If this color is specified as `rgba` with an alpha component, the alpha component will be ignored; use `fill-extrusion-opacity` to set layer opacity. Default value: "#000000".
