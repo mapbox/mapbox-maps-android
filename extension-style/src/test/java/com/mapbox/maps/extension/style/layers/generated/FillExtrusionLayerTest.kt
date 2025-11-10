@@ -937,6 +937,74 @@ class FillExtrusionLayerTest {
   }
 
   @Test
+  fun fillExtrusionCastShadowsSet() {
+    val layer = fillExtrusionLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.fillExtrusionCastShadows(testValue)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-cast-shadows", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun fillExtrusionCastShadowsGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.fillExtrusionCastShadows?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cast-shadows") }
+  }
+  // Expression Tests
+
+  @Test
+  fun fillExtrusionCastShadowsAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = fillExtrusionLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.fillExtrusionCastShadows(expression)
+    verify { style.setStyleLayerProperty("id", "fill-extrusion-cast-shadows", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun fillExtrusionCastShadowsAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.fillExtrusionCastShadowsAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cast-shadows") }
+  }
+
+  @Test
+  fun fillExtrusionCastShadowsAsExpressionGetNull() {
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.fillExtrusionCastShadowsAsExpression)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cast-shadows") }
+  }
+
+  @Test
+  fun fillExtrusionCastShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = fillExtrusionLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.fillExtrusionCastShadowsAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.fillExtrusionCastShadows)
+    verify { style.getStyleLayerProperty("id", "fill-extrusion-cast-shadows") }
+  }
+
+  @Test
   fun fillExtrusionColorSet() {
     val layer = fillExtrusionLayer("id", "source") {}
     val testValue = "rgba(0, 0, 0, 1)"
@@ -3342,6 +3410,38 @@ class FillExtrusionLayerTest {
     assertEquals(FillExtrusionBaseAlignment.TERRAIN.value, FillExtrusionLayer.defaultFillExtrusionBaseAlignmentAsExpression.toString())
     assertEquals(FillExtrusionBaseAlignment.TERRAIN, FillExtrusionLayer.defaultFillExtrusionBaseAlignment)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-base-alignment") }
+  }
+
+  @Test
+  fun defaultFillExtrusionCastShadowsTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), FillExtrusionLayer.defaultFillExtrusionCastShadows?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cast-shadows") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultFillExtrusionCastShadowsAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), FillExtrusionLayer.defaultFillExtrusionCastShadowsAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cast-shadows") }
+  }
+
+  @Test
+  fun defaultFillExtrusionCastShadowsAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", FillExtrusionLayer.defaultFillExtrusionCastShadowsAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, FillExtrusionLayer.defaultFillExtrusionCastShadows)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-cast-shadows") }
   }
 
   @Test

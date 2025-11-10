@@ -186,6 +186,37 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun minzoomSet() {
+    val testSource = geoJsonSource("testId") {
+      minzoom(1L)
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("minzoom=1"))
+  }
+
+  @Test
+  fun minzoomSetAfterBind() {
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+    testSource.minzoom(1L)
+
+    verify { style.setStyleSourceProperty("testId", "minzoom", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1")
+  }
+
+  @Test
+  fun minzoomGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(1L.toString(), testSource.minzoom?.toString())
+    verify { style.getStyleSourceProperty("testId", "minzoom") }
+  }
+
+  @Test
   fun attributionSet() {
     val testSource = geoJsonSource("testId") {
       attribution("abc")
@@ -786,6 +817,14 @@ class GeoJsonSourceTest {
 
     assertEquals(1L.toString(), GeoJsonSource.defaultMaxzoom?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "maxzoom") }
+  }
+
+  @Test
+  fun defaultMinzoomGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
+
+    assertEquals(1L.toString(), GeoJsonSource.defaultMinzoom?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "minzoom") }
   }
 
   @Test

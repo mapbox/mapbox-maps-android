@@ -1775,6 +1775,87 @@ class PointAnnotationManager(
     }
 
   /**
+   * The IconColorBrightnessMax property
+   *
+   * Increase or reduce the brightness of the symbols. The value is the maximum brightness. Default value: 1. Value range: [0, 1]
+   */
+  var iconColorBrightnessMax: Double?
+    /**
+     * Get the IconColorBrightnessMax property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.iconColorBrightnessMax
+    }
+    /**
+     * Set the IconColorBrightnessMax property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-max").value
+      }
+      setLayerProperty(wrappedValue, "icon-color-brightness-max")
+    }
+
+  /**
+   * The IconColorBrightnessMin property
+   *
+   * Increase or reduce the brightness of the symbols. The value is the minimum brightness. Default value: 0. Value range: [0, 1]
+   */
+  var iconColorBrightnessMin: Double?
+    /**
+     * Get the IconColorBrightnessMin property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.iconColorBrightnessMin
+    }
+    /**
+     * Set the IconColorBrightnessMin property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-brightness-min").value
+      }
+      setLayerProperty(wrappedValue, "icon-color-brightness-min")
+    }
+
+  /**
+   * The IconColorContrast property
+   *
+   * Increase or reduce the contrast of the symbol icon. Default value: 0. Value range: [-1, 1]
+   */
+  var iconColorContrast: Double?
+    /**
+     * Get the IconColorContrast property
+     *
+     * @return property wrapper value around Double
+     */
+    get(): Double? {
+      return layer.iconColorContrast
+    }
+    /**
+     * Set the IconColorContrast property
+     * @param value property wrapper value around Double
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-color-contrast").value
+      }
+      setLayerProperty(wrappedValue, "icon-color-contrast")
+    }
+
+  /**
    * The IconColorSaturation property
    *
    * Increase or reduce the saturation of the symbol icon. Default value: 0. Value range: [-1, 1]
@@ -2121,6 +2202,33 @@ class PointAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").value
       }
       setLayerProperty(wrappedValue, "icon-translate-anchor")
+    }
+
+  /**
+   * The OcclusionOpacityMode property
+   *
+   * Specify how opacity in case of being occluded should be applied Default value: "anchor".
+   */
+  var occlusionOpacityMode: OcclusionOpacityMode?
+    /**
+     * Get the OcclusionOpacityMode property
+     *
+     * @return property wrapper value around OcclusionOpacityMode
+     */
+    get(): OcclusionOpacityMode? {
+      return layer.occlusionOpacityMode
+    }
+    /**
+     * Set the OcclusionOpacityMode property
+     * @param value property wrapper value around OcclusionOpacityMode
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("symbol", "occlusion-opacity-mode").value
+      }
+      setLayerProperty(wrappedValue, "occlusion-opacity-mode")
     }
 
   /**

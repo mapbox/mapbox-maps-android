@@ -68,6 +68,7 @@ public class GeoJsonSourceState private constructor(
   initialProperties: Map<String, Pair<Boolean, Value>>,
   initialData: GeoJSONData = GeoJSONData.DEFAULT,
   maxZoom: LongValue,
+  minZoom: LongValue,
   attribution: StringValue,
   buffer: LongValue,
   tolerance: DoubleValue,
@@ -95,6 +96,7 @@ public class GeoJsonSourceState private constructor(
     sourceType = "geojson",
     initialProperties = emptyMap(),
     maxZoom = LongValue.INITIAL,
+    minZoom = LongValue.INITIAL,
     attribution = StringValue.INITIAL,
     buffer = LongValue.INITIAL,
     tolerance = DoubleValue.INITIAL,
@@ -131,6 +133,14 @@ public class GeoJsonSourceState private constructor(
    * Default value: 18.
    */
   public var maxZoom: LongValue by maxZoomState
+
+  private val minZoomState: MutableState<LongValue> = mutableStateOf(minZoom)
+
+  /**
+   * Minimum zoom level at which to create vector tiles
+   * Default value: 0.
+   */
+  public var minZoom: LongValue by minZoomState
 
   private val attributionState: MutableState<StringValue> = mutableStateOf(attribution)
 
@@ -241,10 +251,11 @@ public class GeoJsonSourceState private constructor(
 
   /**
    * When set to true, the maxZoom property is ignored and is instead calculated automatically based on
-   * the largest bounding box from the geoJSON features. This resolves rendering artifacts for features that use
+   * the largest bounding box from the geojson features. This resolves rendering artifacts for features that use
    * wide blur (e.g. fill extrusion ground flood light or circle layer) and would bring performance improvement
    * on lower zoom levels, especially for geoJSON sources that update data frequently. However, it can lead
-   * to flickering and precision loss on zoom levels above 19.
+   * to flickering and precision loss on zoom levels above 19. This option is not supported in
+   * combination with clustering.
    * Default value: false.
    */
   @MapboxExperimental
@@ -274,6 +285,7 @@ public class GeoJsonSourceState private constructor(
   @Composable
   override fun UpdateProperties() {
     ActionWhenNotInitial(setBuilderPropertyAction, maxZoomState, "maxzoom")
+    ActionWhenNotInitial(setBuilderPropertyAction, minZoomState, "minzoom")
     ActionWhenNotInitial(setBuilderPropertyAction, attributionState, "attribution")
     ActionWhenNotInitial(setBuilderPropertyAction, bufferState, "buffer")
     ActionWhenNotInitial(setBuilderPropertyAction, toleranceState, "tolerance")
@@ -293,6 +305,7 @@ public class GeoJsonSourceState private constructor(
   private fun getProperties(): Map<String, Value> =
     listOfNotNull(
       ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
+      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
       ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
       ("buffer" to buffer.value).takeIf { buffer.isNotInitial() },
       ("tolerance" to tolerance.value).takeIf { tolerance.isNotInitial() },
@@ -321,6 +334,7 @@ public class GeoJsonSourceState private constructor(
     if (sourceId != other.sourceId) return false
     if (data != other.data) return false
     if (maxZoom != other.maxZoom) return false
+    if (minZoom != other.minZoom) return false
     if (attribution != other.attribution) return false
     if (buffer != other.buffer) return false
     if (tolerance != other.tolerance) return false
@@ -347,6 +361,7 @@ public class GeoJsonSourceState private constructor(
       sourceId,
       data,
       maxZoom,
+      minZoom,
       attribution,
       buffer,
       tolerance,
@@ -368,7 +383,7 @@ public class GeoJsonSourceState private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String =
-    "GeoJsonSourceState(sourceId=$sourceId, maxZoom=$maxZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, autoMaxZoom=$autoMaxZoom, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
+    "GeoJsonSourceState(sourceId=$sourceId, maxZoom=$maxZoom, minZoom=$minZoom, attribution=$attribution, buffer=$buffer, tolerance=$tolerance, cluster=$cluster, clusterRadius=$clusterRadius, clusterMaxZoom=$clusterMaxZoom, clusterMinPoints=$clusterMinPoints, clusterProperties=$clusterProperties, lineMetrics=$lineMetrics, generateId=$generateId, promoteId=$promoteId, autoMaxZoom=$autoMaxZoom, prefetchZoomDelta=$prefetchZoomDelta, tileCacheBudget=$tileCacheBudget)"
 
   /**
    * Public companion object.
@@ -386,6 +401,7 @@ public class GeoJsonSourceState private constructor(
           initialProperties = holder.savedProperties,
           initialData = holder.geoJSONData,
           maxZoom = holder.savedProperties["maxzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
+          minZoom = holder.savedProperties["minzoom"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
           attribution = holder.savedProperties["attribution"]?.let { StringValue(it.second) } ?: StringValue.INITIAL,
           buffer = holder.savedProperties["buffer"]?.let { LongValue(it.second) } ?: LongValue.INITIAL,
           tolerance = holder.savedProperties["tolerance"]?.let { DoubleValue(it.second) } ?: DoubleValue.INITIAL,

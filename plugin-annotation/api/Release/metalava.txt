@@ -493,6 +493,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> getClusterLongClickListeners();
     method public Boolean? getIconAllowOverlap();
     method public com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? getIconAnchor();
+    method public Double? getIconColorBrightnessMax();
+    method public Double? getIconColorBrightnessMin();
+    method public Double? getIconColorContrast();
     method @ColorInt public Integer? getIconColorInt();
     method public Double? getIconColorSaturation();
     method public String? getIconColorString();
@@ -525,6 +528,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
+    method public com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode? getOcclusionOpacityMode();
     method public String? getSlot();
     method public Boolean? getSymbolAvoidEdges();
     method public com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? getSymbolElevationReference();
@@ -573,6 +577,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     method protected void setDataDrivenPropertyIsUsed(String property);
     method public void setIconAllowOverlap(Boolean?);
     method public void setIconAnchor(com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor?);
+    method public void setIconColorBrightnessMax(Double?);
+    method public void setIconColorBrightnessMin(Double?);
+    method public void setIconColorContrast(Double?);
     method public void setIconColorInt(@ColorInt Integer?);
     method public void setIconColorSaturation(Double?);
     method public void setIconColorString(String?);
@@ -605,6 +612,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLayerFilter(com.mapbox.maps.extension.style.expressions.generated.Expression?);
     method public void setMaxZoom(Double?);
     method public void setMinZoom(Double?);
+    method public void setOcclusionOpacityMode(com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode?);
     method public void setSlot(String?);
     method public void setSymbolAvoidEdges(Boolean?);
     method public void setSymbolElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference?);
@@ -654,6 +662,9 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public java.util.List<com.mapbox.maps.plugin.annotation.OnClusterLongClickListener> clusterLongClickListeners;
     property public final Boolean? iconAllowOverlap;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor? iconAnchor;
+    property public final Double? iconColorBrightnessMax;
+    property public final Double? iconColorBrightnessMin;
+    property public final Double? iconColorContrast;
     property @ColorInt public final Integer? iconColorInt;
     property public final Double? iconColorSaturation;
     property public final String? iconColorString;
@@ -686,6 +697,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property public final Double? maxZoom;
     property public final Double? minZoom;
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.OcclusionOpacityMode? occlusionOpacityMode;
     property public final String? slot;
     property public final Boolean? symbolAvoidEdges;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.SymbolElevationReference? symbolElevationReference;

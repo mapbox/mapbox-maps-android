@@ -1321,12 +1321,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    */
   @MapboxExperimental
   val lineCutoutFadeWidth: Double?
     /**
-     * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+     * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineCutoutFadeWidth] to get the default property.
      *
@@ -1337,7 +1337,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutFadeWidth] to set the default property.
    *
@@ -1350,7 +1350,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * This is an Expression representation of "line-cutout-fade-width".
    *
@@ -1358,7 +1358,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineCutoutFadeWidthAsExpression: Expression?
     /**
-     * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+     * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
      *
      * Get the LineCutoutFadeWidth property as an Expression
      *
@@ -1368,7 +1368,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-cutout-fade-width")
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutFadeWidthAsExpression] to set the default property.
    *
@@ -1418,12 +1418,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val lineCutoutOpacity: Double?
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineCutoutOpacity] to get the default property.
      *
@@ -1434,7 +1434,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutOpacity] to set the default property.
    *
@@ -1447,7 +1447,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "line-cutout-opacity".
    *
@@ -1455,7 +1455,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineCutoutOpacityAsExpression: Expression?
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
      *
      * Get the LineCutoutOpacity property as an Expression
      *
@@ -1465,7 +1465,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-cutout-opacity")
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutOpacityAsExpression] to set the default property.
    *
@@ -1668,11 +1668,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    */
   val lineDepthOcclusionFactor: Double?
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+     * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineDepthOcclusionFactor] to get the default property.
      *
@@ -1683,7 +1683,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineDepthOcclusionFactor] to set the default property.
    *
@@ -1695,14 +1695,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "line-depth-occlusion-factor".
    *
    */
   val lineDepthOcclusionFactorAsExpression: Expression?
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+     * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
      *
      * Get the LineDepthOcclusionFactor property as an Expression
      *
@@ -1712,7 +1712,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-depth-occlusion-factor")
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineDepthOcclusionFactorAsExpression] to set the default property.
    *
@@ -3648,12 +3648,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+     * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultLineCutoutFadeWidth: Double?
       /**
-       * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+       * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
        *
        * Get the default value of LineCutoutFadeWidth property
        *
@@ -3664,7 +3664,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+     * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
      *
      * This is an Expression representation of "line-cutout-fade-width".
      *
@@ -3699,12 +3699,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width-transition").silentUnwrap()
 
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultLineCutoutOpacity: Double?
       /**
-       * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+       * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of LineCutoutOpacity property
        *
@@ -3715,7 +3715,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "line-cutout-opacity".
      *
@@ -3838,11 +3838,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+     * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
      */
     val defaultLineDepthOcclusionFactor: Double?
       /**
-       * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+       * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of LineDepthOcclusionFactor property
        *
@@ -3853,7 +3853,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+     * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "line-depth-occlusion-factor".
      *
@@ -4916,7 +4916,7 @@ interface LineLayerDsl {
   fun lineColorUseTheme(lineColorUseTheme: Expression): LineLayer
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * @param lineCutoutFadeWidth value of lineCutoutFadeWidth
    */
@@ -4924,7 +4924,7 @@ interface LineLayerDsl {
   fun lineCutoutFadeWidth(lineCutoutFadeWidth: Double = 0.4): LineLayer
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * @param lineCutoutFadeWidth value of lineCutoutFadeWidth as Expression
    */
@@ -4932,7 +4932,7 @@ interface LineLayerDsl {
   fun lineCutoutFadeWidth(lineCutoutFadeWidth: Expression): LineLayer
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * Set the LineCutoutFadeWidth property transition options
    *
@@ -4942,7 +4942,7 @@ interface LineLayerDsl {
   fun lineCutoutFadeWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * The width of the cutout fade effect Default value: 0.4. Value range: [0, 1]
+   * The width of the cutout fade effect as a proportion of the cutout width. Default value: 0.4. Value range: [0, 1]
    *
    * DSL for [lineCutoutFadeWidthTransition].
    */
@@ -4950,15 +4950,15 @@ interface LineLayerDsl {
   fun lineCutoutFadeWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * @param lineCutoutOpacity value of lineCutoutOpacity
    */
   @MapboxExperimental
-  fun lineCutoutOpacity(lineCutoutOpacity: Double = 0.3): LineLayer
+  fun lineCutoutOpacity(lineCutoutOpacity: Double = 0.0): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * @param lineCutoutOpacity value of lineCutoutOpacity as Expression
    */
@@ -4966,7 +4966,7 @@ interface LineLayerDsl {
   fun lineCutoutOpacity(lineCutoutOpacity: Expression): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * Set the LineCutoutOpacity property transition options
    *
@@ -4976,7 +4976,7 @@ interface LineLayerDsl {
   fun lineCutoutOpacityTransition(options: StyleTransition): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0.3. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
    *
    * DSL for [lineCutoutOpacityTransition].
    */
@@ -5032,21 +5032,21 @@ interface LineLayerDsl {
   fun lineDasharray(lineDasharray: Expression): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor
    */
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Double = 1.0): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * @param lineDepthOcclusionFactor value of lineDepthOcclusionFactor as Expression
    */
   fun lineDepthOcclusionFactor(lineDepthOcclusionFactor: Expression): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * Set the LineDepthOcclusionFactor property transition options
    *
@@ -5055,7 +5055,7 @@ interface LineLayerDsl {
   fun lineDepthOcclusionFactorTransition(options: StyleTransition): LineLayer
 
   /**
-   * Decrease line layer opacity based on occlusion from 3D objects. Value 0 disables occlusion, value 1 means fully occluded. Default value: 1. Value range: [0, 1]
+   * This property is deprecated and replaced by line-occlusion-opacity. Value 0 disables occlusion, value 1 means fully occluded. Note: line-occlusion-opacity has the opposite effect - value 1 disables occlusion, value 0 means fully occluded. Default value: 1. Value range: [0, 1]
    *
    * DSL for [lineDepthOcclusionFactorTransition].
    */

@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+* Promote `ModelLayer` to stable.
+* Add `SymbolLayer.occlusionOpacityMode`, `SymbolLayer.iconColorBrightnessMax`, `SymbolLayer.iconColorBrightnessMin`, `SymbolLayer.iconColorContrast` properties.
+* Add `FillExtrusionLayer.castShadows` property.
+* Add `GeoJsonSource.minZoom` property.
+* Add `RasterArraySource.volatile` experimental property.
+
+
 # 11.17.0-beta.1 November 05, 2025
 ## Breaking changes ⚠️
 * Require passing required argument to the constructor of experimental `GeofencingState.Builder`, `GeofencingError.Builder`, `GeofencingEvent.Builder` and `GeofencingOptions.Builder` APIs.

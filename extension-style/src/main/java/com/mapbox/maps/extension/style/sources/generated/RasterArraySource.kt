@@ -169,6 +169,28 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("rasterLayers")
 
   /**
+   * A setting to determine whether a source's tiles are cached locally.
+   * Default value: false.
+   */
+  fun volatile(value: Boolean = false): RasterArraySource = apply {
+    setProperty(PropertyValue("volatile", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * A setting to determine whether a source's tiles are cached locally.
+   * Default value: false.
+   */
+  val volatile: Boolean?
+    /**
+     * Get the Volatile property
+     *
+     * Use static method [RasterArraySource.defaultVolatile] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() = getPropertyValue("volatile")
+
+  /**
    * This property defines a source-specific resource budget, either in tile units or in megabytes. Whenever the
    * tile cache goes over the defined limit, the least recently used tile will be evicted from
    * the in-memory cache. Note that the current implementation does not take into account resources allocated by
@@ -265,6 +287,15 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
      */
     fun attribution(value: String): Builder = apply {
       val propertyValue = PropertyValue("attribution", TypeUtils.wrapToValue(value))
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
+     * A setting to determine whether a source's tiles are cached locally.
+     * Default value: false.
+     */
+    fun volatile(value: Boolean = false): Builder = apply {
+      val propertyValue = PropertyValue("volatile", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -383,6 +414,18 @@ class RasterArraySource(builder: Builder) : Source(builder.sourceId) {
        * @return Long
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster-array", "maxzoom").silentUnwrap()
+
+    /**
+     * A setting to determine whether a source's tiles are cached locally.
+     * Default value: false.
+     */
+    val defaultVolatile: Boolean?
+      /**
+       * Get the Volatile property
+       *
+       * @return Boolean
+       */
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("raster-array", "volatile").silentUnwrap()
   }
 }
 
