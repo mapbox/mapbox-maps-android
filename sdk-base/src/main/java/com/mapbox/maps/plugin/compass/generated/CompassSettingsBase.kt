@@ -35,7 +35,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
    * @param block the receiver function of CompassSettings
    */
   override fun updateSettings(block: CompassSettings.Builder.() -> Unit) {
-    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
+    val newSettings = this.internalSettings.toBuilder().apply(block).build()
+    // Trigger the enabled setter to ensure custom logic (e.g., listener management) is executed
+    this.enabled = newSettings.enabled
+    this.internalSettings = newSettings
     applySettings()
   }
 
