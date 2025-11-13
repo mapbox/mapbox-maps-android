@@ -33,7 +33,10 @@ abstract class LogoSettingsBase : LogoSettingsInterface {
    * @param block the receiver function of LogoSettings
    */
   override fun updateSettings(block: LogoSettings.Builder.() -> Unit) {
-    this.internalSettings = this.internalSettings.toBuilder().apply(block).build()
+    val newSettings = this.internalSettings.toBuilder().apply(block).build()
+    // Trigger the enabled setter to ensure custom logic (e.g., listener management) is executed
+    this.enabled = newSettings.enabled
+    this.internalSettings = newSettings
     applySettings()
   }
 
