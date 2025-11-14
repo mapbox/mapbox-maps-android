@@ -3,6 +3,8 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
+import com.mapbox.maps.IndoorManager
+import com.mapbox.maps.IndoorState
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
@@ -41,11 +43,13 @@ class IndoorExampleActivity : AppCompatActivity() {
       mapboxMap.indoor.selectFloor(FLOOR_ID)
 
       // Listen to indoor state updates
-      mapboxMap.indoor.onIndoorUpdate { indoorState ->
-        logD(TAG, "Indoor state updated: $indoorState")
-        logD(TAG, "Available floors: ${indoorState.floors}")
-        logD(TAG, "Selected floor: ${indoorState.selectedFloorId}")
-      }
+      mapboxMap.indoor.setOnIndoorUpdatedCallback(object : IndoorManager.OnIndoorUpdatedCallback {
+        override fun onOnIndoorUpdated(onIndoorUpdated: IndoorState) {
+          logD(TAG, "Indoor state updated: $onIndoorUpdated")
+          logD(TAG, "Available floors: ${onIndoorUpdated.floors}")
+          logD(TAG, "Selected floor: ${onIndoorUpdated.selectedFloorId}")
+        }
+      })
     }
   }
 
