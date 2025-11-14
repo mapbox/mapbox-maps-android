@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.17.0-beta.2 November 14, 2025
+## Dependencies
+* Update gl-native to [v11.17.0-beta.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.2), common to [v24.17.0-beta.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.2).
+
+
 # 11.17.0-rc.1
 ## Features ✨ and improvements 🏁
 * Promote `ModelLayer` to stable.
