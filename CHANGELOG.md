@@ -8,6 +8,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.17.0-rc.1 November 20, 2025
+
+# 11.17.0-rc.1
 ## Features ✨ and improvements 🏁
 * Promote `ModelLayer` to stable.
 * Add `SymbolLayer.occlusionOpacityMode`, `SymbolLayer.iconColorBrightnessMax`, `SymbolLayer.iconColorBrightnessMin`, `SymbolLayer.iconColorContrast` properties.
