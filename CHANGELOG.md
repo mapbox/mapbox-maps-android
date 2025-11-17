@@ -18,6 +18,19 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix camera listener not unsubscribed when disabling ScaleBar via `updateSettings { enabled = false }`
 
+# 11.17.0-beta.2 November 14, 2025
+## Features ✨ and improvements 🏁
+* Improved error reporting for offline tile region downloads on Android.
+* Enhanced reliability of network connections by improving how Cronet timeouts are handled.
+
+## Bug fixes 🐞
+* Fixed a crash when switching map styles quickly.
+* Fixed a threading bug to eliminate 3D rendering issues and instability.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.17.0-beta.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.2), common to [v24.17.0-beta.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-beta.2).
+
 # 11.16.4 November 14, 2025
 ## Bug fixes 🐞
 * Internal fixes and performance improvements.
