@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `FillExtrusionLayer.castShadows` property.
 * Add `GeoJsonSource.minZoom` property.
 * Add `RasterArraySource.volatile` experimental property.
+* Make `line-emissive-strength` property data-driven.
 
 ## Bug fixes 🐞
 * Fix camera listener not unsubscribed when disabling ScaleBar via `updateSettings { enabled = false }`

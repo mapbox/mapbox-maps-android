@@ -175,6 +175,24 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
+   */
+  var lineEmissiveStrength: Double? = null
+
+  /**
+   * Set line-emissive-strength to initialise the polylineAnnotation with.
+   *
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
+   *
+   * @param lineEmissiveStrength the line-emissive-strength value
+   * @return this
+   */
+  fun withLineEmissiveStrength(lineEmissiveStrength: Double): PolylineAnnotationOptions {
+    this.lineEmissiveStrength = lineEmissiveStrength
+    return this
+  }
+
+  /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
    */
   var lineGapWidth: Double? = null
@@ -416,6 +434,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
     lineColor?.let {
       jsonObject.addProperty(PROPERTY_LINE_COLOR, it)
     }
+    lineEmissiveStrength?.let {
+      jsonObject.addProperty(PROPERTY_LINE_EMISSIVE_STRENGTH, it)
+    }
     lineGapWidth?.let {
       jsonObject.addProperty(PROPERTY_LINE_GAP_WIDTH, it)
     }
@@ -468,6 +489,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
     /** The property for line-color */
     const val PROPERTY_LINE_COLOR = "line-color"
+
+    /** The property for line-emissive-strength */
+    const val PROPERTY_LINE_EMISSIVE_STRENGTH = "line-emissive-strength"
 
     /** The property for line-gap-width */
     const val PROPERTY_LINE_GAP_WIDTH = "line-gap-width"
@@ -529,6 +553,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
       }
       if (feature.hasProperty(PROPERTY_LINE_COLOR)) {
         options.lineColor = feature.getProperty(PROPERTY_LINE_COLOR).asString
+      }
+      if (feature.hasProperty(PROPERTY_LINE_EMISSIVE_STRENGTH)) {
+        options.lineEmissiveStrength = feature.getProperty(PROPERTY_LINE_EMISSIVE_STRENGTH).asDouble
       }
       if (feature.hasProperty(PROPERTY_LINE_GAP_WIDTH)) {
         options.lineGapWidth = feature.getProperty(PROPERTY_LINE_GAP_WIDTH).asDouble

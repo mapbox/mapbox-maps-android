@@ -874,14 +874,18 @@ class LineLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun lineEmissiveStrengthAsExpressionTest() {
-    val expression = literal(1.0)
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
     val layer = lineLayer("id", "source") {
       lineEmissiveStrength(expression)
     }
     setupLayer(layer)
 
-    assertEquals(1.0, layer.lineEmissiveStrengthAsExpression?.contents as Double, 1E-5)
-    assertEquals(1.0, layer.lineEmissiveStrength!!, 1E-5)
+    assertEquals(expression.toString(), layer.lineEmissiveStrengthAsExpression.toString())
+    assertEquals(null, layer.lineEmissiveStrength)
   }
 
   @Test

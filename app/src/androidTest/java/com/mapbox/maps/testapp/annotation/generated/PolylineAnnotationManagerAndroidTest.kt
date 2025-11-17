@@ -273,7 +273,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
       polylineAnnotationManager.lineEmissiveStrength = expectedValue
       assertEquals(expectedValue, polylineAnnotationManager.lineEmissiveStrength)
       polylineAnnotationManager.lineEmissiveStrength = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").silentUnwrap(), polylineAnnotationManager.lineEmissiveStrength)
+      assertEquals(null, polylineAnnotationManager.lineEmissiveStrength)
     }
   }
 

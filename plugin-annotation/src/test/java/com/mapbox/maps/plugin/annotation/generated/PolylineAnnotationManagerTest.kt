@@ -104,6 +104,8 @@ class PolylineAnnotationManagerTest {
     every { dragLayer.lineBorderWidth(any<Expression>()) } answers { dragLayer }
     every { layer.lineColor(any<Expression>()) } answers { layer }
     every { dragLayer.lineColor(any<Expression>()) } answers { dragLayer }
+    every { layer.lineEmissiveStrength(any<Expression>()) } answers { layer }
+    every { dragLayer.lineEmissiveStrength(any<Expression>()) } answers { dragLayer }
     every { layer.lineGapWidth(any<Expression>()) } answers { layer }
     every { dragLayer.lineGapWidth(any<Expression>()) } answers { dragLayer }
     every { layer.lineOffset(any<Expression>()) } answers { layer }
@@ -277,6 +279,11 @@ class PolylineAnnotationManagerTest {
     assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.lineColorString)
     annotation.lineColorString = null
     assertNull(annotation.lineColorString)
+
+    annotation.lineEmissiveStrength = 0.0
+    assertEquals(0.0, annotation.lineEmissiveStrength)
+    annotation.lineEmissiveStrength = null
+    assertNull(annotation.lineEmissiveStrength)
 
     annotation.lineGapWidth = 0.0
     assertEquals(0.0, annotation.lineGapWidth)
@@ -1023,6 +1030,35 @@ class PolylineAnnotationManagerTest {
     manager.create(options)
     verify(exactly = 1) { manager.layer.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
     verify(exactly = 1) { manager.dragLayer.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
+  }
+
+  @Test
+  fun testLineEmissiveStrengthLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineEmissiveStrength(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+  }
+
+  @Test
+  fun testLineEmissiveStrengthInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineEmissiveStrength = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
+    verify(exactly = 1) { manager.dragLayer.lineEmissiveStrength(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)) }
   }
 
   @Test
