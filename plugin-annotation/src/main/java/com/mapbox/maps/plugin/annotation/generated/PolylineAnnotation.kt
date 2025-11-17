@@ -350,6 +350,39 @@ class PolylineAnnotation(
     }
 
   /**
+   * The lineEmissiveStrength property
+   *
+   * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
+   */
+  var lineEmissiveStrength: Double?
+    /**
+     * Get the lineEmissiveStrength property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineEmissiveStrength property
+     *
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
+      }
+    }
+
+  /**
    * The lineGapWidth property
    *
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap. Default value: 0. Minimum value: 0. The unit of lineGapWidth is in pixels.
@@ -632,6 +665,9 @@ class PolylineAnnotation(
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+    }
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
     }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)
