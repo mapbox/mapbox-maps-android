@@ -30,7 +30,8 @@ class IndoorExampleActivity : AppCompatActivity() {
         zoom(ZOOM)
         bearing(BEARING)
         pitch(PITCH)
-      }
+      },
+      styleUri = STYLE_URI
     )
 
     val mapView = MapView(this, mapInitOptions)
@@ -38,23 +39,21 @@ class IndoorExampleActivity : AppCompatActivity() {
     val mapboxMap = mapView.mapboxMap
 
     mapboxMap.getStyle {
-      // Select a specific floor (this ID should match a floor in your indoor data)
-      // Example floor ID - replace with actual floor ID from your indoor data
-      mapboxMap.indoor.selectFloor(FLOOR_ID)
-
-      // Listen to indoor state updates
       mapboxMap.indoor.setOnIndoorUpdatedCallback(object : IndoorManager.OnIndoorUpdatedCallback {
         override fun onOnIndoorUpdated(onIndoorUpdated: IndoorState) {
-          logD(TAG, "Indoor state updated: $onIndoorUpdated")
-          logD(TAG, "Available floors: ${onIndoorUpdated.floors}")
-          logD(TAG, "Selected floor: ${onIndoorUpdated.selectedFloorId}")
+          logD(TAG, "Indoor_Subscriber_0: Indoor state updated: $onIndoorUpdated")
+          logD(TAG, "Indoor_Subscriber_0: Selected floor: ${onIndoorUpdated.selectedFloorId}")
         }
       })
+
+      logD(TAG, "Indoor: selectFloor: $FLOOR_ID")
+      mapboxMap.indoor.selectFloor(FLOOR_ID)
     }
   }
 
   companion object {
     private const val TAG = "IndoorExampleActivity"
+    private const val STYLE_URI = "mapbox://styles/mapbox/streets-v12"
 
     // JFK Airport coordinates
     private const val LATITUDE = 40.6441
