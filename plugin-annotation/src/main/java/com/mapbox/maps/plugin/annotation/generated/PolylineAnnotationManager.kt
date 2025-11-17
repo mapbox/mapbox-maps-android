@@ -62,6 +62,10 @@ class PolylineAnnotationManager(
         layer.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
         dragLayer.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
       }
+      PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH -> {
+        layer.lineEmissiveStrength(get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH))
+        dragLayer.lineEmissiveStrength(get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH))
+      }
       PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH -> {
         layer.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
         dragLayer.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
@@ -106,6 +110,7 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
@@ -138,6 +143,7 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR - String
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
@@ -817,30 +823,37 @@ class PolylineAnnotationManager(
     }
 
   /**
-   * The LineEmissiveStrength property
+   * The default lineEmissiveStrength for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
    * Controls the intensity of light emitted on the source features. Default value: 0. Minimum value: 0. The unit of lineEmissiveStrength is in intensity.
    */
   var lineEmissiveStrength: Double?
     /**
-     * Get the LineEmissiveStrength property
+     * Get the lineEmissiveStrength property.
      *
      * @return property wrapper value around Double
      */
-    get(): Double? {
-      return layer.lineEmissiveStrength
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
     }
     /**
-     * Set the LineEmissiveStrength property
-     * @param value property wrapper value around Double
+     * Set the lineEmissiveStrength property.
+     *
+     * @param value constant property value for Double
      */
     set(value) {
-      val wrappedValue = if (value != null) {
-        TypeUtils.wrapToValue(value)
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
       } else {
-        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-emissive-strength").value
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH)
       }
-      setLayerProperty(wrappedValue, "line-emissive-strength")
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -1476,6 +1489,7 @@ class PolylineAnnotationManager(
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_BORDER_WIDTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_COLOR] = false
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_EMISSIVE_STRENGTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OFFSET] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_OPACITY] = false

@@ -972,6 +972,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineColorInt ()Ljava/lang/Integer;
 	public final fun getLineColorString ()Ljava/lang/String;
 	public final fun getLineColorUseTheme ()Ljava/lang/String;
+	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineOffset ()Ljava/lang/Double;
@@ -992,6 +993,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineColorInt (Ljava/lang/Integer;)V
 	public final fun setLineColorString (Ljava/lang/String;)V
 	public final fun setLineColorUseTheme (Ljava/lang/String;)V
+	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineOffset (Ljava/lang/Double;)V
@@ -1120,6 +1122,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public static final field PROPERTY_LINE_BORDER_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_COLOR Ljava/lang/String;
 	public static final field PROPERTY_LINE_COLOR_USE_THEME Ljava/lang/String;
+	public static final field PROPERTY_LINE_EMISSIVE_STRENGTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_GAP_WIDTH Ljava/lang/String;
 	public static final field PROPERTY_LINE_JOIN Ljava/lang/String;
 	public static final field PROPERTY_LINE_OFFSET Ljava/lang/String;
@@ -1140,6 +1143,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColor ()Ljava/lang/String;
 	public final fun getLineColorUseTheme ()Ljava/lang/String;
+	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
 	public final fun getLineOffset ()Ljava/lang/Double;
@@ -1155,6 +1159,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColor (Ljava/lang/String;)V
 	public final fun setLineColorUseTheme (Ljava/lang/String;)V
+	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
 	public final fun setLineOffset (Ljava/lang/Double;)V
@@ -1174,6 +1179,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun withLineColor (I)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineColor (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
+	public final fun withLineEmissiveStrength (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineGapWidth (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;
 	public final fun withLineOffset (D)Lcom/mapbox/maps/plugin/annotation/generated/PolylineAnnotationOptions;

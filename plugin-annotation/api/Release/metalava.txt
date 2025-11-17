@@ -1237,6 +1237,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
     method public String? getLineColorUseTheme();
+    method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
     method public Double? getLineOffset();
@@ -1256,6 +1257,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineColorInt(@ColorInt Integer?);
     method public void setLineColorString(String?);
     method public void setLineColorUseTheme(String?);
+    method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
     method public void setLineOffset(Double?);
@@ -1274,6 +1276,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property @ColorInt public final Integer? lineColorInt;
     property public final String? lineColorString;
     property public final String? lineColorUseTheme;
+    property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
     property public final Double? lineOffset;
@@ -1450,6 +1453,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineBorderWidth();
     method public String? getLineColor();
     method public String? getLineColorUseTheme();
+    method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
     method public Double? getLineOffset();
@@ -1465,6 +1469,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineBorderWidth(Double?);
     method public void setLineColor(String?);
     method public void setLineColorUseTheme(String?);
+    method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
     method public void setLineOffset(Double?);
@@ -1484,6 +1489,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(String lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(@ColorInt int lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColorUseTheme(String lineColorUseTheme);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineEmissiveStrength(double lineEmissiveStrength);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineGapWidth(double lineGapWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin lineJoin);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineOffset(double lineOffset);
@@ -1499,6 +1505,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineBorderWidth;
     property public final String? lineColor;
     property public final String? lineColorUseTheme;
+    property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
     property public final Double? lineOffset;
@@ -1514,6 +1521,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_LINE_BORDER_WIDTH = "line-border-width";
     field public static final String PROPERTY_LINE_COLOR = "line-color";
     field public static final String PROPERTY_LINE_COLOR_USE_THEME = "line-color-use-theme";
+    field public static final String PROPERTY_LINE_EMISSIVE_STRENGTH = "line-emissive-strength";
     field public static final String PROPERTY_LINE_GAP_WIDTH = "line-gap-width";
     field public static final String PROPERTY_LINE_JOIN = "line-join";
     field public static final String PROPERTY_LINE_OFFSET = "line-offset";
