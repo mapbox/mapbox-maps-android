@@ -803,4 +803,27 @@ internal class NativeMapImpl(val map: Map) {
     return map.queryRenderedFeatures(geometry, targets, callback)
   }
   // ///// END INTERACTIONS /////////
+
+  @MapboxExperimental
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  fun setFeatureStateExpression(
+    featureStateExpressionId: Int,
+    featureset: FeaturesetDescriptor,
+    expression: Value,
+    state: Value,
+    callback: FeatureStateOperationCallback,
+  ) = map.setFeatureStateExpression(featureStateExpressionId.toLong(), featureset, expression, state, callback)
+
+  @MapboxExperimental
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  fun removeFeatureStateExpression(
+    featureStateExpressionId: Int,
+    callback: FeatureStateOperationCallback,
+  ) = map.removeFeatureStateExpression(featureStateExpressionId.toLong(), callback)
+
+  @MapboxExperimental
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  fun resetFeatureStateExpressions(
+    callback: FeatureStateOperationCallback,
+  ) = map.resetFeatureStateExpressions(callback)
 }

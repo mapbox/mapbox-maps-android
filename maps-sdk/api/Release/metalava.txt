@@ -277,6 +277,7 @@ package com.mapbox.maps {
 }));
     method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, com.mapbox.maps.FeaturesetFeatureId id, FSK? stateKey = null);
     method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> com.mapbox.common.Cancelable removeFeatureState(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, com.mapbox.maps.FeaturesetFeatureId id);
+    method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public void removeFeatureStateExpression(int featureStateExpressionId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method @Deprecated public void removeOnCameraChangeListener(com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener onCameraChangeListener);
     method @Deprecated public void removeOnMapIdleListener(com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener onMapIdleListener);
     method @Deprecated public void removeOnMapLoadErrorListener(com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener onMapLoadErrorListener);
@@ -290,6 +291,7 @@ package com.mapbox.maps {
     method @Deprecated public void removeOnStyleImageMissingListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageMissingListener onStyleImageMissingListener);
     method @Deprecated public void removeOnStyleImageUnusedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener onStyleImageUnusedListener);
     method @Deprecated public void removeOnStyleLoadedListener(com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener onStyleLoadedListener);
+    method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public void resetFeatureStateExpressions(com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String? sourceLayerId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
@@ -316,6 +318,7 @@ package com.mapbox.maps {
 
 }));
     method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> com.mapbox.common.Cancelable setFeatureState(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor, com.mapbox.maps.FeaturesetFeatureId id, FS state);
+    method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> void setFeatureStateExpression(int featureStateExpressionId, com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> featureset, com.mapbox.bindgen.Value expression, FS state, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public void setGestureInProgress(boolean inProgress);
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setPrefetchZoomDelta(byte delta);

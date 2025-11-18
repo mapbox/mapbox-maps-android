@@ -2285,15 +2285,21 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapFeatureQuery
 public abstract interface class com/mapbox/maps/plugin/delegates/MapFeatureStateDelegate {
 	public abstract fun getFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/QueryFeatureStateCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun removeFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun removeFeatureStateExpression (ILcom/mapbox/maps/FeatureStateOperationCallback;)V
+	public abstract fun resetFeatureStateExpressions (Lcom/mapbox/maps/FeatureStateOperationCallback;)V
 	public abstract fun resetFeatureStates (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun setFeatureState (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun setFeatureStateExpression (ILcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;)V
 }
 
 public final class com/mapbox/maps/plugin/delegates/MapFeatureStateDelegate$DefaultImpls {
 	public static synthetic fun getFeatureState$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/QueryFeatureStateCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun removeFeatureStateExpression$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;ILcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)V
+	public static synthetic fun resetFeatureStateExpressions$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)V
 	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static synthetic fun setFeatureStateExpression$default (Lcom/mapbox/maps/plugin/delegates/MapFeatureStateDelegate;ILcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)V
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapInteractionDelegate {

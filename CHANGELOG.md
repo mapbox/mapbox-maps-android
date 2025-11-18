@@ -14,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add `GeoJsonSource.minZoom` property.
 * Add `RasterArraySource.volatile` experimental property.
 * Make `line-emissive-strength` property data-driven.
+* Add experimental `MapboxMap.setFeatureStateExpression()`, `removeFeatureStateExpression()`, and `resetFeatureStateExpressions()` APIs to efficiently update feature state for multiple features at once using expressions.
 
 ## Bug fixes 🐞
 * Fix camera listener not unsubscribed when disabling ScaleBar via `updateSettings { enabled = false }`
