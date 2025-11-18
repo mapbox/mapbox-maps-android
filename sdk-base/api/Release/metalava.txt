@@ -2237,8 +2237,20 @@ package com.mapbox.maps.plugin.delegates {
   public interface MapFeatureStateDelegate {
     method public com.mapbox.common.Cancelable getFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.maps.QueryFeatureStateCallback callback);
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId = null, String featureId, String? stateKey = null, com.mapbox.maps.FeatureStateOperationCallback callback);
+    method @com.mapbox.maps.MapboxExperimental public void removeFeatureStateExpression(int featureStateExpressionId, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+
+
+}));
+    method @com.mapbox.maps.MapboxExperimental public void resetFeatureStateExpressions(com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+
+
+}));
     method public com.mapbox.common.Cancelable resetFeatureStates(String sourceId, String? sourceLayerId = null, com.mapbox.maps.FeatureStateOperationCallback callback);
     method public com.mapbox.common.Cancelable setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state, com.mapbox.maps.FeatureStateOperationCallback callback);
+    method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public <FS extends com.mapbox.maps.interactions.FeatureState> void setFeatureStateExpression(int featureStateExpressionId, com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> featureset, com.mapbox.bindgen.Value expression, FS state, com.mapbox.maps.FeatureStateOperationCallback callback = FeatureStateOperationCallback({ var it: com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> ->
+
+
+}));
   }
 
   @com.mapbox.maps.MapboxExperimental public interface MapInteractionDelegate {

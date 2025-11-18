@@ -189,4 +189,7 @@
     <string name="color_theme_reset">Reset</string>
     <string name="color_theme_monochrome">Monochrome</string>
     <string name="color_theme_toggle_atmosphere">Use theme color for Atmosphere</string>
+
+    <!-- Standard style interactions activity -->
+    <string name="select_all">Select All</string>
 </resources>

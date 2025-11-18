@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
@@ -13,10 +15,14 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.style.expressions.dsl.generated.boolean
+import com.mapbox.maps.interactions.standard.generated.StandardBuildings
 import com.mapbox.maps.interactions.standard.generated.StandardBuildingsState
 import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState
 import com.mapbox.maps.interactions.standard.generated.StandardPoiFeature
@@ -25,6 +31,7 @@ import com.mapbox.maps.interactions.standard.generated.StandardPoiStateKey
 import com.mapbox.maps.interactions.standard.generated.standardBuildings
 import com.mapbox.maps.interactions.standard.generated.standardPlaceLabels
 import com.mapbox.maps.interactions.standard.generated.standardPoi
+import com.mapbox.maps.testapp.R
 import com.mapbox.maps.viewannotation.annotationAnchor
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
@@ -34,7 +41,9 @@ import com.mapbox.maps.viewannotation.viewAnnotationOptions
  */
 @OptIn(MapboxExperimental::class)
 class StandardStyleInteractionsActivity : AppCompatActivity() {
+  private lateinit var mapboxMap: MapboxMap
 
+  @OptIn(MapboxDelicateApi::class)
   @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -50,6 +59,7 @@ class StandardStyleInteractionsActivity : AppCompatActivity() {
       )
     )
     setContentView(mapView)
+    mapboxMap = mapView.mapboxMap
     val map = mapView.mapboxMap
     val selectedPoiList = mutableListOf<StandardPoiFeature>()
 
@@ -61,7 +71,7 @@ class StandardStyleInteractionsActivity : AppCompatActivity() {
         map.setFeatureState(
           selectedBuilding,
           StandardBuildingsState {
-            highlight(true)
+            select(true)
           }
         )
         return@standardBuildings true
@@ -146,12 +156,30 @@ class StandardStyleInteractionsActivity : AppCompatActivity() {
             StandardPoiStateKey.HIDE
           )
         }
+        map.resetFeatureStateExpressions()
         selectedPoiList.clear()
         mapView.viewAnnotationManager.removeAllViewAnnotations()
+
         Toast.makeText(this, "Map clicked, removing selected POIs if any", Toast.LENGTH_SHORT).show()
         true
       }
     )
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_standard_style_interactions, menu)
+    return true
+  }
+
+  @OptIn(MapboxDelicateApi::class)
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_action_select_all -> {
+        mapboxMap.setFeatureStateExpression(1, StandardBuildings(), boolean { literal(true) }, StandardBuildingsState.Builder().select(true).build())
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
   }
 
   private companion object {
