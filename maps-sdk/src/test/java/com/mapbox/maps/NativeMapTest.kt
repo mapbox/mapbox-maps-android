@@ -830,6 +830,39 @@ class NativeMapTest {
   }
 
   @Test
+  @OptIn(com.mapbox.maps.MapboxExperimental::class, MapboxExperimental::class)
+  fun setFeatureStateExpression() {
+    val expression = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+
+    val featuresetDescriptor = mockk<FeaturesetDescriptor>()
+    val state = mockk<Value>()
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.setFeatureStateExpression(3, featuresetDescriptor, state, expression, callback)
+    verify { map.setFeatureStateExpression(3, featuresetDescriptor, state, expression, callback) }
+  }
+
+  @Test
+  @OptIn(com.mapbox.maps.MapboxExperimental::class, MapboxExperimental::class)
+  fun removeFeatureStateExpression() {
+    val nativeMap = NativeMapImpl(map)
+
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.removeFeatureStateExpression(3, callback)
+    verify { map.removeFeatureStateExpression(3, callback) }
+  }
+
+  @Test
+  @OptIn(com.mapbox.maps.MapboxExperimental::class, MapboxExperimental::class)
+  fun resetFeatureStateExpressions() {
+    val nativeMap = NativeMapImpl(map)
+
+    val callback = mockk<FeatureStateOperationCallback>()
+    nativeMap.resetFeatureStateExpressions(callback)
+    verify { map.resetFeatureStateExpressions(callback) }
+  }
+
+  @Test
   fun reduceMemoryUse() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.reduceMemoryUse()

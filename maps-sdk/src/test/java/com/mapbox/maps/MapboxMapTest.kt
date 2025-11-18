@@ -1322,6 +1322,53 @@ class MapboxMapTest {
   }
 
   @Test
+  @OptIn(MapboxDelicateApi::class)
+  fun setFeatureStateExpression() {
+    val featureExpressionId = 2345325
+    val layerId = "layerId"
+    val descriptor = TypedFeaturesetDescriptor.Layer(layerId)
+    val state = FeatureState { }
+    val expression = Value.nullValue()
+    mapboxMap.setFeatureStateExpression(featureExpressionId, descriptor, expression, state) {}
+
+    verify {
+      nativeMap.setFeatureStateExpression(
+        featureExpressionId,
+        FeaturesetDescriptor(/* featuresetId */ null, /* importId */ null, /* layerId */ layerId),
+        expression,
+        state.internalState,
+        /* callback */ any()
+        )
+    }
+  }
+
+  @Test
+  @OptIn(MapboxDelicateApi::class)
+  fun removeFeatureStateExpression() {
+    val featureExpressionId = 2643634
+    mapboxMap.removeFeatureStateExpression(featureExpressionId) {}
+
+    verify {
+      nativeMap.removeFeatureStateExpression(
+        featureExpressionId,
+        /* callback */ any()
+      )
+    }
+  }
+
+  @Test
+  @OptIn(MapboxDelicateApi::class)
+  fun resetFeatureStateExpressions() {
+    mapboxMap.resetFeatureStateExpressions() {}
+
+    verify {
+      nativeMap.resetFeatureStateExpressions(
+        /* callback */ any()
+      )
+    }
+  }
+
+  @Test
   fun queryRenderedFeatures() {
     val geometry = mockk<RenderedQueryGeometry>()
     val descriptor = mockk<TypedFeaturesetDescriptor<FeatureState, *>>()
