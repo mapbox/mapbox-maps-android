@@ -261,6 +261,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun setStyleSnowProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleSourceProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleTerrain (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleTerrainProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V
