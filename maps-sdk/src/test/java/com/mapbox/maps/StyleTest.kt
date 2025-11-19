@@ -271,6 +271,12 @@ class StyleTest {
   }
 
   @Test
+  fun setSourcePropertyWithImportId() {
+    val value = mockk<Value>()
+    style.setStyleSourceProperty("importId", "id", "foobar", value)
+    verify { styleManager.setStyleSourceProperty("importId", "id", "foobar", value) }
+  }
+  @Test
   fun getSourceProperty() {
     style.getStyleSourceProperty("id", "foobar")
     verify { styleManager.getStyleSourceProperty("id", "foobar") }
