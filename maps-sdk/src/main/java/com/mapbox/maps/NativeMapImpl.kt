@@ -615,6 +615,17 @@ internal class NativeMapImpl(val map: Map) {
     return map.setStyleSourceProperty(sourceId, property, value)
   }
 
+  @MapboxExperimental
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  fun setStyleSourceProperty(
+    importId: String,
+    sourceId: String,
+    property: String,
+    value: Value
+  ): Expected<String, None> {
+    return map.setStyleSourceProperty(importId, sourceId, property, value)
+  }
+
   fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom {
     return map.coordinateBoundsZoomForCamera(camera)
   }

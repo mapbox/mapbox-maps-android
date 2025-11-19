@@ -278,6 +278,14 @@ class NativeMapTest {
   }
 
   @Test
+  fun setStyleSourcePropertyWithImportId() {
+    val value = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setStyleSourceProperty("importId", "foo", "bar", value)
+    verify { map.setStyleSourceProperty("importId", "foo", "bar", value) }
+  }
+
+  @Test
   fun getStyleSourceProperties() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.getStyleSourceProperties("foo")
