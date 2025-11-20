@@ -6,7 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.17.0-rc.1
+
+# 11.17.0-rc.1 November 20, 2025
 ## Features ✨ and improvements 🏁
 * Promote `ModelLayer` to stable.
 * Add `SymbolLayer.occlusionOpacityMode`, `SymbolLayer.iconColorBrightnessMax`, `SymbolLayer.iconColorBrightnessMin`, `SymbolLayer.iconColorContrast` properties.
@@ -18,6 +19,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix camera listener not unsubscribed when disabling ScaleBar via `updateSettings { enabled = false }`
+
+## Dependencies
+* Update gl-native to [v11.17.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-rc.1), common to [v24.17.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-rc.1).
+
 
 # 11.17.0-beta.2 November 14, 2025
 ## Features ✨ and improvements 🏁
