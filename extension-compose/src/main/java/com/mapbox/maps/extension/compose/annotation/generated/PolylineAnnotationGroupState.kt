@@ -38,7 +38,6 @@ public class PolylineAnnotationGroupState private constructor(
   initialLineColor: Color?,
   initialLineCutoutFadeWidth: Double?,
   initialLineCutoutOpacity: Double?,
-  initialLineCutoutWidth: Double?,
   initialLineDasharray: List<Double>?,
   initialLineDepthOcclusionFactor: Double?,
   initialLineEmissiveStrength: Double?,
@@ -78,7 +77,6 @@ public class PolylineAnnotationGroupState private constructor(
     initialLineColor = null,
     initialLineCutoutFadeWidth = null,
     initialLineCutoutOpacity = null,
-    initialLineCutoutWidth = null,
     initialLineDasharray = null,
     initialLineDepthOcclusionFactor = null,
     initialLineEmissiveStrength = null,
@@ -169,15 +167,10 @@ public class PolylineAnnotationGroupState private constructor(
   @MapboxExperimental
   public var lineCutoutFadeWidth: Double? by mutableStateOf(initialLineCutoutFadeWidth)
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   public var lineCutoutOpacity: Double? by mutableStateOf(initialLineCutoutOpacity)
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   */
-  @MapboxExperimental
-  public var lineCutoutWidth: Double? by mutableStateOf(initialLineCutoutWidth)
   /**
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
    */
@@ -336,11 +329,6 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineCutoutOpacity = lineCutoutOpacity
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
-  private fun UpdateLineCutoutWidth(annotationManager: PolylineAnnotationManager) {
-    annotationManager.lineCutoutWidth = lineCutoutWidth
-  }
-  @Composable
   private fun UpdateLineDasharray(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineDasharray = lineDasharray
   }
@@ -448,7 +436,6 @@ public class PolylineAnnotationGroupState private constructor(
     UpdateLineColor(annotationManager)
     UpdateLineCutoutFadeWidth(annotationManager)
     UpdateLineCutoutOpacity(annotationManager)
-    UpdateLineCutoutWidth(annotationManager)
     UpdateLineDasharray(annotationManager)
     UpdateLineDepthOcclusionFactor(annotationManager)
     UpdateLineEmissiveStrength(annotationManager)

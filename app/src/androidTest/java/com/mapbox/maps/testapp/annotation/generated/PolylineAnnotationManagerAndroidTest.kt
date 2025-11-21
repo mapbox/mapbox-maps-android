@@ -230,18 +230,6 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun testLineCutoutWidth() {
-    rule.runOnUiThread {
-      val expectedValue = 1.0
-      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
-      polylineAnnotationManager.lineCutoutWidth = expectedValue
-      assertEquals(expectedValue, polylineAnnotationManager.lineCutoutWidth)
-      polylineAnnotationManager.lineCutoutWidth = null
-      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").silentUnwrap(), polylineAnnotationManager.lineCutoutWidth)
-    }
-  }
-
-  @Test
   fun testLineDasharray() {
     rule.runOnUiThread {
       val expectedValue = listOf(1.0, 2.0)

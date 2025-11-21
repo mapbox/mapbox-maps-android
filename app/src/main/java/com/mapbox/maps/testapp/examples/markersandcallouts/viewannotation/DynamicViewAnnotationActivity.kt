@@ -191,10 +191,9 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         +routeLayerAlt.apply {
           lineColor(Color.parseColor("#FF999999"))
           // make map elements around (30m) route line visible through obstructing 3D buildings and other aboveground features
-          lineCutoutWidth(30.0)
+          lineWidth(30.0)
           lineCutoutOpacity(0.0)
           lineCutoutFadeWidth(0.5)
-          lineWidth(12.0)
           lineBorderWidth(2.0)
           lineBorderColor(Color.parseColor("#FF333333"))
         }
@@ -202,10 +201,9 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         +routeLayerMain.apply {
           lineColor(Color.parseColor("#FF57A9FB"))
           // make map elements around (30m) route line visible through obstructing 3D buildings and other aboveground features
-          lineCutoutWidth(30.0)
+          lineWidth(30.0)
           lineCutoutOpacity(0.0)
           lineCutoutFadeWidth(0.5)
-          lineWidth(12.0)
           lineCap(LineCap.ROUND)
           lineBorderWidth(2.0)
           lineBorderColor(Color.parseColor("#FF327AC2"))

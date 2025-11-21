@@ -1029,7 +1029,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineCrossSlope ()Ljava/lang/Double;
 	public final fun getLineCutoutFadeWidth ()Ljava/lang/Double;
 	public final fun getLineCutoutOpacity ()Ljava/lang/Double;
-	public final fun getLineCutoutWidth ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
 	public final fun getLineElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;
@@ -1072,7 +1071,6 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineCrossSlope (Ljava/lang/Double;)V
 	public final fun setLineCutoutFadeWidth (Ljava/lang/Double;)V
 	public final fun setLineCutoutOpacity (Ljava/lang/Double;)V
-	public final fun setLineCutoutWidth (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
 	public final fun setLineDepthOcclusionFactor (Ljava/lang/Double;)V
 	public final fun setLineElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;)V

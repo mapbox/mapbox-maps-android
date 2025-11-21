@@ -3101,9 +3101,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getLineCutoutOpacity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineCutoutOpacityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineCutoutOpacityTransition();
-    method public Double? getLineCutoutWidth();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineCutoutWidthAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getLineCutoutWidthTransition();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineDasharrayAsExpression();
     method public Double? getLineDepthOcclusionFactor();
@@ -3204,10 +3201,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutOpacity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidth(double lineCutoutWidth);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutWidth);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(java.util.List<java.lang.Double> lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(com.mapbox.maps.extension.style.expressions.generated.Expression lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(double lineDepthOcclusionFactor);
@@ -3312,9 +3305,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? lineCutoutOpacity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineCutoutOpacityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineCutoutOpacityTransition;
-    property public final Double? lineCutoutWidth;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineCutoutWidthAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? lineCutoutWidthTransition;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineDasharrayAsExpression;
     property public final Double? lineDepthOcclusionFactor;
@@ -3413,9 +3403,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultLineCutoutOpacity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineCutoutOpacityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineCutoutOpacityTransition();
-    method public Double? getDefaultLineCutoutWidth();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineCutoutWidthAsExpression();
-    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineCutoutWidthTransition();
     method public java.util.List<java.lang.Double>? getDefaultLineDasharray();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineDasharrayAsExpression();
     method public Double? getDefaultLineDepthOcclusionFactor();
@@ -3505,9 +3492,6 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultLineCutoutOpacity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineCutoutOpacityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineCutoutOpacityTransition;
-    property public final Double? defaultLineCutoutWidth;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineCutoutWidthAsExpression;
-    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineCutoutWidthTransition;
     property public final java.util.List<java.lang.Double>? defaultLineDasharray;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineDasharrayAsExpression;
     property public final Double? defaultLineDepthOcclusionFactor;
@@ -3603,14 +3587,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutFadeWidth);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutFadeWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(double lineCutoutOpacity = 0.0);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(double lineCutoutOpacity = 1.0);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacity(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutOpacity);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutOpacityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidth(double lineCutoutWidth = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineCutoutWidth);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineCutoutWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(java.util.List<java.lang.Double> lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDasharray(com.mapbox.maps.extension.style.expressions.generated.Expression lineDasharray);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(double lineDepthOcclusionFactor = 1.0);

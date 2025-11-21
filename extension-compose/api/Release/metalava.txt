@@ -973,7 +973,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineCrossSlope();
     method public Double? getLineCutoutFadeWidth();
     method public Double? getLineCutoutOpacity();
-    method public Double? getLineCutoutWidth();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
@@ -1011,7 +1010,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineCrossSlope(Double?);
     method public void setLineCutoutFadeWidth(Double?);
     method public void setLineCutoutOpacity(Double?);
-    method public void setLineCutoutWidth(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
     method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
@@ -1049,7 +1047,6 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineCrossSlope;
     property public final Double? lineCutoutFadeWidth;
     property public final Double? lineCutoutOpacity;
-    property public final Double? lineCutoutWidth;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
@@ -2875,8 +2872,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getLineCutoutFadeWidthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCutoutOpacity();
     method public com.mapbox.maps.extension.compose.style.Transition getLineCutoutOpacityTransition();
-    method public com.mapbox.maps.extension.compose.style.DoubleValue getLineCutoutWidth();
-    method public com.mapbox.maps.extension.compose.style.Transition getLineCutoutWidthTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineDasharray();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineDepthOcclusionFactorTransition();
@@ -2933,8 +2928,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineCutoutFadeWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineCutoutOpacity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineCutoutOpacityTransition(com.mapbox.maps.extension.compose.style.Transition);
-    method public void setLineCutoutWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
-    method public void setLineCutoutWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineDasharray(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setLineDepthOcclusionFactor(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineDepthOcclusionFactorTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -2991,8 +2984,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition lineCutoutFadeWidthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCutoutOpacity;
     property public final com.mapbox.maps.extension.compose.style.Transition lineCutoutOpacityTransition;
-    property public final com.mapbox.maps.extension.compose.style.DoubleValue lineCutoutWidth;
-    property public final com.mapbox.maps.extension.compose.style.Transition lineCutoutWidthTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineDasharray;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineDepthOcclusionFactorTransition;

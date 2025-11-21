@@ -1418,12 +1418,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val lineCutoutOpacity: Double?
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineCutoutOpacity] to get the default property.
      *
@@ -1434,7 +1434,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutOpacity] to set the default property.
    *
@@ -1447,7 +1447,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "line-cutout-opacity".
    *
@@ -1455,7 +1455,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineCutoutOpacityAsExpression: Expression?
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      *
      * Get the LineCutoutOpacity property as an Expression
      *
@@ -1465,7 +1465,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-cutout-opacity")
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutOpacityAsExpression] to set the default property.
    *
@@ -1512,103 +1512,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   override fun lineCutoutOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
     lineCutoutOpacityTransition(StyleTransition.Builder().apply(block).build())
-  }
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   */
-  @MapboxExperimental
-  val lineCutoutWidth: Double?
-    /**
-     * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-     *
-     * Use static method [LineLayer.defaultLineCutoutWidth] to get the default property.
-     *
-     * @return Double
-     */
-    get() {
-      return getPropertyValue("line-cutout-width")
-    }
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * Use static method [LineLayer.defaultLineCutoutWidth] to set the default property.
-   *
-   * @param lineCutoutWidth value of lineCutoutWidth
-   */
-  @MapboxExperimental
-  override fun lineCutoutWidth(lineCutoutWidth: Double): LineLayer = apply {
-    val propertyValue = PropertyValue("line-cutout-width", lineCutoutWidth)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * This is an Expression representation of "line-cutout-width".
-   *
-   */
-  @MapboxExperimental
-  val lineCutoutWidthAsExpression: Expression?
-    /**
-     * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-     *
-     * Get the LineCutoutWidth property as an Expression
-     *
-     * Use static method [LineLayer.defaultLineCutoutWidthAsExpression] to get the default property.
-     */
-    get() =
-      getPropertyValueAsExpressionOrLiteralExpression("line-cutout-width")
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * Use static method [LineLayer.defaultLineCutoutWidthAsExpression] to set the default property.
-   *
-   * @param lineCutoutWidth value of lineCutoutWidth as Expression
-   */
-  @MapboxExperimental
-  override fun lineCutoutWidth(lineCutoutWidth: Expression): LineLayer = apply {
-    val propertyValue = PropertyValue("line-cutout-width", lineCutoutWidth)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Transition options for LineCutoutWidth.
-   */
-  @MapboxExperimental
-  val lineCutoutWidthTransition: StyleTransition?
-    /**
-     * Get the LineCutoutWidth property transition options
-     *
-     * Use static method [LineLayer.defaultLineCutoutWidthTransition] to get the default property.
-     *
-     * @return transition options for Double
-     */
-    get() {
-      return getPropertyValue("line-cutout-width-transition")
-    }
-
-  /**
-   * Set the LineCutoutWidth property transition options
-   *
-   * Use static method [LineLayer.defaultLineCutoutWidthTransition] to set the default property.
-   *
-   * @param options transition options for Double
-   */
-  @MapboxExperimental
-  override fun lineCutoutWidthTransition(options: StyleTransition): LineLayer = apply {
-    val propertyValue = PropertyValue("line-cutout-width-transition", options)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * DSL for [lineCutoutWidthTransition].
-   */
-  @MapboxExperimental
-  override fun lineCutoutWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
-    lineCutoutWidthTransition(StyleTransition.Builder().apply(block).build())
   }
 
   /**
@@ -3699,12 +3602,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width-transition").silentUnwrap()
 
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultLineCutoutOpacity: Double?
       /**
-       * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+       * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of LineCutoutOpacity property
        *
@@ -3715,7 +3618,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "line-cutout-opacity".
      *
@@ -3748,57 +3651,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
        * @return transition options for Double
        */
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-opacity-transition").silentUnwrap()
-
-    /**
-     * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-     */
-    @MapboxExperimental
-    val defaultLineCutoutWidth: Double?
-      /**
-       * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-       *
-       * Get the default value of LineCutoutWidth property
-       *
-       * @return Double
-       */
-      get() {
-        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").silentUnwrap()
-      }
-
-    /**
-     * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-     *
-     * This is an Expression representation of "line-cutout-width".
-     *
-     */
-    @MapboxExperimental
-    val defaultLineCutoutWidthAsExpression: Expression?
-      /**
-       * Get default value of the LineCutoutWidth property as an Expression
-       *
-       * @return Double
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultLineCutoutWidth?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
-     * Transition options for LineCutoutWidth.
-     */
-    @MapboxExperimental
-    val defaultLineCutoutWidthTransition: StyleTransition?
-      /**
-       * Get the LineCutoutWidth property transition options
-       *
-       * @return transition options for Double
-       */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-width-transition").silentUnwrap()
 
     /**
      * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.
@@ -4950,15 +4802,15 @@ interface LineLayerDsl {
   fun lineCutoutFadeWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * @param lineCutoutOpacity value of lineCutoutOpacity
    */
   @MapboxExperimental
-  fun lineCutoutOpacity(lineCutoutOpacity: Double = 0.0): LineLayer
+  fun lineCutoutOpacity(lineCutoutOpacity: Double = 1.0): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * @param lineCutoutOpacity value of lineCutoutOpacity as Expression
    */
@@ -4966,7 +4818,7 @@ interface LineLayerDsl {
   fun lineCutoutOpacity(lineCutoutOpacity: Expression): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * Set the LineCutoutOpacity property transition options
    *
@@ -4976,46 +4828,12 @@ interface LineLayerDsl {
   fun lineCutoutOpacityTransition(options: StyleTransition): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 0. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * DSL for [lineCutoutOpacityTransition].
    */
   @MapboxExperimental
   fun lineCutoutOpacityTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * @param lineCutoutWidth value of lineCutoutWidth
-   */
-  @MapboxExperimental
-  fun lineCutoutWidth(lineCutoutWidth: Double = 0.0): LineLayer
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * @param lineCutoutWidth value of lineCutoutWidth as Expression
-   */
-  @MapboxExperimental
-  fun lineCutoutWidth(lineCutoutWidth: Expression): LineLayer
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * Set the LineCutoutWidth property transition options
-   *
-   * @param options transition options for Double
-   */
-  @MapboxExperimental
-  fun lineCutoutWidthTransition(options: StyleTransition): LineLayer
-
-  /**
-   * The width of the line cutout in meters. If set to 0, the cutout is disabled. The cutout does not apply to location-indicator type layers. Default value: 0. Value range: [0, 50]
-   *
-   * DSL for [lineCutoutWidthTransition].
-   */
-  @MapboxExperimental
-  fun lineCutoutWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels. Minimum value: 0. The unit of lineDasharray is in line widths.

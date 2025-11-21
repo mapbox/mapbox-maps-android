@@ -2625,9 +2625,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getLineCutoutOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineCutoutOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
-	public final fun getLineCutoutWidth ()Ljava/lang/Double;
-	public final fun getLineCutoutWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getLineCutoutWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDasharrayAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
@@ -2728,10 +2725,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineCutoutOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineCutoutOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineCutoutOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public fun lineCutoutWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public fun lineCutoutWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public fun lineCutoutWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public fun lineCutoutWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineDasharray (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineDasharray (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineDepthOcclusionFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2842,9 +2835,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getDefaultLineCutoutOpacityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineCutoutOpacityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
-	public final fun getDefaultLineCutoutWidth ()Ljava/lang/Double;
-	public final fun getDefaultLineCutoutWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public final fun getDefaultLineCutoutWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineDasharray ()Ljava/util/List;
 	public final fun getDefaultLineDasharrayAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineDepthOcclusionFactor ()Ljava/lang/Double;
@@ -2944,10 +2934,6 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineCutoutOpacity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineCutoutOpacityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineCutoutOpacityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public abstract fun lineCutoutWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public abstract fun lineCutoutWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public abstract fun lineCutoutWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public abstract fun lineCutoutWidthTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineDasharray (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineDasharray (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineDepthOcclusionFactor (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -3032,7 +3018,6 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayerDsl
 	public static synthetic fun lineColor$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineCutoutFadeWidth$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineCutoutOpacity$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
-	public static synthetic fun lineCutoutWidth$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineDepthOcclusionFactor$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineElevationReference$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public static synthetic fun lineEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/LineLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
