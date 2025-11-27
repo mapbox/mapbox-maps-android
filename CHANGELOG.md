@@ -11,6 +11,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.17.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-rc.2), common to [v24.17.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0-rc.2).
 
 
+## Breaking changes ⚠️
+* Remove line-cutout-width and change line-cutout-opacity default to 1.0
+
+# 11.17.0
+## Features ✨ and improvements 🏁
+* Promote Geofencing APIs to stable, remove `MapboxExperimental` annotations from Geofencing APIs.
 
 # 11.17.0-rc.1 November 20, 2025
 ## Features ✨ and improvements 🏁

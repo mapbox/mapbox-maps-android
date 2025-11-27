@@ -1,7 +1,5 @@
 package com.mapbox.maps.plugin.attribution
 
-import com.mapbox.maps.MapboxExperimental
-
 /**
  * Config class for Attribution
  */
@@ -31,6 +29,5 @@ class AttributionParserConfig @JvmOverloads constructor(
    * Note that the entry will be shown only if the Geofencing is currently active or the user has
    * previously opted out.
    */
-  @MapboxExperimental
   var withMapboxGeofencingConsent: Boolean = true,
 )

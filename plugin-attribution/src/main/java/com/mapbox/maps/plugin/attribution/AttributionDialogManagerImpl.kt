@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.logW
 import com.mapbox.maps.module.MapTelemetry
@@ -45,12 +44,10 @@ class AttributionDialogManagerImpl(
   internal var geofencingDialog: AlertDialog? = null
   private var mapAttributionDelegate: MapAttributionDelegate? = null
   private var telemetry: MapTelemetry? = null
-  @OptIn(MapboxExperimental::class)
   private var geofencingConsent: MapGeofencingConsent? = null
   /**
    * Invoked when the map attribution should be shown to the end user
    */
-  @OptIn(MapboxExperimental::class)
   override fun showAttribution(mapAttributionDelegate: MapAttributionDelegate) {
     this.mapAttributionDelegate = mapAttributionDelegate
     this.telemetry = mapAttributionDelegate.telemetry()
@@ -140,7 +137,6 @@ class AttributionDialogManagerImpl(
     telemetryDialog = builder.show()
   }
 
-  @OptIn(MapboxExperimental::class, com.mapbox.annotation.MapboxExperimental::class)
   private fun showGeofencingConsentDialog() {
     val builder = prepareDialogBuilder()
     builder.setTitle(R.string.mapbox_attributionGeofencingTitle)
