@@ -763,10 +763,10 @@ package com.mapbox.maps.extension.style {
 
 package com.mapbox.maps.geofencing {
 
-  @com.mapbox.annotation.MapboxExperimental @com.mapbox.maps.MapboxExperimental public interface MapGeofencingConsent {
-    method @com.mapbox.maps.MapboxExperimental public boolean getUserConsent();
-    method @com.mapbox.maps.MapboxExperimental public void setUserConsent(boolean isConsentGiven, com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback callback);
-    method @com.mapbox.maps.MapboxExperimental public boolean shouldShowConsent();
+  public interface MapGeofencingConsent {
+    method public boolean getUserConsent();
+    method public void setUserConsent(boolean isConsentGiven, com.mapbox.common.geofencing.GeofencingUtilsUserConsentResponseCallback callback);
+    method public boolean shouldShowConsent();
   }
 
 }
@@ -1797,7 +1797,7 @@ package com.mapbox.maps.plugin.attribution {
   }
 
   public final class AttributionParserConfig {
-    ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true, @com.mapbox.maps.MapboxExperimental boolean withMapboxGeofencingConsent = true);
+    ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true, boolean withMapboxGeofencingConsent = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true, boolean withMapboxPrivacyPolicy = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true, boolean withMapboxAttribution = true);
     ctor public AttributionParserConfig(boolean withImproveMap = true, boolean withCopyrightSign = true, boolean withTelemetryAttribution = true);

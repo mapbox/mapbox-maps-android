@@ -38,7 +38,6 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.InteractionContext
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
@@ -73,8 +72,6 @@ import java.util.Date
  * even when GeofenceActivity or the whole app is closed.
  * [MapboxApplication.ENABLE_BACKGROUND_GEOFENCING] flag turns ON/OFF showcase of background behavior of the geofence engine.
  */
-
-@com.mapbox.annotation.MapboxExperimental
 class ExtendedGeofencingActivity : AppCompatActivity() {
 
   private var requestNotificationPermissionLauncher: ActivityResultLauncher<String> =
@@ -213,7 +210,6 @@ class ExtendedGeofencingActivity : AppCompatActivity() {
   }
 
   @SuppressLint("SetTextI18n")
-  @OptIn(MapboxExperimental::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 

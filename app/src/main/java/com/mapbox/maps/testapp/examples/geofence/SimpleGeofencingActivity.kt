@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.JsonObject
-import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.common.geofencing.GeofencingEvent
@@ -46,7 +45,6 @@ import java.lang.ref.WeakReference
  * Geofence callbacks are called when device location enters, dwells, or leaves loaded geofence zone.
  * Each aforementioned event is accompanied by rendering received feature (Blue, Green, Red colors ).
  */
-@MapboxExperimental
 class SimpleGeofencingActivity : AppCompatActivity() {
 
   private lateinit var locationPermissionHelper: LocationPermissionHelper
