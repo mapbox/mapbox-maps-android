@@ -264,7 +264,7 @@ class SimpleGeofencingActivity : AppCompatActivity() {
     private const val CUSTOM_GEOZONE_LAYER_ID = "custom_geozone_layer_id"
     private const val CUSTOM_GEOZONE_DATA_ID = "custom_geozone_data_id"
     private const val CUSTOM_GEOFENCE_RADIUS = 500
-    private const val DWELL_TIME = 0.5
+    private const val DWELL_TIME = 1
     private const val LAYER_OPACITY = 0.6
     private const val LAYER_OUTLINE_COLOR = "#000"
     private const val DARK_BLUE = "#4264fb"
