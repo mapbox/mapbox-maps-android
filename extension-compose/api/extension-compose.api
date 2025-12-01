@@ -4491,7 +4491,13 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getColorAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorBuildingHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorBuildingSelect ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorBuildings ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorCommercial ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorEducation ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorGreenspace ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorIndustrial ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorLand ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorMedical ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
 	public final fun getColorMotorways ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorPlaceLabelHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
@@ -4500,12 +4506,17 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getColorPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorRoadLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorRoads ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorSnow ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTrunks ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorWater ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getDensityPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getFuelingStationModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getRoadsBrightness ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getShow3dBuildings ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShow3dFacades ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShow3dLandmarks ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShow3dObjects ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShow3dTrees ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowLandmarkIconLabels ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowLandmarkIcons ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
@@ -4516,7 +4527,13 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setColorAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorBuildingHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorBuildingSelect (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorBuildings (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorCommercial (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorEducation (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorGreenspace (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorIndustrial (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorLand (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorMedical (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;)V
 	public final fun setColorMotorways (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorPlaceLabelHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
@@ -4525,12 +4542,17 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setColorPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorRoadLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorRoads (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorSnow (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTrunks (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorWater (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setDensityPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setFuelingStationModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setRoadsBrightness (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setShow3dBuildings (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShow3dFacades (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShow3dLandmarks (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShow3dObjects (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShow3dTrees (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowLandmarkIconLabels (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowLandmarkIcons (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V

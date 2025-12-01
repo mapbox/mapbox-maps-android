@@ -22,8 +22,14 @@ public class StandardStyleConfigurationState private constructor(
   initialBackgroundPointOfInterestLabels: BackgroundPointOfInterestLabelsValue,
   initialColorAdminBoundaries: ColorValue,
   initialColorBuildingHighlight: ColorValue,
+  initialColorBuildings: ColorValue,
   initialColorBuildingSelect: ColorValue,
+  initialColorCommercial: ColorValue,
+  initialColorEducation: ColorValue,
   initialColorGreenspace: ColorValue,
+  initialColorIndustrial: ColorValue,
+  initialColorLand: ColorValue,
+  initialColorMedical: ColorValue,
   initialColorModePointOfInterestLabels: ColorModePointOfInterestLabelsValue,
   initialColorMotorways: ColorValue,
   initialColorPlaceLabelHighlight: ColorValue,
@@ -32,11 +38,16 @@ public class StandardStyleConfigurationState private constructor(
   initialColorPointOfInterestLabels: ColorValue,
   initialColorRoadLabels: ColorValue,
   initialColorRoads: ColorValue,
+  initialColorSnow: ColorValue,
   initialColorTrunks: ColorValue,
   initialColorWater: ColorValue,
   initialDensityPointOfInterestLabels: DoubleValue,
   initialFuelingStationModePointOfInterestLabels: StringValue,
   initialRoadsBrightness: DoubleValue,
+  initialShow3dBuildings: BooleanValue,
+  initialShow3dFacades: BooleanValue,
+  initialShow3dLandmarks: BooleanValue,
+  initialShow3dTrees: BooleanValue,
   initialShowAdminBoundaries: BooleanValue,
   initialShowLandmarkIconLabels: BooleanValue,
   initialShowLandmarkIcons: BooleanValue,
@@ -53,8 +64,14 @@ public class StandardStyleConfigurationState private constructor(
     initialBackgroundPointOfInterestLabels = BackgroundPointOfInterestLabelsValue.INITIAL,
     initialColorAdminBoundaries = ColorValue.INITIAL,
     initialColorBuildingHighlight = ColorValue.INITIAL,
+    initialColorBuildings = ColorValue.INITIAL,
     initialColorBuildingSelect = ColorValue.INITIAL,
+    initialColorCommercial = ColorValue.INITIAL,
+    initialColorEducation = ColorValue.INITIAL,
     initialColorGreenspace = ColorValue.INITIAL,
+    initialColorIndustrial = ColorValue.INITIAL,
+    initialColorLand = ColorValue.INITIAL,
+    initialColorMedical = ColorValue.INITIAL,
     initialColorModePointOfInterestLabels = ColorModePointOfInterestLabelsValue.INITIAL,
     initialColorMotorways = ColorValue.INITIAL,
     initialColorPlaceLabelHighlight = ColorValue.INITIAL,
@@ -63,11 +80,16 @@ public class StandardStyleConfigurationState private constructor(
     initialColorPointOfInterestLabels = ColorValue.INITIAL,
     initialColorRoadLabels = ColorValue.INITIAL,
     initialColorRoads = ColorValue.INITIAL,
+    initialColorSnow = ColorValue.INITIAL,
     initialColorTrunks = ColorValue.INITIAL,
     initialColorWater = ColorValue.INITIAL,
     initialDensityPointOfInterestLabels = DoubleValue.INITIAL,
     initialFuelingStationModePointOfInterestLabels = StringValue.INITIAL,
     initialRoadsBrightness = DoubleValue.INITIAL,
+    initialShow3dBuildings = BooleanValue.INITIAL,
+    initialShow3dFacades = BooleanValue.INITIAL,
+    initialShow3dLandmarks = BooleanValue.INITIAL,
+    initialShow3dTrees = BooleanValue.INITIAL,
     initialShowAdminBoundaries = BooleanValue.INITIAL,
     initialShowLandmarkIconLabels = BooleanValue.INITIAL,
     initialShowLandmarkIcons = BooleanValue.INITIAL,
@@ -85,7 +107,7 @@ public class StandardStyleConfigurationState private constructor(
   public var showPedestrianRoads: BooleanValue by mutableStateOf(initialShowPedestrianRoads)
 
   /**
-   * Show or hide 3d objects (buildings, landmarks, trees, etc.) including shadows, ambient occlusion, and flood lights.
+   * Show or hide all 3D objects, including buildings, landmarks, and trees.
    */
   public var show3dObjects: BooleanValue by mutableStateOf(initialShow3dObjects)
 
@@ -105,14 +127,44 @@ public class StandardStyleConfigurationState private constructor(
   public var colorBuildingHighlight: ColorValue by mutableStateOf(initialColorBuildingHighlight)
 
   /**
+   * Set a custom color for 3D &amp; 2D buildings.
+   */
+  public var colorBuildings: ColorValue by mutableStateOf(initialColorBuildings)
+
+  /**
    * Set a custom color for building fill extrusion when setting select state.
    */
   public var colorBuildingSelect: ColorValue by mutableStateOf(initialColorBuildingSelect)
 
   /**
+   * Set a custom color for commercial areas.
+   */
+  public var colorCommercial: ColorValue by mutableStateOf(initialColorCommercial)
+
+  /**
+   * Set a custom color for education areas.
+   */
+  public var colorEducation: ColorValue by mutableStateOf(initialColorEducation)
+
+  /**
    * Set a custom color for greenspaces such as forests, parks, and woods.
    */
   public var colorGreenspace: ColorValue by mutableStateOf(initialColorGreenspace)
+
+  /**
+   * Set a custom color for industrial areas and airports.
+   */
+  public var colorIndustrial: ColorValue by mutableStateOf(initialColorIndustrial)
+
+  /**
+   * Set a custom color for land.
+   */
+  public var colorLand: ColorValue by mutableStateOf(initialColorLand)
+
+  /**
+   * Set a custom color for medical areas.
+   */
+  public var colorMedical: ColorValue by mutableStateOf(initialColorMedical)
 
   /**
    * Use the default categorical colors or set a single custom color for POI labels.
@@ -155,6 +207,11 @@ public class StandardStyleConfigurationState private constructor(
   public var colorRoads: ColorValue by mutableStateOf(initialColorRoads)
 
   /**
+   * Set a custom color for snow.
+   */
+  public var colorSnow: ColorValue by mutableStateOf(initialColorSnow)
+
+  /**
    * Set a custom color for trunk roads.
    */
   public var colorTrunks: ColorValue by mutableStateOf(initialColorTrunks)
@@ -178,6 +235,26 @@ public class StandardStyleConfigurationState private constructor(
    * Control how bright roads appear in dark styles.
    */
   public var roadsBrightness: DoubleValue by mutableStateOf(initialRoadsBrightness)
+
+  /**
+   * Show or hide 3D buildings.
+   */
+  public var show3dBuildings: BooleanValue by mutableStateOf(initialShow3dBuildings)
+
+  /**
+   * Show or hide 3D building facades.
+   */
+  public var show3dFacades: BooleanValue by mutableStateOf(initialShow3dFacades)
+
+  /**
+   * Show or hide 3D landmark buildings.
+   */
+  public var show3dLandmarks: BooleanValue by mutableStateOf(initialShow3dLandmarks)
+
+  /**
+   * Show or hide 3D trees.
+   */
+  public var show3dTrees: BooleanValue by mutableStateOf(initialShow3dTrees)
 
   /**
    * Show or hide administrative boundaries.
@@ -212,8 +289,14 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_BACKGROUND_POINT_OF_INTEREST_LABELS = "backgroundPointOfInterestLabels"
     internal const val CONFIG_COLOR_ADMIN_BOUNDARIES = "colorAdminBoundaries"
     internal const val CONFIG_COLOR_BUILDING_HIGHLIGHT = "colorBuildingHighlight"
+    internal const val CONFIG_COLOR_BUILDINGS = "colorBuildings"
     internal const val CONFIG_COLOR_BUILDING_SELECT = "colorBuildingSelect"
+    internal const val CONFIG_COLOR_COMMERCIAL = "colorCommercial"
+    internal const val CONFIG_COLOR_EDUCATION = "colorEducation"
     internal const val CONFIG_COLOR_GREENSPACE = "colorGreenspace"
+    internal const val CONFIG_COLOR_INDUSTRIAL = "colorIndustrial"
+    internal const val CONFIG_COLOR_LAND = "colorLand"
+    internal const val CONFIG_COLOR_MEDICAL = "colorMedical"
     internal const val CONFIG_COLOR_MODE_POINT_OF_INTEREST_LABELS = "colorModePointOfInterestLabels"
     internal const val CONFIG_COLOR_MOTORWAYS = "colorMotorways"
     internal const val CONFIG_COLOR_PLACE_LABEL_HIGHLIGHT = "colorPlaceLabelHighlight"
@@ -222,11 +305,16 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_COLOR_POINT_OF_INTEREST_LABELS = "colorPointOfInterestLabels"
     internal const val CONFIG_COLOR_ROAD_LABELS = "colorRoadLabels"
     internal const val CONFIG_COLOR_ROADS = "colorRoads"
+    internal const val CONFIG_COLOR_SNOW = "colorSnow"
     internal const val CONFIG_COLOR_TRUNKS = "colorTrunks"
     internal const val CONFIG_COLOR_WATER = "colorWater"
     internal const val CONFIG_DENSITY_POINT_OF_INTEREST_LABELS = "densityPointOfInterestLabels"
     internal const val CONFIG_FUELING_STATION_MODE_POINT_OF_INTEREST_LABELS = "fuelingStationModePointOfInterestLabels"
     internal const val CONFIG_ROADS_BRIGHTNESS = "roadsBrightness"
+    internal const val CONFIG_SHOW3D_BUILDINGS = "show3dBuildings"
+    internal const val CONFIG_SHOW3D_FACADES = "show3dFacades"
+    internal const val CONFIG_SHOW3D_LANDMARKS = "show3dLandmarks"
+    internal const val CONFIG_SHOW3D_TREES = "show3dTrees"
     internal const val CONFIG_SHOW_ADMIN_BOUNDARIES = "showAdminBoundaries"
     internal const val CONFIG_SHOW_LANDMARK_ICON_LABELS = "showLandmarkIconLabels"
     internal const val CONFIG_SHOW_LANDMARK_ICONS = "showLandmarkIcons"

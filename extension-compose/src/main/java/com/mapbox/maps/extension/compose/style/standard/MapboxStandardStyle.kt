@@ -219,11 +219,29 @@ public fun MapboxStandardStyle(
             if (colorBuildingHighlight.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_BUILDING_HIGHLIGHT, colorBuildingHighlight.value)
             }
+            if (colorBuildings.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_BUILDINGS, colorBuildings.value)
+            }
             if (colorBuildingSelect.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_BUILDING_SELECT, colorBuildingSelect.value)
             }
+            if (colorCommercial.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_COMMERCIAL, colorCommercial.value)
+            }
+            if (colorEducation.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_EDUCATION, colorEducation.value)
+            }
             if (colorGreenspace.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_GREENSPACE, colorGreenspace.value)
+            }
+            if (colorIndustrial.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_INDUSTRIAL, colorIndustrial.value)
+            }
+            if (colorLand.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_LAND, colorLand.value)
+            }
+            if (colorMedical.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_MEDICAL, colorMedical.value)
             }
             if (colorModePointOfInterestLabels.notInitial) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_MODE_POINT_OF_INTEREST_LABELS, colorModePointOfInterestLabels.value)
@@ -249,6 +267,9 @@ public fun MapboxStandardStyle(
             if (colorRoads.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_ROADS, colorRoads.value)
             }
+            if (colorSnow.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_SNOW, colorSnow.value)
+            }
             if (colorTrunks.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_TRUNKS, colorTrunks.value)
             }
@@ -263,6 +284,18 @@ public fun MapboxStandardStyle(
             }
             if (roadsBrightness.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_ROADS_BRIGHTNESS, roadsBrightness.value)
+            }
+            if (show3dBuildings.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW3D_BUILDINGS, show3dBuildings.value)
+            }
+            if (show3dFacades.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW3D_FACADES, show3dFacades.value)
+            }
+            if (show3dLandmarks.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW3D_LANDMARKS, show3dLandmarks.value)
+            }
+            if (show3dTrees.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW3D_TREES, show3dTrees.value)
             }
             if (showAdminBoundaries.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_SHOW_ADMIN_BOUNDARIES, showAdminBoundaries.value)
