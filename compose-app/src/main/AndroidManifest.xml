@@ -99,6 +99,16 @@
                 android:value="@string/category_annotation" />
         </activity>
         <activity
+            android:name=".examples.annotation.CustomVectorIconsActivity"
+            android:description="@string/description_custom_vector_icons"
+            android:exported="true"
+            android:label="@string/activity_custom_vector_icons"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
+        <activity
             android:name=".examples.annotation.ViewAnnotationActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_view_annotation"
