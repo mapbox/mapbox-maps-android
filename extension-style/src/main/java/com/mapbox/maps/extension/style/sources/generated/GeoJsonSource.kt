@@ -186,14 +186,6 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
    * Minimum zoom level at which to create vector tiles
    * Default value: 0.
    */
-  fun minzoom(value: Long = 0L): GeoJsonSource = apply {
-    setProperty(PropertyValue("minzoom", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * Minimum zoom level at which to create vector tiles
-   * Default value: 0.
-   */
   val minzoom: Long?
     /**
      * Get the Minzoom property

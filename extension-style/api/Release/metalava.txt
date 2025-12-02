@@ -7634,7 +7634,6 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public com.mapbox.maps.extension.style.types.PromoteId? getPromoteId();
     method public com.mapbox.maps.TileCacheBudget? getTileCacheBudget();
     method public Double? getTolerance();
-    method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource minzoom(long value = 0L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource prefetchZoomDelta(long value = 4L);
     method public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource tileCacheBudget(com.mapbox.maps.TileCacheBudget value);
     method @Deprecated public com.mapbox.maps.extension.style.sources.generated.GeoJsonSource url(String value, String dataId = "");
