@@ -197,16 +197,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun minzoomSetAfterBind() {
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-    testSource.minzoom(1L)
-
-    verify { style.setStyleSourceProperty("testId", "minzoom", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "1")
-  }
-
-  @Test
   fun minzoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}

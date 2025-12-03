@@ -163,17 +163,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun minzoomAfterBindTest() {
-    val testSource = geoJsonSource(SOURCE_ID) {
-      url(TEST_URI)
-    }
-    setupSource(testSource)
-    testSource.minzoom(1L)
-    assertEquals(1L, testSource.minzoom)
-  }
-
-  @Test
-  @UiThreadTest
   fun attributionTest() {
     val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)

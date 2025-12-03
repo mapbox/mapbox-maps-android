@@ -6423,8 +6423,6 @@ public final class com/mapbox/maps/extension/style/sources/generated/GeoJsonSour
 	public final fun getPromoteId ()Lcom/mapbox/maps/extension/style/types/PromoteId;
 	public final fun getTileCacheBudget ()Lcom/mapbox/maps/TileCacheBudget;
 	public final fun getTolerance ()Ljava/lang/Double;
-	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
-	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun prefetchZoomDelta (J)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public static synthetic fun prefetchZoomDelta$default (Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
 	public final fun tileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)Lcom/mapbox/maps/extension/style/sources/generated/GeoJsonSource;
