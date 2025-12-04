@@ -10,6 +10,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove line-cutout-width and change line-cutout-opacity default to 1.0
 
 * Add Standard Style color and 3D configuration options: `colorBuildings`, `colorCommercial`, `colorEducation`, `colorIndustrial`, `colorLand`, `colorMedical`, `colorSnow`, `show3dBuildings`, `show3dFacades`, `show3dLandmarks`, and `show3dTrees`.
+# 11.17.0 December 04, 2025
+## Dependencies
+* Update gl-native to [v11.17.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0), common to [v24.17.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0).
+
 
 # 11.17.0-rc.3 November 28, 2025
 ## Features ✨ and improvements 🏁
