@@ -7,9 +7,17 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.17.0 December 04, 2025
+## Features ✨ and improvements 🏁
+* Promote Geofencing APIs to stable, remove `MapboxExperimental` annotations from Geofencing APIs. 
+* Add TileStore improvements and optimizations.
+
+## Bug fixes 🐞
+* Fix config expression evaluation to properly check dependencies in nested value expressions.
+* Fix issue with shadows showing up on top of tunnel roads.
+* Fix view-aligned symbols with road elevation being cutout.
+
 ## Dependencies
 * Update gl-native to [v11.17.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0), common to [v24.17.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0).
-
 
 # 11.17.0-rc.3 November 28, 2025
 ## Features ✨ and improvements 🏁
