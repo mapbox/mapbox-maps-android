@@ -7,14 +7,43 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.17.0 December 04, 2025
+## Breaking changes ⚠️
+* Require passing required argument to the constructor of experimental `GeofencingState.Builder`, `GeofencingError.Builder`, `GeofencingEvent.Builder` and `GeofencingOptions.Builder` APIs.
+
 ## Features ✨ and improvements 🏁
-* Promote Geofencing APIs to stable, remove `MapboxExperimental` annotations from Geofencing APIs. 
+* Promote Geofencing APIs to stable, remove `MapboxExperimental` annotations from Geofencing APIs.
 * Add TileStore improvements and optimizations.
+* Promote `ModelLayer` to stable.
+* Add `SymbolLayer.occlusionOpacityMode`, `SymbolLayer.iconColorBrightnessMax`, `SymbolLayer.iconColorBrightnessMin`, `SymbolLayer.iconColorContrast` properties.
+* Add `FillExtrusionLayer.castShadows` property.
+* Add `GeoJsonSource.minZoom` property.
+* Add `RasterArraySource.volatile` experimental property.
+* Make `line-emissive-strength` property data-driven.
+* Add experimental `MapboxMap.setFeatureStateExpression()`, `removeFeatureStateExpression()`, and `resetFeatureStateExpressions()` APIs to efficiently update feature state for multiple features at once using expressions.
+* Improved error reporting for offline tile region downloads on Android.
+* Enhanced reliability of network connections by improving how Cronet timeouts are handled.
+* Added experimental `MapOptions.Builder.scaleFactor()` for scaling icons and texts.
+* Add click gesture support to `Marker` composable with `onClick` parameter
+* Introduced `ScaleBarSettings.distanceUnits` property supporting metric, imperial, and nautical units, replacing the boolean `isMetricUnits` property.
+* Added `fuelingStationModePointOfInterestLabels` configuration option to Mapbox Standard and Standard Satellite styles. Control the visibility of fuel station and electric charging station POI labels with options: "default" (shows both), "fuel" (fuel stations only), "electric" (charging stations only), or "none" (hides both).
+* Introduce experimental support for Appearances. The Appearances layer property defines sets of appearance objects used to quickly change the visual styling of a layer based on a condition using feature-state. See `AppearancesActivity` in example application for further details.
+* Memory allocation improvements
 
 ## Bug fixes 🐞
 * Fix config expression evaluation to properly check dependencies in nested value expressions.
 * Fix issue with shadows showing up on top of tunnel roads.
 * Fix view-aligned symbols with road elevation being cutout.
+* Fix camera listener not unsubscribed when disabling ScaleBar via `updateSettings { enabled = false }`
+* Fixed a crash when switching map styles quickly.
+* Fixed a threading bug to eliminate 3D rendering issues and instability.
+* Internal fixes and performance improvements.
+* Fix multiple crashes during style switches related to terrain rendering, texture management, and image cleanup.
+* Fix line patterns not elevating properly on HD roads.
+* Fix rendering of TileStore tiles when TileStore is used as disk cache and user is offline.
+* Fix performance regression for `distance` and `within` expressions when processing large GeoJSON datasets.
+* Fix GeoJSON tiled model disappearance during fast zoom interactions.
+* Fix rendering issues when switching between globe and mercator projections.
+* Logging improvements to reduce noise and duplication.
 
 ## Dependencies
 * Update gl-native to [v11.17.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0), common to [v24.17.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.0).
