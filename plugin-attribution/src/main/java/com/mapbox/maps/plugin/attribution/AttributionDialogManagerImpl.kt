@@ -208,6 +208,6 @@ class AttributionDialogManagerImpl(
   }
 
   private companion object {
-    private const val FEEDBACK_KEY_WORD = "feedback"
+    private const val FEEDBACK_KEY_WORD = "contribute"
   }
 }

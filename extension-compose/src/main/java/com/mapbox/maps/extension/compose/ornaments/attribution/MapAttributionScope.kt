@@ -23,10 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -44,16 +46,26 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import com.mapbox.annotation.MapboxDelicateApi
+import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.maps.MapView
+import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.ornaments.attribution.internal.AttributionComposePlugin
+import com.mapbox.maps.logD
+import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import java.util.Objects
 import kotlin.coroutines.resume
 
 /**
@@ -76,6 +88,7 @@ public class MapAttributionScope internal constructor(
    * @param modifier Modifier to be applied to the [Attribution].
    * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Attribution] within the Map.
+   * @param iconColor The color tint applied to the attribution icon. Defaults to Mapbox blue (#1E8CAB).
    * @param attributionDialog Defines AlertDialog when the attribution is clicked.
    * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
    */
@@ -111,13 +124,13 @@ public class MapAttributionScope internal constructor(
     }
   ) {
     Attribution(
-      modifier,
-      contentPadding,
-      alignment,
-      iconColor,
-      attributionDialog,
-      telemetryDialog,
-      { onDismissRequest, onDisagree, onAgree, currentUserConsent ->
+      modifier = modifier,
+      contentPadding = contentPadding,
+      alignment = alignment,
+      iconColor = iconColor,
+      attributionDialog = attributionDialog,
+      telemetryDialog = telemetryDialog,
+      geofencingConsentDialog = { onDismissRequest, onDisagree, onAgree, currentUserConsent ->
         GeofencingConsentDialog(
           onDismissRequest = onDismissRequest,
           onDisagree = onDisagree,
@@ -127,6 +140,7 @@ public class MapAttributionScope internal constructor(
       }
     )
   }
+
   /**
    * Add a [Attribution] ornament to the map.
    *
@@ -137,10 +151,12 @@ public class MapAttributionScope internal constructor(
    * @param modifier Modifier to be applied to the [Attribution].
    * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Attribution] within the Map.
+   * @param iconColor The color tint applied to the attribution icon. Defaults to Mapbox blue (#1E8CAB).
    * @param attributionDialog Defines AlertDialog when the attribution is clicked.
    * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
    * @param geofencingConsentDialog Defines GeofencingConsentDialog when the Mapbox Geofencing is clicked.
    */
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
   @Composable
   public fun Attribution(
     modifier: Modifier = Modifier,
@@ -185,15 +201,14 @@ public class MapAttributionScope internal constructor(
       )
     }
   ) {
-    val pluginId = remember {
-      getNextId()
+    val attributionState: AttributionState = remember {
+      AttributionState()
     }
-    val attributions = remember {
-      mutableStateListOf<Attribution>()
-    }
+    val coroutineScope = rememberCoroutineScope()
     var showAttributionDialog by remember {
       mutableStateOf(false)
     }
+
     var showTelemetryDialog by remember {
       mutableStateOf(false)
     }
@@ -201,94 +216,30 @@ public class MapAttributionScope internal constructor(
       mutableStateOf(false)
     }
 
-    var mapboxFeedbackUrl by remember {
-      mutableStateOf("")
+    var userSelectedTelemetryEnableState: Boolean? by remember {
+      mutableStateOf(null)
     }
 
-    var telemetryEnableState by remember {
-      mutableStateOf(true)
-    }
-    var geofencingUserConsentState by remember {
-      mutableStateOf(true)
+    var userSelectedGeofencingUserConsentState: Boolean? by remember {
+      mutableStateOf(null)
     }
 
-    DisposableEffect(Unit) {
-      // Initialise AttributionComposePlugin when entering composition
-      mapView.createPlugin(
-        Plugin.Custom(
-          id = pluginId,
-          instance = AttributionComposePlugin()
-        )
-      )
-      // propagate the initial geofencing user consent
-      mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
-        geofencingUserConsentState = it.mapAttributionDelegate.geofencingConsent().getUserConsent()
+    var userConsentState: UserConsentState? by remember {
+      mutableStateOf(null)
+    }
+
+    // Whenever telemetryEnableState or geofencingUserConsentState is updated by the user,
+    // pass it through to attributionState.
+    LaunchedEffect(
+      userSelectedTelemetryEnableState,
+      userSelectedGeofencingUserConsentState,
+    ) {
+      attributionState.userConsentState?.let { state ->
+        val builder = state.toBuilder()
+        userSelectedTelemetryEnableState?.let { builder.setTelemetryEnableState(it) }
+        userSelectedGeofencingUserConsentState?.let { builder.setGeofencingUserConsentState(it) }
+        userConsentState = builder.build()
       }
-      onDispose {
-        // Remove AttributionComposePlugin when leaving composition
-        mapView.removePlugin(pluginId)
-      }
-    }
-
-    // Whenever telemetryEnableState is updated by user, pass it through to mapAttributionDelegate.
-    LaunchedEffect(telemetryEnableState) {
-      mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
-        it.mapAttributionDelegate.telemetry().userTelemetryRequestState = telemetryEnableState
-      }
-    }
-
-    // Whenever geofencingUserConsentState is updated by the user, pass it through to mapAttributionDelegate.
-    LaunchedEffect(geofencingUserConsentState) {
-      mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
-        val error: GeofencingError? = suspendCancellableCoroutine { continuation ->
-          it.mapAttributionDelegate.geofencingConsent().setUserConsent(geofencingUserConsentState) {
-            continuation.resume(it.error)
-          }
-        }
-        error?.let {
-          logW("GeofencingConsent", "Unable to set user consent: ${it.type}")
-        }
-      }
-    }
-
-    // Whenever attribution dialog is about to appear, update the attribution list and feedback url according
-    // to current style.
-    LaunchedEffect(showAttributionDialog) {
-      mapView.getPlugin<AttributionComposePlugin>(pluginId)?.let {
-        attributions.clear()
-        attributions.addAll(
-          it.mapAttributionDelegate.parseAttributions(
-            mapView.context,
-            AttributionParserConfig()
-          )
-        )
-        mapboxFeedbackUrl = it.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)
-      }
-    }
-
-    // Show Attribution Dialog
-    if (showAttributionDialog) {
-      attributionDialog(
-        attributions = attributions,
-        onDismissRequest = {
-          showAttributionDialog = false
-        },
-        onAttributionClick = { attribution ->
-          showAttributionDialog = false
-          when (attribution.url) {
-              Attribution.ABOUT_TELEMETRY_URL -> showTelemetryDialog = true
-              Attribution.GEOFENCING_URL_MARKER -> showGeofencingConsentDialog = true
-              else -> {
-                  val url = if (attribution.url.contains(FEEDBACK_KEY_WORD)) {
-                    mapboxFeedbackUrl
-                  } else attribution.url
-                  if (url.isNotEmpty()) {
-                    showWebPage(url)
-                  }
-              }
-          }
-        }
-      )
     }
 
     // Show Telemetry Dialog
@@ -302,11 +253,11 @@ public class MapAttributionScope internal constructor(
           showTelemetryDialog = false
         },
         onDisagree = {
-          telemetryEnableState = false
+          userSelectedTelemetryEnableState = false
           showTelemetryDialog = false
         },
         onAgree = {
-          telemetryEnableState = true
+          userSelectedTelemetryEnableState = true
           showTelemetryDialog = false
         }
       )
@@ -319,14 +270,45 @@ public class MapAttributionScope internal constructor(
           showGeofencingConsentDialog = false
         },
         onDisagree = {
-          geofencingUserConsentState = false
+          userSelectedGeofencingUserConsentState = false
           showGeofencingConsentDialog = false
         },
         onAgree = {
-          geofencingUserConsentState = true
+          userSelectedGeofencingUserConsentState = true
           showGeofencingConsentDialog = false
         },
-        geofencingUserConsentState
+        attributionState.userConsentState?.geofencingUserConsentState ?: true
+      )
+    }
+
+    // Show Attribution Dialog
+    if (showAttributionDialog) {
+      attributionDialog(
+        attributions = attributionState.attributions,
+        onDismissRequest = {
+          showAttributionDialog = false
+        },
+        onAttributionClick = { attribution ->
+          showAttributionDialog = false
+          when (attribution.url) {
+            Attribution.ABOUT_TELEMETRY_URL -> showTelemetryDialog = true
+            Attribution.GEOFENCING_URL_MARKER -> showGeofencingConsentDialog = true
+            else -> {
+              if (attribution.url.isNotEmpty()) {
+                if (attribution.isMapboxFeedback()) {
+                  coroutineScope.launch {
+                    val url = attributionState.buildMapboxFeedbackUrl()
+                    showWebPage(url)
+                  }
+                } else {
+                  showWebPage(attribution.url)
+                }
+              } else {
+                logE(TAG, "Attribution url for ${attribution.title} is empty")
+              }
+            }
+          }
+        }
       )
     }
 
@@ -334,17 +316,367 @@ public class MapAttributionScope internal constructor(
     Image(
       modifier = with(boxScope) {
         Modifier
-          .padding(contentPadding)
-          .then(modifier)
-          .align(alignment)
-          .clickable {
-            showAttributionDialog = true
-          }
+            .padding(contentPadding)
+            .then(modifier)
+            .align(alignment)
+            .clickable {
+                showAttributionDialog = true
+            }
       },
       painter = painterResource(id = R.drawable.mapbox_attribution_default),
       contentDescription = "Mapbox Attribution",
       colorFilter = ColorFilter.tint(color = iconColor)
     )
+
+    AttributionControl(
+      userConsentState = userConsentState,
+      attributionState = attributionState
+    )
+  }
+
+  /**
+   * Adds a headless [AttributionControl] to the map for programmatic attribution management.
+   *
+   * This control provides no visual UI itself, instead exposing [UserConsentState] and [AttributionState] data
+   * to enable custom attribution interfaces elsewhere in your application. Use this when
+   * implementing custom attribution UI while maintaining ToS compliance.
+   *
+   * ## Legal Requirements
+   * **Mapbox attribution is mandatory** per [Mapbox Terms of Service](https://www.mapbox.com/legal/tos).
+   * This control helps you create custom UI while meeting these requirements.
+   *
+   * ## Telemetry and Privacy
+   * Your users should be in charge of their own location data and when it is shared. By default,
+   * whenever your application causes the user's location to be gathered, it sends de-identified
+   * location and usage data to Mapbox. If you're developing a native app with one of the Mapbox
+   * mobile SDKs, our terms of service require that you provide a telemetry opt-out option within
+   * your app for all end users. The default attribution control includes an opt out button. If you
+   * hide the attribution control, you must provide an alternative opt out method your users can use.
+   * You are responsible for allowing your users to opt out of Mapbox Telemetry.
+   *
+   * See [guide](https://docs.mapbox.com/help/dive-deeper/mobile-apps/#telemetry) for more info.
+   *
+   * ## Usage Example
+   * ```kotlin
+   * val attributionState = remember { AttributionState() }
+   * var userConsent: UserConsentState? by remember { mutableStateOf(null) }
+   *
+   * MapboxMap(
+   *   attribution = {
+   *     // Headless attribution control for custom UI
+   *     AttributionControl(
+   *       userConsentState = userConsent,
+   *       attributionState = attributionState
+   *     )
+   *   }
+   * )
+   *
+   * // Use attributionState.attributions and attributionState.userConsentState
+   * // in your custom UI components
+   * ```
+   *
+   * ## Usage Notes
+   * - Attribution data may not be immediately available during map initialization, and it might be updated whenever style source is loaded.
+   *
+   * @param userConsentState User consent configuration for telemetry and geofencing.
+   * When `null`, existing consent state remains unchanged. Use to programmatically
+   * update user preferences from your custom UI.
+   *
+   * @param attributionState Current attribution data containing available attributions
+   * and user consent information for building custom UI.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  @Composable
+  public fun AttributionControl(
+    userConsentState: UserConsentState?,
+    attributionState: AttributionState
+  ) {
+    val pluginId = remember {
+      getNextId()
+    }
+
+    var attributionComposePlugin: AttributionComposePlugin? by remember {
+      mutableStateOf(null)
+    }
+
+    DisposableEffect(Unit) {
+      // Initialise AttributionComposePlugin when entering composition
+      mapView.createPlugin(
+        Plugin.Custom(
+          id = pluginId,
+          instance = AttributionComposePlugin()
+        )
+      )
+      attributionComposePlugin = mapView.getPlugin(pluginId)
+      onDispose {
+        // Remove AttributionComposePlugin when leaving composition
+        mapView.removePlugin(pluginId)
+        attributionComposePlugin = null
+      }
+    }
+
+    attributionState.BindToMap(mapView, attributionComposePlugin)
+
+    // Whenever telemetryEnableState is updated by user, pass it through to mapAttributionDelegate.
+    LaunchedEffect(userConsentState?.telemetryEnableState, attributionComposePlugin) {
+      userConsentState?.telemetryEnableState?.let { telemetryEnableState ->
+        attributionComposePlugin?.let {
+          it.mapAttributionDelegate.telemetry().userTelemetryRequestState = telemetryEnableState
+          // Update UserConsentState in attributionState
+          attributionState._userConsentState.value = UserConsentState.Builder()
+            .setTelemetryEnableState(it.mapAttributionDelegate.telemetry().userTelemetryRequestState)
+            .setGeofencingUserConsentState(
+              it.mapAttributionDelegate.geofencingConsent().getUserConsent()
+            )
+            .build()
+          logD(TAG, "User set telemetry state: $telemetryEnableState")
+        }
+      }
+    }
+
+    // Whenever geofencingUserConsentState is updated by the user, pass it through to mapAttributionDelegate.
+    LaunchedEffect(userConsentState?.geofencingUserConsentState, attributionComposePlugin) {
+      userConsentState?.geofencingUserConsentState?.let { geofencingUserConsentState ->
+        attributionComposePlugin?.let { plugin ->
+          val error: GeofencingError? = suspendCancellableCoroutine { continuation ->
+            plugin.mapAttributionDelegate.geofencingConsent()
+              .setUserConsent(geofencingUserConsentState) {
+                continuation.resume(it.error)
+                // Update UserConsentState in attributionState
+                attributionState._userConsentState.value = UserConsentState.Builder()
+                  .setTelemetryEnableState(plugin.mapAttributionDelegate.telemetry().userTelemetryRequestState)
+                  .setGeofencingUserConsentState(
+                    plugin.mapAttributionDelegate.geofencingConsent().getUserConsent()
+                  )
+                  .build()
+                logD(
+                  TAG,
+                  "User set geofencingUserConsentState: $geofencingUserConsentState, error: ${it.error}"
+                )
+              }
+          }
+          error?.let {
+            logW("GeofencingConsent", "Unable to set user consent: ${it.type}")
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Represents user consent preferences for data collection and location services.
+   *
+   * This data class enables programmatic management of user consent states for telemetry
+   * and geofencing features, allowing you to implement custom consent UI flows outside
+   * of the default attribution interface.
+   *
+   * ## Telemetry and Privacy
+   * Your users should be in charge of their own location data and when it is shared. By default,
+   * whenever your application causes the user's location to be gathered, it sends de-identified
+   * location and usage data to Mapbox. If you're developing a native app with one of the Mapbox
+   * mobile SDKs, our terms of service require that you provide a telemetry opt-out option within
+   * your app for all end users. The default attribution control includes an opt out button. If you
+   * hide the attribution control, you must provide an alternative opt out method your users can use.
+   * You are responsible for allowing your users to opt out of Mapbox Telemetry.
+   *
+   * See [guide](https://docs.mapbox.com/help/dive-deeper/mobile-apps/#telemetry) for more info.
+   */
+  @Stable
+  @MapboxExperimental
+  public class UserConsentState private constructor(
+    /**
+     * Telemetry opt-in state.
+     */
+    public val telemetryEnableState: Boolean,
+    /**
+     * Geofencing opt-in state.
+     */
+    public val geofencingUserConsentState: Boolean,
+  ) {
+    /**
+     * Calculate the hash code for this object.
+     */
+    override fun hashCode(): Int {
+      return Objects.hash(telemetryEnableState, geofencingUserConsentState)
+    }
+
+    /**
+     * Determine if this object is equal to the specified [other] object.
+     */
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (javaClass != other?.javaClass) return false
+
+      other as UserConsentState
+
+      if (telemetryEnableState != other.telemetryEnableState) return false
+      if (geofencingUserConsentState != other.geofencingUserConsentState) return false
+
+      return true
+    }
+
+    /**
+     * Return a string representation of this object.
+     */
+    override fun toString(): String {
+      return "UserConsentState(telemetryEnableState=$telemetryEnableState,geofencingUserConsentState=$geofencingUserConsentState)"
+    }
+
+    /**
+     * Builder for [UserConsentState].
+     */
+    @MapboxExperimental
+    public class Builder {
+      /**
+       * Telemetry opt-in state.
+       */
+      @set:JvmSynthetic
+      public var telemetryEnableState: Boolean = true
+
+      /**
+       * Geofencing opt-in state.
+       */
+      @set:JvmSynthetic
+      public var geofencingUserConsentState: Boolean = true
+
+      /**
+       * Set the telemetry opt-in state.
+       */
+      public fun setTelemetryEnableState(telemetryEnableState: Boolean): Builder = apply {
+        this.telemetryEnableState = telemetryEnableState
+      }
+
+      /**
+       * Set the geofencing opt-in state.
+       */
+      public fun setGeofencingUserConsentState(geofencingUserConsentState: Boolean): Builder =
+        apply {
+          this.geofencingUserConsentState = geofencingUserConsentState
+        }
+
+      /**
+       * Build an [UserConsentState].
+       */
+      public fun build(): UserConsentState {
+        return UserConsentState(
+          telemetryEnableState = telemetryEnableState,
+          geofencingUserConsentState = geofencingUserConsentState,
+        )
+      }
+    }
+
+    /**
+     * Build an [UserConsentState] with the current state.
+     */
+    public fun toBuilder(): Builder {
+      return Builder()
+        .setTelemetryEnableState(telemetryEnableState)
+        .setGeofencingUserConsentState(geofencingUserConsentState)
+    }
+  }
+
+  /**
+   * Complete attribution state containing both attribution data and user consent preferences.
+   *
+   * This data class combines attribution information (such as data sources and copyright notices)
+   * with user consent settings, enabling comprehensive attribution management for custom UI
+   * implementations that need to display both attribution and handle user consent.
+   *
+   * ## State Management
+   * - Contains current attribution list from active map style and data sources
+   * - Includes telemetry and geofencing consent states
+   * - Use with [AttributionControl] for programmatic state management
+   *
+   * ## Telemetry and Privacy
+   * Your users should be in charge of their own location data and when it is shared. By default,
+   * whenever your application causes the user's location to be gathered, it sends de-identified
+   * location and usage data to Mapbox. If you're developing a native app with one of the Mapbox
+   * mobile SDKs, our terms of service require that you provide a telemetry opt-out option within
+   * your app for all end users. The default attribution control includes an opt out button. If you
+   * hide the attribution control, you must provide an alternative opt out method your users can use.
+   * You are responsible for allowing your users to opt out of Mapbox Telemetry.
+   *
+   * See [guide](https://docs.mapbox.com/help/dive-deeper/mobile-apps/#telemetry) for more info.
+   */
+  @Stable
+  @MapboxExperimental
+  public class AttributionState {
+    private val attributionPluginFlow =
+      MutableStateFlow<Pair<MapView, AttributionComposePlugin>?>(null)
+
+    /**
+     * List of attributions to be shown in the [AttributionDialog].
+     */
+    private val _attributions: MutableState<List<Attribution>> = mutableStateOf(emptyList())
+
+    /**
+     * User consent state.
+     */
+    internal val _userConsentState: MutableState<UserConsentState?> = mutableStateOf(null)
+
+    /**
+     * List of attributions to be shown in the [AttributionDialog].
+     */
+    public val attributions: List<Attribution> by _attributions
+
+    /**
+     * User consent state.
+     */
+    public val userConsentState: UserConsentState? by _userConsentState
+
+    /**
+     * Build the Mapbox feedback url with the current map states.
+     */
+    public suspend fun buildMapboxFeedbackUrl(): String {
+      attributionPluginFlow.filterNotNull().first().apply {
+        return second.mapAttributionDelegate.buildMapBoxFeedbackUrl(first.context)
+      }
+    }
+
+    @Composable
+    private fun UpdateAttributionState(mapView: MapView, plugin: AttributionComposePlugin?) {
+      LaunchedEffect(plugin) {
+        if (plugin != null) {
+          // Update user consent state for the first time
+          _userConsentState.value = UserConsentState.Builder()
+            .setTelemetryEnableState(plugin.mapAttributionDelegate.telemetry().userTelemetryRequestState)
+            .setGeofencingUserConsentState(
+              plugin.mapAttributionDelegate.geofencingConsent().getUserConsent()
+            )
+            .build()
+          logD(TAG, "${plugin.hashCode()} Load initial user consent state: $userConsentState ")
+
+          // Update attributions when style data is added
+          mapView.mapboxMap.styleDataLoadedEvents.collect { event ->
+            // TO BE FIXED by Native, the SourceDataLoadedEvents with metadata type was never emitted
+//        mapView.mapboxMap.sourceDataLoadedEvents.collect { event ->
+//            if (event.type == SourceDataLoadedType.METADATA) {
+            logD(TAG, "${plugin.hashCode()} style data loaded, refresh attributions")
+            _attributions.value = plugin.mapAttributionDelegate.parseAttributions(
+              mapView.context,
+              AttributionParserConfig()
+            ).toMutableList().apply {
+              find { it.isMapboxFeedback() }?.let {
+                remove(it)
+                add(it.copy(url = plugin.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)))
+              }
+            }.toList()
+//            }
+          }
+        }
+      }
+    }
+
+    @Composable
+    internal fun BindToMap(mapView: MapView, plugin: AttributionComposePlugin?) {
+      LaunchedEffect(plugin) {
+        if (plugin != null) {
+          attributionPluginFlow.value = mapView to plugin
+        }
+      }
+      UpdateAttributionState(mapView, plugin)
+    }
   }
 
   /**
@@ -380,9 +712,9 @@ public class MapAttributionScope internal constructor(
             ClickableText(
               text = attribution.toAnnotatedString(),
               modifier = Modifier
-                .padding(horizontal = 24.dp, vertical = 4.dp)
-                .fillParentMaxWidth()
-                .wrapContentHeight(),
+                  .padding(horizontal = 24.dp, vertical = 4.dp)
+                  .fillParentMaxWidth()
+                  .wrapContentHeight(),
               onClick = {
                 onAttributionClick(attribution)
               }
@@ -423,7 +755,7 @@ public class MapAttributionScope internal constructor(
       agreeStringId = R.string.mapbox_attributionTelemetryPositive,
       titleId = R.string.mapbox_attributionTelemetryTitle,
       bodyId = R.string.mapbox_attributionTelemetryMessage
-      )
+    )
   }
 
   /**
@@ -441,8 +773,10 @@ public class MapAttributionScope internal constructor(
     onAgree: () -> Unit,
     currentUserConsent: Boolean
   ) {
-    val disagreeStringId = if (currentUserConsent) R.string.mapbox_attributionGeofencingConsentedNegative else R.string.mapbox_attributionGeofencingRevokedNegative
-    val agreeStringId = if (currentUserConsent) R.string.mapbox_attributionGeofencingConsentedPositive else R.string.mapbox_attributionGeofencingRevokedPositive
+    val disagreeStringId =
+      if (currentUserConsent) R.string.mapbox_attributionGeofencingConsentedNegative else R.string.mapbox_attributionGeofencingRevokedNegative
+    val agreeStringId =
+      if (currentUserConsent) R.string.mapbox_attributionGeofencingConsentedPositive else R.string.mapbox_attributionGeofencingRevokedPositive
     UserConsentDialog(
       onDismissRequest = onDismissRequest,
       onDisagree = onDisagree,
@@ -451,7 +785,7 @@ public class MapAttributionScope internal constructor(
       agreeStringId = agreeStringId,
       titleId = R.string.mapbox_attributionGeofencingTitle,
       bodyId = R.string.mapbox_attributionGeofencingMessage
-      )
+    )
   }
 
   @Composable
@@ -481,10 +815,10 @@ public class MapAttributionScope internal constructor(
       buttons = {
         Column(
           modifier = Modifier
-            // The alert dialog `title` and `text` are padded 24.dp by default.
+              // The alert dialog `title` and `text` are padded 24.dp by default.
             // To align the button text, we use 16.dp here because TextButton adds 8.dp padding around the text
             .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
+              .fillMaxWidth(),
         ) {
           if (onMoreInfo != null && neutralStringId != null) {
             dialogButton(onMoreInfo, neutralStringId)
@@ -517,7 +851,7 @@ public class MapAttributionScope internal constructor(
       val intent = Intent(Intent.ACTION_VIEW)
       intent.data = Uri.parse(url)
       mapView.context.startActivity(intent)
-    } catch (exception: ActivityNotFoundException) {
+    } catch (_: ActivityNotFoundException) {
       Toast.makeText(
         mapView.context,
         R.string.mapbox_attributionErrorNoBrowser,
@@ -533,11 +867,31 @@ public class MapAttributionScope internal constructor(
   }
 
   private companion object {
+    private const val TAG = "MapboxAttributionScope"
     private const val PLUGIN_ID = "MAPBOX_ATTRIBUTION_COMPOSE_PLUGIN"
     private var INSTANCE_COUNT = 0
-    private const val FEEDBACK_KEY_WORD = "feedback"
     fun getNextId(): String {
       return "$PLUGIN_ID-${INSTANCE_COUNT++}"
     }
   }
+}
+
+/**
+ * Determines if this attribution entry represents a Mapbox feedback link.
+ *
+ * Mapbox feedback attributions are special entries that allow users to provide feedback
+ * about map data and require dynamic URL generation with current map state parameters.
+ *
+ * ## Implementation Notes
+ * This function checks for Mapbox domain and feedback-related keywords in the attribution URL.
+ * When true, the URL should be built using [AttributionState.buildMapboxFeedbackUrl()] rather
+ * than using the attribution's static URL directly.
+ *
+ * @return true if this attribution represents a Mapbox feedback link that requires
+ * dynamic URL generation, false otherwise.
+ */
+@MapboxExperimental
+public fun Attribution.isMapboxFeedback(): Boolean {
+  return url.startsWith("https://mapbox.com/") &&
+    (url.contains("/feedback") || url.contains("/contribute"))
 }

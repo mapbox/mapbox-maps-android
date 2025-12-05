@@ -918,9 +918,43 @@ public final class com/mapbox/maps/extension/compose/ornaments/attribution/Compo
 public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope {
 	public final fun Attribution-fWhpE4E (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JLkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function6;Landroidx/compose/runtime/Composer;II)V
 	public final fun Attribution-hYmLsZ8 (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JLkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function6;Lkotlin/jvm/functions/Function6;Landroidx/compose/runtime/Composer;II)V
+	public final fun AttributionControl (Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState;Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$AttributionState;Landroidx/compose/runtime/Composer;I)V
 	public final fun AttributionDialog (Ljava/util/List;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public final fun GeofencingConsentDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ZLandroidx/compose/runtime/Composer;I)V
 	public final fun TelemetryDialog (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$AttributionState {
+	public fun <init> ()V
+	public final fun buildMapboxFeedbackUrl (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAttributions ()Ljava/util/List;
+	public final fun getUserConsentState ()Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState;
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState {
+	public synthetic fun <init> (ZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGeofencingUserConsentState ()Z
+	public final fun getTelemetryEnableState ()Z
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState$Builder {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState;
+	public final fun getGeofencingUserConsentState ()Z
+	public final fun getTelemetryEnableState ()Z
+	public final fun setGeofencingUserConsentState (Z)Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState$Builder;
+	public final synthetic fun setGeofencingUserConsentState (Z)V
+	public final fun setTelemetryEnableState (Z)Lcom/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScope$UserConsentState$Builder;
+	public final synthetic fun setTelemetryEnableState (Z)V
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScopeKt {
+	public static final fun isMapboxFeedback (Lcom/mapbox/maps/plugin/attribution/Attribution;)Z
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/compass/ComposableSingletons$MapCompassScopeKt {

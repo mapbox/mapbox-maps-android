@@ -1179,9 +1179,42 @@ package com.mapbox.maps.extension.compose.ornaments.attribution {
   @androidx.compose.runtime.Immutable @com.mapbox.maps.extension.compose.MapboxMapScopeMarker public final class MapAttributionScope {
     method @androidx.compose.runtime.Composable public void Attribution(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.BottomStart, long iconColor = Color(4280192171), kotlin.jvm.functions.Function3<? super java.util.List<com.mapbox.maps.plugin.attribution.Attribution>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit>,kotlin.Unit> attributionDialog = { attributions, onDismissRequest, onAttributionClick -> AttributionDialog(attributions, onDismissRequest, onAttributionClick) }, kotlin.jvm.functions.Function4<? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,kotlin.Unit> telemetryDialog = { onDismissRequest, onMoreInfo, onDisagree, onAgree -> TelemetryDialog(onDismissRequest, onMoreInfo, onDisagree, onAgree) });
     method @androidx.compose.runtime.Composable public void Attribution(androidx.compose.ui.Modifier modifier = Modifier, androidx.compose.foundation.layout.PaddingValues contentPadding = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp), androidx.compose.ui.Alignment alignment = androidx.compose.ui.Alignment.Companion.BottomStart, long iconColor = Color(4280192171), kotlin.jvm.functions.Function3<? super java.util.List<com.mapbox.maps.plugin.attribution.Attribution>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit>,kotlin.Unit> attributionDialog = { attributions, onDismissRequest, onAttributionClick -> AttributionDialog(attributions, onDismissRequest, onAttributionClick) }, kotlin.jvm.functions.Function4<? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,kotlin.Unit> telemetryDialog = { onDismissRequest, onMoreInfo, onDisagree, onAgree -> TelemetryDialog(onDismissRequest, onMoreInfo, onDisagree, onAgree) }, kotlin.jvm.functions.Function4<? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super kotlin.jvm.functions.Function0<kotlin.Unit>,? super java.lang.Boolean,kotlin.Unit> geofencingConsentDialog = { onDismissRequest, onDisagree, onAgree, currentUserConsent -> GeofencingConsentDialog(onDismissRequest, onDisagree, onAgree, currentUserConsent) });
+    method @androidx.compose.runtime.Composable @com.mapbox.annotation.MapboxDelicateApi @com.mapbox.annotation.MapboxExperimental public void AttributionControl(com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState? userConsentState, com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.AttributionState attributionState);
     method @androidx.compose.runtime.Composable public void AttributionDialog(java.util.List<com.mapbox.maps.plugin.attribution.Attribution> attributions, kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.Attribution,kotlin.Unit> onAttributionClick);
     method @androidx.compose.runtime.Composable public void GeofencingConsentDialog(kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function0<kotlin.Unit> onDisagree, kotlin.jvm.functions.Function0<kotlin.Unit> onAgree, boolean currentUserConsent);
     method @androidx.compose.runtime.Composable public void TelemetryDialog(kotlin.jvm.functions.Function0<kotlin.Unit> onDismissRequest, kotlin.jvm.functions.Function0<kotlin.Unit> onMoreInfo, kotlin.jvm.functions.Function0<kotlin.Unit> onDisagree, kotlin.jvm.functions.Function0<kotlin.Unit> onAgree);
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.annotation.MapboxExperimental public static final class MapAttributionScope.AttributionState {
+    ctor public MapAttributionScope.AttributionState();
+    method public suspend Object? buildMapboxFeedbackUrl(kotlin.coroutines.Continuation<? super java.lang.String>);
+    method public java.util.List<com.mapbox.maps.plugin.attribution.Attribution> getAttributions();
+    method public com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState? getUserConsentState();
+    property public final java.util.List<com.mapbox.maps.plugin.attribution.Attribution> attributions;
+    property public final com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState? userConsentState;
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.annotation.MapboxExperimental public static final class MapAttributionScope.UserConsentState {
+    method public boolean getGeofencingUserConsentState();
+    method public boolean getTelemetryEnableState();
+    method public com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState.Builder toBuilder();
+    property public final boolean geofencingUserConsentState;
+    property public final boolean telemetryEnableState;
+  }
+
+  @com.mapbox.annotation.MapboxExperimental public static final class MapAttributionScope.UserConsentState.Builder {
+    ctor public MapAttributionScope.UserConsentState.Builder();
+    method public com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState build();
+    method public boolean getGeofencingUserConsentState();
+    method public boolean getTelemetryEnableState();
+    method public com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState.Builder setGeofencingUserConsentState(boolean geofencingUserConsentState);
+    method public com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope.UserConsentState.Builder setTelemetryEnableState(boolean telemetryEnableState);
+    property public final boolean geofencingUserConsentState;
+    property public final boolean telemetryEnableState;
+  }
+
+  public final class MapAttributionScopeKt {
+    method @com.mapbox.annotation.MapboxExperimental public static boolean isMapboxFeedback(com.mapbox.maps.plugin.attribution.Attribution);
   }
 
 }
