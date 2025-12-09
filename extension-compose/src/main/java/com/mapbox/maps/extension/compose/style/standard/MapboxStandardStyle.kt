@@ -267,9 +267,6 @@ public fun MapboxStandardStyle(
             if (colorRoads.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_ROADS, colorRoads.value)
             }
-            if (colorSnow.isNotInitial()) {
-              config(StandardStyleConfigurationState.CONFIG_COLOR_SNOW, colorSnow.value)
-            }
             if (colorTrunks.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_TRUNKS, colorTrunks.value)
             }

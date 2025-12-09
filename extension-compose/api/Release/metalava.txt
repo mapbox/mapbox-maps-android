@@ -5357,7 +5357,6 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorPointOfInterestLabels();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoadLabels();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorRoads();
-    method public com.mapbox.maps.extension.compose.style.ColorValue getColorSnow();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorTrunks();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorWater();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getDensityPointOfInterestLabels();
@@ -5393,7 +5392,6 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setColorPointOfInterestLabels(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorRoadLabels(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorRoads(com.mapbox.maps.extension.compose.style.ColorValue);
-    method public void setColorSnow(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorTrunks(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorWater(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setDensityPointOfInterestLabels(com.mapbox.maps.extension.compose.style.DoubleValue);
@@ -5429,7 +5427,6 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorPointOfInterestLabels;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoadLabels;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorRoads;
-    property public final com.mapbox.maps.extension.compose.style.ColorValue colorSnow;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorTrunks;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorWater;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue densityPointOfInterestLabels;

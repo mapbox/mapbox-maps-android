@@ -4540,7 +4540,6 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getColorPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorRoadLabels ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorRoads ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
-	public final fun getColorSnow ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorTrunks ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorWater ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getDensityPointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
@@ -4576,7 +4575,6 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setColorPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorRoadLabels (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorRoads (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
-	public final fun setColorSnow (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorTrunks (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorWater (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setDensityPointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V

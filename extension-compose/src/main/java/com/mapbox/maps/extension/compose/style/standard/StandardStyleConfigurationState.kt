@@ -38,7 +38,6 @@ public class StandardStyleConfigurationState private constructor(
   initialColorPointOfInterestLabels: ColorValue,
   initialColorRoadLabels: ColorValue,
   initialColorRoads: ColorValue,
-  initialColorSnow: ColorValue,
   initialColorTrunks: ColorValue,
   initialColorWater: ColorValue,
   initialDensityPointOfInterestLabels: DoubleValue,
@@ -80,7 +79,6 @@ public class StandardStyleConfigurationState private constructor(
     initialColorPointOfInterestLabels = ColorValue.INITIAL,
     initialColorRoadLabels = ColorValue.INITIAL,
     initialColorRoads = ColorValue.INITIAL,
-    initialColorSnow = ColorValue.INITIAL,
     initialColorTrunks = ColorValue.INITIAL,
     initialColorWater = ColorValue.INITIAL,
     initialDensityPointOfInterestLabels = DoubleValue.INITIAL,
@@ -207,11 +205,6 @@ public class StandardStyleConfigurationState private constructor(
   public var colorRoads: ColorValue by mutableStateOf(initialColorRoads)
 
   /**
-   * Set a custom color for snow.
-   */
-  public var colorSnow: ColorValue by mutableStateOf(initialColorSnow)
-
-  /**
    * Set a custom color for trunk roads.
    */
   public var colorTrunks: ColorValue by mutableStateOf(initialColorTrunks)
@@ -305,7 +298,6 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_COLOR_POINT_OF_INTEREST_LABELS = "colorPointOfInterestLabels"
     internal const val CONFIG_COLOR_ROAD_LABELS = "colorRoadLabels"
     internal const val CONFIG_COLOR_ROADS = "colorRoads"
-    internal const val CONFIG_COLOR_SNOW = "colorSnow"
     internal const val CONFIG_COLOR_TRUNKS = "colorTrunks"
     internal const val CONFIG_COLOR_WATER = "colorWater"
     internal const val CONFIG_DENSITY_POINT_OF_INTEREST_LABELS = "densityPointOfInterestLabels"
