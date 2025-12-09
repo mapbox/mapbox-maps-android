@@ -216,6 +216,15 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1), common to [24.16.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.16.0-beta.1).
 
+# 11.15.2 October 02, 2025
+## Features ✨ and improvements 🏁
+* Reduce number of allocations for network requests.
+
+## Dependencies
+* Update gl-native to [v11.15.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.2), common to [24.15.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.15.2).
+
+# 11.15.1 September 26, 2025
+
 # 11.15.0 September 11, 2025
 
 ## Features ✨ and improvements 🏁
