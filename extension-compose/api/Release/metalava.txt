@@ -3252,6 +3252,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getModelAllowDensityReduction();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getModelAmbientOcclusionIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getModelAmbientOcclusionIntensityTransition();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getModelCastShadows();
@@ -3286,6 +3287,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setModelAllowDensityReduction(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setModelAmbientOcclusionIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setModelAmbientOcclusionIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setModelCastShadows(com.mapbox.maps.extension.compose.style.BooleanValue);
@@ -3320,6 +3322,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue modelAllowDensityReduction;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue modelAmbientOcclusionIntensity;
     property public final com.mapbox.maps.extension.compose.style.Transition modelAmbientOcclusionIntensityTransition;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue modelCastShadows;

@@ -237,6 +237,66 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   // Property getters and setters
 
   /**
+   * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   */
+  @MapboxExperimental
+  val modelAllowDensityReduction: Boolean?
+    /**
+     * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+     *
+     * Use static method [ModelLayer.defaultModelAllowDensityReduction] to get the default property.
+     *
+     * @return Boolean
+     */
+    get() {
+      return getPropertyValue("model-allow-density-reduction")
+    }
+
+  /**
+   * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   *
+   * Use static method [ModelLayer.defaultModelAllowDensityReduction] to set the default property.
+   *
+   * @param modelAllowDensityReduction value of modelAllowDensityReduction
+   */
+  @MapboxExperimental
+  override fun modelAllowDensityReduction(modelAllowDensityReduction: Boolean): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-allow-density-reduction", modelAllowDensityReduction)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   *
+   * This is an Expression representation of "model-allow-density-reduction".
+   *
+   */
+  @MapboxExperimental
+  val modelAllowDensityReductionAsExpression: Expression?
+    /**
+     * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+     *
+     * Get the ModelAllowDensityReduction property as an Expression
+     *
+     * Use static method [ModelLayer.defaultModelAllowDensityReductionAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("model-allow-density-reduction")
+
+  /**
+   * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   *
+   * Use static method [ModelLayer.defaultModelAllowDensityReductionAsExpression] to set the default property.
+   *
+   * @param modelAllowDensityReduction value of modelAllowDensityReduction as Expression
+   */
+  @MapboxExperimental
+  override fun modelAllowDensityReduction(modelAllowDensityReduction: Expression): ModelLayer = apply {
+    val propertyValue = PropertyValue("model-allow-density-reduction", modelAllowDensityReduction)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
    */
   val modelId: String?
@@ -1696,6 +1756,45 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       get() = StyleManager.getStyleLayerPropertyDefaultValue("model", "maxzoom").silentUnwrap()
 
     /**
+     * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+     */
+    @MapboxExperimental
+    val defaultModelAllowDensityReduction: Boolean?
+      /**
+       * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+       *
+       * Get the default value of ModelAllowDensityReduction property
+       *
+       * @return Boolean
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("model", "model-allow-density-reduction").silentUnwrap()
+      }
+
+    /**
+     * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+     *
+     * This is an Expression representation of "model-allow-density-reduction".
+     *
+     */
+    @MapboxExperimental
+    val defaultModelAllowDensityReductionAsExpression: Expression?
+      /**
+       * Get default value of the ModelAllowDensityReduction property as an Expression
+       *
+       * @return Boolean
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("model", "model-allow-density-reduction").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultModelAllowDensityReduction?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".
      */
     val defaultModelId: String?
@@ -2566,6 +2665,22 @@ interface ModelLayerDsl {
   fun maxZoom(maxZoom: Double): ModelLayer
 
   // Property getters and setters
+
+  /**
+   * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   *
+   * @param modelAllowDensityReduction value of modelAllowDensityReduction
+   */
+  @MapboxExperimental
+  fun modelAllowDensityReduction(modelAllowDensityReduction: Boolean = true): ModelLayer
+
+  /**
+   * If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   *
+   * @param modelAllowDensityReduction value of modelAllowDensityReduction as Expression
+   */
+  @MapboxExperimental
+  fun modelAllowDensityReduction(modelAllowDensityReduction: Expression): ModelLayer
 
   /**
    * Model to render. It can be either a string referencing an element to the models root property or an internal or external URL Default value: "".

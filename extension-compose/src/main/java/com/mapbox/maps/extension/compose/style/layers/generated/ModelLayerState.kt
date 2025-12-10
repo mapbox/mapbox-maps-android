@@ -32,6 +32,7 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 public class ModelLayerState
 @OptIn(MapboxExperimental::class)
 private constructor(
+  initialModelAllowDensityReduction: BooleanValue,
   initialModelId: ModelIdValue,
   initialModelAmbientOcclusionIntensity: DoubleValue,
   initialModelAmbientOcclusionIntensityTransition: Transition,
@@ -72,6 +73,7 @@ private constructor(
    */
   @OptIn(MapboxExperimental::class)
   public constructor() : this(
+    initialModelAllowDensityReduction = BooleanValue.INITIAL,
     initialModelId = ModelIdValue.INITIAL,
     initialModelAmbientOcclusionIntensity = DoubleValue.INITIAL,
     initialModelAmbientOcclusionIntensityTransition = Transition.INITIAL,
@@ -113,6 +115,14 @@ private constructor(
    */
   @MapboxExperimental
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
+
+  @MapboxExperimental
+  private val modelAllowDensityReductionState: MutableState<BooleanValue> = mutableStateOf(initialModelAllowDensityReduction)
+  /**
+   *  If true, the models will be reduced in density based on the zoom level. This is useful for large datasets that may be slow to render. Default value: true.
+   */
+  @MapboxExperimental
+  public var modelAllowDensityReduction: BooleanValue by modelAllowDensityReductionState
 
   private val modelIdState: MutableState<ModelIdValue> = mutableStateOf(initialModelId)
   /**
@@ -327,6 +337,7 @@ private constructor(
   @Composable
   @OptIn(MapboxExperimental::class)
   internal fun UpdateProperties(layerNode: LayerNode) {
+    ActionWhenNotInitial(layerNode.setPropertyAction, modelAllowDensityReductionState, "model-allow-density-reduction")
     UpdateModelId(layerNode)
     ActionWhenNotInitial(layerNode.setPropertyAction, modelAmbientOcclusionIntensityState, "model-ambient-occlusion-intensity")
     ActionWhenNotInitial(layerNode.setPropertyAction, modelAmbientOcclusionIntensityTransitionState, "model-ambient-occlusion-intensity-transition")

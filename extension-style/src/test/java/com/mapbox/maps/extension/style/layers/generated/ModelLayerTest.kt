@@ -6,6 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+@OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class ModelLayerTest {
@@ -156,6 +158,74 @@ class ModelLayerTest {
     verify { style.getStyleLayerProperty("id", "filter") }
   }
   // Property getters and setters
+
+  @Test
+  fun modelAllowDensityReductionSet() {
+    val layer = modelLayer("id", "source") {}
+    val testValue = true
+    layer.bindTo(style)
+    layer.modelAllowDensityReduction(testValue)
+    verify { style.setStyleLayerProperty("id", "model-allow-density-reduction", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "true")
+  }
+
+  @Test
+  fun modelAllowDensityReductionGet() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), layer.modelAllowDensityReduction?.toString())
+    verify { style.getStyleLayerProperty("id", "model-allow-density-reduction") }
+  }
+  // Expression Tests
+
+  @Test
+  fun modelAllowDensityReductionAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = modelLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.modelAllowDensityReduction(expression)
+    verify { style.setStyleLayerProperty("id", "model-allow-density-reduction", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun modelAllowDensityReductionAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.modelAllowDensityReductionAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "model-allow-density-reduction") }
+  }
+
+  @Test
+  fun modelAllowDensityReductionAsExpressionGetNull() {
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.modelAllowDensityReductionAsExpression)
+    verify { style.getStyleLayerProperty("id", "model-allow-density-reduction") }
+  }
+
+  @Test
+  fun modelAllowDensityReductionAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val layer = modelLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("true", layer.modelAllowDensityReductionAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, layer.modelAllowDensityReduction)
+    verify { style.getStyleLayerProperty("id", "model-allow-density-reduction") }
+  }
 
   @Test
   fun modelIdSet() {
@@ -1897,6 +1967,38 @@ class ModelLayerTest {
   }
 
   // Default property getter tests
+
+  @Test
+  fun defaultModelAllowDensityReductionTest() {
+    val testValue = true
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = true
+    assertEquals(expectedValue.toString(), ModelLayer.defaultModelAllowDensityReduction?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-allow-density-reduction") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultModelAllowDensityReductionAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), ModelLayer.defaultModelAllowDensityReductionAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-allow-density-reduction") }
+  }
+
+  @Test
+  fun defaultModelAllowDensityReductionAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    assertEquals("true", ModelLayer.defaultModelAllowDensityReductionAsExpression.toString())
+    val expectedValue = true
+    assertEquals(expectedValue, ModelLayer.defaultModelAllowDensityReduction)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("model", "model-allow-density-reduction") }
+  }
 
   @Test
   fun defaultModelIdTest() {

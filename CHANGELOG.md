@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Breaking changes ⚠️
 * Remove line-cutout-width and change line-cutout-opacity default to 1.0
+* Add `ModelLayer.modelAllowDensityReduction` property to disable density reduction in model layers.
 
 ## Features ✨ and improvements 🏁
 * Add Standard Style color and 3D configuration options: `colorBuildings`, `colorCommercial`, `colorEducation`, `colorIndustrial`, `colorLand`, `colorMedical`, `show3dBuildings`, `show3dFacades`, `show3dLandmarks`, and `show3dTrees`.

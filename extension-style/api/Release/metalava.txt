@@ -4075,6 +4075,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String getLayerId();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
+    method public Boolean? getModelAllowDensityReduction();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelAllowDensityReductionAsExpression();
     method public Double? getModelAmbientOcclusionIntensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getModelAmbientOcclusionIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getModelAmbientOcclusionIntensityTransition();
@@ -4129,6 +4131,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAllowDensityReduction(boolean modelAllowDensityReduction);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAllowDensityReduction(com.mapbox.maps.extension.style.expressions.generated.Expression modelAllowDensityReduction);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAmbientOcclusionIntensity(double modelAmbientOcclusionIntensity);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAmbientOcclusionIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression modelAmbientOcclusionIntensity);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAmbientOcclusionIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -4194,6 +4198,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public String layerId;
     property public Double? maxZoom;
     property public Double? minZoom;
+    property public final Boolean? modelAllowDensityReduction;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelAllowDensityReductionAsExpression;
     property public final Double? modelAmbientOcclusionIntensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? modelAmbientOcclusionIntensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? modelAmbientOcclusionIntensityTransition;
@@ -4252,6 +4258,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   public static final class ModelLayer.Companion {
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
+    method public Boolean? getDefaultModelAllowDensityReduction();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelAllowDensityReductionAsExpression();
     method public Double? getDefaultModelAmbientOcclusionIntensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultModelAmbientOcclusionIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultModelAmbientOcclusionIntensityTransition();
@@ -4302,6 +4310,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
+    property public final Boolean? defaultModelAllowDensityReduction;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelAllowDensityReductionAsExpression;
     property public final Double? defaultModelAmbientOcclusionIntensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultModelAmbientOcclusionIntensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultModelAmbientOcclusionIntensityTransition;
@@ -4356,6 +4366,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer filter(com.mapbox.maps.extension.style.expressions.generated.Expression filter);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAllowDensityReduction(boolean modelAllowDensityReduction = true);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAllowDensityReduction(com.mapbox.maps.extension.style.expressions.generated.Expression modelAllowDensityReduction);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAmbientOcclusionIntensity(double modelAmbientOcclusionIntensity = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAmbientOcclusionIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression modelAmbientOcclusionIntensity);
     method public com.mapbox.maps.extension.style.layers.generated.ModelLayer modelAmbientOcclusionIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);

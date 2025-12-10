@@ -5,6 +5,7 @@ package com.mapbox.maps.testapp.style.layers.generated
 import android.graphics.Color
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.generated.*
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith
 /**
  * Basic smoke tests for ModelLayer
  */
+@OptIn(MapboxExperimental::class)
 @RunWith(AndroidJUnit4::class)
 class ModelLayerTest : BaseStyleTest() {
 
@@ -67,6 +69,30 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(expression.toString(), layer.filter.toString())
   }
   // Property getters and setters
+
+  @Test
+  @UiThreadTest
+  fun modelAllowDensityReductionTest() {
+    val testValue = true
+    val layer = modelLayer("id", "source") {
+      modelAllowDensityReduction(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.modelAllowDensityReduction?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun modelAllowDensityReductionAsExpressionTest() {
+    val expression = literal(true)
+    val layer = modelLayer("id", "source") {
+      modelAllowDensityReduction(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.modelAllowDensityReductionAsExpression.toString())
+    assertEquals(true, layer.modelAllowDensityReduction!!)
+  }
 
   @Test
   @UiThreadTest
@@ -907,6 +933,8 @@ class ModelLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", ModelLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", ModelLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", ModelLayer.defaultMaxZoom)
+    assertNotNull("defaultModelAllowDensityReduction should not be null", ModelLayer.defaultModelAllowDensityReduction)
+    assertNotNull("defaultModelAllowDensityReductionAsExpression should not be null", ModelLayer.defaultModelAllowDensityReductionAsExpression)
     assertNotNull("defaultModelId should not be null", ModelLayer.defaultModelId)
     assertNotNull("defaultModelIdAsExpression should not be null", ModelLayer.defaultModelIdAsExpression)
     assertNotNull("defaultModelAmbientOcclusionIntensity should not be null", ModelLayer.defaultModelAmbientOcclusionIntensity)
@@ -965,6 +993,7 @@ class ModelLayerTest : BaseStyleTest() {
       }
       literal(1.0)
     }
+    val modelAllowDensityReductionTestValue = true
     val modelIdTestValue = "abc"
     val modelAmbientOcclusionIntensityTestValue = 1.0
     val modelCastShadowsTestValue = true
@@ -991,6 +1020,7 @@ class ModelLayerTest : BaseStyleTest() {
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
       filter(filterTestValue)
+      modelAllowDensityReduction(modelAllowDensityReductionTestValue)
       modelId(modelIdTestValue)
       modelAmbientOcclusionIntensity(modelAmbientOcclusionIntensityTestValue)
       modelCastShadows(modelCastShadowsTestValue)
@@ -1022,6 +1052,7 @@ class ModelLayerTest : BaseStyleTest() {
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
+    assertEquals(modelAllowDensityReductionTestValue, cachedLayer.modelAllowDensityReduction)
     assertEquals(modelIdTestValue, cachedLayer.modelId)
     assertEquals(modelAmbientOcclusionIntensityTestValue, cachedLayer.modelAmbientOcclusionIntensity)
     assertEquals(modelCastShadowsTestValue, cachedLayer.modelCastShadows)

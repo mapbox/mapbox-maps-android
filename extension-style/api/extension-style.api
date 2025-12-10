@@ -3351,6 +3351,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun getLayerId ()Ljava/lang/String;
 	public fun getMaxZoom ()Ljava/lang/Double;
 	public fun getMinZoom ()Ljava/lang/Double;
+	public final fun getModelAllowDensityReduction ()Ljava/lang/Boolean;
+	public final fun getModelAllowDensityReductionAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelAmbientOcclusionIntensity ()Ljava/lang/Double;
 	public final fun getModelAmbientOcclusionIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getModelAmbientOcclusionIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3407,6 +3409,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelAllowDensityReduction (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public fun modelAllowDensityReduction (Z)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelAmbientOcclusionIntensity (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelAmbientOcclusionIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public fun modelAmbientOcclusionIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3476,6 +3480,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer :
 public final class com/mapbox/maps/extension/style/layers/generated/ModelLayer$Companion {
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
+	public final fun getDefaultModelAllowDensityReduction ()Ljava/lang/Boolean;
+	public final fun getDefaultModelAllowDensityReductionAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelAmbientOcclusionIntensity ()Ljava/lang/Double;
 	public final fun getDefaultModelAmbientOcclusionIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultModelAmbientOcclusionIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -3530,6 +3536,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun filter (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelAllowDensityReduction (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
+	public abstract fun modelAllowDensityReduction (Z)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelAmbientOcclusionIntensity (D)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelAmbientOcclusionIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public abstract fun modelAmbientOcclusionIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
@@ -3594,6 +3602,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 }
 
 public final class com/mapbox/maps/extension/style/layers/generated/ModelLayerDsl$DefaultImpls {
+	public static synthetic fun modelAllowDensityReduction$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelAmbientOcclusionIntensity$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelCastShadows$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
 	public static synthetic fun modelColor$default (Lcom/mapbox/maps/extension/style/layers/generated/ModelLayerDsl;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/ModelLayer;
