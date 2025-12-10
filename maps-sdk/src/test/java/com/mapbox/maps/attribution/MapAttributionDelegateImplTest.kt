@@ -210,16 +210,6 @@ class MapAttributionDelegateImplTest {
         }
         2 -> {
           assertEquals(
-            "URL improve map should match", "https://www.mapbox.com/map-feedback/",
-            url
-          )
-          assertEquals(
-            "Title improve map should match", "Improve This Map",
-            title
-          )
-        }
-        3 -> {
-          assertEquals(
             "Telemetry URL should match", "https://www.mapbox.com/telemetry/",
             url
           )
@@ -228,7 +218,7 @@ class MapAttributionDelegateImplTest {
             title
           )
         }
-        4 -> {
+        3 -> {
           assertEquals(
             "Geofencing consent URL should match", Attribution.GEOFENCING_URL_MARKER,
             url
@@ -238,13 +228,23 @@ class MapAttributionDelegateImplTest {
             title
           )
         }
-        5 -> {
+        4 -> {
           assertEquals(
             "Telemetry URL should match", "https://www.mapbox.com/legal/privacy#product-privacy-policy/",
             url
           )
           assertEquals(
             "Telemetry title should match", "Mapbox Privacy Policy",
+            title
+          )
+        }
+        5 -> {
+          assertEquals(
+            "URL improve map should match", "https://www.mapbox.com/map-feedback/",
+            url
+          )
+          assertEquals(
+            "Title improve map should match", "Improve This Map",
             title
           )
         }

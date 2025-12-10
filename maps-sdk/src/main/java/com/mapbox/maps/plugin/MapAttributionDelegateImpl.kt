@@ -11,6 +11,7 @@ import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
+import com.mapbox.maps.plugin.attribution.isMapboxFeedback
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -52,7 +53,7 @@ internal class MapAttributionDelegateImpl @OptIn(MapboxExperimental::class) cons
    *
    * @return the parsed attributions
    */
-  @OptIn(MapboxExperimental::class)
+  @OptIn(MapboxExperimental::class, com.mapbox.annotation.MapboxExperimental::class)
   override fun parseAttributions(
     context: Context,
     config: AttributionParserConfig
@@ -68,7 +69,18 @@ internal class MapAttributionDelegateImpl @OptIn(MapboxExperimental::class) cons
       .withMapboxGeofencingConsent(config.withMapboxGeofencingConsent)
       .withAttributionData(*attributionsArray)
       .withExtraAttributions(extraAttributions)
-      .build().getAttributions().toList()
+      .build()
+      .getAttributions()
+      .sortedByDescending { attr ->
+        // Sort attribution by putting Mapbox related special attributions at the bottom of the list
+        when {
+          attr.url == Attribution.ABOUT_TELEMETRY_URL -> -1
+          attr.url == Attribution.GEOFENCING_URL_MARKER -> -2
+          attr.url == Attribution.PRIVACY_POLICY_URL -> -3
+          attr.isMapboxFeedback() -> -4
+          else -> 0
+        }
+      }
   }
 
   /**

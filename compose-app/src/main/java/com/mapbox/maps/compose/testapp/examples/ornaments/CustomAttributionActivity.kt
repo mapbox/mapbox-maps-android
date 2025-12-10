@@ -45,10 +45,18 @@ import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope
-import com.mapbox.maps.extension.compose.ornaments.attribution.isMapboxFeedback
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.DoubleValue
+import com.mapbox.maps.extension.compose.style.LongValue
+import com.mapbox.maps.extension.compose.style.StringListValue
+import com.mapbox.maps.extension.compose.style.StringValue
+import com.mapbox.maps.extension.compose.style.layers.generated.RasterLayer
+import com.mapbox.maps.extension.compose.style.sources.generated.SchemeValue
+import com.mapbox.maps.extension.compose.style.sources.generated.rememberRasterSourceState
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardSatelliteStyle
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.plugin.attribution.Attribution
+import com.mapbox.maps.plugin.attribution.isMapboxFeedback
 import kotlinx.coroutines.launch
 
 /**
@@ -71,6 +79,9 @@ public class CustomAttributionActivity : ComponentActivity() {
                 initialValue = ModalBottomSheetValue.Hidden
             )
             var showSatelliteStyle: Boolean by remember {
+                mutableStateOf(false)
+            }
+            var showOSMLayer: Boolean by remember {
                 mutableStateOf(false)
             }
             val coroutineScope = rememberCoroutineScope()
@@ -121,6 +132,19 @@ public class CustomAttributionActivity : ComponentActivity() {
                                     text = if (showSatelliteStyle) "Show Satellite Style" else "Show Standard Style"
                                 )
                             }
+                            FloatingActionButton(
+                                modifier = Modifier
+                                    .padding(bottom = 10.dp),
+                                onClick = {
+                                    showOSMLayer = !showOSMLayer
+                                },
+                                shape = RoundedCornerShape(16.dp),
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(10.dp),
+                                    text = if (!showOSMLayer) "Show OSM layer" else "Hide OSM layer"
+                                )
+                            }
                         }
                     },
                     floatingActionButtonPosition = FabPosition.End
@@ -158,7 +182,22 @@ public class CustomAttributionActivity : ComponentActivity() {
                                     MapboxStandardStyle()
                                 }
                             }
-                        )
+                        ) {
+                            if (showOSMLayer) {
+                                val source = rememberRasterSourceState {
+                                    tileSize = LongValue(RASTER_TILE_SIZE_PIXELS)
+                                    tiles = StringListValue(listOf(OSM_RASTER_TILE_URL))
+                                    attribution = StringValue(TILE_JSON_ATTRIBUTION)
+                                    scheme = SchemeValue.XYZ
+                                    minZoom = LongValue(TILE_JSON_MIN_ZOOM)
+                                    maxZoom = LongValue(TILE_JSON_MAX_ZOOM)
+                                    bounds = DoubleListValue(MERCATOR_BOUNDS)
+                                }
+                                RasterLayer(source) {
+                                    rasterOpacity = DoubleValue(0.7)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -330,5 +369,16 @@ public class CustomAttributionActivity : ComponentActivity() {
 
     private companion object {
         const val ZOOM: Double = 9.0
+        const val TILE_JSON_VERSION = "2.0.0"
+        const val TILE_JSON_NAME = "OpenStreetMap"
+        const val TILE_JSON_DESCRIPTION = "A free editable map of the whole world."
+        const val TILE_JSON_ATTRIBUTION = "&copy; OpenStreetMap contributors, CC-BY-SA"
+        const val TILE_JSON_MIN_ZOOM = 0L
+        const val TILE_JSON_MAX_ZOOM = 18L
+
+        const val OSM_RASTER_TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        const val RASTER_TILE_SIZE_PIXELS = 256L
+        val MERCATOR_BOUNDS = listOf(-180.0, -85.0, 180.0, 85.0)
+        val CENTER_MAP_LOCATION = listOf(11.9, 57.7, 8.0)
     }
 }

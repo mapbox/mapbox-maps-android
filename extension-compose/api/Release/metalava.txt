@@ -1213,10 +1213,6 @@ package com.mapbox.maps.extension.compose.ornaments.attribution {
     property public final boolean telemetryEnableState;
   }
 
-  public final class MapAttributionScopeKt {
-    method @com.mapbox.annotation.MapboxExperimental public static boolean isMapboxFeedback(com.mapbox.maps.plugin.attribution.Attribution);
-  }
-
 }
 
 package com.mapbox.maps.extension.compose.ornaments.compass {

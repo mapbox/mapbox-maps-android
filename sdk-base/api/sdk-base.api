@@ -1862,6 +1862,10 @@ public abstract interface class com/mapbox/maps/plugin/attribution/AttributionDi
 	public abstract fun showAttribution (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)V
 }
 
+public final class com/mapbox/maps/plugin/attribution/AttributionKt {
+	public static final fun isMapboxFeedback (Lcom/mapbox/maps/plugin/attribution/Attribution;)Z
+}
+
 public final class com/mapbox/maps/plugin/attribution/AttributionParserConfig {
 	public fun <init> ()V
 	public fun <init> (Z)V

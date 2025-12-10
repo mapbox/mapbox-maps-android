@@ -48,9 +48,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.mapbox.annotation.MapboxDelicateApi
 import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.common.Cancelable
 import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.maps.MapView
-import com.mapbox.maps.coroutine.styleDataLoadedEvents
+import com.mapbox.maps.SourceDataLoadedType
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.ornaments.attribution.internal.AttributionComposePlugin
@@ -60,6 +61,7 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
+import com.mapbox.maps.plugin.attribution.isMapboxFeedback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -636,36 +638,93 @@ public class MapAttributionScope internal constructor(
 
     @Composable
     private fun UpdateAttributionState(mapView: MapView, plugin: AttributionComposePlugin?) {
+      // Update user consent state for the first time
       LaunchedEffect(plugin) {
         if (plugin != null) {
-          // Update user consent state for the first time
           _userConsentState.value = UserConsentState.Builder()
             .setTelemetryEnableState(plugin.mapAttributionDelegate.telemetry().userTelemetryRequestState)
             .setGeofencingUserConsentState(
               plugin.mapAttributionDelegate.geofencingConsent().getUserConsent()
             )
             .build()
-          logD(TAG, "${plugin.hashCode()} Load initial user consent state: $userConsentState ")
-
-          // Update attributions when style data is added
-          mapView.mapboxMap.styleDataLoadedEvents.collect { event ->
-            // TO BE FIXED by Native, the SourceDataLoadedEvents with metadata type was never emitted
-//        mapView.mapboxMap.sourceDataLoadedEvents.collect { event ->
-//            if (event.type == SourceDataLoadedType.METADATA) {
-            logD(TAG, "${plugin.hashCode()} style data loaded, refresh attributions")
-            _attributions.value = plugin.mapAttributionDelegate.parseAttributions(
-              mapView.context,
-              AttributionParserConfig()
-            ).toMutableList().apply {
-              find { it.isMapboxFeedback() }?.let {
-                remove(it)
-                add(it.copy(url = plugin.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)))
-              }
-            }.toList()
-//            }
-          }
+          logD(
+            TAG,
+            "AttributionComposePlugin(${plugin.hashCode()}) Load initial user consent state: $userConsentState "
+          )
         }
       }
+
+      // Refresh the attributions when style changes, as for Standard style, the source events are hidden
+      DisposableEffect(plugin) {
+        var styleDataLoadedCancelable: Cancelable? = null
+        if (plugin != null) {
+          // Refresh the attribution initially to show the Mapbox telemetry, feedback attributions etc, even without source attributions
+          updateAttributionState(mapView, plugin)
+          // Update attributions when style data is loaded
+          styleDataLoadedCancelable = mapView.mapboxMap.subscribeStyleDataLoaded {
+            logD(
+              TAG,
+              "AttributionComposePlugin(${plugin.hashCode()}) style loaded, refresh attributions"
+            )
+            updateAttributionState(mapView, plugin)
+          }
+        }
+        onDispose {
+          styleDataLoadedCancelable?.cancel()
+          styleDataLoadedCancelable = null
+        }
+      }
+
+      // Refresh the attributions when source is added or removed in the runtime
+      DisposableEffect(plugin) {
+        var sourceAddedCancellable: Cancelable? = null
+        var sourceRemovedCancellable: Cancelable? = null
+        val sourceDataLoadedCancellable = hashMapOf<String, Cancelable>()
+        if (plugin != null) {
+          mapView.mapboxMap.apply {
+            // Update attributions when new source is added in the runtime
+            sourceAddedCancellable = subscribeSourceAdded { sourceAdded ->
+              sourceDataLoadedCancellable[sourceAdded.sourceId] =
+                subscribeSourceDataLoaded {
+                  // refresh the attribution only when the source metadata is loaded, otherwise the new attribution is not yet parsed
+                  if (it.type == SourceDataLoadedType.METADATA && it.sourceId == sourceAdded.sourceId) {
+                    logD(
+                      TAG,
+                      "AttributionComposePlugin(${plugin.hashCode()}) source metadata loaded, refresh attributions"
+                    )
+                    updateAttributionState(mapView, plugin)
+                    sourceDataLoadedCancellable.remove(sourceAdded.sourceId)?.cancel()
+                  }
+                }
+            }
+            // Update attribution when the source is removed
+            sourceRemovedCancellable = subscribeSourceRemoved {
+              updateAttributionState(mapView, plugin)
+            }
+          }
+        }
+        onDispose {
+          sourceAddedCancellable?.cancel()
+          sourceAddedCancellable = null
+          sourceRemovedCancellable?.cancel()
+          sourceRemovedCancellable = null
+          sourceDataLoadedCancellable.values.forEach { it.cancel() }
+          sourceDataLoadedCancellable.clear()
+        }
+      }
+    }
+
+    private fun updateAttributionState(mapView: MapView, plugin: AttributionComposePlugin) {
+      _attributions.value = plugin.mapAttributionDelegate.parseAttributions(
+        mapView.context,
+        AttributionParserConfig()
+      ).toMutableList().apply {
+        find { it.isMapboxFeedback() }?.let {
+          remove(it)
+          add(it.copy(url = plugin.mapAttributionDelegate.buildMapBoxFeedbackUrl(mapView.context)))
+        }
+      }
+        .toList()
     }
 
     @Composable
@@ -874,24 +933,4 @@ public class MapAttributionScope internal constructor(
       return "$PLUGIN_ID-${INSTANCE_COUNT++}"
     }
   }
-}
-
-/**
- * Determines if this attribution entry represents a Mapbox feedback link.
- *
- * Mapbox feedback attributions are special entries that allow users to provide feedback
- * about map data and require dynamic URL generation with current map state parameters.
- *
- * ## Implementation Notes
- * This function checks for Mapbox domain and feedback-related keywords in the attribution URL.
- * When true, the URL should be built using [AttributionState.buildMapboxFeedbackUrl()] rather
- * than using the attribution's static URL directly.
- *
- * @return true if this attribution represents a Mapbox feedback link that requires
- * dynamic URL generation, false otherwise.
- */
-@MapboxExperimental
-public fun Attribution.isMapboxFeedback(): Boolean {
-  return url.startsWith("https://mapbox.com/") &&
-    (url.contains("/feedback") || url.contains("/contribute"))
 }

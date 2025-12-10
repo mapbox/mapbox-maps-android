@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.attribution
 
+import com.mapbox.annotation.MapboxExperimental
+
 /**
  * Attribution model class.
  *
@@ -37,4 +39,24 @@ data class Attribution(val title: String, val url: String) {
     const val PRIVACY_POLICY_URL = "https://www.mapbox.com/legal/privacy#product-privacy-policy/"
     const val GEOFENCING_URL_MARKER = "geofencing_url_marker"
   }
+}
+
+/**
+ * Determines if this attribution entry represents a Mapbox feedback link.
+ *
+ * Mapbox feedback attributions are special entries that allow users to provide feedback
+ * about map data and require dynamic URL generation with current map state parameters.
+ *
+ * ## Implementation Notes
+ * This function checks for Mapbox domain and feedback-related keywords in the attribution URL.
+ * When true, the URL should be built using [AttributionState.buildMapboxFeedbackUrl()] rather
+ * than using the attribution's static URL directly.
+ *
+ * @return true if this attribution represents a Mapbox feedback link that requires
+ * dynamic URL generation, false otherwise.
+ */
+@MapboxExperimental
+fun Attribution.isMapboxFeedback(): Boolean {
+  return url.contains("mapbox.com") &&
+    (url.contains("feedback") || url.contains("contribute"))
 }

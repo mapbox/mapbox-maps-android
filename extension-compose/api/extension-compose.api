@@ -953,10 +953,6 @@ public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAt
 	public final synthetic fun setTelemetryEnableState (Z)V
 }
 
-public final class com/mapbox/maps/extension/compose/ornaments/attribution/MapAttributionScopeKt {
-	public static final fun isMapboxFeedback (Lcom/mapbox/maps/plugin/attribution/Attribution;)Z
-}
-
 public final class com/mapbox/maps/extension/compose/ornaments/compass/ComposableSingletons$MapCompassScopeKt {
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/ornaments/compass/ComposableSingletons$MapCompassScopeKt;
 	public static field lambda-1 Lkotlin/jvm/functions/Function2;
