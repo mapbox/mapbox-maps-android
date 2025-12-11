@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.17.1 December 11, 2025
+## Dependencies
+* Update gl-native to [v11.17.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.1), common to [v24.17.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.1).
+
+
 # 11.17.0 December 04, 2025
 ## Breaking changes ⚠️
 * Require passing required argument to the constructor of experimental `GeofencingState.Builder`, `GeofencingError.Builder`, `GeofencingEvent.Builder` and `GeofencingOptions.Builder` APIs.
