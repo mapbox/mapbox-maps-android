@@ -14,6 +14,16 @@ Mapbox welcomes participation and contributions from everyone.
 * Add Standard Style color and 3D configuration options: `colorBuildings`, `colorCommercial`, `colorEducation`, `colorIndustrial`, `colorLand`, `colorMedical`, `show3dBuildings`, `show3dFacades`, `show3dLandmarks`, and `show3dTrees`.
 * Introduce experimental `AttributionControl` composable function that exposes `AttributionState` programmatically, enabling developers to build custom Attribution UI outside of the map while maintaining compliance with [Mapbox ToS](https://www.mapbox.com/legal/tos) requirements.
 
+# 11.17.1 December 11, 2025
+## Bug fixes 🐞
+* Reset style fog, snow and rain impl when switching to a new style.
+* Fix changes in brightness not always getting applied.
+* Fix occlusion of location indicator in tunnels.
+* Fix leaking Vertex Array Objects.
+
+## Dependencies
+* Update gl-native to [v11.17.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.1), common to [v24.17.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.1).
+
 # 11.17.0 December 04, 2025
 ## Breaking changes ⚠️
 * Require passing required argument to the constructor of experimental `GeofencingState.Builder`, `GeofencingError.Builder`, `GeofencingEvent.Builder` and `GeofencingOptions.Builder` APIs.
