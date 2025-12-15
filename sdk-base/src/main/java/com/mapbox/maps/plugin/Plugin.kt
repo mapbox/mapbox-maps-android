@@ -109,11 +109,6 @@ sealed class Plugin(
     const val MAPBOX_MAP_OVERLAY_PLUGIN_ID = "MAPBOX_MAP_OVERLAY_PLUGIN_ID"
 
     /**
-     * Id for Mapbox Indoor Floor Selector Plugin.
-     */
-    const val MAPBOX_INDOOR_SELECTOR_PLUGIN_ID = "MAPBOX_INDOOR_SELECTOR_PLUGIN_ID"
-
-    /**
      * Id for Mapbox Map Viewport Plugin.
      */
     const val MAPBOX_VIEWPORT_PLUGIN_ID = "MAPBOX_VIEWPORT_PLUGIN_ID"

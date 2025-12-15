@@ -1,5 +1,0 @@
-public final class com/mapbox/maps/plugin/indoorselector/IndoorUtils {
-	public static final synthetic fun createIndoorSelectorPlugin ()Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;
-	public static final fun getIndoorSelector (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;
-}
-

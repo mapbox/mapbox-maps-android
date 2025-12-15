@@ -35,7 +35,6 @@ include(
   ":plugin-attribution",
   ":plugin-compass",
   ":plugin-gestures",
-  ":plugin-indoorselector",
   ":plugin-lifecycle",
   ":plugin-locationcomponent",
   ":plugin-logo",

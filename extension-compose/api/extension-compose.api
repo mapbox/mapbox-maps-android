@@ -3627,7 +3627,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 	public final fun getId ()Ljava/lang/String;
 	public final fun getIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
-	public final fun getShadowDrawBeforeLayer ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getShadowIntensity ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getShadowIntensityTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public fun hashCode ()I
@@ -3639,7 +3638,6 @@ public final class com/mapbox/maps/extension/compose/style/lights/generated/Dire
 	public final fun setDirectionTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
-	public final fun setShadowDrawBeforeLayer (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setShadowIntensity (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setShadowIntensityTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public fun toString ()Ljava/lang/String;

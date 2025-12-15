@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="mapbox_indoor_item_height">44dp</dimen>
-    <dimen name="mapbox_indoor_corner_radius">8dp</dimen>
-    <dimen name="mapbox_indoor_elevation">4dp</dimen>
-    <dimen name="mapbox_indoor_text_size">16sp</dimen>
-</resources>

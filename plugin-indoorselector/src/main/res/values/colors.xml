@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="mapbox_indoor_bg">#FFFFFF</color>
-    <color name="mapbox_indoor_text">#000000</color>
-    <color name="mapbox_indoor_selected_bg">#333333</color>
-    <color name="mapbox_indoor_selected_text">#FFFFFF</color>
-</resources>

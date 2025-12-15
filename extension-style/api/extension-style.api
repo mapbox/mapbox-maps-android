@@ -5793,8 +5793,6 @@ public final class com/mapbox/maps/extension/style/light/generated/DirectionalLi
 	public final fun getIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public fun getLightId ()Ljava/lang/String;
-	public final fun getShadowDrawBeforeLayer ()Ljava/lang/String;
-	public final fun getShadowDrawBeforeLayerAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getShadowIntensity ()Ljava/lang/Double;
 	public final fun getShadowIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getShadowIntensityTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -5802,8 +5800,6 @@ public final class com/mapbox/maps/extension/style/light/generated/DirectionalLi
 	public fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun intensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun intensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
-	public fun shadowDrawBeforeLayer (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
-	public fun shadowDrawBeforeLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun shadowIntensity (D)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun shadowIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public fun shadowIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
@@ -5828,8 +5824,6 @@ public abstract interface class com/mapbox/maps/extension/style/light/generated/
 	public abstract fun intensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun intensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun intensityTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
-	public abstract fun shadowDrawBeforeLayer (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
-	public abstract fun shadowDrawBeforeLayer (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun shadowIntensity (D)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun shadowIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;
 	public abstract fun shadowIntensityTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/light/generated/DirectionalLight;

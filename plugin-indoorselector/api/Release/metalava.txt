@@ -1,9 +1,0 @@
-// Signature format: 3.0
-package com.mapbox.maps.plugin.indoorselector {
-
-  public final class IndoorUtils {
-    method public static com.mapbox.maps.plugin.indoorselector.IndoorSelectorPlugin getIndoorSelector(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
-  }
-
-}
-

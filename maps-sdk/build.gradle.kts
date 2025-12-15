@@ -103,7 +103,6 @@ dependencies {
   api(project(":extension-localization"))
   api(project(":plugin-lifecycle"))
   api(project(":plugin-viewport"))
-  api(project(":plugin-indoorselector"))
   compileOnly(libs.asyncInflater)
   api(libs.kotlin)
   api(libs.coroutines)

@@ -71,7 +71,6 @@ public class DirectionalLightState internal constructor(
   initialDirectionTransition: Transition = Transition.INITIAL,
   initialIntensity: DoubleValue = DoubleValue.INITIAL,
   initialIntensityTransition: Transition = Transition.INITIAL,
-  initialShadowDrawBeforeLayer: StringValue = StringValue.INITIAL,
   initialShadowIntensity: DoubleValue = DoubleValue.INITIAL,
   initialShadowIntensityTransition: Transition = Transition.INITIAL,
 ) {
@@ -85,7 +84,6 @@ public class DirectionalLightState internal constructor(
     initialDirectionTransition = Transition.INITIAL,
     initialIntensity = DoubleValue.INITIAL,
     initialIntensityTransition = Transition.INITIAL,
-    initialShadowDrawBeforeLayer = StringValue.INITIAL,
     initialShadowIntensity = DoubleValue.INITIAL,
     initialShadowIntensityTransition = Transition.INITIAL,
   )
@@ -98,7 +96,6 @@ public class DirectionalLightState internal constructor(
   private val directionTransitionState: MutableState<Transition> = mutableStateOf(initialDirectionTransition)
   private val intensityState: MutableState<DoubleValue> = mutableStateOf(initialIntensity)
   private val intensityTransitionState: MutableState<Transition> = mutableStateOf(initialIntensityTransition)
-  private val shadowDrawBeforeLayerState: MutableState<StringValue> = mutableStateOf(initialShadowDrawBeforeLayer)
   private val shadowIntensityState: MutableState<DoubleValue> = mutableStateOf(initialShadowIntensity)
   private val shadowIntensityTransitionState: MutableState<Transition> = mutableStateOf(initialShadowIntensityTransition)
 
@@ -153,13 +150,6 @@ public class DirectionalLightState internal constructor(
    * Default value: 0.5. Value range: [0, 1]
    */
   public var intensityTransition: Transition by intensityTransitionState
-
-  /**
-   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are
-   * drawn after the last 3D layer. This property does not affect shadows on terrain.
-   */
-  @MapboxExperimental
-  public var shadowDrawBeforeLayer: StringValue by shadowDrawBeforeLayerState
 
   /**
    * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the
@@ -221,9 +211,6 @@ public class DirectionalLightState internal constructor(
           if (intensityTransition.isNotInitial()) {
             this["intensity-transition"] = intensityTransition.value
           }
-          if (shadowDrawBeforeLayer.isNotInitial()) {
-            this["shadow-draw-before-layer"] = shadowDrawBeforeLayer.value
-          }
           if (shadowIntensity.isNotInitial()) {
             this["shadow-intensity"] = shadowIntensity.value
           }
@@ -245,7 +232,6 @@ public class DirectionalLightState internal constructor(
     mapboxMap.UpdateLightProperty(directionTransitionState, "direction-transition")
     mapboxMap.UpdateLightProperty(intensityState, "intensity")
     mapboxMap.UpdateLightProperty(intensityTransitionState, "intensity-transition")
-    mapboxMap.UpdateLightProperty(shadowDrawBeforeLayerState, "shadow-draw-before-layer")
     mapboxMap.UpdateLightProperty(shadowIntensityState, "shadow-intensity")
     mapboxMap.UpdateLightProperty(shadowIntensityTransitionState, "shadow-intensity-transition")
   }
@@ -264,7 +250,6 @@ public class DirectionalLightState internal constructor(
       directionTransition,
       intensity,
       intensityTransition,
-      shadowDrawBeforeLayer,
       shadowIntensity,
       shadowIntensityTransition,
     )
@@ -287,7 +272,6 @@ public class DirectionalLightState internal constructor(
     if (directionTransition != other.directionTransition) return false
     if (intensity != other.intensity) return false
     if (intensityTransition != other.intensityTransition) return false
-    if (shadowDrawBeforeLayer != other.shadowDrawBeforeLayer) return false
     if (shadowIntensity != other.shadowIntensity) return false
     if (shadowIntensityTransition != other.shadowIntensityTransition) return false
     return true
@@ -298,7 +282,7 @@ public class DirectionalLightState internal constructor(
    */
   @OptIn(MapboxExperimental::class)
   override fun toString(): String {
-    return "DirectionalLightState(castShadows=$castShadows, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, shadowDrawBeforeLayer=$shadowDrawBeforeLayer, shadowIntensity=$shadowIntensity, shadowIntensityTransition=$shadowIntensityTransition)"
+    return "DirectionalLightState(castShadows=$castShadows, color=$color, colorTransition=$colorTransition, colorUseTheme=$colorUseTheme, direction=$direction, directionTransition=$directionTransition, intensity=$intensity, intensityTransition=$intensityTransition, shadowIntensity=$shadowIntensity, shadowIntensityTransition=$shadowIntensityTransition)"
   }
 
   /**
@@ -342,7 +326,6 @@ public class DirectionalLightState internal constructor(
           initialDirectionTransition = properties["direction-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
           initialIntensity = properties["intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           initialIntensityTransition = properties["intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
-          initialShadowDrawBeforeLayer = properties["shadow-draw-before-layer"]?.let { StringValue(it) } ?: StringValue.INITIAL,
           initialShadowIntensity = properties["shadow-intensity"]?.let { DoubleValue(it) } ?: DoubleValue.INITIAL,
           initialShadowIntensityTransition = properties["shadow-intensity-transition"]?.let { Transition(it) } ?: Transition.INITIAL,
         )

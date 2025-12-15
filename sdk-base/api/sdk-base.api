@@ -1378,7 +1378,6 @@ public abstract class com/mapbox/maps/plugin/Plugin {
 	public static final field MAPBOX_CAMERA_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_COMPASS_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_GESTURES_PLUGIN_ID Ljava/lang/String;
-	public static final field MAPBOX_INDOOR_SELECTOR_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_LIFECYCLE_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_LOCATION_COMPONENT_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_LOGO_PLUGIN_ID Ljava/lang/String;
@@ -2269,7 +2268,6 @@ public final class com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate$Def
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProvider {
-	public abstract fun getIndoorManager ()Lcom/mapbox/maps/IndoorManager;
 	public abstract fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
 	public abstract fun getMapCameraManagerDelegate ()Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;
 	public abstract fun getMapFeatureQueryDelegate ()Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;
@@ -2692,132 +2690,6 @@ public abstract interface class com/mapbox/maps/plugin/gestures/generated/Gestur
 
 public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettingsKt {
 	public static final synthetic fun GesturesSettings (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
-}
-
-public abstract interface class com/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin : com/mapbox/maps/plugin/LifecyclePlugin, com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsInterface {
-	public abstract fun addOnFloorSelectedListener (Lcom/mapbox/maps/plugin/indoorselector/OnFloorSelectedListener;)V
-	public abstract fun onFloorSelected (Ljava/lang/String;)V
-	public abstract fun removeOnFloorSelectedListener (Lcom/mapbox/maps/plugin/indoorselector/OnFloorSelectedListener;)V
-	public abstract fun updateFloors (Ljava/util/List;Ljava/lang/String;)V
-}
-
-public final class com/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin$DefaultImpls {
-	public static fun cleanup (Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;)V
-	public static fun initialize (Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;)V
-	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-	public static fun onPluginView (Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;Landroid/view/View;)V
-	public static fun onStart (Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;)V
-	public static fun onStop (Lcom/mapbox/maps/plugin/indoorselector/IndoorSelectorPlugin;)V
-}
-
-public abstract interface class com/mapbox/maps/plugin/indoorselector/IndoorSelectorView {
-	public abstract fun isIndoorSelectorVisible ()Z
-	public abstract fun setIndoorGravity (I)V
-	public abstract fun setIndoorSelectorMargins (IIII)V
-	public abstract fun setIndoorSelectorVisible (Z)V
-	public abstract fun updateFloors (Ljava/util/List;Ljava/lang/String;)V
-}
-
-public abstract interface class com/mapbox/maps/plugin/indoorselector/OnFloorSelectedListener {
-	public abstract fun onFloorSelected (Ljava/lang/String;)V
-}
-
-public final class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (ZIFFFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getEnabled ()Z
-	public final fun getMarginBottom ()F
-	public final fun getMarginLeft ()F
-	public final fun getMarginRight ()F
-	public final fun getMarginTop ()F
-	public final fun getPosition ()I
-	public fun hashCode ()I
-	public final fun toBuilder ()Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder {
-	public fun <init> ()V
-	public final fun build ()Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
-	public final fun getEnabled ()Z
-	public final fun getMarginBottom ()F
-	public final fun getMarginLeft ()F
-	public final fun getMarginRight ()F
-	public final fun getMarginTop ()F
-	public final fun getPosition ()I
-	public final fun setEnabled (Z)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public final synthetic fun setEnabled (Z)V
-	public final fun setMarginBottom (F)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public final synthetic fun setMarginBottom (F)V
-	public final fun setMarginLeft (F)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public final synthetic fun setMarginLeft (F)V
-	public final fun setMarginRight (F)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public final synthetic fun setMarginRight (F)V
-	public final fun setMarginTop (F)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public final synthetic fun setMarginTop (F)V
-	public final fun setPosition (I)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Builder;
-	public final synthetic fun setPosition (I)V
-}
-
-public final class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
-public abstract class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsBase : com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsInterface {
-	public fun <init> ()V
-	protected abstract fun applySettings ()V
-	public fun getEnabled ()Z
-	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
-	public fun getMarginBottom ()F
-	public fun getMarginLeft ()F
-	public fun getMarginRight ()F
-	public fun getMarginTop ()F
-	public fun getPosition ()I
-	public fun getSettings ()Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
-	public fun setEnabled (Z)V
-	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;)V
-	public fun setMarginBottom (F)V
-	public fun setMarginLeft (F)V
-	public fun setMarginRight (F)V
-	public fun setMarginTop (F)V
-	public fun setPosition (I)V
-	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
-}
-
-public final class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsData$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsData;
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun newArray (I)[Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsData;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-}
-
-public abstract interface class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsInterface {
-	public abstract fun getEnabled ()Z
-	public abstract fun getMarginBottom ()F
-	public abstract fun getMarginLeft ()F
-	public abstract fun getMarginRight ()F
-	public abstract fun getMarginTop ()F
-	public abstract fun getPosition ()I
-	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
-	public abstract fun setEnabled (Z)V
-	public abstract fun setMarginBottom (F)V
-	public abstract fun setMarginLeft (F)V
-	public abstract fun setMarginRight (F)V
-	public abstract fun setMarginTop (F)V
-	public abstract fun setPosition (I)V
-	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
-}
-
-public final class com/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettingsKt {
-	public static final synthetic fun IndoorSelectorSettings (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/indoorselector/generated/IndoorSelectorSettings;
 }
 
 public abstract interface class com/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin : com/mapbox/maps/plugin/MapPlugin {

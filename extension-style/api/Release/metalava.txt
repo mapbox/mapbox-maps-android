@@ -6974,8 +6974,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getIntensityTransition();
     method public String getLightId();
-    method public String? getShadowDrawBeforeLayer();
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getShadowDrawBeforeLayerAsExpression();
     method public Double? getShadowIntensity();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getShadowIntensityAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getShadowIntensityTransition();
@@ -6983,8 +6981,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowDrawBeforeLayer(String shadowDrawBeforeLayer);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowDrawBeforeLayer(com.mapbox.maps.extension.style.expressions.generated.Expression shadowDrawBeforeLayer);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(double shadowIntensity);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -7004,8 +7000,6 @@ package com.mapbox.maps.extension.style.light.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? intensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? intensityTransition;
     property public String lightId;
-    property public final String? shadowDrawBeforeLayer;
-    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? shadowDrawBeforeLayerAsExpression;
     property public final Double? shadowIntensity;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? shadowIntensityAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? shadowIntensityTransition;
@@ -7029,8 +7023,6 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensity(com.mapbox.maps.extension.style.expressions.generated.Expression intensity);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowDrawBeforeLayer(String shadowDrawBeforeLayer);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowDrawBeforeLayer(com.mapbox.maps.extension.style.expressions.generated.Expression shadowDrawBeforeLayer);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(double shadowIntensity = 1.0);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression shadowIntensity);
     method public com.mapbox.maps.extension.style.light.generated.DirectionalLight shadowIntensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);

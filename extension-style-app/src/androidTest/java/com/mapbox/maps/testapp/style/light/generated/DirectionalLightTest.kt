@@ -202,26 +202,6 @@ class DirectionalLightTest : BaseStyleTest() {
   }
   @Test
   @UiThreadTest
-  fun shadowDrawBeforeLayerTest() {
-    val light = directionalLight {
-      shadowDrawBeforeLayer("abc")
-    }
-    setupLight(ambientLight { }, light)
-    assertEquals("abc", light.shadowDrawBeforeLayer)
-  }
-  // Add Expression Test
-  @Test
-  @UiThreadTest
-  fun shadowDrawBeforeLayerAsExpressionTest() {
-    val expression = literal("abc")
-    val light = directionalLight {
-      shadowDrawBeforeLayer(expression)
-    }
-    setupLight(ambientLight { }, light)
-    assertEquals(expression.toString(), light.shadowDrawBeforeLayerAsExpression.toString())
-  }
-  @Test
-  @UiThreadTest
   fun shadowIntensityTest() {
     val light = directionalLight {
       shadowIntensity(1.0)

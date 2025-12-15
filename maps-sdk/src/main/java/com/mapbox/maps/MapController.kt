@@ -14,7 +14,6 @@ import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
-import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_INDOOR_SELECTOR_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
@@ -29,7 +28,6 @@ import com.mapbox.maps.plugin.compass.createCompassPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.createGesturePlugin
-import com.mapbox.maps.plugin.indoorselector.createIndoorSelectorPlugin
 import com.mapbox.maps.plugin.lifecycle.createLifecyclePlugin
 import com.mapbox.maps.plugin.locationcomponent.createLocationComponentPlugin
 import com.mapbox.maps.plugin.logo.createLogoPlugin
@@ -377,9 +375,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           }
           MAPBOX_VIEWPORT_PLUGIN_ID -> {
             createViewportPlugin()
-          }
-          MAPBOX_INDOOR_SELECTOR_PLUGIN_ID -> {
-            createIndoorSelectorPlugin()
           }
           else -> {
             plugin.instance

@@ -4325,7 +4325,6 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public String getId();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getIntensityTransition();
-    method public com.mapbox.maps.extension.compose.style.StringValue getShadowDrawBeforeLayer();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getShadowIntensity();
     method public com.mapbox.maps.extension.compose.style.Transition getShadowIntensityTransition();
     method public void setCastShadows(com.mapbox.maps.extension.compose.style.BooleanValue);
@@ -4336,7 +4335,6 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     method public void setDirectionTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
-    method public void setShadowDrawBeforeLayer(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setShadowIntensity(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setShadowIntensityTransition(com.mapbox.maps.extension.compose.style.Transition);
     property public final com.mapbox.maps.extension.compose.style.BooleanValue castShadows;
@@ -4348,7 +4346,6 @@ package com.mapbox.maps.extension.compose.style.lights.generated {
     property public final String id;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue intensity;
     property public final com.mapbox.maps.extension.compose.style.Transition intensityTransition;
-    property public final com.mapbox.maps.extension.compose.style.StringValue shadowDrawBeforeLayer;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue shadowIntensity;
     property public final com.mapbox.maps.extension.compose.style.Transition shadowIntensityTransition;
     field public static final com.mapbox.maps.extension.compose.style.lights.generated.DirectionalLightState.Companion Companion;

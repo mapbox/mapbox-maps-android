@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
 import androidx.annotation.RestrictTo
-import com.mapbox.maps.IndoorManager
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 
@@ -66,11 +65,4 @@ interface MapDelegateProvider {
    */
   @MapboxExperimental
   val mapInteractionDelegate: MapInteractionDelegate
-
-  /**
-   * IndoorManager for controlling indoor map floor display.
-   */
-  @MapboxExperimental
-  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
-  val indoorManager: IndoorManager
 }
