@@ -322,6 +322,60 @@ class DirectionalLight internal constructor(override val lightId: String) : Dire
     intensityTransition(StyleTransition.Builder().apply(block).build())
   }
   /**
+   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+   */
+  @MapboxExperimental
+  val shadowDrawBeforeLayer: String?
+    /**
+     * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+     *
+     * @return shadowDrawBeforeLayer as String
+     */
+    get() = getPropertyValue("shadow-draw-before-layer")
+  /**
+   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+   *
+   * @param shadowDrawBeforeLayer as String
+   */
+  @MapboxExperimental
+  override fun shadowDrawBeforeLayer(shadowDrawBeforeLayer: String): DirectionalLight = apply {
+    setProperty(PropertyValue("shadow-draw-before-layer", shadowDrawBeforeLayer))
+  }
+
+  /**
+   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+   *
+   * This is an Expression representation of "shadow-draw-before-layer".
+   */
+  @MapboxExperimental
+  val shadowDrawBeforeLayerAsExpression: Expression?
+    /**
+     * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+     *
+     * Get the ShadowDrawBeforeLayer property as an Expression
+     *
+     * @return String
+     */
+    get() {
+      getPropertyValue<Expression>("shadow-draw-before-layer")?.let {
+        return it
+      }
+      shadowDrawBeforeLayer?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+  /**
+   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+   *
+   * @param shadowDrawBeforeLayer value of shadowDrawBeforeLayer as Expression
+   */
+  @MapboxExperimental
+  override fun shadowDrawBeforeLayer(shadowDrawBeforeLayer: Expression): DirectionalLight = apply {
+    val propertyValue = PropertyValue("shadow-draw-before-layer", shadowDrawBeforeLayer)
+    setProperty(propertyValue)
+  }
+  /**
    * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    */
   val shadowIntensity: Double?
@@ -565,6 +619,21 @@ interface DirectionalLightDslReceiver {
    * DSL for [intensityTransition].
    */
   fun intensityTransition(block: StyleTransition.Builder.() -> Unit): DirectionalLight
+  /**
+   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+   *
+   * @param shadowDrawBeforeLayer as String
+   */
+  @MapboxExperimental
+  fun shadowDrawBeforeLayer(shadowDrawBeforeLayer: String): DirectionalLight
+
+  /**
+   * Specify a layer before which shadows are drawn on the ground. If not specified, shadows are drawn after the last 3D layer. This property does not affect shadows on terrain.
+   *
+   * @param shadowDrawBeforeLayer value of shadowDrawBeforeLayer as Expression
+   */
+  @MapboxExperimental
+  fun shadowDrawBeforeLayer(shadowDrawBeforeLayer: Expression): DirectionalLight
   /**
    * Determines the shadow strength, affecting the shadow receiver surfaces final color. Values near 0.0 reduce the shadow contribution to the final color. Values near to 1.0 make occluded surfaces receive almost no directional light. Designed to be used mostly for transitioning between values 0 and 1. Default value: 1. Value range: [0, 1]
    *

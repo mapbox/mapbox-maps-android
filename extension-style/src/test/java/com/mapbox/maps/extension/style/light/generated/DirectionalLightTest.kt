@@ -674,6 +674,94 @@ class DirectionalLightTest {
   }
 
   @Test
+  fun shadowDrawBeforeLayerSet() {
+    val light = directionalLight("id") {
+      shadowDrawBeforeLayer("abc")
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("shadow-draw-before-layer=abc"))
+  }
+
+  @Test
+  fun shadowDrawBeforeLayerSetAfterInitialization() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.shadowDrawBeforeLayer("abc")
+    verify { style.setStyleLightProperty("id", "shadow-draw-before-layer", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("abc"))
+  }
+
+  @Test
+  fun shadowDrawBeforeLayerGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals("abc".toString(), light.shadowDrawBeforeLayer!!.toString())
+    verify { style.getStyleLightProperty("id", "shadow-draw-before-layer") }
+  }
+  // Expression Tests
+
+  @Test
+  fun shadowDrawBeforeLayerAsExpressionSet() {
+    val expression = literal("abc")
+
+    val light = directionalLight("id") {
+      shadowDrawBeforeLayer(expression)
+    }
+    style.setLights(listOf(light))
+    verify { style.setStyleLights(capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun shadowDrawBeforeLayerAsExpressionSetAfterInitialization() {
+    val expression = rgba {
+      literal(0)
+      literal(0)
+      literal(0)
+      literal(1.0)
+    }
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    light.shadowDrawBeforeLayer(expression)
+    verify { style.setStyleLightProperty("id", "shadow-draw-before-layer", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains(expression.toString()))
+  }
+
+  @Test
+  fun shadowDrawBeforeLayerAsExpressionGet() {
+    val expression = literal("abc")
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    every { styleProperty.value } returns expression
+
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(expression.toString(), light.shadowDrawBeforeLayerAsExpression?.toString())
+    verify { style.getStyleLightProperty("id", "shadow-draw-before-layer") }
+  }
+
+  @Test
+  fun shadowDrawBeforeLayerAsExpressionGetNull() {
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertEquals(null, light.shadowDrawBeforeLayerAsExpression)
+    verify { style.getStyleLightProperty("id", "shadow-draw-before-layer") }
+  }
+
+  @Test
+  fun shadowDrawBeforeLayerAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+    val light = directionalLight("id") { }
+    style.setLights(listOf(light))
+    assertTrue(light.shadowDrawBeforeLayerAsExpression.toString().contains("abc"))
+    assertEquals("abc", light.shadowDrawBeforeLayer)
+    verify { style.getStyleLightProperty("id", "shadow-draw-before-layer") }
+  }
+
+  @Test
   fun shadowIntensitySet() {
     val light = directionalLight("id") {
       shadowIntensity(1.0)
