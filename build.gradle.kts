@@ -113,6 +113,7 @@ apiValidation {
       "com.mapbox.maps.plugin.attribution.BuildConfig",
       "com.mapbox.maps.plugin.compass.BuildConfig",
       "com.mapbox.maps.plugin.gestures.BuildConfig",
+      "com.mapbox.maps.plugin.indoorselector.BuildConfig",
       "com.mapbox.maps.plugin.lifecycle.BuildConfig",
       "com.mapbox.maps.plugin.locationcomponent.BuildConfig",
       "com.mapbox.maps.plugin.logo.BuildConfig",

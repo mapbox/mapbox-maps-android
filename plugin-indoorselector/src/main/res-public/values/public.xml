@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the indoor selector is visible on the map. -->
+    <public name="mapbox_indoorSelectorEnabled" type="attr" />
+
+    <!-- Defines where the indoor selector is positioned on the map. -->
+    <public name="mapbox_indoorSelectorGravity" type="attr" />
+
+    <!-- Defines the margin to the left that the indoor selector honors. -->
+    <public name="mapbox_indoorSelectorMarginLeft" type="attr" />
+
+    <!-- Defines the margin to the top that the indoor selector honors. -->
+    <public name="mapbox_indoorSelectorMarginTop" type="attr" />
+
+    <!-- Defines the margin to the right that the indoor selector honors. -->
+    <public name="mapbox_indoorSelectorMarginRight" type="attr" />
+
+    <!-- Defines the margin to the bottom that the indoor selector honors. -->
+    <public name="mapbox_indoorSelectorMarginBottom" type="attr" />
+</resources>
+<!-- End of generated file. -->

@@ -19,11 +19,13 @@ class MapDelegateProviderTest {
 
   private lateinit var mapView: MapView
   private val mapboxMap = mockk<MapboxMap>()
+  private val indoor = mockk<IndoorManager>()
 
   @Before
   fun setUp() {
     mapView = mockk(relaxed = true)
     every { mapView.mapboxMap } returns mapboxMap
+    every { mapboxMap.indoor } returns indoor
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
   }
