@@ -16,7 +16,20 @@ Mapbox welcomes participation and contributions from everyone.
 * Add Standard Style color and 3D configuration options: `colorBuildings`, `colorCommercial`, `colorEducation`, `colorIndustrial`, `colorLand`, `colorMedical`, `show3dBuildings`, `show3dFacades`, `show3dLandmarks`, and `show3dTrees`.
 * Introduce experimental `AttributionControl` composable function that exposes `AttributionState` programmatically, enabling developers to build custom Attribution UI outside of the map while maintaining compliance with [Mapbox ToS](https://www.mapbox.com/legal/tos) requirements.
 * Introduce experimental indoor floor selector plugin. The plugin is disabled by default and requires a style with indoor data and special access to indoor mapping features.
-* Add `shadowDrawBeforeLayer` property to directional light to allow specifying the position in the layer stack for drawing shadows on the ground.
+* Add experimental `shadowDrawBeforeLayer` property to directional light to allow specifying the position in the layer stack for drawing shadows on the ground.
+* [tile_store] Add method to set tilestore path to be used by default.
+* Faster polygon triangulation for complex polygons.
+* General fixes and performance improvements.
+
+## Bug fixes 🐞
+* Fix `userData` payload for `onSourceDataLoaded` event during GeoJSON partial update.
+* Fix guard rail placement.
+* Fix changes in brightness not always getting applied.
+* Fix leaking Vertex Array Objects.
+* Reset style fog, snow and rain impl when switching to a new style.
+* Fix rendering artefacts when persistent buffer mapping is enabled.
+* Fix Coercion expression possibleOutputs result for Array type.
+* Fix a crash when jumping between different projections.
 
 ## Dependencies
 * Update gl-native to [v11.18.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0-beta.1), common to [v24.18.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0-beta.1).
