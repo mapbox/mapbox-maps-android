@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.18.0-beta.1 December 17, 2025
+
 ## Breaking changes ⚠️
 * Remove line-cutout-width and change line-cutout-opacity default to 1.0
 * Add `ModelLayer.modelAllowDensityReduction` property to disable density reduction in model layers.
@@ -15,6 +17,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `AttributionControl` composable function that exposes `AttributionState` programmatically, enabling developers to build custom Attribution UI outside of the map while maintaining compliance with [Mapbox ToS](https://www.mapbox.com/legal/tos) requirements.
 * Introduce experimental indoor floor selector plugin. The plugin is disabled by default and requires a style with indoor data and special access to indoor mapping features.
 * Add `shadowDrawBeforeLayer` property to directional light to allow specifying the position in the layer stack for drawing shadows on the ground.
+
+## Dependencies
+* Update gl-native to [v11.18.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0-beta.1), common to [v24.18.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0-beta.1).
+
 
 # 11.17.1 December 11, 2025
 ## Bug fixes 🐞
