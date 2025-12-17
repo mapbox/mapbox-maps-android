@@ -1342,6 +1342,7 @@ package com.mapbox.maps.plugin {
     field public static final String MAPBOX_CAMERA_PLUGIN_ID = "MAPBOX_CAMERA_PLUGIN_ID";
     field public static final String MAPBOX_COMPASS_PLUGIN_ID = "MAPBOX_COMPASS_PLUGIN_ID";
     field public static final String MAPBOX_GESTURES_PLUGIN_ID = "MAPBOX_GESTURES_PLUGIN_ID";
+    field public static final String MAPBOX_INDOOR_SELECTOR_PLUGIN_ID = "MAPBOX_INDOOR_SELECTOR_PLUGIN_ID";
     field public static final String MAPBOX_LIFECYCLE_PLUGIN_ID = "MAPBOX_LIFECYCLE_PLUGIN_ID";
     field public static final String MAPBOX_LOCATION_COMPONENT_PLUGIN_ID = "MAPBOX_LOCATION_COMPONENT_PLUGIN_ID";
     field public static final String MAPBOX_LOGO_PLUGIN_ID = "MAPBOX_LOGO_PLUGIN_ID";
@@ -2212,6 +2213,7 @@ package com.mapbox.maps.plugin.delegates {
   }
 
   @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public interface MapDelegateProvider {
+    method public com.mapbox.maps.IndoorManager getIndoorManager();
     method public com.mapbox.maps.plugin.delegates.MapAttributionDelegate getMapAttributionDelegate();
     method public com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate getMapCameraManagerDelegate();
     method public com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate getMapFeatureQueryDelegate();
@@ -2223,6 +2225,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.MapboxStyleManager getMapStyleManagerDelegate();
     method public com.mapbox.maps.plugin.delegates.MapTransformDelegate getMapTransformDelegate();
     method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapboxStyleManager,kotlin.Unit> callback);
+    property public abstract com.mapbox.maps.IndoorManager indoorManager;
     property public abstract com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate mapFeatureQueryDelegate;
@@ -2677,6 +2680,128 @@ package com.mapbox.maps.plugin.gestures.generated {
 
   public final class GesturesSettingsKt {
     method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.plugin.gestures.generated.GesturesSettings! GesturesSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder,? extends kotlin.Unit> initializer);
+  }
+
+}
+
+package com.mapbox.maps.plugin.indoorselector {
+
+  @com.mapbox.maps.MapboxExperimental public interface IndoorSelectorPlugin extends com.mapbox.maps.plugin.ViewPlugin com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettingsInterface com.mapbox.maps.plugin.LifecyclePlugin {
+    method public void addOnFloorSelectedListener(com.mapbox.maps.plugin.indoorselector.OnFloorSelectedListener listener);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public void onFloorSelected(String floorId);
+    method public void removeOnFloorSelectedListener(com.mapbox.maps.plugin.indoorselector.OnFloorSelectedListener listener);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public void updateFloors(java.util.List<com.mapbox.maps.IndoorFloor> floors, String? selectedFloorId);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public interface IndoorSelectorView {
+    method public boolean isIndoorSelectorVisible();
+    method public void setIndoorGravity(int gravity);
+    method public void setIndoorSelectorMargins(int left, int top, int right, int bottom);
+    method public void setIndoorSelectorVisible(boolean);
+    method public void updateFloors(java.util.List<com.mapbox.maps.IndoorFloor> floors, String? selectedFloorId);
+    property public abstract boolean isIndoorSelectorVisible;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public fun interface OnFloorSelectedListener {
+    method public void onFloorSelected(String floorId);
+  }
+
+}
+
+package com.mapbox.maps.plugin.indoorselector.generated {
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class IndoorSelectorSettings implements android.os.Parcelable {
+    method public boolean getEnabled();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public int getPosition();
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder toBuilder();
+    property public final boolean enabled;
+    property public final float marginBottom;
+    property public final float marginLeft;
+    property public final float marginRight;
+    property public final float marginTop;
+    property public final int position;
+  }
+
+  public static final class IndoorSelectorSettings.Builder {
+    ctor public IndoorSelectorSettings.Builder();
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings build();
+    method public boolean getEnabled();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public int getPosition();
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder setEnabled(boolean enabled);
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder setMarginBottom(float marginBottom);
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder setMarginLeft(float marginLeft);
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder setMarginRight(float marginRight);
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder setMarginTop(float marginTop);
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder setPosition(int position);
+    property public final boolean enabled;
+    property public final float marginBottom;
+    property public final float marginLeft;
+    property public final float marginRight;
+    property public final float marginTop;
+    property public final int position;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public abstract class IndoorSelectorSettingsBase implements com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettingsInterface {
+    ctor public IndoorSelectorSettingsBase();
+    method protected abstract void applySettings();
+    method public boolean getEnabled();
+    method protected abstract com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings getInternalSettings();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public int getPosition();
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings getSettings();
+    method public void setEnabled(boolean);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings);
+    method public void setMarginBottom(float);
+    method public void setMarginLeft(float);
+    method public void setMarginRight(float);
+    method public void setMarginTop(float);
+    method public void setPosition(int);
+    method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder,kotlin.Unit> block);
+    property public boolean enabled;
+    property protected abstract com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings internalSettings;
+    property public float marginBottom;
+    property public float marginLeft;
+    property public float marginRight;
+    property public float marginTop;
+    property public int position;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public interface IndoorSelectorSettingsInterface {
+    method public boolean getEnabled();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public int getPosition();
+    method public com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings getSettings();
+    method public void setEnabled(boolean);
+    method public void setMarginBottom(float);
+    method public void setMarginLeft(float);
+    method public void setMarginRight(float);
+    method public void setMarginTop(float);
+    method public void setPosition(int);
+    method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder,kotlin.Unit> block);
+    property public abstract boolean enabled;
+    property public abstract float marginBottom;
+    property public abstract float marginLeft;
+    property public abstract float marginRight;
+    property public abstract float marginTop;
+    property public abstract int position;
+  }
+
+  public final class IndoorSelectorSettingsKt {
+    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings! IndoorSelectorSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings.Builder,? extends kotlin.Unit> initializer);
   }
 
 }

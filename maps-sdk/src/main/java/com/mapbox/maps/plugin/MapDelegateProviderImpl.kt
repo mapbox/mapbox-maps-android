@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin
 
 import androidx.annotation.RestrictTo
+import com.mapbox.maps.IndoorManager
 import com.mapbox.maps.MapController
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
@@ -43,4 +44,6 @@ internal class MapDelegateProviderImpl(
 
   override val mapStyleManagerDelegate: MapboxStyleManager = mapboxMap
   override val mapInteractionDelegate: MapInteractionDelegate = mapboxMap
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  override val indoorManager: IndoorManager = mapboxMap.indoor
 }

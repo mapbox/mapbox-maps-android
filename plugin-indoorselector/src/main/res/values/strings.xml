@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Indoor selector accessibility strings -->
+    <string name="mapbox_indoorselector_scroll_up">Scroll up</string>
+    <string name="mapbox_indoorselector_scroll_down">Scroll down</string>
+</resources>
