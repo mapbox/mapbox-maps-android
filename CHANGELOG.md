@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster array value at a point on the map. 
+
 # 11.18.0-beta.1 December 17, 2025
 
 ## Breaking changes ⚠️
