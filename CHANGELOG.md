@@ -10,9 +10,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Breaking changes ⚠️
 * Remove line-cutout-width and change line-cutout-opacity default to 1.0
-* Add `ModelLayer.modelAllowDensityReduction` property to disable density reduction in model layers.
 
 ## Features ✨ and improvements 🏁
+* Add `ModelLayer.modelAllowDensityReduction` property to disable density reduction in model layers.
 * Add Standard Style color and 3D configuration options: `colorBuildings`, `colorCommercial`, `colorEducation`, `colorIndustrial`, `colorLand`, `colorMedical`, `show3dBuildings`, `show3dFacades`, `show3dLandmarks`, and `show3dTrees`.
 * Introduce experimental `AttributionControl` composable function that exposes `AttributionState` programmatically, enabling developers to build custom Attribution UI outside of the map while maintaining compliance with [Mapbox ToS](https://www.mapbox.com/legal/tos) requirements.
 * Introduce experimental indoor floor selector plugin. The plugin is disabled by default and requires a style with indoor data and special access to indoor mapping features.
