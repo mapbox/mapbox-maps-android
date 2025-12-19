@@ -2687,10 +2687,10 @@ package com.mapbox.maps.plugin.gestures.generated {
 package com.mapbox.maps.plugin.indoorselector {
 
   @com.mapbox.maps.MapboxExperimental public interface IndoorSelectorPlugin extends com.mapbox.maps.plugin.ViewPlugin com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettingsInterface com.mapbox.maps.plugin.LifecyclePlugin {
-    method public void addOnFloorSelectedListener(com.mapbox.maps.plugin.indoorselector.OnFloorSelectedListener listener);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public void onFloorSelected(String floorId);
-    method public void removeOnFloorSelectedListener(com.mapbox.maps.plugin.indoorselector.OnFloorSelectedListener listener);
-    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) public void updateFloors(java.util.List<com.mapbox.maps.IndoorFloor> floors, String? selectedFloorId);
+    method @com.mapbox.maps.MapboxExperimental public void addOnFloorSelectedListener(com.mapbox.maps.plugin.indoorselector.OnFloorSelectedListener listener);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) @com.mapbox.maps.MapboxExperimental public void onFloorSelected(String floorId);
+    method @com.mapbox.maps.MapboxExperimental public void removeOnFloorSelectedListener(com.mapbox.maps.plugin.indoorselector.OnFloorSelectedListener listener);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY) @com.mapbox.maps.MapboxExperimental public void updateFloors(java.util.List<com.mapbox.maps.IndoorFloor> floors, String? selectedFloorId);
   }
 
   @com.mapbox.maps.MapboxExperimental public interface IndoorSelectorView {

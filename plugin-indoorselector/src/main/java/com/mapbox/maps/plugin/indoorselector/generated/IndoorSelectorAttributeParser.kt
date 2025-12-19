@@ -17,6 +17,7 @@ internal object IndoorSelectorAttributeParser {
    * @param context Context
    * @param attrs AttributionSet
    */
+  @OptIn(com.mapbox.maps.MapboxExperimental::class)
   fun parseIndoorSelectorSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): IndoorSelectorSettings {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
