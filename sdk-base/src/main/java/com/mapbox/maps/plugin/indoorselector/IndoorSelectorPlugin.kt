@@ -33,7 +33,7 @@ interface IndoorSelectorPlugin : ViewPlugin, LifecyclePlugin, IndoorSelectorSett
    * @param floors List of available floors
    * @param selectedFloorId The ID of the currently selected floor (null if no floor is selected)
    */
-  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
   @RestrictTo(RestrictTo.Scope.LIBRARY)
   fun updateFloors(floors: List<IndoorFloor>, selectedFloorId: String?)
 
@@ -42,6 +42,7 @@ interface IndoorSelectorPlugin : ViewPlugin, LifecyclePlugin, IndoorSelectorSett
    *
    * @param listener The listener to add
    */
+  @MapboxExperimental
   fun addOnFloorSelectedListener(listener: OnFloorSelectedListener)
 
   /**
@@ -49,6 +50,7 @@ interface IndoorSelectorPlugin : ViewPlugin, LifecyclePlugin, IndoorSelectorSett
    *
    * @param listener The listener to remove
    */
+  @MapboxExperimental
   fun removeOnFloorSelectedListener(listener: OnFloorSelectedListener)
 
   /**
@@ -56,6 +58,7 @@ interface IndoorSelectorPlugin : ViewPlugin, LifecyclePlugin, IndoorSelectorSett
    *
    * @param floorId The ID of the selected floor
    */
+  @MapboxExperimental
   @RestrictTo(RestrictTo.Scope.LIBRARY)
   fun onFloorSelected(floorId: String)
 }
