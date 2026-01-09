@@ -10,7 +10,6 @@ import com.mapbox.maps.IndoorManager
 import com.mapbox.maps.IndoorState
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorAttributeParser
 import com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettings
 import com.mapbox.maps.plugin.indoorselector.generated.IndoorSelectorSettingsBase
 import java.util.concurrent.CopyOnWriteArraySet
@@ -90,8 +89,6 @@ internal class IndoorSelectorPluginImpl(
    * @return View that will be added to the MapView
    */
   override fun bind(mapView: FrameLayout, attrs: AttributeSet?, pixelRatio: Float): View {
-    internalSettings =
-      IndoorSelectorAttributeParser.parseIndoorSelectorSettings(mapView.context, attrs, pixelRatio)
     return viewImplProvider(mapView.context).also {
       it.injectPresenter(this)
     }
