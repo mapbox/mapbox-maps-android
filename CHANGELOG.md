@@ -9,7 +9,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster array value at a point on the map. 
 
-# 11.18.0
+
+# 11.18.0 January 15, 2026
 
 ## Breaking changes ⚠️
 * Remove line-cutout-width and change line-cutout-opacity default to 1.0
@@ -35,6 +36,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix Coercion expression possibleOutputs result for Array type.
 * Fix a crash when jumping between different projections.
 * Fixes for placements with `icon-optional`, `text-optional`, and missing parts.
+
+## Dependencies
+* Update gl-native to [v11.18.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0), common to [v24.18.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0).
+
 
 # 11.18.0-beta.1 December 17, 2025
 
