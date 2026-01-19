@@ -1557,6 +1557,7 @@ package com.mapbox.maps.plugin.annotation {
   }
 
   public final class AnnotationConfig {
+    ctor public AnnotationConfig(String? belowLayerId = null, String? layerId = null, String? sourceId = null, com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? annotationSourceOptions = null, String? slotName = null);
     ctor public AnnotationConfig(String? belowLayerId = null, String? layerId = null, String? sourceId = null, com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? annotationSourceOptions = null);
     ctor public AnnotationConfig(String? belowLayerId = null, String? layerId = null, String? sourceId = null);
     ctor public AnnotationConfig(String? belowLayerId = null, String? layerId = null);
@@ -1566,14 +1567,17 @@ package com.mapbox.maps.plugin.annotation {
     method public String? component2();
     method public String? component3();
     method public com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? component4();
-    method public com.mapbox.maps.plugin.annotation.AnnotationConfig copy(String? belowLayerId, String? layerId, String? sourceId, com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? annotationSourceOptions);
+    method public String? component5();
+    method public com.mapbox.maps.plugin.annotation.AnnotationConfig copy(String? belowLayerId, String? layerId, String? sourceId, com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? annotationSourceOptions, String? slotName);
     method public com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? getAnnotationSourceOptions();
     method public String? getBelowLayerId();
     method public String? getLayerId();
+    method public String? getSlotName();
     method public String? getSourceId();
     property public final com.mapbox.maps.plugin.annotation.AnnotationSourceOptions? annotationSourceOptions;
     property public final String? belowLayerId;
     property public final String? layerId;
+    property public final String? slotName;
     property public final String? sourceId;
   }
 

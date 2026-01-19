@@ -11,5 +11,7 @@ data class AnnotationConfig @JvmOverloads constructor(
   /** The source id for layer inside of annotation manager, if not set will use the default id managed by annotation manager.*/
   val sourceId: String? = null,
   /** The configure for GeoJsonSource inside of AnnotationManager*/
-  val annotationSourceOptions: AnnotationSourceOptions? = null
+  val annotationSourceOptions: AnnotationSourceOptions? = null,
+  /** The slot name used to position the annotations layer. If not set, null slot (on top of everything) will be used. */
+  val slotName: String? = null,
 )

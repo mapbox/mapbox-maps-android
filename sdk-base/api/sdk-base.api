@@ -1622,17 +1622,20 @@ public final class com/mapbox/maps/plugin/annotation/AnnotationConfig {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;)Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAnnotationSourceOptions ()Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;
 	public final fun getBelowLayerId ()Ljava/lang/String;
 	public final fun getLayerId ()Ljava/lang/String;
+	public final fun getSlotName ()Ljava/lang/String;
 	public final fun getSourceId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

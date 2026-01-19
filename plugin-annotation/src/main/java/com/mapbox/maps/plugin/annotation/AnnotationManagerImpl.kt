@@ -177,7 +177,7 @@ internal constructor(
         if (styleManager.styleLayerExists(belowLayerId)) {
           styleManager.addPersistentLayer(
             layer,
-            LayerPosition(null, annotationConfig.belowLayerId, null)
+            LayerPosition(null, belowLayerId, null),
           )
           layerAdded = true
         } else {
@@ -189,6 +189,17 @@ internal constructor(
       }
       if (!layerAdded) {
         styleManager.addPersistentLayer(layer)
+      }
+      annotationConfig?.slotName?.let { slotName ->
+        if (slotName in styleManager.styleSlots) {
+          layer.slot(slotName)
+        } else {
+          logW(
+            TAG,
+            "Slot with name $slotName doesn't exist in style ${styleManager.styleURI}, " +
+              "it will not be applied to the annotation layer."
+          )
+        }
       }
       associatedLayers.add(layer.layerId)
     }
