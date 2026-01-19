@@ -2089,7 +2089,7 @@ public data class HillshadeIlluminationAnchorValue(public override val value: Va
 }
 
 /**
- * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+ * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.
  */

@@ -1875,9 +1875,9 @@ class HillshadeIlluminationAnchor private constructor(override val value: String
     }
   }
 }
-// MODEL_ELEVATION_REFERENCE: Selects the base of the model. Some modes might require precomputed elevation data in the tileset.
+// MODEL_ELEVATION_REFERENCE: Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time.
 /**
- * Selects the base of the model. Some modes might require precomputed elevation data in the tileset.
+ * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time.
  *
  * @param value String value of this property
  */

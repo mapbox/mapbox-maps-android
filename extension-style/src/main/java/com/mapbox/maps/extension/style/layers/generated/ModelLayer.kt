@@ -825,11 +825,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
    */
   val modelElevationReference: ModelElevationReference?
     /**
-     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
      *
      * Use static method [ModelLayer.defaultModelElevationReference] to get the default property.
      *
@@ -843,7 +843,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
    *
    * Use static method [ModelLayer.defaultModelElevationReference] to set the default property.
    *
@@ -855,14 +855,14 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
    *
    * This is an Expression representation of "model-elevation-reference".
    *
    */
   val modelElevationReferenceAsExpression: Expression?
     /**
-     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
      *
      * Get the ModelElevationReference property as an Expression
      *
@@ -875,7 +875,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
         }
 
   /**
-   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
    *
    * Use static method [ModelLayer.defaultModelElevationReferenceAsExpression] to set the default property.
    *
@@ -2097,11 +2097,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
      */
     val defaultModelElevationReference: ModelElevationReference?
       /**
-       * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+       * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
        *
        * Get the default value of ModelElevationReference property
        *
@@ -2115,7 +2115,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+     * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
      *
      * This is an Expression representation of "model-elevation-reference".
      *
@@ -2838,14 +2838,14 @@ interface ModelLayerDsl {
   fun modelCutoffFadeRange(modelCutoffFadeRange: Expression): ModelLayer
 
   /**
-   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
    *
    * @param modelElevationReference value of modelElevationReference
    */
   fun modelElevationReference(modelElevationReference: ModelElevationReference = ModelElevationReference.GROUND): ModelLayer
 
   /**
-   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. Default value: "ground".
+   * Selects the base of the model. Some modes might require precomputed elevation data in the tileset. When using vector tiled source as the model layer source and hd-road-markup elevation reference, this property acts as layout property and elevation is evaluated only in tile loading time. Default value: "ground".
    *
    * @param modelElevationReference value of modelElevationReference as Expression
    */
