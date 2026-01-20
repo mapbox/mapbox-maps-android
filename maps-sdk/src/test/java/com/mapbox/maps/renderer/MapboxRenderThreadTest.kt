@@ -201,6 +201,23 @@ class MapboxRenderThreadTest {
   }
 
   @Test
+  fun onSurfaceSizeChangedWhileBusyTest() {
+    val mapboxRenderer: MapboxRenderer = mockk(relaxUnitFun = true)
+    initRenderThread(mapboxRenderer)
+    provideValidSurface()
+    pauseHandler()
+    mapboxRenderThread.onSurfaceSizeChanged(2, 2)
+    mapboxRenderThread.onSurfaceSizeChanged(1, 1)
+    idleHandler()
+    verifyOrder {
+      mapboxRenderer.createRenderer()
+      mapboxRenderer.onSurfaceChanged(1, 1)
+      mapboxRenderer.onSurfaceChanged(2, 2)
+      mapboxRenderer.onSurfaceChanged(1, 1)
+    }
+  }
+
+  @Test
   fun onSurfaceSizeChangedSameSizeTest() {
     initRenderThread()
     provideValidSurface()

@@ -11,6 +11,7 @@ package com.mapbox.maps.renderer
   AnnotationTarget.FUNCTION,
   AnnotationTarget.PROPERTY_GETTER,
   AnnotationTarget.PROPERTY_SETTER,
+  AnnotationTarget.PROPERTY,
   AnnotationTarget.CONSTRUCTOR,
   AnnotationTarget.CLASS,
 )

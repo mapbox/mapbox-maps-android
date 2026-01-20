@@ -69,7 +69,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglSurface: EGLSurface
+
+  @RenderThread
   private var width: Int = 0
+  @RenderThread
   private var height: Int = 0
 
   private val widgetRenderer: MapboxWidgetRenderer
@@ -80,7 +83,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var awaitingNextVsync = false
-  private var sizeChanged = false
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
@@ -119,9 +121,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
    * Render thread should be treated as valid (prepared to render a map) when both flags are true.
    * Getter is thread-safe as this flag could be accessed from any thread.
    */
-  private val renderThreadPrepared get() = renderThreadPreparedLock.withLock {
-    eglContextMadeCurrent && nativeRenderCreated
-  }
+  private val renderThreadPrepared
+    get() = renderThreadPreparedLock.withLock {
+      eglContextMadeCurrent && nativeRenderCreated
+    }
   private var eglContextCreated = false
   private var renderNotSupported = false
 
@@ -223,7 +226,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
    * Keep a runnable to [prepareRenderFrame] to avoid creating a new one on every frame.
    */
   private val prepareRenderFrameRunnable: Runnable = Runnable {
-      prepareRenderFrame()
+      prepareRenderFrame(width = null, height = null, creatingSurface = false)
   }
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
     renderHandlerThread.postDelayed(
@@ -265,10 +268,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
                 nativeRenderCreated = true
                 mapboxRenderer.createRenderer()
                 logI(TAG, "Native renderer created.")
-                mapboxRenderer.onSurfaceChanged(
-                  width = width,
-                  height = height
-                )
               }
               return true
             }
@@ -336,12 +335,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     return true
   }
 
-  private fun checkSurfaceSizeChanged() {
-    if (sizeChanged) {
+  @RenderThread
+  private fun notifyRenderersSizeChanged(width: Int, height: Int) {
       mapboxRenderer.onSurfaceChanged(width = width, height = height)
       widgetRenderer.onSurfaceChanged(width = width, height = height)
-      sizeChanged = false
-    }
   }
 
   private fun checkWidgetRender() {
@@ -470,18 +467,34 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
       eglContextCreated = false
       if (tryRecreate) {
-        setUpRenderThread(creatingSurface = true)
+        if (setUpRenderThread(creatingSurface = true)) {
+          notifyRenderersSizeChanged(width, height)
+        }
       } else {
         surface?.release()
       }
     }
   }
 
-  private fun prepareRenderFrame(creatingSurface: Boolean = false) {
-    // no need to do anything if we're waiting for next VSYNC already;
+  /**
+   * Responsible to prepare for rendering and schedule a new frame render (synchronized with the
+   * display's refresh rate using [Choreographer]).
+   * There are 3 main reasons to request a new frame:
+   * 1. A new surface is available ([creatingSurface] flag is true and [width] and [height] are given).
+   * 2. The surface was resized (new [width] and [height] are given).
+   * 3. Normal render pass ([creatingSurface] flag is false and no sizes are given).
+   */
+  @RenderThread
+  private fun prepareRenderFrame(
+    width: Int?,
+    height: Int?,
+    creatingSurface: Boolean
+  ) {
+    // no need to do anything if we're already waiting for next VSYNC (`doFrame`);
     // however if Android has sent us new surface - we must proceed up to `setUpRenderThread` or
     // otherwise main thread will end up having deadlock
-    if (awaitingNextVsync && !creatingSurface) {
+    // We also should go through if we've new sizes to set
+    if (awaitingNextVsync && !creatingSurface && width == null && height == null) {
       return
     }
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
@@ -515,19 +528,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
     }
     checkWidgetRender()
-    checkSurfaceSizeChanged()
+    if (width != null && height != null && renderThreadPrepared) {
+      notifyRenderersSizeChanged(width, height)
+    }
     Choreographer.getInstance().postFrameCallback(this)
     awaitingNextVsync = true
   }
 
   @UiThread
   fun onSurfaceSizeChanged(width: Int, height: Int) {
-    if (this.width != width || this.height != height) {
-      renderHandlerThread.post {
+    renderHandlerThread.post {
+      if (this.width != width || this.height != height) {
         this@MapboxRenderThread.width = width
         this@MapboxRenderThread.height = height
-        sizeChanged = true
-        prepareRenderFrame()
+        // Schedule a new frame to draw map with the new size
+        prepareRenderFrame(width = width, height = height, creatingSurface = false)
       }
     }
   }
@@ -586,8 +601,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     this.width = width
     this.height = height
-    widgetRenderer.onSurfaceChanged(width = width, height = height)
-    prepareRenderFrame(creatingSurface = true)
+    // Make sure we initialize renderer and schedule next frame to draw map.
+    prepareRenderFrame(width, height, creatingSurface = true)
   }
 
   @UiThread
@@ -604,6 +619,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       surfaceProcessingLock.withLock {
         if (renderHandlerThread.isRunning) {
           renderHandlerThread.post {
+            this.width = width
+            this.height = height
             processAndroidSurface(surface, width, height)
           }
           logI(TAG, "onSurfaceCreated: waiting Android surface to be processed...")
