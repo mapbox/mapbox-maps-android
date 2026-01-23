@@ -22,11 +22,13 @@ import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.QueriedRasterValues
 import com.mapbox.maps.QueriedRenderedFeature
 import com.mapbox.maps.RenderFrameFinished
 import com.mapbox.maps.RenderFrameStarted
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.RenderedRasterQueryOptions
 import com.mapbox.maps.ResourceRequest
 import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ScreenCoordinate
@@ -44,6 +46,7 @@ import com.mapbox.maps.coroutine.mapIdleEvents
 import com.mapbox.maps.coroutine.mapLoadedEvents
 import com.mapbox.maps.coroutine.mapLoadingErrorEvents
 import com.mapbox.maps.coroutine.queryRenderedFeatures
+import com.mapbox.maps.coroutine.queryRenderedRasterValues
 import com.mapbox.maps.coroutine.renderFrameFinishedEvents
 import com.mapbox.maps.coroutine.renderFrameStartedEvents
 import com.mapbox.maps.coroutine.resourceRequestEvents
@@ -279,6 +282,21 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
       }
     }
   }
+
+  /**
+   * Queries the map for rendered raster values at a specific coordinate.
+   *
+   * @param coordinate The position on the screen to query.
+   * @param options The options for configuring the rendered raster value query.
+   *
+   * @return [QueriedRasterValues] containing raster values or a string describing an error.
+   */
+  @MapboxExperimental
+  public suspend fun queryRenderedRasterValues(
+    coordinate: ScreenCoordinate,
+    options: RenderedRasterQueryOptions
+  ): Expected<String, QueriedRasterValues> =
+    mapboxMapFlow.filterNotNull().first().queryRenderedRasterValues(coordinate, options)
 
   /**
    * Gets the state map of a feature from a featureset asynchronously.

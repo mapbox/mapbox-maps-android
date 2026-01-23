@@ -1574,6 +1574,15 @@ class MapboxMapTest {
   }
 
   @Test
+  fun queryRenderedRasterValues() {
+    val coordinate = mockk<ScreenCoordinate>()
+    val options = mockk<RenderedRasterQueryOptions>()
+    val callback = mockk<QueryRenderedRasterValuesCallback>()
+    mapboxMap.queryRenderedRasterValues(coordinate, options, callback)
+    verify { nativeMap.queryRenderedRasterValues(coordinate, options, callback) }
+  }
+
+  @Test
   fun queryRenderedFeaturesGeometry() {
     val queryCallback = mockk<QueryRenderedFeaturesCallback>()
     val geometry = mockk<RenderedQueryGeometry>()

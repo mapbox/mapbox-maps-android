@@ -2245,6 +2245,7 @@ package com.mapbox.maps.plugin.delegates {
   public interface MapFeatureQueryDelegate {
     method public void executeOnRenderThread(Runnable runnable);
     method public com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, com.mapbox.maps.QueryRenderedFeaturesCallback callback);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable queryRenderedRasterValues(com.mapbox.maps.ScreenCoordinate coordinate, com.mapbox.maps.RenderedRasterQueryOptions options, com.mapbox.maps.QueryRenderedRasterValuesCallback callback);
     method public com.mapbox.common.Cancelable querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QuerySourceFeaturesCallback callback);
   }
 

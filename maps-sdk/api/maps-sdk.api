@@ -270,6 +270,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/interactions/QueryRenderedFeaturesetFeaturesCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/interactions/QueryRenderedFeaturesetFeaturesCallback;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun queryRenderedFeatures$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/interactions/QueryRenderedFeaturesetFeaturesCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public fun queryRenderedRasterValues (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/RenderedRasterQueryOptions;Lcom/mapbox/maps/QueryRenderedRasterValuesCallback;)Lcom/mapbox/common/Cancelable;
 	public fun querySourceFeatures (Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lcom/mapbox/maps/QuerySourceFeaturesCallback;)Lcom/mapbox/common/Cancelable;
 	public final fun reduceMemoryUse ()V
 	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;)Lcom/mapbox/common/Cancelable;
@@ -637,6 +638,7 @@ public final class com/mapbox/maps/coroutine/MapCameraManagerDelegateExtKt {
 
 public final class com/mapbox/maps/coroutine/MapFeatureQueryDelegateExtKt {
 	public static final synthetic fun queryRenderedFeatures (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final synthetic fun queryRenderedRasterValues (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/RenderedRasterQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final synthetic fun querySourceFeatures (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

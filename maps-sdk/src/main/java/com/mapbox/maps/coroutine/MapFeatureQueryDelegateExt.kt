@@ -1,10 +1,14 @@
 package com.mapbox.maps.coroutine
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.QueriedRasterValues
 import com.mapbox.maps.QueriedRenderedFeature
 import com.mapbox.maps.QueriedSourceFeature
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.RenderedRasterQueryOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.SourceQueryOptions
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
 import com.mapbox.maps.suspendMapboxCancellableCoroutine
@@ -45,4 +49,24 @@ suspend fun MapFeatureQueryDelegate.querySourceFeatures(
 ): Expected<String, List<QueriedSourceFeature>> =
   suspendMapboxCancellableCoroutine { continuation ->
     querySourceFeatures(sourceId, options, continuation::resume)
+  }
+
+/**
+ * Queries the map for rendered raster values at a specific coordinate.
+ *
+ * This is a suspend function variant of [MapFeatureQueryDelegate.queryRenderedRasterValues].
+ *
+ * @param coordinate The position on the screen to query.
+ * @param options The options for configuring the rendered raster value query.
+ *
+ * @return [QueriedRasterValues] containing raster values or a string describing an error.
+ */
+@MapboxExperimental
+@JvmSynthetic
+suspend fun MapFeatureQueryDelegate.queryRenderedRasterValues(
+  coordinate: ScreenCoordinate,
+  options: RenderedRasterQueryOptions,
+): Expected<String, QueriedRasterValues> =
+  suspendMapboxCancellableCoroutine { continuation ->
+    queryRenderedRasterValues(coordinate, options, continuation::resume)
   }

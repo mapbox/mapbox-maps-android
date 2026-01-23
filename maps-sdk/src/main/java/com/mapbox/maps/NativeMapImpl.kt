@@ -496,6 +496,13 @@ internal class NativeMapImpl(val map: Map) {
     callback: QuerySourceFeaturesCallback
   ): Cancelable = map.querySourceFeatures(sourceId, options, callback)
 
+  @MapboxExperimental
+  fun queryRenderedRasterValues(
+    coordinate: ScreenCoordinate,
+    options: RenderedRasterQueryOptions,
+    callback: QueryRenderedRasterValuesCallback
+  ): Cancelable = map.queryRenderedRasterValues(coordinate, options, callback)
+
   fun queryFeatureExtensions(
     sourceIdentifier: String,
     feature: Feature,

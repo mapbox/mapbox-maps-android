@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster array value at a point on the map.
 * Introduce new `AnnotationConfig#slotName` property to allow to specify a slot to position annotation layer.
+* Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster values on the map at a specific screen coordinate.
 
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.

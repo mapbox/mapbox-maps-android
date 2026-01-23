@@ -260,6 +260,7 @@ package com.mapbox.maps {
     method @com.mapbox.maps.MapboxExperimental public <FF extends com.mapbox.maps.interactions.FeaturesetFeature<?>> com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,FF> descriptor, com.mapbox.maps.RenderedQueryGeometry? geometry = null, com.mapbox.bindgen.Value? filter = null, com.mapbox.maps.interactions.QueryRenderedFeaturesetFeaturesCallback<FF> callback);
     method @com.mapbox.maps.MapboxExperimental public <FF extends com.mapbox.maps.interactions.FeaturesetFeature<?>> com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,FF> descriptor, com.mapbox.maps.RenderedQueryGeometry? geometry = null, com.mapbox.maps.interactions.QueryRenderedFeaturesetFeaturesCallback<FF> callback);
     method @com.mapbox.maps.MapboxExperimental public <FF extends com.mapbox.maps.interactions.FeaturesetFeature<?>> com.mapbox.common.Cancelable queryRenderedFeatures(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,FF> descriptor, com.mapbox.maps.interactions.QueryRenderedFeaturesetFeaturesCallback<FF> callback);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable queryRenderedRasterValues(com.mapbox.maps.ScreenCoordinate coordinate, com.mapbox.maps.RenderedRasterQueryOptions options, com.mapbox.maps.QueryRenderedRasterValuesCallback callback);
     method public com.mapbox.common.Cancelable querySourceFeatures(String sourceId, com.mapbox.maps.SourceQueryOptions options, com.mapbox.maps.QuerySourceFeaturesCallback callback);
     method public void reduceMemoryUse();
     method public com.mapbox.common.Cancelable removeFeatureState(String sourceId, String? sourceLayerId, String featureId, String? stateKey, com.mapbox.maps.FeatureStateOperationCallback callback);
@@ -570,6 +571,7 @@ package com.mapbox.maps.coroutine {
 
   public final class MapFeatureQueryDelegateExtKt {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>! queryRenderedFeatures(com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate, com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options);
+    method @com.mapbox.maps.MapboxExperimental @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.maps.QueriedRasterValues>! queryRenderedRasterValues(com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate, com.mapbox.maps.ScreenCoordinate coordinate, com.mapbox.maps.RenderedRasterQueryOptions options);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedSourceFeature>>! querySourceFeatures(com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate, String sourceId, com.mapbox.maps.SourceQueryOptions options);
   }
 
@@ -651,7 +653,7 @@ package com.mapbox.maps.renderer {
     method @com.mapbox.maps.renderer.RenderThread public void onFpsChanged(double fps);
   }
 
-  @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.SOURCE) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.PROPERTY_SETTER, kotlin.annotation.AnnotationTarget.CONSTRUCTOR, kotlin.annotation.AnnotationTarget.CLASS}) public @interface RenderThread {
+  @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.SOURCE) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.PROPERTY_SETTER, kotlin.annotation.AnnotationTarget.PROPERTY, kotlin.annotation.AnnotationTarget.CONSTRUCTOR, kotlin.annotation.AnnotationTarget.CLASS}) public @interface RenderThread {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class RenderThreadStats {

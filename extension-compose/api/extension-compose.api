@@ -86,6 +86,7 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/RenderedQueryGeometry;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun queryRenderedFeatures$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun queryRenderedRasterValues (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/RenderedRasterQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun removeFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun removeFeatureState$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureStateKey;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;

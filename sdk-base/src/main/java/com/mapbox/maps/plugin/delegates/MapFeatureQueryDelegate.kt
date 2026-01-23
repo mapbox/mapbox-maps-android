@@ -36,6 +36,21 @@ interface MapFeatureQueryDelegate {
   ): Cancelable
 
   /**
+   * Queries the map for rendered raster values at a specific coordinate.
+   *
+   * @param coordinate The position on the screen to query.
+   * @param options The options for configuring the rendered raster value query.
+   * @param callback Callback called when the query completes.
+   * @return A `cancelable` object that could be used to cancel the pending query.
+   */
+  @MapboxExperimental
+  fun queryRenderedRasterValues(
+    coordinate: ScreenCoordinate,
+    options: RenderedRasterQueryOptions,
+    callback: QueryRenderedRasterValuesCallback
+  ): Cancelable
+
+  /**
    * In some cases querying source / render features is expected to be a blocking operation
    * e.g. performing this action on map click. In this case in order to avoid deadlock on main
    * thread querying could be performed on render thread and in that case querying result will be also

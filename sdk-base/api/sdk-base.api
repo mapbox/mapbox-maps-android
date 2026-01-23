@@ -2289,6 +2289,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProv
 public abstract interface class com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate {
 	public abstract fun executeOnRenderThread (Ljava/lang/Runnable;)V
 	public abstract fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lcom/mapbox/maps/QueryRenderedFeaturesCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun queryRenderedRasterValues (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/RenderedRasterQueryOptions;Lcom/mapbox/maps/QueryRenderedRasterValuesCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun querySourceFeatures (Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lcom/mapbox/maps/QuerySourceFeaturesCallback;)Lcom/mapbox/common/Cancelable;
 }
 
