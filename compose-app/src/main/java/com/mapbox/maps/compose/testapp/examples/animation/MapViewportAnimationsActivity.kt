@@ -104,7 +104,6 @@ public class MapViewportAnimationsActivity : ComponentActivity() {
                           )
                         )
                       )
-                      .animationDurationMs(600L)
                       .padding(EdgeInsets(100.0, 100.0, 100.0, 100.0))
                       .build(),
                     defaultTransitionOptions = DefaultViewportTransitionOptions.Builder()

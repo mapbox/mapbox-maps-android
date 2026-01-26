@@ -58,11 +58,6 @@ class OverviewViewportStateOptions private constructor(
    * The length of the animation performed in milliseconds by [OverviewViewportState] when it starts
    * updating the camera and anytime [OverviewViewportState.options] is set.
    *
-   * When set to a custom value, transitions will use fixed-duration linear animations that take
-   * exactly the specified duration regardless of distance. This provides predictable timing but
-   * may result in very fast camera movement for large distances. Consider using longer durations
-   * or keeping the default value if animating over large geographic areas.
-   *
    * @see [OverviewViewportState.options] for details.
    *
    * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
@@ -181,11 +176,6 @@ class OverviewViewportStateOptions private constructor(
     /**
      * The length of the animation performed by [OverviewViewportState] when it starts updating the
      * camera and anytime [OverviewViewportState.options] is set.
-     *
-     * When set to a custom value, transitions will use fixed-duration linear animations that take
-     * exactly the specified duration regardless of distance. This provides predictable timing but
-     * may result in very fast camera movement for large distances. Consider using longer durations
-     * or keeping the default value if animating over large geographic areas.
      *
      * @see [OverviewViewportState.options] for details.
      *

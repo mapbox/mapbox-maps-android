@@ -19,7 +19,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
       antialiasingSampleCount = antialiasingSampleCount,
       mapName = mapName,
     )
-    renderThread = GLMapboxRenderThread(
+    renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = false,

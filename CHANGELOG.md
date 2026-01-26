@@ -10,11 +10,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster array value at a point on the map.
 * Introduce new `AnnotationConfig#slotName` property to allow to specify a slot to position annotation layer.
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster values on the map at a specific screen coordinate.
-* Introduce `StyleAttributionsChanged` event for detecting map attributions changes
 
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.
-* Respect `animationDurationMs` when custom `OverviewViewportStateOptions.animationDurationMs` is set.
 
 
 # 11.18.0 January 15, 2026

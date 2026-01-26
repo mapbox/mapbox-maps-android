@@ -4,7 +4,6 @@ import android.app.Application
 import android.os.StrictMode
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.annotation.MapboxExperimental
-import com.mapbox.common.MapboxTracing
 import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.common.geofencing.GeofencingEvent
 import com.mapbox.common.geofencing.GeofencingFactory
@@ -63,8 +62,6 @@ class MapboxApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    // Enable all traces. Useful when capturing Perfetto traces
-    MapboxTracing.enableAll()
     initializeStrictMode()
     if (ENABLE_BACKGROUND_GEOFENCING) {
       registerGeofencingObserver()
