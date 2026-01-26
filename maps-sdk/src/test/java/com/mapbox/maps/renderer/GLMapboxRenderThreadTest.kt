@@ -35,7 +35,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-class MapboxRenderThreadTest {
+class GLMapboxRenderThreadTest {
 
   private lateinit var mapboxRenderThread: MapboxRenderThread
   private lateinit var mapboxRenderer: MapboxRenderer
@@ -57,7 +57,7 @@ class MapboxRenderThreadTest {
     every { fpsManager.preRender(any()) } returns true
     val surfaceProcessingLock = ReentrantLock()
     destroyCondition = spyk(surfaceProcessingLock.newCondition())
-    mapboxRenderThread = MapboxRenderThread(
+    mapboxRenderThread = GLMapboxRenderThread(
       mapboxRenderer,
       mapboxWidgetRenderer,
       renderHandlerThread,
@@ -598,12 +598,12 @@ class MapboxRenderThreadTest {
       )
     )
     // simulate render thread is not fully prepared, e.g. EGL context is lost
-    mapboxRenderThread.eglContextMadeCurrent = false
+    mapboxRenderThread.isRendererReady = false
     idleHandler()
     verifyNo { runnable.run() }
     pauseHandler()
     // simulate render thread is fully prepared again
-    mapboxRenderThread.eglContextMadeCurrent = true
+    mapboxRenderThread.isRendererReady = true
     mapboxRenderThread.processAndroidSurface(surface, 1, 1)
     // taking into account we try to reschedule event with some delay
     idleHandler(RETRY_DELAY_MS)
@@ -650,7 +650,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.awaitingNextVsync = false
 
     // paused state
-    mapboxRenderThread.eglContextMadeCurrent = false
+    mapboxRenderThread.isRendererReady = false
     mapboxRenderThread.pause()
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(
@@ -665,7 +665,7 @@ class MapboxRenderThreadTest {
     verifyNo { runnable.run() }
 
     // resumed state
-    mapboxRenderThread.eglContextMadeCurrent = true
+    mapboxRenderThread.isRendererReady = true
     mapboxRenderThread.resume()
     idleHandler()
     assertEquals(0, mapboxRenderThread.nonRenderEventQueue.size)
@@ -1095,7 +1095,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.pause()
     // easiest way to simulate that Android surface is not valid
     mapboxRenderThread.surface = null
-    mapboxRenderThread.eglContextMadeCurrent = false
+    mapboxRenderThread.isRendererReady = false
     idleHandler()
     // make sure we do not print any logI
     every { logI(any(), any()) } answers { throw RuntimeException() }

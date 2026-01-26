@@ -23,7 +23,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
       mapName = mapName,
     )
     this.widgetRenderer = widgetRenderer
-    renderThread = MapboxRenderThread(
+    renderThread = GLMapboxRenderThread(
       mapboxRenderer = this,
       mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = true,
