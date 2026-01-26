@@ -7,7 +7,7 @@ import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
 /**
- * Extension val for MapView to get the Compass View plugin instance.
+ * Extension val for MapView to get the Attribution View plugin instance.
  */
 val MapPluginProviderDelegate.attribution: AttributionPlugin
   @JvmName("getAttribution")
