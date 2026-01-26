@@ -307,13 +307,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
     renderer.renderThread.renderHandlerThread.post {
-      renderer.renderThread.eglCore.addRendererStateListener(rendererSetupErrorListener)
+      renderer.renderThread.addRendererStateListener(rendererSetupErrorListener)
     }
   }
 
   override fun removeRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
     renderer.renderThread.renderHandlerThread.post {
-      renderer.renderThread.eglCore.removeRendererStateListener(rendererSetupErrorListener)
+      renderer.renderThread.removeRendererStateListener(rendererSetupErrorListener)
     }
   }
 
