@@ -6,10 +6,13 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
+import android.os.Trace
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.MapboxTracing
+import com.mapbox.common.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
@@ -62,10 +65,18 @@ class GeoJsonSource private constructor(builder: Builder) : Source(builder.sourc
       workerHandler.post {
         var nativeExpected: Expected<String, None>? = null
         var nativeException: Throwable? = null
+        val tracingEnabled = MapboxTracing.platformTracingEnabled
+        if (tracingEnabled) {
+          Trace.beginSection("$MAPBOX_TRACE_ID: GeoJSONSource#setSourceData")
+        }
         try {
           nativeExpected = style.setStyleGeoJSONSourceData(sourceId, dataId, data)
         } catch (e: Throwable) {
           nativeException = e
+        } finally {
+          if (tracingEnabled) {
+            Trace.endSection()
+          }
         }
         if (nativeExpected?.isError == true || nativeException != null) {
           val errorJsonString = JSONObject().apply {
