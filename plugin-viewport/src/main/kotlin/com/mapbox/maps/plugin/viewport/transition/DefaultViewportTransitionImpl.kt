@@ -15,7 +15,9 @@ import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.CompletionListener
+import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.threading.AnimationThreadController
 import com.mapbox.maps.util.MathUtils
@@ -68,7 +70,7 @@ internal class DefaultViewportTransitionImpl(
         startCamera,
         cameraOptions
       ) ?: kotlin.run {
-        val initialAnimatorSet = createAnimatorSet(cameraOptions, options.maxDurationMs)
+        val initialAnimatorSet = createAnimatorSet(to, cameraOptions, options.maxDurationMs)
           .apply {
             addListener(
               object : Animator.AnimatorListener {
@@ -133,7 +135,25 @@ internal class DefaultViewportTransitionImpl(
     }
   }
 
-  private fun createAnimatorSet(cameraOptions: CameraOptions, maxDurationMs: Long): AnimatorSet {
+  private fun createAnimatorSet(
+    targetState: ViewportState,
+    cameraOptions: CameraOptions,
+    maxDurationMs: Long
+  ): AnimatorSet {
+    // If transitioning to OverviewViewportState and user has explicitly customized animationDurationMs,
+    // animate using that value. Otherwise, use default animation logic.
+    if (targetState is OverviewViewportState) {
+      val overviewDuration = targetState.options.animationDurationMs
+
+      // Only use linear animation if user explicitly set a different duration from default.
+      // If user did not customize duration, then we will fallback to default animation logic
+      if (overviewDuration != DEFAULT_STATE_ANIMATION_DURATION_MS) {
+        // Use the state's animation duration, but still respect maxDurationMs as an upper bound
+        val effectiveDuration = minOf(overviewDuration, maxDurationMs)
+        return transitionFactory.transitionLinear(cameraOptions, effectiveDuration)
+      }
+    }
+
     val currentZoom = cameraDelegate.cameraState.zoom
     return with(transitionFactory) {
       if (currentZoom < (cameraOptions.zoom ?: currentZoom)) {
