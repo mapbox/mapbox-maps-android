@@ -13,6 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.
+* Respect `animationDurationMs` when custom `OverviewViewportStateOptions.animationDurationMs` is set.
 
 
 # 11.18.0 January 15, 2026
