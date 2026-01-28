@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.19.0-beta.1 January 28, 2026
+
 ## Features ✨ and improvements 🏁
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster array value at a point on the map.
 * Introduce new `AnnotationConfig#slotName` property to allow to specify a slot to position annotation layer.
@@ -16,6 +18,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.
 * Respect `animationDurationMs` when custom `OverviewViewportStateOptions.animationDurationMs` is set.
+
+
+## Dependencies
+* Update gl-native to [v11.19.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-beta.1), common to [v24.19.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-beta.1).
 
 
 # 11.18.0 January 15, 2026
