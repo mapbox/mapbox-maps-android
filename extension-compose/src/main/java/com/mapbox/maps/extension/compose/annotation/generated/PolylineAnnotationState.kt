@@ -19,6 +19,7 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
  */
 @Stable
 public class PolylineAnnotationState private constructor(
+  initialLineElevationGroundScale: Double?,
   initialLineJoin: LineJoin?,
   initialLineZOffset: Double?,
   initialLineBlur: Double?,
@@ -37,6 +38,7 @@ public class PolylineAnnotationState private constructor(
 ) {
 
   public constructor() : this(
+    initialLineElevationGroundScale = null,
     initialLineJoin = null,
     initialLineZOffset = null,
     initialLineBlur = null,
@@ -58,6 +60,10 @@ public class PolylineAnnotationState private constructor(
   * All interactions with [PointAnnotation]
   */
   public var interactionsState: PolylineAnnotationInteractionsState by mutableStateOf(initialPolylineAnnotationInteractionsState)
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   */
+  public var lineElevationGroundScale: Double? by mutableStateOf(initialLineElevationGroundScale)
   /**
    * The display of lines when joining. Default value: "miter".
    */
@@ -118,6 +124,16 @@ public class PolylineAnnotationState private constructor(
   @MapboxExperimental
   public var lineColorUseTheme: String? by mutableStateOf(initialLineColorUseTheme)
 
+  @Composable
+  private fun UpdateLineElevationGroundScale(
+    annotationNode: PolylineAnnotationNode
+  ) {
+    annotationNode.annotationManager.update(
+      annotationNode.annotation.also { annotation ->
+        annotation.lineElevationGroundScale = lineElevationGroundScale
+      }
+    )
+  }
   @Composable
   private fun UpdateLineJoin(
     annotationNode: PolylineAnnotationNode
@@ -263,6 +279,7 @@ public class PolylineAnnotationState private constructor(
   internal fun UpdateProperties(
     annotationNode: PolylineAnnotationNode,
   ) {
+    UpdateLineElevationGroundScale(annotationNode)
     UpdateLineJoin(annotationNode)
     UpdateLineZOffset(annotationNode)
     UpdateLineBlur(annotationNode)

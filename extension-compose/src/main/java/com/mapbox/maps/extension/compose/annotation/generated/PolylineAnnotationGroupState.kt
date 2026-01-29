@@ -25,6 +25,7 @@ import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager
 public class PolylineAnnotationGroupState private constructor(
   initialLineCap: LineCap?,
   initialLineCrossSlope: Double?,
+  initialLineElevationGroundScale: Double?,
   initialLineElevationReference: LineElevationReference?,
   initialLineJoin: LineJoin?,
   initialLineMiterLimit: Double?,
@@ -64,6 +65,7 @@ public class PolylineAnnotationGroupState private constructor(
   public constructor() : this(
     initialLineCap = null,
     initialLineCrossSlope = null,
+    initialLineElevationGroundScale = null,
     initialLineElevationReference = null,
     initialLineJoin = null,
     initialLineMiterLimit = null,
@@ -114,6 +116,10 @@ public class PolylineAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var lineCrossSlope: Double? by mutableStateOf(initialLineCrossSlope)
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   */
+  public var lineElevationGroundScale: Double? by mutableStateOf(initialLineElevationGroundScale)
   /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
@@ -272,6 +278,10 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineCrossSlope = lineCrossSlope
   }
   @Composable
+  private fun UpdateLineElevationGroundScale(annotationManager: PolylineAnnotationManager) {
+    annotationManager.lineElevationGroundScale = lineElevationGroundScale
+  }
+  @Composable
   @OptIn(MapboxExperimental::class)
   private fun UpdateLineElevationReference(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineElevationReference = lineElevationReference
@@ -423,6 +433,7 @@ public class PolylineAnnotationGroupState private constructor(
   internal fun UpdateProperties(annotationManager: PolylineAnnotationManager) {
     UpdateLineCap(annotationManager)
     UpdateLineCrossSlope(annotationManager)
+    UpdateLineElevationGroundScale(annotationManager)
     UpdateLineElevationReference(annotationManager)
     UpdateLineJoin(annotationManager)
     UpdateLineMiterLimit(annotationManager)

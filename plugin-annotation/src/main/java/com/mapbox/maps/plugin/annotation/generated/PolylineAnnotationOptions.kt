@@ -23,6 +23,24 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   private var geometry: LineString? = null
 
   /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   */
+  var lineElevationGroundScale: Double? = null
+
+  /**
+   * Set line-elevation-ground-scale to initialise the polylineAnnotation with.
+   *
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * @param lineElevationGroundScale the line-elevation-ground-scale value
+   * @return this
+   */
+  fun withLineElevationGroundScale(lineElevationGroundScale: Double): PolylineAnnotationOptions {
+    this.lineElevationGroundScale = lineElevationGroundScale
+    return this
+  }
+
+  /**
    * The display of lines when joining. Default value: "miter".
    */
   var lineJoin: LineJoin? = null
@@ -413,6 +431,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
       throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
+    lineElevationGroundScale?.let {
+      jsonObject.addProperty(PROPERTY_LINE_ELEVATION_GROUND_SCALE, it)
+    }
     lineJoin?.let {
       jsonObject.addProperty(PROPERTY_LINE_JOIN, it.value)
     }
@@ -468,6 +489,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
    * Static variables and methods.
    */
   companion object {
+
+    /** The property for line-elevation-ground-scale */
+    const val PROPERTY_LINE_ELEVATION_GROUND_SCALE = "line-elevation-ground-scale"
 
     /** The property for line-join */
     const val PROPERTY_LINE_JOIN = "line-join"
@@ -533,6 +557,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
       val options = PolylineAnnotationOptions()
       options.geometry = feature.geometry() as (LineString)
+      if (feature.hasProperty(PROPERTY_LINE_ELEVATION_GROUND_SCALE)) {
+        options.lineElevationGroundScale = feature.getProperty(PROPERTY_LINE_ELEVATION_GROUND_SCALE).asDouble
+      }
       if (feature.hasProperty(PROPERTY_LINE_JOIN)) {
         options.lineJoin = LineJoin.valueOf(feature.getProperty(PROPERTY_LINE_JOIN).asString)
       }

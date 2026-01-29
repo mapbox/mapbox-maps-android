@@ -976,6 +976,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineCutoutOpacity();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
+    method public Double? getLineElevationGroundScale();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
@@ -1013,6 +1014,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineCutoutOpacity(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
+    method public void setLineElevationGroundScale(Double?);
     method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
@@ -1050,6 +1052,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineCutoutOpacity;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
+    property public final Double? lineElevationGroundScale;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
@@ -1117,6 +1120,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineBorderWidth();
     method public androidx.compose.ui.graphics.Color? getLineColor();
     method public String? getLineColorUseTheme();
+    method public Double? getLineElevationGroundScale();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
@@ -1132,6 +1136,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineBorderWidth(Double?);
     method public void setLineColor(androidx.compose.ui.graphics.Color?);
     method public void setLineColorUseTheme(String?);
+    method public void setLineElevationGroundScale(Double?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
@@ -1147,6 +1152,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineBorderWidth;
     property public final androidx.compose.ui.graphics.Color? lineColor;
     property public final String? lineColorUseTheme;
+    property public final Double? lineElevationGroundScale;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
@@ -2905,6 +2911,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleListValue getLineDasharray();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineDepthOcclusionFactorTransition();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getLineElevationGroundScale();
+    method public com.mapbox.maps.extension.compose.style.Transition getLineElevationGroundScaleTransition();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue getLineElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getLineEmissiveStrengthTransition();
@@ -2961,6 +2969,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineDasharray(com.mapbox.maps.extension.compose.style.DoubleListValue);
     method public void setLineDepthOcclusionFactor(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineDepthOcclusionFactorTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setLineElevationGroundScale(com.mapbox.maps.extension.compose.style.DoubleValue);
+    method public void setLineElevationGroundScaleTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue);
     method public void setLineEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3017,6 +3027,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleListValue lineDasharray;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineDepthOcclusionFactorTransition;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue lineElevationGroundScale;
+    property public final com.mapbox.maps.extension.compose.style.Transition lineElevationGroundScaleTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue lineElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition lineEmissiveStrengthTransition;

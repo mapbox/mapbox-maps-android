@@ -1237,6 +1237,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method @ColorInt public Integer? getLineColorInt();
     method public String? getLineColorString();
     method public String? getLineColorUseTheme();
+    method public Double? getLineElevationGroundScale();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
@@ -1257,6 +1258,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineColorInt(@ColorInt Integer?);
     method public void setLineColorString(String?);
     method public void setLineColorUseTheme(String?);
+    method public void setLineElevationGroundScale(Double?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
@@ -1276,6 +1278,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property @ColorInt public final Integer? lineColorInt;
     property public final String? lineColorString;
     property public final String? lineColorUseTheme;
+    property public final Double? lineElevationGroundScale;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
@@ -1313,6 +1316,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineCutoutOpacity();
     method public java.util.List<java.lang.Double>? getLineDasharray();
     method public Double? getLineDepthOcclusionFactor();
+    method public Double? getLineElevationGroundScale();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
@@ -1356,6 +1360,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineCutoutOpacity(Double?);
     method public void setLineDasharray(java.util.List<java.lang.Double>?);
     method public void setLineDepthOcclusionFactor(Double?);
+    method public void setLineElevationGroundScale(Double?);
     method public void setLineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
@@ -1398,6 +1403,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineCutoutOpacity;
     property public final java.util.List<java.lang.Double>? lineDasharray;
     property public final Double? lineDepthOcclusionFactor;
+    property public final Double? lineElevationGroundScale;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
@@ -1450,6 +1456,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineBorderWidth();
     method public String? getLineColor();
     method public String? getLineColorUseTheme();
+    method public Double? getLineElevationGroundScale();
     method public Double? getLineEmissiveStrength();
     method public Double? getLineGapWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? getLineJoin();
@@ -1466,6 +1473,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineBorderWidth(Double?);
     method public void setLineColor(String?);
     method public void setLineColorUseTheme(String?);
+    method public void setLineElevationGroundScale(Double?);
     method public void setLineEmissiveStrength(Double?);
     method public void setLineGapWidth(Double?);
     method public void setLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin?);
@@ -1486,6 +1494,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(String lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColor(@ColorInt int lineColor);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineColorUseTheme(String lineColorUseTheme);
+    method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineElevationGroundScale(double lineElevationGroundScale);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineEmissiveStrength(double lineEmissiveStrength);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineGapWidth(double lineGapWidth);
     method public com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions withLineJoin(com.mapbox.maps.extension.style.layers.properties.generated.LineJoin lineJoin);
@@ -1502,6 +1511,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineBorderWidth;
     property public final String? lineColor;
     property public final String? lineColorUseTheme;
+    property public final Double? lineElevationGroundScale;
     property public final Double? lineEmissiveStrength;
     property public final Double? lineGapWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin? lineJoin;
@@ -1518,6 +1528,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     field public static final String PROPERTY_LINE_BORDER_WIDTH = "line-border-width";
     field public static final String PROPERTY_LINE_COLOR = "line-color";
     field public static final String PROPERTY_LINE_COLOR_USE_THEME = "line-color-use-theme";
+    field public static final String PROPERTY_LINE_ELEVATION_GROUND_SCALE = "line-elevation-ground-scale";
     field public static final String PROPERTY_LINE_EMISSIVE_STRENGTH = "line-emissive-strength";
     field public static final String PROPERTY_LINE_GAP_WIDTH = "line-gap-width";
     field public static final String PROPERTY_LINE_JOIN = "line-join";

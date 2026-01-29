@@ -359,6 +359,96 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   */
+  val lineElevationGroundScale: Double?
+    /**
+     * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+     *
+     * Use static method [LineLayer.defaultLineElevationGroundScale] to get the default property.
+     *
+     * @return Double
+     */
+    get() {
+      return getPropertyValue("line-elevation-ground-scale")
+    }
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [LineLayer.defaultLineElevationGroundScale] to set the default property.
+   *
+   * @param lineElevationGroundScale value of lineElevationGroundScale
+   */
+  override fun lineElevationGroundScale(lineElevationGroundScale: Double): LineLayer = apply {
+    val propertyValue = PropertyValue("line-elevation-ground-scale", lineElevationGroundScale)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * This is an Expression representation of "line-elevation-ground-scale".
+   *
+   */
+  val lineElevationGroundScaleAsExpression: Expression?
+    /**
+     * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+     *
+     * Get the LineElevationGroundScale property as an Expression
+     *
+     * Use static method [LineLayer.defaultLineElevationGroundScaleAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValueAsExpressionOrLiteralExpression("line-elevation-ground-scale")
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * Use static method [LineLayer.defaultLineElevationGroundScaleAsExpression] to set the default property.
+   *
+   * @param lineElevationGroundScale value of lineElevationGroundScale as Expression
+   */
+  override fun lineElevationGroundScale(lineElevationGroundScale: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-elevation-ground-scale", lineElevationGroundScale)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Transition options for LineElevationGroundScale.
+   */
+  val lineElevationGroundScaleTransition: StyleTransition?
+    /**
+     * Get the LineElevationGroundScale property transition options
+     *
+     * Use static method [LineLayer.defaultLineElevationGroundScaleTransition] to get the default property.
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("line-elevation-ground-scale-transition")
+    }
+
+  /**
+   * Set the LineElevationGroundScale property transition options
+   *
+   * Use static method [LineLayer.defaultLineElevationGroundScaleTransition] to set the default property.
+   *
+   * @param options transition options for Double
+   */
+  override fun lineElevationGroundScaleTransition(options: StyleTransition): LineLayer = apply {
+    val propertyValue = PropertyValue("line-elevation-ground-scale-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [lineElevationGroundScaleTransition].
+   */
+  override fun lineElevationGroundScaleTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
+    lineElevationGroundScaleTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
   @MapboxExperimental
@@ -2991,6 +3081,54 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
+     * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+     */
+    val defaultLineElevationGroundScale: Double?
+      /**
+       * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+       *
+       * Get the default value of LineElevationGroundScale property
+       *
+       * @return Double
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale").silentUnwrap()
+      }
+
+    /**
+     * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+     *
+     * This is an Expression representation of "line-elevation-ground-scale".
+     *
+     */
+    val defaultLineElevationGroundScaleAsExpression: Expression?
+      /**
+       * Get default value of the LineElevationGroundScale property as an Expression
+       *
+       * @return Double
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineElevationGroundScale?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Transition options for LineElevationGroundScale.
+     */
+    val defaultLineElevationGroundScaleTransition: StyleTransition?
+      /**
+       * Get the LineElevationGroundScale property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale-transition").silentUnwrap()
+
+    /**
      * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
      */
     @MapboxExperimental
@@ -4496,6 +4634,36 @@ interface LineLayerDsl {
    */
   @MapboxExperimental
   fun lineCrossSlope(lineCrossSlope: Expression): LineLayer
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * @param lineElevationGroundScale value of lineElevationGroundScale
+   */
+  fun lineElevationGroundScale(lineElevationGroundScale: Double = 0.0): LineLayer
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * @param lineElevationGroundScale value of lineElevationGroundScale as Expression
+   */
+  fun lineElevationGroundScale(lineElevationGroundScale: Expression): LineLayer
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * Set the LineElevationGroundScale property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun lineElevationGroundScaleTransition(options: StyleTransition): LineLayer
+
+  /**
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   *
+   * DSL for [lineElevationGroundScaleTransition].
+   */
+  fun lineElevationGroundScaleTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".

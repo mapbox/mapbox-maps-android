@@ -53,6 +53,39 @@ class PolylineAnnotation(
 
   // Property accessors
   /**
+   * The lineElevationGroundScale property
+   *
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   */
+  var lineElevationGroundScale: Double?
+    /**
+     * Get the lineElevationGroundScale property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineElevationGroundScale property
+     *
+     * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)
+      }
+    }
+
+  /**
    * The lineJoin property
    *
    * The display of lines when joining. Default value: "miter".
@@ -645,6 +678,9 @@ class PolylineAnnotation(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
+    jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)?.let {
+      annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)
+    }
     jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)?.let {
       annotationManager.enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
     }

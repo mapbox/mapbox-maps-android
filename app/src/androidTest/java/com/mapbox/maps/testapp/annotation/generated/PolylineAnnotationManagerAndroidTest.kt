@@ -66,6 +66,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineElevationGroundScale() {
+    rule.runOnUiThread {
+      val expectedValue = 1.0
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineElevationGroundScale = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineElevationGroundScale)
+      polylineAnnotationManager.lineElevationGroundScale = null
+      assertEquals(null, polylineAnnotationManager.lineElevationGroundScale)
+    }
+  }
+
+  @Test
   fun testLineElevationReference() {
     rule.runOnUiThread {
       val expectedValue = LineElevationReference.NONE
