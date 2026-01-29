@@ -781,6 +781,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineCutoutOpacity ()Ljava/lang/Double;
 	public final fun getLineDasharray ()Ljava/util/List;
 	public final fun getLineDepthOcclusionFactor ()Ljava/lang/Double;
+	public final fun getLineElevationGroundScale ()Ljava/lang/Double;
 	public final fun getLineElevationReference ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;
 	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
@@ -818,6 +819,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineCutoutOpacity (Ljava/lang/Double;)V
 	public final fun setLineDasharray (Ljava/util/List;)V
 	public final fun setLineDepthOcclusionFactor (Ljava/lang/Double;)V
+	public final fun setLineElevationGroundScale (Ljava/lang/Double;)V
 	public final fun setLineElevationReference (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineElevationReference;)V
 	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
@@ -880,6 +882,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getLineColorUseTheme ()Ljava/lang/String;
+	public final fun getLineElevationGroundScale ()Ljava/lang/Double;
 	public final fun getLineEmissiveStrength ()Ljava/lang/Double;
 	public final fun getLineGapWidth ()Ljava/lang/Double;
 	public final fun getLineJoin ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;
@@ -895,6 +898,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setLineColorUseTheme (Ljava/lang/String;)V
+	public final fun setLineElevationGroundScale (Ljava/lang/Double;)V
 	public final fun setLineEmissiveStrength (Ljava/lang/Double;)V
 	public final fun setLineGapWidth (Ljava/lang/Double;)V
 	public final fun setLineJoin (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineJoin;)V
@@ -2460,6 +2464,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun getLineDasharray ()Lcom/mapbox/maps/extension/compose/style/DoubleListValue;
 	public final fun getLineDepthOcclusionFactor ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineDepthOcclusionFactorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getLineElevationGroundScale ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
+	public final fun getLineElevationGroundScaleTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineElevationReference ()Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;
 	public final fun getLineEmissiveStrength ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineEmissiveStrengthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -2516,6 +2522,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun setLineDasharray (Lcom/mapbox/maps/extension/compose/style/DoubleListValue;)V
 	public final fun setLineDepthOcclusionFactor (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineDepthOcclusionFactorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setLineElevationGroundScale (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
+	public final fun setLineElevationGroundScaleTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineElevationReference (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineElevationReferenceValue;)V
 	public final fun setLineEmissiveStrength (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineEmissiveStrengthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V

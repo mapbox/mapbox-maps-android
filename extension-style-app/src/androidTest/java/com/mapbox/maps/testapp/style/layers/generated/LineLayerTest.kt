@@ -119,6 +119,65 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineElevationGroundScaleTest() {
+    val testValue = 1.0
+    val layer = lineLayer("id", "source") {
+      lineElevationGroundScale(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue, layer.lineElevationGroundScale!!, 1E-5)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineElevationGroundScaleAsExpressionTest() {
+    val expression = number {
+      get {
+        literal("number")
+      }
+    }
+    val layer = lineLayer("id", "source") {
+      lineElevationGroundScale(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineElevationGroundScaleAsExpression.toString())
+    assertEquals(null, layer.lineElevationGroundScale)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineElevationGroundScaleTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineElevationGroundScaleTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineElevationGroundScaleTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineElevationGroundScaleTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = lineLayer("id", "source") {
+      lineElevationGroundScaleTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.lineElevationGroundScaleTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineElevationReferenceTest() {
     val layer = lineLayer("id", "source") {
       lineElevationReference(LineElevationReference.NONE)
@@ -1541,6 +1600,9 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineCapAsExpression should not be null", LineLayer.defaultLineCapAsExpression)
     assertNotNull("defaultLineCrossSlope should not be null", LineLayer.defaultLineCrossSlope)
     assertNotNull("defaultLineCrossSlopeAsExpression should not be null", LineLayer.defaultLineCrossSlopeAsExpression)
+    assertNotNull("defaultLineElevationGroundScale should not be null", LineLayer.defaultLineElevationGroundScale)
+    assertNotNull("defaultLineElevationGroundScaleAsExpression should not be null", LineLayer.defaultLineElevationGroundScaleAsExpression)
+    assertNotNull("defaultLineElevationGroundScaleTransition should not be null", LineLayer.defaultLineElevationGroundScaleTransition)
     assertNotNull("defaultLineElevationReference should not be null", LineLayer.defaultLineElevationReference)
     assertNotNull("defaultLineElevationReferenceAsExpression should not be null", LineLayer.defaultLineElevationReferenceAsExpression)
     assertNotNull("defaultLineJoin should not be null", LineLayer.defaultLineJoin)
@@ -1636,6 +1698,7 @@ class LineLayerTest : BaseStyleTest() {
     }
     val lineCapTestValue = LineCap.BUTT
     val lineCrossSlopeTestValue = 1.0
+    val lineElevationGroundScaleTestValue = 1.0
     val lineElevationReferenceTestValue = LineElevationReference.NONE
     val lineJoinTestValue = LineJoin.BEVEL
     val lineMiterLimitTestValue = 1.0
@@ -1700,6 +1763,7 @@ class LineLayerTest : BaseStyleTest() {
       filter(filterTestValue)
       lineCap(lineCapTestValue)
       lineCrossSlope(lineCrossSlopeTestValue)
+      lineElevationGroundScale(lineElevationGroundScaleTestValue)
       lineElevationReference(lineElevationReferenceTestValue)
       lineJoin(lineJoinTestValue)
       lineMiterLimit(lineMiterLimitTestValue)
@@ -1748,6 +1812,7 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(filterTestValue.toString(), cachedLayer.filter.toString())
     assertEquals(lineCapTestValue, cachedLayer.lineCap)
     assertEquals(lineCrossSlopeTestValue, cachedLayer.lineCrossSlope)
+    assertEquals(lineElevationGroundScaleTestValue, cachedLayer.lineElevationGroundScale)
     assertEquals(lineElevationReferenceTestValue, cachedLayer.lineElevationReference)
     assertEquals(lineJoinTestValue, cachedLayer.lineJoin)
     assertEquals(lineMiterLimitTestValue, cachedLayer.lineMiterLimit)

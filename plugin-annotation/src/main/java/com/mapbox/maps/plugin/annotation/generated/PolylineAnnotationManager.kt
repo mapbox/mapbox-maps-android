@@ -34,6 +34,10 @@ class PolylineAnnotationManager(
   @OptIn(MapboxExperimental::class)
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
+      PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE -> {
+        layer.lineElevationGroundScale(get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE))
+        dragLayer.lineElevationGroundScale(get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE))
+      }
       PolylineAnnotationOptions.PROPERTY_LINE_JOIN -> {
         layer.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
         dragLayer.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
@@ -103,6 +107,7 @@ class PolylineAnnotationManager(
    * PolylineAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
+   * PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
    * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET - Double
@@ -136,6 +141,7 @@ class PolylineAnnotationManager(
    * PolylineAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
+   * PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
    * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET - Double
@@ -259,6 +265,40 @@ class PolylineAnnotationManager(
         StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope").value
       }
       setLayerProperty(wrappedValue, "line-cross-slope")
+    }
+
+  /**
+   * The default lineElevationGroundScale for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
+   */
+  var lineElevationGroundScale: Double?
+    /**
+     * Get the lineElevationGroundScale property.
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = dataDrivenPropertyDefaultValues.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)
+      value?.let {
+        return it.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineElevationGroundScale property.
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      if (value != null) {
+        dataDrivenPropertyDefaultValues.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE, value)
+        enableDataDrivenProperty(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)
+      } else {
+        dataDrivenPropertyDefaultValues.remove(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)
+      }
+      // Update child annotation property if not being set.
+      update(annotations)
     }
 
   /**
@@ -1454,6 +1494,7 @@ class PolylineAnnotationManager(
     }
 
   init {
+    dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_JOIN] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY] = false
     dataDrivenPropertyUsageMap[PolylineAnnotationOptions.PROPERTY_LINE_Z_OFFSET] = false

@@ -90,6 +90,8 @@ class PolylineAnnotationManagerTest {
     manager.source = source
     manager.dragLayer = dragLayer
     manager.dragSource = dragSource
+    every { layer.lineElevationGroundScale(any<Expression>()) } answers { layer }
+    every { dragLayer.lineElevationGroundScale(any<Expression>()) } answers { dragLayer }
     every { layer.lineJoin(any<Expression>()) } answers { layer }
     every { dragLayer.lineJoin(any<Expression>()) } answers { dragLayer }
     every { layer.lineSortKey(any<Expression>()) } answers { layer }
@@ -234,6 +236,11 @@ class PolylineAnnotationManagerTest {
   @Test
   fun annotationPropertiesUpdate() {
     val annotation = manager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
+
+    annotation.lineElevationGroundScale = 0.0
+    assertEquals(0.0, annotation.lineElevationGroundScale)
+    annotation.lineElevationGroundScale = null
+    assertNull(annotation.lineElevationGroundScale)
 
     annotation.lineJoin = LineJoin.BEVEL
     assertEquals(LineJoin.BEVEL, annotation.lineJoin)
@@ -799,6 +806,35 @@ class PolylineAnnotationManagerTest {
     manager.delete(annotation)
     assertTrue(manager.annotations.isEmpty())
     unmockkObject(DragInteraction.Companion)
+  }
+
+  @Test
+  fun testLineElevationGroundScaleLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineElevationGroundScale(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+    verify(exactly = 1) { manager.dragLayer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+    verify(exactly = 1) { manager.dragLayer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+  }
+
+  @Test
+  fun testLineElevationGroundScaleInAnnotationManager() {
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    verify(exactly = 0) { manager.layer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+    val options = PolylineAnnotationOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+    manager.lineElevationGroundScale = 0.0
+    manager.create(options)
+    verify(exactly = 1) { manager.layer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
+    verify(exactly = 1) { manager.dragLayer.lineElevationGroundScale(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_ELEVATION_GROUND_SCALE)) }
   }
 
   @Test

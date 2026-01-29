@@ -3106,6 +3106,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineDepthOcclusionFactorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineDepthOcclusionFactorTransition();
+    method public Double? getLineElevationGroundScale();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineElevationGroundScaleAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getLineElevationGroundScaleTransition();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getLineElevationReference();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineElevationReferenceAsExpression();
     method public Double? getLineEmissiveStrength();
@@ -3207,6 +3210,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(com.mapbox.maps.extension.style.expressions.generated.Expression lineDepthOcclusionFactor);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScale(double lineElevationGroundScale);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScale(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationGroundScale);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference lineElevationReference);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength);
@@ -3310,6 +3317,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineDepthOcclusionFactorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineDepthOcclusionFactorTransition;
+    property public final Double? lineElevationGroundScale;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineElevationGroundScaleAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? lineElevationGroundScaleTransition;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? lineElevationReference;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineElevationReferenceAsExpression;
     property public final Double? lineEmissiveStrength;
@@ -3408,6 +3418,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineDepthOcclusionFactorAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineDepthOcclusionFactorTransition();
+    method public Double? getDefaultLineElevationGroundScale();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineElevationGroundScaleAsExpression();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineElevationGroundScaleTransition();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? getDefaultLineElevationReference();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineElevationReferenceAsExpression();
     method public Double? getDefaultLineEmissiveStrength();
@@ -3497,6 +3510,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultLineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineDepthOcclusionFactorAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineDepthOcclusionFactorTransition;
+    property public final Double? defaultLineElevationGroundScale;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineElevationGroundScaleAsExpression;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineElevationGroundScaleTransition;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference? defaultLineElevationReference;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineElevationReferenceAsExpression;
     property public final Double? defaultLineEmissiveStrength;
@@ -3597,6 +3613,10 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactor(com.mapbox.maps.extension.style.expressions.generated.Expression lineDepthOcclusionFactor);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineDepthOcclusionFactorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScale(double lineElevationGroundScale = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScale(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationGroundScale);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference lineElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference.NONE);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength = 0.0);

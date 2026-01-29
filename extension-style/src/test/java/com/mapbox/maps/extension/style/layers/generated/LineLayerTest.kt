@@ -295,6 +295,113 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineElevationGroundScaleSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = 1.0
+    layer.bindTo(style)
+    layer.lineElevationGroundScale(testValue)
+    verify { style.setStyleLayerProperty("id", "line-elevation-ground-scale", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun lineElevationGroundScaleGet() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), layer.lineElevationGroundScale?.toString())
+    verify { style.getStyleLayerProperty("id", "line-elevation-ground-scale") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineElevationGroundScaleAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineElevationGroundScale(expression)
+    verify { style.setStyleLayerProperty("id", "line-elevation-ground-scale", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineElevationGroundScaleAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineElevationGroundScaleAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-elevation-ground-scale") }
+  }
+
+  @Test
+  fun lineElevationGroundScaleAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineElevationGroundScaleAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-elevation-ground-scale") }
+  }
+
+  @Test
+  fun lineElevationGroundScaleAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(1.0, layer.lineElevationGroundScaleAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, layer.lineElevationGroundScale!!, 1E-5)
+    verify { style.getStyleLayerProperty("id", "line-elevation-ground-scale") }
+  }
+
+  @Test
+  fun lineElevationGroundScaleTransitionSet() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineElevationGroundScaleTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "line-elevation-ground-scale-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun lineElevationGroundScaleTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.lineElevationGroundScaleTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "line-elevation-ground-scale-transition") }
+  }
+
+  @Test
+  fun lineElevationGroundScaleTransitionSetDsl() {
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineElevationGroundScaleTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "line-elevation-ground-scale-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun lineElevationReferenceSet() {
     val layer = lineLayer("id", "source") {}
     layer.bindTo(style)
@@ -3404,6 +3511,50 @@ class LineLayerTest {
     assertEquals(1.0, LineLayer.defaultLineCrossSlopeAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, LineLayer.defaultLineCrossSlope!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cross-slope") }
+  }
+
+  @Test
+  fun defaultLineElevationGroundScaleTest() {
+    val testValue = 1.0
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = 1.0
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineElevationGroundScale?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineElevationGroundScaleAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineElevationGroundScaleAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale") }
+  }
+
+  @Test
+  fun defaultLineElevationGroundScaleAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    assertEquals(1.0, LineLayer.defaultLineElevationGroundScaleAsExpression?.contents as Double, 1E-5)
+    assertEquals(1.0, LineLayer.defaultLineElevationGroundScale!!, 1E-5)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale") }
+  }
+
+  @Test
+  fun defaultLineElevationGroundScaleTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LineLayer.defaultLineElevationGroundScaleTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale-transition") }
   }
 
   @Test
