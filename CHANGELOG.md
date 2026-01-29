@@ -14,11 +14,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster values on the map at a specific screen coordinate.
 * Introduce `StyleAttributionsChanged` event for detecting map attributions changes
 * Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
+* Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
 
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.
 * Respect `animationDurationMs` when custom `OverviewViewportStateOptions.animationDurationMs` is set.
-
+* Fix point View Annotation flickering and hiding on moving anchor out of screen.
 
 ## Dependencies
 * Update gl-native to [v11.19.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-beta.1), common to [v24.19.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-beta.1).
