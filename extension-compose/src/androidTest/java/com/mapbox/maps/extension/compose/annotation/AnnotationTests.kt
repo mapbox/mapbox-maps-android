@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
@@ -27,7 +28,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
-import com.mapbox.maps.coroutine.awaitStyle
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.MapboxMapComposable
@@ -59,7 +59,6 @@ import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import org.junit.Assert.assertEquals
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -96,11 +95,11 @@ public class AnnotationTests {
     }
 
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(SINGLE_POINT, clickedAnnotation!!.point)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(timeoutMillis = 5000L) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(SINGLE_POINT, longClickedAnnotation!!.point)
   }
 
@@ -145,12 +144,12 @@ public class AnnotationTests {
       }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(CLUSTER_POINTS[2], clickedAnnotation!!.point)
     assertEquals(Color.Red.toArgb(), clickedAnnotation!!.circleColorInt)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(5000L) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(CLUSTER_POINTS[2], longClickedAnnotation!!.point)
     assertEquals(Color.Red.toArgb(), longClickedAnnotation!!.circleColorInt)
   }
@@ -201,21 +200,20 @@ public class AnnotationTests {
       }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { actualPointsInClickedCluster != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { actualPointsInClickedCluster != null }
     assertEquals(expectedPointsInCluster, actualPointsInClickedCluster)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(5000L) { actualPointsInLongClickedCluster != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { actualPointsInLongClickedCluster != null }
     assertEquals(expectedPointsInCluster, actualPointsInLongClickedCluster)
   }
 
   @Test
-  @Ignore("Flaky test, times out")
   public fun testPointAnnotation() {
     var clickedAnnotation: PointAnnotation? = null
     var longClickedAnnotation: PointAnnotation? = null
     val testTag = "point_annotation"
-
+    val annotationIconAnchor = IconAnchor.BOTTOM_LEFT
     setMapContent(
       cameraCenter = HELSINKI,
       annotationPoint = SINGLE_POINT,
@@ -226,7 +224,7 @@ public class AnnotationTests {
         point = SINGLE_POINT
       ) {
         iconImage = icon
-        iconAnchor = IconAnchor.BOTTOM_LEFT
+        iconAnchor = annotationIconAnchor
         interactionsState.onClicked {
           clickedAnnotation = it
           true
@@ -239,12 +237,12 @@ public class AnnotationTests {
     }
 
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(SINGLE_POINT, clickedAnnotation!!.point)
-    assertEquals(IconAnchor.BOTTOM_LEFT, clickedAnnotation!!.iconAnchor)
+    assertEquals(annotationIconAnchor, clickedAnnotation!!.iconAnchor)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(timeoutMillis = 5000L) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(SINGLE_POINT, longClickedAnnotation!!.point)
   }
 
@@ -300,12 +298,12 @@ public class AnnotationTests {
     }
 
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(CLUSTER_POINTS[2], clickedAnnotation!!.point)
     assertEquals(TextAnchor.TOP_LEFT, clickedAnnotation!!.textAnchor)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(5000L) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(CLUSTER_POINTS[2], longClickedAnnotation!!.point)
   }
 
@@ -365,11 +363,11 @@ public class AnnotationTests {
     }
 
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { actualPointsInClickedCluster != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { actualPointsInClickedCluster != null }
     assertEquals(expectedPointsInCluster, actualPointsInClickedCluster)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(5000L) { actualPointsInLongClickedCluster != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { actualPointsInLongClickedCluster != null }
     assertEquals(expectedPointsInCluster, actualPointsInLongClickedCluster)
   }
 
@@ -381,7 +379,7 @@ public class AnnotationTests {
 
     setMapContent(
       cameraCenter = HELSINKI,
-      annotationPoint = POLYGON_POINTS.first().first(),
+      annotationPoint = POLYGON_CENTER,
       testTag = testTag
     ) {
       PolygonAnnotation(
@@ -399,12 +397,12 @@ public class AnnotationTests {
       }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(Color.Red.toArgb(), clickedAnnotation!!.fillColorInt)
     assertEquals(POLYGON_POINTS, clickedAnnotation!!.points)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(timeoutMillis = 5000L) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(Color.Red.toArgb(), clickedAnnotation!!.fillColorInt)
     assertEquals(POLYGON_POINTS, longClickedAnnotation!!.points)
   }
@@ -417,7 +415,7 @@ public class AnnotationTests {
 
     setMapContent(
       cameraCenter = HELSINKI,
-      annotationPoint = POLYGON_POINTS.first().first(),
+      annotationPoint = POLYGON_CENTER,
       testTag = testTag
     ) {
       PolygonAnnotationGroup(
@@ -439,18 +437,17 @@ public class AnnotationTests {
       }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(Color.Yellow.toArgb(), clickedAnnotation!!.fillColorInt)
     assertEquals(POLYGON_POINTS, clickedAnnotation!!.points)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(timeoutMillis = 50000L) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(Color.Yellow.toArgb(), clickedAnnotation!!.fillColorInt)
     assertEquals(POLYGON_POINTS, longClickedAnnotation!!.points)
   }
 
   @Test
-  @Ignore("Flaky test, times out")
   public fun testPolylineAnnotation() {
     var clickedAnnotation: PolylineAnnotation? = null
     var longClickedAnnotation: PolylineAnnotation? = null
@@ -476,12 +473,12 @@ public class AnnotationTests {
       }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(Color.Red.toArgb(), clickedAnnotation!!.lineColorInt)
     assertEquals(POLYLINE_POINTS, clickedAnnotation!!.points)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil(5000) { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(Color.Red.toArgb(), longClickedAnnotation!!.lineColorInt)
     assertEquals(POLYLINE_POINTS, longClickedAnnotation!!.points)
   }
@@ -516,12 +513,12 @@ public class AnnotationTests {
       }
     }
     composeTestRule.onNodeWithTag(testTag).performClick()
-    composeTestRule.waitUntil { clickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { clickedAnnotation != null }
     assertEquals(Color.Blue.toArgb(), clickedAnnotation!!.lineColorInt)
     assertEquals(POLYLINE_POINTS, clickedAnnotation!!.points)
 
     composeTestRule.onNodeWithTag(testTag).performLongClick()
-    composeTestRule.waitUntil { longClickedAnnotation != null }
+    composeTestRule.waitUntil(WAIT_TIMEOUT) { longClickedAnnotation != null }
     assertEquals(Color.Blue.toArgb(), longClickedAnnotation!!.lineColorInt)
     assertEquals(POLYLINE_POINTS, longClickedAnnotation!!.points)
   }
@@ -538,6 +535,7 @@ public class AnnotationTests {
     annotationBlock: @MapboxMapComposable @Composable () -> Unit,
   ) {
     composeTestRule.setContent {
+      val density = LocalDensity.current
       // screen coordinate of given annotation which can be used for adding Box with testTag
       var offset: IntOffset? by remember {
         mutableStateOf(null)
@@ -557,9 +555,16 @@ public class AnnotationTests {
         ) {
           annotationBlock()
           MapEffect(Unit) { mapView ->
-            mapView.mapboxMap.awaitStyle()
-            val screenCoordinate = mapView.mapboxMap.pixelForCoordinate(annotationPoint)
-            offset = IntOffset(screenCoordinate.x.toInt(), screenCoordinate.y.toInt())
+            mapView.mapboxMap.subscribeMapLoaded {
+              val screenCoordinate = mapView.mapboxMap.pixelForCoordinate(annotationPoint)
+              // Center the box on the coordinate
+              val boxSizePx = with(density) { 5.dp.roundToPx() }
+              val halfSize = boxSizePx / 2
+              offset = IntOffset(
+                screenCoordinate.x.toInt() - halfSize,
+                screenCoordinate.y.toInt() - halfSize
+              )
+            }
           }
         }
         if (offset != null) {
@@ -574,7 +579,7 @@ public class AnnotationTests {
       }
     }
 
-    composeTestRule.waitUntil(5_000) {
+    composeTestRule.waitUntil(WAIT_TIMEOUT) {
       composeTestRule.onAllNodesWithTag(testTag)
         .fetchSemanticsNodes().size == 1
     }
@@ -592,6 +597,8 @@ public class AnnotationTests {
 
   public companion object {
     public const val MAP_TEST_TAG: String = "map_tag"
+    // Increase timeout for Firebase/CI environments
+    public const val WAIT_TIMEOUT: Long = 10_000L
     public const val ZOOM: Double = 10.0
     private const val INTERVAL = 0.01
     public val CLUSTER_POINTS: List<Point> by lazy {
@@ -617,6 +624,12 @@ public class AnnotationTests {
         Point.fromLngLat(24.9349, 60.1673),
         Point.fromLngLat(24.9349, 60.1725),
       )
+    )
+
+    // Center point of POLYGON_POINTS for click testing
+    private val POLYGON_CENTER = Point.fromLngLat(
+      (24.9349 + 24.9429) / 2,
+      (60.1725 + 60.1673) / 2
     )
 
     private val POLYGON_POINTS_2 = listOf(
