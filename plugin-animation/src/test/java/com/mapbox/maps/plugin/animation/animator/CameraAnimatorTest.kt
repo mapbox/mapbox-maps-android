@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.animation.animator
 
+import android.animation.Animator
 import androidx.core.view.animation.PathInterpolatorCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
@@ -288,5 +289,128 @@ class CameraAnimatorTest {
     val result = animator.getAnimatedValueAt(1.0f)
 
     assertEquals(Point.fromLngLat(10.0, 15.0), result)
+  }
+
+  @Test
+  fun `end sets endedNormally flag to true`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(10.0),
+    )
+      .startValue(1.0)
+      .build()
+    val animator = CameraZoomAnimator(options)
+
+    // Register internal listener to allow animation to run
+    val mockListener = mockk<Animator.AnimatorListener>(relaxed = true)
+    animator.addInternalListener(mockListener)
+
+    // Initially endedNormally should be false
+    assertEquals(false, animator.endedManually)
+
+    // Call end
+    animator.end()
+
+    // After end is called, endedNormally should be true
+    assertEquals(true, animator.endedManually)
+    assertEquals(false, animator.canceled)
+  }
+
+  @Test
+  fun `cancel sets canceled flag to true`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(10.0),
+    )
+      .startValue(1.0)
+      .build()
+    val animator = CameraZoomAnimator(options)
+
+    // Register internal listener
+    val mockListener = mockk<Animator.AnimatorListener>(relaxed = true)
+    animator.addInternalListener(mockListener)
+
+    // Initially canceled should be false
+    assertEquals(false, animator.canceled)
+
+    // Call cancel
+    animator.cancel()
+
+    // After cancel is called, canceled should be true
+    assertEquals(true, animator.canceled)
+    assertEquals(false, animator.endedManually)
+  }
+
+  @Test
+  fun `cancel does not set endedNormally flag`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(10.0),
+    )
+      .startValue(1.0)
+      .build()
+    val animator = CameraZoomAnimator(options)
+
+    // Register internal listener
+    val mockListener = mockk<Animator.AnimatorListener>(relaxed = true)
+    animator.addInternalListener(mockListener)
+
+    // Call cancel
+    animator.cancel()
+
+    // endedNormally should remain false when cancel() is called
+    assertEquals(false, animator.endedManually)
+    assertEquals(true, animator.canceled)
+  }
+
+  @Test
+  fun `start resets endedNormally and canceled flags`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(10.0),
+    )
+      .startValue(1.0)
+      .build()
+    val animator = CameraZoomAnimator(options)
+
+    // Register internal listener to allow animation
+    val mockListener = mockk<Animator.AnimatorListener>(relaxed = true)
+    animator.addInternalListener(mockListener)
+
+    // Set flags by ending and canceling
+    animator.end()
+    assertEquals(true, animator.endedManually)
+
+    animator.cancel()
+    assertEquals(true, animator.canceled)
+
+    // Start again - should reset flags
+    animator.start()
+
+    // Both flags should be reset to false
+    assertEquals(false, animator.endedManually)
+    assertEquals(false, animator.canceled)
+  }
+
+  @Test
+  fun `end then cancel maintains canceled state`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(10.0),
+    )
+      .startValue(1.0)
+      .build()
+    val animator = CameraZoomAnimator(options)
+
+    // Register internal listener
+    val mockListener = mockk<Animator.AnimatorListener>(relaxed = true)
+    animator.addInternalListener(mockListener)
+
+    // Start, then end
+    animator.start()
+    animator.end()
+    assertEquals(true, animator.endedManually)
+    assertEquals(false, animator.canceled)
+
+    // Then cancel
+    animator.cancel()
+    assertEquals(true, animator.canceled)
+    // endedNormally remains true from previous end()
+    assertEquals(true, animator.endedManually)
   }
 }

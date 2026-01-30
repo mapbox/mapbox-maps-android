@@ -393,6 +393,16 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
   }
 
   private fun onAnimationUpdateInternal(animator: CameraAnimator<*>) {
+    if (animator.canceled || animator.endedManually) {
+      if (debugMode) {
+        logW(
+          TAG,
+          "Ignoring onAnimationUpdateInternal callback as animator is cancelled: " +
+            "${animator.canceled}; is ended normally: ${animator.endedManually}.",
+        )
+      }
+      return
+    }
     // add current animator to queue-set if was not present
     runningAnimatorsQueue.add(animator)
 

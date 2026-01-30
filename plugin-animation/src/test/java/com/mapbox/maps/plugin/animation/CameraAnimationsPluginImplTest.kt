@@ -1440,6 +1440,294 @@ class CameraAnimationsPluginImplTest {
     }
   }
 
+  @Test
+  fun `onAnimationUpdateInternal exits early when animator is canceled`() {
+    var cameraPosition = CameraOptions.Builder().build()
+    var updateCallCount = 0
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      cameraPosition = firstArg()
+      updateCallCount++
+    }
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 100L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+
+    // Let a few updates happen
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
+    val updatesBeforeCancel = updateCallCount
+    assertTrue("Expected at least one update before cancel", updatesBeforeCancel > 0)
+
+    // Cancel the animator
+    bearingAnimator.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    // Verify no additional setCamera calls happened after cancel
+    // (the cancel itself might trigger one final update, but subsequent updates should be ignored)
+    val updatesAfterCancel = updateCallCount
+    assertEquals(
+      "No additional updates should occur after canceled flag is set",
+      updatesBeforeCancel,
+      updatesAfterCancel
+    )
+  }
+
+  @Test
+  fun `onAnimationUpdateInternal exits early when animator endedNormally`() {
+    var cameraPosition = CameraOptions.Builder().build()
+    var updateCallCount = 0
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      cameraPosition = firstArg()
+      updateCallCount++
+    }
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 100L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+
+    // Let a few updates happen
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
+    val updatesBeforeEnd = updateCallCount
+    assertTrue("Expected at least one update before end", updatesBeforeEnd > 0)
+
+    // End the animator
+    bearingAnimator.end()
+    shadowOf(getMainLooper()).idle()
+
+    // Verify no additional setCamera calls happened after end
+    val updatesAfterEnd = updateCallCount
+    assertEquals(
+      "No additional updates should occur after endedNormally flag is set",
+      updatesBeforeEnd,
+      updatesAfterEnd
+    )
+  }
+
+  @Test
+  fun `onAnimationUpdateInternal exits early when both canceled and endedNormally are true`() {
+    var cameraPosition = CameraOptions.Builder().build()
+    var updateCallCount = 0
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      cameraPosition = firstArg()
+      updateCallCount++
+    }
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 100L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+
+    // Let a few updates happen
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
+    val updatesBeforeEndAndCancel = updateCallCount
+    assertTrue("Expected at least one update before end and cancel", updatesBeforeEndAndCancel > 0)
+
+    // End then cancel the animator (both flags will be true)
+    bearingAnimator.end()
+    bearingAnimator.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    // Verify no additional setCamera calls happened after both flags are set
+    val updatesAfter = updateCallCount
+    assertEquals(
+      "No additional updates should occur when both canceled and endedNormally are true",
+      updatesBeforeEndAndCancel,
+      updatesAfter
+    )
+  }
+
+  @Test
+  fun `onAnimationUpdateInternal processes normally when neither canceled nor endedNormally is true`() {
+    var cameraPosition = CameraOptions.Builder().build()
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      cameraPosition = firstArg()
+    }
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 50L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+    shadowOf(getMainLooper()).idle()
+
+    // Animation completed normally, final camera position should be the target
+    assertEquals(targetBearing, cameraPosition.bearing)
+  }
+
+  @Test
+  fun `runningAnimatorsQueue remains empty when animator is canceled before updates`() {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } just Runs
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 100L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+
+    // Cancel immediately before any updates are processed
+    bearingAnimator.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    // Verify setUserAnimationInProgress was set to true on start, then false on cancel
+    // If the queue remained empty during updates, setUserAnimationInProgress(false)
+    // should be called when animation finishes
+    verifyOrder {
+      mapTransformDelegate.setUserAnimationInProgress(true)
+      mapTransformDelegate.setUserAnimationInProgress(false)
+    }
+  }
+
+  @Test
+  fun `runningAnimatorsQueue remains empty when animator endedNormally before updates`() {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } just Runs
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 100L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+
+    // End immediately before any updates are processed
+    bearingAnimator.end()
+    shadowOf(getMainLooper()).idle()
+
+    // Verify setUserAnimationInProgress was set to true on start, then false on end
+    // If the queue remained empty during updates, setUserAnimationInProgress(false)
+    // should be called when animation finishes
+    verifyOrder {
+      mapTransformDelegate.setUserAnimationInProgress(true)
+      mapTransformDelegate.setUserAnimationInProgress(false)
+    }
+  }
+
+  @Test
+  fun `runningAnimatorsQueue is populated when animator runs normally`() {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } just Runs
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 50L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+    shadowOf(getMainLooper()).idle()
+
+    // Verify setUserAnimationInProgress was set to true, then false
+    // Multiple setCamera calls indicate the animator was in the queue during updates
+    verifyOrder {
+      mapTransformDelegate.setUserAnimationInProgress(true)
+      mapTransformDelegate.setUserAnimationInProgress(false)
+    }
+    verify(atLeast = 1) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun `runningAnimatorsQueue not populated when canceled animator receives update callbacks`() {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } just Runs
+    every { mapCameraManagerDelegate.cameraState } returns CameraOptions.Builder()
+      .bearing(0.0)
+      .build()
+      .toCameraState()
+
+    val targetBearing = 12.0
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(targetBearing) {
+        startValue(0.0)
+      },
+      true
+    ) {
+      duration = 100L
+    }
+
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    shadowOf(getMainLooper()).pause()
+
+    bearingAnimator.start()
+
+    // Let one update happen
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(5))
+
+    // Cancel and continue processing
+    bearingAnimator.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    // The key test: after cancel, any update callbacks that fire should exit early
+    // and not add to queue. We verify this by checking that setUserAnimationInProgress(false)
+    // is called after the animation ends (meaning queue is empty)
+    verifyOrder {
+      mapTransformDelegate.setUserAnimationInProgress(true)
+      mapTransformDelegate.setUserAnimationInProgress(false)
+    }
+    verify(exactly = 1) { mapTransformDelegate.setUserAnimationInProgress(true) }
+  }
+
   class LifecycleListener : CameraAnimationsLifecycleListener {
     var starting = false
     var interrupting = false

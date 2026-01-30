@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.19.0-rc.1
+
+## Bug fixes 🐞
+* Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
+
 # 11.19.0-beta.1 January 28, 2026
 
 ## Features ✨ and improvements 🏁
