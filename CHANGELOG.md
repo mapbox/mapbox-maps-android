@@ -8,6 +8,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
 * Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
 
+# 11.19.0-rc.1
+
+## Bug fixes 🐞
+* Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
+
 # 11.19.0-beta.1 January 28, 2026
 
 ## Features ✨ and improvements 🏁

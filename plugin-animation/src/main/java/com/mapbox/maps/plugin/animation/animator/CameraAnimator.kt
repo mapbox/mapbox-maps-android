@@ -62,6 +62,10 @@ abstract class CameraAnimator<out T>(
   private val userListeners = CopyOnWriteArraySet<AnimatorListener?>()
 
   internal var canceled = false
+  // set when animation is ended manually (by calling Animator#end),
+  // i. e. not when it finished "normally" because it reached its end
+  internal var endedManually = false
+    private set
   internal var isInternal = false
   internal var skipped = false
   private val immediate get() = duration == 0L && startDelay == 0L
@@ -173,6 +177,7 @@ abstract class CameraAnimator<out T>(
     postOnAnimatorThread {
       if (registered) {
         canceled = false
+        endedManually = false
         if (immediate) {
           handleImmediateAnimation()
           return@postOnAnimatorThread
@@ -355,6 +360,19 @@ abstract class CameraAnimator<out T>(
     postOnAnimatorThread {
       canceled = true
       super.cancel()
+    }
+  }
+
+  /**
+   * Ends the animation.
+   * Causes sending an Animator.AnimatorListener.onAnimationEnd(Animator) to its listeners.
+   *
+   * This method must be called on the thread that is running the animation.
+   */
+  override fun end() {
+    postOnAnimatorThread {
+      endedManually = true
+      super.end()
     }
   }
 
