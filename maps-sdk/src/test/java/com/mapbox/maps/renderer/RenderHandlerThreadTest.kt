@@ -29,6 +29,7 @@ class RenderHandlerThreadTest {
 
   @After
   fun cleanUp() {
+    cleanupShadows()
     unmockkStatic("com.mapbox.maps.MapboxLogger")
     renderHandlerThread.stop()
   }

@@ -5,6 +5,7 @@ import android.opengl.EGLContext
 import android.util.Log
 import android.view.Surface
 import com.mapbox.countDownEvery
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -19,7 +20,6 @@ import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -124,6 +124,7 @@ class GLMapboxRenderThreadTest {
 
   @After
   fun cleanup() {
+    cleanupShadows()
     renderHandlerThread.stop()
     unmockkStatic("com.mapbox.maps.MapboxLogger")
     unmockkAll()
@@ -280,7 +281,6 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test
-  @Ignore("with robolectric after 4.13 this test fails when run in a class but not separately")
   fun needViewAnnotationSyncMapSynchronized() {
     initRenderThread()
     provideValidSurface()
@@ -308,7 +308,6 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test
-  @Ignore("with robolectric after 4.13 this test fails when run in a class but not separately")
   fun needViewAnnotationSyncMapFixedDelay() {
     initRenderThread()
     provideValidSurface()
@@ -1013,7 +1012,6 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test(timeout = 10000) // Added timeout to ensure that if test fails, test does not hang forever.
-  @Ignore("with robolectric after 4.13 this test fails when run in a class but not separately")
   fun newAndroidSurfaceArriveWhenWaitingVsyncTest() {
     initRenderThread()
     val choreographerCallbackDelayMs = 16L
@@ -1105,7 +1103,7 @@ class GLMapboxRenderThreadTest {
     every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
   }
 
-  @OptIn(com.mapbox.maps.MapboxExperimental::class)
+  @OptIn(MapboxExperimental::class)
   @Test
   fun scheduleThreadServiceTypeResetCallsRendererOnMainThread() {
     initRenderThread()
