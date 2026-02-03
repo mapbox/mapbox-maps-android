@@ -5,13 +5,16 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
-* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
-* Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
 
 # 11.19.0-rc.1
 
+## Features ✨ and improvements 🏁
+* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
+* Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
+
 ## Bug fixes 🐞
 * Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
+* Fix elevated line bevel join artifacts at sharp corners.
 
 # 11.19.0-beta.1 January 28, 2026
 
@@ -19,9 +22,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster array value at a point on the map.
 * Introduce new `AnnotationConfig#slotName` property to allow to specify a slot to position annotation layer.
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster values on the map at a specific screen coordinate.
-* Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
-* Introduce `StyleAttributionsChanged` event for detecting map attributions changes
-* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
 * Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
 
 ## Bug fixes 🐞
