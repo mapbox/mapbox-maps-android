@@ -5,6 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
+* Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
 
 # 11.19.0-rc.1
 
@@ -20,6 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
 * Introduce `StyleAttributionsChanged` event for detecting map attributions changes
 * Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
+* Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
 
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.

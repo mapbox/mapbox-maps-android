@@ -123,7 +123,6 @@ public class PolylineAnnotationGroupState private constructor(
   /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
-  @MapboxExperimental
   public var lineElevationReference: LineElevationReference? by mutableStateOf(initialLineElevationReference)
   /**
    * The display of lines when joining. Default value: "miter".
@@ -147,9 +146,8 @@ public class PolylineAnnotationGroupState private constructor(
   @MapboxExperimental
   public var lineWidthUnit: LineWidthUnit? by mutableStateOf(initialLineWidthUnit)
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    */
-  @MapboxExperimental
   public var lineZOffset: Double? by mutableStateOf(initialLineZOffset)
   /**
    * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
@@ -282,7 +280,6 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineElevationGroundScale = lineElevationGroundScale
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateLineElevationReference(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineElevationReference = lineElevationReference
   }
@@ -308,7 +305,6 @@ public class PolylineAnnotationGroupState private constructor(
     annotationManager.lineWidthUnit = lineWidthUnit
   }
   @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateLineZOffset(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineZOffset = lineZOffset
   }

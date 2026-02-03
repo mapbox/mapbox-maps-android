@@ -451,7 +451,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
-  @MapboxExperimental
   val lineElevationReference: LineElevationReference?
     /**
      * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
@@ -474,7 +473,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineElevationReference value of lineElevationReference
    */
-  @MapboxExperimental
   override fun lineElevationReference(lineElevationReference: LineElevationReference): LineLayer = apply {
     val propertyValue = PropertyValue("line-elevation-reference", lineElevationReference)
     setProperty(propertyValue)
@@ -486,7 +484,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    * This is an Expression representation of "line-elevation-reference".
    *
    */
-  @MapboxExperimental
   val lineElevationReferenceAsExpression: Expression?
     /**
      * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
@@ -508,7 +505,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param lineElevationReference value of lineElevationReference as Expression
    */
-  @MapboxExperimental
   override fun lineElevationReference(lineElevationReference: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-elevation-reference", lineElevationReference)
     setProperty(propertyValue)
@@ -811,12 +807,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    */
-  @MapboxExperimental
   val lineZOffset: Double?
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
      *
      * Use static method [LineLayer.defaultLineZOffset] to get the default property.
      *
@@ -827,28 +822,26 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    *
    * Use static method [LineLayer.defaultLineZOffset] to set the default property.
    *
    * @param lineZOffset value of lineZOffset
    */
-  @MapboxExperimental
   override fun lineZOffset(lineZOffset: Double): LineLayer = apply {
     val propertyValue = PropertyValue("line-z-offset", lineZOffset)
     setProperty(propertyValue)
   }
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    *
    * This is an Expression representation of "line-z-offset".
    *
    */
-  @MapboxExperimental
   val lineZOffsetAsExpression: Expression?
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
      *
      * Get the LineZOffset property as an Expression
      *
@@ -858,13 +851,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-z-offset")
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    *
    * Use static method [LineLayer.defaultLineZOffsetAsExpression] to set the default property.
    *
    * @param lineZOffset value of lineZOffset as Expression
    */
-  @MapboxExperimental
   override fun lineZOffset(lineZOffset: Expression): LineLayer = apply {
     val propertyValue = PropertyValue("line-z-offset", lineZOffset)
     setProperty(propertyValue)
@@ -3131,7 +3123,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
      */
-    @MapboxExperimental
     val defaultLineElevationReference: LineElevationReference?
       /**
        * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
@@ -3153,7 +3144,6 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      * This is an Expression representation of "line-elevation-reference".
      *
      */
-    @MapboxExperimental
     val defaultLineElevationReferenceAsExpression: Expression?
       /**
        * Get default value of the LineElevationReference property as an Expression
@@ -3364,12 +3354,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
      */
-    @MapboxExperimental
     val defaultLineZOffset: Double?
       /**
-       * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+       * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
        *
        * Get the default value of LineZOffset property
        *
@@ -3380,12 +3369,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
      *
      * This is an Expression representation of "line-z-offset".
      *
      */
-    @MapboxExperimental
     val defaultLineZOffsetAsExpression: Expression?
       /**
        * Get default value of the LineZOffset property as an Expression
@@ -4670,7 +4658,6 @@ interface LineLayerDsl {
    *
    * @param lineElevationReference value of lineElevationReference
    */
-  @MapboxExperimental
   fun lineElevationReference(lineElevationReference: LineElevationReference = LineElevationReference.NONE): LineLayer
 
   /**
@@ -4678,7 +4665,6 @@ interface LineLayerDsl {
    *
    * @param lineElevationReference value of lineElevationReference as Expression
    */
-  @MapboxExperimental
   fun lineElevationReference(lineElevationReference: Expression): LineLayer
 
   /**
@@ -4754,19 +4740,17 @@ interface LineLayerDsl {
   fun lineWidthUnit(lineWidthUnit: Expression): LineLayer
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    *
    * @param lineZOffset value of lineZOffset
    */
-  @MapboxExperimental
   fun lineZOffset(lineZOffset: Double = 0.0): LineLayer
 
   /**
-   * Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    *
    * @param lineZOffset value of lineZOffset as Expression
    */
-  @MapboxExperimental
   fun lineZOffset(lineZOffset: Expression): LineLayer
 
   /**
