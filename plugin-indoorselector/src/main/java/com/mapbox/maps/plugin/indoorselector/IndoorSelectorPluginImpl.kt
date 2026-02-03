@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.IndoorFloor
 import com.mapbox.maps.IndoorManager
 import com.mapbox.maps.IndoorState
@@ -28,7 +29,7 @@ internal class IndoorSelectorPluginImpl(
 ) : IndoorSelectorPlugin, IndoorSelectorSettingsBase() {
 
   private lateinit var indoorSelectorView: IndoorSelectorView
-  private var indoorManager: IndoorManager? = null
+  private lateinit var indoorManager: IndoorManager
 
   override var internalSettings: IndoorSelectorSettings = IndoorSelectorSettings { }
 
@@ -40,15 +41,17 @@ internal class IndoorSelectorPluginImpl(
   private var selectedFloorId: String? = null
 
   private val onFloorSelectedListener = OnFloorSelectedListener { floorId ->
-    indoorManager?.selectFloor(floorId)
+    indoorManager.selectFloor(floorId)
   }
 
   private val onIndoorUpdatedCallback = object : IndoorManager.OnIndoorUpdatedCallback {
-    override fun onOnIndoorUpdated(indoorState: IndoorState) {
+    override fun onIndoorUpdated(indoorState: IndoorState) {
       if (!internalSettings.enabled) return
       updateFloors(indoorState.floors, indoorState.selectedFloorId)
     }
   }
+
+  private var cancelable: Cancelable? = null
 
   override fun applySettings() {
     indoorSelectorView.apply {
@@ -72,8 +75,10 @@ internal class IndoorSelectorPluginImpl(
       if (value == internalSettings.enabled) return
       internalSettings = internalSettings.toBuilder().setEnabled(value).build()
       if (value) {
+        cancelable = indoorManager.subscribeOnIndoorUpdated(onIndoorUpdatedCallback)
         addOnFloorSelectedListener(onFloorSelectedListener)
       } else {
+        cancelable?.cancel()
         removeOnFloorSelectedListener(onFloorSelectedListener)
       }
       updateIndoorVisibility()
@@ -113,6 +118,7 @@ internal class IndoorSelectorPluginImpl(
   override fun initialize() {
     applySettings()
     if (internalSettings.enabled) {
+      cancelable = indoorManager.subscribeOnIndoorUpdated(onIndoorUpdatedCallback)
       addOnFloorSelectedListener(onFloorSelectedListener)
     }
   }
@@ -122,9 +128,9 @@ internal class IndoorSelectorPluginImpl(
    */
   override fun cleanup() {
     floorSelectedListeners.clear()
+    cancelable?.cancel()
     currentFloors = emptyList()
     selectedFloorId = null
-    indoorManager = null
   }
 
   /**
@@ -132,9 +138,6 @@ internal class IndoorSelectorPluginImpl(
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.indoorManager = delegateProvider.indoorManager
-    // There's no way to remove this callback at the moment
-    // To be fixed with Kotlin Flow implementation
-    delegateProvider.indoorManager.setOnIndoorUpdatedCallback(onIndoorUpdatedCallback)
   }
 
   /**
