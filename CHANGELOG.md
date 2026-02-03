@@ -18,7 +18,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce new `AnnotationConfig#slotName` property to allow to specify a slot to position annotation layer.
 * Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster values on the map at a specific screen coordinate.
 * Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
-* Introduce `StyleAttributionsChanged` event for detecting map attributions changes
 
 ## Bug fixes 🐞
 * Fix rare scenario where map render surface size was wrong.
