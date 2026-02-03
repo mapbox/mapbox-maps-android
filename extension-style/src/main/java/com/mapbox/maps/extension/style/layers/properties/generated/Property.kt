@@ -187,7 +187,6 @@ class LineCap private constructor(override val value: String) : LayerProperty {
  *
  * @param value String value of this property
  */
-@MapboxExperimental
 class LineElevationReference private constructor(override val value: String) : LayerProperty {
 
   /**

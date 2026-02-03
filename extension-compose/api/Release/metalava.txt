@@ -2839,7 +2839,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class LineCapValue.Companion {
   }
 
-  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class LineElevationReferenceValue {
+  @androidx.compose.runtime.Immutable public final class LineElevationReferenceValue {
     ctor public LineElevationReferenceValue(com.mapbox.bindgen.Value value);
     ctor public LineElevationReferenceValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
     method public com.mapbox.bindgen.Value component1();

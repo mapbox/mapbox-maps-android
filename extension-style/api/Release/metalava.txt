@@ -3214,8 +3214,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScale(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationGroundScale);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference lineElevationReference);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationReference);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference lineElevationReference);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression lineEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3274,8 +3274,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthUnit(com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit lineWidthUnit);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthUnit(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidthUnit);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(double lineZOffset);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineZOffset);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(double lineZOffset);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineZOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
@@ -3617,8 +3617,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScale(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationGroundScale);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationGroundScaleTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference lineElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference.NONE);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationReference);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference lineElevationReference = com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference.NONE);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineElevationReference(com.mapbox.maps.extension.style.expressions.generated.Expression lineElevationReference);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(double lineEmissiveStrength = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrength(com.mapbox.maps.extension.style.expressions.generated.Expression lineEmissiveStrength);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineEmissiveStrengthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3677,8 +3677,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthUnit(com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit lineWidthUnit = com.mapbox.maps.extension.style.layers.properties.generated.LineWidthUnit.PIXELS);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthUnit(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidthUnit);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(double lineZOffset = 0.0);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineZOffset);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(double lineZOffset = 0.0);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineZOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineZOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer minZoom(double minZoom);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer slot(String slot);
@@ -6564,7 +6564,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap valueOf(String value);
   }
 
-  @com.mapbox.maps.MapboxExperimental public final class LineElevationReference {
+  public final class LineElevationReference {
     method public String getValue();
     method public static com.mapbox.maps.extension.style.layers.properties.generated.LineElevationReference valueOf(String value);
     property public String value;

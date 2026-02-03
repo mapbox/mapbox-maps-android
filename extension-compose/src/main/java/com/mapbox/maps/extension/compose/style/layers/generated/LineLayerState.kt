@@ -189,12 +189,10 @@ private constructor(
    */
   public var lineElevationGroundScaleTransition: Transition by lineElevationGroundScaleTransitionState
 
-  @MapboxExperimental
   private val lineElevationReferenceState: MutableState<LineElevationReferenceValue> = mutableStateOf(initialLineElevationReference)
   /**
    *  Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
    */
-  @MapboxExperimental
   public var lineElevationReference: LineElevationReferenceValue by lineElevationReferenceState
 
   private val lineJoinState: MutableState<LineJoinValue> = mutableStateOf(initialLineJoin)
@@ -229,12 +227,10 @@ private constructor(
   @MapboxExperimental
   public var lineWidthUnit: LineWidthUnitValue by lineWidthUnitState
 
-  @MapboxExperimental
   private val lineZOffsetState: MutableState<DoubleValue> = mutableStateOf(initialLineZOffset)
   /**
-   *  Vertical offset from ground, in meters. Defaults to 0. This is an experimental property with some known issues:  - Not supported for globe projection at the moment  - Elevated line discontinuity is possible on tile borders with terrain enabled  - Rendering artifacts can happen near line joins and line caps depending on the line styling  - Rendering artifacts relating to `line-opacity` and `line-blur`  - Elevated line visibility is determined by layer order  - Z-fighting issues can happen with intersecting elevated lines  - Elevated lines don't cast shadows Default value: 0.
+   *  Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
    */
-  @MapboxExperimental
   public var lineZOffset: DoubleValue by lineZOffsetState
 
   private val lineBlurState: MutableState<DoubleValue> = mutableStateOf(initialLineBlur)
