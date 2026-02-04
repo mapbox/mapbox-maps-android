@@ -192,4 +192,7 @@
 
     <!-- Standard style interactions activity -->
     <string name="select_all">Select All</string>
+    <!-- Indoor Example Activity -->
+    <string name="activity_indoor_example">Indoor Example</string>
+    <string name="description_indoor_example">Showcase Indoor Manager API with Mapbox Standard Style</string>
 </resources>

@@ -14,8 +14,6 @@ This README is intended for developers who are interested in [contributing](http
 
 ⚠️ **Important**: The indoor selector plugin is **not included in the default plugin list**. You must explicitly add it when creating your MapView.
 
-⚠️ **Known Issue - Native Memory Leak**: The indoor selector plugin currently registers a callback with `IndoorManager` that cannot be unregistered during the plugin lifecycle (see `IndoorSelectorPluginImpl.kt:138-140`). This callback remains active for the lifetime of the map instance, potentially causing native memory leaks. While the callback has an early-return guard when the plugin is disabled, it still incurs a small performance overhead on every indoor state update. A Flow-based implementation is planned to address this issue in a future release.
-
 **Recommendation**: Only add this plugin to your application if you specifically need indoor mapping functionality and have access to indoor map data with a supported style.
 
 ```kotlin
