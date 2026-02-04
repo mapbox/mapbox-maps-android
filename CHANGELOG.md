@@ -13,6 +13,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
 
+# 11.18.1 January 29, 2026
+## Dependencies
+* Update gl-native to [v11.18.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.1), common to [v24.18.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.1).
+
+
 # 11.19.0-beta.1 January 28, 2026
 
 ## Features ✨ and improvements 🏁
