@@ -373,10 +373,30 @@
             android:description="@string/description_elevated_line"
             android:exported="true"
             android:label="@string/activity_elevated_line"
-            android:parentActivityName=".examples.style.ExampleOverviewActivity">
+            android:parentActivityName=".ExampleOverviewActivity">
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_styles" />
+        </activity>
+        <activity
+            android:name=".examples.model.Interactive3DModelFeatureStateActivity"
+            android:description="@string/description_3d_model_feature_state_interactions"
+            android:label="@string/activity_3d_model_feature_state_interactions"
+            android:exported="true"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_3D" />
+        </activity>
+        <activity
+            android:name=".examples.model.Animated3DModelActivity"
+            android:description="@string/description_animated_3d_model"
+            android:label="@string/activity_animated_3d_model"
+            android:exported="true"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_3D" />
         </activity>
     </application>
 

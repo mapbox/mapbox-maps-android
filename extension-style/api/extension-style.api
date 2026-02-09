@@ -6544,6 +6544,163 @@ public final class com/mapbox/maps/extension/style/sources/generated/ImageSource
 	public static final fun imageSource (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/sources/generated/ImageSource;
 }
 
+public final class com/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride : java/util/HashMap {
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun containsKey (Ljava/lang/Object;)Z
+	public fun containsKey (Ljava/lang/String;)Z
+	public fun containsValue (Lcom/mapbox/bindgen/Value;)Z
+	public final fun containsValue (Ljava/lang/Object;)Z
+	public final fun entrySet ()Ljava/util/Set;
+	public final fun get (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
+	public final synthetic fun get (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun get (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
+	public fun getEntries ()Ljava/util/Set;
+	public fun getKeys ()Ljava/util/Set;
+	public final fun getOrDefault (Ljava/lang/Object;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Value;
+	public final synthetic fun getOrDefault (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+	public fun getOrDefault (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Value;
+	public fun getSize ()I
+	public fun getValues ()Ljava/util/Collection;
+	public final fun keySet ()Ljava/util/Set;
+	public final fun remove (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
+	public final synthetic fun remove (Ljava/lang/Object;)Ljava/lang/Object;
+	public final fun remove (Ljava/lang/Object;Ljava/lang/Object;)Z
+	public fun remove (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
+	public fun remove (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Z
+	public final fun size ()I
+	public final fun values ()Ljava/util/Collection;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun build ()Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride;
+	public final fun getName ()Ljava/lang/String;
+	public final fun modelColor (I)Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder;
+	public final fun modelColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder;
+	public final fun modelColorMixIntensity (D)Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder;
+	public final fun modelEmissiveStrength (D)Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder;
+	public final fun modelOpacity (D)Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride$Builder;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelNodeOverride : java/util/HashMap {
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/ModelNodeOverride$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun containsKey (Ljava/lang/Object;)Z
+	public fun containsKey (Ljava/lang/String;)Z
+	public fun containsValue (Lcom/mapbox/bindgen/Value;)Z
+	public final fun containsValue (Ljava/lang/Object;)Z
+	public final fun entrySet ()Ljava/util/Set;
+	public final fun get (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
+	public final synthetic fun get (Ljava/lang/Object;)Ljava/lang/Object;
+	public fun get (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
+	public fun getEntries ()Ljava/util/Set;
+	public fun getKeys ()Ljava/util/Set;
+	public final fun getOrDefault (Ljava/lang/Object;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Value;
+	public final synthetic fun getOrDefault (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+	public fun getOrDefault (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Value;
+	public fun getSize ()I
+	public fun getValues ()Ljava/util/Collection;
+	public final fun keySet ()Ljava/util/Set;
+	public final fun remove (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
+	public final synthetic fun remove (Ljava/lang/Object;)Ljava/lang/Object;
+	public final fun remove (Ljava/lang/Object;Ljava/lang/Object;)Z
+	public fun remove (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
+	public fun remove (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Z
+	public final fun size ()I
+	public final fun values ()Ljava/util/Collection;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelNodeOverride$Builder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun build ()Lcom/mapbox/maps/extension/style/sources/generated/ModelNodeOverride;
+	public final fun getName ()Ljava/lang/String;
+	public final fun orientation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelNodeOverride$Builder;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSource : com/mapbox/maps/extension/style/sources/Source {
+	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Companion;
+	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;)V
+	public fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
+	public final fun getMaxzoom ()Ljava/lang/Long;
+	public final fun getMinzoom ()Ljava/lang/Long;
+	public final fun getModels ()Ljava/util/List;
+	public final fun getTiles ()Ljava/util/List;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun maxzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public static synthetic fun maxzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public final fun models (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public final fun removeAllModels ()V
+	public final fun removeModel (Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;)V
+	public final fun removeModel (Ljava/lang/String;)V
+	public final fun tiles (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSource$Builder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun batched (Z)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public final fun build ()Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+	public final fun getSourceId ()Ljava/lang/String;
+	public final fun maxzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public static synthetic fun maxzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public final fun minzoom (J)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public static synthetic fun minzoom$default (Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;JILjava/lang/Object;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public final fun models (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public final fun tiles (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+	public final fun url (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource$Builder;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSource$Companion {
+	public final fun getDefaultMaxzoom ()Ljava/lang/Long;
+	public final fun getDefaultMinzoom ()Ljava/lang/Long;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSourceKt {
+	public static final fun modelSource (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSource;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSourceModel {
+	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;)V
+	public final fun featureProperties (Ljava/util/HashMap;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun getFeatureProperties ()Ljava/util/HashMap;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getMaterialOverrideNames ()Ljava/util/List;
+	public final fun getMaterialOverrides ()Ljava/util/List;
+	public final fun getNodeOverrideNames ()Ljava/util/List;
+	public final fun getNodeOverrides ()Ljava/util/List;
+	public final fun getOrientation ()Ljava/util/List;
+	public final fun getPosition ()Ljava/util/List;
+	public final fun getUri ()Ljava/lang/String;
+	public final fun materialOverrideNames (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun materialOverrides (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun nodeOverrideNames (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun nodeOverrides (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun orientation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun position (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun uri (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun build ()Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+	public final fun featureProperties (Ljava/util/HashMap;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun getId ()Ljava/lang/String;
+	public final fun materialOverrideNames (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun materialOverrides (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun nodeOverrideNames (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun nodeOverrides (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun orientation (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun position (Ljava/util/List;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+	public final fun uri (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel$Builder;
+}
+
+public final class com/mapbox/maps/extension/style/sources/generated/ModelSourceModelKt {
+	public static final fun modelMaterialOverride (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/sources/generated/ModelMaterialOverride;
+	public static final fun modelNodeOverride (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/sources/generated/ModelNodeOverride;
+	public static final fun modelSourceModel (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/sources/generated/ModelSourceModel;
+}
+
 public final class com/mapbox/maps/extension/style/sources/generated/RasterArraySource : com/mapbox/maps/extension/style/sources/Source {
 	public static final field Companion Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Companion;
 	public fun <init> (Lcom/mapbox/maps/extension/style/sources/generated/RasterArraySource$Builder;)V

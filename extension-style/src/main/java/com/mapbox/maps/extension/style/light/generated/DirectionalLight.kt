@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorStr
 /**
  * A light that has a direction and is located at infinite distance, so its rays are parallel. It simulates the sun light and can cast shadows.
  *
- * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
+ * Check the [online documentation](https://docs.mapbox.com/style-spec/reference/light/).
  */
 @UiThread
 class DirectionalLight internal constructor(override val lightId: String) : DirectionalLightDslReceiver, Light() {

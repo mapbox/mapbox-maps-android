@@ -107,7 +107,7 @@ class PolygonAnnotationManager(
    * PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise
@@ -138,7 +138,7 @@ class PolygonAnnotationManager(
    * PolygonAnnotationOptions.PROPERTY_FILL_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR_USE_THEME - String
    * PolygonAnnotationOptions.PROPERTY_FILL_TUNNEL_STRUCTURE_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise

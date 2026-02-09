@@ -41,6 +41,7 @@ fun MapboxStyleManager.getSource(sourceId: String): Source? {
       // we pass empty CustomRasterSourceOptions as it will not be applied anyway; it is already stored in core
       "custom-raster" -> CustomRasterSource(sourceId, CustomRasterSourceOptions.Builder().build())
         .also { it.delegate = this }
+      "model" -> ModelSource.Builder(sourceId).build().also { it.delegate = this }
 
       else -> {
         logW("StyleSourcePlugin", "Source type: $type unknown.")

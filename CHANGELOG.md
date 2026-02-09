@@ -20,6 +20,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.18.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.1), common to [v24.18.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.1).
 
 
+## Features ✨ and improvements 🏁
+* Add `ModelSource` support with `ModelSourceModel`, `ModelMaterialOverride`, and `ModelNodeOverride` to enable interactive 3D models. Material overrides allow customization of color, emissive strength, opacity, and color mix intensity. Node overrides enable control of model part transformations such as rotating doors, landing gear, or propellers. Models can be updated via source-driven approach (modifying `ModelSource.models` directly) or feature-state driven approach (using expressions with feature state for dynamic control). For implementation examples, see `Interactive3DModelFeatureStateActivity` (Compose), `Interactive3DModelSourceActivity` (View), and `Animated3DModelActivity` (Compose).
+
 # 11.19.0-beta.1 January 28, 2026
 
 ## Features ✨ and improvements 🏁

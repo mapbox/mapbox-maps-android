@@ -7796,6 +7796,130 @@ package com.mapbox.maps.extension.style.sources.generated {
     method public static com.mapbox.maps.extension.style.sources.generated.ImageSource imageSource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.ImageSource.Builder,kotlin.Unit> block);
   }
 
+  @UiThread public final class ModelMaterialOverride extends java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> {
+  }
+
+  public static final class ModelMaterialOverride.Builder {
+    ctor public ModelMaterialOverride.Builder(String name);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride build();
+    method public String getName();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride.Builder modelColor(String value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride.Builder modelColor(@ColorInt int modelColor);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride.Builder modelColorMixIntensity(double value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride.Builder modelEmissiveStrength(double value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride.Builder modelOpacity(double value);
+    property public final String name;
+  }
+
+  @UiThread public final class ModelNodeOverride extends java.util.HashMap<java.lang.String,com.mapbox.bindgen.Value> {
+  }
+
+  public static final class ModelNodeOverride.Builder {
+    ctor public ModelNodeOverride.Builder(String name);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride build();
+    method public String getName();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride.Builder orientation(java.util.List<java.lang.Double> value);
+    property public final String name;
+  }
+
+  public final class ModelSource extends com.mapbox.maps.extension.style.sources.Source {
+    ctor public ModelSource(com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder builder);
+    method public Long? getMaxzoom();
+    method public Long? getMinzoom();
+    method public java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelSourceModel>? getModels();
+    method public java.util.List<java.lang.String>? getTiles();
+    method public String? getUrl();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource maxzoom(long value = 18L);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource minzoom(long value = 0L);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource models(java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelSourceModel> value);
+    method public void removeAllModels();
+    method public void removeModel(com.mapbox.maps.extension.style.sources.generated.ModelSourceModel model);
+    method public void removeModel(String id);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource tiles(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource url(String value);
+    property public final Long? maxzoom;
+    property public final Long? minzoom;
+    property public final java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelSourceModel>? models;
+    property public final java.util.List<java.lang.String>? tiles;
+    property public final String? url;
+    field public static final com.mapbox.maps.extension.style.sources.generated.ModelSource.Companion Companion;
+  }
+
+  @com.mapbox.maps.extension.style.types.SourceDsl public static final class ModelSource.Builder {
+    ctor public ModelSource.Builder(String sourceId);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder batched(boolean batched);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource build();
+    method public String getSourceId();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder maxzoom(long value = 18L);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder minzoom(long value = 0L);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder models(java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelSourceModel> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder tiles(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder url(String value);
+    property public final String sourceId;
+  }
+
+  public static final class ModelSource.Companion {
+    method public Long? getDefaultMaxzoom();
+    method public Long? getDefaultMinzoom();
+    property public final Long? defaultMaxzoom;
+    property public final Long? defaultMinzoom;
+  }
+
+  public final class ModelSourceKt {
+    method public static com.mapbox.maps.extension.style.sources.generated.ModelSource modelSource(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.ModelSource.Builder,kotlin.Unit> block);
+  }
+
+  @UiThread public final class ModelSourceModel {
+    ctor public ModelSourceModel(com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder builder);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel featureProperties(java.util.HashMap<java.lang.String,java.lang.Object> value);
+    method public java.util.HashMap<java.lang.String,java.lang.Object>? getFeatureProperties();
+    method public String getId();
+    method public java.util.List<java.lang.String>? getMaterialOverrideNames();
+    method public java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride>? getMaterialOverrides();
+    method public java.util.List<java.lang.String>? getNodeOverrideNames();
+    method public java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride>? getNodeOverrides();
+    method public java.util.List<java.lang.Double>? getOrientation();
+    method public java.util.List<java.lang.Double>? getPosition();
+    method public String? getUri();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel materialOverrideNames(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel materialOverrides(java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel nodeOverrideNames(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel nodeOverrides(java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel orientation(java.util.List<java.lang.Double> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel position(java.util.List<java.lang.Double> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel uri(String value);
+    property public final java.util.HashMap<java.lang.String,java.lang.Object>? featureProperties;
+    property public final String id;
+    property public final java.util.List<java.lang.String>? materialOverrideNames;
+    property public final java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride>? materialOverrides;
+    property public final java.util.List<java.lang.String>? nodeOverrideNames;
+    property public final java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride>? nodeOverrides;
+    property public final java.util.List<java.lang.Double>? orientation;
+    property public final java.util.List<java.lang.Double>? position;
+    property public final String? uri;
+  }
+
+  public static final class ModelSourceModel.Builder {
+    ctor public ModelSourceModel.Builder(String id);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel build();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder featureProperties(java.util.HashMap<java.lang.String,java.lang.Object> value);
+    method public String getId();
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder materialOverrideNames(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder materialOverrides(java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder nodeOverrideNames(java.util.List<java.lang.String> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder nodeOverrides(java.util.List<com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder orientation(java.util.List<java.lang.Double> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder position(java.util.List<java.lang.Double> value);
+    method public com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder uri(String value);
+    property public final String id;
+  }
+
+  public final class ModelSourceModelKt {
+    method public static com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride modelMaterialOverride(String name, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.ModelMaterialOverride.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride modelNodeOverride(String name, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.ModelNodeOverride.Builder,kotlin.Unit> block);
+    method public static com.mapbox.maps.extension.style.sources.generated.ModelSourceModel modelSourceModel(String id, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.sources.generated.ModelSourceModel.Builder,kotlin.Unit> block);
+  }
+
   @com.mapbox.maps.MapboxExperimental public final class RasterArraySource extends com.mapbox.maps.extension.style.sources.Source {
     ctor public RasterArraySource(com.mapbox.maps.extension.style.sources.generated.RasterArraySource.Builder builder);
     method public String? getAttribution();

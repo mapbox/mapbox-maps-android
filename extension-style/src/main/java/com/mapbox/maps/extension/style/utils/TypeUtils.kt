@@ -13,6 +13,7 @@ import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.generated.LayerProperty
 import com.mapbox.maps.extension.style.light.LightPosition
+import com.mapbox.maps.extension.style.sources.generated.ModelSourceModel
 import com.mapbox.maps.extension.style.sources.toValue
 import com.mapbox.maps.extension.style.types.Formatted
 import com.mapbox.maps.extension.style.types.StyleTransition
@@ -49,6 +50,9 @@ object TypeUtils {
         value.toValue()
       }
       is TileCacheBudget -> {
+        value.toValue()
+      }
+      is ModelSourceModel -> {
         value.toValue()
       }
       is Int -> {

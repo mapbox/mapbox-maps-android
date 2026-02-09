@@ -1470,5 +1470,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity android:name=".examples.Interactive3DModelSourceActivity"
+            android:description="@string/description_3d_model_source_interactions"
+            android:label="@string/description_3d_model_source_interactions_label"
+            android:exported="true">
+            <meta-data
+                android:name="category"
+                android:value="@string/category_3D" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".examples.Interactive3DModelSourceActivity" />
+        </activity>
     </application>
 </manifest>
