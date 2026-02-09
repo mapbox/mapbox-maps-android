@@ -28,10 +28,12 @@ public class SimulateRouteLocationProvider(
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
   private var emitLocationsJob: Job? = null
   private val totalRouteLength by lazy { TurfMeasurement.length(route, TurfConstants.UNIT_CENTIMETERS) }
-  private val routeStartPoint = route.coordinates().first()
+  private val routeStartPoint = Point.fromLngLat(
+    route.flattenCoordinates().flattenLngLatArray[0],
+    route.flattenCoordinates().flattenLngLatArray[1]
+  )
   private val locationConsumers = CopyOnWriteArraySet<LocationConsumer>()
   private var isFakeLocationEmitting = false
-  private val iterator = route.coordinates().toMutableList().iterator()
 
   override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
     locationConsumers.add(locationConsumer)
@@ -54,16 +56,18 @@ public class SimulateRouteLocationProvider(
     emitLocationsJob = scope.launch {
       // Make sure previous job is cancelled before starting a new one
       previousEmitLocationsJob?.cancelAndJoin()
-      var lastLocation: Point = if (iterator.hasNext()) {
-        iterator.next()
-      } else {
-        Point.fromLngLat(0.0, 0.0)
-      }
-      while (isActive && iterator.hasNext()) {
-        val point = iterator.next().insertProgressInfo()
+      val flattenCoordinates = route.flattenCoordinates()
+      var lastLocation: Point = routeStartPoint
+      var nextLocationIdx = 1
+      val flattenLngLatArray = flattenCoordinates.flattenLngLatArray
+      while (isActive && nextLocationIdx < flattenCoordinates.size()) {
+        val point = Point.fromLngLat(
+          flattenLngLatArray[nextLocationIdx * 2],
+          flattenLngLatArray[(nextLocationIdx * 2) + 1]
+        ).insertProgressInfo()
         val bearing = TurfMeasurement.bearing(lastLocation, point)
         lastLocation = point
-        iterator.remove()
+        nextLocationIdx++
 
         withContext(Dispatchers.Main) {
           locationConsumers.forEach { it.onLocationUpdated(point) }

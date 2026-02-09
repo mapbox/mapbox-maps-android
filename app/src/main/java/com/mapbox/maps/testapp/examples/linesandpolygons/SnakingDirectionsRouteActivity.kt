@@ -18,6 +18,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -150,30 +151,56 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
       .flatMap { it.coordinates() }
       .let(LineString::fromLngLats)
 
-    val features = List(ANIMATION_STEPS) { index ->
-      Feature.fromGeometry(
+    val features = MutableList(ANIMATION_STEPS) { index ->
         TurfMisc.lineSliceAlong(
           line,
           singleAnimationDistance * index,
           singleAnimationDistance * (index + 1),
           TurfConstants.UNIT_METERS
         )
-      )
     }
 
     val map = binding.mapView.mapboxMap
-    (0..ANIMATION_STEPS).forEach { index ->
       binding.mapView.postDelayed(
         {
-          if (map.isValid()) {
-            map.getStyle {
-              (it.getSource(DRIVING_ROUTE_POLYLINE_SOURCE_ID) as? GeoJsonSource)
-                ?.featureCollection(FeatureCollection.fromFeatures(features.take(index)))
-            }
-          }
+          setCurrentLine(map, features, features.removeAt(0))
         },
-        DRAW_SPEED_MILLISECONDS * index
+        DRAW_SPEED_MILLISECONDS
       )
+  }
+
+  private fun setCurrentLine(
+    map: MapboxMap,
+    features: MutableList<LineString>,
+    currentLineString: LineString
+  ) {
+    if (map.isValid()) {
+      // Draw current line
+      map.getStyle {
+        (it.getSource(DRIVING_ROUTE_POLYLINE_SOURCE_ID) as? GeoJsonSource)
+          ?.geometry(currentLineString)
+      }
+
+      // Extend the current line with the next segment
+      if (features.isNotEmpty()) {
+        val currentSegmentLngLats = currentLineString.flattenCoordinates().flattenLngLatArray
+        val nextSegmentLngLats = features.removeAt(0).flattenCoordinates().flattenLngLatArray
+        // Merge the current segment and the next one
+        val lngLats = DoubleArray(nextSegmentLngLats.size + currentSegmentLngLats.size)
+        System.arraycopy(currentSegmentLngLats, 0, lngLats, 0, currentSegmentLngLats.size)
+        System.arraycopy(
+          nextSegmentLngLats,
+          0,
+          lngLats,
+          currentSegmentLngLats.size,
+          nextSegmentLngLats.size
+        )
+        val nextLine = LineString.fromFlattenArrayOfPoints(lngLats, null)
+        binding.mapView.postDelayed(
+          { setCurrentLine(map, features, nextLine) },
+          DRAW_SPEED_MILLISECONDS
+        )
+      }
     }
   }
 
