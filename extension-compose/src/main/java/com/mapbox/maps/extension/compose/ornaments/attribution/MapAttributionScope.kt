@@ -52,6 +52,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.maps.MapView
 import com.mapbox.maps.SourceDataLoadedType
+import com.mapbox.maps.StyleAttributionsChangedCallback
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.ornaments.attribution.internal.AttributionComposePlugin
@@ -656,22 +657,25 @@ public class MapAttributionScope internal constructor(
 
       // Refresh the attributions when style changes, as for Standard style, the source events are hidden
       DisposableEffect(plugin) {
-        var styleDataLoadedCancelable: Cancelable? = null
+        var styleAttributionChangedCancelable: Cancelable? = null
         if (plugin != null) {
           // Refresh the attribution initially to show the Mapbox telemetry, feedback attributions etc, even without source attributions
           updateAttributionState(mapView, plugin)
-          // Update attributions when style data is loaded
-          styleDataLoadedCancelable = mapView.mapboxMap.subscribeStyleDataLoaded {
-            logD(
-              TAG,
-              "AttributionComposePlugin(${plugin.hashCode()}) style loaded, refresh attributions"
-            )
-            updateAttributionState(mapView, plugin)
-          }
+          // Update attributions when style attribution is changed
+          // Used internal styleManager API to utlise this new StyleAttributionsChanged event.
+          styleAttributionChangedCancelable = mapView.mapboxMap.styleManager.subscribe(
+            StyleAttributionsChangedCallback {
+              logD(
+                TAG,
+                "AttributionComposePlugin(${plugin.hashCode()}) StyleAttributionsChanged, refresh attributions"
+              )
+              updateAttributionState(mapView, plugin)
+            }
+          )
         }
         onDispose {
-          styleDataLoadedCancelable?.cancel()
-          styleDataLoadedCancelable = null
+          styleAttributionChangedCancelable?.cancel()
+          styleAttributionChangedCancelable = null
         }
       }
 
