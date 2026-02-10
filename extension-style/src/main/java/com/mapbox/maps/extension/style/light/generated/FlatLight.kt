@@ -23,7 +23,7 @@ import java.util.Locale
 /**
  * A global directional light source which is only applied on 3D and hillshade layers. Using this type disables other light sources.
  *
- * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
+ * Check the [online documentation](https://docs.mapbox.com/style-spec/reference/light/).
  */
 @UiThread
 class FlatLight internal constructor(override val lightId: String) : FlatLightDslReceiver, StyleContract.StyleLightExtension, Light() {

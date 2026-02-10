@@ -3965,6 +3965,23 @@ public final class com/mapbox/maps/extension/compose/style/sources/GeoJSONData {
 public final class com/mapbox/maps/extension/compose/style/sources/GeoJSONData$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue$Companion;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Ljava/util/HashMap;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun isNotInitial ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/sources/PromoteIdValue : com/mapbox/maps/extension/compose/style/HoldsValue {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/sources/PromoteIdValue;
@@ -4158,6 +4175,34 @@ public final class com/mapbox/maps/extension/compose/style/sources/generated/Ima
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/ImageSourceStateKt {
 	public static final fun rememberImageSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/ImageSourceState;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/ModelSourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/sources/generated/ModelSourceState$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lcom/mapbox/maps/extension/compose/style/StringValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/LongValue;Lcom/mapbox/maps/extension/compose/style/StringListValue;Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
+	public final fun getModels ()Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue;
+	public final fun getTiles ()Lcom/mapbox/maps/extension/compose/style/StringListValue;
+	public final fun getUrl ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public fun hashCode ()I
+	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
+	public final fun setModels (Lcom/mapbox/maps/extension/compose/style/sources/ModelSourceModelsValue;)V
+	public final fun setTiles (Lcom/mapbox/maps/extension/compose/style/StringListValue;)V
+	public final fun setUrl (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/ModelSourceState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/style/sources/generated/ModelSourceStateKt {
+	public static final fun rememberModelSourceState (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/sources/generated/ModelSourceState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/generated/RasterArraySourceState : com/mapbox/maps/extension/compose/style/sources/SourceState {

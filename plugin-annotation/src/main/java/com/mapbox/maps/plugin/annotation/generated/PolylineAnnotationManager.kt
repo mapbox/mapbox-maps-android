@@ -123,7 +123,7 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME - String
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polylineAnnotation should be draggable, false otherwise
@@ -157,7 +157,7 @@ class PolylineAnnotationManager(
    * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double
    * PolylineAnnotationOptions.PROPERTY_LINE_BORDER_COLOR_USE_THEME - String
    * PolylineAnnotationOptions.PROPERTY_LINE_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polylineAnnotation should be draggable, false otherwise

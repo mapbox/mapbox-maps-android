@@ -11,7 +11,7 @@ import com.mapbox.maps.logW
 
 /**
  * Base class for all light implementations.
- * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
+ * Check the [online documentation](https://docs.mapbox.com/style-spec/reference/light/).
  */
 abstract class Light internal constructor() {
   /**

@@ -16,7 +16,7 @@ import com.mapbox.maps.extension.style.utils.unwrap
 /**
  * A global modifier that elevates layers and markers based on a DEM data source.
  *
- * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#terrain)
+ * @see [The online documentation](https://docs.mapbox.com/style-spec/reference/terrain/)
  */
 @UiThread
 class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.StyleTerrainExtension {

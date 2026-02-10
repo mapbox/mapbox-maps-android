@@ -106,7 +106,7 @@ class CircleAnnotationManager(
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double
    * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME - String
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the circleAnnotation should be draggable, false otherwise
@@ -134,7 +134,7 @@ class CircleAnnotationManager(
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double
    * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR_USE_THEME - String
    * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the circleAnnotation should be draggable, false otherwise

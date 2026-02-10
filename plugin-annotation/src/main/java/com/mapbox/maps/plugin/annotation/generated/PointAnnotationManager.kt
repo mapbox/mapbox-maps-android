@@ -250,7 +250,7 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME - String
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME - String
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the pointAnnotation should be draggable, false otherwise
@@ -306,7 +306,7 @@ class PointAnnotationManager(
    * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR_USE_THEME - String
    * PointAnnotationOptions.PROPERTY_TEXT_COLOR_USE_THEME - String
    * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR_USE_THEME - String
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * Learn more about above properties in the )[The online documentation](https://docs.mapbox.com/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the pointAnnotation should be draggable, false otherwise

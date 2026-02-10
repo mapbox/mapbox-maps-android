@@ -11,8 +11,54 @@ import com.mapbox.maps.TileCacheBudgetInTiles
 import com.mapbox.maps.extension.compose.style.HoldsValue
 import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.sources.generated.ModelSourceModel
 import com.mapbox.maps.extension.style.sources.generated.RasterArraySource
 import java.util.Objects
+
+/**
+ * Defines properties of 3D models in collection. Each entry maps a model ID to its [ModelSourceModel] configuration,
+ * which includes the model URI, position, orientation, and optional material and node overrides.
+ * Used with [com.mapbox.maps.extension.compose.style.sources.generated.ModelSourceState].
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+public data class ModelSourceModelsValue(public override val value: Value) : HoldsValue {
+  /**
+   * Construct the [ModelSourceModelsValue] with [HashMap<String, ModelSourceModel>].
+   * The map keys are model IDs used to reference models in feature state or layer properties.
+   */
+  public constructor(value: HashMap<String, ModelSourceModel>) : this(ComposeTypeUtils.wrapToValue(value))
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: ModelSourceModelsValue = ModelSourceModelsValue(hashMapOf("ModelValue.INITIAL" to ModelSourceModel.Builder("ModelValue.INITIAL").build()))
+
+    /**
+     * Default value for [ModelSourceModelsValue], setting [DEFAULT] will result in setting the property value
+     * defined by the rendering engine.
+     */
+    @JvmField
+    internal val DEFAULT: ModelSourceModelsValue = ModelSourceModelsValue(Value.nullValue())
+  }
+}
 
 /**
  * An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from clustered points. Has the form `{"property_name": [operator, map_expression]}`. `operator` is any expression function that accepts at least 2 operands (e.g. `"+"` or `"max"`) — it accumulates the property value from clusters/points the cluster contains; `map_expression` produces the value of a single point.

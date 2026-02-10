@@ -4677,6 +4677,20 @@ package com.mapbox.maps.extension.compose.style.sources {
   public static final class GeoJSONData.Companion {
   }
 
+  @androidx.compose.runtime.Immutable public final class ModelSourceModelsValue {
+    ctor public ModelSourceModelsValue(com.mapbox.bindgen.Value value);
+    ctor public ModelSourceModelsValue(java.util.HashMap<java.lang.String,com.mapbox.maps.extension.style.sources.generated.ModelSourceModel> value);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.sources.ModelSourceModelsValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.sources.ModelSourceModelsValue.Companion Companion;
+  }
+
+  public static final class ModelSourceModelsValue.Companion {
+  }
+
   @androidx.compose.runtime.Immutable public final class PromoteIdValue {
     ctor public PromoteIdValue(com.mapbox.bindgen.Value value);
     ctor public PromoteIdValue(String propertyName, String? sourceId = null);
@@ -4868,6 +4882,37 @@ package com.mapbox.maps.extension.compose.style.sources.generated {
     method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.ImageSourceState rememberImageSourceState(String? key = null, String sourceId = remember({ 
     return generateRandomSourceId("image")
 }), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.ImageSourceState,kotlin.Unit> init = {});
+  }
+
+  @androidx.compose.runtime.Stable public final class ModelSourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {
+    ctor public ModelSourceState(String sourceId = generateRandomSourceId("model"));
+    method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
+    method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
+    method public com.mapbox.maps.extension.compose.style.sources.ModelSourceModelsValue getModels();
+    method public com.mapbox.maps.extension.compose.style.StringListValue getTiles();
+    method public com.mapbox.maps.extension.compose.style.StringValue getUrl();
+    method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
+    method public void setModels(com.mapbox.maps.extension.compose.style.sources.ModelSourceModelsValue);
+    method public void setTiles(com.mapbox.maps.extension.compose.style.StringListValue);
+    method public void setUrl(com.mapbox.maps.extension.compose.style.StringValue);
+    property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
+    property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
+    property public final com.mapbox.maps.extension.compose.style.sources.ModelSourceModelsValue models;
+    property public final com.mapbox.maps.extension.compose.style.StringListValue tiles;
+    property public final com.mapbox.maps.extension.compose.style.StringValue url;
+    field public static final com.mapbox.maps.extension.compose.style.sources.generated.ModelSourceState.Companion Companion;
+  }
+
+  public static final class ModelSourceState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.sources.generated.ModelSourceState,com.mapbox.maps.extension.compose.style.sources.SourceState.Holder> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.style.sources.generated.ModelSourceState,com.mapbox.maps.extension.compose.style.sources.SourceState.Holder> Saver;
+  }
+
+  public final class ModelSourceStateKt {
+    method @androidx.compose.runtime.Composable public static inline com.mapbox.maps.extension.compose.style.sources.generated.ModelSourceState rememberModelSourceState(String? key = null, String sourceId = remember({ 
+    return generateRandomSourceId("model")
+}), kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.style.sources.generated.ModelSourceState,kotlin.Unit> init = {});
   }
 
   @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class RasterArraySourceState extends com.mapbox.maps.extension.compose.style.sources.SourceState {

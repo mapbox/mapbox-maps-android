@@ -1662,7 +1662,7 @@ class Expression : Value {
      * "text-font" is required to be a literal array.
      *
      * The requested font stack has to be a part of the used style.
-     * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
+     * For more information see [The online documentation](https://docs.mapbox.com/help/glossary/font-stack/).
      *
      * @param textFont
      */
@@ -1676,7 +1676,7 @@ class Expression : Value {
      * "text-font" is required to be a literal array.
      *
      * The requested font stack has to be a part of the used style.
-     * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
+     * For more information see [The online documentation](https://docs.mapbox.com/help/glossary/font-stack/).
      *
      * @param textFont
      */
@@ -1690,7 +1690,7 @@ class Expression : Value {
      * "text-font" is required to be a literal array.
      *
      * The requested font stack has to be a part of the used style.
-     * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
+     * For more information see [The online documentation](https://docs.mapbox.com/help/glossary/font-stack/).
      */
     fun textFont(block: ExpressionBuilder.() -> Unit): FormatSectionBuilder = apply {
       this.options["text-font"] =

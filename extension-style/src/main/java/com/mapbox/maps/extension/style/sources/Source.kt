@@ -11,6 +11,7 @@ import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.generated.RasterArraySource
+import com.mapbox.maps.extension.style.sources.generated.unwrapToModelSourceModels
 import com.mapbox.maps.extension.style.utils.unwrap
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
@@ -141,6 +142,9 @@ abstract class Source(
         }
         if (propertyName == "tile-cache-budget" && stylePropertyValue.kind == StylePropertyValueKind.CONSTANT) {
           return stylePropertyValue.value.unwrapToTileCacheBudget() as T
+        }
+        if (propertyName == "models") {
+          return stylePropertyValue.value.unwrapToModelSourceModels() as T
         }
         stylePropertyValue.unwrap()
       } catch (e: RuntimeException) {

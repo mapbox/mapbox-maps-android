@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorStr
 /**
  * An indirect light affecting all objects in the map adding a constant amount of light on them. It has no explicit direction and cannot cast shadows.
  *
- * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
+ * Check the [online documentation](https://docs.mapbox.com/style-spec/reference/light/).
  */
 @UiThread
 class AmbientLight internal constructor(override val lightId: String) : AmbientLightDslReceiver, Light() {
