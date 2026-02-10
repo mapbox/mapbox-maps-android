@@ -7,6 +7,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.18.2 February 09, 2026
+
+## Bug fixes 🐞
+* Fix disappearing icons after reducing memory use.
+* Fix Point View Annotation flickering and hiding on moving anchor out of screen
+
 ## Dependencies
 * Update gl-native to [v11.18.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.2), common to [v24.18.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.2).
 
