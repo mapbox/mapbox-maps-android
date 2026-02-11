@@ -10,6 +10,7 @@ import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.LogThrottler
 import com.mapbox.common.MapboxTracing
 import com.mapbox.common.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.maps.MapboxExperimental
@@ -109,6 +110,11 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var surface: Surface? = null
+
+  /**
+   * Throttler for high-frequency render thread logs to prevent logcat spam.
+   */
+  private val logThrottler = LogThrottler(LOG_THROTTLE_INTERVAL_MS)
 
   @RenderThread
   private var width: Int = 0
@@ -629,7 +635,11 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
         }
       }
     } else if (!paused) {
-      logI(TAG, "renderThreadPrepared=false and Android surface is not valid (isValid=${surface?.isValid}). Waiting for new one.")
+      logI(
+        TAG,
+        "renderThreadPrepared=false and Android surface is not valid (isValid=${surface?.isValid}). Waiting for new one.",
+        logThrottler
+      )
     }
   }
 
@@ -761,6 +771,10 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
      * rescheduling configuration with that delay in order not to overflood handler thread message queue.
      */
     internal const val RETRY_DELAY_MS = 50L
+    /**
+     * Interval for throttling high-frequency render thread logs (in milliseconds).
+     */
+    private const val LOG_THROTTLE_INTERVAL_MS = 300L
     /**
      * Delay before calling resetThreadServiceType() on resume to ensure CPU affinity is properly set.
      * This delay helps address timing issues where CPU affinity might not be set immediately

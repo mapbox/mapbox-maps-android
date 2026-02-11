@@ -12,11 +12,21 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
+import com.mapbox.maps.shadows.ShadowLogThrottler
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import com.mapbox.waitZeroCounter
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.spyk
+import io.mockk.unmockkAll
+import io.mockk.unmockkStatic
+import io.mockk.verify
+import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -24,6 +34,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowChoreographer
 import org.robolectric.shadows.ShadowLog
@@ -34,6 +45,11 @@ import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
 
 @RunWith(RobolectricTestRunner::class)
+@Config(
+  shadows = [
+    ShadowLogThrottler::class
+  ]
+)
 @LooperMode(LooperMode.Mode.PAUSED)
 class GLMapboxRenderThreadTest {
 
@@ -74,6 +90,7 @@ class GLMapboxRenderThreadTest {
     every { logE(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
     every { logW(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
     every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
+    every { logI(any(), any(), any()) } answers { Log.i(firstArg(), secondArg()) }
   }
 
   private fun mockSurface() {
