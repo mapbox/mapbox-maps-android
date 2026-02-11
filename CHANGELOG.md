@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
 * Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
 * Improve data serialization speed when using `LineString` or `MultiPoint` in `GeoJsonSource`.
+* Introduce experimental `SymbolScaleBehavior` API to automatically scale map symbols (icons and text) based on system accessibility text size settings. Set `MapboxMap.symbolScaleBehavior` property to configure: `SymbolScaleBehavior.system` (automatic scaling), `SymbolScaleBehavior.system(mapping)` (custom mapping function), or `SymbolScaleBehavior.fixed(scaleFactor)` (fixed scale, default is 1.0). Valid scale factor range is [0.8, 2.0]. Automatic scaling is opt-in; symbols default to fixed 1.0x scale.
 
 # 11.19.0-rc.1
 

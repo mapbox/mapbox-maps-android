@@ -82,6 +82,12 @@ internal class NativeMapImpl(val map: Map) {
     map.resetThreadServiceType()
   }
 
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
+  fun setScaleFactor(scaleFactor: Float) {
+    map.setScaleFactor(scaleFactor)
+  }
+
   fun setCamera(cameraOptions: CameraOptions) {
     map.setCamera(cameraOptions)
   }

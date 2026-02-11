@@ -124,6 +124,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapInitOptions.cameraOptions?.let {
       mapboxMap.setCamera(it)
     }
+
+    _mapboxMap.initializeAccessibility(mapInitOptions.context)
   }
 
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)

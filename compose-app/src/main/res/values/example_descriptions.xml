@@ -36,4 +36,5 @@
     <string name="description_elevated_line">Showcase line elevation</string>
     <string name="description_3d_model_feature_state_interactions">Use a style-driven method for overriding the materials and orientation of model parts using the model layer and model-source.</string>
     <string name="description_animated_3d_model">Animate a 3D airplane model along a flight path with animated propellers, landing gear, and lights using feature state.</string>
+    <string name="description_accessibility_scale">Automatic map symbol scaling based on system font size preferences</string>
 </resources>
