@@ -2414,6 +2414,100 @@ class MapboxMap :
     return nativeMap.getScreenCullingShape()
   }
 
+  // MARK: - Accessibility Scale Behavior
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var scaleBehavior: SymbolScaleBehavior = SymbolScaleBehavior.fixed(1.0f)
+  private var accessibilityContext: android.content.Context? = null
+  private var configCallbacks: android.content.ComponentCallbacks? = null
+  private var currentSystemFontScale: Float = 1.0f
+
+  internal fun initializeAccessibility(context: android.content.Context) {
+    accessibilityContext = context.applicationContext
+    currentSystemFontScale = context.resources.configuration.fontScale
+  }
+
+  /**
+   * Controls how map symbols scale in response to system font size.
+   *
+   * Modes:
+   * - `.fixed(scaleFactor)` - Fixed scale (default: 1.0)
+   * - `.system` - Scales with system font size
+   * - `.system(mapping)` - Scales with custom mapping
+   */
+  @MapboxExperimental
+  var symbolScaleBehavior: SymbolScaleBehavior
+    get() = scaleBehavior
+    set(value) {
+      checkNativeMap("symbolScaleBehavior")
+      scaleBehavior = value
+
+      if (value.isSystem()) {
+        registerConfigurationObserver()
+        applyCurrentScale()
+      } else if (value.isFixed()) {
+        unregisterConfigurationObserver()
+        value.scaleFactor?.let { setScaleFactor(it) }
+      }
+    }
+
+  /**
+   * Registers observer for system font scale changes.
+   * Thread-safe: synchronized to prevent concurrent registration.
+   */
+  @Synchronized
+  private fun registerConfigurationObserver() {
+    val context = accessibilityContext ?: return
+    if (configCallbacks != null) return
+
+    configCallbacks = object : android.content.ComponentCallbacks {
+      override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        val newFontScale = newConfig.fontScale
+        if (newFontScale != currentSystemFontScale && isMapValid) {
+          currentSystemFontScale = newFontScale
+          applyCurrentScale()
+        }
+      }
+      override fun onLowMemory() {}
+    }
+    context.registerComponentCallbacks(configCallbacks)
+  }
+
+  /**
+   * Unregisters observer for system font scale changes.
+   * Thread-safe: synchronized to prevent concurrent unregistration.
+   */
+  @Synchronized
+  private fun unregisterConfigurationObserver() {
+    val context = accessibilityContext ?: return
+    configCallbacks?.let {
+      try {
+        context.unregisterComponentCallbacks(it)
+      } catch (e: Exception) {
+        // Catch any exceptions during unregistration
+        logW(TAG, "Failed to unregister configuration observer: ${e.message}")
+      } finally {
+        // Always clear the reference even if unregistration fails
+        configCallbacks = null
+      }
+    }
+  }
+
+  /**
+   * Applies current system font scale using the configured mapping function.
+   * Only called for System mode (Fixed mode doesn't respond to system changes).
+   */
+  private fun applyCurrentScale() {
+    val mapping = scaleBehavior.mapping ?: SymbolScaleBehavior.defaultMapping
+    val scaleFactor = mapping(currentSystemFontScale)
+    setScaleFactor(scaleFactor)
+  }
+
+  private fun setScaleFactor(scaleFactor: Float) {
+    checkNativeMap("setScaleFactor")
+    nativeMap.setScaleFactor(scaleFactor)
+  }
+
   /**
    * Enable real-time collection of map rendering performance statistics, for development purposes. Use after `render()` has
    * been called for the first time.
@@ -2532,6 +2626,10 @@ class MapboxMap :
   @OptIn(MapboxExperimental::class)
   @JvmSynthetic
   internal fun onDestroy() {
+    // Always attempt to clean up observers first to prevent memory leaks
+    unregisterConfigurationObserver()
+    accessibilityContext = null
+
     if (performanceCollectionStatisticsStarted) {
       stopPerformanceStatisticsCollection()
     }

@@ -236,6 +236,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun getStyle ()Lcom/mapbox/maps/Style;
 	public final fun getStyle (Lcom/mapbox/maps/Style$OnStyleLoaded;)V
 	public final synthetic fun getStyleDeprecated ()Lcom/mapbox/maps/Style;
+	public final fun getSymbolScaleBehavior ()Lcom/mapbox/maps/SymbolScaleBehavior;
 	public fun isGestureInProgress ()Z
 	public fun isUserAnimationInProgress ()Z
 	public final fun isValid ()Z
@@ -325,6 +326,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/MapboxStyleManage
 	public final fun setPrefetchZoomDelta (B)V
 	public final fun setRenderWorldCopies (Z)V
 	public final fun setScreenCullingShape (Ljava/util/List;)V
+	public final fun setSymbolScaleBehavior (Lcom/mapbox/maps/SymbolScaleBehavior;)V
 	public final fun setTileCacheBudget (Lcom/mapbox/maps/TileCacheBudget;)V
 	public fun setUserAnimationInProgress (Z)V
 	public fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
@@ -578,6 +580,23 @@ public final class com/mapbox/maps/Style$Companion {
 
 public abstract interface class com/mapbox/maps/Style$OnStyleLoaded {
 	public abstract fun onStyleLoaded (Lcom/mapbox/maps/Style;)V
+}
+
+public final class com/mapbox/maps/SymbolScaleBehavior {
+	public static final field Companion Lcom/mapbox/maps/SymbolScaleBehavior$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Float;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public static final fun fixed (F)Lcom/mapbox/maps/SymbolScaleBehavior;
+	public static final fun getSystem ()Lcom/mapbox/maps/SymbolScaleBehavior;
+	public fun hashCode ()I
+	public static final fun system (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/SymbolScaleBehavior;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/SymbolScaleBehavior$Companion {
+	public final fun fixed (F)Lcom/mapbox/maps/SymbolScaleBehavior;
+	public final fun getSystem ()Lcom/mapbox/maps/SymbolScaleBehavior;
+	public final fun system (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/SymbolScaleBehavior;
 }
 
 public final class com/mapbox/maps/attribution/AttributionLayout {

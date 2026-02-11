@@ -36,4 +36,5 @@
     <string name="activity_elevated_line">Elevated line example</string>
     <string name="activity_3d_model_feature_state_interactions">3D model with style-driven interactions</string>
     <string name="activity_animated_3d_model">Animated 3D airplane model</string>
+    <string name="activity_accessibility_scale">Accessibility scale</string>
 </resources>

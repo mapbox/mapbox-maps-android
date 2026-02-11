@@ -235,6 +235,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.Style? getStyle();
     method public void getStyle(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.Style! getStyle();
+    method public com.mapbox.maps.SymbolScaleBehavior getSymbolScaleBehavior();
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
     method public boolean isValid();
@@ -325,6 +326,7 @@ package com.mapbox.maps {
     method public void setPrefetchZoomDelta(byte delta);
     method public void setRenderWorldCopies(boolean renderWorldCopies);
     method @com.mapbox.maps.MapboxExperimental public void setScreenCullingShape(java.util.List<com.mapbox.maps.Vec2> shape);
+    method public void setSymbolScaleBehavior(com.mapbox.maps.SymbolScaleBehavior);
     method public void setTileCacheBudget(com.mapbox.maps.TileCacheBudget? tileCacheBudget);
     method public void setUserAnimationInProgress(boolean inProgress);
     method public void setViewportMode(com.mapbox.maps.ViewportMode viewportMode);
@@ -353,6 +355,7 @@ package com.mapbox.maps {
     property public com.mapbox.maps.CameraState cameraState;
     property public final com.mapbox.maps.IndoorManager indoor;
     property public final com.mapbox.maps.Style? style;
+    property public final com.mapbox.maps.SymbolScaleBehavior symbolScaleBehavior;
     field public static final com.mapbox.maps.MapboxMap.Companion Companion;
   }
 
@@ -502,6 +505,21 @@ package com.mapbox.maps {
 
   public static fun interface Style.OnStyleLoaded {
     method public void onStyleLoaded(com.mapbox.maps.Style style);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class SymbolScaleBehavior {
+    method public static com.mapbox.maps.SymbolScaleBehavior fixed(float scaleFactor);
+    method public static com.mapbox.maps.SymbolScaleBehavior getSystem();
+    method public static com.mapbox.maps.SymbolScaleBehavior system(kotlin.jvm.functions.Function1<? super java.lang.Float,java.lang.Float> mapping);
+    property public static final com.mapbox.maps.SymbolScaleBehavior system;
+    field public static final com.mapbox.maps.SymbolScaleBehavior.Companion Companion;
+  }
+
+  public static final class SymbolScaleBehavior.Companion {
+    method public com.mapbox.maps.SymbolScaleBehavior fixed(float scaleFactor);
+    method public com.mapbox.maps.SymbolScaleBehavior getSystem();
+    method public com.mapbox.maps.SymbolScaleBehavior system(kotlin.jvm.functions.Function1<? super java.lang.Float,java.lang.Float> mapping);
+    property public final com.mapbox.maps.SymbolScaleBehavior system;
   }
 
   public final class UtilsKt {

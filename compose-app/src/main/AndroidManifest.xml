@@ -44,6 +44,17 @@
                 android:value="@string/category_basic" />
         </activity>
         <activity
+            android:name=".examples.basic.AccessibilityScaleActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_accessibility_scale"
+            android:exported="true"
+            android:label="@string/activity_accessibility_scale"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_lab" />
+        </activity>
+        <activity
             android:name=".examples.annotation.MarkersActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_markers"
