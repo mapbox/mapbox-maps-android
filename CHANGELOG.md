@@ -5,18 +5,24 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
-## Features ✨ and improvements 🏁
-* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
-* Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
-* Improve data serialization speed when using `LineString` or `MultiPoint` in `GeoJsonSource`.
-* Introduce experimental `SymbolScaleBehavior` API to automatically scale map symbols (icons and text) based on system accessibility text size settings. Set `MapboxMap.symbolScaleBehavior` property to configure: `SymbolScaleBehavior.system` (automatic scaling), `SymbolScaleBehavior.system(mapping)` (custom mapping function), or `SymbolScaleBehavior.fixed(scaleFactor)` (fixed scale, default is 1.0). Valid scale factor range is [0.8, 2.0]. Automatic scaling is opt-in; symbols default to fixed 1.0x scale.
-
 
 # 11.19.0-rc.1 February 12, 2026
 
+## Features ✨ and improvements 🏁
+* Improve data serialization speed when using `LineString` or `MultiPoint` in `GeoJsonSource`.
+* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
+* Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
+* Introduce experimental `SymbolScaleBehavior` API to automatically scale map symbols (icons and text) based on system accessibility text size settings. Set `MapboxMap.symbolScaleBehavior` property to configure: `SymbolScaleBehavior.system` (automatic scaling), `SymbolScaleBehavior.system(mapping)` (custom mapping function), or `SymbolScaleBehavior.fixed(scaleFactor)` (fixed scale, default is 1.0). Valid scale factor range is [0.8, 2.0]. Automatic scaling is opt-in; symbols default to fixed 1.0x scale.
+* General fixes and performance improvements.
+
 ## Bug fixes 🐞
 * Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
+* Fix elevated line bevel join artifacts at sharp corners.
 * [compose] Improved reliability of attribution list updates on source change.
+
+## Dependencies
+* Update gl-native to [v11.19.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-rc.1), common to [v24.19.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-rc.1).
+
 
 # 11.18.2 February 09, 2026
 
@@ -26,14 +32,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.18.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.2), common to [v24.18.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.2).
-## Dependencies
-* Update gl-native to [v11.19.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-rc.1), common to [v24.19.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-rc.1).
 
 
 # 11.18.1 January 29, 2026
 ## Dependencies
 * Update gl-native to [v11.18.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.1), common to [v24.18.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.1).
-
 
 ## Features ✨ and improvements 🏁
 * Add `ModelSource` support with `ModelSourceModel`, `ModelMaterialOverride`, and `ModelNodeOverride` to enable interactive 3D models. Material overrides allow customization of color, emissive strength, opacity, and color mix intensity. Node overrides enable control of model part transformations such as rotating doors, landing gear, or propellers. Models can be updated via source-driven approach (modifying `ModelSource.models` directly) or feature-state driven approach (using expressions with feature state for dynamic control). For implementation examples, see `Interactive3DModelFeatureStateActivity` (Compose), `Interactive3DModelSourceActivity` (View), and `Animated3DModelActivity` (Compose).
