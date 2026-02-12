@@ -1481,5 +1481,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".examples.Interactive3DModelSourceActivity" />
         </activity>
+        <activity android:name=".examples.EdgeToEdgeActivity"
+            android:description="@string/description_edge_to_edge"
+            android:label="@string/activity_edge_to_edge"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>

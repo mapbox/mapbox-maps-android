@@ -409,6 +409,16 @@
                 android:name="@string/category"
                 android:value="@string/category_3D" />
         </activity>
+        <activity
+            android:name=".examples.basic.EdgeToEdgeActivity"
+            android:description="@string/description_edge_to_edge"
+            android:exported="true"
+            android:label="@string/activity_edge_to_edge"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+        </activity>
     </application>
 
 </manifest>

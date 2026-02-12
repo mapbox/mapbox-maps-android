@@ -117,5 +117,5 @@
     <string name="description_data_join">Showcase join JSON data with vector tiles and style it.</string>
     <string name="description_3d_model_source_interactions_label">3D model with source-driven interactions</string>
     <string name="description_3d_model_source_interactions">Use a model layer and source to interactively change material and orientation of model parts.</string>
-
+    <string name="description_edge_to_edge">Showcase edge-to-edge layout with proper handling of system insets (system bars, navigation bars, and display cutouts).</string>
 </resources>

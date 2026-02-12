@@ -117,4 +117,5 @@
     <string name="activity_color_theme">Color theme example</string>
     <string name="activity_elevated_line">Elevated line example</string>
     <string name="activity_join_data">Join local JSON data with vector tiles</string>
+    <string name="activity_edge_to_edge">Edge-to-Edge layout</string>
 </resources>
