@@ -11,7 +11,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Improve data serialization speed when using `LineString` or `MultiPoint` in `GeoJsonSource`.
 * Introduce experimental `SymbolScaleBehavior` API to automatically scale map symbols (icons and text) based on system accessibility text size settings. Set `MapboxMap.symbolScaleBehavior` property to configure: `SymbolScaleBehavior.system` (automatic scaling), `SymbolScaleBehavior.system(mapping)` (custom mapping function), or `SymbolScaleBehavior.fixed(scaleFactor)` (fixed scale, default is 1.0). Valid scale factor range is [0.8, 2.0]. Automatic scaling is opt-in; symbols default to fixed 1.0x scale.
 
-# 11.19.0-rc.1
+
+# 11.19.0-rc.1 February 12, 2026
 
 ## Features ✨ and improvements 🏁
 * Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
@@ -21,6 +22,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
 * Fix elevated line bevel join artifacts at sharp corners.
 * [compose] Improved reliability of attribution list updates on source change.
+
+## Dependencies
+* Update gl-native to [v11.19.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-rc.1), common to [v24.19.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-rc.1).
+
 
 # 11.18.1 January 29, 2026
 ## Dependencies
@@ -49,7 +54,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.19.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-beta.1), common to [v24.19.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0-beta.1).
 
-# 11.19.0-rc.1
 ## Features ✨ and improvements 🏁
 * Rename `IndoorManager.setOnIndoorUpdatedCallback` to `IndoorManager.subscribeOnIndoorUpdated` with returned Cancelable support. Add flow-based `val onIndoorUpdated: Flow<IndoorState>` API.
 
