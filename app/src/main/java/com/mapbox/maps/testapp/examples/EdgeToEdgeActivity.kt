@@ -124,7 +124,7 @@ class EdgeToEdgeActivity : AppCompatActivity() {
 
     // Set dark system bar icons (more visible on light map backgrounds)
     WindowCompat.getInsetsController(window, window.decorView).apply {
-      isAppearanceLightStatusBars = true  // true = dark icons
+      isAppearanceLightStatusBars = true // true = dark icons
       isAppearanceLightNavigationBars = true
     }
   }

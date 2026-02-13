@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.view.WindowCompat
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap

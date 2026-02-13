@@ -3,7 +3,6 @@ package com.mapbox.maps.compose.testapp
 import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -73,7 +72,7 @@ public fun ExampleScaffold(
                 }
               }
             } else null,
-            elevation = 0.dp  // Prevent TopAppBar shadow (Surface provides elevation)
+            elevation = 0.dp // Prevent TopAppBar shadow (Surface provides elevation)
           )
         }
       }
