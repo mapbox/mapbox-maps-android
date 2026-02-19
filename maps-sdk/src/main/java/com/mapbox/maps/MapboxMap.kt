@@ -2509,6 +2509,15 @@ class MapboxMap :
   }
 
   /**
+   * Internal accessor to retrieve the current scale factor from the native map.
+   */
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun getScaleFactor(): Float {
+    checkNativeMap("getScaleFactor")
+    return nativeMap.getScaleFactor()
+  }
+
+  /**
    * Enable real-time collection of map rendering performance statistics, for development purposes. Use after `render()` has
    * been called for the first time.
    *

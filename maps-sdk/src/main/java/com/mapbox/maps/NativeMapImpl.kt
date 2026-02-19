@@ -85,7 +85,13 @@ internal class NativeMapImpl(val map: Map) {
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @MapboxExperimental
   fun setScaleFactor(scaleFactor: Float) {
-    map.setScaleFactor(scaleFactor)
+    map.scaleFactor = scaleFactor
+  }
+
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
+  fun getScaleFactor(): Float {
+    return map.scaleFactor
   }
 
   fun setCamera(cameraOptions: CameraOptions) {
