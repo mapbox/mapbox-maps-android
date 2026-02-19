@@ -3,6 +3,8 @@ package com.mapbox.maps.extension.compose.annotation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.hasText
@@ -161,8 +163,7 @@ public class ViewAnnotationTest {
         // Create a marker with click functionality
         Marker(
           point = HELSINKI,
-          text = VIEW_ANNOTATION_TEXT,
-          onClick = onClickCallback
+          text = VIEW_ANNOTATION_TEXT
         )
 
         // Use MapEffect to count annotations

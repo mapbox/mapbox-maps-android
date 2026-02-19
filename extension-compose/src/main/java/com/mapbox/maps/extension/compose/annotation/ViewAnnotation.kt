@@ -11,10 +11,12 @@ import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.ViewAnnotationAnchorConfig
 import com.mapbox.maps.ViewAnnotationOptions
@@ -28,7 +30,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 internal class ViewAnnotationNode(
   val viewAnnotationManager: ViewAnnotationManager,
   val view: View,
-  var updatedListener: OnViewAnnotationUpdatedListener?,
+  var updatedListener: OnViewAnnotationUpdatedListener?
 ) : MapNode() {
   // The internal listener used to forward the specific view related events to update listener
   private val internalViewAnnotationUpdatedListener = object : OnViewAnnotationUpdatedListener {
@@ -89,11 +91,46 @@ internal class ViewAnnotationNode(
   }
 
   override fun onRemoved(parent: MapNode) {
-    cleanUp()
+    (view.getTag(R.id.markerDisappearAnimation) as? MarkerAnimationConfig)?.let { config ->
+      animateDisappear(view, config) {
+        cleanUp()
+      }
+    } ?: cleanUp()
   }
 
   override fun onClear() {
     cleanUp()
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun animateDisappear(
+    view: View,
+    config: MarkerAnimationConfig,
+    onComplete: () -> Unit
+  ) {
+    val animator = view.animate()
+
+    // Apply each effect using configured values
+    config.effects.forEach { effect ->
+      when (effect) {
+        is MarkerAnimationEffect.Effect.Scale -> {
+          animator.scaleX(effect.to).scaleY(effect.to)
+        }
+        is MarkerAnimationEffect.Effect.Fade -> {
+          animator.alpha(effect.to)
+        }
+        is MarkerAnimationEffect.Effect.Wiggle -> {
+          // Wiggle treated as scale for disappear animation
+          // Scale to nearly 0 (0.01f instead of 0f to avoid rendering issues)
+          animator.scaleX(0.01f).scaleY(0.01f)
+        }
+      }
+    }
+
+    animator
+      .setDuration(MarkerAnimationConfig.DURATION_MS.toLong())
+      .withEndAction(onComplete)
+      .start()
   }
 
   private fun cleanUp() {
@@ -137,6 +174,9 @@ public fun ViewAnnotation(
           FrameLayout.LayoutParams.WRAP_CONTENT,
           FrameLayout.LayoutParams.WRAP_CONTENT
         )
+        // Disable clipping to allow animations to scale beyond bounds
+        clipChildren = false
+        clipToPadding = false
       }
 
       composeView.apply {
@@ -150,6 +190,7 @@ public fun ViewAnnotation(
                   .then(modifier)
                   // Allow the content to measure at its desired size without minimum or maximum constraints
                   .wrapContentSize(unbounded = true)
+                  .graphicsLayer(clip = false)
                   .onGloballyPositioned { coordinates ->
                       viewAnnotationManager.updateViewAnnotation(
                           this,
@@ -180,7 +221,7 @@ public fun ViewAnnotation(
       ViewAnnotationNode(
         viewAnnotationManager,
         composeView,
-        onUpdatedListener,
+        onUpdatedListener
       )
     },
     update = {

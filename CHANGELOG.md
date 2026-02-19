@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* [compose] Add declarative animation API to experimental `Marker` composable with two animation triggers: `appearAnimation` and `disappearAnimation`. Each trigger accepts a list of `MarkerAnimationEffect` including `wiggle` (pendulum rotation), `scale`, `fadeIn`, and `fadeOut`. Effects can be customized with parameters (e.g., `scale(from = 0.5f, to = 1.5f)`, `fade(from = 0.5f, to = 1.0f)`) and combined for rich animations. See `MarkersActivity` example for usage.
+
 # 11.19.0-rc.1 February 12, 2026
 
 ## Features ✨ and improvements 🏁

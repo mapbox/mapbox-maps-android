@@ -197,8 +197,36 @@ public final class com/mapbox/maps/extension/compose/annotation/IconImageKt {
 	public static final fun rememberIconImage (Ljava/lang/Object;Landroidx/compose/ui/graphics/painter/Painter;Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/extension/compose/annotation/IconImage;
 }
 
+public abstract class com/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect {
+	public static final field $stable I
+	public static final field Companion Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect$Companion;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect$Companion {
+	public final fun fade (FF)Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect;
+	public final fun getFadeIn ()Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect;
+	public final fun getFadeOut ()Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect;
+	public final fun getScale ()Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect;
+	public final fun getWiggle ()Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect;
+	public final fun scale (FF)Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationEffect;
+}
+
+public abstract class com/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger {
+	public static final field $stable I
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger$Appear : com/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger$Appear;
+}
+
+public final class com/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger$Disappear : com/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger {
+	public static final field $stable I
+	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/annotation/MarkerAnimationTrigger$Disappear;
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/MarkerKt {
-	public static final fun Marker-_2sGejQ (Lcom/mapbox/geojson/Point;JJLandroidx/compose/ui/graphics/Color;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Marker-02sZxzM (Lcom/mapbox/geojson/Point;JJLandroidx/compose/ui/graphics/Color;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt {
