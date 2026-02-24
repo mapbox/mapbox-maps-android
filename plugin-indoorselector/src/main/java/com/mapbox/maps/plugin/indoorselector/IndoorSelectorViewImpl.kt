@@ -56,9 +56,11 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
 
   private val topArrow: ImageView
   private val bottomArrow: ImageView
+  private val buildingButton: ImageView
 
   private var indoorFloors: List<IndoorFloor> = emptyList()
   private var selectedFloorId: String? = null
+  private var isBuildingSelected = false
   private lateinit var presenter: IndoorSelectorPluginImpl
 
   init {
@@ -75,10 +77,19 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
       cornerRadius = cornerRadiusPx
     }
 
-    addView(scrollView, LayoutParams(itemHeightPx, LayoutParams.WRAP_CONTENT))
+    buildingButton = createBuildingButton()
+    addView(buildingButton)
+
+    val scrollParams = LayoutParams(itemHeightPx, LayoutParams.WRAP_CONTENT).apply {
+      topMargin = itemHeightPx
+    }
+    addView(scrollView, scrollParams)
 
     topArrow = createArrowButton(isUp = true)
     bottomArrow = createArrowButton(isUp = false)
+
+    (topArrow.layoutParams as LayoutParams).topMargin = itemHeightPx
+    (bottomArrow.layoutParams as LayoutParams).topMargin = itemHeightPx
 
     addView(topArrow)
     addView(bottomArrow)
@@ -141,6 +152,10 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
         setTextSize(TypedValue.COMPLEX_UNIT_SP, FLOOR_LABEL_TEXT_SIZE_SP)
 
         setOnClickListener {
+          if (isBuildingSelected) {
+            isBuildingSelected = false
+            updateBuildingButtonStyle()
+          }
           if (::presenter.isInitialized) {
             presenter.onFloorSelected(level.id)
           }
@@ -165,7 +180,8 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
     for (i in 0 until containerLayout.childCount) {
       val view = containerLayout.getChildAt(i) as TextView
       val level = indoorFloors.getOrNull(i) ?: continue
-      val isActive = level.id == activeId
+      // When building button is active, no floor appears highlighted
+      val isActive = !isBuildingSelected && level.id == activeId
 
       view.setBackgroundColor(if (isActive) selectedBg else Color.TRANSPARENT)
       view.setTextColor(if (isActive) selectedTxt else normalTxt)
@@ -174,7 +190,8 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
 
   private fun updateContainerHeight() {
     val visibleCount = indoorFloors.size.coerceAtMost(MAX_VISIBLE_ITEMS)
-    val targetHeight = visibleCount * itemHeightPx
+    // Add 1 for the building button
+    val targetHeight = (visibleCount + 1) * itemHeightPx
 
     updateLayoutParams {
       it.height = targetHeight
@@ -215,6 +232,45 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
     layoutParams = LayoutParams(itemHeightPx, itemHeightPx).apply {
       gravity = if (isUp) Gravity.TOP else Gravity.BOTTOM
     }
+  }
+
+  private fun createBuildingButton() = ImageView(context).apply {
+    scaleType = ImageView.ScaleType.CENTER_INSIDE
+    setBackgroundColor(ContextCompat.getColor(context, R.color.mapbox_indoor_bg))
+    setImageResource(R.drawable.mapbox_indoor_selector_building)
+    contentDescription = context.getString(R.string.mapbox_indoorselector_building)
+    setColorFilter(ContextCompat.getColor(context, R.color.mapbox_indoor_text), PorterDuff.Mode.SRC_IN)
+
+    layoutParams = LayoutParams(itemHeightPx, itemHeightPx).apply {
+      gravity = Gravity.TOP
+    }
+
+    setOnClickListener { onBuildingButtonTapped() }
+  }
+
+  private fun onBuildingButtonTapped() {
+    if (isBuildingSelected) return
+    isBuildingSelected = true
+    updateBuildingButtonStyle()
+    if (::presenter.isInitialized) {
+      presenter.onBuildingSelected()
+    }
+  }
+
+  private fun updateBuildingButtonStyle() {
+    val bgColor = if (isBuildingSelected) {
+      ContextCompat.getColor(context, R.color.mapbox_indoor_selected_bg)
+    } else {
+      ContextCompat.getColor(context, R.color.mapbox_indoor_bg)
+    }
+    val iconColor = if (isBuildingSelected) {
+      ContextCompat.getColor(context, R.color.mapbox_indoor_selected_text)
+    } else {
+      ContextCompat.getColor(context, R.color.mapbox_indoor_text)
+    }
+    buildingButton.setBackgroundColor(bgColor)
+    buildingButton.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN)
+    updateSelectionHighlight(selectedFloorId)
   }
 
   private inline fun updateLayoutParams(block: (LayoutParams) -> Unit) {

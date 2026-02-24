@@ -194,6 +194,16 @@ internal class IndoorSelectorPluginImpl(
   }
 
   /**
+   * Called when the building button is tapped by the user via the UI.
+   * Clears the active floor selection so the map shows buildings.
+   */
+  fun onBuildingSelected() {
+    selectedFloorId = null
+    indoorManager.selectFloor(null)
+    indoorSelectorView.updateFloors(currentFloors, null)
+  }
+
+  /**
    * Update the list of available floors.
    * Call this method when indoor data becomes available or changes.
    *
