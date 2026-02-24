@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
@@ -73,15 +72,6 @@ class IndoorExampleActivity : AppCompatActivity() {
                 enabled = true
                 puckBearingEnabled = true
                 locationPuck = createDefault2DPuck(withBearing = true)
-
-                addOnIndicatorPositionChangedListener { point ->
-                    mapView.mapboxMap.setCamera(
-                        CameraOptions.Builder()
-                            .center(point)
-                            .zoom(18.0)
-                            .build()
-                    )
-                }
             }
         }
     }

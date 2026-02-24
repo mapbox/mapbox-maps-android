@@ -3,4 +3,5 @@
     <!-- Indoor selector accessibility strings -->
     <string name="mapbox_indoorselector_scroll_up">Scroll up</string>
     <string name="mapbox_indoorselector_scroll_down">Scroll down</string>
+    <string name="mapbox_indoorselector_building">Show building</string>
 </resources>
