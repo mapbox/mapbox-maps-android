@@ -779,7 +779,9 @@ class Style internal constructor(
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
    *
    * @param imageId ID of the image.
-   * @param scale Scale factor for the image.
+   * @param scale The pixel density of the provided image. The image's pixel dimensions are divided
+   * by this value to determine its display size in density-independent pixels. For example, a
+   * 100x100 pixel image with scale=2.0 will be displayed as 50x50 density-independent pixels.
    * @param image Pixel data of the image.
    * @param sdf Option to treat whether image is SDF(signed distance field) or not.
    * @param stretchX An array of two-element arrays, consisting of two numbers that represent

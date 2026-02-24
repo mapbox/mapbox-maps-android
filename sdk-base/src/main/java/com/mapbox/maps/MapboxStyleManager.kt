@@ -1216,7 +1216,9 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    * [`text-field`](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-text-field) properties.
    *
    * @param imageId An identifier of the image.
-   * @param scale A scale factor for the image.
+   * @param scale The pixel density of the provided image. The image's pixel dimensions are divided
+   * by this value to determine its display size in density-independent pixels. For example, a
+   * 100x100 pixel image with scale=2.0 will be displayed as 50x50 density-independent pixels.
    * @param image A pixel data of the image.
    * @param sdf An option to treat whether image is SDF(signed distance field) or not.
    * @param stretchX An array of two-element arrays, consisting of two numbers that represent
@@ -1541,6 +1543,10 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
    *
+   * The image's pixel dimensions are assumed to match the device's screen density. They are divided
+   * by the screen density to determine the display size in density-independent pixels. To add an
+   * image with a different density, use [addStyleImage] with an explicit scale parameter.
+   *
    * @param imageId ID of the image.
    * @param image Pixel data of the image.
    * @param sdf Option to treat whether image is SDF(signed distance field) or not.
@@ -1566,6 +1572,10 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
    *
+   * The image's pixel dimensions are assumed to match the device's screen density. They are divided
+   * by the screen density to determine the display size in density-independent pixels. To add an
+   * image with a different density, use [addStyleImage] with an explicit scale parameter.
+   *
    * @param imageId ID of the image.
    * @param image Pixel data of the image.
    *
@@ -1587,6 +1597,10 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
+   *
+   * The bitmap's pixel dimensions are assumed to match the device's screen density. They are divided
+   * by the screen density to determine the display size in density-independent pixels. To add an
+   * image with a different density, use [addStyleImage] with an explicit scale parameter.
    *
    * @param imageId ID of the image.
    * @param bitmap The bitmap image.
@@ -1618,6 +1632,10 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
    * See [https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
+   *
+   * The bitmap's pixel dimensions are assumed to match the device's screen density. They are divided
+   * by the screen density to determine the display size in density-independent pixels. To add an
+   * image with a different density, use [addStyleImage] with an explicit scale parameter.
    *
    * @param imageId ID of the image.
    * @param bitmap The bitmap image.
