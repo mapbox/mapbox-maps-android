@@ -30,13 +30,12 @@ import com.mapbox.maps.extension.compose.style.standard.ThemeValue
 import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 
 /**
@@ -152,25 +151,31 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
     }
   }
 
-  @OptIn(ExperimentalCoroutinesApi::class)
-  private suspend fun loadData(): List<Point> {
-    return suspendCancellableCoroutine { continuation ->
-      AnnotationUtils.loadStringFromNet(this@PointAnnotationClusterActivity, POINTS_URL)
-        ?.let {
-          FeatureCollection.fromJson(it).features()?.let { features ->
-            features.shuffle()
-            continuation.resume(
-              features.take(AMOUNT).map { feature ->
-                feature.geometry() as Point
-              },
-              onCancellation = null
-            )
-          }
+  private fun loadData(): List<Point> {
+    val json = AnnotationUtils.loadStringFromNet(this@PointAnnotationClusterActivity, POINTS_URL)
+    if (json == null) {
+      runOnUiThread {
+        Toast.makeText(this@PointAnnotationClusterActivity, "Failed to download data from network", Toast.LENGTH_LONG).show()
+      }
+      return emptyList()
+    }
+    return try {
+      FeatureCollection.fromJson(json).features()?.let { features ->
+        features.shuffled().take(AMOUNT).map { feature ->
+          feature.geometry() as Point
         }
+      } ?: emptyList()
+    } catch (e: Exception) {
+      logE(TAG, "Failed to parse GeoJSON: ${e.message}")
+      runOnUiThread {
+        Toast.makeText(this@PointAnnotationClusterActivity, "Failed to parse GeoJSON: ${e.message}", Toast.LENGTH_LONG).show()
+      }
+      emptyList()
     }
   }
 
   private companion object {
+    const val TAG = "PointAnnotationCluster"
     const val ZOOM: Double = 10.0
     const val AMOUNT = 10000
     const val ICON_FIRE_STATION = "fire-station"

@@ -12,6 +12,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.color
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
@@ -141,13 +142,26 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   }
 
   private fun loadData() {
-    AnnotationUtils.loadStringFromNet(this@PointAnnotationClusterActivity, POINTS_URL)?.let {
-      FeatureCollection.fromJson(it).features()?.let { features ->
+    val json = AnnotationUtils.loadStringFromNet(this@PointAnnotationClusterActivity, POINTS_URL)
+    if (json == null) {
+      runOnUiThread {
+        Toast.makeText(this@PointAnnotationClusterActivity, "Failed to download data from network", Toast.LENGTH_LONG).show()
+        binding.progress.visibility = View.GONE
+      }
+      return
+    }
+    try {
+      FeatureCollection.fromJson(json).features()?.let { features ->
         features.shuffle()
         options = features.take(AMOUNT).map { feature ->
           PointAnnotationOptions()
             .withGeometry((feature.geometry() as Point))
         }
+      }
+    } catch (e: Exception) {
+      logE(TAG, "Failed to parse GeoJSON: ${e.message}")
+      runOnUiThread {
+        Toast.makeText(this@PointAnnotationClusterActivity, "Failed to parse GeoJSON: ${e.message}", Toast.LENGTH_LONG).show()
       }
     }
     runOnUiThread {
@@ -159,6 +173,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   }
 
   companion object {
+    private const val TAG = "PointAnnotationCluster"
     private const val AMOUNT = 10000
     private const val ICON_FIRE_STATION = "fire-station"
     private const val LONGITUDE = -77.00897

@@ -7,7 +7,10 @@ import com.mapbox.maps.logE
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.IOException
+import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.util.*
 
@@ -112,13 +115,12 @@ internal object AnnotationUtils {
 
     return try {
       val response = client.newCall(request).execute()
-      val inputStream = BufferedInputStream(response.body?.byteStream())
-      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
-      val sb = StringBuilder()
-      rd.forEachLine {
-        sb.append(it)
+      if (!response.isSuccessful) {
+        logE(TAG, "HTTP error ${response.code} for $url")
+        response.close()
+        return null
       }
-      sb.toString()
+      response.body?.string()
     } catch (e: IOException) {
       logE(TAG, "Unable to download $url")
       null
