@@ -8,8 +8,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.layers.CustomLayer
-import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.customLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.projection
@@ -45,9 +44,10 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
   }
 
   private fun addCustomLayer(style: Style) {
-    style.addLayerBelow(
-      CustomLayer(CUSTOM_LAYER_ID, TriangleCustomLayer()),
-      below = "building"
+    style.addLayer(
+      customLayer(CUSTOM_LAYER_ID, TriangleCustomLayer()) {
+        slot("middle")
+      }
     )
     binding.fab.setImageResource(R.drawable.ic_layers_clear)
   }
