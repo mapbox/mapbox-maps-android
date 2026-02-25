@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
@@ -95,9 +96,13 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
         fallback = MapView.DEFAULT_FPS,
         logTag = TAG,
         operation = {
-          @Suppress("DEPRECATION")
-          (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
-            ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.display.refreshRate.toInt()
+          } else {
+            @Suppress("DEPRECATION")
+            (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
+              ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
+          }
         }
       ) { screenRefreshRate ->
         mapController.setScreenRefreshRate(screenRefreshRate)
