@@ -154,6 +154,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.17.2 February 24, 2026
+
+## Bug fixes 🐞
+* Avoid placing occlusion layers after location indicator layer.
+* Properly handle `CoordinateBounds` during conversion to internal type.
+
 ## Dependencies
 * Update gl-native to [v11.17.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.2), common to [v24.17.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.2).
 
