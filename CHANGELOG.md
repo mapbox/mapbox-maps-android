@@ -153,6 +153,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.18.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0-beta.1), common to [v24.18.0-beta.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.18.0-beta.1).
 
 
+# 11.17.2 February 24, 2026
+## Dependencies
+* Update gl-native to [v11.17.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.2), common to [v24.17.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.17.2).
+
+
 # 11.17.1 December 11, 2025
 ## Bug fixes 🐞
 * Reset style fog, snow and rain impl when switching to a new style.
