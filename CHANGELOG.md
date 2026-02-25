@@ -14,6 +14,27 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix `MapSurface.setMaximumFps` not working correctly on secondary displays (e.g. Android Auto). Use `Context.getDisplay()` on API 30+ to get the actual display refresh rate instead of always using the primary display's rate.
 
 # 11.19.0 February 24, 2026
+
+## Features ✨ and improvements 🏁
+* Introduce new `AnnotationConfig#slotName` property to allow to specify a slot to position annotation layer.
+* Introduce experimental `queryRenderedRasterValues` API for querying the rendered raster values on the map at a specific screen coordinate.
+* Deprecate `Tilestore.create(path: String)` instead use `TileStore.setRootPath()`.
+* Improve data serialization speed when using `LineString` or `MultiPoint` in `GeoJsonSource`.
+* Introduce new `LineLayer.lineElevationGroundScale` property to scale elevated lines with terrain exaggeration.
+* Promote elevated lines properties to stable: `LineLayer.lineZOffset` and `LineLayer.lineElevationReference`.
+* Introduce experimental `SymbolScaleBehavior` API to automatically scale map symbols (icons and text) based on system accessibility text size settings. Set `MapboxMap.symbolScaleBehavior` property to configure: `SymbolScaleBehavior.system` (automatic scaling), `SymbolScaleBehavior.system(mapping)` (custom mapping function), or `SymbolScaleBehavior.fixed(scaleFactor)` (fixed scale, default is 1.0). Valid scale factor range is [0.8, 2.0]. Automatic scaling is opt-in; symbols default to fixed 1.0x scale.
+* General fixes and performance improvements.
+
+## Bug fixes 🐞
+* Fix rare scenario where map render surface size was wrong.
+* Respect `animationDurationMs` when custom `OverviewViewportStateOptions.animationDurationMs` is set.
+* Fix point View Annotation flickering and hiding on moving anchor out of screen.
+* Fixed a potential leak of animators, which resulted in the absence of MapIdle events.
+* Fix elevated line bevel join artifacts at sharp corners.
+* [compose] Improved reliability of attribution list updates on source change.
+* Fix duplicate name detection bug in symbol appearance conversion.
+* Fix a crash when using feature dependent appearances with images and default appearance image is empty.
+
 ## Dependencies
 * Update gl-native to [v11.19.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0), common to [v24.19.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0).
 
