@@ -9,7 +9,7 @@ USES_PERMISSION = "uses-permission: name="
 
 def load_apk_permissions(args):
     permissions = []
-    shell = subprocess.Popen(f"aapt d permissions {args.apk}", stdout=subprocess.PIPE, shell=True).stdout
+    shell = subprocess.Popen(["aapt", "d", "permissions", args.apk], stdout=subprocess.PIPE).stdout
     for output in shell:
         line = output.decode('utf-8')
         if USES_PERMISSION in line:
