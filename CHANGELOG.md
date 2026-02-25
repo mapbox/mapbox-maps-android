@@ -11,6 +11,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix NPE crash in `PointAnnotationClusterActivity` example when the remote GeoJSON endpoint returns a non-successful HTTP response.
+# 11.19.0 February 24, 2026
+## Dependencies
+* Update gl-native to [v11.19.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0), common to [v24.19.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.0).
+
 
 # 11.19.0-rc.1 February 12, 2026
 
