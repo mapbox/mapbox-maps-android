@@ -18,13 +18,14 @@ import androidx.compose.ui.Modifier
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.compose.testapp.ExampleScaffold
+import com.mapbox.maps.compose.testapp.R
 import com.mapbox.maps.compose.testapp.examples.utils.AnnotationUtils
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
-import com.mapbox.maps.extension.compose.annotation.IconImage
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationGroup
+import com.mapbox.maps.extension.compose.annotation.rememberIconImage
 import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
 import com.mapbox.maps.extension.compose.style.standard.ThemeValue
 import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
@@ -73,6 +74,7 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
               )
             }
           ) {
+            val marker = rememberIconImage(R.drawable.ic_red_marker)
             PointAnnotationGroup(
               annotations = points.map {
                 PointAnnotationOptions()
@@ -94,8 +96,7 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
                 )
               ),
             ) {
-              // Apply icon image to the whole annotation group.
-              iconImage = IconImage(ICON_FIRE_STATION)
+              iconImage = marker
               interactionsState.isDraggable = true
 
               interactionsState.onClicked {
@@ -178,7 +179,6 @@ public class PointAnnotationClusterActivity : ComponentActivity() {
     const val TAG = "PointAnnotationCluster"
     const val ZOOM: Double = 10.0
     const val AMOUNT = 10000
-    const val ICON_FIRE_STATION = "fire-station"
     private const val POINTS_URL =
       "https://opendata.arcgis.com/datasets/01d0ff375695466d93d1fa2a976e2bdd_5.geojson"
   }

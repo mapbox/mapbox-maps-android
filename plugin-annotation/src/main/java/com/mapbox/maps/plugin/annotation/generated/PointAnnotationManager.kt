@@ -346,9 +346,9 @@ class PointAnnotationManager(
      * @param value the iconBitmap
      */
     set(value) {
-      field = value
       if (value != null) {
         if (field != value) {
+          field = value
           if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
             // User does not set iconImage, update iconImage to this new bitmap
             val imageId = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
@@ -357,6 +357,7 @@ class PointAnnotationManager(
           }
         }
       } else {
+        field = null
         iconImage = null
       }
     }
