@@ -1,8 +1,11 @@
 package com.mapbox.maps.testapp.examples
 
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mapbox.geojson.Point
@@ -33,6 +36,28 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
   private inner class FakeLocationProvider : LocationProvider {
 
     private var locationConsumer: LocationConsumer? = null
+    private val listeners =
+      object : ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+        override fun onAnimationUpdate(animation: ValueAnimator) {
+          Watchdog.reschedule()
+        }
+
+        override fun onAnimationStart(animation: Animator) {
+          Watchdog.reschedule()
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
+          Watchdog.stop()
+          animation.removeListener(this)
+          (animation as ValueAnimator).removeUpdateListener(this)
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+        }
+      }
 
     private fun emitFakeLocations() {
       // after several first emits we update puck animator options
@@ -73,7 +98,10 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
                   POINT_LNG + delta,
                   POINT_LAT + delta
                 )
-              )
+              ) {
+                addUpdateListener(this@FakeLocationProvider.listeners)
+                addListener(this@FakeLocationProvider.listeners)
+              }
             }
           }
           locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
@@ -88,11 +116,20 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
     override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
       this.locationConsumer = locationConsumer
       emitFakeLocations()
+      Watchdog.enabled = true
+      // Fake a busy main thread after 15s
+      handler.postDelayed({
+        Log.d("TAG", "emitFakeLocations: Blocking main thread")
+        // Simulate main thread busy for few milliseconds
+        Thread.sleep(150)
+        Log.d("TAG", "emitFakeLocations: Finished blocking main thread")
+      }, 15_000L)
     }
 
     override fun unRegisterLocationConsumer(locationConsumer: LocationConsumer) {
       this.locationConsumer = null
       handler.removeCallbacksAndMessages(null)
+      Watchdog.enabled = false
     }
   }
 
