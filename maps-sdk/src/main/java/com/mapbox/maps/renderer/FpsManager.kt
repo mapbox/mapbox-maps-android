@@ -26,7 +26,22 @@ internal class FpsManager(
 
   private var preRenderTimeNs = -1L
   private var choreographerTicks = 0
+
+  /**
+   * VSYNC skipped, either due to taking too long (see [updateFrameStats]) or due to frame pacing
+   * (see [performPacing])
+   */
   private var choreographerSkips = 0
+
+  /**
+   * VSYNC skipped due to frame pacing (see [performPacing])
+   */
+  private var choreographerPacingSkips = 0
+
+  /**
+   * Amount of render frames missed (based on map render frame rate) due to map render taking too long
+   */
+  private var missedMapRenderFrames = 0
 
   internal var fpsChangedListener: OnFpsChangedListener? = null
 
@@ -97,18 +112,19 @@ internal class FpsManager(
   fun postRender() {
     val frameRenderTimeNs = System.nanoTime() - preRenderTimeNs
     frameRenderTimeAccumulatedNs += frameRenderTimeNs
-    // normally we update FPS counter and reset counters once a second
+    // normally we update FPS counter and reset counters once a second (since screenRefreshRate is FPS)
     if (choreographerTicks >= screenRefreshRate) {
       calculateFpsAndReset()
     } else {
       // however to produce correct values we also update FPS after IDLE_TIMEOUT_MS
       // otherwise when updating the map after it was IDLE first update will report
       // huge delta between new frame and last frame (as we're using dirty rendering)
+      val delayMillis = VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / ONE_MILLISECOND_NS)
       HandlerCompat.postDelayed(
         handler,
         onRenderingPausedRunnable,
         fpsManagerToken,
-        VSYNC_COUNT_TILL_IDLE * (screenRefreshPeriodNs / ONE_MILLISECOND_NS)
+        delayMillis
       )
     }
     preRenderTimeNs = -1L
@@ -123,14 +139,32 @@ internal class FpsManager(
     fpsChangedListener = null
   }
 
+  /**
+   * This is called on every VSYNC (screenRefreshRate)
+   */
   private fun updateFrameStats(frameTimeNs: Long) {
     preRenderTimeNs = System.nanoTime()
     skippedNow = 0
-    // check if we did miss VSYNC deadline meaning too much work was done in previous doFrame
-    if (previousFrameTimeNs != -1L && frameTimeNs - previousFrameTimeNs > screenRefreshPeriodNs + ONE_MILLISECOND_NS) {
-      skippedNow =
-        ((frameTimeNs - previousFrameTimeNs) / (screenRefreshPeriodNs + ONE_MILLISECOND_NS)).toInt()
-      choreographerSkips += skippedNow
+    if (previousFrameTimeNs != -1L) {
+      val frameElapsedTimeNs = frameTimeNs - previousFrameTimeNs
+
+      // check if we did miss VSYNC deadline meaning too much work was done in previous doFrame
+      if (frameElapsedTimeNs > screenRefreshPeriodNs + ONE_MILLISECOND_NS) {
+        // Figure out how many VSYNC (`screenRefreshPeriod`) we missed due to the map rendering taking too long
+        skippedNow =
+          (frameElapsedTimeNs / (screenRefreshPeriodNs + ONE_MILLISECOND_NS)).toInt()
+        choreographerSkips += skippedNow
+      }
+
+      // Check if we did miss map render frames
+      // The map render frame time is based on the userToScreenRefreshRateRatio or the screen refresh rate (1.0)
+      val mapRenderFrameRatio = userToScreenRefreshRateRatio ?: 1.0
+      val mapRenderTimeNs = screenRefreshPeriodNs / mapRenderFrameRatio
+      val missedMapRenderFramesNow =
+        (frameElapsedTimeNs / (mapRenderTimeNs + ONE_MILLISECOND_NS)).toInt()
+      if (missedMapRenderFramesNow > 0) {
+        missedMapRenderFrames += missedMapRenderFramesNow
+      }
     }
     previousFrameTimeNs = frameTimeNs
     // we always increase choreographer tick by one + add number of skipped frames for consistent results
@@ -172,6 +206,8 @@ internal class FpsManager(
    *                 // reset counters
    *        1           |       0.4       |   false
    *        2           |       0.8       |   false
+   *
+   * @return true if we should render this frame, false otherwise
    */
   private fun performPacing(userToScreenRefreshRateRatio: Double): Boolean {
     val drawnFrameIndex = (choreographerTicks * userToScreenRefreshRateRatio).toInt()
@@ -186,6 +222,9 @@ internal class FpsManager(
       previousDrawnFrameIndex = drawnFrameIndex
       return true
     }
+    choreographerPacingSkips++
+    // We also increase choreographerSkips when performing pacing. Note this is not really a
+    // missed map render frame since we're doing pacing.
     choreographerSkips++
     return false
   }
@@ -201,19 +240,23 @@ internal class FpsManager(
       if (choreographerTicks == choreographerSkips) {
         logI(
           TAG,
-          "VSYNC based FPS is $fps, missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
+          "VSYNC based FPS is $fps, " +
+            "skipped $choreographerSkips ($choreographerPacingSkips due to pacing) " +
+            "out of $choreographerTicks VSYNC pulses"
         )
       } else {
+        val actualAmountOfFramesRendered = choreographerTicks - choreographerSkips
         val averageRenderTimeNs =
-          frameRenderTimeAccumulatedNs.toDouble() / (choreographerTicks - choreographerSkips)
-        val fps =
-          String.format("%.2f", screenRefreshPeriodNs / averageRenderTimeNs * screenRefreshRate)
+          frameRenderTimeAccumulatedNs.toDouble() / actualAmountOfFramesRendered
+        val averageFps =
+          String.format("%.2f", (screenRefreshPeriodNs / averageRenderTimeNs) * screenRefreshRate)
         logI(
           TAG,
-          "VSYNC based FPS is $fps," +
-            " average core rendering time is ${averageRenderTimeNs / ONE_MILLISECOND_NS} ms" +
-            " (or $fps FPS)," +
-            " missed $choreographerSkips out of $choreographerTicks VSYNC pulses"
+          "Average map core rendering time is " +
+            "${averageRenderTimeNs / ONE_MILLISECOND_NS} ms (or $averageFps FPS), " +
+            "missed $missedMapRenderFrames map render frames, " +
+            "skipped $choreographerSkips ($choreographerPacingSkips due to render pacing) " +
+            "out of $choreographerTicks VSYNC pulses"
         )
       }
     }
@@ -221,6 +264,8 @@ internal class FpsManager(
     frameRenderTimeAccumulatedNs = 0L
     choreographerTicks = 0
     choreographerSkips = 0
+    choreographerPacingSkips = 0
+    missedMapRenderFrames = 0
   }
 
   internal companion object {

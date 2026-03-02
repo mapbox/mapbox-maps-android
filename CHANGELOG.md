@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add declarative animation API to experimental `Marker` composable with two animation triggers: `appearAnimation` and `disappearAnimation`. Each trigger accepts a list of `MarkerAnimationEffect` including `wiggle` (pendulum rotation), `scale`, `fadeIn`, and `fadeOut`. Effects can be customized with parameters (e.g., `scale(from = 0.5f, to = 1.5f)`, `fade(from = 0.5f, to = 1.0f)`) and combined for rich animations. See `MarkersActivity` example for usage.
+* Improve FPS statistics logging when `mapView.setOnFpsChangedListener()` is used with separate tracking for frame pacing skips and missed render frames for better performance debugging.
 
 ## Bug fixes 🐞
 * Fix NPE crash in `PointAnnotationClusterActivity` example when the remote GeoJSON endpoint returns a non-successful HTTP response.
