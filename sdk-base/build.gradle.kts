@@ -14,9 +14,14 @@ val VERSION_NAME: String by project
 android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   namespace = "com.mapbox.maps.base"
+  lint {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
+  }
+  testOptions {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
+  }
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
-    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
     buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))

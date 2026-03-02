@@ -8,11 +8,11 @@ android {
   namespace = "com.mapbox.maps.extension.compose"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
-    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   testOptions {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     unitTests.apply {
       isIncludeAndroidResources = true
     }
@@ -31,6 +31,7 @@ android {
   }
 
   lint {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     warningsAsErrors = true
   }
 

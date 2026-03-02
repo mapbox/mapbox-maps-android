@@ -7,11 +7,14 @@ android {
   namespace = "com.mapbox.maps.plugin.lifecycle"
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
-    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
   testOptions {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     unitTests.isReturnDefaultValues = true
+  }
+  lint {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
   }
 }
 

@@ -7,14 +7,16 @@ android {
   namespace = "com.mapbox.maps.extension.androidauto"
   defaultConfig {
     minSdk = libs.versions.autoMinSdkVersion.get().toInt()
-    targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
-
   testOptions {
+    targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()
     unitTests.apply {
       isIncludeAndroidResources = true
     }
+  }
+  lint {
+    targetSdk = libs.versions.autoTargetSdkVersion.get().toInt()
   }
 }
 

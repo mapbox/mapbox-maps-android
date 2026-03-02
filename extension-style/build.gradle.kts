@@ -6,10 +6,15 @@ android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
-    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
   namespace = "com.mapbox.maps.extension.style"
+  lint {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
+  }
+  testOptions {
+    targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
+  }
 }
 
 mapboxLibrary {
