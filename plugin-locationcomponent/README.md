@@ -32,7 +32,7 @@ allprojects {
 }
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-locationcomponent:11.19.0'
+  implementation 'com.mapbox.plugin:maps-locationcomponent:11.20.0-rc.1'
 }
 ```
 
