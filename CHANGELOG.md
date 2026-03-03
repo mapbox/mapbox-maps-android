@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.20.0-rc.1 March 03, 2026
+
 ## Features ✨ and improvements 🏁
 * [compose] Add declarative animation API to experimental `Marker` composable with two animation triggers: `appearAnimation` and `disappearAnimation`. Each trigger accepts a list of `MarkerAnimationEffect` including `wiggle` (pendulum rotation), `scale`, `fadeIn`, and `fadeOut`. Effects can be customized with parameters (e.g., `scale(from = 0.5f, to = 1.5f)`, `fade(from = 0.5f, to = 1.0f)`) and combined for rich animations. See `MarkersActivity` example for usage.
 * Improve FPS statistics logging when `mapView.setOnFpsChangedListener()` is used with separate tracking for frame pacing skips and missed render frames for better performance debugging.
@@ -14,6 +16,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix NPE crash in `PointAnnotationClusterActivity` example when the remote GeoJSON endpoint returns a non-successful HTTP response.
 * Fix `MapSurface.setMaximumFps` not working correctly on secondary displays (e.g. Android Auto). Use `Context.getDisplay()` on API 30+ to get the actual display refresh rate instead of always using the primary display's rate.
 * Fix `PointAnnotationManager.iconImageBitmap` setter not registering the bitmap image with the style, causing group-level bitmap icons to be invisible.
+
+## Dependencies
+* Update gl-native to [v11.20.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.0-rc.1), common to [v24.20.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.0-rc.1).
+
 
 # 11.19.0 February 24, 2026
 
