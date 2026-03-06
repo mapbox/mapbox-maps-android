@@ -14,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix NPE crash in `PointAnnotationClusterActivity` example when the remote GeoJSON endpoint returns a non-successful HTTP response.
 * Fix `MapSurface.setMaximumFps` not working correctly on secondary displays (e.g. Android Auto). Use `Context.getDisplay()` on API 30+ to get the actual display refresh rate instead of always using the primary display's rate.
 * Fix `PointAnnotationManager.iconImageBitmap` setter not registering the bitmap image with the style, causing group-level bitmap icons to be invisible.
+* Fix intermittent rendering artifacts (reversed/large bitmaps) on Android Auto caused by stale texture ID reuse in `BitmapWidgetRenderer` after surface recreation.
 
 # 11.19.0 February 24, 2026
 

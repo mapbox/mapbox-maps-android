@@ -235,6 +235,7 @@ internal class BitmapWidgetRenderer(
         GLES20.glDeleteShader(vertexShader)
         GLES20.glDeleteShader(fragmentShader)
         GLES20.glDeleteTextures(textures.size, textures, 0)
+        textures[0] = 0
         GLES20.glDeleteProgram(program)
         program = 0
       }
