@@ -647,6 +647,18 @@ internal constructor(
     delegateProvider.mapStyleManagerDelegate.addImage(image(imageId, bitmap))
   }
 
+  private fun removeIconsFromStyle(style: MapboxStyleManager, annotations: Collection<T>) {
+    annotations.forEach { removeIconFromStyle(style, it) }
+  }
+
+  private fun removeIconFromStyle(style: MapboxStyleManager, annotation: T) {
+    val symbol = annotation as? PointAnnotation ?: return
+    val imageId = symbol.iconImage ?: return
+    if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
+    if (!style.hasStyleImage(imageId)) return
+    style.removeStyleImage(imageId)
+  }
+
   // Add icons to style from PointAnnotation.
   private fun addIconToStyle(style: MapboxStyleManager, annotations: Collection<T>) {
     // Add icon image bitmap from point annotation
@@ -762,6 +774,7 @@ internal constructor(
         style.removeStyleSource(it)
       }
     }
+    removeIconsFromStyle(style, annotations)
 
     unregisterInteractions()
     annotationMap.clear()
