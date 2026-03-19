@@ -1,5 +1,6 @@
 buildscript {
   repositories {
+    mavenLocal()
     google()
     mavenCentral()
     maven {

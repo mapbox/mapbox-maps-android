@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed onDestroy.
 
+
 # 11.20.1 March 17, 2026
 ## Dependencies
 * Update gl-native to [v11.20.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.1), common to [v24.20.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.1).

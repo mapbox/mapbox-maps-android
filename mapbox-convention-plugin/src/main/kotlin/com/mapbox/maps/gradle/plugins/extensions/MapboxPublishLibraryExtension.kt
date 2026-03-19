@@ -255,6 +255,8 @@ constructor(objects: ObjectFactory) {
             publishMessage = this@MapboxPublishLibraryExtension.publishMessage
             publications = arrayOf(currentComponent.name)
             excludeFromRootProject = this@MapboxPublishLibraryExtension.excludeFromRootProject
+            sbom = true
+            sbomSupplier = "Mapbox"
           }
         }
       }
