@@ -1,6 +1,6 @@
 ### License
 
-Mapbox Maps for Android version 11.22.0-SNAPSHOT-03-24--04-59.git-b8d4dff
+Mapbox Maps for Android version 11.21.0-rc.1
 Mapbox Maps Android SDK
 
 Copyright &copy; 2021 - 2026 Mapbox, Inc. All rights reserved.
@@ -488,7 +488,7 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
-### MapboxCoreMaps,11.22.0-SNAPSHOT-03-24--04-59.git-b8d4dff,Mapbox ToS,Mapbox,https://www.mapbox.com/
+### MapboxCoreMaps,11.21.0-rc.1,Mapbox ToS,Mapbox,https://www.mapbox.com/
 
 ```
 Mapbox Core Maps version 11.0
