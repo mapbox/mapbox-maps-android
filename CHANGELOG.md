@@ -8,13 +8,33 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed onDestroy.
 
-
 # 11.20.1 March 17, 2026
+## Bug fixes 🐞
+* Internal fixes and performance improvements.
+
 ## Dependencies
 * Update gl-native to [v11.20.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.1), common to [v24.20.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.1).
 
 
 # 11.20.0 March 13, 2026
+
+## Features ✨ and improvements 🏁
+* [compose] Add declarative animation API to experimental `Marker` composable with two animation triggers: `appearAnimation` and `disappearAnimation`. Each trigger accepts a list of `MarkerAnimationEffect` including `wiggle` (pendulum rotation), `scale`, `fadeIn`, and `fadeOut`. Effects can be customized with parameters (e.g., `scale(from = 0.5f, to = 1.5f)`, `fade(from = 0.5f, to = 1.0f)`) and combined for rich animations. See `MarkersActivity` example for usage.
+* Improve FPS statistics logging when `mapView.setOnFpsChangedListener()` is used with separate tracking for frame pacing skips and missed render frames for better performance debugging.
+
+## Bug fixes 🐞
+* Fix NPE crash in `PointAnnotationClusterActivity` example when the remote GeoJSON endpoint returns a non-successful HTTP response.
+* Fix `MapSurface.setMaximumFps` not working correctly on secondary displays (e.g. Android Auto). Use `Context.getDisplay()` on API 30+ to get the actual display refresh rate instead of always using the primary display's rate.
+* Fix `PointAnnotationManager.iconImageBitmap` setter not registering the bitmap image with the style, causing group-level bitmap icons to be invisible.
+* Fix intermittent rendering artifacts (reversed/large bitmaps) on Android Auto caused by stale texture ID reuse in `BitmapWidgetRenderer` after surface recreation.
+* Fix feature cutout artifacts at route overlaps.
+* Fix a data race condition for `FillExtrusion` layer.
+* Fix several issues related to runtime symbol appearances switches.
+* Fix disappearing icons after reducing memory use.
+* Fix landmark POI image loads causes relayout for unrelated layers.
+* Fix tilestore eviction logic to not block tilestore thread completely.
+* Fix out-of-bounds issue for elevated line caused by an incorrect clipping result.
+
 ## Dependencies
 * Update gl-native to [v11.20.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.0), common to [v24.20.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.0).
 
@@ -30,12 +50,22 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix `MapSurface.setMaximumFps` not working correctly on secondary displays (e.g. Android Auto). Use `Context.getDisplay()` on API 30+ to get the actual display refresh rate instead of always using the primary display's rate.
 * Fix `PointAnnotationManager.iconImageBitmap` setter not registering the bitmap image with the style, causing group-level bitmap icons to be invisible.
 * Fix intermittent rendering artifacts (reversed/large bitmaps) on Android Auto caused by stale texture ID reuse in `BitmapWidgetRenderer` after surface recreation.
+* Fix feature cutout artifacts at route overlaps.
+* Fix a data race condition for `FillExtrusion` layer.
+* Fix several issues related to runtime symbol appearances switches.
+* Fix disappearing icons after reducing memory use.
+* Fix landmark POI image loads causes relayout for unrelated layers.
+* Fix tilestore eviction logic to not block tilestore thread completely.
+* Fix out-of-bounds issue for elevated line caused by an incorrect clipping result.
 
 ## Dependencies
 * Update gl-native to [v11.20.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.0-rc.1), common to [v24.20.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.0-rc.1).
 
 
 # 11.19.1 March 10, 2026
+## Bug fixes 🐞
+* Internal fixes and performance improvements.
+
 ## Dependencies
 * Update gl-native to [v11.19.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.1), common to [v24.19.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.1).
 
