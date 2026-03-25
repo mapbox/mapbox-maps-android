@@ -9,6 +9,8 @@ import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.DelegatingMapClient
+import com.mapbox.maps.Map
+import com.mapbox.maps.RenderBackendType
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.NativeMapImpl
@@ -22,7 +24,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
+internal abstract class MapboxRenderer(
+  mapName: String,
+) : DelegatingMapClient {
 
   internal lateinit var renderThread: MapboxRenderThread
   internal abstract val widgetRenderer: MapboxWidgetRenderer
@@ -103,7 +107,7 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
     if (width != this.width || height != this.height) {
       this.width = width
       this.height = height
-      GLES20.glViewport(0, 0, width, height)
+      renderThread.resize(width, height)
       map?.setSize(Size(width.toFloat(), height.toFloat()))
     }
   }
@@ -262,5 +266,9 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   companion object {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal val repaintRenderEvent = RenderEvent(null, true)
+
+    internal val supportedRenderBackend: RenderBackendType by lazy {
+      Map.getSupportedRenderBackend()
+    }
   }
 }

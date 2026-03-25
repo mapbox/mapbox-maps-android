@@ -73,6 +73,9 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
     this.eglSurface = eglCore.eglNoSurface
     this.contextMode = ContextMode.UNIQUE
   }
+  init {
+    logI(TAG, "GLMapboxRenderThread created")
+  }
 
   override fun detachSurfaceFromRenderer(creatingSurface: Boolean) {
     // on Android SDK <= 23 at least on x86 emulators we need to force set EGL14.EGL_NO_CONTEXT

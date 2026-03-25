@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.ContextMode
+import com.mapbox.maps.RenderBackendType
 
 internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
@@ -19,14 +20,20 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
       antialiasingSampleCount = antialiasingSampleCount,
       mapName = mapName,
     )
-    renderThread = GLMapboxRenderThread(
-      mapboxRenderer = this,
-      mapboxWidgetRenderer = widgetRenderer,
-      translucentSurface = false,
-      antialiasingSampleCount = antialiasingSampleCount,
-      contextMode = contextMode,
-      mapName = mapName,
-    )
+    renderThread = when (supportedRenderBackend) {
+      RenderBackendType.VULKAN -> VulkanMapboxRenderThread(
+        mapboxRenderer = this,
+        mapName = mapName,
+      )
+      RenderBackendType.OPEN_GL -> GLMapboxRenderThread(
+        mapboxRenderer = this,
+        mapboxWidgetRenderer = widgetRenderer,
+        translucentSurface = false,
+        antialiasingSampleCount = antialiasingSampleCount,
+        contextMode = contextMode,
+        mapName = mapName,
+      )
+    }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

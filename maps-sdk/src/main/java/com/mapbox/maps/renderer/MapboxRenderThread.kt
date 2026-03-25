@@ -84,7 +84,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   internal val renderHandlerThread: RenderHandlerThread
   protected val mapboxRenderer: MapboxRenderer
-  protected val widgetRenderer: MapboxWidgetRenderer
+  protected val widgetRenderer: MapboxWidgetRenderer?
 
   /**
    * [ReentrantLock] to guarantee consistent behaviour of surface create / destroy events.
@@ -214,7 +214,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   constructor(
     mapboxRenderer: MapboxRenderer,
-    widgetRenderer: MapboxWidgetRenderer,
+    widgetRenderer: MapboxWidgetRenderer?,
     mapName: String,
     rendererName: String
   ) {
@@ -232,7 +232,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   constructor(
     mapboxRenderer: MapboxRenderer,
-    mapboxWidgetRenderer: MapboxWidgetRenderer,
+    mapboxWidgetRenderer: MapboxWidgetRenderer?,
     handlerThread: RenderHandlerThread,
     fpsManager: FpsManager,
     surfaceProcessingLock: ReentrantLock,
@@ -348,7 +348,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @RenderThread
   private fun notifyRenderersSizeChanged(width: Int, height: Int) {
     mapboxRenderer.onSurfaceChanged(width = width, height = height)
-    widgetRenderer.onSurfaceChanged(width = width, height = height)
+    widgetRenderer?.onSurfaceChanged(width = width, height = height)
   }
 
   private val presentFrameFunc = Choreographer.FrameCallback { presentFrame() }
@@ -362,7 +362,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     preRenderWithSharedContext()
-    if (widgetRenderer.hasWidgets() == true) {
+    if (widgetRenderer?.hasWidgets() == true) {
       renderWithWidgets()
     } else {
       renderWithoutWidgets()
@@ -509,11 +509,11 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   @OptIn(MapboxExperimental::class)
   fun addWidget(widget: Widget) {
-    widgetRenderer.addWidget(widget)
+    widgetRenderer?.addWidget(widget)
   }
 
   @OptIn(MapboxExperimental::class)
-  fun removeWidget(widget: Widget): Boolean = widgetRenderer.removeWidget(widget)
+  fun removeWidget(widget: Widget): Boolean = widgetRenderer?.removeWidget(widget) == true
 
   @RenderThread
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {

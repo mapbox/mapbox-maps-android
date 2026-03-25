@@ -6,6 +6,7 @@ import android.view.TextureView
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.ContextMode
+import com.mapbox.maps.RenderBackendType
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
@@ -23,14 +24,20 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
       mapName = mapName,
     )
     this.widgetRenderer = widgetRenderer
-    renderThread = GLMapboxRenderThread(
-      mapboxRenderer = this,
-      mapboxWidgetRenderer = widgetRenderer,
-      translucentSurface = true,
-      antialiasingSampleCount = antialiasingSampleCount,
-      contextMode = contextMode,
-      mapName = mapName,
-    )
+    renderThread = when (supportedRenderBackend) {
+      RenderBackendType.VULKAN -> VulkanMapboxRenderThread(
+        mapboxRenderer = this,
+        mapName = mapName,
+      )
+      RenderBackendType.OPEN_GL -> GLMapboxRenderThread(
+        mapboxRenderer = this,
+        mapboxWidgetRenderer = widgetRenderer,
+        translucentSurface = true,
+        antialiasingSampleCount = antialiasingSampleCount,
+        contextMode = contextMode,
+        mapName = mapName,
+      )
+    }
     textureView.let {
       it.isOpaque = false
       it.surfaceTextureListener = this

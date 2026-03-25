@@ -76,6 +76,10 @@ internal class NativeMapImpl(val map: Map) {
     map.render()
   }
 
+  fun getVulkanManager(): IVulkanManager {
+    return map.createVulkanManager()
+  }
+
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @MapboxExperimental
   fun resetThreadServiceType() {

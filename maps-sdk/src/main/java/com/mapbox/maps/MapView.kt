@@ -133,14 +133,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
           view.holder,
           resolvedMapInitOptions.antialiasingSampleCount,
           contextMode,
-          resolvedMapInitOptions.mapName
+          resolvedMapInitOptions.mapName,
         )
 
         is TextureView -> MapboxTextureViewRenderer(
           view,
           resolvedMapInitOptions.antialiasingSampleCount,
           contextMode,
-          resolvedMapInitOptions.mapName
+          resolvedMapInitOptions.mapName,
         )
 
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
