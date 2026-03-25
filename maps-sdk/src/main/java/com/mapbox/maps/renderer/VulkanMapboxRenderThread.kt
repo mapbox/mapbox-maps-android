@@ -33,7 +33,6 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
    * Preparations will be done in [attachSurfaceToRenderer].
    */
   override fun prepareRenderer(): Boolean {
-    logI(TAG, "prepareRenderer called")
     // TODO: How to handle vulkan not supported in the device?
     if (nativeVulkanManager == null) {
       nativeVulkanManager = mapboxRenderer.map?.getVulkanManager()
@@ -43,8 +42,6 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
   }
 
   override fun attachSurfaceToRenderer(surface: Surface): Boolean {
-    logI(TAG, "attachSurfaceToRenderer called")
-
     surfaceWrapper.setSurface(surface)
     val nativeWindowPtr = surfaceWrapper.aNativeWindow
 
@@ -53,13 +50,11 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
       return false
     }
 
-    logI(TAG, "Vulkan pre-init")
     val result = nativeVulkanManager?.init(nativeWindowPtr) ?: run {
       // TODO cache surface until nativeVulkanManager is set via setMap
       false
     }
 
-    logI(TAG, "Vulkan init result: $result")
     return result
   }
 
@@ -82,7 +77,6 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
   }
 
   override fun releaseResources() {
-    logI(TAG, "releaseResources called")
     isRendererReady = false
     surfaceWrapper.releaseSurface()
     nativeVulkanManager?.release()
@@ -93,8 +87,7 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
   }
 
   override fun releaseRenderSurface() {
-    logI(TAG, "releaseRenderSurface called")
-     nativeVulkanManager?.releaseSurface()
+    nativeVulkanManager?.releaseSurface()
   }
 
   override fun clearRendererStateListeners() {
@@ -110,7 +103,6 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
   }
 
   override fun resize(width: Int, height: Int) {
-    logI(TAG, "resize to ${width}x${height} called")
     // TODO cache width/height if NULL
     nativeVulkanManager?.resize(width, height)
   }

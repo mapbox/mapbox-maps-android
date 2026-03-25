@@ -2,7 +2,6 @@ package com.mapbox.maps.renderer
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.opengl.GLES20
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.annotation.UiThread
@@ -10,10 +9,10 @@ import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.DelegatingMapClient
 import com.mapbox.maps.Map
-import com.mapbox.maps.RenderBackendType
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.NativeMapImpl
+import com.mapbox.maps.RenderBackendType
 import com.mapbox.maps.RenderFrameFinishedCallback
 import com.mapbox.maps.RenderModeType
 import com.mapbox.maps.Size
