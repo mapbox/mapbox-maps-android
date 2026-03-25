@@ -76,7 +76,7 @@ internal class NativeMapImpl(val map: Map) {
     map.render()
   }
 
-  fun getVulkanManager(): IVulkanManager {
+  fun getVulkanManager(): IVulkanManager? {
     return map.createVulkanManager()
   }
 
