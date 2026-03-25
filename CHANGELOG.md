@@ -12,6 +12,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed onDestroy.
+* Fix feature cutout rendering artifacts on some devices caused by insufficient shader precision.
+* Fix rendering of stacked underground 3D roads.
+* Fix a crash that could occur when the map is destroyed during style loading.
+* Fix underground road geometry being clipped in orthographic projection with small viewports.
+* Fix map flickering caused by stencil buffer conflicts between raster and hillshade layers.
+* Fix potential ANRs when receiving location updates under heavy system load.
+* Fix a bug in eviction logic for TileStore.
+* Internal fixes and performance improvements.
 
 ## Dependencies
 * Update gl-native to [v11.21.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0-rc.1), common to [v24.21.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0-rc.1).
