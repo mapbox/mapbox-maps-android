@@ -51,9 +51,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     this.context = context
     this.surface = surface
     this.mapInitOptions = mapInitOptions
-    if (Map.getSupportedRenderBackend() == RenderBackendType.VULKAN) {
-      throw RuntimeException("Vulkan is not supported yet on MapSurface")
-    }
     this.renderer = MapboxSurfaceRenderer(
       antialiasingSampleCount = mapInitOptions.antialiasingSampleCount,
       contextMode = mapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE,
