@@ -36,9 +36,11 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
     // TODO: How to handle vulkan not supported in the device?
     if (nativeVulkanManager == null) {
       nativeVulkanManager = mapboxRenderer.map?.getVulkanManager()
+      if (nativeVulkanManager == null) {
+        logW(TAG, "Failed to obtain VulkanManager - Vulkan rendering will not be available")
+      }
     }
-    val result = nativeVulkanManager != null
-    return result
+    return nativeVulkanManager != null
   }
 
   override fun attachSurfaceToRenderer(surface: Surface): Boolean {
