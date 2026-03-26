@@ -300,7 +300,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   @OptIn(MapboxExperimental::class)
   override fun removeWidget(widget: Widget): Boolean {
-    val wasRemoved = renderer.renderThread.removeWidget(widget) ?: false
+    val wasRemoved = renderer.renderThread.removeWidget(widget)
     if (wasRemoved) {
       renderer.scheduleRepaint()
     }
