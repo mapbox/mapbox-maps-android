@@ -21,11 +21,11 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Devices.PHONE
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.mapbox.maps.Map
 import com.mapbox.maps.compose.testapp.data.ExamplesProvider
 import com.mapbox.maps.compose.testapp.data.model.SpecificExample
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.common.Version as CommonVersion
-import com.mapbox.maps.Map
 import com.mapbox.maps.Version as MapsVersion
 
 /**
