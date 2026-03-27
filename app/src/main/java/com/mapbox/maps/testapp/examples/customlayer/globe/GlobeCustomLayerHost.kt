@@ -389,6 +389,7 @@ class GlobeCustomLayerHost(
   override fun contextLost() = logW(TAG, "contextLost")
 
   override fun deinitialize() {
+    if (!::globeProgram.isInitialized) return
     globeProgram.deinitialize()
     simpleProgram.deinitialize()
     glDeleteBuffers(vbo.buffer.size, vbo.buffer, 0)
