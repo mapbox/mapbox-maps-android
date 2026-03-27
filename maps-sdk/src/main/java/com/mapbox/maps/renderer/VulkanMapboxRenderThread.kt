@@ -90,6 +90,7 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
 
   override fun releaseRenderSurface() {
     nativeVulkanManager?.releaseSurface()
+    isRendererReady = false
   }
 
   override fun clearRendererStateListeners() {
