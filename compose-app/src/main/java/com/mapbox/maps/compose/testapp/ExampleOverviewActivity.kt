@@ -25,6 +25,7 @@ import com.mapbox.maps.compose.testapp.data.ExamplesProvider
 import com.mapbox.maps.compose.testapp.data.model.SpecificExample
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.common.Version as CommonVersion
+import com.mapbox.maps.Map
 import com.mapbox.maps.Version as MapsVersion
 
 /**
@@ -101,9 +102,15 @@ public class ExampleOverviewActivity : ComponentActivity() {
       } else {
         "Common: ${CommonVersion.getCommonSDKVersionString()} (${CommonVersion.getCommonSDKRevisionString()})"
       }
+    @SuppressLint("RestrictedApi")
+    val renderBackend = if (LocalInspectionMode.current) {
+      "Renderer: preview"
+    } else {
+      "Renderer: ${Map.getSupportedRenderBackend()}"
+    }
     Text(
       modifier = modifier,
-      text = "$glNativeVersion; $commonVersion",
+      text = "$glNativeVersion; $commonVersion; $renderBackend",
       fontSize = 10.sp,
     )
   }

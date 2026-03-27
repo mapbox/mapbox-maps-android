@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.mapbox.maps.Map
 import com.mapbox.maps.Version
 import com.mapbox.maps.testapp.adapter.ExampleAdapter
 import com.mapbox.maps.testapp.adapter.ExampleSectionAdapter
@@ -57,8 +58,10 @@ class ExampleOverviewActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     val commonVersion =
       "Common: ${com.mapbox.common.Version.getCommonSDKVersionString()} (${com.mapbox.common.Version.getCommonSDKRevisionString()})"
+    @SuppressLint("RestrictedApi")
+    val renderBackend = Map.getSupportedRenderBackend()
     @SuppressLint("SetTextI18n")
-    binding.sdkVersions.text = "$glNativeVersion; $commonVersion"
+    binding.sdkVersions.text = "$glNativeVersion; $commonVersion; Renderer: $renderBackend"
 
     binding.recyclerView.apply {
       layoutManager = LinearLayoutManager(this@ExampleOverviewActivity)
