@@ -337,7 +337,7 @@ class PointAnnotationManager(
   /**
    * The bitmap image for this Symbol
    *
-   * Will not take effect if [iconImage] has been set.
+   * Will not take effect if [iconImageInternal] has been set.
    */
   var iconImageBitmap: Bitmap? = null
     /**
@@ -349,16 +349,16 @@ class PointAnnotationManager(
       if (value != null) {
         if (field != value) {
           field = value
-          if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
+          if (iconImageInternal == null || iconImageInternal!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
             // User does not set iconImage, update iconImage to this new bitmap
-            val imageId = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
-            iconImage = imageId
+            val imageId = ICON_DEFAULT_NAME_PREFIX + hashCode().toString(16) + "_" + value.hashCode()
+            iconImageInternal = imageId
             addStyleImage(imageId, value)
           }
         }
       } else {
         field = null
-        iconImage = null
+        iconImageInternal = null
       }
     }
 
@@ -451,11 +451,9 @@ class PointAnnotationManager(
     }
 
   /**
-   * The default iconImage for all annotations added to this annotation manager if not overwritten by individual annotation settings.
-   *
-   * Name of image in sprite to use for drawing an image background.
+   * Internal default iconImage property.
    */
-  var iconImage: String?
+  internal var iconImageInternal: String?
     /**
      * Get the iconImage property.
      *
@@ -482,6 +480,34 @@ class PointAnnotationManager(
       }
       // Update child annotation property if not being set.
       update(annotations)
+    }
+
+  /**
+   * The default iconImage for all annotations added to this annotation manager if not overwritten by individual annotation settings.
+   *
+   * Name of image in sprite to use for drawing an image background.
+   */
+  var iconImage: String?
+    /**
+     * Get the iconImage property.
+     *
+     * @return property wrapper value around String
+     */
+    @Deprecated(
+      "Reading iconImage exposes an internally generated image ID. " +
+        "Consider saving the argument for PointAnnotationOptions.withIconImage(String).",
+      level = DeprecationLevel.WARNING
+    )
+    get() {
+      return iconImageInternal
+    }
+    /**
+     * Set the iconImage property.
+     *
+     * @param value constant property value for String
+     */
+    set(value) {
+      iconImageInternal = value
     }
 
   /**

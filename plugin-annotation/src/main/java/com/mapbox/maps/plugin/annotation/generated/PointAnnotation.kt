@@ -54,7 +54,7 @@ class PointAnnotation(
   /**
    * The bitmap image for this Symbol
    *
-   * Will not take effect if [iconImage] has been set.
+   * Will not take effect if [iconImageInternal] has been set.
    */
   var iconImageBitmap: Bitmap? = null
     /**
@@ -66,9 +66,9 @@ class PointAnnotation(
       if (value != null) {
         if (field != value) {
           field = value
-          if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
+          if (iconImageInternal == null || iconImageInternal!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
             // User does not set iconImage, update iconImage to this new bitmap
-            iconImage = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
+            iconImageInternal = ICON_DEFAULT_NAME_PREFIX + annotationManager.hashCode().toString(16) + "_" + value.hashCode()
           }
         }
       } else {
@@ -137,6 +137,25 @@ class PointAnnotation(
     }
 
   /**
+   * Internal property for iconImage
+   */
+  internal var iconImageInternal: String?
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      }
+    }
+
+  /**
    * The iconImage property
    *
    * Name of image in sprite to use for drawing an image background.
@@ -147,12 +166,13 @@ class PointAnnotation(
      *
      * @return property wrapper value around String
      */
+    @Deprecated(
+      "Reading iconImage exposes an internally generated image ID. " +
+        "Consider saving the argument for PointAnnotationOptions.withIconImage(String).",
+      level = DeprecationLevel.WARNING
+    )
     get() {
-      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
-      value?.let {
-        return it.asString.toString()
-      }
-      return null
+      return iconImageInternal
     }
     /**
      * Set the iconImage property
@@ -162,11 +182,7 @@ class PointAnnotation(
      * @param value constant property value for String
      */
     set(value) {
-      if (value != null) {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, value)
-      } else {
-        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
-      }
+      iconImageInternal = value
     }
 
   /**

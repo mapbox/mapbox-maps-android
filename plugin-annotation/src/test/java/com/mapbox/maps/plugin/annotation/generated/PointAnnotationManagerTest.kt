@@ -284,7 +284,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals("car-15", annotation.iconImage)
+    assertEquals("car-15", annotation.iconImageInternal)
     verify(exactly = 0) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
 
@@ -294,14 +294,14 @@ class PointAnnotationManagerTest {
     every { style.styleLayerExists(any()) } returns true
     mockkStatic(DataRef::class)
     every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
-    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode()
+    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode()
     every { style.hasStyleImage(imageId) } returns false
     val annotation = manager.create(
       PointAnnotationOptions()
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(imageId, annotation.iconImage)
+    assertEquals(imageId, annotation.iconImageInternal)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
     unmockkStatic(DataRef::class)
@@ -313,7 +313,7 @@ class PointAnnotationManagerTest {
     every { style.styleLayerExists(any()) } returns true
     mockkStatic(DataRef::class)
     every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
-    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode()
+    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode()
     every { style.hasStyleImage(imageId) } returns false
 
     val annotation = manager.create(
@@ -321,7 +321,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(imageId, annotation.iconImage)
+    assertEquals(imageId, annotation.iconImageInternal)
 
     verify(exactly = 1) { style.addStyleImage(imageId, any(), any(), any(), any(), any(), any()) }
 
@@ -331,7 +331,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(imageId, annotation2.iconImage)
+    assertEquals(imageId, annotation2.iconImageInternal)
     // Only one image should be added to the style because we're re-using the same bitmap
     verify(exactly = 1) { style.addStyleImage(imageId, any(), any(), any(), any(), any(), any()) }
     unmockkStatic(DataRef::class)
@@ -343,7 +343,7 @@ class PointAnnotationManagerTest {
     every { style.styleLayerExists(any()) } returns true
     mockkStatic(DataRef::class)
     every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
-    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode()
+    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode()
     every { style.hasStyleImage(imageId) } returns false
 
     val annotation = manager.create(
@@ -351,14 +351,14 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(imageId, annotation.iconImage)
+    assertEquals(imageId, annotation.iconImageInternal)
 
     verify(exactly = 1) { style.addStyleImage(imageId, any(), any(), any(), any(), any(), any()) }
 
     every { style.hasStyleImage(imageId) } returns true
 
     val secondBitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
-    val secondImageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + secondBitmap.hashCode()
+    val secondImageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + secondBitmap.hashCode()
     every { style.hasStyleImage(secondImageId) } returns false
     annotation.iconImageBitmap = secondBitmap
     manager.update(annotation)
@@ -373,7 +373,7 @@ class PointAnnotationManagerTest {
     every { style.styleLayerExists(any()) } returns true
     mockkStatic(DataRef::class)
     every { DataRef.allocateNative(any()) } returns mockk(relaxed = true)
-    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode()
+    val imageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode()
     every { style.hasStyleImage(imageId) } returns false
     val annotation = manager.create(
       PointAnnotationOptions()
@@ -384,11 +384,11 @@ class PointAnnotationManagerTest {
 
     // Update the bitmap for the same point annotation
     val createBitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
-    val secondImageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + createBitmap.hashCode()
+    val secondImageId = PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + createBitmap.hashCode()
     every { style.hasStyleImage(secondImageId) } returns false
     annotation.iconImageBitmap = createBitmap
     manager.update(annotation)
-    assertEquals(secondImageId, annotation.iconImage)
+    assertEquals(secondImageId, annotation.iconImageInternal)
     verify(exactly = 1) { style.addStyleImage(secondImageId, any(), any(), any(), any(), any(), any()) }
     unmockkStatic(DataRef::class)
   }
@@ -436,19 +436,19 @@ class PointAnnotationManagerTest {
     val annotation = manager.create(PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
 
     annotation.iconImageBitmap = bitmap
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation.iconImage)
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode(), annotation.iconImageInternal)
     annotation.iconImageBitmap = null
-    assertNull(annotation.iconImage)
+    assertNull(annotation.iconImageInternal)
 
     annotation.iconAnchor = IconAnchor.CENTER
     assertEquals(IconAnchor.CENTER, annotation.iconAnchor)
     annotation.iconAnchor = null
     assertNull(annotation.iconAnchor)
 
-    annotation.iconImage = ""
-    assertEquals("", annotation.iconImage)
-    annotation.iconImage = null
-    assertNull(annotation.iconImage)
+    annotation.iconImageInternal = ""
+    assertEquals("", annotation.iconImageInternal)
+    annotation.iconImageInternal = null
+    assertNull(annotation.iconImageInternal)
 
     annotation.iconOffset = listOf(0.0, 0.0)
     assertEquals(listOf(0.0, 0.0), annotation.iconOffset)

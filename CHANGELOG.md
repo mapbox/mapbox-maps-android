@@ -5,7 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+## Features ✨ and improvements 🏁
+* Deprecate `PointAnnotation.iconImage` getter. Reading this property exposes an internally generated image ID managed by the annotation manager. If you need a stable, reusable image ID, register the image in the style yourself via the Style API and pass the ID explicitly via `PointAnnotationOptions.withIconImage(String)`. In that case you are responsible for the image's lifecycle and must remove it from the style when no longer needed.
+
 ## Bug fixes 🐞
+* Fix native memory leak in `AnnotationManager` where bitmap style images were not removed when annotations were deleted.
 * Fix feature ID format mismatch in JNI marshaling where whole-number `double` feature IDs (e.g. `12345.0`) were incorrectly serialized as `"12345.000000"` instead of `"12345"`, causing `setFeatureState` to fail when using IDs obtained from `queryRenderedFeatures`.
 
 # 11.21.0-rc.1 March 23, 2026

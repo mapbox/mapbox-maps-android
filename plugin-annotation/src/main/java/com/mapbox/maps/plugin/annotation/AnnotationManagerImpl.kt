@@ -82,6 +82,7 @@ internal constructor(
   private var draggingAnnotation: T? = null
   private val annotationMap = LinkedHashMap<String, T>()
   private val dragAnnotationMap = LinkedHashMap<String, T>()
+  private val styleImages = StyleImages()
   internal val dataDrivenPropertyDefaultValues: JsonObject = JsonObject()
 
   private val interactionsCancelableSet = mutableSetOf<Cancelable>()
@@ -546,6 +547,7 @@ internal constructor(
   override fun create(option: S): T {
     return option.build(UUID.randomUUID().toString(), this).also {
       annotationMap[it.id] = it
+      styleImages.put(it)
       updateSource()
     }
   }
@@ -557,6 +559,7 @@ internal constructor(
     val list = options.map { option ->
       option.build(UUID.randomUUID().toString(), this).also {
         annotationMap[it.id] = it
+        styleImages.put(it)
       }
     }
     updateSource()
@@ -568,8 +571,10 @@ internal constructor(
    */
   override fun delete(annotation: T) {
     if (annotationMap.remove(annotation.id) != null) {
+      styleImages.remove(annotation)
       updateSource()
     } else if (dragAnnotationMap.remove(annotation.id) != null) {
+      styleImages.remove(annotation)
       updateDragSource()
     } else {
       logW(
@@ -587,8 +592,10 @@ internal constructor(
     var needUpdateDragSource = false
     annotations.forEach {
       if (annotationMap.remove(it.id) != null) {
+        styleImages.remove(it)
         needUpdateSource = true
       } else if (dragAnnotationMap.remove(it.id) != null) {
+        styleImages.remove(it)
         needUpdateDragSource = true
       }
     }
@@ -612,6 +619,7 @@ internal constructor(
       dragAnnotationMap.clear()
       updateDragSource()
     }
+    styleImages.clear()
   }
 
   private fun updateDragSource() {
@@ -645,18 +653,7 @@ internal constructor(
   // Add a bitmap to the style.
   internal fun addStyleImage(imageId: String, bitmap: Bitmap) {
     delegateProvider.mapStyleManagerDelegate.addImage(image(imageId, bitmap))
-  }
-
-  private fun removeIconsFromStyle(style: MapboxStyleManager, annotations: Collection<T>) {
-    annotations.forEach { removeIconFromStyle(style, it) }
-  }
-
-  private fun removeIconFromStyle(style: MapboxStyleManager, annotation: T) {
-    val symbol = annotation as? PointAnnotation ?: return
-    val imageId = symbol.iconImage ?: return
-    if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
-    if (!style.hasStyleImage(imageId)) return
-    style.removeStyleImage(imageId)
+    styleImages.put(imageId)
   }
 
   // Add icons to style from PointAnnotation.
@@ -664,7 +661,7 @@ internal constructor(
     // Add icon image bitmap from point annotation
     annotations.forEach { annotation ->
       (annotation as? PointAnnotation)?.let { symbol ->
-        symbol.iconImage?.let { imageId ->
+        symbol.iconImageInternal?.let { imageId ->
           if (imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
             /*
              * Basically if an image with the `imageId` already exists we don't add it again. The
@@ -774,7 +771,7 @@ internal constructor(
         style.removeStyleSource(it)
       }
     }
-    removeIconsFromStyle(style, annotations)
+    styleImages.clear()
 
     unregisterInteractions()
     annotationMap.clear()
@@ -999,6 +996,46 @@ internal constructor(
   @OptIn(MapboxExperimental::class)
   private fun FeaturesetFeature<FeatureState>.isCluster(): Boolean {
     return properties.optBoolean("cluster", false)
+  }
+
+  private inner class StyleImages() {
+
+    private val images: MutableMap<String, Int> = mutableMapOf()
+    private val style get() = delegateProvider.mapStyleManagerDelegate
+
+    fun put(annotation: T) {
+      val imageId = (annotation as? PointAnnotation)?.iconImageInternal ?: return
+      if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
+      put(imageId)
+    }
+
+    fun put(imageId: String) {
+      images[imageId] = (images[imageId] ?: 0) + 1
+    }
+
+    fun remove(annotation: T) {
+      val imageId = (annotation as? PointAnnotation)?.iconImageInternal ?: return
+      if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
+      val newCount = (images[imageId] ?: return) - 1
+      if (newCount <= 0) {
+        images.remove(imageId)
+        if (style.hasStyleImage(imageId)) {
+          style.removeStyleImage(imageId)
+        }
+      } else {
+        images[imageId] = newCount
+      }
+    }
+
+    fun clear() {
+      val style = style
+      images.keys.forEach { imageId ->
+        if (style.hasStyleImage(imageId)) {
+          style.removeStyleImage(imageId)
+        }
+      }
+      images.clear()
+    }
   }
 
   /**
