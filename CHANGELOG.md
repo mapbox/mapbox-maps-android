@@ -12,6 +12,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed when annotations were deleted.
 * Fix feature ID format mismatch in JNI marshaling where whole-number `double` feature IDs (e.g. `12345.0`) were incorrectly serialized as `"12345.000000"` instead of `"12345"`, causing `setFeatureState` to fail when using IDs obtained from `queryRenderedFeatures`.
 
+# 11.21.0 April 02, 2026
+## Dependencies
+* Update gl-native to [v11.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0), common to [v24.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0).
+
+
 # 11.21.0-rc.1 March 23, 2026
 
 ## Bug fixes 🐞
