@@ -7,6 +7,22 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.21.0 April 02, 2026
+## Bug fixes 🐞
+* Fix tile store eviction failing to clean up files for decompressed tiles, causing gradual storage growth.
+* Fix gaps in elevated route line rendering at ramp transitions and tile borders.
+* Fix indicator cutout (location puck area) appearing in the wrong position on high-DPI displays.
+* Fix incorrect shadow culling on fill-extrusion layers.
+* Fix ambient occlusion not being clipped when fill-extrusion layers are clipped by clip layers.
+* Fix clip layer updates not always refreshing clipped layers and shadows.
+* Fix native memory leak in `AnnotationManager` where bitmap style images were not removed onDestroy.
+* Fix feature cutout rendering artifacts on some devices caused by insufficient shader precision.
+* Fix rendering of stacked underground 3D roads.
+* Fix a crash that could occur when the map is destroyed during style loading.
+* Fix underground road geometry being clipped in orthographic projection with small viewports.
+* Fix map flickering caused by stencil buffer conflicts between raster and hillshade layers.
+* Fix potential ANRs when receiving location updates under heavy system load.
+* Internal fixes and performance improvements.
+
 ## Dependencies
 * Update gl-native to [v11.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0), common to [v24.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0).
 
