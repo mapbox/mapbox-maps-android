@@ -33,6 +33,17 @@
                 android:value="@string/category_basic" />
         </activity>
         <activity
+            android:name=".examples.basic.LazyColumnMapActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_lazy_column_map"
+            android:exported="true"
+            android:label="@string/activity_lazy_column_map"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+        </activity>
+        <activity
             android:name=".examples.basic.DebugModeActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_debug_mode"
