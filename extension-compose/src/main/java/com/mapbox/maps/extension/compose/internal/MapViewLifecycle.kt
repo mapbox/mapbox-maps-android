@@ -43,6 +43,7 @@ internal fun MapViewLifecycle(mapView: MapView) {
   }
   DisposableEffect(mapView) {
     onDispose {
+      mapView.onStop()
       mapView.onDestroy()
       mapView.removeAllViews()
     }

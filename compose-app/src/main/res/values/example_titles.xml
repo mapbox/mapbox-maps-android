@@ -38,4 +38,5 @@
     <string name="activity_animated_3d_model">Animated 3D airplane model</string>
     <string name="activity_accessibility_scale">Accessibility scale</string>
     <string name="activity_edge_to_edge">Edge-to-Edge layout</string>
+    <string name="activity_lazy_column_map">Map in LazyColumn</string>
 </resources>
