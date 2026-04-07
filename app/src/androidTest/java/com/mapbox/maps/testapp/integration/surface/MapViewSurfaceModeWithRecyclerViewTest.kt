@@ -15,7 +15,6 @@ import androidx.test.uiautomator.UiObject2
 import com.mapbox.maps.testapp.examples.SurfaceRecyclerViewActivity
 import com.mapbox.maps.testapp.integration.BaseReuseIntegrationTest
 import org.hamcrest.core.Is
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -28,13 +27,14 @@ class MapViewSurfaceModeWithRecyclerViewTest : BaseReuseIntegrationTest(SurfaceR
 
   @Test
   @LargeTest
-  @Ignore("Flaky test")
   fun scrollSurfaceRecyclerView() {
     // wait extra seconds to make sure recycler view is indeed added to hierarchy
     Thread.sleep(2_000)
     device.waitForIdle()
     val recyclerObject = By.clazz(RecyclerView::class.java)
     val recyclerView: UiObject2 = device.findObject(recyclerObject)
+    // we set gesture margin to keep touches at least 100 pixels away from the edges
+    recyclerView.setGestureMargin(100)
     repeat(2) {
       onMapView(matches(isDisplayed()))
       recyclerView.scroll(Direction.DOWN, 100.0f)
