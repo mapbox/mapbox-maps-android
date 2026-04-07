@@ -18,7 +18,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -308,7 +307,6 @@ class GestureActivityTest : BaseMapTest() {
   }
 
   @Test
-  @Ignore("Flaky test, expected:<3.0> but was:<2.8510000000000004>")
   fun quickZoom_roundTripping() {
     rule.scenario.onActivity {
       it.runOnUiThread {
