@@ -11,6 +11,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed when annotations were deleted.
 * Fix feature ID format mismatch in JNI marshaling where whole-number `double` feature IDs (e.g. `12345.0`) were incorrectly serialized as `"12345.000000"` instead of `"12345"`, causing `setFeatureState` to fail when using IDs obtained from `queryRenderedFeatures`.
+* [compose] Fix `MapboxMap` crash (`place is called on a deactivated node`) when used inside a `LazyColumn`.
+  * [compose] **Known limitation:** on Compose Foundation 1.7+ a secondary crash (`Apply is called on deactivated node`) may still occur when `MapboxMap` is used inside a `LazyColumn` during fast scrolling/item reuse because of `LazyColumn` prefetch behavior. Workaround: pass a no-op `LazyListPrefetchStrategy` to `rememberLazyListState()`; see `LazyColumnMapActivity` for an example.
 
 # 11.21.0 April 02, 2026
 ## Dependencies
@@ -33,7 +35,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.21.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0-rc.1), common to [v24.21.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0-rc.1).
-
 
 # 11.20.1 March 17, 2026
 ## Bug fixes 🐞

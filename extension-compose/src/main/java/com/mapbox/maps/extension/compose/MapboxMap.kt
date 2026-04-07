@@ -75,57 +75,64 @@ public fun MapboxMap(
     return
   }
 
-  // Re-create the map every time the init options change
-  key(composeMapInitOptions) {
-    val context = LocalContext.current
-    val mapView = remember {
-      ComposeTelemetryEvents.map.increment()
-      MapView(
-        context,
-        mapInitOptions = composeMapInitOptions.getMapInitOptions(context)
-      )
-    }
-    MapViewLifecycle(mapView = mapView)
+  // Workaround for "place is called on a deactivated node" crash in LazyColumn.
+  // During fast scroll, LazyColumn can deactivate a slot mid-layout-pass. At that point the slot
+  // root's MeasurePolicy calls place() on its direct children — crashing if AndroidView's holder
+  // node is one of them. Box acts as a stable intermediate LayoutNode: it stays as the direct
+  // child of the slot root, while key() safely resets the map content inside it.
+  Box(modifier = modifier) {
+    // Re-create the map every time the init options change
+    key(composeMapInitOptions) {
+      val context = LocalContext.current
+      val mapView = remember {
+        ComposeTelemetryEvents.map.increment()
+        MapView(
+          context,
+          mapInitOptions = composeMapInitOptions.getMapInitOptions(context)
+        )
+      }
+      MapViewLifecycle(mapView = mapView)
 
-    Box(modifier = modifier) {
-      AndroidView(
-        factory = { mapView },
-        modifier = Modifier.fillMaxSize(),
-      )
-      MapCompassScope(mapView, this).compass()
-      MapScaleBarScope(mapView, this).scaleBar()
-      MapLogoScope(this).logo()
-      MapAttributionScope(mapView, this).attribution()
-    }
+      Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(
+          factory = { mapView },
+          modifier = Modifier.fillMaxSize(),
+        )
+        MapCompassScope(mapView, this).compass()
+        MapScaleBarScope(mapView, this).scaleBar()
+        MapLogoScope(this).logo()
+        MapAttributionScope(mapView, this).attribution()
+      }
 
-    key(mapViewportState) {
-      mapViewportState.BindToMap(mapView = mapView)
-    }
-    key(mapState) {
-      mapState.BindToMap(mapboxMap = mapView.mapboxMap)
-    }
+      key(mapViewportState) {
+        mapViewportState.BindToMap(mapView = mapView)
+      }
+      key(mapState) {
+        mapState.BindToMap(mapboxMap = mapView.mapboxMap)
+      }
 
-    val parentComposition = rememberCompositionContext()
-    val currentOnMapClickListener by rememberUpdatedState(onMapClickListener)
-    val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
-    val currentContent by rememberUpdatedState(content)
-    val currentStyle by rememberUpdatedState(style)
-    LaunchedEffect(Unit) {
-      disposingComposition(
-        Composition(
-          MapApplier(mapView), parentComposition
-        ).apply {
-          setContent {
-            MapboxMapComposeNode(
-              currentOnMapClickListener,
-              currentOnMapLongClickListener,
-            )
-            // add Style node with the styleUri
-            currentStyle.invoke()
-            currentContent?.let { MapboxMapScope.it() }
+      val parentComposition = rememberCompositionContext()
+      val currentOnMapClickListener by rememberUpdatedState(onMapClickListener)
+      val currentOnMapLongClickListener by rememberUpdatedState(onMapLongClickListener)
+      val currentContent by rememberUpdatedState(content)
+      val currentStyle by rememberUpdatedState(style)
+      LaunchedEffect(Unit) {
+        disposingComposition(
+          Composition(
+            MapApplier(mapView), parentComposition
+          ).apply {
+            setContent {
+              MapboxMapComposeNode(
+                currentOnMapClickListener,
+                currentOnMapLongClickListener,
+              )
+              // add Style node with the styleUri
+              currentStyle.invoke()
+              currentContent?.let { MapboxMapScope.it() }
+            }
           }
-        }
-      )
+        )
+      }
     }
   }
 }
