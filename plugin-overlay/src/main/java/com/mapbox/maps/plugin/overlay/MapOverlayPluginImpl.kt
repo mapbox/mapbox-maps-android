@@ -190,7 +190,7 @@ internal class MapOverlayPluginImpl : MapOverlayPlugin {
           if (it.left - subMapRect.left < subMapRect.right - it.right) {
             // overlay rect is on the left part of MapRect, create a new MapRect with the right part
             queue.offerLast(subMapRect.updateLeft(it.right))
-          } else if (it.left - subMapRect.left < subMapRect.right - it.right) {
+          } else if (it.left - subMapRect.left > subMapRect.right - it.right) {
             // overlay rect is on the right part of MapRect, create a new MapRect with the left part
             queue.offerLast(subMapRect.updateRight(it.left))
           } else {
