@@ -1,6 +1,5 @@
 package com.mapbox.maps.renderer
 
-import android.os.Looper
 import com.mapbox.maps.logW
 import com.mapbox.verifyNo
 import io.mockk.*
@@ -88,9 +87,7 @@ class RenderHandlerThreadTest {
   @Test
   fun postThreadNotStarted() {
     val action = mockk<Runnable>(relaxed = true)
-    Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.post(action)
-    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verifyNo { action.run() }
   }
 
@@ -100,15 +97,15 @@ class RenderHandlerThreadTest {
     val actionTwo = mockk<Runnable>(relaxed = true)
     val actionThree = mockk<Runnable>(relaxed = true)
     val actionFour = mockk<Runnable>(relaxed = true)
-    Shadows.shadowOf(Looper.getMainLooper()).pause()
     renderHandlerThread.apply {
       start()
+      val handlerLooperShadow = Shadows.shadowOf(renderHandlerThread.handlerThread.looper)
+      handlerLooperShadow.pause()
       post(actionOne)
-      postDelayed(
-        actionTwo,
-        50
-      )
-      Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(40))
+      postDelayed(actionTwo, 50)
+      // Idle handler thread looper to run actionOne (0ms delay)
+      // but not actionTwo (50ms delay)
+      handlerLooperShadow.idleFor(Duration.ofMillis(40))
       stop()
       post(actionThree)
       postDelayed(
@@ -116,7 +113,6 @@ class RenderHandlerThreadTest {
         50
       )
     }
-    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
     verify { actionOne.run() }
     // action two skipped because of using HandlerThread#quit() and not quitSafely()
     verifyNo { actionTwo.run() }
@@ -128,13 +124,14 @@ class RenderHandlerThreadTest {
   fun postThreadStarted() {
     val actionOne = mockk<Runnable>(relaxed = true)
     val actionTwo = mockk<Runnable>(relaxed = true)
-    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    renderHandlerThread.start()
+    val handlerLooperShadow = Shadows.shadowOf(renderHandlerThread.handlerThread.looper)
     renderHandlerThread.apply {
-      start()
       post(actionOne)
       postDelayed(actionTwo, 50)
     }
-    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
+    // Advance time by 50ms and idle to run both actions
+    handlerLooperShadow.idleFor(Duration.ofMillis(50))
     verify { actionOne.run() }
     verify { actionTwo.run() }
   }
