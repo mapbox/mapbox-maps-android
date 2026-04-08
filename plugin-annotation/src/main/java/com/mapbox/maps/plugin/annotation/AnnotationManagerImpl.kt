@@ -82,7 +82,7 @@ internal constructor(
   private var draggingAnnotation: T? = null
   private val annotationMap = LinkedHashMap<String, T>()
   private val dragAnnotationMap = LinkedHashMap<String, T>()
-  private val styleImages = StyleImages()
+  private val styleImages = PointAnnotationStyleImages()
   internal val dataDrivenPropertyDefaultValues: JsonObject = JsonObject()
 
   private val interactionsCancelableSet = mutableSetOf<Cancelable>()
@@ -998,21 +998,34 @@ internal constructor(
     return properties.optBoolean("cluster", false)
   }
 
-  private inner class StyleImages() {
+  /**
+   * Tracks reference counts for style images associated with [PointAnnotation]s that use
+   * auto-generated icon image IDs starting with [PointAnnotation.ICON_DEFAULT_NAME_PREFIX].
+   *
+   * Each unique image ID is reference-counted so that the underlying style image is only removed
+   * from the map style when no annotation still references it. Images whose IDs do not start with
+   * the default prefix must be managed externally.
+   */
+  private inner class PointAnnotationStyleImages() {
 
+    /** Map from image ID to the number of annotations currently referencing it. */
     private val images: MutableMap<String, Int> = mutableMapOf()
     private val style get() = delegateProvider.mapStyleManagerDelegate
 
     fun put(annotation: T) {
       val imageId = (annotation as? PointAnnotation)?.iconImageInternal ?: return
-      if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
       put(imageId)
     }
 
     fun put(imageId: String) {
+      if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
       images[imageId] = (images[imageId] ?: 0) + 1
     }
 
+    /**
+     * Decrements the reference count for the icon image of [annotation].
+     * When the count reaches zero the image is removed from the map style.
+     */
     fun remove(annotation: T) {
       val imageId = (annotation as? PointAnnotation)?.iconImageInternal ?: return
       if (!imageId.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) return
@@ -1027,6 +1040,10 @@ internal constructor(
       }
     }
 
+    /**
+     * Removes all tracked images from the map style and clears the reference-count map.
+     * Called when the annotation manager is destroyed or all annotations are deleted.
+     */
     fun clear() {
       val style = style
       images.keys.forEach { imageId ->

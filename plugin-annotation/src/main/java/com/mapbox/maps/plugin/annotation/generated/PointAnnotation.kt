@@ -10,6 +10,7 @@ import com.mapbox.geojson.*
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -68,7 +69,7 @@ class PointAnnotation(
           field = value
           if (iconImageInternal == null || iconImageInternal!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
             // User does not set iconImage, update iconImage to this new bitmap
-            iconImageInternal = ICON_DEFAULT_NAME_PREFIX + annotationManager.hashCode().toString(16) + "_" + value.hashCode()
+            iconImageInternal = iconImageId(annotationManager, value)
           }
         }
       } else {
@@ -167,11 +168,21 @@ class PointAnnotation(
      * @return property wrapper value around String
      */
     @Deprecated(
-      "Reading iconImage exposes an internally generated image ID. " +
-        "Consider saving the argument for PointAnnotationOptions.withIconImage(String).",
+      "Reading iconImage potentially exposes an internally generated image ID. " +
+        "Consider saving the image id argument for PointAnnotationOptions.withIconImage(String), or PointAnnotation.setIconImage(String) APIs " +
+        "This getter will be removed in future releases.",
       level = DeprecationLevel.WARNING
     )
     get() {
+      if (iconImageInternal?.startsWith(ICON_DEFAULT_NAME_PREFIX) == true) {
+        logE(
+          TAG,
+          "Reading iconImage returned an internally generated image ID ('$iconImageInternal'). " +
+          "This is a misuse, save the argument passed to PointAnnotationOptions.withIconImage(String) or PointAnnotation.setIconImage(String) instead. " +
+          "Caching and reusing this value for other annotation creation may result in unexpected behaviour, " +
+          "as the image associated with the internal image ID can be removed by the internal system at runtime."
+        )
+      }
       return iconImageInternal
     }
     /**
@@ -1636,9 +1647,18 @@ class PointAnnotation(
    * Static variables and methods.
    */
   companion object {
+    private const val TAG = "PointAnnotation"
     /** the Id key for annotation */
     const val ID_KEY: String = "PointAnnotation"
     /** the default name for icon */
     const val ICON_DEFAULT_NAME_PREFIX = "icon_default_name_"
+
+    /**
+     * Builds the auto-generated style image ID for the given [manager] and [bitmap].
+     * The ID encodes the manager identity and bitmap content so that identical bitmaps
+     * added through the same manager share a single style image.
+     */
+    internal fun iconImageId(manager: AnnotationManager<*, *, *, *, *, *, *>, bitmap: Bitmap): String =
+      ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode()
   }
 }
