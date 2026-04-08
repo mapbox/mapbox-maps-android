@@ -387,7 +387,7 @@ class DirectionalLightTest {
 
   @Test
   fun directionAsExpressionSet() {
-    val expression = literal(listOf(0.0, 1.0))
+    val expression = literal(listOf(180.0, 45.0))
 
     val light = directionalLight("id") {
       direction(expression)
@@ -415,7 +415,7 @@ class DirectionalLightTest {
 
   @Test
   fun directionAsExpressionGet() {
-    val expression = literal(listOf(0.0, 1.0))
+    val expression = literal(listOf(180.0, 45.0))
     every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
     every { styleProperty.value } returns expression
 
