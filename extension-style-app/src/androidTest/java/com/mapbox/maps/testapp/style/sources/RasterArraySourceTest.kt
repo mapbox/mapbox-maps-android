@@ -19,9 +19,8 @@ class RasterArraySourceTest : BaseStyleTest() {
   @Test
   fun rasterLayersTest() {
     val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.loadStyle(
+    runOnUiThread {
+      mapboxMap.loadStyle(
           style = """
         {
           "version": 8,
@@ -108,7 +107,6 @@ class RasterArraySourceTest : BaseStyleTest() {
           )
           latch.countDown()
         }
-      }
     }
 
     if (!latch.await(10000, TimeUnit.MILLISECONDS)) {

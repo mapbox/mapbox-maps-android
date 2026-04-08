@@ -1,7 +1,7 @@
 package com.mapbox.maps.testapp.style
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -27,8 +27,9 @@ import com.mapbox.maps.extension.style.precipitations.generated.setSnow
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.terrain.generated.setTerrain
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
-import org.junit.Rule
+import org.junit.BeforeClass
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -36,35 +37,54 @@ import java.util.concurrent.TimeoutException
 
 /**
  * Instrumentation test for Layers to test Layer properties.
+ *
+ * The [ActivityScenario] is launched once per test class (in [setupClass]) to save time.
+ * A fresh [MapView] and [MapboxMap] are created for each test (in [before]) for isolation.
+ * UI thread work is dispatched via [runOnUiThread] ([Instrumentation.runOnMainSync]) to
+ * avoid depending on the Activity not being destroyed between tests.
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 abstract class BaseStyleTest {
 
   private lateinit var mapView: MapView
-  protected lateinit var mapboxMap: MapboxMap
   private lateinit var style: Style
+  protected lateinit var mapboxMap: MapboxMap
 
-  @get:Rule
-  var rule = ActivityScenarioRule(AppCompatActivity::class.java)
+  companion object {
+    private lateinit var _scenario: ActivityScenario<AppCompatActivity>
+
+    @BeforeClass
+    @JvmStatic
+    fun setupClass() {
+      _scenario = ActivityScenario.launch(AppCompatActivity::class.java)
+    }
+
+    @AfterClass
+    @JvmStatic
+    fun tearDownClass() {
+      _scenario.close()
+    }
+  }
+
+  protected fun runOnUiThread(block: () -> Unit) {
+    InstrumentationRegistry.getInstrumentation().runOnMainSync(block)
+  }
 
   @Before
   fun before() {
     val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        mapView = MapView(context)
-
-        mapboxMap = mapView.mapboxMap
-        mapboxMap.loadStyle(
-          "mapbox://styles/mapbox/empty-v9"
-        ) { style ->
-          this@BaseStyleTest.style = style
-          latch.countDown()
-        }
-        mapView.onStart()
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+      val context = InstrumentationRegistry.getInstrumentation().targetContext
+      mapView = MapView(context)
+      mapboxMap = mapView.mapboxMap
+      mapboxMap.loadStyle(
+        "mapbox://styles/mapbox/empty-v9"
+      ) { style ->
+        this@BaseStyleTest.style = style
+        latch.countDown()
       }
+      mapView.onStart()
     }
     if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
@@ -73,16 +93,9 @@ abstract class BaseStyleTest {
 
   @After
   fun tearDown() {
-    val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapView.onStop()
-        mapView.onDestroy()
-        latch.countDown()
-      }
-    }
-    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+      mapView.onStop()
+      mapView.onDestroy()
     }
   }
 
