@@ -57,13 +57,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.data(TEST_GEOJSON)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -93,12 +91,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -121,13 +117,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.data(TEST_URI)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -420,12 +414,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -455,12 +447,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -490,12 +480,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -525,13 +513,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.feature(FEATURE, DATA_ID)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -562,13 +548,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.featureCollection(FEATURE_COLLECTION, DATA_ID)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
@@ -598,13 +582,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
         latch.countDown()
       }
     }
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
+    runOnUiThread {
+      mapboxMap.apply {
           cancelable = subscribeSourceDataLoaded(listener)
           setupSource(testSource)
           testSource.geometry(FEATURE.geometry()!!, DATA_ID)
-        }
       }
     }
     if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {

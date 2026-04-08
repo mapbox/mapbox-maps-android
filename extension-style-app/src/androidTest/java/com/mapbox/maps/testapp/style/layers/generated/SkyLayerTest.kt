@@ -198,7 +198,7 @@ class SkyLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun skyAtmosphereSunAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0))
+    val expression = literal(listOf(180.0, 90.0))
     val layer = skyLayer("id") {
       skyAtmosphereSun(expression)
     }
@@ -311,7 +311,7 @@ class SkyLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun skyGradientCenterAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0))
+    val expression = literal(listOf(180.0, 90.0))
     val layer = skyLayer("id") {
       skyGradientCenter(expression)
     }

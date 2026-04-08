@@ -394,7 +394,7 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun iconSizeScaleRangeAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0))
+    val expression = literal(listOf(5.0, 5.0))
     val layer = symbolLayer("id", "source") {
       iconSizeScaleRange(expression)
     }
@@ -1220,7 +1220,7 @@ class SymbolLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun textSizeScaleRangeAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0))
+    val expression = literal(listOf(5.0, 5.0))
     val layer = symbolLayer("id", "source") {
       textSizeScaleRange(expression)
     }
@@ -1503,7 +1503,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(1.0, layer.iconColorSaturation!!, 1E-5)
   }
 
-  @Ignore("Icon color saturation transition will be added in future versions")
+  @Ignore("IconColorSaturation transition is not supported by the native engine")
   @Test
   @UiThreadTest
   fun iconColorSaturationTransitionTest() {
@@ -1518,7 +1518,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(transition, layer.iconColorSaturationTransition)
   }
 
-  @Ignore("Icon color saturation transition will be added in future versions")
+  @Ignore("IconColorSaturation transition is not supported by the native engine")
   @Test
   @UiThreadTest
   fun iconColorSaturationTransitionSetDslTest() {
@@ -1839,6 +1839,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(1.0, layer.iconImageCrossFade!!, 1E-5)
   }
 
+  @Ignore("IconImageCrossFade transition is not supported by the native engine")
   @Test
   @UiThreadTest
   fun iconImageCrossFadeTransitionTest() {
@@ -1853,6 +1854,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertEquals(transition, layer.iconImageCrossFadeTransition)
   }
 
+  @Ignore("IconImageCrossFade transition is not supported by the native engine")
   @Test
   @UiThreadTest
   fun iconImageCrossFadeTransitionSetDslTest() {
@@ -2863,7 +2865,7 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconColorContrastAsExpression should not be null", SymbolLayer.defaultIconColorContrastAsExpression)
     assertNotNull("defaultIconColorSaturation should not be null", SymbolLayer.defaultIconColorSaturation)
     assertNotNull("defaultIconColorSaturationAsExpression should not be null", SymbolLayer.defaultIconColorSaturationAsExpression)
-    // Icon color saturation transition will be added in future versions
+    // IconColorSaturation transition is not supported by the native engine
     // assertNotNull("defaultIconColorSaturationTransition should not be null", SymbolLayer.defaultIconColorSaturationTransition)
     assertNotNull("defaultIconEmissiveStrength should not be null", SymbolLayer.defaultIconEmissiveStrength)
     assertNotNull("defaultIconEmissiveStrengthAsExpression should not be null", SymbolLayer.defaultIconEmissiveStrengthAsExpression)
@@ -2882,7 +2884,8 @@ class SymbolLayerTest : BaseStyleTest() {
     assertNotNull("defaultIconHaloWidthTransition should not be null", SymbolLayer.defaultIconHaloWidthTransition)
     assertNotNull("defaultIconImageCrossFade should not be null", SymbolLayer.defaultIconImageCrossFade)
     assertNotNull("defaultIconImageCrossFadeAsExpression should not be null", SymbolLayer.defaultIconImageCrossFadeAsExpression)
-    assertNotNull("defaultIconImageCrossFadeTransition should not be null", SymbolLayer.defaultIconImageCrossFadeTransition)
+    // IconImageCrossFade transition is not supported by the native engine
+    // assertNotNull("defaultIconImageCrossFadeTransition should not be null", SymbolLayer.defaultIconImageCrossFadeTransition)
     assertNotNull("defaultIconOcclusionOpacity should not be null", SymbolLayer.defaultIconOcclusionOpacity)
     assertNotNull("defaultIconOcclusionOpacityAsExpression should not be null", SymbolLayer.defaultIconOcclusionOpacityAsExpression)
     assertNotNull("defaultIconOcclusionOpacityTransition should not be null", SymbolLayer.defaultIconOcclusionOpacityTransition)

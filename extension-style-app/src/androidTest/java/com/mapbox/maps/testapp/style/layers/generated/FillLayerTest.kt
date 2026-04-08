@@ -84,8 +84,10 @@ class FillLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun fillConstructBridgeGuardRailAsExpressionTest() {
-    val expression = get {
-      literal("boolean")
+    val expression = boolean {
+      get {
+        literal("boolean")
+      }
     }
     val layer = fillLayer("id", "source") {
       fillConstructBridgeGuardRail(expression)
