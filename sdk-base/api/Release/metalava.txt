@@ -878,7 +878,11 @@ package com.mapbox.maps.interactions.standard.generated {
   public final class StandardBuildingsFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardBuildingsState> {
     ctor public StandardBuildingsFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardBuildingsState state);
     method public String? getGroup();
+    method public Double? getHeight();
+    method public Double? getMinHeight();
     property public final String? group;
+    property public final Double? height;
+    property public final Double? minHeight;
   }
 
   public final class StandardBuildingsState extends com.mapbox.maps.interactions.FeatureState {
