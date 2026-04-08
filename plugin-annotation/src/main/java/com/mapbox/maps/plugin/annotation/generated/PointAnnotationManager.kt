@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
@@ -351,7 +352,7 @@ class PointAnnotationManager(
           field = value
           if (iconImageInternal == null || iconImageInternal!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
             // User does not set iconImage, update iconImage to this new bitmap
-            val imageId = ICON_DEFAULT_NAME_PREFIX + hashCode().toString(16) + "_" + value.hashCode()
+            val imageId = PointAnnotation.iconImageId(this, value)
             iconImageInternal = imageId
             addStyleImage(imageId, value)
           }
@@ -494,11 +495,21 @@ class PointAnnotationManager(
      * @return property wrapper value around String
      */
     @Deprecated(
-      "Reading iconImage exposes an internally generated image ID. " +
-        "Consider saving the argument for PointAnnotationOptions.withIconImage(String).",
+      "Reading iconImage potentially exposes an internally generated image ID. " +
+        "Consider saving the image id argument for PointAnnotationOptions.withIconImage(String), or PointAnnotation.setIconImage(String) APIs " +
+        "This getter will be removed in future releases.",
       level = DeprecationLevel.WARNING
     )
     get() {
+      if (iconImageInternal?.startsWith(ICON_DEFAULT_NAME_PREFIX) == true) {
+        logE(
+          TAG,
+          "Reading iconImage returned an internally generated image ID ('$iconImageInternal'). " +
+          "This is a misuse, save the argument passed to PointAnnotationOptions.withIconImage(String) or PointAnnotation.setIconImage(String) instead. " +
+          "Caching and reusing this value for other annotation creation may result in unexpected behaviour, " +
+          "as the image associated with the internal image ID can be removed by the internal system at runtime."
+        )
+      }
       return iconImageInternal
     }
     /**
@@ -2953,6 +2964,7 @@ class PointAnnotationManager(
    * Static variables and methods.
    */
   companion object {
+    private const val TAG = "PointAnnotationManager"
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
   }

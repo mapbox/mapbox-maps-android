@@ -16,7 +16,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.logE
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotation.Companion.ICON_DEFAULT_NAME_PREFIX
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation.Companion.iconImageId
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -370,7 +370,7 @@ class StyleImageRefCountTest {
   }
 
   private fun imageIdFor(b: Bitmap, mgr: PointAnnotationManager = manager) =
-    ICON_DEFAULT_NAME_PREFIX + mgr.hashCode().toString(16) + "_" + b.hashCode()
+    iconImageId(mgr, b)
 
   private fun createWithBitmap(b: Bitmap) = manager.create(
     PointAnnotationOptions()
