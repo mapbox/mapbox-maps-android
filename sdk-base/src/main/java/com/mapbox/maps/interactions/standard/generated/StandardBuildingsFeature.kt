@@ -28,4 +28,14 @@ class StandardBuildingsFeature(
    * A high-level building group like building-2d, building-3d, etc.
    */
   val group get(): String? = originalFeature.getStringProperty("group")
+
+  /**
+   * The height in meters of a building or building part (rounded to the nearest integer).
+   */
+  val height get(): Double? = originalFeature.getNumberProperty("height")?.toDouble()
+
+  /**
+   * The height in meters from the ground to the bottom of a building part, for cases where the bottom of the part is not on the ground.
+   */
+  val minHeight get(): Double? = originalFeature.getNumberProperty("min_height")?.toDouble()
 }

@@ -874,6 +874,8 @@ public final class com/mapbox/maps/interactions/standard/generated/StandardBuild
 public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature : com/mapbox/maps/interactions/FeaturesetFeature {
 	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsState;)V
 	public final fun getGroup ()Ljava/lang/String;
+	public final fun getHeight ()Ljava/lang/Double;
+	public final fun getMinHeight ()Ljava/lang/Double;
 }
 
 public final class com/mapbox/maps/interactions/standard/generated/StandardBuildingsState : com/mapbox/maps/interactions/FeatureState {
