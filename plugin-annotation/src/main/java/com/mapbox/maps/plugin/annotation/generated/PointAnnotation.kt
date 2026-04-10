@@ -10,6 +10,7 @@ import com.mapbox.geojson.*
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -54,7 +55,7 @@ class PointAnnotation(
   /**
    * The bitmap image for this Symbol
    *
-   * Will not take effect if [iconImage] has been set.
+   * Will not take effect if [iconImageInternal] has been set.
    */
   var iconImageBitmap: Bitmap? = null
     /**
@@ -66,9 +67,9 @@ class PointAnnotation(
       if (value != null) {
         if (field != value) {
           field = value
-          if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
+          if (iconImageInternal == null || iconImageInternal!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
             // User does not set iconImage, update iconImage to this new bitmap
-            iconImage = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
+            iconImageInternal = iconImageId(annotationManager, value)
           }
         }
       } else {
@@ -137,6 +138,25 @@ class PointAnnotation(
     }
 
   /**
+   * Internal property for iconImage
+   */
+  internal var iconImageInternal: String?
+    get() {
+      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      value?.let {
+        return it.asString.toString()
+      }
+      return null
+    }
+    set(value) {
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
+      }
+    }
+
+  /**
    * The iconImage property
    *
    * Name of image in sprite to use for drawing an image background.
@@ -147,12 +167,23 @@ class PointAnnotation(
      *
      * @return property wrapper value around String
      */
+    @Deprecated(
+      "Reading iconImage potentially exposes an internally generated image ID. " +
+        "Consider saving the image id argument for PointAnnotationOptions.withIconImage(String), or PointAnnotation.setIconImage(String) APIs " +
+        "This getter will be removed in future releases.",
+      level = DeprecationLevel.WARNING
+    )
     get() {
-      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
-      value?.let {
-        return it.asString.toString()
+      if (iconImageInternal?.startsWith(ICON_DEFAULT_NAME_PREFIX) == true) {
+        logE(
+          TAG,
+          "Reading iconImage returned an internally generated image ID ('$iconImageInternal'). " +
+          "This is a misuse, save the argument passed to PointAnnotationOptions.withIconImage(String) or PointAnnotation.setIconImage(String) instead. " +
+          "Caching and reusing this value for other annotation creation may result in unexpected behaviour, " +
+          "as the image associated with the internal image ID can be removed by the internal system at runtime."
+        )
       }
-      return null
+      return iconImageInternal
     }
     /**
      * Set the iconImage property
@@ -162,11 +193,7 @@ class PointAnnotation(
      * @param value constant property value for String
      */
     set(value) {
-      if (value != null) {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, value)
-      } else {
-        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
-      }
+      iconImageInternal = value
     }
 
   /**
@@ -1620,9 +1647,18 @@ class PointAnnotation(
    * Static variables and methods.
    */
   companion object {
+    private const val TAG = "PointAnnotation"
     /** the Id key for annotation */
     const val ID_KEY: String = "PointAnnotation"
     /** the default name for icon */
     const val ICON_DEFAULT_NAME_PREFIX = "icon_default_name_"
+
+    /**
+     * Builds the auto-generated style image ID for the given [manager] and [bitmap].
+     * The ID encodes the manager identity and bitmap content so that identical bitmaps
+     * added through the same manager share a single style image.
+     */
+    internal fun iconImageId(manager: AnnotationManager<*, *, *, *, *, *, *>, bitmap: Bitmap): String =
+      ICON_DEFAULT_NAME_PREFIX + manager.hashCode().toString(16) + "_" + bitmap.hashCode()
   }
 }

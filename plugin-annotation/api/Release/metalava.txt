@@ -348,7 +348,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public String? getIconHaloColorString();
     method public String? getIconHaloColorUseTheme();
     method public Double? getIconHaloWidth();
-    method public String? getIconImage();
+    method @Deprecated public String? getIconImage();
     method public android.graphics.Bitmap? getIconImageBitmap();
     method @Deprecated public Double? getIconImageCrossFade();
     method public Double? getIconOcclusionOpacity();
@@ -441,7 +441,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final String? iconHaloColorString;
     property public final String? iconHaloColorUseTheme;
     property public final Double? iconHaloWidth;
-    property public final String? iconImage;
+    property @Deprecated public final String? iconImage;
     property public final android.graphics.Bitmap? iconImageBitmap;
     property @Deprecated public final Double? iconImageCrossFade;
     property public final Double? iconOcclusionOpacity;

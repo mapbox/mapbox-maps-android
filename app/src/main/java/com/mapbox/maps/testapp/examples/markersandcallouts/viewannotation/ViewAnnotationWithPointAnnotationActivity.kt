@@ -67,7 +67,7 @@ class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
       }
       // show / hide view annotation based on marker visibility
       binding.fabStyleToggle.setOnClickListener {
-        if (pointAnnotation.iconImage == null) {
+        if (pointAnnotation.iconImageBitmap == null) {
           pointAnnotation.iconImageBitmap = bitmapFromDrawableRes(R.drawable.ic_blue_marker)
           viewAnnotation.isVisible = true
         } else {
