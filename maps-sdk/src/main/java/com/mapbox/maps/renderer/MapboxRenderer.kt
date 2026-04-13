@@ -2,13 +2,11 @@ package com.mapbox.maps.renderer
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.util.Log
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
-import com.mapbox.common.MapboxTracing
 import com.mapbox.maps.DelegatingMapClient
 import com.mapbox.maps.Map
 import com.mapbox.maps.MapView.OnSnapshotReady
@@ -75,9 +73,7 @@ internal abstract class MapboxRenderer(
 
   @AnyThread
   override fun scheduleRepaint() {
-    MapboxTracing.traceSync("scheduleRepaint") {
-      renderThread.queueRenderEvent(repaintRenderEvent)
-    }
+    renderThread.queueRenderEvent(repaintRenderEvent)
   }
 
   @AnyThread
