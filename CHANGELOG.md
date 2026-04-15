@@ -6,7 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Bug fixes 🐞
-* Update `gulrak/filesystem` dependency to avoid possible FD leak
+* Fix a potential file descriptor leak that could cause resource exhaustion.
 
 # 11.21.1 April 10, 2026
 ## Features ✨ and improvements 🏁
