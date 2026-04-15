@@ -42,6 +42,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Deprecate `PointAnnotation.iconImage` getter. Reading this property exposes an internally generated image ID managed by the annotation manager. If you need a stable, reusable image ID, register the image in the style yourself via the Style API and pass the ID explicitly via `PointAnnotationOptions.withIconImage(String)`. In that case you are responsible for the image's lifecycle and must remove it from the style when no longer needed.
 * Internal fixes and performance improvements.
+* TileStore improvements.
 
 ## Bug fixes 🐞
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed when annotations were deleted.
@@ -95,8 +96,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.21.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0-rc.1), common to [v24.21.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0-rc.1).
-
-* TileStore improvements.
 
 # 11.20.1 March 17, 2026
 ## Bug fixes 🐞
