@@ -487,7 +487,15 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
             Choreographer.getInstance().removeFrameCallback(this@MapboxRenderThread)
             surfaceProcessingLock.withLock {
               // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-              if (nativeMapRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
+              // GL TextureView needs releaseAll() because EGL surface is directly tied to
+              // the SurfaceTexture — EGL must be torn down synchronously before the
+              // SurfaceTexture is destroyed.
+              // Vulkan's surface binding goes through ANativeWindow, so releasing the
+              // swapchain via releaseRenderSurface() is sufficient to detach from the
+              // SurfaceTexture. Full native renderer teardown can happen later in destroy().
+              if (nativeMapRenderCreated && mapboxRenderer is MapboxTextureViewRenderer &&
+                this@MapboxRenderThread is GLMapboxRenderThread
+              ) {
                 releaseAll()
                 renderHandlerThread.clearRenderEventQueue()
               } else {
