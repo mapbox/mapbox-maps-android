@@ -27,6 +27,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
     renderThread = when (supportedRenderBackend) {
       RenderBackendType.VULKAN -> VulkanMapboxRenderThread(
         mapboxRenderer = this,
+        antialiasingSampleCount = antialiasingSampleCount,
         mapName = mapName,
       )
       RenderBackendType.OPEN_GL -> GLMapboxRenderThread(

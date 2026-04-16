@@ -9,7 +9,11 @@ import com.mapbox.maps.logW
 /**
  * Vulkan-based implementation of MapboxRenderThread.
  */
-internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName: String) :
+internal class VulkanMapboxRenderThread(
+  mapboxRenderer: MapboxRenderer,
+  private val antialiasingSampleCount: Int,
+  mapName: String,
+) :
   MapboxRenderThread(
     mapboxRenderer = mapboxRenderer,
     widgetRenderer = null,
@@ -52,6 +56,7 @@ internal class VulkanMapboxRenderThread(mapboxRenderer: MapboxRenderer, mapName:
       return false
     }
 
+    nativeVulkanManager?.setAntialiasingSampleCount(antialiasingSampleCount)
     val result = nativeVulkanManager?.init(nativeWindowPtr) ?: run {
       // TODO cache surface until nativeVulkanManager is set via setMap
       false

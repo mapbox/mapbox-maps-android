@@ -23,6 +23,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
     renderThread = when (supportedRenderBackend) {
       RenderBackendType.VULKAN -> VulkanMapboxRenderThread(
         mapboxRenderer = this,
+        antialiasingSampleCount = antialiasingSampleCount,
         mapName = mapName,
       )
       RenderBackendType.OPEN_GL -> GLMapboxRenderThread(
