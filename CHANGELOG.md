@@ -8,6 +8,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a potential file descriptor leak that could cause resource exhaustion.
 
+# 11.20.3 April 14, 2026
+## Dependencies
+* Update gl-native to [v11.20.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.3), common to [v24.20.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.3).
+
 # 11.21.1 April 10, 2026
 ## Features ✨ and improvements 🏁
 * Deprecate `PointAnnotation.iconImage` getter. Reading this property exposes an internally generated image ID managed by the annotation manager. If you need a stable, reusable image ID, register the image in the style yourself via the Style API and pass the ID explicitly via `PointAnnotationOptions.withIconImage(String)`. In that case you are responsible for the image's lifecycle and must remove it from the style when no longer needed.
@@ -46,6 +50,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0), common to [v24.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0).
 
+# 11.20.2 March 25, 2026
+## Dependencies
+* Update gl-native to [v11.20.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.2), common to [v24.20.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.2).
 
 # 11.21.0-rc.1 March 23, 2026
 
