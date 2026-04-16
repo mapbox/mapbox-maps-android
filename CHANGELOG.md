@@ -8,6 +8,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a potential file descriptor leak that could cause resource exhaustion.
 
+
+# 11.22.0 April 16, 2026
+## Dependencies
+* Update gl-native to [v11.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0), common to [v24.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0).
+
 # 11.20.3 April 14, 2026
 ## Dependencies
 * Update gl-native to [v11.20.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.3), common to [v24.20.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.3).
