@@ -910,9 +910,13 @@ public class MapAttributionScope internal constructor(
     }
 
   private fun showWebPage(url: String) {
+    val uri = Uri.parse(url)
+    if (uri.scheme?.lowercase() !in setOf("http", "https")) {
+      return
+    }
     try {
       val intent = Intent(Intent.ACTION_VIEW)
-      intent.data = Uri.parse(url)
+      intent.data = uri
       mapView.context.startActivity(intent)
     } catch (_: ActivityNotFoundException) {
       Toast.makeText(

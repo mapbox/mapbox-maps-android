@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Bug fixes 🐞
+* Fix attribution links accepting non-HTTP URI schemes.
 * Fix a potential file descriptor leak that could cause resource exhaustion.
 
 

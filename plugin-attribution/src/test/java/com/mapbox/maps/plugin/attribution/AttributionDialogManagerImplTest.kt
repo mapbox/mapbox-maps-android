@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.attribution
 
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.geofencing.MapGeofencingConsent
@@ -21,12 +22,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
 class AttributionDialogManagerImplTest {
 
   private lateinit var attributionDialogManagerImpl: AttributionDialogManagerImpl
+  private lateinit var activity: AppCompatActivity
   private val telemetry: MapTelemetry = mockk()
   @OptIn(MapboxExperimental::class)
   private val geofencingConsent: MapGeofencingConsent = mockk()
@@ -48,11 +51,10 @@ class AttributionDialogManagerImplTest {
       Attribution("Telemetry", Attribution.ABOUT_TELEMETRY_URL),
       Attribution(Attribution.GEOFENCING, Attribution.GEOFENCING_URL_MARKER),
     )
-    attributionDialogManagerImpl = AttributionDialogManagerImpl(
-      Robolectric.buildActivity(AppCompatActivity::class.java).get().also {
-        it.setTheme(R.style.Theme_AppCompat_Dialog_Alert)
-      }
-    )
+    activity = Robolectric.buildActivity(AppCompatActivity::class.java).get().also {
+      it.setTheme(R.style.Theme_AppCompat_Dialog_Alert)
+    }
+    attributionDialogManagerImpl = AttributionDialogManagerImpl(activity)
   }
 
   @Test
@@ -201,5 +203,75 @@ class AttributionDialogManagerImplTest {
     button.performClick()
     ShadowLooper.runUiThreadTasks()
     assertFalse(attributionDialogManagerImpl.telemetryDialog!!.isShowing)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun onClickHttpsAttributionOpensWebPage() {
+    every {
+      mapAttributionDelegate.parseAttributions(any(), any())
+    } returns listOf(
+      Attribution("OpenStreetMap", "https://www.openstreetmap.org/copyright"),
+      Attribution("Telemetry", Attribution.ABOUT_TELEMETRY_URL),
+      Attribution(Attribution.GEOFENCING, Attribution.GEOFENCING_URL_MARKER),
+    )
+    attributionDialogManagerImpl.showAttribution(mapAttributionDelegate)
+    attributionDialogManagerImpl.onClick(mockk(), 0)
+    val shadowActivity = Shadows.shadowOf(activity)
+    val startedIntent = shadowActivity.nextStartedActivity
+    assertNotNull(startedIntent)
+    assertEquals(Intent.ACTION_VIEW, startedIntent.action)
+    assertEquals("https://www.openstreetmap.org/copyright", startedIntent.data.toString())
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun onClickTelSchemeAttributionDoesNotLaunchIntent() {
+    every {
+      mapAttributionDelegate.parseAttributions(any(), any())
+    } returns listOf(
+      Attribution("Malicious", "tel:+19001234567"),
+      Attribution("Telemetry", Attribution.ABOUT_TELEMETRY_URL),
+      Attribution(Attribution.GEOFENCING, Attribution.GEOFENCING_URL_MARKER),
+    )
+    attributionDialogManagerImpl.showAttribution(mapAttributionDelegate)
+    attributionDialogManagerImpl.onClick(mockk(), 0)
+    val shadowActivity = Shadows.shadowOf(activity)
+    val startedIntent = shadowActivity.nextStartedActivity
+    assertNull(startedIntent)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun onClickSmsSchemeAttributionDoesNotLaunchIntent() {
+    every {
+      mapAttributionDelegate.parseAttributions(any(), any())
+    } returns listOf(
+      Attribution("Malicious", "sms:+19001234567"),
+      Attribution("Telemetry", Attribution.ABOUT_TELEMETRY_URL),
+      Attribution(Attribution.GEOFENCING, Attribution.GEOFENCING_URL_MARKER),
+    )
+    attributionDialogManagerImpl.showAttribution(mapAttributionDelegate)
+    attributionDialogManagerImpl.onClick(mockk(), 0)
+    val shadowActivity = Shadows.shadowOf(activity)
+    val startedIntent = shadowActivity.nextStartedActivity
+    assertNull(startedIntent)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun onClickMarketSchemeAttributionDoesNotLaunchIntent() {
+    every {
+      mapAttributionDelegate.parseAttributions(any(), any())
+    } returns listOf(
+      Attribution("Malicious", "market://details?id=com.malicious.app"),
+      Attribution("Telemetry", Attribution.ABOUT_TELEMETRY_URL),
+      Attribution(Attribution.GEOFENCING, Attribution.GEOFENCING_URL_MARKER),
+    )
+    attributionDialogManagerImpl.showAttribution(mapAttributionDelegate)
+    attributionDialogManagerImpl.onClick(mockk(), 0)
+    val shadowActivity = Shadows.shadowOf(activity)
+    val startedIntent = shadowActivity.nextStartedActivity
+    assertNull(startedIntent)
   }
 }

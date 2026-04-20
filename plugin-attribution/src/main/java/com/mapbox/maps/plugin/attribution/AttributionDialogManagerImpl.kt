@@ -173,9 +173,13 @@ class AttributionDialogManagerImpl(
   }
 
   private fun showWebPage(url: String) {
+    val uri = Uri.parse(url)
+    if (uri.scheme?.lowercase() !in setOf("http", "https")) {
+      return
+    }
     try {
       val intent = Intent(Intent.ACTION_VIEW)
-      intent.data = Uri.parse(url)
+      intent.data = uri
       context.startActivity(intent)
     } catch (exception: ActivityNotFoundException) {
       Toast.makeText(context, R.string.mapbox_attributionErrorNoBrowser, Toast.LENGTH_LONG).show()
