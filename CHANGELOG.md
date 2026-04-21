@@ -41,15 +41,26 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0), common to [v24.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0).
 
+# 11.21.2 April 16, 2026
+## Features ✨ and improvements 🏁
+*  Improve rendering performance of feature cutouts
+
+## Bug fixes 🐞
+* Fix tile cover issues for tunnels
+
+## Dependencies
+* Update gl-native to [v11.21.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.2), common to [v24.21.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.2).
+
 # 11.20.3 April 14, 2026
+## Bug fixes 🐞
+* Fix tile data decompression by properly tracking compression state in tile storage.
+
 ## Dependencies
 * Update gl-native to [v11.20.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.3), common to [v24.20.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.3).
 
 # 11.21.1 April 10, 2026
 ## Features ✨ and improvements 🏁
 * Deprecate `PointAnnotation.iconImage` getter. Reading this property exposes an internally generated image ID managed by the annotation manager. If you need a stable, reusable image ID, register the image in the style yourself via the Style API and pass the ID explicitly via `PointAnnotationOptions.withIconImage(String)`. In that case you are responsible for the image's lifecycle and must remove it from the style when no longer needed.
-* Internal fixes and performance improvements.
-* TileStore improvements.
 
 ## Bug fixes 🐞
 * Fix native memory leak in `AnnotationManager` where bitmap style images were not removed when annotations were deleted.
@@ -80,10 +91,30 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.22.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0-rc.1), common to [v24.22.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0-rc.1).
 
 # 11.21.0 April 02, 2026
+
+## Bug fixes 🐞
+* Fix tile store eviction failing to clean up files for decompressed tiles, causing gradual storage growth.
+* Fix gaps in elevated route line rendering at ramp transitions and tile borders.
+* Fix indicator cutout (location puck area) appearing in the wrong position on high-DPI displays.
+* Fix incorrect shadow culling on fill-extrusion layers.
+* Fix ambient occlusion not being clipped when fill-extrusion layers are clipped by clip layers.
+* Fix clip layer updates not always refreshing clipped layers and shadows.
+* Fix native memory leak in `AnnotationManager` where bitmap style images were not removed onDestroy.
+* Fix feature cutout rendering artifacts on some devices caused by insufficient shader precision.
+* Fix rendering of stacked underground 3D roads.
+* Fix a crash that could occur when the map is destroyed during style loading.
+* Fix underground road geometry being clipped in orthographic projection with small viewports.
+* Fix map flickering caused by stencil buffer conflicts between raster and hillshade layers.
+* Fix potential ANRs when receiving location updates under heavy system load.
+* Internal fixes and performance improvements.
+
 ## Dependencies
 * Update gl-native to [v11.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0), common to [v24.21.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.0).
 
 # 11.20.2 March 25, 2026
+## Bug fixes 🐞
+* Fix a bug in eviction logic for TileStore.
+
 ## Dependencies
 * Update gl-native to [v11.20.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.2), common to [v24.20.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.20.2).
 
@@ -119,10 +150,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Improve FPS statistics logging when `mapView.setOnFpsChangedListener()` is used with separate tracking for frame pacing skips and missed render frames for better performance debugging.
 
 ## Bug fixes 🐞
-* Fix NPE crash in `PointAnnotationClusterActivity` example when the remote GeoJSON endpoint returns a non-successful HTTP response.
 * Fix `MapSurface.setMaximumFps` not working correctly on secondary displays (e.g. Android Auto). Use `Context.getDisplay()` on API 30+ to get the actual display refresh rate instead of always using the primary display's rate.
 * Fix `PointAnnotationManager.iconImageBitmap` setter not registering the bitmap image with the style, causing group-level bitmap icons to be invisible.
-* Fix intermittent rendering artifacts (reversed/large bitmaps) on Android Auto caused by stale texture ID reuse in `BitmapWidgetRenderer` after surface recreation.
 * Fix feature cutout artifacts at route overlaps.
 * Fix a data race condition for `FillExtrusion` layer.
 * Fix several issues related to runtime symbol appearances switches.
@@ -157,11 +186,48 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.19.1 March 10, 2026
+## Dependencies
+* Update gl-native to [v11.19.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.1), common to [v24.19.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.1).
+
+
+# 11.19.6 April 10, 2026
 ## Bug fixes 🐞
 * Internal fixes and performance improvements.
 
 ## Dependencies
-* Update gl-native to [v11.19.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.1), common to [v24.19.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.1).
+* Update gl-native to [v11.19.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.6), common to [v24.19.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.6).
+
+
+# 11.19.5 April 02, 2026
+## Bug fixes 🐞
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.19.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.5), common to [v24.19.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.5).
+
+
+# 11.19.4 April 02, 2026
+## Bug fixes 🐞
+* Fix overscaled offline tilepack tiles being showed after switching to online mode
+
+## Dependencies
+* Update gl-native to [v11.19.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.4), common to [v24.19.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.4).
+
+
+# 11.19.3 March 31, 2026
+## Bug fixes 🐞
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.19.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.3), common to [v24.19.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.3).
+
+
+# 11.19.2 March 25, 2026
+## Bug fixes 🐞
+* Fix a bug in eviction logic for TileStore.
+
+## Dependencies
+* Update gl-native to [v11.19.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.2), common to [v24.19.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.19.2).
 
 
 # 11.19.0 February 24, 2026
