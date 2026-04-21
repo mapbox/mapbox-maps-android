@@ -22,6 +22,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix fog incorrectly obscuring the globe when using a custom field of view.
 * Fix tile data corruption causing integrity check failures for small tiles stored in the offline cache.
 * Fix a crash that could occur when the tile store is destroyed while downloads are still being processed.
+* [compose] Fixed Composition leak in ViewAnnotation when annotations are removed from the map.
+
 
 ## Dependencies
 * Update gl-native to [v11.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1), common to [v24.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1).

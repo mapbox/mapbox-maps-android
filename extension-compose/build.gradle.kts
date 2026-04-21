@@ -15,6 +15,16 @@ android {
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     unitTests.apply {
       isIncludeAndroidResources = true
+      all {
+        // JDK 17.0.7+ added StackTraceElement.HashedModules which Robolectric's
+        // SandboxClassLoader tries to instrument. Without --add-opens the module
+        // system blocks reflective access, crashing the test worker with
+        // NoClassDefFoundError: Could not initialize class
+        // java.lang.StackTraceElement$HashedModules
+        it.jvmArgs(
+          "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+        )
+      }
     }
   }
 
@@ -85,6 +95,7 @@ dependencies {
     testImplementation(libs.bundles.base.dependenciesTests)
     testImplementation(project(":maps-sdk"))
     testImplementation(libs.junit)
+    testImplementation(libs.asyncInflater)
   }
 }
 

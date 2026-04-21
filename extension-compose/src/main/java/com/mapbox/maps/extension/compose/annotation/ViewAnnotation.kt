@@ -140,6 +140,11 @@ internal class ViewAnnotationNode(
       }
       removeViewAnnotation(view = view)
     }
+    // Explicitly dispose the Composition to avoid leaking it until the Activity is destroyed.
+    // The ViewCompositionStrategy is set to DisposeOnViewTreeLifecycleDestroyed to survive
+    // temporary detach/reattach cycles in ViewAnnotationManagerImpl, so we need to manually
+    // dispose when the annotation is actually removed.
+    (view as? ComposeView)?.disposeComposition()
     updatedListener = null
   }
 }
