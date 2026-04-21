@@ -7,10 +7,21 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.23.0-rc.1 April 20, 2026
+## Features ✨ and improvements 🏁
+* Support symbol paint properties in appearances — symbol layers can now use feature-dependent appearances for paint properties (not only layout), enabling richer per-feature styling of text and icons.
+* Improve rendering performance of feature cutouts — optimized depth sampling in the cutout shader yields noticeably smoother rendering when feature cutouts are enabled (e.g. elevated route with cutouts).
+* TileStore can now store 3D landmark/navigation tile content types, unblocking their use in offline regions.
+* Add support for USB import radius in TileStore — new import parameter for seeding offline tile packs from USB media within a configurable radius.
+* Evict tiles based on LRU and optimize eviction — the default eviction policy now uses least-recently-used instead of expiration-based scoring, keeping frequently-viewed tiles around longer and making cleanup passes faster.
+* Settings can be set on startup — the SDK now loads `persistent_settings.json` and `non_persistent_settings.json` from the app's internal storage directory at startup, allowing configuration changes without an app rebuild.
+
 ## Bug fixes 🐞
 * Fix attribution links accepting non-HTTP URI schemes.
 * Fix a potential file descriptor leak that could cause resource exhaustion.
-
+* Fix icons appearing at incorrect size when `icon-size` is data-driven and a non-default scale factor is applied.
+* Fix fog incorrectly obscuring the globe when using a custom field of view.
+* Fix tile data corruption causing integrity check failures for small tiles stored in the offline cache.
+* Fix a crash that could occur when the tile store is destroyed while downloads are still being processed.
 
 ## Dependencies
 * Update gl-native to [v11.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1), common to [v24.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1).
