@@ -818,6 +818,7 @@ public class com/mapbox/maps/interactions/FeaturesetFeature {
 	public final fun getDescriptor ()Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;
 	public fun getGeometry ()Lcom/mapbox/geojson/Geometry;
 	public final fun getId ()Lcom/mapbox/maps/FeaturesetFeatureId;
+	public final fun getOriginalFeature ()Lcom/mapbox/geojson/Feature;
 	public final fun getProperties ()Lorg/json/JSONObject;
 	public final fun getState ()Lcom/mapbox/maps/interactions/FeatureState;
 	public fun hashCode ()I

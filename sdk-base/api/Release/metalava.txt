@@ -820,11 +820,13 @@ package com.mapbox.maps.interactions {
     method public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> getDescriptor();
     method public com.mapbox.geojson.Geometry getGeometry();
     method public final com.mapbox.maps.FeaturesetFeatureId? getId();
+    method public final com.mapbox.geojson.Feature getOriginalFeature();
     method public final org.json.JSONObject getProperties();
     method public final FS getState();
     property public final com.mapbox.maps.interactions.TypedFeaturesetDescriptor<FS,?> descriptor;
     property public com.mapbox.geojson.Geometry geometry;
     property public final com.mapbox.maps.FeaturesetFeatureId? id;
+    property public final com.mapbox.geojson.Feature originalFeature;
     property public final org.json.JSONObject properties;
     property public final FS state;
   }

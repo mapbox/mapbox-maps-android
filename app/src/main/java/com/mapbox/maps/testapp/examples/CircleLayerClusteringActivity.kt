@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.format
@@ -32,6 +33,8 @@ import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 
 /**
  * Example of using GeoJSON and circle layers to visualize point data in clusters.
+ *
+ * It implements the common pattern when user taps clusters to display more data points.
  */
 class CircleLayerClusteringActivity : AppCompatActivity() {
 
@@ -44,9 +47,9 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     mapboxMap.loadStyle(
       styleExtension = style(Style.STANDARD) {
         +transition {
-            duration(0)
-            delay(0)
-            enablePlacementTransitions(false)
+          duration(0)
+          delay(0)
+          enablePlacementTransitions(false)
         }
       },
       onStyleLoaded = {
@@ -67,6 +70,26 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
           R.string.zoom_map_in_and_out_instruction,
           Toast.LENGTH_SHORT
         ).show()
+      }
+    )
+
+    // Add interaction to the "clusters" layer that will expand the cluster circles when clicked.
+    mapboxMap.addInteraction(
+      ClickInteraction.layer(CLUSTERS_LAYER_ID) { feature, _ ->
+        mapboxMap.getGeoJsonClusterExpansionZoom(GEOJSON_SOURCE_ID, feature.originalFeature) { result ->
+          result.onValue { value ->
+            val zoom = value.value?.contents as? Long
+            if (zoom != null) {
+              mapboxMap.flyTo(
+                CameraOptions.Builder()
+                  .center(feature.geometry as? Point)
+                  .zoom(zoom.toDouble())
+                  .build()
+              )
+            }
+          }
+        }
+        true
       }
     )
   }
@@ -148,7 +171,7 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
 
     // Add clusters' circles
     style.addLayer(
-      circleLayer("clusters", GEOJSON_SOURCE_ID) {
+      circleLayer(CLUSTERS_LAYER_ID, GEOJSON_SOURCE_ID) {
         circleColor(
           step(
             input = get("point_count"),
@@ -190,5 +213,7 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
   companion object {
     private const val GEOJSON_SOURCE_ID = "earthquakes"
     private const val CROSS_ICON_ID = "cross-icon-id"
+
+    private const val CLUSTERS_LAYER_ID = "clusters"
   }
 }

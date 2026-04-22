@@ -6,7 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Expose `FeaturesetFeature.originalFeature` property.
+
 # 11.23.0-rc.1 April 20, 2026
+
 ## Bug fixes 🐞
 * Fix attribution links accepting non-HTTP URI schemes.
 * Fix a potential file descriptor leak that could cause resource exhaustion.

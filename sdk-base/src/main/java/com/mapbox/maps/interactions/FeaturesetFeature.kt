@@ -33,9 +33,13 @@ open class FeaturesetFeature<FS : FeatureState> @RestrictTo(RestrictTo.Scope.LIB
    */
   val state: FS,
   /**
-   * For internal usage.
+   * The original GeoJSON [Feature].
+   *
+   * This is useful for passing to cluster-related methods such as
+   * `MapboxMap.getGeoJsonClusterExpansionZoom`.
+   * For accessing feature data prefer using [geometry], [properties], etc.
    */
-  internal val originalFeature: Feature,
+  val originalFeature: Feature,
 ) {
   /**
    * Mandatory feature [Geometry].
