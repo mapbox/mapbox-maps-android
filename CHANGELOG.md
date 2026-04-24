@@ -7,6 +7,12 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.21.3 April 23, 2026
+
+## Bug fixes 🐞
+* Fix above-ground route line not rendering over tunnel geometry when cutout is active.
+* Fix rendering artifacts on feature cutout geometries caused by incorrect shader clipping.
+* Fix a potential crash in style configuration expression evaluation when a config value is unset.
+
 ## Dependencies
 * Update gl-native to [v11.21.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.3), common to [v24.21.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.3).
 
