@@ -1142,6 +1142,51 @@ class GesturesPluginTest {
     assertEquals(customManager, presenter.getGesturesManager())
   }
 
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun verifySetGesturesManagerCancelsPreviousInteractions() {
+    every { mapInteractionDelegate.addInteraction(any()) } answers { mockk(relaxUnitFun = true) }
+
+    val customManager1 = mockk<AndroidGesturesManager>(relaxed = true)
+    presenter.setGesturesManager(customManager1, true, true)
+    assertEquals(3, presenter.interactionsCancelableSet.size)
+
+    val customManager2 = mockk<AndroidGesturesManager>(relaxed = true)
+    presenter.setGesturesManager(customManager2, true, true)
+    assertEquals(3, presenter.interactionsCancelableSet.size)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun verifySetGesturesManagerAfterCleanupIsIgnored() {
+    every { mapInteractionDelegate.addInteraction(any()) } answers { mockk(relaxUnitFun = true) }
+
+    presenter.cleanup()
+    assertTrue(presenter.isCleanedUp)
+
+    val customManager = mockk<AndroidGesturesManager>(relaxed = true)
+    presenter.setGesturesManager(customManager, true, true)
+    assertEquals(0, presenter.interactionsCancelableSet.size)
+  }
+
+  @Test
+  fun verifyPublicApiIsNoOpAfterCleanup() {
+    presenter.cleanup()
+
+    val clickListener = mockk<OnMapClickListener>()
+    val longClickListener = mockk<OnMapLongClickListener>()
+    val moveListener = mockk<OnMoveListener>()
+
+    presenter.addOnMapClickListener(clickListener)
+    presenter.addOnMapLongClickListener(longClickListener)
+    presenter.addOnMoveListener(moveListener)
+
+    val event = obtain(0L, 0L, ACTION_DOWN, 0f, 0f, 0)
+    assertFalse(presenter.onTouchEvent(event))
+    assertFalse(presenter.onGenericMotionEvent(event))
+    event.recycle()
+  }
+
   @Test
   fun verifyAddProtectedAnimationOwner() {
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
