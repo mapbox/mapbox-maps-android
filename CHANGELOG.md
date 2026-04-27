@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Expose `FeaturesetFeature.originalFeature` property.
+
+## Bug fixes 🐞
+* [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
+* [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
+
 # 11.23.0-rc.1 April 20, 2026
 ## Features ✨ and improvements 🏁
 * Support symbol paint properties in appearances — symbol layers can now use feature-dependent appearances for paint properties (not only layout), enabling richer per-feature styling of text and icons.
