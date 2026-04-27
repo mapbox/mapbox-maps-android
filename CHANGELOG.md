@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expose `FeaturesetFeature.originalFeature` property.
 
+
 # 11.23.0-rc.1 April 20, 2026
 
 ## Bug fixes 🐞
