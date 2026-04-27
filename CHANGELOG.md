@@ -9,6 +9,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expose `FeaturesetFeature.originalFeature` property.
 
+## Bug fixes 🐞
+* [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
+* [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
 
 # 11.23.0-rc.1 April 20, 2026
 
