@@ -73,7 +73,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   internal lateinit var moveGestureListener: MoveGestureListener
   private lateinit var gestureState: GestureState
   private var style: MapboxStyleManager? = null
-  private val interactionsCancelableSet = mutableSetOf<Cancelable>()
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val interactionsCancelableSet = mutableSetOf<Cancelable>()
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var isCleanedUp = false
+    private set
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
@@ -229,6 +233,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       gesturesManager.setRotateGestureListener(rotateGestureListener)
       gesturesManager.setShoveGestureListener(shoveGestureListener)
       gesturesManager.setMultiFingerTapGestureListener(tapGestureListener)
+      unregisterInteractions()
       registerInteractions()
     }
   }
@@ -311,6 +316,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * @return True if touch event is handled
    */
   override fun onTouchEvent(motionEvent: MotionEvent?): Boolean {
+    if (checkCleanedUp("onTouchEvent")) return false
     // Framework can return null motion events in edge cases mapbox-gl-native#9432
     if (motionEvent == null) {
       return false
@@ -391,6 +397,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * @return True is the event is handled
    */
   override fun onGenericMotionEvent(event: MotionEvent): Boolean {
+    if (checkCleanedUp("onGenericMotionEvent")) return false
     // Mouse events
     // if (event.isFromSource(InputDevice.SOURCE_CLASS_POINTER)) { // this is not available before API 18
     if (event.source and InputDevice.SOURCE_CLASS_POINTER == InputDevice.SOURCE_CLASS_POINTER) {
@@ -1618,6 +1625,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is clicked.
    */
   override fun addOnMapClickListener(onMapClickListener: OnMapClickListener) {
+    if (checkCleanedUp("addOnMapClickListener")) return
     onMapClickListeners.add(onMapClickListener)
   }
 
@@ -1632,6 +1640,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is long clicked.
    */
   override fun addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+    if (checkCleanedUp("addOnMapLongClickListener")) return
     onMapLongClickListeners.add(onMapLongClickListener)
   }
 
@@ -1646,6 +1655,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is has received a fling gesture.
    */
   override fun addOnFlingListener(onFlingListener: OnFlingListener) {
+    if (checkCleanedUp("addOnFlingListener")) return
     onFlingListeners.add(onFlingListener)
   }
 
@@ -1660,6 +1670,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is moved.
    */
   override fun addOnMoveListener(onMoveListener: OnMoveListener) {
+    if (checkCleanedUp("addOnMoveListener")) return
     onMoveListeners.add(onMoveListener)
   }
 
@@ -1674,6 +1685,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is rotated.
    */
   override fun addOnRotateListener(onRotateListener: OnRotateListener) {
+    if (checkCleanedUp("addOnRotateListener")) return
     onRotateListeners.add(onRotateListener)
   }
 
@@ -1688,6 +1700,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is scaled.
    */
   override fun addOnScaleListener(onScaleListener: OnScaleListener) {
+    if (checkCleanedUp("addOnScaleListener")) return
     onScaleListeners.add(onScaleListener)
   }
 
@@ -1702,6 +1715,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Add a callback that is invoked when the map is shoved.
    */
   override fun addOnShoveListener(onShoveListener: OnShoveListener) {
+    if (checkCleanedUp("addOnShoveListener")) return
     onShoveListeners.add(onShoveListener)
   }
 
@@ -1718,6 +1732,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   override fun addProtectedAnimationOwner(owner: String) {
+    if (checkCleanedUp("addProtectedAnimationOwner")) return
     protectedCameraAnimatorOwners.add(owner)
   }
 
@@ -1745,6 +1760,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     attachDefaultListeners: Boolean,
     setDefaultMutuallyExclusives: Boolean
   ) {
+    if (checkCleanedUp("setGesturesManager")) return
     initializeGesturesManager(
       internalGesturesManager,
       setDefaultMutuallyExclusives
@@ -1774,6 +1790,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
+    isCleanedUp = true
     style = null
     unregisterInteractions()
     protectedCameraAnimatorOwners.clear()
@@ -1810,6 +1827,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
+    if (checkCleanedUp("onDelegateProvider")) return
     delegateProvider.getStyle {
       this.style = it
     }
@@ -1834,6 +1852,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Called when new style is loaded.
    */
   override fun onStyleChanged(style: MapboxStyleManager) {
+    if (checkCleanedUp("onStyleChanged")) return
     this.style = style
   }
 
@@ -1841,8 +1860,20 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    * Called when the plugin is first added to the map.
    */
   override fun initialize() {
+    if (checkCleanedUp("initialize")) return
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
+  }
+
+  private fun checkCleanedUp(caller: String): Boolean {
+    if (isCleanedUp) {
+      logE(
+        TAG,
+        "$caller called after cleanup, ignoring. " +
+          "Ensure map interactions are performed before MapView.onDestroy()."
+      )
+    }
+    return isCleanedUp
   }
 
   private companion object {

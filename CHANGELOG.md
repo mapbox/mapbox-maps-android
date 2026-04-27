@@ -6,6 +6,49 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Expose `FeaturesetFeature.originalFeature` property.
+
+## Bug fixes 🐞
+* [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
+* [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
+
+# 11.23.0-rc.1 April 20, 2026
+
+## Bug fixes 🐞
+* Fix attribution links accepting non-HTTP URI schemes.
+* Fix a potential file descriptor leak that could cause resource exhaustion.
+* [compose] Fixed Composition leak in ViewAnnotation when annotations are removed from the map.
+
+
+## Dependencies
+* Update gl-native to [v11.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1), common to [v24.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1).
+
+
+# 11.22.0 April 16, 2026
+## Features ✨ and improvements 🏁
+* Expose `height` and `minHeight` properties on `StandardBuildingsFeature`.
+* Deprecate `PointAnnotation.iconImage` getter. Reading this property exposes an internally generated image ID managed by the annotation manager. If you need a stable, reusable image ID, register the image in the style yourself via the Style API and pass the ID explicitly via `PointAnnotationOptions.withIconImage(String)`. In that case you are responsible for the image's lifecycle and must remove it from the style when no longer needed.
+* Internal fixes and performance improvements.
+
+## Bug fixes 🐞
+* Fix native memory leak in `AnnotationManager` where bitmap style images were not removed when annotations were deleted.
+* Fix feature ID format mismatch in JNI marshaling where whole-number `double` feature IDs (e.g. `12345.0`) were incorrectly serialized as `"12345.000000"` instead of `"12345"`, causing `setFeatureState` to fail when using IDs obtained from `queryRenderedFeatures`.
+* [compose] Fix `MapboxMap` crash (`place is called on a deactivated node`) when used inside a `LazyColumn`.
+    * [compose] **Known limitation:** on Compose Foundation 1.7+ a secondary crash (`Apply is called on deactivated node`) may still occur when `MapboxMap` is used inside a `LazyColumn` during fast scrolling/item reuse because of `LazyColumn` prefetch behavior. Workaround: pass a no-op `LazyListPrefetchStrategy` to `rememberLazyListState()`; see `LazyColumnMapActivity` for an example.
+* Fix location indicator cutout appearing in the wrong position on devices with high pixel density.
+* Fix lines with sub-pixel width being rendered thicker than intended.
+* Fix tile data decompression by properly tracking compression state in tile storage.
+* Fix potential ANR caused by a deadlock in lifecycle management.
+* Fix tile store cleanup task incorrectly deleting in-progress downloads.
+* Fix tiles failing to load on some Android devices when the server response is incomplete.
+* Fix tunnel roads being clipped or missing near the top of the screen at high pitch angles when crossing tile boundaries.
+* Fix stretchable icons used with `icon-text-fit` disappearing in some situations.
+* Fix dashed lines not rendering correctly when `line-dasharray` values are smaller than 1.
+
+## Dependencies
+* Update gl-native to [v11.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0), common to [v24.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0).
+
 # 11.21.3 April 23, 2026
 
 ## Bug fixes 🐞
