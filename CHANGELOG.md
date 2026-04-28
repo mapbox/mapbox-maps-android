@@ -4,11 +4,16 @@ Mapbox welcomes participation and contributions from everyone.
 
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
-# 11.22.1
+
+# 11.22.1 April 28, 2026
 
 ## Bug fixes 🐞
 * [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
 * [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
+
+## Dependencies
+* Update gl-native to [v11.22.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.1), common to [v24.22.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.1).
+
 
 # 11.22.0 April 16, 2026
 ## Features ✨ and improvements 🏁
