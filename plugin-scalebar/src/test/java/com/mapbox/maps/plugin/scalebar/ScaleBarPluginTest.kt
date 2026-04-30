@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import com.mapbox.common.Cancelable
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.Projection
+import com.mapbox.maps.plugin.DistanceUnits
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
@@ -144,5 +145,57 @@ class ScaleBarPluginTest {
     // listener remains active (only subscribed once during initialize)
     verify(exactly = 1) { mapListenerManagerDelegate.subscribeCameraChangedCoalesced(any()) }
     assertEquals(true, scaleBarPlugin.getSettings().enabled)
+  }
+
+  @Suppress("DEPRECATION")
+  @Test
+  fun setIsMetricUnits_syncsDistanceUnits() {
+    scaleBarPlugin.isMetricUnits = false
+    assertEquals(DistanceUnits.IMPERIAL, scaleBarPlugin.distanceUnits)
+
+    scaleBarPlugin.isMetricUnits = true
+    assertEquals(DistanceUnits.METRIC, scaleBarPlugin.distanceUnits)
+  }
+
+  @Suppress("DEPRECATION")
+  @Test
+  fun setDistanceUnits_syncsIsMetricUnits() {
+    scaleBarPlugin.distanceUnits = DistanceUnits.IMPERIAL
+    assertEquals(false, scaleBarPlugin.isMetricUnits)
+
+    scaleBarPlugin.distanceUnits = DistanceUnits.METRIC
+    assertEquals(true, scaleBarPlugin.isMetricUnits)
+
+    scaleBarPlugin.distanceUnits = DistanceUnits.NAUTICAL
+    assertEquals(false, scaleBarPlugin.isMetricUnits)
+  }
+
+  @Suppress("DEPRECATION")
+  @Test
+  fun updateSettings_isMetricUnits_syncsDistanceUnits() {
+    scaleBarPlugin.updateSettings { isMetricUnits = false }
+    assertEquals(DistanceUnits.IMPERIAL, scaleBarPlugin.getSettings().distanceUnits)
+
+    scaleBarPlugin.updateSettings { isMetricUnits = true }
+    assertEquals(DistanceUnits.METRIC, scaleBarPlugin.getSettings().distanceUnits)
+  }
+
+  @Test
+  fun updateSettings_distanceUnits_syncsIsMetricUnits() {
+    scaleBarPlugin.updateSettings { distanceUnits = DistanceUnits.NAUTICAL }
+    @Suppress("DEPRECATION")
+    assertEquals(false, scaleBarPlugin.getSettings().isMetricUnits)
+    assertEquals(DistanceUnits.NAUTICAL, scaleBarPlugin.getSettings().distanceUnits)
+  }
+
+  @Suppress("DEPRECATION")
+  @Test
+  fun updateSettings_bothChanged_distanceUnitsWins() {
+    scaleBarPlugin.updateSettings {
+      isMetricUnits = false
+      distanceUnits = DistanceUnits.NAUTICAL
+    }
+    assertEquals(DistanceUnits.NAUTICAL, scaleBarPlugin.getSettings().distanceUnits)
+    assertEquals(false, scaleBarPlugin.getSettings().isMetricUnits)
   }
 }

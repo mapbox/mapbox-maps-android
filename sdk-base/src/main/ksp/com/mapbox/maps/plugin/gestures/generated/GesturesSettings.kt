@@ -8,8 +8,11 @@ import com.mapbox.maps.plugin.ScrollMode
 import java.util.Objects
 import kotlin.Any
 import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Float
 import kotlin.Int
+import kotlin.ReplaceWith
 import kotlin.Unit
 import kotlin.jvm.JvmSynthetic
 import kotlinx.parcelize.Parcelize
@@ -81,6 +84,11 @@ public class GesturesSettings private constructor(
   /**
    * Whether rotate threshold increases when pinching to zoom. true by default. Default value: true.
    */
+  @Deprecated(
+    message = "This property has no effect",
+    replaceWith = ReplaceWith(expression = "", imports = []),
+    level = DeprecationLevel.WARNING
+  )
   public val increaseRotateThresholdWhenPinchingToZoom: Boolean,
   /**
    * Whether pinch to zoom threshold increases when rotating. true by default. Default value: true.
@@ -149,19 +157,24 @@ public class GesturesSettings private constructor(
   /**
    * Convert to Builder allowing to change class properties.
    */
-  public fun toBuilder(): Builder = Builder() .setRotateEnabled(rotateEnabled)
-      .setPinchToZoomEnabled(pinchToZoomEnabled) .setScrollEnabled(scrollEnabled)
-      .setSimultaneousRotateAndPinchToZoomEnabled(simultaneousRotateAndPinchToZoomEnabled)
-      .setPitchEnabled(pitchEnabled) .setScrollMode(scrollMode)
-      .setDoubleTapToZoomInEnabled(doubleTapToZoomInEnabled)
-      .setDoubleTouchToZoomOutEnabled(doubleTouchToZoomOutEnabled)
-      .setQuickZoomEnabled(quickZoomEnabled) .setFocalPoint(focalPoint)
-      .setPinchToZoomDecelerationEnabled(pinchToZoomDecelerationEnabled)
-      .setRotateDecelerationEnabled(rotateDecelerationEnabled)
-      .setScrollDecelerationEnabled(scrollDecelerationEnabled)
-      .setIncreaseRotateThresholdWhenPinchingToZoom(increaseRotateThresholdWhenPinchingToZoom)
-      .setIncreasePinchToZoomThresholdWhenRotating(increasePinchToZoomThresholdWhenRotating)
-      .setZoomAnimationAmount(zoomAnimationAmount) .setPinchScrollEnabled(pinchScrollEnabled)
+  public fun toBuilder(): Builder = Builder()
+    .setRotateEnabled(rotateEnabled)
+    .setPinchToZoomEnabled(pinchToZoomEnabled)
+    .setScrollEnabled(scrollEnabled)
+    .setSimultaneousRotateAndPinchToZoomEnabled(simultaneousRotateAndPinchToZoomEnabled)
+    .setPitchEnabled(pitchEnabled)
+    .setScrollMode(scrollMode)
+    .setDoubleTapToZoomInEnabled(doubleTapToZoomInEnabled)
+    .setDoubleTouchToZoomOutEnabled(doubleTouchToZoomOutEnabled)
+    .setQuickZoomEnabled(quickZoomEnabled)
+    .setFocalPoint(focalPoint)
+    .setPinchToZoomDecelerationEnabled(pinchToZoomDecelerationEnabled)
+    .setRotateDecelerationEnabled(rotateDecelerationEnabled)
+    .setScrollDecelerationEnabled(scrollDecelerationEnabled)
+    .setIncreaseRotateThresholdWhenPinchingToZoom(increaseRotateThresholdWhenPinchingToZoom)
+    .setIncreasePinchToZoomThresholdWhenRotating(increasePinchToZoomThresholdWhenRotating)
+    .setZoomAnimationAmount(zoomAnimationAmount)
+    .setPinchScrollEnabled(pinchScrollEnabled)
 
   /**
    * Composes and builds a [GesturesSettings] object.
@@ -259,6 +272,11 @@ public class GesturesSettings private constructor(
      * true.
      */
     @set:JvmSynthetic
+    @Deprecated(
+      message = "This property has no effect",
+      replaceWith = ReplaceWith(expression = "", imports = []),
+      level = DeprecationLevel.WARNING
+    )
     public var increaseRotateThresholdWhenPinchingToZoom: Boolean = true
 
     /**
@@ -443,6 +461,11 @@ public class GesturesSettings private constructor(
      * @param increaseRotateThresholdWhenPinchingToZoom
      * @return Builder
      */
+    @Deprecated(
+      message = "This property has no effect",
+      replaceWith = ReplaceWith(expression = "", imports = []),
+      level = DeprecationLevel.WARNING
+    )
     public
         fun setIncreaseRotateThresholdWhenPinchingToZoom(increaseRotateThresholdWhenPinchingToZoom: Boolean):
         Builder {

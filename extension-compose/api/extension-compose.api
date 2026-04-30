@@ -1002,6 +1002,7 @@ public final class com/mapbox/maps/extension/compose/ornaments/logo/MapLogoScope
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/scalebar/MapScaleBarScope {
+	public final fun ScaleBar-vLKV3eY (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JJJFFFFJLcom/mapbox/maps/plugin/DistanceUnits;JZFZLandroidx/compose/runtime/Composer;III)V
 	public final fun ScaleBar-vLKV3eY (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;JJJFFFFJZJZFZLandroidx/compose/runtime/Composer;III)V
 }
 

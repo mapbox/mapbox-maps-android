@@ -20,7 +20,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.maps.MapView
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.ornaments.scalebar.internal.ScaleBarComposePlugin
+import com.mapbox.maps.plugin.DistanceUnits
 import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.scalebar.LocaleUnitResolver
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -61,6 +63,10 @@ public class MapScaleBarScope internal constructor(
    *     will redraw only on demand. Defaults to False and should not be changed explicitly in most cases.
    *     Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
    */
+  @Deprecated(
+    message = "Use the overload with distanceUnits parameter instead.",
+    replaceWith = ReplaceWith("ScaleBar(modifier, contentPadding, alignment, textColor, primaryColor, secondaryColor, borderWidth, height, textBarMargin, textBorderWidth, textSize, if (isMetricUnit) DistanceUnits.METRIC else DistanceUnits.IMPERIAL, refreshInterval, showTextBorder, ratio, useContinuousRendering)")
+  )
   @Composable
   public fun ScaleBar(
     modifier: Modifier = Modifier,
@@ -74,7 +80,72 @@ public class MapScaleBarScope internal constructor(
     textBarMargin: Dp = 8.dp,
     textBorderWidth: Dp = 2.dp,
     textSize: TextUnit = 8.sp,
-    isMetricUnit: Boolean = true,
+    isMetricUnit: Boolean,
+    refreshInterval: Duration = 15.milliseconds,
+    showTextBorder: Boolean = true,
+    ratio: Float = 0.5f,
+    useContinuousRendering: Boolean = false,
+  ) {
+    ScaleBar(
+      modifier = modifier,
+      contentPadding = contentPadding,
+      alignment = alignment,
+      textColor = textColor,
+      primaryColor = primaryColor,
+      secondaryColor = secondaryColor,
+      borderWidth = borderWidth,
+      height = height,
+      textBarMargin = textBarMargin,
+      textBorderWidth = textBorderWidth,
+      textSize = textSize,
+      distanceUnits = if (isMetricUnit) DistanceUnits.METRIC else DistanceUnits.IMPERIAL,
+      refreshInterval = refreshInterval,
+      showTextBorder = showTextBorder,
+      ratio = ratio,
+      useContinuousRendering = useContinuousRendering,
+    )
+  }
+
+  /**
+   * Add a [ScaleBar] ornament to the map, the scale bar will update accordingly when the map's zoom
+   * level or latitude changes.
+   *
+   * By default, the [ScaleBar] will be placed to the [Alignment.TopStart] of the map with padding of 4dp.
+   *
+   * @param modifier Modifier to be applied to the [ScaleBar].
+   * @param contentPadding The default padding applied to the [ScaleBar], paddings from [modifier] will be applied on top of this default padding.
+   * @param alignment The alignment of the [ScaleBar] within the Map.
+   * @param textColor Defines text color of the scale bar.
+   * @param primaryColor Defines primary color of the scale bar.
+   * @param secondaryColor Defines secondary color of the scale bar.
+   * @param borderWidth Defines width of the border for the scale bar.
+   * @param height Defines height of the scale bar.
+   * @param textBarMargin Defines margin of the text bar of the scale bar.
+   * @param textBorderWidth Defines text border width of the scale bar.
+   * @param textSize Defines text size of the scale bar.
+   * @param distanceUnits The distance unit type for the scale bar. Defaults to the device locale (metric for most locales, imperial for US/LR/MM).
+   * @param refreshInterval Configures minimum refresh interval, in millisecond, default is 15 milliseconds.
+   * @param showTextBorder Configures whether to show the text border or not, default is true.
+   * @param ratio Configures ratio of scale bar max width compared with MapView width, default is 0.5.
+   * @param useContinuousRendering If set to True scale bar will be triggering onDraw depending on
+   *     [refreshInterval] even if actual data did not change. If set to False scale bar
+   *     will redraw only on demand. Defaults to False and should not be changed explicitly in most cases.
+   *     Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   */
+  @Composable
+  public fun ScaleBar(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(4.dp),
+    alignment: Alignment = Alignment.TopStart,
+    textColor: Color = Color.Black,
+    primaryColor: Color = Color.Black,
+    secondaryColor: Color = Color.White,
+    borderWidth: Dp = 2.dp,
+    height: Dp = 2.dp,
+    textBarMargin: Dp = 8.dp,
+    textBorderWidth: Dp = 2.dp,
+    textSize: TextUnit = 8.sp,
+    distanceUnits: DistanceUnits = LocaleUnitResolver.distanceUnits,
     refreshInterval: Duration = 15.milliseconds,
     showTextBorder: Boolean = true,
     ratio: Float = 0.5f,
@@ -112,7 +183,7 @@ public class MapScaleBarScope internal constructor(
           .setTextBarMargin(textBarMargin.toPx())
           .setTextBorderWidth(textBorderWidth.toPx())
           .setTextSize(textSize.toPx())
-          .setIsMetricUnits(isMetricUnit)
+          .setDistanceUnits(distanceUnits)
           .setRefreshInterval(refreshInterval.toLong(DurationUnit.MILLISECONDS))
           .setShowTextBorder(showTextBorder)
           .setRatio(ratio)

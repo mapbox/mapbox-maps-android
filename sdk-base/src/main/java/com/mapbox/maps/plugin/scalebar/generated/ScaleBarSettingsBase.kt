@@ -35,7 +35,16 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
    * @param block the receiver function of ScaleBarSettings
    */
   override fun updateSettings(block: ScaleBarSettings.Builder.() -> Unit) {
-    val newSettings = this.internalSettings.toBuilder().apply(block).build()
+    val builder = this.internalSettings.toBuilder().apply(block)
+    // Sync isMetricUnits and distanceUnits after DSL block — the block sets Builder
+    // properties directly, bypassing the Base class setters that normally handle sync.
+    val oldSettings = this.internalSettings
+    if (builder.distanceUnits != oldSettings.distanceUnits) {
+      builder.isMetricUnits = builder.distanceUnits == DistanceUnits.METRIC
+    } else if (builder.isMetricUnits != oldSettings.isMetricUnits) {
+      builder.distanceUnits = if (builder.isMetricUnits) DistanceUnits.METRIC else DistanceUnits.IMPERIAL
+    }
+    val newSettings = builder.build()
     // Trigger the enabled setter to ensure custom logic (e.g., listener management) is executed
     this.enabled = newSettings.enabled
     this.internalSettings = newSettings
@@ -247,8 +256,14 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
       return this.internalSettings.isMetricUnits
     }
     set(value) {
-      if (this.internalSettings.isMetricUnits != value) {
-        this.internalSettings = this.internalSettings.toBuilder().setIsMetricUnits(value).build()
+      // Guard also checks distanceUnits consistency — attribute parsing can leave isMetricUnits
+      // and distanceUnits out of sync when only one is set via XML.
+      val expectedDistanceUnits = if (value) DistanceUnits.METRIC else DistanceUnits.IMPERIAL
+      if (this.internalSettings.isMetricUnits != value || this.internalSettings.distanceUnits != expectedDistanceUnits) {
+        this.internalSettings = this.internalSettings.toBuilder()
+          .setIsMetricUnits(value)
+          .setDistanceUnits(expectedDistanceUnits)
+          .build()
         applySettings()
       }
     }
@@ -261,8 +276,14 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
       return this.internalSettings.distanceUnits
     }
     set(value) {
-      if (this.internalSettings.distanceUnits != value) {
-        this.internalSettings = this.internalSettings.toBuilder().setDistanceUnits(value).build()
+      // Guard also checks isMetricUnits consistency — attribute parsing can leave isMetricUnits
+      // and distanceUnits out of sync when only one is set via XML.
+      if (this.internalSettings.distanceUnits != value || this.internalSettings.isMetricUnits != (value == DistanceUnits.METRIC)) {
+        @Suppress("DEPRECATION")
+        this.internalSettings = this.internalSettings.toBuilder()
+          .setDistanceUnits(value)
+          .setIsMetricUnits(value == DistanceUnits.METRIC)
+          .build()
         applySettings()
       }
     }

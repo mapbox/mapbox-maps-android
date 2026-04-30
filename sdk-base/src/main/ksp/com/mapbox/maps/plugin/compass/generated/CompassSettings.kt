@@ -106,11 +106,19 @@ public class CompassSettings private constructor(
   /**
    * Convert to Builder allowing to change class properties.
    */
-  public fun toBuilder(): Builder = Builder() .setEnabled(enabled) .setPosition(position)
-      .setMarginLeft(marginLeft) .setMarginTop(marginTop) .setMarginRight(marginRight)
-      .setMarginBottom(marginBottom) .setOpacity(opacity) .setRotation(rotation)
-      .setVisibility(visibility) .setFadeWhenFacingNorth(fadeWhenFacingNorth)
-      .setClickable(clickable) .setImage(image)
+  public fun toBuilder(): Builder = Builder()
+    .setEnabled(enabled)
+    .setPosition(position)
+    .setMarginLeft(marginLeft)
+    .setMarginTop(marginTop)
+    .setMarginRight(marginRight)
+    .setMarginBottom(marginBottom)
+    .setOpacity(opacity)
+    .setRotation(rotation)
+    .setVisibility(visibility)
+    .setFadeWhenFacingNorth(fadeWhenFacingNorth)
+    .setClickable(clickable)
+    .setImage(image)
 
   /**
    * Composes and builds a [CompassSettings] object.

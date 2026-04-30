@@ -3227,7 +3227,7 @@ public final class com/mapbox/maps/plugin/scalebar/ScaleBarPlugin$DefaultImpls {
 
 public final class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (ZIFFFFIIIFFFFFZJZFZLcom/mapbox/maps/plugin/DistanceUnits;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ZIFFFFIIIFFFFFZLcom/mapbox/maps/plugin/DistanceUnits;JZFZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBorderWidth ()F

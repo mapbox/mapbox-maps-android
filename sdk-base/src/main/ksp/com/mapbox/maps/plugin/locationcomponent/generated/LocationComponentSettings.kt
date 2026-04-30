@@ -120,13 +120,20 @@ public class LocationComponentSettings private constructor(
   /**
    * Convert to Builder allowing to change class properties.
    */
-  public fun toBuilder(): Builder = Builder(locationPuck) .setEnabled(enabled)
-      .setPulsingEnabled(pulsingEnabled) .setPulsingColor(pulsingColor)
-      .setPulsingMaxRadius(pulsingMaxRadius) .setShowAccuracyRing(showAccuracyRing)
-      .setAccuracyRingColor(accuracyRingColor) .setAccuracyRingBorderColor(accuracyRingBorderColor)
-      .setLayerAbove(layerAbove) .setLayerBelow(layerBelow)
-      .setPuckBearingEnabled(puckBearingEnabled) .setPuckBearing(puckBearing) .setSlot(slot)
-      .setLocationPuck(locationPuck)
+  public fun toBuilder(): Builder = Builder(locationPuck)
+    .setEnabled(enabled)
+    .setPulsingEnabled(pulsingEnabled)
+    .setPulsingColor(pulsingColor)
+    .setPulsingMaxRadius(pulsingMaxRadius)
+    .setShowAccuracyRing(showAccuracyRing)
+    .setAccuracyRingColor(accuracyRingColor)
+    .setAccuracyRingBorderColor(accuracyRingBorderColor)
+    .setLayerAbove(layerAbove)
+    .setLayerBelow(layerBelow)
+    .setPuckBearingEnabled(puckBearingEnabled)
+    .setPuckBearing(puckBearing)
+    .setSlot(slot)
+    .setLocationPuck(locationPuck)
 
   /**
    * Composes and builds a [LocationComponentSettings] object.

@@ -85,9 +85,15 @@ public class AttributionSettings private constructor(
   /**
    * Convert to Builder allowing to change class properties.
    */
-  public fun toBuilder(): Builder = Builder() .setEnabled(enabled) .setIconColor(iconColor)
-      .setPosition(position) .setMarginLeft(marginLeft) .setMarginTop(marginTop)
-      .setMarginRight(marginRight) .setMarginBottom(marginBottom) .setClickable(clickable)
+  public fun toBuilder(): Builder = Builder()
+    .setEnabled(enabled)
+    .setIconColor(iconColor)
+    .setPosition(position)
+    .setMarginLeft(marginLeft)
+    .setMarginTop(marginTop)
+    .setMarginRight(marginRight)
+    .setMarginBottom(marginBottom)
+    .setClickable(clickable)
 
   /**
    * Composes and builds a [AttributionSettings] object.

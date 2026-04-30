@@ -6,8 +6,18 @@ import android.graphics.Color
 import android.os.Parcelable
 import android.view.Gravity
 import com.mapbox.maps.plugin.DistanceUnits
-import kotlinx.parcelize.Parcelize
 import java.util.Objects
+import kotlin.Any
+import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
+import kotlin.Float
+import kotlin.Int
+import kotlin.Long
+import kotlin.ReplaceWith
+import kotlin.Unit
+import kotlin.jvm.JvmSynthetic
+import kotlinx.parcelize.Parcelize
 
 /**
  * Shows the scale bar on the map.
@@ -81,7 +91,16 @@ public class ScaleBarSettings private constructor(
    * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false
    * if the scale bar is using imperial units. Default value: true.
    */
+  @Deprecated(
+    message = "Use distanceUnits instead.",
+    replaceWith = ReplaceWith(expression = "", imports = []),
+    level = DeprecationLevel.WARNING
+  )
   public val isMetricUnits: Boolean,
+  /**
+   * Supported distance unit types. Default value: "metric".
+   */
+  public val distanceUnits: DistanceUnits,
   /**
    * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.
    */
@@ -102,12 +121,7 @@ public class ScaleBarSettings private constructor(
    * Could be set to True to produce correct GPU frame metrics when running gfxinfo command. Default
    * value: false.
    */
-  public val useContinuousRendering: Boolean,
-
-  /**
-   * The type of the distance unit the scale bar displays in. Default value: "metric".
-   */
-  public val distanceUnits: DistanceUnits
+  public val useContinuousRendering: Boolean
 ) : Parcelable {
   /**
    * Overloaded toString function.
@@ -117,9 +131,9 @@ public class ScaleBarSettings private constructor(
       marginBottom=$marginBottom, textColor=$textColor, primaryColor=$primaryColor,
       secondaryColor=$secondaryColor, borderWidth=$borderWidth, height=$height,
       textBarMargin=$textBarMargin, textBorderWidth=$textBorderWidth, textSize=$textSize,
-      isMetricUnits=$isMetricUnits, refreshInterval=$refreshInterval,
+      isMetricUnits=$isMetricUnits, distanceUnits=$distanceUnits, refreshInterval=$refreshInterval,
       showTextBorder=$showTextBorder, ratio=$ratio,
-      useContinuousRendering=$useContinuousRendering, distanceUnits=$distanceUnits)""".trimIndent()
+      useContinuousRendering=$useContinuousRendering)""".trimIndent()
 
   /**
    * Overloaded equals function.
@@ -137,9 +151,9 @@ public class ScaleBarSettings private constructor(
         textBarMargin.compareTo(other.textBarMargin) == 0 &&
         textBorderWidth.compareTo(other.textBorderWidth) == 0 &&
         textSize.compareTo(other.textSize) == 0 && isMetricUnits == other.isMetricUnits &&
-        refreshInterval == other.refreshInterval && showTextBorder == other.showTextBorder &&
-        ratio.compareTo(other.ratio) == 0 && useContinuousRendering == other.useContinuousRendering &&
-        distanceUnits == other.distanceUnits
+        distanceUnits == other.distanceUnits && refreshInterval == other.refreshInterval &&
+        showTextBorder == other.showTextBorder && ratio.compareTo(other.ratio) == 0 &&
+        useContinuousRendering == other.useContinuousRendering
   }
 
   /**
@@ -147,21 +161,33 @@ public class ScaleBarSettings private constructor(
    */
   public override fun hashCode(): Int = Objects.hash(enabled, position, marginLeft, marginTop,
       marginRight, marginBottom, textColor, primaryColor, secondaryColor, borderWidth, height,
-      textBarMargin, textBorderWidth, textSize, isMetricUnits, refreshInterval, showTextBorder,
-      ratio, useContinuousRendering, distanceUnits)
+      textBarMargin, textBorderWidth, textSize, isMetricUnits, distanceUnits, refreshInterval,
+      showTextBorder, ratio, useContinuousRendering)
 
   /**
    * Convert to Builder allowing to change class properties.
    */
-  public fun toBuilder(): Builder = Builder() .setEnabled(enabled) .setPosition(position)
-      .setMarginLeft(marginLeft) .setMarginTop(marginTop) .setMarginRight(marginRight)
-      .setMarginBottom(marginBottom) .setTextColor(textColor) .setPrimaryColor(primaryColor)
-      .setSecondaryColor(secondaryColor) .setBorderWidth(borderWidth) .setHeight(height)
-      .setTextBarMargin(textBarMargin) .setTextBorderWidth(textBorderWidth) .setTextSize(textSize)
-      .setIsMetricUnits(isMetricUnits) .setRefreshInterval(refreshInterval)
-      .setShowTextBorder(showTextBorder) .setRatio(ratio)
-      .setUseContinuousRendering(useContinuousRendering)
-      .setDistanceUnits(distanceUnits)
+  public fun toBuilder(): Builder = Builder()
+    .setEnabled(enabled)
+    .setPosition(position)
+    .setMarginLeft(marginLeft)
+    .setMarginTop(marginTop)
+    .setMarginRight(marginRight)
+    .setMarginBottom(marginBottom)
+    .setTextColor(textColor)
+    .setPrimaryColor(primaryColor)
+    .setSecondaryColor(secondaryColor)
+    .setBorderWidth(borderWidth)
+    .setHeight(height)
+    .setTextBarMargin(textBarMargin)
+    .setTextBorderWidth(textBorderWidth)
+    .setTextSize(textSize)
+    .setIsMetricUnits(isMetricUnits)
+    .setDistanceUnits(distanceUnits)
+    .setRefreshInterval(refreshInterval)
+    .setShowTextBorder(showTextBorder)
+    .setRatio(ratio)
+    .setUseContinuousRendering(useContinuousRendering)
 
   /**
    * Composes and builds a [ScaleBarSettings] object.
@@ -265,7 +291,18 @@ public class ScaleBarSettings private constructor(
      * false if the scale bar is using imperial units. Default value: true.
      */
     @set:JvmSynthetic
+    @Deprecated(
+      message = "Use distanceUnits instead.",
+      replaceWith = ReplaceWith(expression = "", imports = []),
+      level = DeprecationLevel.WARNING
+    )
     public var isMetricUnits: Boolean = true
+
+    /**
+     * Supported distance unit types. Default value: "metric".
+     */
+    @set:JvmSynthetic
+    public var distanceUnits: DistanceUnits = DistanceUnits.METRIC
 
     /**
      * Configures minimum refresh interval, in millisecond, default is 15. Default value: 15.
@@ -295,12 +332,6 @@ public class ScaleBarSettings private constructor(
      */
     @set:JvmSynthetic
     public var useContinuousRendering: Boolean = false
-
-    /**
-     * The type of the distance unit the scale bar displays in. Default value: "metric".
-     */
-    @set:JvmSynthetic
-    public var distanceUnits: DistanceUnits = DistanceUnits.METRIC
 
     /**
      * Setter for enabled: whether the scale is visible on the map. Default value: true.
@@ -473,10 +504,24 @@ public class ScaleBarSettings private constructor(
      * @param isMetricUnits
      * @return Builder
      */
-    @Deprecated(message = "Use setDistanceUnits() instead.")
+    @Deprecated(
+      message = "Use distanceUnits instead.",
+      replaceWith = ReplaceWith(expression = "", imports = []),
+      level = DeprecationLevel.WARNING
+    )
     public fun setIsMetricUnits(isMetricUnits: Boolean): Builder {
       this.isMetricUnits = isMetricUnits
-      this.distanceUnits = if (isMetricUnits) DistanceUnits.METRIC else DistanceUnits.IMPERIAL
+      return this
+    }
+
+    /**
+     * Setter for distanceUnits: supported distance unit types. Default value: "metric".
+     *
+     * @param distanceUnits
+     * @return Builder
+     */
+    public fun setDistanceUnits(distanceUnits: DistanceUnits): Builder {
+      this.distanceUnits = distanceUnits
       return this
     }
 
@@ -532,26 +577,14 @@ public class ScaleBarSettings private constructor(
     }
 
     /**
-     * The type of the distance unit the scale bar displays in. Default value: "metric".
-     *
-     * @param units
-     * @return Builder
-     */
-    public fun setDistanceUnits(units: DistanceUnits): Builder {
-      this.distanceUnits = units
-      this.isMetricUnits = units == DistanceUnits.METRIC
-      return this
-    }
-
-    /**
      * Returns a [ScaleBarSettings] reference to the object being constructed by the builder.
      *
      * @return ScaleBarSettings
      */
     public fun build(): ScaleBarSettings = ScaleBarSettings(enabled, position, marginLeft,
         marginTop, marginRight, marginBottom, textColor, primaryColor, secondaryColor, borderWidth,
-        height, textBarMargin, textBorderWidth, textSize, isMetricUnits, refreshInterval,
-        showTextBorder, ratio, useContinuousRendering, distanceUnits)
+        height, textBarMargin, textBorderWidth, textSize, isMetricUnits, distanceUnits,
+        refreshInterval, showTextBorder, ratio, useContinuousRendering)
   }
 }
 
