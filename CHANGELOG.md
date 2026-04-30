@@ -7,16 +7,6 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.23.0 April 29, 2026
-## Dependencies
-* Update gl-native to [v11.23.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0), common to [v24.23.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0).
-
-
-## Features ✨ and improvements 🏁
-* Expose `FeaturesetFeature.originalFeature` property.
-
-## Bug fixes 🐞
-* [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
-# 11.23.0 April 29, 2026
 ## Features ✨ and improvements 🏁
 * Support symbol paint properties in appearances — symbol layers can now use feature-dependent appearances for paint properties (not only layout), enabling richer per-feature styling of text and icons.
 * Improve rendering performance of feature cutouts — optimized depth sampling in the cutout shader yields noticeably smoother rendering when feature cutouts are enabled (e.g. elevated route with cutouts).
@@ -33,6 +23,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix fog incorrectly obscuring the globe when using a custom field of view.
 * Fix tile data corruption causing integrity check failures for small tiles stored in the offline cache.
 * Fix a crash that could occur when the tile store is destroyed while downloads are still being processed.
+* Fix 3D models occasionally not rendering on first load on some devices, caused by background shader compilation not signaling the renderer when compilation completed.
+* Fix a crash in `ConfigExpression`  where dereferencing an empty optional caused undefined behaviour.
 * [compose] Fixed Composition leak in ViewAnnotation when annotations are removed from the map.
 * [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
 * [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
