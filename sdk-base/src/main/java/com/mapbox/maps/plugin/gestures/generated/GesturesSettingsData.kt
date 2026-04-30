@@ -98,6 +98,7 @@ private data class GesturesSettingsData(
   /**
    * Whether rotate threshold increases when pinching to zoom. true by default. Default value: true.
    */
+  @Deprecated("This property has no effect")
   @Default("true")
   var increaseRotateThresholdWhenPinchingToZoom: Boolean,
 

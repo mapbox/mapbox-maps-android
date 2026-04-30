@@ -2487,7 +2487,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getDoubleTouchToZoomOutEnabled();
     method public com.mapbox.maps.ScreenCoordinate? getFocalPoint();
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
-    method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
+    method @Deprecated public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
     method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
     method public boolean getPinchToZoomEnabled();
@@ -2505,7 +2505,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public final boolean doubleTouchToZoomOutEnabled;
     property public final com.mapbox.maps.ScreenCoordinate? focalPoint;
     property public final boolean increasePinchToZoomThresholdWhenRotating;
-    property public final boolean increaseRotateThresholdWhenPinchingToZoom;
+    property @Deprecated public final boolean increaseRotateThresholdWhenPinchingToZoom;
     property public final boolean pinchScrollEnabled;
     property public final boolean pinchToZoomDecelerationEnabled;
     property public final boolean pinchToZoomEnabled;
@@ -2527,7 +2527,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getDoubleTouchToZoomOutEnabled();
     method public com.mapbox.maps.ScreenCoordinate? getFocalPoint();
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
-    method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
+    method @Deprecated public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
     method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
     method public boolean getPinchToZoomEnabled();
@@ -2544,7 +2544,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setDoubleTouchToZoomOutEnabled(boolean doubleTouchToZoomOutEnabled);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setFocalPoint(com.mapbox.maps.ScreenCoordinate? focalPoint);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setIncreasePinchToZoomThresholdWhenRotating(boolean increasePinchToZoomThresholdWhenRotating);
-    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
+    method @Deprecated public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setPinchScrollEnabled(boolean pinchScrollEnabled);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setPinchToZoomDecelerationEnabled(boolean pinchToZoomDecelerationEnabled);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setPinchToZoomEnabled(boolean pinchToZoomEnabled);
@@ -2561,7 +2561,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public final boolean doubleTouchToZoomOutEnabled;
     property public final com.mapbox.maps.ScreenCoordinate? focalPoint;
     property public final boolean increasePinchToZoomThresholdWhenRotating;
-    property public final boolean increaseRotateThresholdWhenPinchingToZoom;
+    property @Deprecated public final boolean increaseRotateThresholdWhenPinchingToZoom;
     property public final boolean pinchScrollEnabled;
     property public final boolean pinchToZoomDecelerationEnabled;
     property public final boolean pinchToZoomEnabled;
@@ -3242,13 +3242,13 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public int getTextColor();
     method public float getTextSize();
     method public boolean getUseContinuousRendering();
-    method public boolean isMetricUnits();
+    method @Deprecated public boolean isMetricUnits();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder toBuilder();
     property public final float borderWidth;
     property public final com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public final boolean enabled;
     property public final float height;
-    property public final boolean isMetricUnits;
+    property @Deprecated public final boolean isMetricUnits;
     property public final float marginBottom;
     property public final float marginLeft;
     property public final float marginRight;
@@ -3288,9 +3288,9 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public int getTextColor();
     method public float getTextSize();
     method public boolean getUseContinuousRendering();
-    method public boolean isMetricUnits();
+    method @Deprecated public boolean isMetricUnits();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setBorderWidth(float borderWidth);
-    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits units);
+    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits distanceUnits);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setEnabled(boolean enabled);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setHeight(float height);
     method @Deprecated public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
@@ -3313,7 +3313,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     property public final com.mapbox.maps.plugin.DistanceUnits distanceUnits;
     property public final boolean enabled;
     property public final float height;
-    property public final boolean isMetricUnits;
+    property @Deprecated public final boolean isMetricUnits;
     property public final float marginBottom;
     property public final float marginLeft;
     property public final float marginRight;

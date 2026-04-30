@@ -78,9 +78,13 @@ public class IndoorSelectorSettings private constructor(
   /**
    * Convert to Builder allowing to change class properties.
    */
-  public fun toBuilder(): Builder = Builder() .setEnabled(enabled) .setPosition(position)
-      .setMarginLeft(marginLeft) .setMarginTop(marginTop) .setMarginRight(marginRight)
-      .setMarginBottom(marginBottom)
+  public fun toBuilder(): Builder = Builder()
+    .setEnabled(enabled)
+    .setPosition(position)
+    .setMarginLeft(marginLeft)
+    .setMarginTop(marginTop)
+    .setMarginRight(marginRight)
+    .setMarginBottom(marginBottom)
 
   /**
    * Composes and builds a [IndoorSelectorSettings] object.

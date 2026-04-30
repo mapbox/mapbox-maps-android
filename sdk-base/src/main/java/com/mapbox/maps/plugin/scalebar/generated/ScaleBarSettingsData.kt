@@ -109,6 +109,7 @@ private data class ScaleBarSettingsData(
   /**
    * Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. Default value: true.
    */
+  @Deprecated("Use distanceUnits instead.")
   @Default("true")
   var isMetricUnits: Boolean,
 
