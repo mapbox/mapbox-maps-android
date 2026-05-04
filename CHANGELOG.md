@@ -45,6 +45,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix attribution links accepting non-HTTP URI schemes.
 * Fix a potential file descriptor leak that could cause resource exhaustion.
 * [compose] Fixed Composition leak in ViewAnnotation when annotations are removed from the map.
+* [compose] Fix Fragment lifecycle observer leak in ViewAnnotation on annotation removal.
 
 
 ## Dependencies
