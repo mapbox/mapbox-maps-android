@@ -15,6 +15,7 @@ import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkAll
 import io.mockk.verify
+import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -98,6 +99,38 @@ internal class ViewAnnotationNodeTest {
     node.onRemoved(parentNode)
 
     verify(exactly = 0) { viewAnnotationManager.removeOnViewAnnotationUpdatedListener(any()) }
+  }
+
+  @Test
+  fun `onRemoved sets view composition strategy before disposing composition`() {
+    val node = ViewAnnotationNode(
+      viewAnnotationManager = viewAnnotationManager,
+      view = composeView,
+      updatedListener = null,
+    )
+
+    node.onRemoved(parentNode)
+
+    verifyOrder {
+      composeView.setViewCompositionStrategy(any())
+      composeView.disposeComposition()
+    }
+  }
+
+  @Test
+  fun `onClear sets view composition strategy before disposing composition`() {
+    val node = ViewAnnotationNode(
+      viewAnnotationManager = viewAnnotationManager,
+      view = composeView,
+      updatedListener = null,
+    )
+
+    node.onClear()
+
+    verifyOrder {
+      composeView.setViewCompositionStrategy(any())
+      composeView.disposeComposition()
+    }
   }
 
   @Test
