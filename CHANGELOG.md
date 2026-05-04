@@ -5264,3 +5264,4 @@ To get started with v10, please refer to our [migration guide](https://docs.mapb
 * An invalid LatLng conversion can occur and produce a native crash
 * Native crash when resuming the map in specific situations
 * Native crash when performing a camera transition using Map#jumpTo
+
