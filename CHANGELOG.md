@@ -6,17 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.21.4 May 05, 2026
-## Dependencies
-* Update gl-native to [v11.21.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.4), common to [v24.21.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.4).
-
-
 ## Features ✨ and improvements 🏁
 * Expose `FeaturesetFeature.originalFeature` property.
 
 ## Bug fixes 🐞
 * [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
 * [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
+
 
 # 11.23.0-rc.1 April 20, 2026
 
@@ -54,6 +50,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0), common to [v24.22.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.0).
+
+
+
+# 11.21.4 May 05, 2026
+
+## Dependencies
+* Update gl-native to [v11.21.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.4), common to [v24.21.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.4).
+
 
 # 11.21.3 April 23, 2026
 
