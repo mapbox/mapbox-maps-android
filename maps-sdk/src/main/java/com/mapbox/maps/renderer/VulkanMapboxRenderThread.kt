@@ -1,28 +1,67 @@
 package com.mapbox.maps.renderer
 
+import android.annotation.SuppressLint
 import android.view.Surface
+import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.IVulkanManager
 import com.mapbox.maps.RenderCallback
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
+import java.util.concurrent.locks.Condition
+import java.util.concurrent.locks.ReentrantLock
 
 /**
  * Vulkan-based implementation of MapboxRenderThread.
  */
-internal class VulkanMapboxRenderThread(
-  mapboxRenderer: MapboxRenderer,
-  private val antialiasingSampleCount: Int,
-  mapName: String,
-) :
-  MapboxRenderThread(
+internal class VulkanMapboxRenderThread : MapboxRenderThread {
+
+  private val antialiasingSampleCount: Int
+  private var nativeVulkanManager: IVulkanManager? = null
+  private val surfaceWrapper: SurfaceWrapper = SurfaceWrapper()
+
+  /**
+   * Latest resize dimensions received before [nativeVulkanManager] was available.
+   * Drained by [applyCachedResize] once the manager is obtained.
+   *
+   * Thread-confined to the render handler thread — both [resize] and
+   * [prepareRenderer] are dispatched through it, so no synchronization needed.
+   */
+  private var cachedSize: Pair<Int, Int>? = null
+
+  constructor(
+    mapboxRenderer: MapboxRenderer,
+    antialiasingSampleCount: Int,
+    mapName: String,
+  ) : super(
     mapboxRenderer = mapboxRenderer,
     widgetRenderer = null,
     mapName = mapName,
     rendererName = "Vulkan"
   ) {
+    this.antialiasingSampleCount = antialiasingSampleCount
+  }
 
-  private var nativeVulkanManager: IVulkanManager? = null
-  private val surfaceWrapper: SurfaceWrapper = SurfaceWrapper()
+  @SuppressLint("VisibleForTests")
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  constructor(
+    mapboxRenderer: MapboxRenderer,
+    antialiasingSampleCount: Int,
+    handlerThread: RenderHandlerThread,
+    fpsManager: FpsManager,
+    surfaceProcessingLock: ReentrantLock,
+    createCondition: Condition,
+    destroyCondition: Condition,
+  ) : super(
+    mapboxRenderer,
+    null,
+    handlerThread,
+    fpsManager,
+    surfaceProcessingLock,
+    createCondition,
+    destroyCondition
+  ) {
+    this.antialiasingSampleCount = antialiasingSampleCount
+  }
 
   init {
     logI(TAG, "VulkanMapboxRenderThread created")
@@ -42,6 +81,8 @@ internal class VulkanMapboxRenderThread(
       nativeVulkanManager = mapboxRenderer.map?.getVulkanManager()
       if (nativeVulkanManager == null) {
         logW(TAG, "Failed to obtain VulkanManager - Vulkan rendering will not be available")
+      } else {
+        applyCachedResize()
       }
     }
     return nativeVulkanManager != null
@@ -110,10 +151,36 @@ internal class VulkanMapboxRenderThread(
     // no-op for now
   }
 
+  @RenderThread
   override fun resize(width: Int, height: Int) {
-    // TODO cache width/height if NULL
-    nativeVulkanManager?.resize(width, height)
+    val mgr = nativeVulkanManager
+    if (mgr != null) {
+      mgr.resize(width, height)
+    } else {
+      cachedSize = width to height
+    }
   }
+
+  /**
+   * Forwards the cached pre-init resize to the manager and clears the cache.
+   *
+   * Apply-once is intentional: once [nativeVulkanManager] is non-null,
+   * subsequent [resize] calls go directly to the manager and never repopulate
+   * [cachedSize]. [prepareRenderer] also short-circuits while the manager is
+   * non-null, so this method does not re-enter. If a manager destroy/re-init
+   * lifecycle is added, this contract needs revisiting.
+   */
+  @RenderThread
+  private fun applyCachedResize() {
+    cachedSize?.let { (w, h) ->
+      logI(TAG, "Applying cached resize($w, $h)")
+      nativeVulkanManager?.resize(w, h)
+      cachedSize = null
+    }
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun prepareRendererForTest(): Boolean = prepareRenderer()
 
   override fun flushCommands() {
     // no-op for now
