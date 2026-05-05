@@ -84,6 +84,7 @@ dependencies {
 
     testImplementation(libs.bundles.base.dependenciesTests)
     testImplementation(project(":maps-sdk"))
+    testImplementation(libs.asyncInflater)
     testImplementation(libs.junit)
   }
 }

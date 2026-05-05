@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.mapbox.geojson.Point
@@ -140,6 +141,16 @@ internal class ViewAnnotationNode(
       }
       removeViewAnnotation(view = view)
     }
+    // DisposeOnViewTreeLifecycleDestroyed registers a LifecycleEventObserver in the Fragment's
+    // LifecycleRegistry that holds a reference to this ComposeView. When the annotation is removed
+    // before the Fragment is destroyed, we must both invoke the previously installed strategy's
+    // cleanup (so it removes the observer and releases the reference) and call disposeComposition()
+    // ourselves — the role the observer would have played on ON_DESTROY. We force the strategy
+    // cleanup by installing a new no-op EmptyStrategy, which triggers the old strategy's disposer.
+    (view as? ComposeView)?.apply {
+      setViewCompositionStrategy(EmptyStrategy)
+      disposeComposition()
+    }
     updatedListener = null
   }
 }
@@ -240,4 +251,12 @@ public fun ViewAnnotation(
       }
     }
   )
+}
+
+/**
+ * A no-op [ViewCompositionStrategy] used in [ViewAnnotationNode.cleanUp] to force the cleanup
+ * of the previously installed strategy, triggering removal of its Fragment lifecycle observer.
+ */
+private object EmptyStrategy : ViewCompositionStrategy {
+  override fun installFor(view: AbstractComposeView): () -> Unit = {}
 }
