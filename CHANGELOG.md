@@ -10,19 +10,21 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Expose `FeaturesetFeature.originalFeature` property.
-* Add Vulkan rendering backend support (Public Preview). The Vulkan backend is published as a separate artifact (`android-core-vulkan` / `android-core-vulkan-ndk27`) that replaces the default OpenGL-based `android-core`. To use it, exclude the default core and add the Vulkan variant:
+* Add Vulkan rendering backend support (Public Preview). The Vulkan backend is published as a separate artifact (`android-core-vulkan` / `android-core-vulkan-ndk27`) that replaces the default OpenGL-based `android-core`. To use it, replace the default core dependency with the Vulkan variant. In your `build.gradle.kts` add:
     ```kotlin
-    // NDK 23
-    implementation("com.mapbox.maps:android:11.24.0-rc.1") {
-        exclude(group = "com.mapbox.maps", module = "android-core")
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            all {
+                val requested = requested as? ModuleComponentSelector
+                if (requested?.group == "com.mapbox.maps" &&
+                    (requested.module == "android-core" || requested.module == "android-core-ndk27")
+                ) {
+                    val vulkanModule = requested.module.replace("android-core", "android-core-vulkan")
+                    useTarget("com.mapbox.maps:$vulkanModule:${requested.version}")
+                }
+            }
+        }
     }
-    implementation("com.mapbox.maps:android-core-vulkan:11.24.0-rc.1")
-
-    // NDK 27 (16 KB page size support)
-    implementation("com.mapbox.maps:android-ndk27:11.24.0-rc.1") {
-        exclude(group = "com.mapbox.maps", module = "android-core-ndk27")
-    }
-    implementation("com.mapbox.maps:android-core-vulkan-ndk27:11.24.0-rc.1")
     ```
     Known limitations:
     * Android 12 (API 31) or later is recommended. Earlier Android versions may exhibit GPU driver bugs, particularly on devices with Adreno GPUs.
