@@ -79,7 +79,7 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelCastShadows" format="boolean"/>
         <!-- Enable/Disable shadow receiving for the 3D location puck. Default value: true. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelReceiveShadows" format="boolean"/>
-        <!-- Defines scaling mode. Only applies to location-indicator type layers. Default value: "map". -->
+        <!-- Defines scaling mode. Only applies to location-indicator type layers. Default value: "viewport". -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleMode" format="enum">
           <!-- Model is scaled so that it's always the same size relative to other map features. The property model-scale specifies how many meters each unit in the model file should cover. -->
           <enum name="map" value="0"/>

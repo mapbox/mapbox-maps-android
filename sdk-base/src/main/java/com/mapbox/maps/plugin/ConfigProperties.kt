@@ -121,7 +121,7 @@ data class LocationPuck3D @JvmOverloads constructor(
   @MapboxExperimental
   var modelReceiveShadows: Boolean = true,
   /**
-   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "map".
+   * Defines scaling mode. Only applies to location-indicator type layers. Default value: "viewport".
    */
   @MapboxExperimental
   var modelScaleMode: ModelScaleMode = ModelScaleMode.VIEWPORT,
