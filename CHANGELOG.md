@@ -6,11 +6,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.25.0-alpha.2 May 06, 2026
-## Dependencies
-* Update gl-native to [v11.25.0-alpha.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-alpha.2), common to [v24.25.0-alpha.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-alpha.2).
-
-
 ## Features ✨ and improvements 🏁
 * Expose `FeaturesetFeature.originalFeature` property.
 * Add Vulkan rendering backend support (Public Preview). The Vulkan backend is published as a separate artifact (`android-core-vulkan` / `android-core-vulkan-ndk27`) that replaces the default OpenGL-based `android-core`. To use it, exclude the default core and add the Vulkan variant:
