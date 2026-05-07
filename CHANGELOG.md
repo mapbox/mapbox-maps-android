@@ -101,6 +101,15 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1), common to [v24.23.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.0-rc.1).
 
 
+# 11.22.1 April 28, 2026
+
+## Bug fixes 🐞
+* [gestures] Fixed interaction leak in `setGesturesManager` causing native map interactions to accumulate.
+* [gestures] Added post-cleanup guard to prevent re-registering interactions or listeners after plugin cleanup.
+
+## Dependencies
+* Update gl-native to [v11.22.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.1), common to [v24.22.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.1).
+
 # 11.22.0 April 16, 2026
 ## Features ✨ and improvements 🏁
 * Expose `height` and `minHeight` properties on `StandardBuildingsFeature`.
