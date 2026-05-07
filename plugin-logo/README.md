@@ -30,7 +30,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-logo:11.24.0-rc.1'
+  implementation 'com.mapbox.plugin:maps-logo:11.25.0-alpha.5'
 }
 ```
 
