@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.23.1 May 11, 2026
+## Dependencies
+* Update gl-native to [v11.23.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.1), common to [v24.23.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.23.1).
+
+
 # 11.23.0 April 29, 2026
 ## Features ✨ and improvements 🏁
 * Support symbol paint properties in appearances — symbol layers can now use feature-dependent appearances for paint properties (not only layout), enabling richer per-feature styling of text and icons.
