@@ -33,6 +33,7 @@ class MapPluginRegistryTest {
     every { mapInitOptions.attrs } returns null
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+    every { logD(any(), any<String>()) } just Runs
   }
 
   @After
@@ -145,6 +146,38 @@ class MapPluginRegistryTest {
     mapPluginRegistry.onStart()
     mapPluginRegistry.onStop()
     verify { lifecyclePlugin.onStop() }
+  }
+
+  // Reproduce the CME thrown when a Compose ornament's
+  // `DisposableEffect.onDispose` calls `removePlugin` while the outer
+  // `MapViewLifecycle.onDispose` has already started iterating plugins in
+  // `pluginRegistry.onDestroy()`.
+  @Test
+  fun onDestroy_composeOrnamentRemovesPluginDuringIteration_doesNotThrow() {
+    val mapView = mockk<MapView>(relaxUnitFun = true)
+    val outerPlugin = mockk<MapPlugin>(relaxUnitFun = true)
+    val ornamentPlugin = mockk<MapPlugin>(relaxUnitFun = true)
+    val tailPlugin = mockk<MapPlugin>(relaxUnitFun = true)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, Plugin.Custom("outer", outerPlugin))
+    mapPluginRegistry.createPlugin(
+        mapView,
+        mapInitOptions,
+        Plugin.Custom("ornament", ornamentPlugin)
+    )
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, Plugin.Custom("tail", tailPlugin))
+
+    // Stands in for the Compose dispatcher invoking an ornament
+    // DisposableEffect.onDispose after the outer MapViewLifecycle.onDispose
+    // has already started iterating plugins.
+    every { outerPlugin.cleanup() } answers {
+      mapPluginRegistry.removePlugin("ornament")
+    }
+
+    mapPluginRegistry.onDestroy()
+
+    verify { outerPlugin.cleanup() }
+    verify { ornamentPlugin.cleanup() }
+    verify { tailPlugin.cleanup() }
   }
 
   @Test
