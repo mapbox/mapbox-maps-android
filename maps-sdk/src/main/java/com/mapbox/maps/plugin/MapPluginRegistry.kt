@@ -21,13 +21,13 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
       if (value != field) {
         field = value
         when (field) {
-          State.STARTED -> plugins.values.forEach {
+          State.STARTED -> plugins.values.toList().forEach {
             if (it is LifecyclePlugin) {
               it.onStart()
             }
           }
 
-          State.STOPPED -> plugins.values.forEach {
+          State.STOPPED -> plugins.values.toList().forEach {
             if (it is LifecyclePlugin) {
               it.onStop()
             }
@@ -38,6 +38,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
 
   private var mapSize: Pair<Int, Int>? = null
 
+  private var isDestroyed = false
   private val plugins = mutableMapOf<String, MapPlugin>()
   private val cameraPlugins = CopyOnWriteArraySet<MapCameraPlugin>()
   private val gesturePlugins = CopyOnWriteArraySet<GesturesPlugin>()
@@ -50,6 +51,13 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
     mapInitOptions: MapInitOptions,
     plugin: Plugin
   ) {
+    if (isDestroyed) {
+      logE(
+        TAG,
+        "createPlugin('${plugin.id}') called after destroy."
+      )
+    }
+    logD(TAG, "createPlugin('${plugin.id}') from thread '${Thread.currentThread().name}'")
     val mapPlugin = plugin.instance
     if (mapPlugin == null) {
       throw MapboxConfigurationException("MapPlugin instance is missing for ${plugin.id}!")
@@ -119,6 +127,13 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
   fun <T> getPlugin(id: String): T? = plugins[id] as T
 
   fun removePlugin(id: String) {
+    if (isDestroyed) {
+      logE(
+        TAG,
+        "removePlugin('$id') called after destroy."
+      )
+    }
+    logD(TAG, "removePlugin('$id') from thread '${Thread.currentThread().name}'")
     val plugin = plugins[id]
     when (plugin) {
       is MapCameraPlugin -> cameraPlugins.remove(plugin)
@@ -142,8 +157,12 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
   }
 
   fun onDestroy() {
-    plugins.forEach {
-      it.value.cleanup()
+    if (isDestroyed) {
+      logW(TAG, "onDestroy() called more than once.")
+    }
+    isDestroyed = true
+    plugins.values.toList().forEach {
+      it.cleanup()
     }
   }
 
