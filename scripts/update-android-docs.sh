@@ -15,7 +15,7 @@ set -Eeuxo pipefail
 readonly ANDROID_DOCS_DIRECTORY="android-docs-repo"
 readonly CONSTANTS_FILE="./src/constants.json"
 readonly MAP_VERSION_NUMBERS_FILE="./src/data/map-version-numbers.json"
-readonly BRANCH_WITH_DOCUMENTATION="publisher-production"
+readonly BRANCH_WITH_DOCUMENTATION="production"
 
 MAPS_SDK_VERSION=
 REVIEWERS=
@@ -65,7 +65,7 @@ function prepare_branch_with_documentation() {
   mkdir -p ~/android-docs/$1
   cp -fr ~/android-docs/release-docs/htmlCollector/* ~/android-docs/$1
   cd ~/android-docs
-  # Create new working branch with version (e.g. `publisher-production_10.999.0`)
+  # Create new working branch with version (e.g. `production_10.999.0`)
   git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
   git add $1
   git commit --quiet -m "Add $1 API documentation."
