@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Bug fixes 🐞
 * Fix a `ConcurrentModificationException` crash that could occur when a plugin was added or removed during `MapView.onDestroy`.
+* Fix frame pacing breaking when the panel switches refresh-rate modes mid-session (VRR or per-UID `frameRateOverride`). `FpsManager` now updates its `screenRefreshRate` via a `DisplayManager.DisplayListener` instead of only sampling once at `onStart`.
 
 # 11.22.3 May 07, 2026
 ## Features ✨ and improvements 🏁
