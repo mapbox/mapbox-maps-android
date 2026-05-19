@@ -17,6 +17,7 @@ import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.renderer.DisplayRefreshRateMonitor
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -55,6 +56,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   private val debugOptionsController: DebugOptionsController by debugOptionsControllerDelegate
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
+  private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
   private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
 
   /**
@@ -244,6 +246,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       }
     }
 
+    // Subscribe to live refresh-rate changes (VRR mode switches, per-UID frameRateOverride).
+    displayRefreshRateMonitor = DisplayRefreshRateMonitor(
+      context = context,
+      onRefreshRateChanged = mapController::setScreenRefreshRate,
+    ).also { it.start() }
+
     mapController.onStart()
     if (debugOptionsControllerDelegate.isInitialized()) {
       debugOptionsController.started = true
@@ -256,6 +264,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStop
    */
   override fun onStop() {
+    displayRefreshRateMonitor?.stop()
+    displayRefreshRateMonitor = null
     mapController.onStop()
     if (debugOptionsControllerDelegate.isInitialized()) {
       debugOptionsController.started = false

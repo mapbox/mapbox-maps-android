@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.hardware.display.DisplayManager
 import android.view.Display
 import android.view.MotionEvent
 import android.view.Surface
@@ -85,11 +86,16 @@ class MapSurfaceTest {
   fun testSurfaceCreated() {
     val display: Display = mockk()
     val windowManager: WindowManager = mockk()
+    val displayManager: DisplayManager = mockk(relaxed = true)
     val refreshRate = 100f
     @Suppress("DEPRECATION")
     every { windowManager.defaultDisplay } returns display
     every { display.refreshRate } returns refreshRate
+    // DisplayRefreshRateMonitor's context ctor also reads display.displayId at construction to
+    // capture which display this monitor tracks (multi-display support).
+    every { display.displayId } returns 0
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
+    every { context.getSystemService(Context.DISPLAY_SERVICE) } returns displayManager
 
     mapSurface.surfaceCreated()
 
@@ -104,7 +110,9 @@ class MapSurfaceTest {
 
   @Test
   fun testSurfaceCreatedWithNoWindowManager() {
+    val displayManager: DisplayManager = mockk(relaxed = true)
     every { context.getSystemService(Context.WINDOW_SERVICE) } returns null
+    every { context.getSystemService(Context.DISPLAY_SERVICE) } returns displayManager
 
     mapSurface.surfaceCreated()
 

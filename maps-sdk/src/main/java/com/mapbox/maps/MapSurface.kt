@@ -32,6 +32,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   private val mapController: MapController
   private val mapInitOptions: MapInitOptions
   private val renderer: MapboxSurfaceRenderer
+  private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
 
   /**
    * The surface to be used, set from the constructor.
@@ -108,6 +109,12 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
         mapController.setScreenRefreshRate(screenRefreshRate)
       }
     }
+
+    // Subscribe to live refresh-rate changes (VRR mode switches, per-UID frameRateOverride).
+    displayRefreshRateMonitor = DisplayRefreshRateMonitor(
+      context = context,
+      onRefreshRateChanged = mapController::setScreenRefreshRate,
+    ).also { it.start() }
   }
 
   /**
@@ -125,6 +132,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Must be called when the surface is destroyed.
    */
   fun surfaceDestroyed() {
+    displayRefreshRateMonitor?.stop()
+    displayRefreshRateMonitor = null
     renderer.surfaceDestroyed()
   }
 
