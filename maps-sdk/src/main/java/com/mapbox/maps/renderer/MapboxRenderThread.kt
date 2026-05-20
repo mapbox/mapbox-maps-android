@@ -577,6 +577,11 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  @AnyThread
+  fun clearUserRefreshRate() {
+    setUserRefreshRate(FpsManager.USER_DEFINED_REFRESH_RATE_NOT_SET)
+  }
+
   @OptIn(MapboxExperimental::class)
   @RenderThread
   final override fun doFrame(frameTimeNanos: Long) {
