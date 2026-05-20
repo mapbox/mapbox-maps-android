@@ -245,6 +245,39 @@ class FpsManagerTest {
     Assert.assertEquals(40.0, fpsValue, EPS)
   }
 
+  @Test
+  fun clearingRefreshRateRestoresUnpacedRendering() {
+    // First set a user refresh rate that paces rendering (24 fps on 60 Hz -> ~2 out of every 5 frames render)
+    fpsManager.setUserRefreshRate(24)
+    pauseHandler()
+
+    // Verify pacing is active: out of 5 VSYNCs, some should be skipped
+    val pacedPattern = mutableListOf<Boolean>()
+    idleHandler(vsyncCount = 5) {
+      pacedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
+    }
+    Assert.assertTrue(
+      "Expected at least one skipped frame while pacing at 24 fps",
+      pacedPattern.any { !it }
+    )
+
+    // Now clear the cap
+    fpsManager.setUserRefreshRate(FpsManager.USER_DEFINED_REFRESH_RATE_NOT_SET)
+
+    // After clearing, every preRender call should return true (no pacing)
+    val unpacedPattern = mutableListOf<Boolean>()
+    idleHandler(vsyncCount = 10) {
+      unpacedPattern.add(fpsManager.preRender(it))
+      fpsManager.postRender()
+    }
+    Assert.assertArrayEquals(
+      "Expected all frames to render after clearing the FPS cap",
+      Array(10) { true },
+      unpacedPattern.toTypedArray()
+    )
+  }
+
   private fun mapIdleTest() {
     // pattern is [0, 1, 1, 1, 1]
     fpsManager.setUserRefreshRate(48)

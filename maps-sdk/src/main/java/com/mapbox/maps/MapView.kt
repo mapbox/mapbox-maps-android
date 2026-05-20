@@ -11,6 +11,8 @@ import android.view.TextureView
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
+import androidx.annotation.MainThread
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.debugoptions.DebugOptionsController
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
@@ -21,6 +23,7 @@ import com.mapbox.maps.renderer.DisplayRefreshRateMonitor
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.OnMaximumFpsChangedListener
 import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.egl.EGLCore
@@ -378,8 +381,46 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @param fps new maximum FPS value that must be greater than 0 and less than max integer.
    * When setting this value higher than screen physically supports - max possible screen FPS rate will be used.
    */
+  @MainThread
   override fun setMaximumFps(@IntRange(from = 1, to = Int.MAX_VALUE.toLong()) fps: Int) {
     mapController.setMaximumFps(fps)
+  }
+
+  /**
+   * The currently configured maximum FPS, or null if [setMaximumFps] was never called
+   * (or was followed by [clearMaximumFps]).
+   */
+  @get:MainThread
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val maximumFps: Int?
+    get() = mapController.maximumFps
+
+  /**
+   * Reset to "no cap" — equivalent to never having called [setMaximumFps].
+   */
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun clearMaximumFps() {
+    mapController.clearMaximumFps()
+  }
+
+  /**
+   * Register a callback invoked when [setMaximumFps] or [clearMaximumFps] is called.
+   * Fires synchronously on the main thread.
+   */
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun addOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
+    mapController.addOnMaximumFpsChangedListener(listener)
+  }
+
+  /**
+   * Unregister a callback previously registered via [addOnMaximumFpsChangedListener].
+   */
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
+    mapController.removeOnMaximumFpsChangedListener(listener)
   }
 
   /**

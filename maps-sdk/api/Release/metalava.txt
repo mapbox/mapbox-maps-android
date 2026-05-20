@@ -11,7 +11,7 @@ package com.mapbox.maps {
     method public void queueEvent(Runnable event, boolean needRender = true);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
-    method public void setMaximumFps(int fps);
+    method @MainThread public void setMaximumFps(int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method @com.mapbox.maps.MapboxExperimental public void setRenderThreadStatsRecorder(com.mapbox.maps.renderer.RenderThreadStatsRecorder renderThreadStatsRecorder);
     method public android.graphics.Bitmap? snapshot();
@@ -81,10 +81,13 @@ package com.mapbox.maps {
   public final class MapSurface implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {
     ctor public MapSurface(android.content.Context context, android.view.Surface surface, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(context));
     ctor public MapSurface(android.content.Context context, android.view.Surface surface);
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void addOnMaximumFpsChangedListener(com.mapbox.maps.renderer.OnMaximumFpsChangedListener listener);
     method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void clearMaximumFps();
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public Integer? getMaximumFps();
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
     method public android.view.Surface getSurface();
     method public void onDestroy();
@@ -96,9 +99,10 @@ package com.mapbox.maps {
     method public void onStop();
     method public boolean onTouchEvent(android.view.MotionEvent event);
     method public void queueEvent(Runnable event, boolean needRender);
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void removeOnMaximumFpsChangedListener(com.mapbox.maps.renderer.OnMaximumFpsChangedListener listener);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
-    method public void setMaximumFps(int fps);
+    method @MainThread public void setMaximumFps(int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method @com.mapbox.maps.MapboxExperimental public void setRenderThreadStatsRecorder(com.mapbox.maps.renderer.RenderThreadStatsRecorder renderThreadStatsRecorder);
     method public android.graphics.Bitmap? snapshot();
@@ -107,6 +111,7 @@ package com.mapbox.maps {
     method public void surfaceCreated();
     method public void surfaceDestroyed();
     property public com.mapbox.maps.MapboxMap mapboxMap;
+    property @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final Integer? maximumFps;
     property public final android.view.Surface surface;
   }
 
@@ -115,12 +120,15 @@ package com.mapbox.maps {
     ctor public MapView(android.content.Context context);
     ctor public MapView(android.content.Context context, android.util.AttributeSet? attrs);
     ctor public MapView(android.content.Context context, android.util.AttributeSet? attrs, int defStyleAttr);
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final void addOnMaximumFpsChangedListener(com.mapbox.maps.renderer.OnMaximumFpsChangedListener listener);
     method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final void clearMaximumFps();
     method public final void createPlugin(com.mapbox.maps.plugin.Plugin plugin);
     method public final java.util.Set<com.mapbox.maps.debugoptions.MapViewDebugOptions> getDebugOptions();
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final Integer? getMaximumFps();
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
     method public final com.mapbox.maps.viewannotation.ViewAnnotationManager getViewAnnotationManager();
     method public static final boolean isRenderingSupported();
@@ -133,12 +141,13 @@ package com.mapbox.maps {
     method public void onStart();
     method public void onStop();
     method public void queueEvent(Runnable event, boolean needRender);
+    method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final void removeOnMaximumFpsChangedListener(com.mapbox.maps.renderer.OnMaximumFpsChangedListener listener);
     method public final void removePlugin(String id);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method @com.mapbox.maps.MapboxDelicateApi @com.mapbox.maps.MapboxExperimental public final void scheduleThreadServiceTypeReset();
     method public final void setDebugOptions(java.util.Set<com.mapbox.maps.debugoptions.MapViewDebugOptions>);
-    method public void setMaximumFps(@IntRange(from=1L, to=kotlin.jvm.internal.IntCompanionObject.MAX_VALUE.toLong()) int fps);
+    method @MainThread public void setMaximumFps(@IntRange(from=1L, to=kotlin.jvm.internal.IntCompanionObject.MAX_VALUE.toLong()) int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method @com.mapbox.maps.MapboxExperimental public void setRenderThreadStatsRecorder(com.mapbox.maps.renderer.RenderThreadStatsRecorder renderThreadStatsRecorder);
     method @com.mapbox.maps.MapboxExperimental public final void setSnapshotLegacyMode(boolean enabled);
@@ -146,6 +155,7 @@ package com.mapbox.maps {
     method public void snapshot(com.mapbox.maps.MapView.OnSnapshotReady listener);
     property public final java.util.Set<com.mapbox.maps.debugoptions.MapViewDebugOptions> debugOptions;
     property public com.mapbox.maps.MapboxMap mapboxMap;
+    property @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final Integer? maximumFps;
     property public final com.mapbox.maps.viewannotation.ViewAnnotationManager viewAnnotationManager;
     field public static final com.mapbox.maps.MapView.Companion Companion;
   }
@@ -669,6 +679,10 @@ package com.mapbox.maps.renderer {
 
   public fun interface OnFpsChangedListener {
     method @com.mapbox.maps.renderer.RenderThread public void onFpsChanged(double fps);
+  }
+
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public fun interface OnMaximumFpsChangedListener {
+    method @MainThread public void onMaximumFpsChanged(Integer? maximumFps);
   }
 
   @kotlin.annotation.MustBeDocumented @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention.SOURCE) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget.FUNCTION, kotlin.annotation.AnnotationTarget.PROPERTY_GETTER, kotlin.annotation.AnnotationTarget.PROPERTY_SETTER, kotlin.annotation.AnnotationTarget.PROPERTY, kotlin.annotation.AnnotationTarget.CONSTRUCTOR, kotlin.annotation.AnnotationTarget.CLASS}) public @interface RenderThread {
