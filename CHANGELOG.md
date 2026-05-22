@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a `ConcurrentModificationException` crash that could occur when a plugin was added or removed during `MapView.onDestroy`.
 * Fix frame pacing breaking when the panel switches refresh-rate modes mid-session (VRR or per-UID `frameRateOverride`). `FpsManager` now updates its `screenRefreshRate` via a `DisplayManager.DisplayListener` instead of only sampling once at `onStart`.
+* [maps-sdk] Fix Vulkan rendering being permanently disabled when the Android surface arrived before the native map was set. The renderer now defers setup and retries via `onMapSet()` once the map is available.
 
 # 11.24.2 May 20, 2026
 ## Dependencies

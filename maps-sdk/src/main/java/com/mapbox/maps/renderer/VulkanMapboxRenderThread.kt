@@ -74,36 +74,36 @@ internal class VulkanMapboxRenderThread : MapboxRenderThread {
   /**
    * For Vulkan renderer there's not much to prepare, just get the [IVulkanManager].
    * Preparations will be done in [attachSurfaceToRenderer].
+   *
+   * Returns `false` only when the map is set but [IVulkanManager] cannot be obtained — genuine
+   * lack of Vulkan support. Returns `true` while waiting for [onMapSet] so the caller does not
+   * mark the renderer unsupported.
    */
   override fun prepareRenderer(): Boolean {
-    // TODO: How to handle vulkan not supported in the device?
+    if (nativeVulkanManager != null) return true
+    val map = mapboxRenderer.map ?: return true
+    nativeVulkanManager = map.getVulkanManager()
     if (nativeVulkanManager == null) {
-      nativeVulkanManager = mapboxRenderer.map?.getVulkanManager()
-      if (nativeVulkanManager == null) {
-        logW(TAG, "Failed to obtain VulkanManager - Vulkan rendering will not be available")
-      } else {
-        applyCachedResize()
-      }
+      logW(TAG, "Failed to obtain VulkanManager - Vulkan rendering will not be available")
+      return false
     }
-    return nativeVulkanManager != null
+    applyCachedResize()
+    return true
   }
 
   override fun attachSurfaceToRenderer(surface: Surface): Boolean {
+    val mgr = nativeVulkanManager ?: run {
+      logI(TAG, "VulkanManager not available yet, surface will be attached when map is set")
+      return false
+    }
     surfaceWrapper.setSurface(surface)
     val nativeWindowPtr = surfaceWrapper.aNativeWindow
-
     if (nativeWindowPtr == 0L) {
       logW(TAG, "Failed to get native window pointer")
       return false
     }
-
-    nativeVulkanManager?.setAntialiasingSampleCount(antialiasingSampleCount)
-    val result = nativeVulkanManager?.init(nativeWindowPtr) ?: run {
-      // TODO cache surface until nativeVulkanManager is set via setMap
-      false
-    }
-
-    return result
+    mgr.setAntialiasingSampleCount(antialiasingSampleCount)
+    return mgr.init(nativeWindowPtr)
   }
 
   private val renderCallback: RenderCallback = RenderCallback(mapboxRenderer::render)

@@ -69,6 +69,7 @@ internal abstract class MapboxRenderer(
   @Synchronized
   fun setMap(map: NativeMapImpl) {
     this.map = map
+    renderThread.onMapSet()
   }
 
   @AnyThread

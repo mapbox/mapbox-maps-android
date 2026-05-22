@@ -717,6 +717,20 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     renderPreparedGuardedRun(::postPrepareRenderFrame)
   }
 
+  /**
+   * Called from [MapboxRenderer.setMap]. Re-triggers render setup if a surface arrived before the
+   * map was available (Vulkan path: [VulkanManager] requires the map to be set first).
+   */
+  @AnyThread
+  internal fun onMapSet() {
+    renderHandlerThread.post {
+      if (surface?.isValid == true && !renderThreadPrepared) {
+        logI(TAG, "Map set, re-triggering render setup with pending surface")
+        prepareRenderFrame(width = width, height = height, creatingSurface = true)
+      }
+    }
+  }
+
   @UiThread
   internal fun destroy() {
     trace("destroy") {
