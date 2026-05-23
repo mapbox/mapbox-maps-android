@@ -81,6 +81,38 @@ To verify if everything has been correctly setup so far, you can run the followi
 $ make sdk-build
 ```
 
+### Building with the Vulkan renderer
+
+The Vulkan rendering backend is published as a separate gl-native artifact
+(`android-core-vulkan` / `android-core-vulkan-ndk27`) — see
+[`CHANGELOG.md`](CHANGELOG.md) for the public-preview entry. To build the test
+app, compose app, or any other consumer of `:maps-sdk` against the Vulkan
+variant, set the `vulkanEnabled` gradle property to `true`. Either pass it on
+the command line:
+
+```
+$ ./gradlew :app:assembleDebug -Pmapbox.abis=arm64-v8a -PvulkanEnabled=true
+$ ./gradlew :compose-app:assembleDebug -Pmapbox.abis=arm64-v8a -PvulkanEnabled=true
+```
+
+…or flip the default in the root `gradle.properties`:
+
+```
+vulkanEnabled=true
+```
+
+This routes the gl-native dependency to `android-core-vulkan` (binary build) or
+to the `:sdk` project built with `-PvulkanEnabled=true` (when combined with
+`-PbuildFromSource=true`). The flag composes with `-PndkMajor=27` to produce
+`android-core-vulkan-ndk27` for 16 KB page-size support.
+
+Notes:
+* Public preview supports `arm64-v8a` only. Restrict ABIs via the standard
+  `-Pmapbox.abis=arm64-v8a` / `ANDROID_ABI` env var when building.
+* Android 12 (API 31) or later is recommended for stable Vulkan support.
+* `android-auto-app` is not supported with the Vulkan backend (see VULKAN
+  limitations in `CHANGELOG.md`); do not build it with `-PvulkanEnabled=true`.
+
 ## Checks
 
 Before pushing your code and triggering the CI, it is important that all the

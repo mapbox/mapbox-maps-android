@@ -13,6 +13,7 @@ internal object MapboxDependencies {
     // v11.9 snapshots or earlier should use `android-core-internal` as `artifact`.
     artifact = "android-core",
     versionRef = "mapboxGlNative",
-    supportsNdkVariant = true
+    supportsNdkVariant = true,
+    supportsVulkanVariant = true,
   )
 }
