@@ -20,6 +20,7 @@ import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -107,6 +108,36 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
+
+  /**
+   * Monotonic frame-ID source for prepare-render-frame trace pairing.
+   * Only incremented when [MapboxTracing.platformTracingEnabled] is true.
+   */
+  private val nextPrepareRenderFrameId = AtomicInteger(0)
+
+  /**
+   * Registered with [renderHandlerThread]'s [Handler] so that [postPrepareRenderFrame]
+   * messages dispatch here. Reads the frame ID from [Message.arg1] to build the matching
+   * `run-prepare-render-$frameId` trace span.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val handlerCallback = Handler.Callback { msg ->
+    when (msg.what) {
+      MSG_PREPARE_RENDER_FRAME -> {
+        val frameId = msg.arg1
+        MapboxTracing.traceSync({ "$ownTraceID: run-prepare-render-$frameId" }) {
+          prepareRenderFrame(
+            width = null,
+            height = null,
+            creatingSurface = false,
+            frameId = frameId,
+          )
+        }
+        true
+      }
+      else -> false
+    }
+  }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var surface: Surface? = null
@@ -212,6 +243,12 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @Suppress("PropertyName")
   protected val TAG: String
 
+  /**
+   * Internal id to keep track of the map instance. Useful for tracing when having multiple map
+   * instances. Assigned in the constructor body after [TAG] is set.
+   */
+  private val ownTraceID: String
+
   constructor(
     mapboxRenderer: MapboxRenderer,
     widgetRenderer: MapboxWidgetRenderer?,
@@ -221,8 +258,9 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     this.mapboxRenderer = mapboxRenderer
     this.widgetRenderer = widgetRenderer
     this.TAG = "${rendererName}RenderThread" + if (mapName.isNotBlank()) "\\$mapName" else ""
+    this.ownTraceID = "$TAG: ${System.identityHashCode(this)}"
     renderHandlerThread = RenderHandlerThread(mapName)
-    val handler = renderHandlerThread.start()
+    val handler = renderHandlerThread.start(handlerCallback)
     fpsManager = FpsManager(handler, mapName)
     surfaceProcessingLock = ReentrantLock()
     createCondition = surfaceProcessingLock.newCondition()
@@ -240,6 +278,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     destroyCondition: Condition,
   ) {
     this.TAG = ""
+    this.ownTraceID = ""
     this.widgetRenderer = mapboxWidgetRenderer
     this.mapboxRenderer = mapboxRenderer
     this.renderHandlerThread = handlerThread
@@ -278,17 +317,17 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  /**
-   * Keep a runnable to [prepareRenderFrame] to avoid creating a new one on every frame.
-   */
-  private val prepareRenderFrameRunnable: Runnable = Runnable {
-      prepareRenderFrame(width = null, height = null, creatingSurface = false)
-  }
   protected fun postPrepareRenderFrame(delayMillis: Long = 0L) {
-    renderHandlerThread.postDelayed(
-      prepareRenderFrameRunnable,
-      delayMillis
-    )
+    val frameId = if (MapboxTracing.platformTracingEnabled) {
+      nextPrepareRenderFrameId.incrementAndGet()
+    } else {
+      // Sentinel: tracing is off, no string is built; if tracing flips on before
+      //  dispatch the run side will emit an orphan `run-prepare-render-0`.
+      0
+    }
+    MapboxTracing.traceSync({ "$ownTraceID: post-prepare-render-$frameId" }) {
+      renderHandlerThread.sendMessageDelayed(MSG_PREPARE_RENDER_FRAME, frameId, delayMillis)
+    }
   }
 
   /**
@@ -296,6 +335,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
    * - the Mapbox Map renderer is created ([MapboxRenderer.createRenderer])
    * - The graphics renderer backend is prepared ([prepareRenderer]) and ready to render ([isRendererReady])
    */
+  @RenderThread
   private fun setUpRenderThread(creatingSurface: Boolean): Boolean {
     surfaceProcessingLock.withLock {
       try {
@@ -329,6 +369,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
         }
         return false
       } finally {
+        // We can now free the main thread from [onSurfaceCreated]
         createCondition.signal()
       }
     }
@@ -413,11 +454,13 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
    * 2. The surface was resized (new [width] and [height] are given).
    * 3. Normal render pass ([creatingSurface] flag is false and no sizes are given).
    */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   @RenderThread
-  private fun prepareRenderFrame(
+  internal fun prepareRenderFrame(
     width: Int?,
     height: Int?,
-    creatingSurface: Boolean
+    creatingSurface: Boolean,
+    frameId: Int = 0,
   ) {
     // no need to do anything if we're already waiting for next VSYNC (`doFrame`);
     // however if Android has sent us new surface - we must proceed up to `setUpRenderThread` or
@@ -459,7 +502,6 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     if (width != null && height != null && renderThreadPrepared) {
       notifyRenderersSizeChanged(width, height)
     }
-    // Finally schedule next doFrame call
     Choreographer.getInstance().postFrameCallback(this)
     awaitingNextVsync = true
   }
@@ -525,21 +567,23 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   @RenderThread
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
-    if (this.surface != surface) {
-      if (this.surface != null) {
-        logI(
-          TAG,
-          "Processing new android surface while current is not null, " +
-            "releasing current EGL and recreating native renderer."
-        )
-        releaseAll()
+    MapboxTracing.traceSync({ "$ownTraceID: processAndroidSurface" }) {
+      if (this.surface != surface) {
+        if (this.surface != null) {
+          logI(
+            TAG,
+            "Processing new android surface while current is not null, " +
+              "releasing current EGL and recreating native renderer."
+          )
+          releaseAll()
+        }
+        this.surface = surface
       }
-      this.surface = surface
+      this.width = width
+      this.height = height
+      // Make sure we initialize renderer and schedule next frame to draw map.
+      prepareRenderFrame(width, height, creatingSurface = true)
     }
-    this.width = width
-    this.height = height
-    // Make sure we initialize renderer and schedule next frame to draw map.
-    prepareRenderFrame(width, height, creatingSurface = true)
   }
 
   @UiThread
@@ -549,9 +593,13 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  /**
+   * Delegates the processing to the render thread. The main thread will be blocked until the
+   * surface is fully processed by the render thread (see [createCondition]).
+   */
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
-    trace("surface-created") {
+    trace("$ownTraceID: surface-created") {
       logI(TAG, "onSurfaceCreated")
       surfaceProcessingLock.withLock {
         if (renderHandlerThread.isRunning) {
@@ -611,6 +659,13 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
           fpsManager.skippedNow
         )
       }
+    }
+  }
+
+  @AnyThread
+  fun scheduleRepaint() {
+    MapboxTracing.traceSync({ "$ownTraceID: schedule-repaint" }) {
+      queueRenderEvent(repaintRenderEvent)
     }
   }
 
@@ -793,6 +848,14 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   internal companion object {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val repaintRenderEvent = RenderEvent(null, true)
+    /**
+     * `what` code for the typed Message that carries the prepare-render-frame
+     * trace frame ID via [Message.arg1]. Kept private — this class is the sole
+     * sender (via [postPrepareRenderFrame]) and receiver (via [handlerCallback]).
+     */
+    private const val MSG_PREPARE_RENDER_FRAME = 1
     /**
      * If we hit some issue caused by invalid state (most likely caused by GPU driver) we start
      * rescheduling configuration with that delay in order not to overflood handler thread message queue.

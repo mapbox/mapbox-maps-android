@@ -53,7 +53,6 @@ class VulkanMapboxRenderThreadTest {
     nativeMap = mockk(relaxUnitFun = true)
 
     renderHandlerThread = RenderHandlerThread(mapName = "")
-    renderHandlerThread.start()
 
     fpsManager = mockk(relaxUnitFun = true)
     every { fpsManager.preRender(any()) } returns true
@@ -69,6 +68,7 @@ class VulkanMapboxRenderThreadTest {
       createCondition = surfaceProcessingLock.newCondition(),
       destroyCondition = surfaceProcessingLock.newCondition(),
     )
+    renderHandlerThread.start(renderThread.handlerCallback)
 
     mockkStatic("com.mapbox.maps.MapboxLogger")
     ShadowLog.stream = System.out

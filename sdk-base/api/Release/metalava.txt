@@ -264,6 +264,10 @@ package com.mapbox.maps {
     property @CallSuper @MainThread public String styleURI;
   }
 
+  public final class MapboxTracingConstants {
+    field @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static final String MAPS_SDK_TRACE_PREFIX = "maps-sdk:";
+  }
+
   public final class MapboxViewAnnotationException extends java.lang.RuntimeException {
     ctor public MapboxViewAnnotationException(String? exceptionText);
   }

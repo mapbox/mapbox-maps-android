@@ -8,9 +8,11 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxTracing
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MAPS_SDK_TRACE_PREFIX
 import com.mapbox.maps.MapboxCameraAnimationException
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
@@ -416,7 +418,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
 
       // commit applies changes immediately
       // this helps to avoid camera animations jitter noticeable on high zoom levels using location puck following mode.
-      commitChanges()
+      MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX CameraAnimations#commitChanges#${animator.type.name}" }) {
+        commitChanges()
+      }
     }
   }
 

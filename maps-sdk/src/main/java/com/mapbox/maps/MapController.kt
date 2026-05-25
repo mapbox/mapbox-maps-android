@@ -6,6 +6,7 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
+import com.mapbox.common.MapboxTracing
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -384,60 +385,62 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     mapView: MapView? = null,
   ) {
     for (plugin in options.plugins) {
-      try {
-        val pluginObject = when (plugin.id) {
-          MAPBOX_GESTURES_PLUGIN_ID -> {
-            createGesturePlugin(options.context, options.attrs, options.mapOptions.pixelRatio)
+      MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX createPlugin: ${plugin.id}" }) {
+        try {
+          val pluginObject = when (plugin.id) {
+            MAPBOX_GESTURES_PLUGIN_ID -> {
+              createGesturePlugin(options.context, options.attrs, options.mapOptions.pixelRatio)
+            }
+            MAPBOX_CAMERA_PLUGIN_ID -> {
+              createCameraAnimationPlugin()
+            }
+            MAPBOX_ANNOTATION_PLUGIN_ID -> {
+              createAnnotationPlugin()
+            }
+            MAPBOX_COMPASS_PLUGIN_ID -> {
+              createCompassPlugin()
+            }
+            MAPBOX_ATTRIBUTION_PLUGIN_ID -> {
+              createAttributionPlugin()
+            }
+            MAPBOX_LIFECYCLE_PLUGIN_ID -> {
+              createLifecyclePlugin()
+            }
+            MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> {
+              createLocationComponentPlugin()
+            }
+            MAPBOX_LOGO_PLUGIN_ID -> {
+              createLogoPlugin()
+            }
+            MAPBOX_MAP_OVERLAY_PLUGIN_ID -> {
+              createOverlayPlugin()
+            }
+            MAPBOX_SCALEBAR_PLUGIN_ID -> {
+              createScaleBarPlugin()
+            }
+            MAPBOX_VIEWPORT_PLUGIN_ID -> {
+              createViewportPlugin()
+            }
+            MAPBOX_INDOOR_SELECTOR_PLUGIN_ID -> {
+              createIndoorSelectorPlugin()
+            }
+            else -> {
+              plugin.instance
+                ?: throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
+            }
           }
-          MAPBOX_CAMERA_PLUGIN_ID -> {
-            createCameraAnimationPlugin()
+          createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
+          if (plugin is Plugin.Mapbox) {
+            when (pluginObject) {
+              is CameraAnimationsPlugin -> mapboxMap.cameraAnimationsPlugin = pluginObject
+              is GesturesPlugin -> mapboxMap.gesturesPlugin = pluginObject
+            }
           }
-          MAPBOX_ANNOTATION_PLUGIN_ID -> {
-            createAnnotationPlugin()
-          }
-          MAPBOX_COMPASS_PLUGIN_ID -> {
-            createCompassPlugin()
-          }
-          MAPBOX_ATTRIBUTION_PLUGIN_ID -> {
-            createAttributionPlugin()
-          }
-          MAPBOX_LIFECYCLE_PLUGIN_ID -> {
-            createLifecyclePlugin()
-          }
-          MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> {
-            createLocationComponentPlugin()
-          }
-          MAPBOX_LOGO_PLUGIN_ID -> {
-            createLogoPlugin()
-          }
-          MAPBOX_MAP_OVERLAY_PLUGIN_ID -> {
-            createOverlayPlugin()
-          }
-          MAPBOX_SCALEBAR_PLUGIN_ID -> {
-            createScaleBarPlugin()
-          }
-          MAPBOX_VIEWPORT_PLUGIN_ID -> {
-            createViewportPlugin()
-          }
-          MAPBOX_INDOOR_SELECTOR_PLUGIN_ID -> {
-            createIndoorSelectorPlugin()
-          }
-          else -> {
-            plugin.instance
-              ?: throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
-          }
+        } catch (ex: NoClassDefFoundError) {
+          logI(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))
+        } catch (ex: InvalidViewPluginHostException) {
+          logI(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
         }
-        createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
-        if (plugin is Plugin.Mapbox) {
-          when (pluginObject) {
-            is CameraAnimationsPlugin -> mapboxMap.cameraAnimationsPlugin = pluginObject
-            is GesturesPlugin -> mapboxMap.gesturesPlugin = pluginObject
-          }
-        }
-      } catch (ex: NoClassDefFoundError) {
-        logI(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))
-      } catch (ex: InvalidViewPluginHostException) {
-        logI(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
       }
     }
   }
