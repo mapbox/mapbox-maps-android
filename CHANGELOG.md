@@ -80,6 +80,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.24.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.24.0), common to [v24.24.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.24.0).
 
+# 11.21.6 May 25, 2026
+## Dependencies
+* Update gl-native to [v11.21.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.6), common to [v24.21.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.6).
+
+
 # 11.21.5 May 15, 2026
 ## Features ✨ and improvements 🏁
 * Add animated transitions when toggling HD roads.
