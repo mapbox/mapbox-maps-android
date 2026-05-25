@@ -74,7 +74,7 @@ internal abstract class MapboxRenderer(
 
   @AnyThread
   override fun scheduleRepaint() {
-    renderThread.queueRenderEvent(repaintRenderEvent)
+    renderThread.scheduleRepaint()
   }
 
   @AnyThread
@@ -269,9 +269,6 @@ internal abstract class MapboxRenderer(
   }
 
   companion object {
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val repaintRenderEvent = RenderEvent(null, true)
-
     internal val supportedRenderBackend: RenderBackendType by lazy {
       Map.getSupportedRenderBackend()
     }

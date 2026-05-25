@@ -84,7 +84,7 @@ class GLMapboxRenderThreadTest {
       createCondition = surfaceProcessingLock.newCondition(),
       destroyCondition = destroyCondition
     )
-    renderHandlerThread.start()
+    renderHandlerThread.start(mapboxRenderThread.handlerCallback)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     ShadowLog.stream = System.out
     every { logE(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
@@ -283,9 +283,9 @@ class GLMapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // one swap buffer for surface creation, two for not squashed render requests
     verify(exactly = 3) {
@@ -308,7 +308,7 @@ class GLMapboxRenderThreadTest {
     pauseHandler()
     mapboxRenderThread.viewAnnotationMode = ViewAnnotationUpdateMode.MAP_SYNCHRONIZED
     mapboxRenderThread.needViewAnnotationSync = true
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler(choreographerCallbackDelayMs)
     // buffers are already swapped once when surface was created
     // they should not be swapped this frame N, they need to be swapped next frame N+1
@@ -335,7 +335,7 @@ class GLMapboxRenderThreadTest {
     pauseHandler()
     mapboxRenderThread.viewAnnotationMode = ViewAnnotationUpdateMode.MAP_FIXED_DELAY
     mapboxRenderThread.needViewAnnotationSync = true
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler(choreographerCallbackDelayMs)
     // buffers are already swapped once when surface was created
     // they should be swapped on this frame N
@@ -355,8 +355,8 @@ class GLMapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // one swap buffer for surface creation, 2 render requests squash in one swap buffers call
     verify(exactly = 2) {
@@ -380,11 +380,11 @@ class GLMapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.pause()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // one swap buffer for surface creation, one request render after pause is omitted
     verify(exactly = 2) {
@@ -397,17 +397,17 @@ class GLMapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.pause()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.resume()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // render requests after pause do not swap buffer, we do it on resume if needed once
     verify(exactly = 4) {
@@ -420,13 +420,13 @@ class GLMapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     mapboxRenderThread.pause()
     idleHandler()
     mapboxRenderThread.resume()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // we always do extra render call on resume
     verify(exactly = 4) {
@@ -591,7 +591,7 @@ class GLMapboxRenderThreadTest {
     mapboxRenderThread.awaitingNextVsync = false
     pauseHandler()
     // schedule render request
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     assert(mapboxRenderThread.nonRenderEventQueue.isEmpty())
     // one swap buffer from surface creation + one for render request
@@ -634,9 +634,9 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     pauseHandler()
     every { fpsManager.preRender(any()) } returns false
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     every { fpsManager.preRender(any()) } returns true
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // one swap for surface creation and one more when preRender returns true
     verify(exactly = 2) {
@@ -735,7 +735,7 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     verifyNo {
       // we do not destroy native renderer if it's stop and not destroy
@@ -754,7 +754,7 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
 
     verifyOnce {
@@ -774,7 +774,7 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.setUserRefreshRate(15)
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     // 1 swap when creating surface + 1 for request render call
     verify(exactly = 2) {
@@ -789,9 +789,9 @@ class GLMapboxRenderThreadTest {
     every { mapboxWidgetRenderer.needRender } returns false
     every { mapboxWidgetRenderer.getTexture() } returns 0
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     verifyNo {
       mapboxWidgetRenderer.renderToFrameBuffer()
@@ -809,9 +809,9 @@ class GLMapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasTexture() } returns true
     every { mapboxWidgetRenderer.getTexture() } returns textureId
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     verify(exactly = 2) {
       mapboxWidgetRenderer.renderToFrameBuffer()
@@ -829,7 +829,7 @@ class GLMapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasTexture() } returns true
     every { mapboxWidgetRenderer.getTexture() } returns textureId
     pauseHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     verifyOrder {
       mapboxWidgetRenderer.renderToFrameBuffer()
@@ -960,10 +960,10 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     pauseHandler()
     every { eglCore.swapBuffers(any()) } returns EGL14.EGL_CONTEXT_LOST
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     verifyOrder {
       // swap buffers for surface creation
@@ -1076,10 +1076,10 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     pauseHandler()
     every { eglCore.swapBuffers(any()) } returns EGL14.EGL_BAD_ALLOC
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     verifyOrder {
       // swap buffers for surface creation
@@ -1115,7 +1115,7 @@ class GLMapboxRenderThreadTest {
     // make sure we do not print any logI
     every { logI(any(), any()) } answers { throw RuntimeException() }
     // simulate engine sending request render while we are paused
-    mapboxRenderThread.queueRenderEvent(MapboxRenderer.repaintRenderEvent)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
     every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
   }

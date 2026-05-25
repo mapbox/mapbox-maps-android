@@ -14,6 +14,7 @@ import androidx.annotation.IntRange
 import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxTracing
 import com.mapbox.maps.debugoptions.DebugOptionsController
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
@@ -118,42 +119,46 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     defStyleRes: Int,
     initOptions: MapInitOptions?,
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
-    val resolvedMapInitOptions = if (attrs != null) {
-      parseTypedArray(context, attrs)
-    } else {
-      initOptions ?: MapInitOptions(context)
-    }
-    if (isInEditMode) {
-      return
-    }
-    val view = if (resolvedMapInitOptions.textureView) {
-      TextureView(context, attrs)
-    } else {
-      SurfaceView(context, attrs)
-    }
-    val contextMode = resolvedMapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE
-    mapController = MapController(
-      when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(
-          view.holder,
-          resolvedMapInitOptions.antialiasingSampleCount,
-          contextMode,
-          resolvedMapInitOptions.mapName,
-        )
+    MapboxTracing.traceSync("$MAPS_SDK_TRACE_PREFIX MapView") {
+      val resolvedMapInitOptions = if (attrs != null) {
+        parseTypedArray(context, attrs)
+      } else {
+        initOptions ?: MapInitOptions(context)
+      }
+      if (isInEditMode) {
+        return
+      }
+      val view = if (resolvedMapInitOptions.textureView) {
+        TextureView(context, attrs)
+      } else {
+        SurfaceView(context, attrs)
+      }
+      val contextMode = resolvedMapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE
+      val mapName = resolvedMapInitOptions.mapName
 
-        is TextureView -> MapboxTextureViewRenderer(
-          view,
-          resolvedMapInitOptions.antialiasingSampleCount,
-          contextMode,
-          resolvedMapInitOptions.mapName,
-        )
+      val renderer = MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX renderer($mapName)" }) {
+        when (view) {
+          is SurfaceView -> MapboxSurfaceHolderRenderer(
+            view.holder,
+            resolvedMapInitOptions.antialiasingSampleCount,
+            contextMode,
+            resolvedMapInitOptions.mapName,
+          )
 
-        else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
-      },
-      resolvedMapInitOptions
-    )
-    addView(view, 0)
-    mapController.initializePlugins(resolvedMapInitOptions, this)
+          is TextureView -> MapboxTextureViewRenderer(
+            view,
+            resolvedMapInitOptions.antialiasingSampleCount,
+            contextMode,
+            resolvedMapInitOptions.mapName,
+          )
+
+          else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
+        }
+      }
+      mapController = MapController(renderer, resolvedMapInitOptions)
+      addView(view, 0)
+      mapController.initializePlugins(resolvedMapInitOptions, this)
+    }
   }
 
   override fun onAttachedToWindow() {

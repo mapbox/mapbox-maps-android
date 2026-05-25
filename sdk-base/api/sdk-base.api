@@ -279,6 +279,10 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun updateStyleImportWithURI (Ljava/lang/String;Ljava/lang/String;Ljava/util/HashMap;)Lcom/mapbox/bindgen/Expected;
 }
 
+public final class com/mapbox/maps/MapboxTracingConstants {
+	public static final field MAPS_SDK_TRACE_PREFIX Ljava/lang/String;
+}
+
 public final class com/mapbox/maps/MapboxViewAnnotationException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 }

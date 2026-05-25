@@ -4,6 +4,7 @@ import com.mapbox.maps.logW
 import com.mapbox.verifyNo
 import io.mockk.*
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
@@ -134,5 +135,32 @@ class RenderHandlerThreadTest {
     handlerLooperShadow.idleFor(Duration.ofMillis(50))
     verify { actionOne.run() }
     verify { actionTwo.run() }
+  }
+
+  @Test
+  fun sendMessageDelayedDispatchesTypedMessageWithArgs() {
+    val testWhat = 7
+    var dispatchedArg1: Int? = null
+    val callback = android.os.Handler.Callback { msg ->
+      if (msg.what == testWhat) {
+        dispatchedArg1 = msg.arg1
+        true
+      } else {
+        false
+      }
+    }
+    renderHandlerThread.start(callback)
+    val handlerLooperShadow = Shadows.shadowOf(renderHandlerThread.handlerThread.looper)
+    renderHandlerThread.sendMessageDelayed(what = testWhat, arg1 = 42, delayMillis = 0)
+    handlerLooperShadow.idleFor(Duration.ofMillis(0))
+    assertEquals(42, dispatchedArg1)
+  }
+
+  @Test
+  fun sendMessageDelayedThreadNotStarted() {
+    var dispatchedArg1: Int? = null
+    // NOTE: deliberately not calling renderHandlerThread.start() — thread is not started.
+    renderHandlerThread.sendMessageDelayed(what = 7, arg1 = 42, delayMillis = 0)
+    assertEquals(null, dispatchedArg1)
   }
 }

@@ -42,11 +42,18 @@ internal class RenderHandlerThread(
     } ?: logW(TAG, "Thread $handlerThreadName was not started, ignoring event")
   }
 
-  fun start(): Handler {
+  fun start(callback: Handler.Callback? = null): Handler {
     handlerThread.start()
-    return Handler(handlerThread.looper).also {
+    return Handler(handlerThread.looper, callback).also {
       handler = it
     }
+  }
+
+  fun sendMessageDelayed(what: Int, arg1: Int, delayMillis: Long) {
+    handler?.let {
+      val msg = it.obtainMessage(what, arg1, 0)
+      it.sendMessageDelayed(msg, delayMillis)
+    } ?: logW(TAG, "Thread $handlerThreadName was not started, ignoring event")
   }
 
   fun stop() {

@@ -53,14 +53,7 @@ internal abstract class MapboxRendererTest {
   @Test
   fun scheduleRepaintTest() {
     mapboxRenderer.scheduleRepaint()
-    verify {
-      renderThread.queueRenderEvent(
-        RenderEvent(
-          null,
-          true,
-        )
-      )
-    }
+    verify { renderThread.scheduleRepaint() }
   }
 
   @Test
