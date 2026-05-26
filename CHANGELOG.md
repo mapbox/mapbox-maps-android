@@ -13,6 +13,16 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix frame pacing breaking when the panel switches refresh-rate modes mid-session (VRR or per-UID `frameRateOverride`). `FpsManager` now updates its `screenRefreshRate` via a `DisplayManager.DisplayListener` instead of only sampling once at `onStart`.
 * [maps-sdk] Fix Vulkan rendering being permanently disabled when the Android surface arrived before the native map was set. The renderer now defers setup and retries via `onMapSet()` once the map is available.
 
+# 11.21.6 May 25, 2026
+## Features ✨ and improvements 🏁
+* Improve anti-aliasing for line layers with `line-border-width` set.
+
+## Bug fixes 🐞
+* Fix a crash that could occur when the map is destroyed while asynchronous operations are in progress.
+
+## Dependencies
+* Update gl-native to [v11.21.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.6), common to [v24.21.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.6).
+
 # 11.24.2 May 20, 2026
 ## Dependencies
 * Update gl-native to [v11.24.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.24.2), common to [v24.24.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.24.2).
