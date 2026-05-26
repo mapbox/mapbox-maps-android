@@ -7,15 +7,21 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.21.6 May 25, 2026
+## Features ✨ and improvements 🏁
+* Improve anti-aliasing for line layers with `line-border-width` set.
+
+## Bug fixes 🐞
+* Fix a crash that could occur when the map is destroyed while asynchronous operations are in progress.
+
 ## Dependencies
 * Update gl-native to [v11.21.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.6), common to [v24.21.6](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.6).
 
 
 # 11.21.5 May 15, 2026
-## Features and improvements
+## Features ✨ and improvements 🏁
 * Add animated transitions when toggling HD roads.
 
-## Bug fixes
+## Bug fixes 🐞
 * Fix a situation where updated import config properties were ignored after an import URL change.
 
 ## Dependencies
