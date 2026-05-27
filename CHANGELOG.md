@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.24.3 May 27, 2026
+## Dependencies
+* Update gl-native to [v11.24.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.24.3), common to [v24.24.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.24.3).
+
+
 # 11.24.2 May 20, 2026
 ## Bug fixes
 * Fix a crash when modifying a layer at runtime whose ID matches a layer in an imported style.
