@@ -57,6 +57,7 @@ class MapboxMap :
 
   private val nativeMap: NativeMapImpl
   private var isMapValid = true
+  private val throttlers = LogThrottlers()
   private var performanceCollectionStatisticsStarted = false
   private val interactions = mutableListOf<Cancelable>()
 
@@ -2650,6 +2651,7 @@ class MapboxMap :
     interactions.clear()
     styleObserver.onDestroy()
     isMapValid = false
+    throttlers.clear()
   }
 
   /**
@@ -2747,7 +2749,8 @@ class MapboxMap :
     if (!isMapValid) {
       logW(
         TAG,
-        "MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed."
+        "MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.",
+        throttlers[methodName],
       )
     }
   }

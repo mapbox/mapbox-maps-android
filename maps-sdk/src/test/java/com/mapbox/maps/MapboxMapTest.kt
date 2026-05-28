@@ -4,6 +4,7 @@ import android.graphics.RectF
 import android.os.Looper
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.LogThrottler
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
@@ -29,6 +30,7 @@ import com.mapbox.maps.plugin.delegates.listeners.OnStyleImageUnusedListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.shadows.ShadowLogThrottler
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import io.mockk.CapturingSlot
@@ -62,7 +64,7 @@ private val ZERO_EDGE_INSETS = EdgeInsets(0.0, 0.0, 0.0, 0.0)
 @Suppress("DEPRECATION")
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-@Config(shadows = [ShadowMap::class])
+@Config(shadows = [ShadowMap::class, ShadowLogThrottler::class])
 class MapboxMapTest {
 
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
@@ -84,6 +86,42 @@ class MapboxMapTest {
     assertTrue(mapboxMap.isValid())
     mapboxMap.onDestroy()
     assertFalse(mapboxMap.isValid())
+  }
+
+  @Test
+  fun checkNativeMapDoesNotLogWhenValid() {
+    every { logW(any(), any(), any<LogThrottler>()) } just Runs
+    mapboxMap.setCamera(CameraOptions.Builder().build())
+    verify(exactly = 0) { logW(any(), any(), any<LogThrottler>()) }
+  }
+
+  @Test
+  fun checkNativeMapLogsWithThrottlerAfterDestroy() {
+    every { logW(any(), any(), any<LogThrottler>()) } just Runs
+    val throttlerSlot = slot<LogThrottler>()
+    mapboxMap.onDestroy()
+    mapboxMap.setCamera(CameraOptions.Builder().build())
+    verifyOnce { logW(any(), match { it.contains("setCamera") }, capture(throttlerSlot)) }
+    assertNotNull(throttlerSlot.captured)
+  }
+
+  @Test
+  fun checkNativeMapReusesThrottlerPerMethodName() {
+    val captured = mutableListOf<LogThrottler>()
+    every { logW(any(), any(), capture(captured)) } just Runs
+    mapboxMap.onDestroy()
+    val options = CameraOptions.Builder().build()
+    // Three setCamera calls share one throttler; cameraState gets a different one.
+    mapboxMap.setCamera(options)
+    mapboxMap.setCamera(options)
+    mapboxMap.setCamera(options)
+    mapboxMap.cameraState
+    assertEquals(4, captured.size)
+    // First three (setCamera) are the same instance.
+    assertTrue(captured[0] === captured[1])
+    assertTrue(captured[1] === captured[2])
+    // cameraState has a distinct throttler.
+    assertTrue(captured[3] !== captured[0])
   }
 
   @Test
