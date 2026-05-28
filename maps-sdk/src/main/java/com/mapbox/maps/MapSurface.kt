@@ -6,6 +6,8 @@ import android.os.Build
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
+import androidx.annotation.MainThread
+import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.maps.plugin.MapPlugin
@@ -213,8 +215,46 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    *
    * @param fps The maximum fps
    */
+  @MainThread
   override fun setMaximumFps(fps: Int) {
-    renderer.setMaximumFps(fps)
+    mapController.setMaximumFps(fps)
+  }
+
+  /**
+   * The currently configured maximum FPS, or null if [setMaximumFps] was never called
+   * (or was followed by [clearMaximumFps]).
+   */
+  @get:MainThread
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val maximumFps: Int?
+    get() = mapController.maximumFps
+
+  /**
+   * Reset to "no cap" — equivalent to never having called [setMaximumFps].
+   */
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun clearMaximumFps() {
+    mapController.clearMaximumFps()
+  }
+
+  /**
+   * Register a callback invoked when [setMaximumFps] or [clearMaximumFps] is called.
+   * Fires synchronously on the main thread.
+   */
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun addOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
+    mapController.addOnMaximumFpsChangedListener(listener)
+  }
+
+  /**
+   * Unregister a callback previously registered via [addOnMaximumFpsChangedListener].
+   */
+  @MainThread
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
+    mapController.removeOnMaximumFpsChangedListener(listener)
   }
 
   /**

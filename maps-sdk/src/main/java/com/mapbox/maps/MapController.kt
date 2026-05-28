@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.view.MotionEvent
+import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
@@ -38,6 +39,7 @@ import com.mapbox.maps.plugin.scalebar.createScaleBarPlugin
 import com.mapbox.maps.plugin.viewport.createViewportPlugin
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.OnMaximumFpsChangedListener
 import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
@@ -47,6 +49,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.plus
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -59,6 +62,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val _mapboxMap: MapboxMap
   private val pluginRegistry: MapPluginRegistry
   private val styleDataLoadedCallback: StyleDataLoadedCallback
+
+  // Main-thread only: MapView/MapSurface setMaximumFps/clearMaximumFps and the
+  // maximumFps getter are all @MainThread, so this field is only ever touched
+  // from the main thread. No synchronization needed.
+  private var cachedMaximumFps: Int? = null
+
+  private val maximumFpsListeners =
+    CopyOnWriteArrayList<OnMaximumFpsChangedListener>()
+
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   private val cameraChangedCoalescedCallback: CameraChangedCoalescedCallback
   private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
@@ -274,8 +286,35 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.snapshot(listener)
   }
 
+  @get:MainThread
+  internal val maximumFps: Int? get() = cachedMaximumFps
+
+  @MainThread
   override fun setMaximumFps(fps: Int) {
-    renderer.setMaximumFps(fps)
+    if (cachedMaximumFps != fps) {
+      cachedMaximumFps = fps
+      renderer.setMaximumFps(fps)
+      maximumFpsListeners.forEach { it.onMaximumFpsChanged(fps) }
+    }
+  }
+
+  @MainThread
+  internal fun clearMaximumFps() {
+    if (cachedMaximumFps != null) {
+      cachedMaximumFps = null
+      renderer.clearMaximumFps()
+      maximumFpsListeners.forEach { it.onMaximumFpsChanged(null) }
+    }
+  }
+
+  @MainThread
+  internal fun addOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
+    maximumFpsListeners.add(listener)
+  }
+
+  @MainThread
+  internal fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
+    maximumFpsListeners.remove(listener)
   }
 
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {

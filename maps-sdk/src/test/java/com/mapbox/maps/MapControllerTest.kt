@@ -13,6 +13,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.renderer.MapboxRenderThread
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.OnMaximumFpsChangedListener
 import com.mapbox.maps.renderer.widget.BitmapWidget
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.shadows.ShadowCancelable
@@ -358,6 +359,75 @@ class MapControllerTest {
 
     // range check is performed within MapboxRenderer
     verify { mockRenderer.setMaximumFps(any()) }
+  }
+
+  @Test
+  fun setMaximumFpsCachesValue() {
+    every { mockRenderer.setMaximumFps(any()) } just Runs
+
+    testMapController.setMaximumFps(60)
+
+    assertEquals(60, testMapController.maximumFps)
+  }
+
+  @Test
+  fun setMaximumFpsTwiceWithSameValueOnlyForwardsOnce() {
+    every { mockRenderer.setMaximumFps(any()) } just Runs
+
+    testMapController.setMaximumFps(60)
+    testMapController.setMaximumFps(60)
+
+    verifyOnce { mockRenderer.setMaximumFps(60) }
+  }
+
+  @Test
+  fun clearMaximumFpsResetsCacheAndForwards() {
+    every { mockRenderer.setMaximumFps(any()) } just Runs
+    every { mockRenderer.clearMaximumFps() } just Runs
+    testMapController.setMaximumFps(60)
+
+    testMapController.clearMaximumFps()
+
+    assertNull(testMapController.maximumFps)
+    verify { mockRenderer.clearMaximumFps() }
+  }
+
+  @Test
+  fun clearMaximumFpsWhenAlreadyNullIsNoop() {
+    every { mockRenderer.clearMaximumFps() } just Runs
+
+    testMapController.clearMaximumFps()
+
+    verify(exactly = 0) { mockRenderer.clearMaximumFps() }
+  }
+
+  @Test
+  fun maximumFpsListenerFiresOnSetAndClear() {
+    every { mockRenderer.setMaximumFps(any()) } just Runs
+    every { mockRenderer.clearMaximumFps() } just Runs
+    val listener = mockk<OnMaximumFpsChangedListener>(relaxed = true)
+    testMapController.addOnMaximumFpsChangedListener(listener)
+
+    testMapController.setMaximumFps(60)
+    testMapController.setMaximumFps(60) // duplicate -> no fire
+    testMapController.setMaximumFps(24)
+    testMapController.clearMaximumFps()
+
+    verifyOnce { listener.onMaximumFpsChanged(60) }
+    verifyOnce { listener.onMaximumFpsChanged(24) }
+    verifyOnce { listener.onMaximumFpsChanged(null) }
+  }
+
+  @Test
+  fun removedMaximumFpsListenerDoesNotFire() {
+    every { mockRenderer.setMaximumFps(any()) } just Runs
+    val listener = mockk<OnMaximumFpsChangedListener>(relaxed = true)
+    testMapController.addOnMaximumFpsChangedListener(listener)
+    testMapController.removeOnMaximumFpsChangedListener(listener)
+
+    testMapController.setMaximumFps(60)
+
+    verify(exactly = 0) { listener.onMaximumFpsChanged(any()) }
   }
 
   @Test

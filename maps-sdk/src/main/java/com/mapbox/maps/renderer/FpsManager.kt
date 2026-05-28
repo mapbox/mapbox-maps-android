@@ -74,6 +74,7 @@ internal class FpsManager(
 
   private fun updateUserToScreenRefreshRatio() {
     if (userRefreshRate == USER_DEFINED_REFRESH_RATE_NOT_SET || screenRefreshRate == SCREEN_METRICS_NOT_DEFINED) {
+      userToScreenRefreshRateRatio = null
       logI(TAG, "userToScreenRefreshRateRatio is not set (userRefreshRate=$userRefreshRate, screenRefreshRate=$screenRefreshRate)")
       return
     }
@@ -269,7 +270,7 @@ internal class FpsManager(
   }
 
   internal companion object {
-    private const val USER_DEFINED_REFRESH_RATE_NOT_SET = -1
+    internal const val USER_DEFINED_REFRESH_RATE_NOT_SET = -1
     private const val SCREEN_METRICS_NOT_DEFINED = -1
     private const val LOG_STATISTICS = false
 

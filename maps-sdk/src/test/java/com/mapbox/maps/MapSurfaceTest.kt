@@ -183,7 +183,11 @@ class MapSurfaceTest {
   fun setMaximumFpsTest() {
     val fps = 160
     mapSurface.setMaximumFps(fps)
-    verifyOnce { mapboxSurfaceRenderer.setMaximumFps(fps) }
+    // setMaximumFps now routes through mapController (which caches and dispatches listeners)
+    // rather than calling the renderer directly. mapController.setMaximumFps is responsible
+    // for the renderer call internally.
+    verify { mapController.setMaximumFps(fps) }
+    verify(exactly = 0) { mapboxSurfaceRenderer.setMaximumFps(any()) }
   }
 
   @Test

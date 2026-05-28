@@ -202,6 +202,11 @@ internal abstract class MapboxRenderer(mapName: String) : DelegatingMapClient {
   }
 
   @AnyThread
+  fun clearMaximumFps() {
+    renderThread.clearUserRefreshRate()
+  }
+
+  @AnyThread
   @Synchronized
   fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
     renderThread.fpsChangedListener = listener
