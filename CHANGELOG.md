@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add Standard `IndoorLabels` featureset and indoor configuration options (`showIndoor`, `showIndoorLabels`, `colorIndoorLabelHighlight`, `colorIndoorLabelSelect`) for the Mapbox Standard style.
+* Add `useNativeFlingDeceleration` option to `GesturesPlugin` that uses `OverScroller` for physics-based fling deceleration instead of the legacy `easeTo` animation, providing a more natural fling experience.
 * Throttle `MapboxMap` post destroyed warning logs.
 
 ## Bug fixes 🐞

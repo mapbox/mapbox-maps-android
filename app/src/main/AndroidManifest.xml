@@ -197,6 +197,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.FlingModeActivity"
+            android:description="@string/description_fling_mode"
+            android:exported="true"
+            android:label="@string/activity_fling_mode">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_gestures" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.RawGeoJsonActivity"
             android:description="@string/description_raw_geojson"
             android:exported="true"

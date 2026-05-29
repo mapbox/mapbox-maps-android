@@ -2563,6 +2563,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getScrollEnabled();
     method public com.mapbox.maps.plugin.ScrollMode getScrollMode();
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
+    method public boolean getUseNativeFlingDeceleration();
     method public float getZoomAnimationAmount();
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder toBuilder();
     property public final boolean doubleTapToZoomInEnabled;
@@ -2581,6 +2582,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public final boolean scrollEnabled;
     property public final com.mapbox.maps.plugin.ScrollMode scrollMode;
     property public final boolean simultaneousRotateAndPinchToZoomEnabled;
+    property public final boolean useNativeFlingDeceleration;
     property public final float zoomAnimationAmount;
   }
 
@@ -2603,6 +2605,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getScrollEnabled();
     method public com.mapbox.maps.plugin.ScrollMode getScrollMode();
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
+    method public boolean getUseNativeFlingDeceleration();
     method public float getZoomAnimationAmount();
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setDoubleTapToZoomInEnabled(boolean doubleTapToZoomInEnabled);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setDoubleTouchToZoomOutEnabled(boolean doubleTouchToZoomOutEnabled);
@@ -2620,6 +2623,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setScrollEnabled(boolean scrollEnabled);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setScrollMode(com.mapbox.maps.plugin.ScrollMode scrollMode);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setSimultaneousRotateAndPinchToZoomEnabled(boolean simultaneousRotateAndPinchToZoomEnabled);
+    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setUseNativeFlingDeceleration(boolean useNativeFlingDeceleration);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setZoomAnimationAmount(float zoomAnimationAmount);
     property public final boolean doubleTapToZoomInEnabled;
     property public final boolean doubleTouchToZoomOutEnabled;
@@ -2637,6 +2641,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public final boolean scrollEnabled;
     property public final com.mapbox.maps.plugin.ScrollMode scrollMode;
     property public final boolean simultaneousRotateAndPinchToZoomEnabled;
+    property public final boolean useNativeFlingDeceleration;
     property public final float zoomAnimationAmount;
   }
 
@@ -2661,6 +2666,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.ScrollMode getScrollMode();
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getSettings();
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
+    method public boolean getUseNativeFlingDeceleration();
     method public float getZoomAnimationAmount();
     method public void setDoubleTapToZoomInEnabled(boolean);
     method public void setDoubleTouchToZoomOutEnabled(boolean);
@@ -2679,6 +2685,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setScrollEnabled(boolean);
     method public void setScrollMode(com.mapbox.maps.plugin.ScrollMode);
     method public void setSimultaneousRotateAndPinchToZoomEnabled(boolean);
+    method public void setUseNativeFlingDeceleration(boolean);
     method public void setZoomAnimationAmount(float);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder,kotlin.Unit> block);
     property public boolean doubleTapToZoomInEnabled;
@@ -2698,6 +2705,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public boolean scrollEnabled;
     property public com.mapbox.maps.plugin.ScrollMode scrollMode;
     property public boolean simultaneousRotateAndPinchToZoomEnabled;
+    property public boolean useNativeFlingDeceleration;
     property public float zoomAnimationAmount;
   }
 
@@ -2719,6 +2727,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.ScrollMode getScrollMode();
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getSettings();
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
+    method public boolean getUseNativeFlingDeceleration();
     method public float getZoomAnimationAmount();
     method public void setDoubleTapToZoomInEnabled(boolean);
     method public void setDoubleTouchToZoomOutEnabled(boolean);
@@ -2736,6 +2745,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setScrollEnabled(boolean);
     method public void setScrollMode(com.mapbox.maps.plugin.ScrollMode);
     method public void setSimultaneousRotateAndPinchToZoomEnabled(boolean);
+    method public void setUseNativeFlingDeceleration(boolean);
     method public void setZoomAnimationAmount(float);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder,kotlin.Unit> block);
     property public abstract boolean doubleTapToZoomInEnabled;
@@ -2754,6 +2764,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public abstract boolean scrollEnabled;
     property public abstract com.mapbox.maps.plugin.ScrollMode scrollMode;
     property public abstract boolean simultaneousRotateAndPinchToZoomEnabled;
+    property public abstract boolean useNativeFlingDeceleration;
     property public abstract float zoomAnimationAmount;
   }
 
@@ -3357,7 +3368,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits distanceUnits);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setEnabled(boolean enabled);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setHeight(float height);
-    method @Deprecated public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
+    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginBottom(float marginBottom);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginLeft(float marginLeft);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginRight(float marginRight);

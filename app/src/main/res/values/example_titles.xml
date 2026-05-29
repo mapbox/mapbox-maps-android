@@ -12,6 +12,7 @@
     <string name="activity_default_styles">Change the map\'s style</string>
     <string name="activity_map_recycle">RecyclerView</string>
     <string name="activity_gestures">Gestures</string>
+    <string name="activity_fling_mode">Fling Mode Toggle</string>
     <string name="activity_raw_expression">Raw Expression</string>
     <string name="activity_raw_geojson">Raw GeoJSON</string>
     <string name="activity_geojson_in_stack">Adjust layer order</string>

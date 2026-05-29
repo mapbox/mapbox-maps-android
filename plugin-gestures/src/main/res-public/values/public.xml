@@ -55,5 +55,8 @@
 
     <!-- Whether pan is enabled for the pinch gesture. -->
     <public name="mapbox_gesturesPinchScrollEnabled" type="attr" />
+
+    <!-- Whether to use OverScroller-based fling deceleration for smoother, physics-based scroll deceleration. Requires scrollDecelerationEnabled to be true. False by default. -->
+    <public name="mapbox_gesturesUseNativeFlingDeceleration" type="attr" />
 </resources>
 <!-- End of generated file. -->

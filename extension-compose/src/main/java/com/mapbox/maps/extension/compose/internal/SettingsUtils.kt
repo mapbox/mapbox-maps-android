@@ -28,5 +28,6 @@ internal fun GesturesSettingsInterface.applySettings(gesturesSettings: GesturesS
       gesturesSettings.increasePinchToZoomThresholdWhenRotating
     zoomAnimationAmount = gesturesSettings.zoomAnimationAmount
     pinchScrollEnabled = gesturesSettings.pinchScrollEnabled
+    useNativeFlingDeceleration = gesturesSettings.useNativeFlingDeceleration
   }
 }

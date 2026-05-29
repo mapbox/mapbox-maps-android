@@ -2586,7 +2586,7 @@ public abstract interface class com/mapbox/maps/plugin/gestures/OnShoveListener 
 
 public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDoubleTapToZoomInEnabled ()Z
@@ -2605,6 +2605,7 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings : 
 	public final fun getScrollEnabled ()Z
 	public final fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
 	public final fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public final fun getUseNativeFlingDeceleration ()Z
 	public final fun getZoomAnimationAmount ()F
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings$Builder;
@@ -2631,6 +2632,7 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings$Bu
 	public final fun getScrollEnabled ()Z
 	public final fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
 	public final fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public final fun getUseNativeFlingDeceleration ()Z
 	public final fun getZoomAnimationAmount ()F
 	public final fun setDoubleTapToZoomInEnabled (Z)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings$Builder;
 	public final synthetic fun setDoubleTapToZoomInEnabled (Z)V
@@ -2664,6 +2666,8 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings$Bu
 	public final synthetic fun setScrollMode (Lcom/mapbox/maps/plugin/ScrollMode;)V
 	public final fun setSimultaneousRotateAndPinchToZoomEnabled (Z)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings$Builder;
 	public final synthetic fun setSimultaneousRotateAndPinchToZoomEnabled (Z)V
+	public final fun setUseNativeFlingDeceleration (Z)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings$Builder;
+	public final synthetic fun setUseNativeFlingDeceleration (Z)V
 	public final fun setZoomAnimationAmount (F)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings$Builder;
 	public final synthetic fun setZoomAnimationAmount (F)V
 }
@@ -2697,6 +2701,7 @@ public abstract class com/mapbox/maps/plugin/gestures/generated/GesturesSettings
 	public fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
 	public fun getSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public fun getUseNativeFlingDeceleration ()Z
 	public fun getZoomAnimationAmount ()F
 	public fun setDoubleTapToZoomInEnabled (Z)V
 	public fun setDoubleTouchToZoomOutEnabled (Z)V
@@ -2715,6 +2720,7 @@ public abstract class com/mapbox/maps/plugin/gestures/generated/GesturesSettings
 	public fun setScrollEnabled (Z)V
 	public fun setScrollMode (Lcom/mapbox/maps/plugin/ScrollMode;)V
 	public fun setSimultaneousRotateAndPinchToZoomEnabled (Z)V
+	public fun setUseNativeFlingDeceleration (Z)V
 	public fun setZoomAnimationAmount (F)V
 	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
 }
@@ -2745,6 +2751,7 @@ public abstract interface class com/mapbox/maps/plugin/gestures/generated/Gestur
 	public abstract fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
 	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public abstract fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public abstract fun getUseNativeFlingDeceleration ()Z
 	public abstract fun getZoomAnimationAmount ()F
 	public abstract fun setDoubleTapToZoomInEnabled (Z)V
 	public abstract fun setDoubleTouchToZoomOutEnabled (Z)V
@@ -2762,6 +2769,7 @@ public abstract interface class com/mapbox/maps/plugin/gestures/generated/Gestur
 	public abstract fun setScrollEnabled (Z)V
 	public abstract fun setScrollMode (Lcom/mapbox/maps/plugin/ScrollMode;)V
 	public abstract fun setSimultaneousRotateAndPinchToZoomEnabled (Z)V
+	public abstract fun setUseNativeFlingDeceleration (Z)V
 	public abstract fun setZoomAnimationAmount (F)V
 	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
 }

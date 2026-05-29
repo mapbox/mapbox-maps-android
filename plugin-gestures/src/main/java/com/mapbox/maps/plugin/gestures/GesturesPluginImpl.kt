@@ -132,6 +132,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   private var gesturesInterpolator = LinearOutSlowInInterpolator()
 
   private lateinit var coreGesturesHandler: CoreGesturesHandler
+  private lateinit var overScrollerFlingAnimator: OverScrollerFlingAnimator
 
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
@@ -361,6 +362,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   }
 
   private fun unregisterScheduledAnimators() {
+    overScrollerFlingAnimator.forceStop()
     animationsTimeoutHandler.removeCallbacksAndMessages(null)
     scheduledAnimators.clear()
     unregisterScheduledAnimators(scaleAnimators)
@@ -1305,6 +1307,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     // we need to cancel core transitions only if there is no started gesture yet
     if (noGesturesInProgress()) {
       cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
+      overScrollerFlingAnimator.forceStop()
     }
   }
 
@@ -1387,7 +1390,8 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       return false
     }
 
-    if (isPointAboveHorizon(e2.toScreenCoordinate())) {
+    val e2ScreenCoordinate = e2.toScreenCoordinate()
+    if (isPointAboveHorizon(e2ScreenCoordinate)) {
       return false
     }
 
@@ -1407,6 +1411,20 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       return false
     }
 
+    return if (useNativeFlingDeceleration) {
+      handleOverScrollerFling(velocityX, velocityY, e2ScreenCoordinate)
+    } else {
+      handleLegacyFling(velocityX, velocityY, velocityXY)
+    }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun handleLegacyFling(
+    velocityX: Float,
+    velocityY: Float,
+    velocityXY: Double
+  ): Boolean {
+    val screenDensity = pixelRatio
     val pitch = mapCameraManagerDelegate.cameraState.pitch
 
     // We limit the amount of fling displacement based on the camera pitch value.
@@ -1454,6 +1472,21 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       },
       animatorListener = coreGesturesHandler.coreGestureAnimatorHandler
     )
+    return true
+  }
+
+  private fun handleOverScrollerFling(
+    velocityX: Float,
+    velocityY: Float,
+    focalPoint: ScreenCoordinate
+  ): Boolean {
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
+
+    overScrollerFlingAnimator.apply {
+      limitHorizontal = internalSettings.isScrollHorizontallyLimited()
+      limitVertical = internalSettings.isScrollVerticallyLimited()
+      fling(velocityX.toInt(), velocityY.toInt(), focalPoint)
+    }
     return true
   }
 
@@ -1846,6 +1879,11 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       cameraPaddingChanged = true
     }
     coreGesturesHandler = CoreGesturesHandler(mapTransformDelegate, mapCameraManagerDelegate)
+    overScrollerFlingAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate).apply {
+      val animatorHandler = coreGesturesHandler.coreGestureAnimatorHandler
+      onAnimationStart = { animatorHandler.onAnimationStart(noOpAnimator) }
+      onAnimationEnd = { animatorHandler.onAnimationEnd(noOpAnimator) }
+    }
   }
 
   /**
@@ -1884,6 +1922,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       duration(0)
       owner(MapAnimationOwnerRegistry.GESTURES)
     }
+    private val noOpAnimator = ValueAnimator()
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
   }
