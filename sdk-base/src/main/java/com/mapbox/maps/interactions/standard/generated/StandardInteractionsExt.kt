@@ -295,4 +295,75 @@ fun LongClickInteraction.Companion.standardLandmarkIcons(
     )
   }
 }
+/**
+ * Create the [ClickInteraction] for Mapbox Standard Style `indoor-labels` featureset and an optional [importId].
+ *
+ * When several [ClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+ *
+ * @param importId optional style import id. Defaults to NULL.
+ * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+ * @param onClick callback triggered when the `indoor-labels` featureset is clicked.
+ */
+@JvmOverloads
+fun ClickInteraction.Companion.standardIndoorLabels(
+  importId: String? = null,
+  filter: Value? = null,
+  radius: Double? = null,
+  onClick: (StandardIndoorLabelsFeature, InteractionContext) -> Boolean
+): MapInteraction {
+  return ClickInteraction(
+    FeaturesetDescriptor(
+      /* featuresetId */ StandardIndoorLabels.FEATURESET_ID,
+      /* importId */ importId ?: TypedFeaturesetDescriptor.DEFAULT_IMPORT_ID,
+      /* layerId */null
+    ),
+    filter,
+    radius,
+    onClick
+  ) { feature, featuresetFeatureId, state ->
+    StandardIndoorLabelsFeature(
+      id = featuresetFeatureId,
+      importId = importId,
+      originalFeature = feature,
+      state = StandardIndoorLabelsState(state)
+    )
+  }
+}
+
+/**
+ * Create the [LongClickInteraction] for Mapbox Standard Style `indoor-labels` featureset and an optional [importId].
+ *
+ * When several [LongClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+ *
+ * @param importId optional style import id. Defaults to NULL.
+ * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+ * @param onLongClick callback triggered when the `indoor-labels` featureset is long clicked.
+ */
+@JvmOverloads
+fun LongClickInteraction.Companion.standardIndoorLabels(
+  importId: String? = null,
+  filter: Value? = null,
+  radius: Double? = null,
+  onLongClick: (StandardIndoorLabelsFeature, InteractionContext) -> Boolean
+): MapInteraction {
+  return LongClickInteraction(
+    FeaturesetDescriptor(
+      /* featuresetId */ StandardIndoorLabels.FEATURESET_ID,
+      /* importId */ importId ?: TypedFeaturesetDescriptor.DEFAULT_IMPORT_ID,
+      /* layerId */null
+    ),
+    filter,
+    radius,
+    onLongClick
+  ) { feature, featuresetFeatureId, state ->
+    StandardIndoorLabelsFeature(
+      id = featuresetFeatureId,
+      importId = importId,
+      originalFeature = feature,
+      state = StandardIndoorLabelsState(state)
+    )
+  }
+}
 // End of generated file.

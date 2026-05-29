@@ -234,6 +234,12 @@ public fun MapboxStandardStyle(
             if (colorGreenspace.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_GREENSPACE, colorGreenspace.value)
             }
+            if (colorIndoorLabelHighlight.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_INDOOR_LABEL_HIGHLIGHT, colorIndoorLabelHighlight.value)
+            }
+            if (colorIndoorLabelSelect.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_INDOOR_LABEL_SELECT, colorIndoorLabelSelect.value)
+            }
             if (colorIndustrial.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_INDUSTRIAL, colorIndustrial.value)
             }
@@ -296,6 +302,12 @@ public fun MapboxStandardStyle(
             }
             if (showAdminBoundaries.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_SHOW_ADMIN_BOUNDARIES, showAdminBoundaries.value)
+            }
+            if (showIndoor.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_INDOOR, showIndoor.value)
+            }
+            if (showIndoorLabels.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_INDOOR_LABELS, showIndoorLabels.value)
             }
             if (showLandmarkIconLabels.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_SHOW_LANDMARK_ICON_LABELS, showLandmarkIconLabels.value)

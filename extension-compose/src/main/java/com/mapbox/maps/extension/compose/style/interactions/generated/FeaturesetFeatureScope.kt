@@ -11,6 +11,8 @@ import com.mapbox.maps.interactions.FeatureStateKey
 import com.mapbox.maps.interactions.FeaturesetFeature
 import com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature
 import com.mapbox.maps.interactions.standard.generated.StandardBuildingsState
+import com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature
+import com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState
 import com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature
 import com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState
 import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature
@@ -76,6 +78,19 @@ public sealed interface FeaturesetFeatureScope {
     init: StandardLandmarkIconsState.Builder.() -> Unit,
   ) {
     setFeatureState(StandardLandmarkIconsState(init)) { }
+  }
+
+  /**
+   * Extension function allowing to set the [StandardIndoorLabelsState] for [StandardIndoorLabelsFeature]
+   * in the most convenient way.
+   *
+   * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
+   * Refer to [setFeatureState] if the callback is required.
+   */
+  public fun StandardIndoorLabelsFeature.setStandardIndoorLabelsState(
+    init: StandardIndoorLabelsState.Builder.() -> Unit,
+  ) {
+    setFeatureState(StandardIndoorLabelsState(init)) { }
   }
 
   /**

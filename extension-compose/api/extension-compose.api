@@ -1516,6 +1516,7 @@ public abstract interface class com/mapbox/maps/extension/compose/style/interact
 	public abstract fun resetFeatureStates (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun setFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;)Lcom/mapbox/common/Cancelable;
 	public abstract fun setStandardBuildingsState (Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun setStandardIndoorLabelsState (Lcom/mapbox/maps/interactions/standard/generated/StandardIndoorLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardLandmarkIconsState (Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardPlaceLabelsState (Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardPoiState (Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
@@ -1526,6 +1527,7 @@ public final class com/mapbox/maps/extension/compose/style/interactions/generate
 	public static synthetic fun resetFeatureStates$default (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun setFeatureState$default (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lcom/mapbox/maps/FeatureStateOperationCallback;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static fun setStandardBuildingsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardBuildingsFeature;Lkotlin/jvm/functions/Function1;)V
+	public static fun setStandardIndoorLabelsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardIndoorLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardLandmarkIconsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardPlaceLabelsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardPoiState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
@@ -4612,6 +4614,8 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getColorCommercial ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorEducation ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorGreenspace ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorIndoorLabelHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorIndoorLabelSelect ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorIndustrial ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorLand ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorMedical ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
@@ -4634,6 +4638,8 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getShow3dObjects ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShow3dTrees ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowAdminBoundaries ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShowIndoor ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
+	public final fun getShowIndoorLabels ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowLandmarkIconLabels ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowLandmarkIcons ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getShowPedestrianRoads ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
@@ -4647,6 +4653,8 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setColorCommercial (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorEducation (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorGreenspace (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorIndoorLabelHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorIndoorLabelSelect (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorIndustrial (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorLand (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorMedical (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
@@ -4669,6 +4677,8 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setShow3dObjects (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShow3dTrees (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowAdminBoundaries (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShowIndoor (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
+	public final fun setShowIndoorLabels (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowLandmarkIconLabels (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowLandmarkIcons (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setShowPedestrianRoads (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
@@ -4720,6 +4730,10 @@ public final class com/mapbox/maps/extension/compose/style/standard/generated/St
 	public static synthetic fun onFeaturesetClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onFeaturesetLongClicked (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public static synthetic fun onFeaturesetLongClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun onIndoorLabelsClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public static synthetic fun onIndoorLabelsClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun onIndoorLabelsLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public static synthetic fun onIndoorLabelsLongClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onLandmarkIconsClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public static synthetic fun onLandmarkIconsClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onLandmarkIconsLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;

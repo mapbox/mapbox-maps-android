@@ -27,6 +27,8 @@ public class StandardStyleConfigurationState private constructor(
   initialColorCommercial: ColorValue,
   initialColorEducation: ColorValue,
   initialColorGreenspace: ColorValue,
+  initialColorIndoorLabelHighlight: ColorValue,
+  initialColorIndoorLabelSelect: ColorValue,
   initialColorIndustrial: ColorValue,
   initialColorLand: ColorValue,
   initialColorMedical: ColorValue,
@@ -48,6 +50,8 @@ public class StandardStyleConfigurationState private constructor(
   initialShow3dLandmarks: BooleanValue,
   initialShow3dTrees: BooleanValue,
   initialShowAdminBoundaries: BooleanValue,
+  initialShowIndoor: BooleanValue,
+  initialShowIndoorLabels: BooleanValue,
   initialShowLandmarkIconLabels: BooleanValue,
   initialShowLandmarkIcons: BooleanValue,
   initialThemeData: StringValue
@@ -68,6 +72,8 @@ public class StandardStyleConfigurationState private constructor(
     initialColorCommercial = ColorValue.INITIAL,
     initialColorEducation = ColorValue.INITIAL,
     initialColorGreenspace = ColorValue.INITIAL,
+    initialColorIndoorLabelHighlight = ColorValue.INITIAL,
+    initialColorIndoorLabelSelect = ColorValue.INITIAL,
     initialColorIndustrial = ColorValue.INITIAL,
     initialColorLand = ColorValue.INITIAL,
     initialColorMedical = ColorValue.INITIAL,
@@ -89,6 +95,8 @@ public class StandardStyleConfigurationState private constructor(
     initialShow3dLandmarks = BooleanValue.INITIAL,
     initialShow3dTrees = BooleanValue.INITIAL,
     initialShowAdminBoundaries = BooleanValue.INITIAL,
+    initialShowIndoor = BooleanValue.INITIAL,
+    initialShowIndoorLabels = BooleanValue.INITIAL,
     initialShowLandmarkIconLabels = BooleanValue.INITIAL,
     initialShowLandmarkIcons = BooleanValue.INITIAL,
     initialThemeData = StringValue.INITIAL
@@ -148,6 +156,16 @@ public class StandardStyleConfigurationState private constructor(
    * Set a custom color for greenspaces such as forests, parks, and woods.
    */
   public var colorGreenspace: ColorValue by mutableStateOf(initialColorGreenspace)
+
+  /**
+   * Set a custom color for indoor labels when setting highlight state.
+   */
+  public var colorIndoorLabelHighlight: ColorValue by mutableStateOf(initialColorIndoorLabelHighlight)
+
+  /**
+   * Set a custom color for indoor labels when setting select state.
+   */
+  public var colorIndoorLabelSelect: ColorValue by mutableStateOf(initialColorIndoorLabelSelect)
 
   /**
    * Set a custom color for industrial areas and airports.
@@ -255,6 +273,16 @@ public class StandardStyleConfigurationState private constructor(
   public var showAdminBoundaries: BooleanValue by mutableStateOf(initialShowAdminBoundaries)
 
   /**
+   * Show or hide indoor areas in major airports.
+   */
+  public var showIndoor: BooleanValue by mutableStateOf(initialShowIndoor)
+
+  /**
+   * Show or hide indoor labels.
+   */
+  public var showIndoorLabels: BooleanValue by mutableStateOf(initialShowIndoorLabels)
+
+  /**
    * Show or hide Landmark icon labels.
    */
   public var showLandmarkIconLabels: BooleanValue by mutableStateOf(initialShowLandmarkIconLabels)
@@ -287,6 +315,8 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_COLOR_COMMERCIAL = "colorCommercial"
     internal const val CONFIG_COLOR_EDUCATION = "colorEducation"
     internal const val CONFIG_COLOR_GREENSPACE = "colorGreenspace"
+    internal const val CONFIG_COLOR_INDOOR_LABEL_HIGHLIGHT = "colorIndoorLabelHighlight"
+    internal const val CONFIG_COLOR_INDOOR_LABEL_SELECT = "colorIndoorLabelSelect"
     internal const val CONFIG_COLOR_INDUSTRIAL = "colorIndustrial"
     internal const val CONFIG_COLOR_LAND = "colorLand"
     internal const val CONFIG_COLOR_MEDICAL = "colorMedical"
@@ -308,6 +338,8 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_SHOW3D_LANDMARKS = "show3dLandmarks"
     internal const val CONFIG_SHOW3D_TREES = "show3dTrees"
     internal const val CONFIG_SHOW_ADMIN_BOUNDARIES = "showAdminBoundaries"
+    internal const val CONFIG_SHOW_INDOOR = "showIndoor"
+    internal const val CONFIG_SHOW_INDOOR_LABELS = "showIndoorLabels"
     internal const val CONFIG_SHOW_LANDMARK_ICON_LABELS = "showLandmarkIconLabels"
     internal const val CONFIG_SHOW_LANDMARK_ICONS = "showLandmarkIcons"
     internal const val CONFIG_THEME_DATA = "theme-data"
