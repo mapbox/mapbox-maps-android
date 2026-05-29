@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 * `MapView.setMaximumFps` and `MapSurface.setMaximumFps` are now annotated `@MainThread`. Callers must invoke them from the main thread; off-main callers will see a lint warning.
 
 ## Features ✨ and improvements 🏁
+* [compose] Add Standard `IndoorLabels` featureset and indoor configuration options (`showIndoor`, `showIndoorLabels`, `colorIndoorLabelHighlight`, `colorIndoorLabelSelect`) for the Mapbox Standard style.
 * Throttle `MapboxMap` post destroyed warning logs.
 
 ## Bug fixes 🐞

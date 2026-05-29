@@ -1801,6 +1801,7 @@ package com.mapbox.maps.extension.compose.style.interactions.generated {
 
 }));
     method public default void setStandardBuildingsState(com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,kotlin.Unit> init);
+    method public default void setStandardIndoorLabelsState(com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState.Builder,kotlin.Unit> init);
     method public default void setStandardLandmarkIconsState(com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState.Builder,kotlin.Unit> init);
     method public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
     method public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
@@ -5435,6 +5436,8 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorCommercial();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorEducation();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorGreenspace();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndoorLabelHighlight();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndoorLabelSelect();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndustrial();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorLand();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorMedical();
@@ -5457,6 +5460,8 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dObjects();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dTrees();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowAdminBoundaries();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowIndoor();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowIndoorLabels();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowLandmarkIconLabels();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowLandmarkIcons();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowPedestrianRoads();
@@ -5470,6 +5475,8 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setColorCommercial(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorEducation(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorGreenspace(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorIndoorLabelHighlight(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorIndoorLabelSelect(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorIndustrial(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorLand(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorMedical(com.mapbox.maps.extension.compose.style.ColorValue);
@@ -5492,6 +5499,8 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setShow3dObjects(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShow3dTrees(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowAdminBoundaries(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowIndoor(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowIndoorLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowLandmarkIconLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowLandmarkIcons(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowPedestrianRoads(com.mapbox.maps.extension.compose.style.BooleanValue);
@@ -5505,6 +5514,8 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorCommercial;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorEducation;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorGreenspace;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndoorLabelHighlight;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndoorLabelSelect;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndustrial;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorLand;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorMedical;
@@ -5527,6 +5538,8 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dTrees;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showAdminBoundaries;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showIndoor;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showIndoorLabels;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showLandmarkIconLabels;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showLandmarkIcons;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showPedestrianRoads;
@@ -5577,6 +5590,8 @@ package com.mapbox.maps.extension.compose.style.standard.generated {
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onBuildingsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onFeaturesetClicked(String id, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onFeaturesetLongClicked(String id, String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onIndoorLabelsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onIndoorLabelsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLandmarkIconsClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLandmarkIconsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onLayerClicked(String id, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.FeatureState>,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);

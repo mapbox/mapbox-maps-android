@@ -921,6 +921,58 @@ package com.mapbox.maps.interactions.standard.generated {
     method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardBuildingsState! StandardBuildingsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsState.Builder,? extends kotlin.Unit> init);
   }
 
+  public final class StandardIndoorLabels extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState,com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature> {
+    ctor public StandardIndoorLabels(String? importId = null);
+    ctor public StandardIndoorLabels();
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public String? getImportId();
+    method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
+    property public final String? importId;
+  }
+
+  public final class StandardIndoorLabelsFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState> {
+    ctor public StandardIndoorLabelsFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState state);
+    method public String? getClass();
+    method public String? getName();
+    method public String? getShapeType();
+    method public String? getType();
+    property public final String? class;
+    property public final String? name;
+    property public final String? shapeType;
+    property public final String? type;
+  }
+
+  public final class StandardIndoorLabelsState extends com.mapbox.maps.interactions.FeatureState {
+    method public Boolean? getHighlight();
+    method public Boolean? getSelect();
+    property public final Boolean? highlight;
+    property public final Boolean? select;
+  }
+
+  public static final class StandardIndoorLabelsState.Builder extends com.mapbox.maps.interactions.FeatureState.Builder {
+    ctor public StandardIndoorLabelsState.Builder();
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState build();
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState.Builder highlight(boolean highlight);
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState.Builder select(boolean select);
+  }
+
+  public final class StandardIndoorLabelsStateKey extends com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState> {
+    field public static final com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsStateKey.Companion Companion;
+  }
+
+  public static final class StandardIndoorLabelsStateKey.Companion {
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsStateKey create(String key);
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsStateKey getHIGHLIGHT();
+    method public com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsStateKey getSELECT();
+    property public final com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsStateKey HIGHLIGHT;
+    property public final com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsStateKey SELECT;
+  }
+
+  public final class StandardIndoorLabelsStateKt {
+    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState! StandardIndoorLabelsState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsState.Builder,? extends kotlin.Unit> init);
+  }
+
   public final class StandardInteractions {
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
@@ -930,6 +982,14 @@ package com.mapbox.maps.interactions.standard.generated {
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardBuildings(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardBuildingsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.ClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardIndoorLabels(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public static com.mapbox.maps.MapInteraction standardLandmarkIcons(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
