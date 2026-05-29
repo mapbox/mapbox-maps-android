@@ -117,6 +117,11 @@ class GesturesAttributeParserTest : BaseMapTest() {
       false,
       mapView.gestures.getSettings().pinchScrollEnabled
     )
+    assertEquals(
+      "useNativeFlingDeceleration test failed..",
+      false,
+      mapView.gestures.getSettings().useNativeFlingDeceleration
+    )
   }
 }
 

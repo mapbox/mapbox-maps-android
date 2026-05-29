@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.gestures.generated
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
 
@@ -108,6 +109,12 @@ interface GesturesSettingsInterface {
    * Whether pan is enabled for the pinch gesture. Default value: true.
    */
   var pinchScrollEnabled: Boolean
+
+  /**
+   * Whether to use OverScroller-based fling deceleration for smoother, physics-based scroll deceleration. Requires scrollDecelerationEnabled to be true. False by default. Default value: false.
+   */
+  @MapboxExperimental
+  var useNativeFlingDeceleration: Boolean
 }
 
 // End of generated file.

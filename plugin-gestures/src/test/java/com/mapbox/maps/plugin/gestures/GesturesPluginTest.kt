@@ -1266,6 +1266,56 @@ class GesturesPluginTest {
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
+  @Test
+  fun verifyNativeFlingDoesNotCallEaseTo() {
+    presenter.useNativeFlingDeceleration = true
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), any())
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } just runs
+
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertTrue(result)
+    verify(exactly = 0) {
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
+    }
+  }
+
+  @Test
+  fun verifyNativeFlingDefaultsToFalse() {
+    assertFalse(presenter.useNativeFlingDeceleration)
+  }
+
+  @Test
+  fun verifyLegacyFlingStillWorksWhenNativeFlingDisabled() {
+    presenter.useNativeFlingDeceleration = false
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), any())
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertTrue(result)
+    verify(exactly = 1) {
+      cameraAnimationsPlugin.easeTo(any(), any(), any())
+    }
+  }
+
+  @Test
+  fun verifyNativeFlingRespectsScrollDisabled() {
+    presenter.useNativeFlingDeceleration = true
+    presenter.scrollEnabled = false
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertFalse(result)
+  }
+
+  @Test
+  fun verifyNativeFlingRespectsScrollDecelerationDisabled() {
+    presenter.useNativeFlingDeceleration = true
+    presenter.scrollDecelerationEnabled = false
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertFalse(result)
+  }
+
   private companion object {
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f

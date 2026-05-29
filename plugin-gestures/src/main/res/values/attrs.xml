@@ -45,6 +45,8 @@
         <attr name="mapbox_gesturesZoomAnimationAmount" format="float"/>
         <!-- Whether pan is enabled for the pinch gesture. -->
         <attr name="mapbox_gesturesPinchScrollEnabled" format="boolean"/>
+        <!-- Whether to use OverScroller-based fling deceleration for smoother, physics-based scroll deceleration. Requires scrollDecelerationEnabled to be true. False by default. -->
+        <attr name="mapbox_gesturesUseNativeFlingDeceleration" format="boolean"/>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

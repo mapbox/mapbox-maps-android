@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.gestures.generated
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
 
@@ -276,6 +277,21 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     set(value) {
       if (this.internalSettings.pinchScrollEnabled != value) {
         this.internalSettings = this.internalSettings.toBuilder().setPinchScrollEnabled(value).build()
+        applySettings()
+      }
+    }
+
+  /**
+   * Whether to use OverScroller-based fling deceleration for smoother, physics-based scroll deceleration. Requires scrollDecelerationEnabled to be true. False by default. Default value: false.
+   */
+  @MapboxExperimental
+  override var useNativeFlingDeceleration: Boolean
+    get() {
+      return this.internalSettings.useNativeFlingDeceleration
+    }
+    set(value) {
+      if (this.internalSettings.useNativeFlingDeceleration != value) {
+        this.internalSettings = this.internalSettings.toBuilder().setUseNativeFlingDeceleration(value).build()
         applySettings()
       }
     }

@@ -292,6 +292,20 @@ class GesturesAttributeParserTest {
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs)
     assertEquals(false, settings.pinchScrollEnabled)
   }
+
+  @Test
+  fun useNativeFlingDecelerationTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs)
+    assertEquals(true, settings.useNativeFlingDeceleration)
+  }
+
+  @Test
+  fun useNativeFlingDecelerationTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs)
+    assertEquals(false, settings.useNativeFlingDeceleration)
+  }
 }
 
 // End of generated file.

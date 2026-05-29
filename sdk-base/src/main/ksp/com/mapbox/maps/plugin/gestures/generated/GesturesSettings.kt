@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.gestures.generated
 
 import android.os.Parcelable
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
 import java.util.Objects
@@ -102,7 +103,14 @@ public class GesturesSettings private constructor(
   /**
    * Whether pan is enabled for the pinch gesture. Default value: true.
    */
-  public val pinchScrollEnabled: Boolean
+  public val pinchScrollEnabled: Boolean,
+  /**
+   * Whether to use OverScroller-based fling deceleration for smoother, physics-based scroll
+   * deceleration. Requires scrollDecelerationEnabled to be true. False by default. Default value:
+   * false.
+   */
+  @MapboxExperimental
+  public val useNativeFlingDeceleration: Boolean
 ) : Parcelable {
   /**
    * Overloaded toString function.
@@ -118,8 +126,8 @@ public class GesturesSettings private constructor(
       scrollDecelerationEnabled=$scrollDecelerationEnabled,
       increaseRotateThresholdWhenPinchingToZoom=$increaseRotateThresholdWhenPinchingToZoom,
       increasePinchToZoomThresholdWhenRotating=$increasePinchToZoomThresholdWhenRotating,
-      zoomAnimationAmount=$zoomAnimationAmount,
-      pinchScrollEnabled=$pinchScrollEnabled)""".trimIndent()
+      zoomAnimationAmount=$zoomAnimationAmount, pinchScrollEnabled=$pinchScrollEnabled,
+      useNativeFlingDeceleration=$useNativeFlingDeceleration)""".trimIndent()
 
   /**
    * Overloaded equals function.
@@ -141,7 +149,8 @@ public class GesturesSettings private constructor(
         increaseRotateThresholdWhenPinchingToZoom == other.increaseRotateThresholdWhenPinchingToZoom &&
         increasePinchToZoomThresholdWhenRotating == other.increasePinchToZoomThresholdWhenRotating &&
         zoomAnimationAmount.compareTo(other.zoomAnimationAmount) == 0 &&
-        pinchScrollEnabled == other.pinchScrollEnabled
+        pinchScrollEnabled == other.pinchScrollEnabled &&
+        useNativeFlingDeceleration == other.useNativeFlingDeceleration
   }
 
   /**
@@ -152,7 +161,7 @@ public class GesturesSettings private constructor(
       doubleTapToZoomInEnabled, doubleTouchToZoomOutEnabled, quickZoomEnabled, focalPoint,
       pinchToZoomDecelerationEnabled, rotateDecelerationEnabled, scrollDecelerationEnabled,
       increaseRotateThresholdWhenPinchingToZoom, increasePinchToZoomThresholdWhenRotating,
-      zoomAnimationAmount, pinchScrollEnabled)
+      zoomAnimationAmount, pinchScrollEnabled, useNativeFlingDeceleration)
 
   /**
    * Convert to Builder allowing to change class properties.
@@ -175,6 +184,7 @@ public class GesturesSettings private constructor(
     .setIncreasePinchToZoomThresholdWhenRotating(increasePinchToZoomThresholdWhenRotating)
     .setZoomAnimationAmount(zoomAnimationAmount)
     .setPinchScrollEnabled(pinchScrollEnabled)
+    .setUseNativeFlingDeceleration(useNativeFlingDeceleration)
 
   /**
    * Composes and builds a [GesturesSettings] object.
@@ -298,6 +308,15 @@ public class GesturesSettings private constructor(
      */
     @set:JvmSynthetic
     public var pinchScrollEnabled: Boolean = true
+
+    /**
+     * Whether to use OverScroller-based fling deceleration for smoother, physics-based scroll
+     * deceleration. Requires scrollDecelerationEnabled to be true. False by default. Default value:
+     * false.
+     */
+    @set:JvmSynthetic
+    @MapboxExperimental
+    public var useNativeFlingDeceleration: Boolean = false
 
     /**
      * Setter for rotateEnabled: whether the rotate gesture is enabled. Default value: true.
@@ -513,6 +532,20 @@ public class GesturesSettings private constructor(
     }
 
     /**
+     * Setter for useNativeFlingDeceleration: whether to use OverScroller-based fling deceleration
+     * for smoother, physics-based scroll deceleration. Requires scrollDecelerationEnabled to be true.
+     * False by default. Default value: false.
+     *
+     * @param useNativeFlingDeceleration
+     * @return Builder
+     */
+    @MapboxExperimental
+    public fun setUseNativeFlingDeceleration(useNativeFlingDeceleration: Boolean): Builder {
+      this.useNativeFlingDeceleration = useNativeFlingDeceleration
+      return this
+    }
+
+    /**
      * Returns a [GesturesSettings] reference to the object being constructed by the builder.
      *
      * @return GesturesSettings
@@ -522,7 +555,7 @@ public class GesturesSettings private constructor(
         doubleTapToZoomInEnabled, doubleTouchToZoomOutEnabled, quickZoomEnabled, focalPoint,
         pinchToZoomDecelerationEnabled, rotateDecelerationEnabled, scrollDecelerationEnabled,
         increaseRotateThresholdWhenPinchingToZoom, increasePinchToZoomThresholdWhenRotating,
-        zoomAnimationAmount, pinchScrollEnabled)
+        zoomAnimationAmount, pinchScrollEnabled, useNativeFlingDeceleration)
   }
 }
 
