@@ -5,6 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.21.7 June 01, 2026
+## Dependencies
+* Update gl-native to [v11.21.7](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.7), common to [v24.21.7](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.7).
+
 ## Breaking changes ⚠️
 * `MapView.setMaximumFps` and `MapSurface.setMaximumFps` are now annotated `@MainThread`. Callers must invoke them from the main thread; off-main callers will see a lint warning.
 
