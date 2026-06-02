@@ -5,6 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.25.0-rc.1 June 02, 2026
 ## Breaking changes ⚠️
 * `MapView.setMaximumFps` and `MapSurface.setMaximumFps` are now annotated `@MainThread`. Callers must invoke them from the main thread; off-main callers will see a lint warning.
 
@@ -17,6 +19,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a `ConcurrentModificationException` crash that could occur when a plugin was added or removed during `MapView.onDestroy`.
 * Fix frame pacing breaking when the panel switches refresh-rate modes mid-session (VRR or per-UID `frameRateOverride`). `FpsManager` now updates its `screenRefreshRate` via a `DisplayManager.DisplayListener` instead of only sampling once at `onStart`.
 * [maps-sdk] Fix Vulkan rendering being permanently disabled when the Android surface arrived before the native map was set. The renderer now defers setup and retries via `onMapSet()` once the map is available.
+
+## Dependencies
+* Update gl-native to [v11.25.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-rc.1), common to [v24.25.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-rc.1).
+
 
 # 11.21.6 May 25, 2026
 ## Features ✨ and improvements 🏁
