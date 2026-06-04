@@ -2623,7 +2623,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setScrollEnabled(boolean scrollEnabled);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setScrollMode(com.mapbox.maps.plugin.ScrollMode scrollMode);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setSimultaneousRotateAndPinchToZoomEnabled(boolean simultaneousRotateAndPinchToZoomEnabled);
-    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setUseNativeFlingDeceleration(boolean useNativeFlingDeceleration);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setUseNativeFlingDeceleration(boolean useNativeFlingDeceleration);
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings.Builder setZoomAnimationAmount(float zoomAnimationAmount);
     property public final boolean doubleTapToZoomInEnabled;
     property public final boolean doubleTouchToZoomOutEnabled;
@@ -3368,7 +3368,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setDistanceUnits(com.mapbox.maps.plugin.DistanceUnits distanceUnits);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setEnabled(boolean enabled);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setHeight(float height);
-    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
+    method @Deprecated public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setIsMetricUnits(boolean isMetricUnits);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginBottom(float marginBottom);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginLeft(float marginLeft);
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings.Builder setMarginRight(float marginRight);
