@@ -39,9 +39,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a crash caused by dereferencing a null index buffer when drawing symbols.
 * Fix a crash when an overriding terrain source was merged with another source from the same root style.
 * Fix missing letters in the middle of text labels placed along lines elevated by terrain.
-* Fix anti-aliasing artifacts on lines with borders.
+* Fix aliasing artifacts on lines with borders.
 * Fix step expression evaluation when using uniform buffer objects.
-* Fix draped symbols being incorrectly hidden in some cases on Vulkan.
+* Improve symbol appearances performance for Vulkan backend.
 * Fix rare process crashes during HTTP downloads (failure to create a temporary file, and an uncaught error while writing the response).
 
 ## Dependencies
