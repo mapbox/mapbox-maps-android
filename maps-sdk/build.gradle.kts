@@ -16,6 +16,10 @@ mapboxLibrary {
     if (commonApiDocFile.exists()) {
       extraApiDocs.addAll(commonApiDocFile.readLines())
     }
+    val gesturesApiDocFile = rootProject.file("api-doc-list-maps-gestures.txt")
+    if (gesturesApiDocFile.exists()) {
+      extraApiDocs.addAll(gesturesApiDocFile.readLines())
+    }
     if (extraApiDocs.isNotEmpty()) {
       extraListOfSources = extraApiDocs
       // which might not have docs, so disable report undocumented
