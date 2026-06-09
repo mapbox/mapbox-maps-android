@@ -90,6 +90,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Must be called when the surface has been created.
    */
   fun surfaceCreated() {
+    logI(TAG, "surfaceCreated() called")
     renderer.surfaceCreated()
     // Set default refresh rate immediately to ensure map controller has a valid value
     mapController.setScreenRefreshRate(MapView.DEFAULT_FPS)
@@ -112,6 +113,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
       }
     }
 
+    // Stop any previous display refresh rate monitor in case `surfaceCreated` is called twice
+    stopDisplayRefreshRateMonitor()
     // Subscribe to live refresh-rate changes (VRR mode switches, per-UID frameRateOverride).
     displayRefreshRateMonitor = DisplayRefreshRateMonitor(
       context = context,
@@ -134,9 +137,14 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Must be called when the surface is destroyed.
    */
   fun surfaceDestroyed() {
+    logI(TAG, "surfaceDestroyed() called")
+    stopDisplayRefreshRateMonitor()
+    renderer.surfaceDestroyed()
+  }
+
+  private fun stopDisplayRefreshRateMonitor() {
     displayRefreshRateMonitor?.stop()
     displayRefreshRateMonitor = null
-    renderer.surfaceDestroyed()
   }
 
   /**

@@ -239,6 +239,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStart
    */
   override fun onStart() {
+    logI(TAG, "onStart() called")
     // Set default refresh rate immediately to ensure map controller has a valid value
     mapController.setScreenRefreshRate(DEFAULT_FPS)
     // Retrieve screen refresh rate off the main thread to prevent ANR
@@ -254,6 +255,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       }
     }
 
+    // Stop any previous display refresh rate monitor in case `onStart` is called twice
+    stopDisplayRefreshRateMonitor()
     // Subscribe to live refresh-rate changes (VRR mode switches, per-UID frameRateOverride).
     displayRefreshRateMonitor = DisplayRefreshRateMonitor(
       context = context,
@@ -272,12 +275,17 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStop
    */
   override fun onStop() {
-    displayRefreshRateMonitor?.stop()
-    displayRefreshRateMonitor = null
+    logI(TAG, "onStop() called")
+    stopDisplayRefreshRateMonitor()
     mapController.onStop()
     if (debugOptionsControllerDelegate.isInitialized()) {
       debugOptionsController.started = false
     }
+  }
+
+  private fun stopDisplayRefreshRateMonitor() {
+    displayRefreshRateMonitor?.stop()
+    displayRefreshRateMonitor = null
   }
 
   /**
