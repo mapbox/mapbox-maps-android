@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.internal.ComposeTelemetryEvents
@@ -26,6 +26,7 @@ import com.mapbox.maps.extension.compose.internal.MapViewLifecycle
 import com.mapbox.maps.extension.compose.internal.MapboxMapComposeNode
 import com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope
 import com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope
+import com.mapbox.maps.extension.compose.ornaments.indoorselector.MapIndoorSelectorScope
 import com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope
 import com.mapbox.maps.extension.compose.ornaments.scalebar.MapScaleBarScope
 import com.mapbox.maps.extension.compose.style.MapboxStyleComposable
@@ -67,7 +68,63 @@ public fun MapboxMap(
   onMapClickListener: OnMapClickListener? = null,
   onMapLongClickListener: OnMapLongClickListener? = null,
   style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
-  content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null
+  content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null,
+) {
+  @OptIn(MapboxExperimental::class)
+  MapboxMap(
+    modifier = modifier,
+    composeMapInitOptions = composeMapInitOptions,
+    compass = compass,
+    scaleBar = scaleBar,
+    logo = logo,
+    attribution = attribution,
+    indoorSelector = {},
+    mapViewportState = mapViewportState,
+    mapState = mapState,
+    onMapClickListener = onMapClickListener,
+    onMapLongClickListener = onMapLongClickListener,
+    style = style,
+    content = content,
+  )
+}
+
+/**
+ * Entry point for adding a Mapbox Map instance to the Jetpack Compose UI.
+ *
+ * @param modifier Modifier to be applied to the Mapbox map.
+ * @param composeMapInitOptions Defines the initialisation configurations for a [MapboxMap]. It should only be set once and not mutated after the initialisation. Mutating the [ComposeMapInitOptions] will result in internal [MapView] recreation and impact performance.
+ * @param compass The Mapbox Compass ornament of the map, consider using [MapCompassScope.Compass].
+ * @param scaleBar The Mapbox ScaleBar ornament of the map, consider using [MapScaleBarScope.ScaleBar].
+ * @param logo The Mapbox Logo ornament of the map, consider using [MapLogoScope.Logo].
+ * @param attribution The Mapbox Attribution ornament of the map, consider using [MapAttributionScope.Attribution].
+ * @param indoorSelector The Mapbox IndoorSelector ornament of the map, consider using [MapIndoorSelectorScope.IndoorSelector]. Requires opt-in to [MapboxExperimental].
+ * @param mapViewportState A state object that can be hoisted to control and observe the map's camera state. A [MapViewportState] may only be used by a single [MapboxMap] composable at a time as it reflects instance state for a single view of a map.
+ * @param mapState A state object that can be hoisted to query map rendered features and gestures settings.
+ * @param onMapClickListener Callback to be invoked when the user clicks on the map view.
+ * @param onMapLongClickListener Callback to be invoked when the user long clicks on the map view.
+ * @param style The Style of the map.
+ * @param content The content of the map.
+ */
+@MapboxExperimental
+@Composable
+public fun MapboxMap(
+  modifier: Modifier = Modifier,
+  composeMapInitOptions: ComposeMapInitOptions = with(LocalDensity.current) {
+    remember {
+      ComposeMapInitOptions(density)
+    }
+  },
+  compass: (@Composable MapCompassScope.() -> Unit) = { Compass() },
+  scaleBar: (@Composable MapScaleBarScope.() -> Unit) = { ScaleBar() },
+  logo: (@Composable MapLogoScope.() -> Unit) = { Logo() },
+  attribution: (@Composable MapAttributionScope.() -> Unit) = { Attribution() },
+  indoorSelector: (@Composable MapIndoorSelectorScope.() -> Unit) = {},
+  mapViewportState: MapViewportState = rememberMapViewportState(),
+  mapState: MapState = rememberMapState(),
+  onMapClickListener: OnMapClickListener? = null,
+  onMapLongClickListener: OnMapLongClickListener? = null,
+  style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
+  content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null,
 ) {
   // display placeholder when in preview mode.
   if (LocalInspectionMode.current) {
@@ -102,6 +159,7 @@ public fun MapboxMap(
         MapScaleBarScope(mapView, this).scaleBar()
         MapLogoScope(this).logo()
         MapAttributionScope(mapView, this).attribution()
+        MapIndoorSelectorScope(mapView, this).indoorSelector()
       }
 
       key(mapViewportState) {

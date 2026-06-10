@@ -5,6 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+## Features ✨ and improvements 🏁
+* [compose] Introduce experimental `IndoorSelector` composable function available inside `MapboxMap`, displaying a scrollable floor-selection widget that appears automatically when an indoor building is in view. Exposes `IndoorSelectorState` for programmatic access to the current floor list and selected floor, and an `onFloorClicked` callback for reacting to user selections.
+* [compose] Add `IndoorSelectorControl` headless composable inside `MapIndoorSelectorScope`: attaches the indoor plugin to an `IndoorSelectorState` without rendering any UI, enabling custom floor-selector implementations.
 
 # 11.25.0-rc.2 June 04, 2026
 ## Bug fixes 🐞
@@ -12,7 +15,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.25.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-rc.2), common to [v24.25.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-rc.2).
-
 
 # 11.25.0-rc.1 June 02, 2026
 ## Breaking changes ⚠️

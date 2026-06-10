@@ -46,6 +46,7 @@ public data class ComposeMapInitOptions(
         Plugin.Mapbox(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
         Plugin.Mapbox(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
         Plugin.Mapbox(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
+        Plugin.Mapbox(Plugin.MAPBOX_INDOOR_SELECTOR_PLUGIN_ID),
       ),
       // specifically set cameraOptions to null, since the camera is controlled through MapViewportState.
       cameraOptions = null,

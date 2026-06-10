@@ -8,16 +8,30 @@ public final class com/mapbox/maps/extension/compose/BuildConfig {
 public final class com/mapbox/maps/extension/compose/ComposableSingletons$MapboxMapKt {
 	public static final field INSTANCE Lcom/mapbox/maps/extension/compose/ComposableSingletons$MapboxMapKt;
 	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-10 Lkotlin/jvm/functions/Function3;
+	public static field lambda-11 Lkotlin/jvm/functions/Function3;
+	public static field lambda-12 Lkotlin/jvm/functions/Function2;
 	public static field lambda-2 Lkotlin/jvm/functions/Function3;
 	public static field lambda-3 Lkotlin/jvm/functions/Function3;
 	public static field lambda-4 Lkotlin/jvm/functions/Function3;
 	public static field lambda-5 Lkotlin/jvm/functions/Function2;
+	public static field lambda-6 Lkotlin/jvm/functions/Function3;
+	public static field lambda-7 Lkotlin/jvm/functions/Function3;
+	public static field lambda-8 Lkotlin/jvm/functions/Function3;
+	public static field lambda-9 Lkotlin/jvm/functions/Function3;
 	public fun <init> ()V
 	public final fun getLambda-1$extension_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-10$extension_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-11$extension_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-12$extension_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-2$extension_compose_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda-3$extension_compose_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda-4$extension_compose_release ()Lkotlin/jvm/functions/Function3;
 	public final fun getLambda-5$extension_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-6$extension_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-7$extension_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-8$extension_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-9$extension_compose_release ()Lkotlin/jvm/functions/Function3;
 }
 
 public final class com/mapbox/maps/extension/compose/ComposeMapInitOptions {
@@ -131,6 +145,7 @@ public abstract interface annotation class com/mapbox/maps/extension/compose/Map
 
 public final class com/mapbox/maps/extension/compose/MapboxMapKt {
 	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
+	public static final fun MapboxMap (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/ComposeMapInitOptions;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
 public final class com/mapbox/maps/extension/compose/MapboxMapScope {
@@ -995,6 +1010,23 @@ public final class com/mapbox/maps/extension/compose/ornaments/compass/Composabl
 
 public final class com/mapbox/maps/extension/compose/ornaments/compass/MapCompassScope {
 	public final fun Compass (Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;ZZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/indoorselector/IndoorSelectorState {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getFloors ()Ljava/util/List;
+	public final fun getSelectedFloorId ()Ljava/lang/String;
+	public final fun setSelectedFloorId (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/indoorselector/MapIndoorSelectorScope {
+	public final fun IndoorSelector (Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/extension/compose/ornaments/indoorselector/IndoorSelectorState;Landroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/ui/Alignment;ILkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public final fun IndoorSelectorControl (Lcom/mapbox/maps/extension/compose/ornaments/indoorselector/IndoorSelectorState;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/mapbox/maps/extension/compose/ornaments/indoorselector/MapIndoorSelectorScopeKt {
+	public static final fun rememberIndoorSelectorState (Landroidx/compose/runtime/Composer;I)Lcom/mapbox/maps/extension/compose/ornaments/indoorselector/IndoorSelectorState;
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/logo/MapLogoScope {

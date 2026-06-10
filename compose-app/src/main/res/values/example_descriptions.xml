@@ -18,6 +18,8 @@
     <string name="description_style_composition">Runtime styling with style composition</string>
     <string name="description_navigation_simulation">Simulate navigation experience with compose</string>
     <string name="description_multi_map">Showcase displaying two maps in the same Activity</string>
+    <string name="description_indoor_example">Compose-native indoor floor selector backed by a hoisted IndoorState.</string>
+    <string name="description_custom_indoor_selector_example">Custom floor-selector UI built with IndoorSelectorControl and a plain Column (no scroll).</string>
     <string name="description_style_states">Showcase using style states</string>
     <string name="description_style_positions">Showcase usage of slotsContent and layerPositionedContent to arrange contents within the base style using GenericStyle API.</string>
     <string name="description_model_layer">Showcase the usage of a 3D model layer.</string>

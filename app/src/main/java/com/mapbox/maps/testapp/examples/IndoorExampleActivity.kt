@@ -1,7 +1,9 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
@@ -60,11 +62,21 @@ class IndoorExampleActivity : AppCompatActivity() {
                 mapView.mapboxMap.loadStyle(style)
             }
         }
+        mapView.mapboxMap.getStyle { style ->
+            style.setStyleImportConfigProperty(
+                "basemap",
+                "showIndoor",
+                Value.valueOf(true),
+            )
+        }
 
         mapView.scalebar.enabled = true
 
         mapView.indoorSelector.enabled = true
         mapView.indoorSelector.marginTop = 160f
+        mapView.indoorSelector.addOnFloorSelectedListener { floor ->
+          Log.d("IndoorExample", "Floor selected: $floor")
+        }
 
         locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
         locationPermissionHelper.checkPermissions {

@@ -18,6 +18,8 @@
     <string name="activity_style_composition">Style composition</string>
     <string name="activity_navigation_simulation">Simulate navigation</string>
     <string name="activity_multi_map">Display multiple maps</string>
+    <string name="activity_indoor_example">Indoor Example</string>
+    <string name="activity_custom_indoor_selector_example">Custom indoor selector</string>
     <string name="activity_style_states">Style States</string>
     <string name="activity_style_positions">Position content using GenericStyle</string>
     <string name="activity_model_layer">Display 3D model in a model layer</string>
