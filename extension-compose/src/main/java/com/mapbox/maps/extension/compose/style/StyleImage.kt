@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.compose.style
 
+import android.graphics.Bitmap
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -16,6 +17,8 @@ import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
 import com.mapbox.maps.MapboxDelicateApi
+import com.mapbox.maps.extension.style.image.NinePatchImage
+import com.mapbox.maps.extension.style.image.parse9PatchBitmap
 import com.mapbox.maps.toMapboxImage
 
 /**
@@ -149,6 +152,72 @@ public fun rememberStyleImage(
     stretchY = stretchY,
     content = content
   )
+}
+
+/**
+ * Create and remember a [StyleImage] from a pre-parsed [NinePatchImage].
+ *
+ * Call `parse9PatchBitmap` to obtain the [NinePatchImage] from a
+ * nine-patch bitmap (.9.png). Stretch regions and content padding are read directly from the
+ * [NinePatchImage] fields.
+ *
+ * @param imageId the id of the image
+ * @param image9Patch the pre-parsed nine-patch as [NinePatchImage]
+ * @param scale scale factor for the image
+ * @param sdf option to treat whether image is SDF(signed distance field) or not
+ *
+ * @return a [StyleImage]
+ */
+@Composable
+public fun rememberStyleImage(
+  imageId: String,
+  image9Patch: NinePatchImage,
+  scale: Float? = null,
+  sdf: Boolean = false,
+): StyleImage {
+  return remember(imageId, image9Patch, scale, sdf) {
+    StyleImage(
+      imageId = imageId,
+      image = image9Patch.internalImage,
+      scale = scale,
+      sdf = sdf,
+      stretchX = image9Patch.stretchX,
+      stretchY = image9Patch.stretchY,
+      content = image9Patch.imageContent,
+    )
+  }
+}
+
+/**
+ * Create and remember a [StyleImage] from a nine-patch [Bitmap].
+ *
+ * The [bitmap] must be a nine-patch drawable (.9.png). [parse9PatchBitmap] is called inside
+ * the `remember` block; it runs once on first composition and is cached for subsequent
+ * recompositions as long as the same [Bitmap] object is passed.
+ *
+ * To avoid re-parsing on every recomposition, wrap the bitmap in `remember` at the call site:
+ * ```
+ * val bitmap = remember { BitmapFactory.decodeResource(resources, R.drawable.my_nine_patch) }
+ * val styleImage = remember9PatchStyleImage(imageId = "my-image", bitmap = bitmap)
+ * ```
+ *
+ * @param imageId the id of the image
+ * @param bitmap the nine-patch bitmap as [Bitmap]; must be a `.9.png` nine-patch drawable
+ * @param scale scale factor for the image
+ * @param sdf option to treat whether image is SDF(signed distance field) or not
+ *
+ * @return a [StyleImage]
+ * @throws IllegalArgumentException if [bitmap] is not a valid nine-patch drawable
+ */
+@Composable
+public fun remember9PatchStyleImage(
+  imageId: String,
+  bitmap: Bitmap,
+  scale: Float? = null,
+  sdf: Boolean = false,
+): StyleImage {
+  val ninePatch = remember(bitmap) { bitmap.parse9PatchBitmap() }
+  return rememberStyleImage(imageId = imageId, image9Patch = ninePatch, scale = scale, sdf = sdf)
 }
 
 internal fun Painter.drawToBitmap(): ImageBitmap {

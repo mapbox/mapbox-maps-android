@@ -1321,9 +1321,11 @@ public final class com/mapbox/maps/extension/compose/style/StyleImage {
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleImageKt {
+	public static final fun remember9PatchStyleImage (Ljava/lang/String;Landroid/graphics/Bitmap;Ljava/lang/Float;ZLandroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
 	public static final fun rememberStyleImage (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
 	public static final fun rememberStyleImage (Ljava/lang/String;ILjava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
 	public static final fun rememberStyleImage (Ljava/lang/String;Landroidx/compose/ui/graphics/ImageBitmap;Ljava/lang/Float;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
+	public static final fun rememberStyleImage (Ljava/lang/String;Lcom/mapbox/maps/extension/style/image/NinePatchImage;Ljava/lang/Float;ZLandroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/style/StyleImage;
 }
 
 public final class com/mapbox/maps/extension/compose/style/StyleImportsConfig {

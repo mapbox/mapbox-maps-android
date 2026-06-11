@@ -1552,9 +1552,11 @@ package com.mapbox.maps.extension.compose.style {
   }
 
   public final class StyleImageKt {
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage remember9PatchStyleImage(String imageId, android.graphics.Bitmap bitmap, Float? scale = null, boolean sdf = false);
     method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, androidx.compose.ui.graphics.ImageBitmap imageBitmap, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
     method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(Object? key, String imageId, androidx.compose.ui.graphics.painter.Painter painter, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
     method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, @DrawableRes int resourceId, Float? scale = null, boolean sdf = false, java.util.List<com.mapbox.maps.ImageStretches> stretchX = listOf(), java.util.List<com.mapbox.maps.ImageStretches> stretchY = listOf(), com.mapbox.maps.ImageContent? content = null);
+    method @androidx.compose.runtime.Composable public static com.mapbox.maps.extension.compose.style.StyleImage rememberStyleImage(String imageId, com.mapbox.maps.extension.style.image.NinePatchImage image9Patch, Float? scale = null, boolean sdf = false);
   }
 
   @androidx.compose.runtime.Stable public final class StyleImportsConfig {

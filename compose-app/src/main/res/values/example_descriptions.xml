@@ -42,4 +42,5 @@
     <string name="description_edge_to_edge">Showcase edge-to-edge layout using Jetpack Compose with proper handling of system insets (system bars, navigation bars, and display cutouts).</string>
     <string name="description_lazy_column_map">Showcase MapboxMap inside a LazyColumn with correct scroll lifecycle management.</string>
     <string name="description_fling_mode">Toggle native OverScroller fling deceleration and scroll mode via GesturesSettings.</string>
+    <string name="description_nine_patch_image">Add a nine-patch image to a symbol layer and watch it stretch as text grows.</string>
 </resources>
