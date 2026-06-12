@@ -10,6 +10,11 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `IndoorSelectorControl` headless composable inside `MapIndoorSelectorScope`: attaches the indoor plugin to an `IndoorSelectorState` without rendering any UI, enabling custom floor-selector implementations.
 * [compose] Add `rememberStyleImage(imageId, image9Patch: NinePatchImage)` and `remember9PatchStyleImage(imageId, bitmap: Bitmap)` overloads for nine-patch images.
 
+# 11.25.0 June 11, 2026
+## Dependencies
+* Update gl-native to [v11.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0), common to [v24.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0).
+
+
 # 11.25.0-rc.2 June 04, 2026
 ## Bug fixes 🐞
 * Internal fixes and performance improvements.
