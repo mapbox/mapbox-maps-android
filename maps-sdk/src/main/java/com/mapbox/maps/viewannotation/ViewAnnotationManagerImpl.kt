@@ -1,17 +1,24 @@
 package com.mapbox.maps.viewannotation
 
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Looper
 import android.view.*
 import android.view.View.MeasureSpec
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
-import androidx.annotation.*
+import androidx.annotation.AnyThread
+import androidx.annotation.LayoutRes
+import androidx.annotation.RestrictTo
+import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.R
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.renderer.RenderThread
 import com.mapbox.maps.util.isEmpty
@@ -19,6 +26,7 @@ import java.util.UUID
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.abs
 
+@OptIn(MapboxExperimental::class, com.mapbox.annotation.MapboxExperimental::class)
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class ViewAnnotationManagerImpl(
   mapView: MapView,
@@ -42,7 +50,12 @@ internal class ViewAnnotationManagerImpl(
     var positionDescriptor: DelegatingViewAnnotationPositionDescriptor?,
     var isPositioned: Boolean,
     // id passed to gl-native
-    val id: String = UUID.randomUUID().toString()
+    val id: String = UUID.randomUUID().toString(),
+    // last collision boxes pushed to core; used to skip no-op updates
+    var lastPushedCollisionBoxes: List<ScreenBox>? = null,
+    // collision-frame overlays currently attached to [view]'s ViewOverlay; null when debug is off
+    var debugFrames: List<Drawable>? = null,
+    var userCollisionBoxes: Boolean = false
   ) {
     // Helper function to understand if view is visible from Android visibility perspective.
     val isVisible
@@ -74,10 +87,13 @@ internal class ViewAnnotationManagerImpl(
     }
 
   init {
-    viewAnnotationsLayout.layoutParams = FrameLayout.LayoutParams(
-      ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.MATCH_PARENT,
-    )
+    viewAnnotationsLayout.apply {
+      layoutParams = FrameLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT,
+      )
+      clipChildren = false // Prevents view annotation shadows or bouncing animation clipping.
+    }
     // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
     mapView.addView(viewAnnotationsLayout, 1)
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -155,6 +171,9 @@ internal class ViewAnnotationManagerImpl(
         }
         if (options.height != null) {
           viewAnnotation.measuredHeight = USER_FIXED_DIMENSION
+        }
+        if (options.collisionBoxes != null) {
+          viewAnnotation.userCollisionBoxes = true
         }
         getValue(mapboxMap.updateViewAnnotation(viewAnnotation.id, options))
         true
@@ -286,6 +305,7 @@ internal class ViewAnnotationManagerImpl(
     )
   }
 
+  @OptIn(MapboxDelicateApi::class)
   private fun cameraForAnnotationsImpl(
     annotations: List<View>,
     edgeInsets: EdgeInsets?,
@@ -612,10 +632,6 @@ internal class ViewAnnotationManagerImpl(
       inflatedViewLayoutParams.height
     }
 
-    val updatedOptions = options.toBuilder()
-      .width(options.width ?: measuredWidth.toDouble())
-      .height(options.height ?: measuredHeight.toDouble())
-      .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = (options.visible == null),
@@ -625,7 +641,16 @@ internal class ViewAnnotationManagerImpl(
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else measuredHeight,
       positionDescriptor = null,
       isPositioned = false,
+      userCollisionBoxes = options.collisionBoxes != null
     )
+
+    val builder = options.toBuilder()
+      .width(options.width ?: measuredWidth.toDouble())
+      .height(options.height ?: measuredHeight.toDouble())
+
+    updateCollisionBoxes(builder, viewAnnotation)
+
+    val updatedOptions = builder.build()
 
     val onGlobalLayoutListener = buildGlobalLayoutListener(viewAnnotation)
     val onDrawListener = buildDrawListener(viewAnnotation)
@@ -719,40 +744,135 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  // controls view annotations's width and height when dimensions of the view change
+  // controls view annotations's width, height and collision boxes when dimensions of the view change
   private fun buildGlobalLayoutListener(viewAnnotation: ViewAnnotation) =
     OnGlobalLayoutListener {
+      val view = viewAnnotation.view
+      val builder = ViewAnnotationOptions.Builder()
+      var hasUpdate = false
+
       if (
         viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
-        viewAnnotation.view.measuredWidth > 0 &&
-        viewAnnotation.view.measuredWidth != viewAnnotation.measuredWidth
+        view.measuredWidth > 0 &&
+        view.measuredWidth != viewAnnotation.measuredWidth
       ) {
-        viewAnnotation.measuredWidth = viewAnnotation.view.measuredWidth
-        getValue(
-          mapboxMap.updateViewAnnotation(
-            viewAnnotation.id,
-            ViewAnnotationOptions.Builder()
-              .width(viewAnnotation.view.measuredWidth.toDouble())
-              .build()
-          )
-        )
+        viewAnnotation.measuredWidth = view.measuredWidth
+        builder.width(view.measuredWidth.toDouble())
+        hasUpdate = true
       }
+
       if (
         viewAnnotation.measuredHeight != USER_FIXED_DIMENSION &&
-        viewAnnotation.view.measuredHeight > 0 &&
-        viewAnnotation.view.measuredHeight != viewAnnotation.measuredHeight
+        view.measuredHeight > 0 &&
+        view.measuredHeight != viewAnnotation.measuredHeight
       ) {
-        viewAnnotation.measuredHeight = viewAnnotation.view.measuredHeight
-        getValue(
-          mapboxMap.updateViewAnnotation(
-            viewAnnotation.id,
-            ViewAnnotationOptions.Builder()
-              .height(viewAnnotation.view.measuredHeight.toDouble())
-              .build()
+        viewAnnotation.measuredHeight = view.measuredHeight
+        builder.height(view.measuredHeight.toDouble())
+        hasUpdate = true
+      }
+
+      if (updateCollisionBoxes(builder, viewAnnotation)) {
+        hasUpdate = true
+      }
+
+      if (hasUpdate) {
+        getValue(mapboxMap.updateViewAnnotation(viewAnnotation.id, builder.build()))
+      }
+
+      if (subviewDebugFrames) refreshDebugFrames(viewAnnotation)
+    }
+
+  private fun updateCollisionBoxes(builder: ViewAnnotationOptions.Builder, viewAnnotation: ViewAnnotation): Boolean {
+    if (!viewAnnotation.userCollisionBoxes) {
+      val boxes = collectCollisionBoxes(viewAnnotation.view)
+      if (boxes != viewAnnotation.lastPushedCollisionBoxes) {
+        viewAnnotation.lastPushedCollisionBoxes = boxes
+        builder.collisionBoxes(boxes)
+        return true
+      }
+    }
+    return false
+  }
+
+  // Toggled by MapView.debugOptions containing MapViewDebugOptions.COLLISION.
+  // When off there is no traversal, no allocation, and no debug overlay attached.
+  internal var subviewDebugFrames: Boolean = false
+    set(value) {
+      if (field == value) return
+      field = value
+      if (value) {
+        viewAnnotations.values.forEach(::refreshDebugFrames)
+      } else {
+        viewAnnotations.values.forEach(::removeDebugFrames)
+      }
+    }
+
+  private fun refreshDebugFrames(viewAnnotation: ViewAnnotation) {
+    removeDebugFrames(viewAnnotation)
+    val root = viewAnnotation.view
+    if (root.width <= 0 || root.height <= 0 || root.visibility == View.GONE) return
+
+    val boxes = viewAnnotation.lastPushedCollisionBoxes
+    val drawables = if (!boxes.isNullOrEmpty()) {
+      boxes.map { box ->
+        buildDebugFrame(
+          box.min.x.toInt(),
+          box.min.y.toInt(),
+          box.max.x.toInt(),
+          box.max.y.toInt()
+        )
+      }
+    } else {
+      // No subview-level boxes pushed: core treats the whole annotation as the collision box.
+      listOf(buildDebugFrame(0, 0, root.width, root.height))
+    }
+
+    val overlay = root.overlay
+    drawables.forEach(overlay::add)
+    viewAnnotation.debugFrames = drawables
+  }
+
+  private fun buildDebugFrame(left: Int, top: Int, right: Int, bottom: Int): Drawable =
+    GradientDrawable().apply {
+      setStroke(DEBUG_FRAME_STROKE_PX, DEBUG_FRAME_COLOR)
+      setBounds(left, top, right, bottom)
+    }
+
+  private fun removeDebugFrames(viewAnnotation: ViewAnnotation) {
+    val existing = viewAnnotation.debugFrames ?: return
+    val overlay = viewAnnotation.view.overlay
+    existing.forEach(overlay::remove)
+    viewAnnotation.debugFrames = null
+  }
+
+  private fun collectCollisionBoxes(root: View): List<ScreenBox>? {
+    if (root.getTag(R.id.composeView) != null) return null
+    if (root !is ViewGroup) return null
+    val boxes = mutableListOf<ScreenBox>()
+    collectCollisionBoxesInto(root, root, boxes)
+    return if (boxes.isEmpty()) null else boxes
+  }
+
+  private fun collectCollisionBoxesInto(root: ViewGroup, current: View, out: MutableList<ScreenBox>) {
+    if (current.mbxCollisionBox) {
+      if (current.width > 0 && current.height > 0 && current.visibility != View.GONE) {
+        val rect = Rect(0, 0, current.width, current.height)
+        root.offsetDescendantRectToMyCoords(current, rect)
+        out.add(
+          ScreenBox(
+            ScreenCoordinate(rect.left.toDouble(), rect.top.toDouble()),
+            ScreenCoordinate(rect.right.toDouble(), rect.bottom.toDouble())
           )
         )
       }
+      return
     }
+    if (current is ViewGroup) {
+      for (i in 0 until current.childCount) {
+        collectCollisionBoxesInto(root, current.getChildAt(i), out)
+      }
+    }
+  }
 
   private fun findByAnnotatedLayerFeature(annotatedLayerFeature: AnnotatedLayerFeature): Pair<View?, ViewAnnotationOptions?> {
     return viewAnnotations
@@ -951,6 +1071,10 @@ internal class ViewAnnotationManagerImpl(
     private const val MAX_ADJUST_BOUNDS_COUNTER = 2
 
     private const val USER_FIXED_DIMENSION = -1
+
+    private const val DEBUG_FRAME_STROKE_PX = 1
+    // ARGB red with 0.6 alpha, mirrors iOS ViewAnnotationsContainer debug border.
+    private const val DEBUG_FRAME_COLOR = 0x99FF0000.toInt()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun needToReorderZ(

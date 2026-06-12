@@ -15,6 +15,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0), common to [v24.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0).
 
 
+## Features ✨ and improvements 🏁
+* Introduce new experimental `ViewAnnotationOptions.enableSymbolLayerCollision` option which allows view annotations to hide underlying map symbols to avoid visual clutter.
+By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.
+* Support drawing view annotation collision boxes when `MapView.debugOptions` is set to `COLLISION`.
+
 # 11.25.0-rc.2 June 04, 2026
 ## Bug fixes 🐞
 * Internal fixes and performance improvements.
@@ -5463,4 +5468,3 @@ To get started with v10, please refer to our [migration guide](https://docs.mapb
 * An invalid LatLng conversion can occur and produce a native crash
 * Native crash when resuming the map in specific situations
 * Native crash when performing a camera transition using Map#jumpTo
-

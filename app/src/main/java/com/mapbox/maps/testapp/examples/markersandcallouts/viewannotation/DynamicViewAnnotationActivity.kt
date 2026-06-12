@@ -336,6 +336,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     btnMode.text = getString(R.string.dynamic_mode, if (isOverview) "follow" else "overview")
   }
 
+  @OptIn(com.mapbox.maps.MapboxExperimental::class)
   private fun addViewAnnotations() {
     etaView = viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_dva_eta,
@@ -356,6 +357,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
           },
         )
         minZoom(8f)
+        enableSymbolLayerCollision(true)
       }
     )
     alternativeEtaView = viewAnnotationManager.addViewAnnotation(
@@ -377,6 +379,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
           },
         )
         minZoom(8f)
+        enableSymbolLayerCollision(true)
       }
     )
     alternativeEtaView.setOnClickListener {
@@ -392,6 +395,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
           featureId(PARKING_FEATURE_ID_1)
         }
         minZoom(10f)
+        enableSymbolLayerCollision(true)
       }
     )
 
@@ -404,6 +408,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
           featureId(PARKING_FEATURE_ID_2)
         }
         minZoom(12f)
+        enableSymbolLayerCollision(true)
       }
     )
 

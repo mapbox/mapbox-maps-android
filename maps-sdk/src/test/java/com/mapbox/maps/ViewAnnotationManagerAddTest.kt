@@ -66,6 +66,7 @@ class ViewAnnotationManagerAddTest(
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     viewAnnotationsLayout = mockk()
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
+    every { viewAnnotationsLayout.setClipChildren(any()) } just Runs
     every { viewAnnotationsLayout.addView(any()) } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
     every { viewAnnotationsLayout.context } returns mockk()

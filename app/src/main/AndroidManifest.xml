@@ -1253,6 +1253,18 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.markersandcallouts.viewannotation.ViewAnnotationCollisionActivity"
+            android:description="@string/description_view_annotation_collision"
+            android:exported="true"
+            android:label="@string/activity_view_annotation_collision">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_markers_and_callouts" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
         </activity> <!--  -->
         <activity
             android:name=".examples.viewport.ViewportShowcaseActivity"

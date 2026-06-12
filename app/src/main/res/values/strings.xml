@@ -171,6 +171,10 @@
     <!--View Annotations-->
     <string name="content_description_close">Close callout</string>
     <string name="dynamic_mode">Mode: %1$s</string>
+    <string name="collision_debug">Collision debug</string>
+    <string name="va_symbol_collision">Enable ViewAnnotation-Symbols collision</string>
+    <string name="va_allow_overlap">Allow Overlap (view annotations)</string>
+    <string name="view_annotation_collision_hint">The View Annotations hide the map symbols below automatically.\nTap on POI features to add more annotations</string>
 
     <!-- Tile requests -->
     <string name="set_tile_request_delay">Set tile request delay to 2 sec</string>

@@ -30,6 +30,10 @@ data class MapViewDebugOptions internal constructor(internal val name: String) {
     /**
      * Edges of glyphs and symbols are shown as faint, green lines to help
      * diagnose collision and label placement issues.
+     *
+     * Also draws a red frame around each view annotation subview marked via
+     * [com.mapbox.maps.viewannotation.mbxCollisionBox], so the rectangles
+     * participating in view-annotation collision are visible on screen.
      */
     @JvmField
     val COLLISION = MapViewDebugOptions("COLLISION")

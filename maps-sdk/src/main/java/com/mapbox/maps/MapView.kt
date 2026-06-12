@@ -61,7 +61,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
   private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
-  private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
+  private val viewAnnotationManagerDelegate = lazy {
+    ViewAnnotationManagerImpl(this).also {
+      it.subviewDebugFrames = MapViewDebugOptions.COLLISION in debugOptions
+    }
+  }
 
   /**
    * Get view annotation manager instance to add / update / remove view annotations
@@ -76,6 +80,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     get() = debugOptionsController.options
     set(value) {
       debugOptionsController.options = value
+      if (viewAnnotationManagerDelegate.isInitialized()) {
+        (viewAnnotationManager as ViewAnnotationManagerImpl).subviewDebugFrames =
+          MapViewDebugOptions.COLLISION in value
+      }
     }
 
   /**

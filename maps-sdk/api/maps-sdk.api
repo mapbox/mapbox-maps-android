@@ -926,3 +926,8 @@ public final class com/mapbox/maps/viewannotation/ViewAnnotationUpdateMode {
 public final class com/mapbox/maps/viewannotation/ViewAnnotationUpdateMode$Companion {
 }
 
+public final class com/mapbox/maps/viewannotation/ViewCollisionParticipationKt {
+	public static final fun getMbxCollisionBox (Landroid/view/View;)Z
+	public static final fun setMbxCollisionBox (Landroid/view/View;Z)V
+}
+

@@ -2,4 +2,5 @@
 <resources>
     <item name="mapView" type="id"/>
     <item name="composeView" type="id"/>
+    <item name="collisionBox" type="id"/>
 </resources>
