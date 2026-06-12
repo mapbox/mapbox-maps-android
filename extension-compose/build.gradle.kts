@@ -9,6 +9,7 @@ android {
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles("proguard-rules.pro")
   }
 
   testOptions {
