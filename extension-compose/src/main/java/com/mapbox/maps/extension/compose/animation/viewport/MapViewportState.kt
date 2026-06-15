@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.compose.animation.viewport
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import androidx.annotation.UiThread
-import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -114,14 +113,9 @@ public class MapViewportState(
   @Composable
   private fun DrainActionQueue(mapView: MapView) {
     LaunchedEffect(Unit) {
-      drainActionQueue(mapView)
-    }
-  }
-
-  @VisibleForTesting
-  internal suspend fun drainActionQueue(mapView: MapView) {
-    for (action in viewportActionChannel) {
-      action(mapView)
+      for (action in viewportActionChannel) {
+        action(mapView)
+      }
     }
   }
 
@@ -348,124 +342,6 @@ public class MapViewportState(
   }
 
   /**
-   * Rotate the map using two screen coordinates as rotation pivots, with optional animation.
-   *
-   * @param first The first pointer to rotate on
-   * @param second The second pointer to rotate on
-   * @param animationOptions Transition options (animation duration, listeners etc)
-   * @param completionListener the optional [CompletionListener] to observe the completion of the transition
-   */
-  public fun rotateBy(
-    first: ScreenCoordinate,
-    second: ScreenCoordinate,
-    animationOptions: MapAnimationOptions? = null,
-    completionListener: CompletionListener? = null
-  ) {
-    viewportActionChannel.trySend { mapView ->
-      mapView.apply {
-        viewport.transitionTo(
-          targetState = RelativeAnimationViewportTransition.emptyTargetState(),
-          transition = RelativeAnimationViewportTransition { transitionCompletionListener ->
-            camera.rotateBy(
-              first,
-              second,
-              animationOptions,
-              OnAnimationCompletedListener(listOf(completionListener, transitionCompletionListener))
-            )
-          }
-        )
-      }
-    }
-  }
-
-  /**
-   * Move the map by the given screen coordinate with optional animation.
-   *
-   * @param screenCoordinate The screen coordinate distance to move by
-   * @param animationOptions Transition options (animation duration, listeners etc)
-   * @param completionListener the optional [CompletionListener] to observe the completion of the transition
-   */
-  public fun moveBy(
-    screenCoordinate: ScreenCoordinate,
-    animationOptions: MapAnimationOptions? = null,
-    completionListener: CompletionListener? = null
-  ) {
-    viewportActionChannel.trySend { mapView ->
-      mapView.apply {
-        viewport.transitionTo(
-          targetState = RelativeAnimationViewportTransition.emptyTargetState(),
-          transition = RelativeAnimationViewportTransition { transitionCompletionListener ->
-            camera.moveBy(
-              screenCoordinate,
-              animationOptions,
-              OnAnimationCompletedListener(listOf(completionListener, transitionCompletionListener))
-            )
-          }
-        )
-      }
-    }
-  }
-
-  /**
-   * Pitch the map by the given amount in degrees with optional animation.
-   *
-   * @param pitch The amount to pitch by, in degrees
-   * @param animationOptions Transition options (animation duration, listeners etc)
-   * @param completionListener the optional [CompletionListener] to observe the completion of the transition
-   */
-  public fun pitchBy(
-    pitch: Double,
-    animationOptions: MapAnimationOptions? = null,
-    completionListener: CompletionListener? = null
-  ) {
-    viewportActionChannel.trySend { mapView ->
-      mapView.apply {
-        viewport.transitionTo(
-          targetState = RelativeAnimationViewportTransition.emptyTargetState(),
-          transition = RelativeAnimationViewportTransition { transitionCompletionListener ->
-            camera.pitchBy(
-              pitch,
-              animationOptions,
-              OnAnimationCompletedListener(listOf(completionListener, transitionCompletionListener))
-            )
-          }
-        )
-      }
-    }
-  }
-
-  /**
-   * Scale the map by the given amount with optional animation.
-   *
-   * @param amount The amount to scale by
-   * @param screenCoordinate The optional focal point to scale on
-   * @param animationOptions Transition options (animation duration, listeners etc)
-   * @param completionListener the optional [CompletionListener] to observe the completion of the transition
-   */
-  public fun scaleBy(
-    amount: Double,
-    screenCoordinate: ScreenCoordinate? = null,
-    animationOptions: MapAnimationOptions? = null,
-    completionListener: CompletionListener? = null
-  ) {
-    viewportActionChannel.trySend { mapView ->
-      mapView.apply {
-        viewport.transitionTo(
-          targetState = RelativeAnimationViewportTransition.emptyTargetState(),
-          transition = RelativeAnimationViewportTransition { transitionCompletionListener ->
-            camera.scaleBy(
-              amount,
-              screenCoordinate,
-              animationOptions,
-              OnAnimationCompletedListener(listOf(completionListener, transitionCompletionListener))
-            )
-          }
-        )
-      }
-    }
-  }
-
-  /**
    * Sets [ViewportPlugin.status] to [ViewportStatus.Idle] synchronously.
    *
    * This cancels any active [ViewportState] or [ViewportTransition].
@@ -539,25 +415,6 @@ private class GenericViewportTransition(private val doTransition: (CameraOptions
       false
     }
     return cancelable
-  }
-}
-
-/**
- * A viewport transition for relative/incremental camera animations (rotateBy, moveBy, pitchBy, scaleBy).
- * Unlike [GenericViewportTransition], it does not need to observe a target [CameraOptions] since the
- * animation is defined relative to the current camera position.
- */
-private class RelativeAnimationViewportTransition(
-  private val doTransition: (CompletionListener) -> Cancelable
-) : ViewportTransition {
-  override fun run(to: ViewportState, completionListener: CompletionListener): Cancelable {
-    return doTransition.invoke(completionListener)
-  }
-
-  companion object {
-    private val emptyCameraOptions = cameraOptions { }
-    private val emptyDoSetCamera: (CameraOptions) -> Unit = { }
-    fun emptyTargetState() = CameraViewportState(emptyCameraOptions, emptyDoSetCamera)
   }
 }
 
