@@ -395,42 +395,7 @@ A great bug report will have many of the following:
 ## Symbolicating native crashes
 
 The Mapbox Maps SDK for Android uses C++ code under the hood. By default, the used C++ binary
-will be stripped from symbols which means that stacktraces produced are not readable. To symbolicate
-C++ traces you can use [ndk-stack](https://developer.android.com/ndk/guides/ndk-stack) and a binary that has the symbols attached.
-
-### Download the unstripped binary
-
-Next to Mapbox Maven distribution mechanism, Mapbox Android binaries can be downloaded as a zipped
-archive. This zipped version contains the additional shared objects with debug symbols.
-Replace in following command the SDK_REGISTRY_TOKEN and VERSION with the appropriate values:
-
-```
-$ curl --user mapbox:{SDK_REGISTRY_TOKEN} https://api.mapbox.com/downloads/v2/mobile-maps-android-core/releases/android/{VERSION}/android-core-all.zip --output android-core-all.zip
-```
-
-### Running NDK stack
-
-After unzipping the archive you can run ndk-stack on the unstripped native binary and your
-stacktrace that was saved as a txt file.
-
-```
-$ ndk-stack -sym obj/arm64-v8a -dump trace.txt
-```
-
-Note that the stacktrace _must_ be formatted properly, otherwise ndk-stack will not be able to symbolicate
-the stacktrace. Different crash reporting tools often format stacktraces differently, so you might need to reformat the stacktrace.
-The stacktrace should be formatted as follows:
-
-```
-*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
-  #00 pc acfed libmapbox-maps.so
-  ...
-  #12 pc 51f408 libmapbox-maps.so (BuildId: 331a309c6d4e90a8)
-```
-
-e.g. start with asterisks line, followed by stack entries. 
-Stack entries should start with at least one space, then a hash sign with a stack entry number, 
-then `pc`, then the address (_without_ the `0x` prefix), then the library name.
+will be stripped from symbols which means that stacktraces produced are not readable. To symbolicate C++ traces, you can send them to us along with the SDK and NDK version information.
 
 ## Working with snapshots
 
