@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Introduce experimental `IndoorSelector` composable function available inside `MapboxMap`, displaying a scrollable floor-selection widget that appears automatically when an indoor building is in view. Exposes `IndoorSelectorState` for programmatic access to the current floor list and selected floor, and an `onFloorClicked` callback for reacting to user selections.
 * [compose] Add `IndoorSelectorControl` headless composable inside `MapIndoorSelectorScope`: attaches the indoor plugin to an `IndoorSelectorState` without rendering any UI, enabling custom floor-selector implementations.
+* [compose] Add `rotateBy`, `moveBy`, `pitchBy`, and `scaleBy` methods to `MapViewportState` for incremental camera animations.
 * [compose] Add `rememberStyleImage(imageId, image9Patch: NinePatchImage)` and `remember9PatchStyleImage(imageId, bitmap: Bitmap)` overloads for nine-patch images.
 * Introduce new experimental `ViewAnnotationOptions.enableSymbolLayerCollision` option which allows view annotations to hide underlying map symbols to avoid visual clutter.
     By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.

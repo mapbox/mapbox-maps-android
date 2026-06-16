@@ -144,6 +144,10 @@ package com.mapbox.maps.extension.compose.animation.viewport {
     method public com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason? getMapViewportStatusChangedReason();
     method public com.mapbox.maps.CameraOptions? getStyleDefaultCameraOptions();
     method public void idle();
+    method public void moveBy(com.mapbox.maps.ScreenCoordinate screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void pitchBy(double pitch, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void rotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
+    method public void scaleBy(double amount, com.mapbox.maps.ScreenCoordinate? screenCoordinate = null, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     method @UiThread public void setCameraOptions(com.mapbox.maps.CameraOptions cameraOptions);
     method @UiThread public void setCameraOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.CameraOptions.Builder,kotlin.Unit> block);
     method public void transitionToFollowPuckState(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions followPuckViewportStateOptions = FollowPuckViewportStateOptions.<init>().build(), com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions defaultTransitionOptions = DefaultViewportTransitionOptions.<init>().build(), com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
