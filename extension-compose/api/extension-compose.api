@@ -171,6 +171,14 @@ public final class com/mapbox/maps/extension/compose/animation/viewport/MapViewp
 	public final fun getMapViewportStatusChangedReason ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
 	public final fun getStyleDefaultCameraOptions ()Lcom/mapbox/maps/CameraOptions;
 	public final fun idle ()V
+	public final fun moveBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
+	public static synthetic fun moveBy$default (Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
+	public final fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
+	public static synthetic fun pitchBy$default (Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
+	public final fun rotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
+	public static synthetic fun rotateBy$default (Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
+	public final fun scaleBy (DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
+	public static synthetic fun scaleBy$default (Lcom/mapbox/maps/extension/compose/animation/viewport/MapViewportState;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
 	public final fun setCameraOptions (Lcom/mapbox/maps/CameraOptions;)V
 	public final fun setCameraOptions (Lkotlin/jvm/functions/Function1;)V
 	public final fun transitionToFollowPuckState (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
