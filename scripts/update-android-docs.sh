@@ -15,7 +15,7 @@ set -Eeuxo pipefail
 readonly ANDROID_DOCS_DIRECTORY="android-docs-repo"
 readonly CONSTANTS_FILE="./src/constants.json"
 readonly MAP_VERSION_NUMBERS_FILE="./src/data/map-version-numbers.json"
-readonly BRANCH_WITH_DOCUMENTATION="publisher-production"
+readonly BRANCH_WITH_DOCUMENTATION="production"
 
 MAPS_SDK_VERSION=
 REVIEWERS=
