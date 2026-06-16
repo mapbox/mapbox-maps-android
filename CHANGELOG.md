@@ -9,16 +9,44 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Introduce experimental `IndoorSelector` composable function available inside `MapboxMap`, displaying a scrollable floor-selection widget that appears automatically when an indoor building is in view. Exposes `IndoorSelectorState` for programmatic access to the current floor list and selected floor, and an `onFloorClicked` callback for reacting to user selections.
 * [compose] Add `IndoorSelectorControl` headless composable inside `MapIndoorSelectorScope`: attaches the indoor plugin to an `IndoorSelectorState` without rendering any UI, enabling custom floor-selector implementations.
 * [compose] Add `rememberStyleImage(imageId, image9Patch: NinePatchImage)` and `remember9PatchStyleImage(imageId, bitmap: Bitmap)` overloads for nine-patch images.
+* Introduce new experimental `ViewAnnotationOptions.enableSymbolLayerCollision` option which allows view annotations to hide underlying map symbols to avoid visual clutter.
+    By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.
+* Support drawing view annotation collision boxes when `MapView.debugOptions` is set to `COLLISION`.
 
 # 11.25.0 June 11, 2026
-## Dependencies
-* Update gl-native to [v11.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0), common to [v24.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0).
-
+## Breaking changes ⚠️
+* `MapView.setMaximumFps` and `MapSurface.setMaximumFps` are now annotated `@MainThread`. Callers must invoke them from the main thread; off-main callers will see a lint warning.
 
 ## Features ✨ and improvements 🏁
-* Introduce new experimental `ViewAnnotationOptions.enableSymbolLayerCollision` option which allows view annotations to hide underlying map symbols to avoid visual clutter.
-By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.
-* Support drawing view annotation collision boxes when `MapView.debugOptions` is set to `COLLISION`.
+* [compose] Add Standard `IndoorLabels` featureset and indoor configuration options (`showIndoor`, `showIndoorLabels`, `colorIndoorLabelHighlight`, `colorIndoorLabelSelect`) for the Mapbox Standard style.
+* Add `useNativeFlingDeceleration` option to `GesturesPlugin` that uses `OverScroller` for physics-based fling deceleration instead of the legacy `easeTo` animation, providing a more natural fling experience.
+* Throttle `MapboxMap` post destroyed warning logs.
+* Expose `verticalFov` in `CameraOptions`, allowing a custom vertical field of view to be set in `setCamera`, `easeTo`, and `flyTo`.
+* Allow using color string literals in `interpolate` expressions, including when set on style config at runtime.
+* Support using `line-progress` in `line-emissive-strength`.
+* Add support for zoom-and-feature-dependent appearance conditions.
+* Add client-side SD/HD road and traffic conflation, hiding redundant roads based on functional road class coverage with stencil-masked transitions and configurable opacity fade.
+* Add animated cross-fade transitions for boolean style config options (e.g. switching HD roads on/off).
+* Add an option to disallow expensive network requests in `loadStylePack`.
+
+## Bug fixes 🐞
+* Fix a `ConcurrentModificationException` crash that could occur when a plugin was added or removed during `MapView.onDestroy`.
+* Fix frame pacing breaking when the panel switches refresh-rate modes mid-session (VRR or per-UID `frameRateOverride`). `FpsManager` now updates its `screenRefreshRate` via a `DisplayManager.DisplayListener` instead of only sampling once at `onStart`.
+* [maps-sdk] Fix Vulkan rendering being permanently disabled when the Android surface arrived before the native map was set. The renderer now defers setup and retries via `onMapSet()` once the map is available.
+* Fix a crash that could occur while iterating map interactions when a callback modifies interaction state.
+* Fix a use-after-free crash in the map caused by asynchronous tasks accessing a partially destroyed map instance.
+* Fix a crash caused by dereferencing a null index buffer when drawing symbols.
+* Fix a crash when an overriding terrain source was merged with another source from the same root style.
+* Fix missing letters in the middle of text labels placed along lines elevated by terrain.
+* Fix aliasing artifacts on lines with borders.
+* Fix step expression evaluation when using uniform buffer objects.
+* Improve symbol appearances performance for Vulkan backend.
+* Fix rare process crashes during HTTP downloads (failure to create a temporary file, and an uncaught error while writing the response).
+* Fix a crash sometimes occurring when using a custom raster source.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0), common to [v24.25.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0).
 
 # 11.25.0-rc.2 June 04, 2026
 ## Bug fixes 🐞
@@ -26,9 +54,6 @@ By default, the full bounding box of the view annotation is used for collision d
 
 ## Dependencies
 * Update gl-native to [v11.25.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-rc.2), common to [v24.25.0-rc.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.0-rc.2).
-
-## Features ✨ and improvements 🏁
-* [compose] Add `rememberStyleImage(imageId, image9Patch: NinePatchImage)` and `remember9PatchStyleImage(imageId, bitmap: Bitmap)` overloads for nine-patch images.
 
 # 11.25.0-rc.1 June 02, 2026
 ## Breaking changes ⚠️
