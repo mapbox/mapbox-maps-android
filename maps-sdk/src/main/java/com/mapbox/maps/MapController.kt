@@ -98,6 +98,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   constructor(
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
+    mapName: String,
   ) {
     if (MapboxOptions.accessToken.isBlank()) {
       throw MapboxConfigurationException()
@@ -112,7 +113,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     )
     this.nativeObserver = NativeObserver(nativeMap)
     this._mapboxMap =
-      MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
+      MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio, mapName)
     this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,

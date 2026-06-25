@@ -67,6 +67,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  @Suppress("PrivatePropertyName")
+  private var TAG: String = "MapView"
   /**
    * Get view annotation manager instance to add / update / remove view annotations
    * represented as Android views.
@@ -133,6 +135,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       } else {
         initOptions ?: MapInitOptions(context)
       }
+      val mapName = resolvedMapInitOptions.mapName.ifBlank { "${System.identityHashCode(this)}" }
+      TAG = "MapView\\$mapName"
       if (isInEditMode) {
         return
       }
@@ -142,7 +146,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         SurfaceView(context, attrs)
       }
       val contextMode = resolvedMapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE
-      val mapName = resolvedMapInitOptions.mapName
 
       val renderer = MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX renderer($mapName)" }) {
         when (view) {
@@ -150,20 +153,20 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
             view.holder,
             resolvedMapInitOptions.antialiasingSampleCount,
             contextMode,
-            resolvedMapInitOptions.mapName,
+            mapName,
           )
 
           is TextureView -> MapboxTextureViewRenderer(
             view,
             resolvedMapInitOptions.antialiasingSampleCount,
             contextMode,
-            resolvedMapInitOptions.mapName,
+            mapName,
           )
 
           else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
         }
       }
-      mapController = MapController(renderer, resolvedMapInitOptions)
+      mapController = MapController(renderer, resolvedMapInitOptions, mapName)
       addView(view, 0)
       mapController.initializePlugins(resolvedMapInitOptions, this)
     }
@@ -302,6 +305,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onResume
    */
   override fun onResume() {
+    logI(TAG, "onResume() called")
     mapController.onResume()
   }
 
@@ -311,6 +315,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onLowMemory
    */
   override fun onLowMemory() {
+    logI(TAG, "onLowMemory() called")
     mapController.onLowMemory()
   }
 
@@ -318,6 +323,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * You must call this method from the parent's Activity#onDestroy() or Fragment#onDestroy()
    */
   override fun onDestroy() {
+    logI(TAG, "onDestroy() called")
     if (viewAnnotationManagerDelegate.isInitialized()) {
       (viewAnnotationManager as ViewAnnotationManagerImpl).destroy()
     }
@@ -653,8 +659,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmSynthetic
     internal const val DEFAULT_FPS = 60
-
-    private const val TAG = "MapView"
 
     /**
      * Static method to check if [MapView] could properly render on this device.

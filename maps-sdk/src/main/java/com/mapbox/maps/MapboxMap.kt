@@ -78,6 +78,9 @@ class MapboxMap :
   @get:JvmSynthetic
   internal val nativeObserver: NativeObserver
 
+  @Suppress("PrivatePropertyName")
+  private var TAG: String = "Mbgl-MapboxMap"
+
   /**
    * [Style] of the map synchronously, will return null is style is not loaded yet.
    *
@@ -142,7 +145,8 @@ class MapboxMap :
   private constructor(
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
-    pixelRatio: Float
+    pixelRatio: Float,
+    mapName: String
   ) : super(
     nativeMap.map,
     pixelRatio,
@@ -152,6 +156,9 @@ class MapboxMap :
   ) {
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
+    if (mapName.isNotBlank()) {
+      TAG = "Mbgl-MapboxMap\\$mapName"
+    }
     val mapLoadingErrorDelegate = MapLoadingErrorDelegate { error ->
       this.nativeObserver.sendMapLoadingError(error)
     }
@@ -3159,7 +3166,6 @@ class MapboxMap :
       MapsResourceOptions.clearData(callback)
     }
 
-    private const val TAG = "Mbgl-MapboxMap"
     @JvmSynthetic
     internal const val QFE_SUPER_CLUSTER = "supercluster"
     @JvmSynthetic
@@ -3189,8 +3195,9 @@ class MapboxMap :
     internal operator fun invoke(
       nativeMap: NativeMapImpl,
       nativeObserver: NativeObserver,
-      pixelRatio: Float
-    ) = MapboxMap(nativeMap, nativeObserver, pixelRatio)
+      pixelRatio: Float,
+      mapName: String
+    ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName)
 
     /**
      * Calculates the bounding box for a list of points.

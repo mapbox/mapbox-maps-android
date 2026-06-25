@@ -36,6 +36,9 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   private val renderer: MapboxSurfaceRenderer
   private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
 
+  @Suppress("PrivatePropertyName")
+  private var TAG: String = "MapSurface"
+
   /**
    * The surface to be used, set from the constructor.
    */
@@ -54,12 +57,14 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     this.context = context
     this.surface = surface
     this.mapInitOptions = mapInitOptions
+    val mapName = mapInitOptions.mapName.ifBlank { "${System.identityHashCode(this)}" }
+    TAG = "MapSurface\\$mapName"
     this.renderer = MapboxSurfaceRenderer(
       antialiasingSampleCount = mapInitOptions.antialiasingSampleCount,
       contextMode = mapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE,
-      mapName = mapInitOptions.mapName,
+      mapName = mapName,
     )
-    this.mapController = MapController(renderer, mapInitOptions).apply {
+    this.mapController = MapController(renderer, mapInitOptions, mapName).apply {
       initializePlugins(mapInitOptions)
     }
   }
@@ -367,8 +372,4 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * @return created plugin instance or null if no plugin is found for given id.
    */
   override fun <T : MapPlugin> getPlugin(id: String): T? = mapController.getPlugin(id)
-
-  private companion object {
-    private const val TAG = "MapSurface"
-  }
 }
