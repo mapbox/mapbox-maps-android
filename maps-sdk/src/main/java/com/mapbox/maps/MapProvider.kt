@@ -47,8 +47,9 @@ internal object MapProvider {
   fun getMapboxMap(
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
-    pixelRatio: Float
-  ) = MapboxMap(nativeMap, nativeObserver, pixelRatio)
+    pixelRatio: Float,
+    mapName: String
+  ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName)
 
   @OptIn(MapboxExperimental::class)
   fun getMapPluginRegistry(
