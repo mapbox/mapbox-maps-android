@@ -85,6 +85,7 @@ package com.mapbox.maps {
     method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void clearMaximumFps();
+    method public android.content.Context getContext();
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
     method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public Integer? getMaximumFps();
@@ -110,6 +111,7 @@ package com.mapbox.maps {
     method public void surfaceChanged(int width, int height);
     method public void surfaceCreated();
     method public void surfaceDestroyed();
+    property public final android.content.Context context;
     property public com.mapbox.maps.MapboxMap mapboxMap;
     property @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final Integer? maximumFps;
     property public final android.view.Surface surface;

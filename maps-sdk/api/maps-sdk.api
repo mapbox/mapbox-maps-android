@@ -82,6 +82,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public final fun clearMaximumFps ()V
+	public final fun getContext ()Landroid/content/Context;
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public final synthetic fun getMapboxMapDeprecated ()Lcom/mapbox/maps/MapboxMap;
 	public final fun getMaximumFps ()Ljava/lang/Integer;

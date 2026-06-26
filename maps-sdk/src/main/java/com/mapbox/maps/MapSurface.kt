@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
  */
 class MapSurface : MapPluginProviderDelegate, MapControllable {
 
-  private val context: Context
+  val context: Context
   private val mapController: MapController
   private val mapInitOptions: MapInitOptions
   private val renderer: MapboxSurfaceRenderer
