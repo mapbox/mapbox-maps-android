@@ -333,6 +333,16 @@
                 android:value="@string/category_styles" />
         </activity>
         <activity
+            android:name=".examples.style.RasterTileOverlayActivity"
+            android:description="@string/description_raster_tile_overlay"
+            android:exported="true"
+            android:label="@string/activity_raster_tile_overlay"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+        </activity>
+        <activity
             android:name=".examples.style.AnimatedImageSourceActivity"
             android:description="@string/description_animated_image_source"
             android:exported="true"

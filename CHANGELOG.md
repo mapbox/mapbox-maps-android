@@ -14,6 +14,9 @@ Mapbox welcomes participation and contributions from everyone.
     By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.
 * Support drawing view annotation collision boxes when `MapView.debugOptions` is set to `COLLISION`.
 
+## Bug fixes 🐞
+* [compose] Pass the identifier as an input to `rememberSaveable` in `remember*SourceState`, `remember*LightState`, and `rememberTerrainState` functions so that changing the identifier correctly recreates the saved state.
+
 # 11.25.0 June 11, 2026
 ## Breaking changes ⚠️
 * `MapView.setMaximumFps` and `MapSurface.setMaximumFps` are now annotated `@MainThread`. Callers must invoke them from the main thread; off-main callers will see a lint warning.
