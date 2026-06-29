@@ -101,21 +101,16 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     mapController.setScreenRefreshRate(MapView.DEFAULT_FPS)
     // Retrieve screen refresh rate off the main thread to prevent ANR
     mapController.lifecycleScope.launch {
-      safeSystemCallWithCallback(
-        fallback = MapView.DEFAULT_FPS,
-        logTag = TAG,
-        operation = {
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            context.display.refreshRate.toInt()
-          } else {
-            @Suppress("DEPRECATION")
-            (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
-              ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
-          }
+      val rate = safeBinderCall(fallback = MapView.DEFAULT_FPS, logTag = TAG) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+          context.display.refreshRate.toInt()
+        } else {
+          @Suppress("DEPRECATION")
+          (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager?)
+            ?.defaultDisplay?.refreshRate?.toInt() ?: MapView.DEFAULT_FPS
         }
-      ) { screenRefreshRate ->
-        mapController.setScreenRefreshRate(screenRefreshRate)
       }
+      mapController.setScreenRefreshRate(rate)
     }
 
     // Stop any previous display refresh rate monitor in case `surfaceCreated` is called twice

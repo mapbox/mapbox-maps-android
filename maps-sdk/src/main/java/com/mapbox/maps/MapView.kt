@@ -255,15 +255,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     mapController.setScreenRefreshRate(DEFAULT_FPS)
     // Retrieve screen refresh rate off the main thread to prevent ANR
     mapController.lifecycleScope.launch {
-      safeSystemCallWithCallback(
-        fallback = DEFAULT_FPS,
-        logTag = TAG,
-        operation = {
-          display?.refreshRate?.toInt() ?: DEFAULT_FPS
-        }
-      ) { screenRefreshRate ->
-        mapController.setScreenRefreshRate(screenRefreshRate)
+      val rate = safeBinderCall(fallback = DEFAULT_FPS, logTag = TAG) {
+        display?.refreshRate?.toInt() ?: DEFAULT_FPS
       }
+      mapController.setScreenRefreshRate(rate)
     }
 
     // Stop any previous display refresh rate monitor in case `onStart` is called twice

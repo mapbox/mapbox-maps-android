@@ -4,11 +4,12 @@ import android.content.Context
 import android.util.TypedValue
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.Cancelable
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeoutOrNull
 import java.lang.ref.WeakReference
 import kotlin.coroutines.Continuation
 
@@ -40,63 +41,30 @@ internal fun <T : Number> T.toDP(context: Context): T {
 }
 
 /**
- * Executes a potentially blocking system call off the main thread with timeout and error handling.
- * This utility helps prevent ANRs caused by blocking IPC calls to system services.
+ * Executes a potentially blocking system call off the main thread, preventing ANRs.
  *
- * Uses [Dispatchers.Default] as system calls are CPU-bound operations involving IPC to system services.
+ * The call runs on [dispatcher] (default [Dispatchers.IO]). Note: if the underlying
+ * operation is a blocking Binder IPC (e.g. [android.view.Display.getRefreshRate]), its
+ * duration cannot be reliably bounded — the native Binder layer ignores [Thread.interrupt],
+ * so the dispatcher thread may stay blocked until the system server replies. The main thread
+ * is never affected.
  *
- * @param timeoutMs Timeout in milliseconds for the operation (default: 5000ms)
- * @param fallback Fallback value to return if the operation fails or times out
- * @param logTag Tag for logging errors (default: "SystemCall")
- * @param dispatcher The dispatcher to use for the operation (default: Dispatchers.Default)
- * @param operation The blocking operation to execute
- * @return The result of the operation or the fallback value
+ * @param fallback Value returned if the operation throws.
+ * @param logTag Tag for error logging.
+ * @param dispatcher Dispatcher for the blocking operation (default: [Dispatchers.IO]).
+ * @param operation The blocking operation to execute.
+ * @return The result of [operation], or [fallback] if it throws.
  */
-internal suspend fun <T> safeSystemCall(
-  timeoutMs: Long = 5000L,
+internal suspend fun <T> safeBinderCall(
   fallback: T,
   logTag: String = "SystemCall",
-  dispatcher: CoroutineDispatcher = Dispatchers.Default,
-  operation: suspend () -> T
-): T {
-  return try {
-    withTimeoutOrNull(timeoutMs) {
-      withContext(dispatcher) {
-        operation()
-      }
-    } ?: run {
-      logW(logTag, "System call timed out after ${timeoutMs}ms, using fallback")
-      fallback
-    }
-  } catch (e: Exception) {
-    logE(logTag, "System call failed: ${e.message}, using fallback")
-    fallback
-  }
-}
-
-/**
- * Executes a potentially blocking system call off the main thread and posts the result back to the main thread.
- * This is useful for updating UI components after retrieving system information.
- *
- * @param timeoutMs Timeout in milliseconds for the operation (default: 5000ms)
- * @param fallback Fallback value to return if the operation fails or times out
- * @param logTag Tag for logging errors (default: "SystemCall")
- * @param dispatcher The dispatcher to use for the operation (default: Dispatchers.Default)
- * @param mainDispatcher The dispatcher to use for the callback (default: Dispatchers.Main)
- * @param operation The blocking operation to execute
- * @param onResult Callback to handle the result on the main thread
- */
-internal suspend fun <T> safeSystemCallWithCallback(
-  timeoutMs: Long = 5000L,
-  fallback: T,
-  logTag: String = "SystemCall",
-  dispatcher: CoroutineDispatcher = Dispatchers.Default,
-  mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+  dispatcher: CoroutineDispatcher = Dispatchers.IO,
   operation: suspend () -> T,
-  onResult: (T) -> Unit
-) {
-  val result = safeSystemCall(timeoutMs, fallback, logTag, dispatcher, operation)
-  withContext(mainDispatcher) {
-    onResult(result)
-  }
+): T = try {
+  withContext(dispatcher + CoroutineName("safeBinderCall")) { operation() }
+} catch (e: CancellationException) {
+  throw e
+} catch (e: Exception) {
+  logE(logTag, "System call failed: ${e.message}, using fallback")
+  fallback
 }
