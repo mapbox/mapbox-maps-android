@@ -17,6 +17,17 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [compose] Pass the identifier as an input to `rememberSaveable` in `remember*SourceState`, `remember*LightState`, and `rememberTerrainState` functions so that changing the identifier correctly recreates the saved state.
 
+# 11.21.8 June 25, 2026
+## Features ✨ and improvements 🏁
+* Reduce per-frame rendering overhead when style properties are updated frequently.
+
+## Bug fixes 🐞
+* Fix a crash caused by dereferencing a null index buffer when drawing symbols.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.21.8](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.8), common to [v24.21.8](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.21.8).
+
 # 11.25.0 June 11, 2026
 ## Breaking changes ⚠️
 * `MapView.setMaximumFps` and `MapSurface.setMaximumFps` are now annotated `@MainThread`. Callers must invoke them from the main thread; off-main callers will see a lint warning.
