@@ -930,7 +930,7 @@ public final class com/mapbox/maps/viewannotation/ViewAnnotationUpdateMode$Compa
 }
 
 public final class com/mapbox/maps/viewannotation/ViewCollisionParticipationKt {
-	public static final fun getMbxCollisionBox (Landroid/view/View;)Z
-	public static final fun setMbxCollisionBox (Landroid/view/View;Z)V
+	public static final fun getMbxViewAnnotationCollisionBox (Landroid/view/View;)Z
+	public static final fun setMbxViewAnnotationCollisionBox (Landroid/view/View;Z)V
 }
 

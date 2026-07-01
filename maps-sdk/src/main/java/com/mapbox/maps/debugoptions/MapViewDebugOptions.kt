@@ -32,7 +32,7 @@ data class MapViewDebugOptions internal constructor(internal val name: String) {
      * diagnose collision and label placement issues.
      *
      * Also draws a red frame around each view annotation subview marked via
-     * [com.mapbox.maps.viewannotation.mbxCollisionBox], so the rectangles
+     * [com.mapbox.maps.viewannotation.mbxViewAnnotationCollisionBox], so the rectangles
      * participating in view-annotation collision are visible on screen.
      */
     @JvmField

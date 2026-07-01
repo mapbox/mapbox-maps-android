@@ -14,7 +14,7 @@ import com.mapbox.maps.R
  * on the enclosing annotation.
  */
 @MapboxExperimental
-var View.mbxCollisionBox: Boolean
+var View.mbxViewAnnotationCollisionBox: Boolean
   get() = getTag(R.id.collisionBox) as? Boolean ?: false
   set(value) {
       setTag(R.id.collisionBox, value)
