@@ -15,13 +15,23 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce new experimental `ViewAnnotationOptions.enableSymbolLayerCollision` option which allows view annotations to hide underlying map symbols to avoid visual clutter.
     By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.
 * Support drawing view annotation collision boxes when `MapView.debugOptions` is set to `COLLISION`.
+* Add `TileStore` option to configure the ambient cache quota, allowing control over how much disk space is used for ambient cached tile data.
 
 ## Bug fixes 🐞
 * [compose] Pass the identifier as an input to `rememberSaveable` in `remember*SourceState`, `remember*LightState`, and `rememberTerrainState` functions so that changing the identifier correctly recreates the saved state.
+* Fix labels missing on some road segments due to multilinestring geometry parts being dropped during label merging.
+* Fix View Annotations sometimes failing to appear on short line segments due to collision detection over-rejection.
+* Fix worldview filter not applying correctly after being changed at runtime.
+* Fix zoom interpolation expressions not working correctly when symbol layer appearances define different zoom stops for the same property.
+* Fix icon cross-fade animation not rendering correctly for icons redefined across appearances.
+* Fix symbols with elevation or z-offset not displaying when the map is both rotated and pitched.
+* Fix inaccurate coordinate conversion when querying geographic coordinates over terrain.
+* Fix `SecurityException` crash on Android 12 (API 31–32) when the Maps SDK registers location broadcast receivers.
+* Fix a potential crash caused by a use-after-free when evicting decompressed tile data from memory.
+* Internal fixes and performance improvements.
 
 ## Dependencies
 * Update gl-native to [v11.26.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0-rc.1), common to [v24.26.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0-rc.1).
-
 
 # 11.21.8 June 25, 2026
 ## Features ✨ and improvements 🏁
