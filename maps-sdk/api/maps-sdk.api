@@ -82,6 +82,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public final fun clearMaximumFps ()V
+	public final fun createPlugin (Lcom/mapbox/maps/plugin/Plugin;)V
 	public final fun getContext ()Landroid/content/Context;
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public final synthetic fun getMapboxMapDeprecated ()Lcom/mapbox/maps/MapboxMap;
@@ -98,6 +99,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
 	public final fun removeOnMaximumFpsChangedListener (Lcom/mapbox/maps/renderer/OnMaximumFpsChangedListener;)V
+	public final fun removePlugin (Ljava/lang/String;)V
 	public fun removeRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V

@@ -85,6 +85,7 @@ package com.mapbox.maps {
     method public void addRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void clearMaximumFps();
+    method public void createPlugin(com.mapbox.maps.plugin.Plugin plugin);
     method public android.content.Context getContext();
     method public com.mapbox.maps.MapboxMap getMapboxMap();
     method @Deprecated @kotlin.jvm.JvmSynthetic public com.mapbox.maps.MapboxMap! getMapboxMap();
@@ -101,6 +102,7 @@ package com.mapbox.maps {
     method public boolean onTouchEvent(android.view.MotionEvent event);
     method public void queueEvent(Runnable event, boolean needRender);
     method @MainThread @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public void removeOnMaximumFpsChangedListener(com.mapbox.maps.renderer.OnMaximumFpsChangedListener listener);
+    method public void removePlugin(String id);
     method public void removeRendererSetupErrorListener(com.mapbox.maps.renderer.RendererSetupErrorListener rendererSetupErrorListener);
     method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method @MainThread public void setMaximumFps(int fps);

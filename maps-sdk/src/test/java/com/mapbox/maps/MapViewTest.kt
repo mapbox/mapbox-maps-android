@@ -219,6 +219,12 @@ class MapViewTest {
   }
 
   @Test
+  fun removePlugin() {
+    mapView.removePlugin("id")
+    verify { mapController.removePlugin("id") }
+  }
+
+  @Test
   fun getPlugin() {
     every { mapController.getPlugin<MapPlugin>(any()) } returns mockk()
     mapView.getPlugin<MapPlugin>("id")

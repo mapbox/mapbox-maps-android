@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
 import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
@@ -262,6 +263,20 @@ class MapSurfaceTest {
     val listener = RendererSetupErrorListener { }
     mapSurface.removeRendererSetupErrorListener(listener)
     verifyOnce { mapController.removeRendererSetupErrorListener(listener) }
+  }
+
+  @Test
+  fun createPlugin() {
+    every { mapController.createPlugin(any(), any()) } returns mockk()
+    val plugin = Plugin.Custom("id", mockk())
+    mapSurface.createPlugin(plugin)
+    verify { mapController.createPlugin(null, plugin) }
+  }
+
+  @Test
+  fun removePlugin() {
+    mapSurface.removePlugin("id")
+    verify { mapController.removePlugin("id") }
   }
 
   @Test

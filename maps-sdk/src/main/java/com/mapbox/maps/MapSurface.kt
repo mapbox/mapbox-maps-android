@@ -11,6 +11,7 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.*
 import com.mapbox.maps.renderer.widget.Widget
@@ -346,7 +347,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * Add an instance of [RendererSetupErrorListener].
    *
-   * Please note that errors could be already reported from the renderer during [MapView] creation
+   * Please note that errors could be already reported from the renderer during [MapSurface] creation
    * before this method will be called - all accumulated renderer errors will be delivered.
    */
   override fun addRendererSetupErrorListener(rendererSetupErrorListener: RendererSetupErrorListener) {
@@ -360,6 +361,25 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     mapController.removeRendererSetupErrorListener(rendererSetupErrorListener)
   }
 
+  /**
+   * Create a new plugin instance that will be added to the map.
+   * Only one instance of [Plugin.instance] with given [Plugin.id] can exist for given [MapSurface].
+   *
+   * @param plugin instance of [Plugin] that will be added to the [MapSurface].
+   */
+  fun createPlugin(
+    plugin: Plugin
+  ) = mapController.createPlugin(null, plugin)
+
+  /**
+   * Remove the plugin instance that will be removed from the map.
+   *
+   * Removing the plugin from [MapSurface] will result in [MapPlugin.cleanup] being called and existing
+   * events subscription cancelled.
+   *
+   * @param id the id of the plugin to be removed
+   */
+  fun removePlugin(id: String) = mapController.removePlugin(id)
   /**
    * Get the plugin instance.
    *
