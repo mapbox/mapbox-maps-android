@@ -55,7 +55,7 @@
                 android:value="@string/category_basic" />
         </activity>
         <activity
-            android:name=".examples.basic.AccessibilityScaleActivity"
+            android:name=".examples.lab.AccessibilityScaleActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:description="@string/description_accessibility_scale"
             android:exported="true"
@@ -462,6 +462,16 @@
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_styles" />
+        </activity>
+        <activity
+            android:name=".examples.lab.LineCutoutActivity"
+            android:description="@string/description_line_cutout"
+            android:exported="true"
+            android:label="@string/activity_line_cutout"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_lab" />
         </activity>
         <activity
             android:name=".examples.model.Interactive3DModelFeatureStateActivity"

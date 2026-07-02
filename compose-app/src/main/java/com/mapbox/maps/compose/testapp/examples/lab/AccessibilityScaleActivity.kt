@@ -1,4 +1,4 @@
-package com.mapbox.maps.compose.testapp.examples.basic
+package com.mapbox.maps.compose.testapp.examples.lab
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
