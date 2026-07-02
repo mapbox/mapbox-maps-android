@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.doOnEnd
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -187,6 +188,7 @@ internal class CompassViewPlugin(
    * Called whenever camera position changes.
    * Could be invoked from any thread when map starts rendering.
    */
+  @Suppress("OVERRIDE_DEPRECATION")
   override fun onCameraMove(
       center: Point,
       zoom: Double,
@@ -194,7 +196,11 @@ internal class CompassViewPlugin(
       bearing: Double,
       padding: EdgeInsets
   ) {
-    update(bearing)
+    // NOP
+  }
+
+  override fun onCameraMove(cameraState: CameraState) {
+    update(cameraState.bearing)
   }
 
   /**

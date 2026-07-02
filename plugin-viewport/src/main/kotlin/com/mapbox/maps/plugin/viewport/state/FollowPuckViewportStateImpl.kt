@@ -106,6 +106,7 @@ internal class FollowPuckViewportStateImpl(
     zoom(options.zoom)
     pitch(options.pitch)
     padding(options.padding)
+    verticalFov(options.verticalFov)
   }.build()
 
   private fun addIndicatorListenerIfNeeded() {

@@ -2,7 +2,9 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.viewport.DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV
 import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import java.lang.IllegalArgumentException
@@ -67,7 +69,16 @@ class OverviewViewportStateOptions private constructor(
    *
    * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
    */
-  val animationDurationMs: Long
+  val animationDurationMs: Long,
+  /**
+   * The vertical fov that [OverviewViewportState] should use when calculating its camera.
+   *
+   * If null, vertical fov will not be modified by the [OverviewViewportState].
+   *
+   * Defaults to [DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV] degrees.
+   */
+  @MapboxExperimental
+  val verticalFov: Double?
 ) {
   /**
    * Returns a builder that created the [OverviewViewportStateOptions]
@@ -75,7 +86,7 @@ class OverviewViewportStateOptions private constructor(
   fun toBuilder(): Builder =
     Builder().geometry(geometry).padding(padding).geometryPadding(geometryPadding)
       .bearing(bearing).pitch(pitch).maxZoom(maxZoom).offset(offset)
-      .animationDurationMs(animationDurationMs)
+      .animationDurationMs(animationDurationMs).verticalFov(verticalFov)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -88,19 +99,20 @@ class OverviewViewportStateOptions private constructor(
     Objects.equals(pitch, other.pitch) &&
     Objects.equals(maxZoom, other.maxZoom) &&
     offset == other.offset &&
-    animationDurationMs == other.animationDurationMs
+    animationDurationMs == other.animationDurationMs &&
+    Objects.equals(verticalFov, other.verticalFov)
 
   /**
    * Returns a hash code value for the object.
    */
   override fun hashCode() =
-    Objects.hash(geometry, padding, geometryPadding, bearing, pitch, maxZoom, offset, animationDurationMs)
+    Objects.hash(geometry, padding, geometryPadding, bearing, pitch, maxZoom, offset, animationDurationMs, verticalFov)
 
   /**
    * Returns a String for the object.
    */
   override fun toString() =
-    "OverviewViewportStateOptions(geometry=$geometry, padding=$padding, geometryPadding=$geometryPadding, bearing=$bearing, pitch=$pitch, maxZoom=$maxZoom, offset=$offset, animationDurationMs=$animationDurationMs)"
+    "OverviewViewportStateOptions(geometry=$geometry, padding=$padding, geometryPadding=$geometryPadding, bearing=$bearing, pitch=$pitch, maxZoom=$maxZoom, offset=$offset, animationDurationMs=$animationDurationMs, verticalFov=$verticalFov)"
 
   /**
    * Builder for [OverviewViewportStateOptions]
@@ -114,6 +126,7 @@ class OverviewViewportStateOptions private constructor(
     private var maxZoom: Double? = null
     private var offset: ScreenCoordinate = ScreenCoordinate(0.0, 0.0)
     private var animationDurationMs: Long = DEFAULT_STATE_ANIMATION_DURATION_MS
+    private var verticalFov: Double? = DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV
 
     /**
      * The geometry that the [OverviewViewportState] should use when calculating its camera.
@@ -196,6 +209,18 @@ class OverviewViewportStateOptions private constructor(
     }
 
     /**
+     * The vertical fov that [OverviewViewportState] should use when calculating its camera.
+     *
+     * If null, vertical fov will not be modified by the [OverviewViewportState].
+     *
+     * Defaults to [DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV] degrees.
+     */
+    @MapboxExperimental
+    fun verticalFov(verticalFov: Double?): Builder = apply {
+      this.verticalFov = verticalFov
+    }
+
+    /**
      * Builds [OverviewViewportStateOptions]
      */
     fun build(): OverviewViewportStateOptions = geometry?.let {
@@ -207,7 +232,8 @@ class OverviewViewportStateOptions private constructor(
         pitch = pitch,
         maxZoom = maxZoom,
         offset = offset,
-        animationDurationMs = animationDurationMs
+        animationDurationMs = animationDurationMs,
+        verticalFov = verticalFov
       )
     } ?: throw IllegalArgumentException("Geometry is required for OverviewViewportStateOptions and shouldn't be null")
   }

@@ -18,6 +18,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType.BEARING
 import com.mapbox.maps.plugin.animation.CameraAnimatorType.CENTER
 import com.mapbox.maps.plugin.animation.CameraAnimatorType.PADDING
 import com.mapbox.maps.plugin.animation.CameraAnimatorType.PITCH
+import com.mapbox.maps.plugin.animation.CameraAnimatorType.VERTICAL_FOV
 import com.mapbox.maps.plugin.animation.CameraAnimatorType.ZOOM
 import com.mapbox.maps.threading.AnimationThreadController.postOnAnimatorThread
 import java.util.concurrent.CopyOnWriteArraySet
@@ -144,6 +145,7 @@ abstract class CameraAnimator<out T>(
       PADDING -> cameraState().padding
       BEARING -> cameraState().bearing
       PITCH -> cameraState().pitch
+      VERTICAL_FOV -> cameraState().verticalFov
     }
   }
 

@@ -2,7 +2,9 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import java.util.Objects
@@ -45,11 +47,19 @@ class FollowPuckViewportStateOptions private constructor(
    * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
    */
   val pitch: Double?,
+    /**
+   * The value to use for setting [CameraOptions.verticalFov]. If null, vertical fov will not be modified by
+   * the [FollowPuckViewportState].
+   *
+   * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV] degrees.
+   */
+  @MapboxExperimental
+  val verticalFov: Double?,
 ) {
   /**
    * Returns a builder that created the [FollowPuckViewportStateOptions]
    */
-  fun toBuilder(): Builder = Builder().padding(padding).zoom(zoom).bearing(bearing).pitch(pitch)
+  fun toBuilder(): Builder = Builder().padding(padding).zoom(zoom).bearing(bearing).pitch(pitch).verticalFov(verticalFov)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -58,18 +68,19 @@ class FollowPuckViewportStateOptions private constructor(
     padding == other.padding &&
     Objects.equals(zoom, other.zoom) &&
     bearing == other.bearing &&
-    Objects.equals(pitch, other.pitch)
+    Objects.equals(pitch, other.pitch) &&
+    Objects.equals(verticalFov, other.verticalFov)
 
   /**
    * Returns a hash code value for the object.
    */
-  override fun hashCode() = Objects.hash(padding, zoom, bearing, pitch)
+  override fun hashCode() = Objects.hash(padding, zoom, bearing, pitch, verticalFov)
 
   /**
    * Returns a String for the object.
    */
   override fun toString() =
-    "FollowPuckViewportStateOptions(padding=$padding, zoom=$zoom, bearing=$bearing, pitch=$pitch)"
+    "FollowPuckViewportStateOptions(padding=$padding, zoom=$zoom, bearing=$bearing, pitch=$pitch, verticalFov=$verticalFov)"
 
   /**
    * Builder for [FollowPuckViewportStateOptions]
@@ -80,6 +91,7 @@ class FollowPuckViewportStateOptions private constructor(
     private var bearing: FollowPuckViewportStateBearing? =
       FollowPuckViewportStateBearing.SyncWithLocationPuck
     private var pitch: Double? = DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+    private var verticalFov: Double? = DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV
 
     /**
      * The value to use for setting [CameraOptions.padding]. If null, padding will not be modified by
@@ -122,6 +134,17 @@ class FollowPuckViewportStateOptions private constructor(
     }
 
     /**
+     * The value to use for setting [CameraOptions.verticalFov]. If null, vertical fov will not be modified by
+     * the [FollowPuckViewportState].
+     *
+     * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV] degrees.
+     */
+    @MapboxExperimental
+    fun verticalFov(verticalFov: Double?): Builder = apply {
+      this.verticalFov = verticalFov
+    }
+
+    /**
      * Builds [FollowPuckViewportStateOptions]
      */
     fun build(): FollowPuckViewportStateOptions =
@@ -130,6 +153,7 @@ class FollowPuckViewportStateOptions private constructor(
         zoom,
         bearing,
         pitch,
+        verticalFov,
       )
   }
 }

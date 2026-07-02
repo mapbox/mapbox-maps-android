@@ -191,13 +191,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
 
   fun onCameraMove(cameraState: CameraState) {
     cameraPlugins.forEach {
-      it.onCameraMove(
-        cameraState.center,
-        cameraState.zoom,
-        cameraState.pitch,
-        cameraState.bearing,
-        cameraState.padding
-      )
+      it.onCameraMove(cameraState)
     }
   }
 

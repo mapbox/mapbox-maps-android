@@ -13,6 +13,7 @@ import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraVerticalFovAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
 import io.mockk.every
 import io.mockk.mockk
@@ -37,6 +38,8 @@ class CameraAnimationsExtTest {
       every { bearing } returns 0.0
       every { pitch } returns 0.0
       every { padding } returns EdgeInsets(0.0, 0.0, 0.0, 0.0)
+
+      every { verticalFov } returns 5.0
     }
   }
 
@@ -292,7 +295,14 @@ class CameraAnimationsExtTest {
       every { getAnimatedValueAt(0.5f, mockCameraState) } returns EdgeInsets(5.0, 5.0, 5.0, 5.0)
     }
 
-    val animators = listOf(centerAnimator, zoomAnimator, bearingAnimator, pitchAnimator, anchorAnimator, paddingAnimator)
+    val verticalFovAnimator = mockk<CameraVerticalFovAnimator>() {
+      every { duration } returns 1000L
+      every { totalDuration } returns 1000L
+      every { startDelay } returns 0L
+      every { getAnimatedValueAt(0.5f, mockCameraState) } returns 20.0
+    }
+
+    val animators = listOf(centerAnimator, zoomAnimator, bearingAnimator, pitchAnimator, anchorAnimator, paddingAnimator, verticalFovAnimator)
     val result = animators.calculateCameraAnimationHint(listOf(0.5f), mockCameraState)
 
     assertEquals(1, result?.stages?.size)
@@ -303,6 +313,7 @@ class CameraAnimationsExtTest {
     assertEquals(15.0, result?.stages?.get(0)?.camera?.pitch ?: -1.0, 0.001)
     assertEquals(ScreenCoordinate(100.0, 100.0), result?.stages?.get(0)?.camera?.anchor)
     assertEquals(EdgeInsets(5.0, 5.0, 5.0, 5.0), result?.stages?.get(0)?.camera?.padding)
+    assertEquals(20.0, result?.stages?.get(0)?.camera?.verticalFov ?: -1.0, 0.001)
   }
 
   @Test

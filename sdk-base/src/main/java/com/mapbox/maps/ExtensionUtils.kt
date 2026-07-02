@@ -36,6 +36,7 @@ fun CameraState.toCameraOptions(anchor: ScreenCoordinate? = null): CameraOptions
       .zoom(zoom)
       .pitch(pitch)
       .bearing(bearing)
+      .verticalFov(verticalFov)
       .build()
   } else {
     CameraOptions.Builder()
@@ -44,5 +45,6 @@ fun CameraState.toCameraOptions(anchor: ScreenCoordinate? = null): CameraOptions
       .zoom(zoom)
       .pitch(pitch)
       .bearing(bearing)
+      .verticalFov(verticalFov)
       .build()
   }

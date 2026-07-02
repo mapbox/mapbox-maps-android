@@ -6,6 +6,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.MapPlugin
 
@@ -263,6 +264,14 @@ interface CameraAnimationsPlugin : MapPlugin {
   fun addCameraZoomChangeListener(listener: CameraAnimatorChangeListener<Double>)
 
   /**
+   * Add camera vertical fov change listener
+   *
+   * @param listener to be invoked when camera vertical fov value changes
+   */
+  @MapboxExperimental
+  fun addCameraVerticalFovChangeListener(listener: CameraAnimatorChangeListener<Double>) { /* no op */ }
+
+  /**
    * Remove camera zoom change listener
    *
    * @param listener to be invoked when camera zoom value changes
@@ -324,6 +333,14 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param listener to be invoked when camera pitch value changes
    */
   fun removeCameraPitchChangeListener(listener: CameraAnimatorChangeListener<Double>)
+
+  /**
+   * Remove camera vertical fov change listener
+   *
+   * @param listener to be invoked when camera vertical fov value changes
+   */
+  @MapboxExperimental
+  fun removeCameraVerticalFovChangeListener(listener: CameraAnimatorChangeListener<Double>) { /* no op */ }
 
   /**
    * Add given [CameraAnimationsLifecycleListener] for capturing all events about animators lifecycle.

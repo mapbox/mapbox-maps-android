@@ -631,6 +631,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.camera.PinchToChangeFovActivity"
+            android:description="@string/description_pinch_to_change_fov"
+            android:exported="true"
+            android:label="@string/activity_pinch_to_change_fov">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_camera" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.markersandcallouts.MultipleGeometriesActivity"
             android:description="@string/description_dds_multiple_geometries"
             android:exported="true"

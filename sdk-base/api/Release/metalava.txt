@@ -1374,7 +1374,8 @@ package com.mapbox.maps.plugin {
   }
 
   public fun interface MapCameraPlugin extends com.mapbox.maps.plugin.MapPlugin {
-    method public void onCameraMove(com.mapbox.geojson.Point center, double zoom, double pitch, double bearing, com.mapbox.maps.EdgeInsets padding);
+    method @Deprecated public void onCameraMove(com.mapbox.geojson.Point center, double zoom, double pitch, double bearing, com.mapbox.maps.EdgeInsets padding);
+    method public default void onCameraMove(com.mapbox.maps.CameraState cameraState);
   }
 
   public interface MapPlugin {
@@ -1488,6 +1489,7 @@ package com.mapbox.maps.plugin.animation {
     method public void addCameraCenterChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<com.mapbox.geojson.Point> listener);
     method public void addCameraPaddingChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<com.mapbox.maps.EdgeInsets> listener);
     method public void addCameraPitchChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
+    method @com.mapbox.maps.MapboxExperimental public default void addCameraVerticalFovChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public void addCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public double calculateScaleBy(double amount, double currentZoom);
     method public void cancelAllAnimators(java.util.List<java.lang.String> exceptOwnerList = emptyList());
@@ -1513,6 +1515,7 @@ package com.mapbox.maps.plugin.animation {
     method public void removeCameraCenterChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<com.mapbox.geojson.Point> listener);
     method public void removeCameraPaddingChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<com.mapbox.maps.EdgeInsets> listener);
     method public void removeCameraPitchChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
+    method @com.mapbox.maps.MapboxExperimental public default void removeCameraVerticalFovChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public void removeCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public com.mapbox.common.Cancelable rotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
     method public com.mapbox.common.Cancelable scaleBy(double amount, com.mapbox.maps.ScreenCoordinate? screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null, android.animation.Animator.AnimatorListener? animatorListener = null);
@@ -1560,6 +1563,7 @@ package com.mapbox.maps.plugin.animation {
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType CENTER;
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType PADDING;
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType PITCH;
+    enum_constant @com.mapbox.maps.MapboxExperimental public static final com.mapbox.maps.plugin.animation.CameraAnimatorType VERTICAL_FOV;
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType ZOOM;
   }
 
@@ -3555,7 +3559,9 @@ package com.mapbox.maps.plugin.viewport {
 
   public final class ViewportConstantsKt {
     field public static final double DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH = 45.0;
+    field @com.mapbox.maps.MapboxExperimental public static final double DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV = 36.87;
     field public static final double DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM = 16.35;
+    field @com.mapbox.maps.MapboxExperimental public static final double DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV = 36.87;
     field public static final long DEFAULT_STATE_ANIMATION_DURATION_MS = 1000L; // 0x3e8L
     field public static final long DEFAULT_TRANSITION_MAX_DURATION_MS = 3500L; // 0xdacL
   }
@@ -3637,11 +3643,13 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? getBearing();
     method public com.mapbox.maps.EdgeInsets? getPadding();
     method public Double? getPitch();
+    method public Double? getVerticalFov();
     method public Double? getZoom();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder toBuilder();
     property public final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? bearing;
     property public final com.mapbox.maps.EdgeInsets? padding;
     property public final Double? pitch;
+    property public final Double? verticalFov;
     property public final Double? zoom;
   }
 
@@ -3651,6 +3659,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions build();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets? padding);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder pitch(Double? pitch);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder verticalFov(Double? verticalFov);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder zoom(Double? zoom);
   }
 
@@ -3663,6 +3672,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.ScreenCoordinate getOffset();
     method public com.mapbox.maps.EdgeInsets? getPadding();
     method public Double? getPitch();
+    method public Double? getVerticalFov();
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder toBuilder();
     property public final long animationDurationMs;
     property public final Double? bearing;
@@ -3672,6 +3682,7 @@ package com.mapbox.maps.plugin.viewport.data {
     property public final com.mapbox.maps.ScreenCoordinate offset;
     property public final com.mapbox.maps.EdgeInsets? padding;
     property public final Double? pitch;
+    property public final Double? verticalFov;
   }
 
   public static final class OverviewViewportStateOptions.Builder {
@@ -3685,6 +3696,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder offset(com.mapbox.maps.ScreenCoordinate offset);
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets? padding);
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder pitch(Double? pitch);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder verticalFov(Double? verticalFov);
   }
 
   public final class ViewportOptions {

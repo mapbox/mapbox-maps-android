@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
+import com.mapbox.maps.plugin.viewport.DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import io.mockk.every
@@ -90,7 +91,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -122,7 +123,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -154,7 +155,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -189,7 +190,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -211,7 +212,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(newGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -241,7 +242,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(initialGeometry),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -260,7 +261,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(Point.fromLngLat(1.0, 1.0)),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -297,7 +298,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(Point.fromLngLat(1.0, 1.0)),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),
@@ -344,7 +345,7 @@ class OverviewViewportStateImplTest {
       mapCameraDelegate.cameraForCoordinates(
         coordinates = listOf(Point.fromLngLat(1.0, 1.0)),
         camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
-          .bearing(0.0).pitch(0.0).build(),
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
         coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
         maxZoom = null,
         offset = ScreenCoordinate(0.0, 0.0),

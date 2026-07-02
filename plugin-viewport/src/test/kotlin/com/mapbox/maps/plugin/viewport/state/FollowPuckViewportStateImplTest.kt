@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListen
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.LOCATION_COMPONENT_UTILS
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
@@ -100,6 +101,7 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -112,6 +114,7 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -166,6 +169,7 @@ class FollowPuckViewportStateImplTest {
           bearing(constantBearing)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -219,6 +223,7 @@ class FollowPuckViewportStateImplTest {
           bearing(null)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -272,6 +277,7 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -285,6 +291,7 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -325,6 +332,7 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }
@@ -339,6 +347,7 @@ class FollowPuckViewportStateImplTest {
           center(testCenter)
           pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          verticalFov(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV)
         }
       )
     }

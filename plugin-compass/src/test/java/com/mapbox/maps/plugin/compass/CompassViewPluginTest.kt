@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.plugin.Plugin
@@ -122,13 +123,7 @@ class CompassViewPluginTest {
   fun resetFadeCompassViewWhenFacingNorth_false() {
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0.33f
-    compassPlugin.onCameraMove(
-        zeroPoint,
-        0.0,
-        0.0,
-        -0.33,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -0.33, 0.0))
     compassPlugin.fadeWhenFacingNorth = false
     verify { compassView.setCompassAlpha(1.0f) }
     verify { compassView.isCompassVisible = true }
@@ -140,13 +135,7 @@ class CompassViewPluginTest {
     compassPlugin.fadeWhenFacingNorth = false
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0.33f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -0.33,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -0.33, 0.0))
     compassPlugin.fadeWhenFacingNorth = true
     verify { fadeAnimator.start() }
   }
@@ -299,13 +288,7 @@ class CompassViewPluginTest {
   fun onCameraMove() {
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 15f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -15.0,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -15.0, 0.0))
     verify { compassView.compassRotation = -(-15.0).toFloat() }
     verify { fadeAnimator.cancel() }
     verify { compassView.setCompassAlpha(1.0f) }
@@ -315,13 +298,7 @@ class CompassViewPluginTest {
   fun onCameraMove_disabled() {
     every { compassView.isCompassEnabled } returns false
     every { compassView.compassRotation } returns 15f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -15.0,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -15.0, 0.0))
     verify { compassView.compassRotation = -(-15.0).toFloat() }
     verify(exactly = 0) { fadeAnimator.cancel() }
     verify(exactly = 0) { compassView.setCompassAlpha(1.0f) }
@@ -331,29 +308,11 @@ class CompassViewPluginTest {
   fun onCameraMove_north_hide() {
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 15f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -15.0,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -15.0, 0.0))
     every { compassView.compassRotation } returns 0.33f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -0.33,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -0.33, 0.0))
     every { compassView.compassRotation } returns 0.23f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -0.23,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -0.23, 0.0))
     verify(exactly = 1) { fadeAnimator.start() }
   }
 
@@ -362,21 +321,9 @@ class CompassViewPluginTest {
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 15f
     compassPlugin.fadeWhenFacingNorth = false
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -15.0,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -15.0, 0.0))
     every { compassView.compassRotation } returns 0.23f
-    compassPlugin.onCameraMove(
-      zeroPoint,
-        0.0,
-        0.0,
-        -0.23,
-        padding
-    )
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, -0.23, 0.0))
     verify(exactly = 0) { fadeAnimator.start() }
   }
 
@@ -423,7 +370,7 @@ class CompassViewPluginTest {
   @Test
   fun onCompassDisabledRotateMapEnabled() {
     compassPlugin.enabled = false
-    compassPlugin.onCameraMove(zeroPoint, 0.0, 0.0, 40.0, padding)
+    compassPlugin.onCameraMove(CameraState(zeroPoint, padding, 0.0, 40.0, 0.0))
     every { compassView.compassRotation } returns -40.0f
     compassPlugin.enabled = true
     verify { compassView.isCompassVisible = true }

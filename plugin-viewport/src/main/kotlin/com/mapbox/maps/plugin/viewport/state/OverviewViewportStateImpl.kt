@@ -86,6 +86,7 @@ internal class OverviewViewportStateImpl(
         padding(options.padding)
         bearing(options.bearing)
         pitch(options.pitch)
+        verticalFov(options.verticalFov)
       },
       coordinatesPadding = options.geometryPadding,
       maxZoom = options.maxZoom,

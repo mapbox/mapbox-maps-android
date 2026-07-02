@@ -1395,11 +1395,13 @@ public final class com/mapbox/maps/plugin/LocationPuck3D$Creator : android/os/Pa
 
 public abstract interface class com/mapbox/maps/plugin/MapCameraPlugin : com/mapbox/maps/plugin/MapPlugin {
 	public abstract fun onCameraMove (Lcom/mapbox/geojson/Point;DDDLcom/mapbox/maps/EdgeInsets;)V
+	public abstract fun onCameraMove (Lcom/mapbox/maps/CameraState;)V
 }
 
 public final class com/mapbox/maps/plugin/MapCameraPlugin$DefaultImpls {
 	public static fun cleanup (Lcom/mapbox/maps/plugin/MapCameraPlugin;)V
 	public static fun initialize (Lcom/mapbox/maps/plugin/MapCameraPlugin;)V
+	public static fun onCameraMove (Lcom/mapbox/maps/plugin/MapCameraPlugin;Lcom/mapbox/maps/CameraState;)V
 	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/MapCameraPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
 }
 
@@ -1534,6 +1536,7 @@ public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimation
 	public abstract fun addCameraCenterChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun addCameraPaddingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun addCameraPitchChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun addCameraVerticalFovChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun addCameraZoomChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun calculateScaleBy (DD)D
 	public abstract fun cancelAllAnimators (Ljava/util/List;)V
@@ -1559,6 +1562,7 @@ public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimation
 	public abstract fun removeCameraCenterChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun removeCameraPaddingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun removeCameraPitchChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun removeCameraVerticalFovChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun removeCameraZoomChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public abstract fun rotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
 	public abstract fun scaleBy (DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/common/Cancelable;
@@ -1568,6 +1572,7 @@ public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimation
 }
 
 public final class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin$DefaultImpls {
+	public static fun addCameraVerticalFovChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public static synthetic fun cancelAllAnimators$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Ljava/util/List;ILjava/lang/Object;)V
 	public static fun cleanup (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;)V
 	public static synthetic fun createAnchorAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
@@ -1584,6 +1589,7 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin$Defau
 	public static synthetic fun moveBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
 	public static synthetic fun pitchBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
+	public static fun removeCameraVerticalFovChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
 	public static synthetic fun rotateBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun scaleBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;Landroid/animation/Animator$AnimatorListener;ILjava/lang/Object;)Lcom/mapbox/common/Cancelable;
 	public static synthetic fun unregisterAnimators$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;[Landroid/animation/ValueAnimator;ZILjava/lang/Object;)V
@@ -1626,6 +1632,7 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimatorType : java/la
 	public static final field CENTER Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field PADDING Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field PITCH Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field VERTICAL_FOV Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field ZOOM Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static fun values ()[Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
@@ -2122,6 +2129,7 @@ public abstract interface class com/mapbox/maps/plugin/compass/CompassPlugin : c
 public final class com/mapbox/maps/plugin/compass/CompassPlugin$DefaultImpls {
 	public static fun cleanup (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
 	public static fun initialize (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
+	public static fun onCameraMove (Lcom/mapbox/maps/plugin/compass/CompassPlugin;Lcom/mapbox/maps/CameraState;)V
 	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/compass/CompassPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
 	public static fun onPluginView (Lcom/mapbox/maps/plugin/compass/CompassPlugin;Landroid/view/View;)V
 	public static fun onStart (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
@@ -3514,7 +3522,9 @@ public abstract interface class com/mapbox/maps/plugin/viewport/CompletionListen
 
 public final class com/mapbox/maps/plugin/viewport/ViewportConstantsKt {
 	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH D
+	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_VERTICAL_FOV D
 	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM D
+	public static final field DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV D
 	public static final field DEFAULT_STATE_ANIMATION_DURATION_MS J
 	public static final field DEFAULT_TRANSITION_MAX_DURATION_MS J
 }
@@ -3607,11 +3617,12 @@ public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateB
 }
 
 public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions {
-	public synthetic fun <init> (Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;Ljava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBearing ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;
 	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getPitch ()Ljava/lang/Double;
+	public final fun getVerticalFov ()Ljava/lang/Double;
 	public final fun getZoom ()Ljava/lang/Double;
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
@@ -3624,11 +3635,12 @@ public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateO
 	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;
 	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
 	public final fun pitch (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun verticalFov (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
 	public final fun zoom (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
 }
 
 public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions {
-	public synthetic fun <init> (Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Lcom/mapbox/maps/ScreenCoordinate;JLjava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAnimationDurationMs ()J
 	public final fun getBearing ()Ljava/lang/Double;
@@ -3638,6 +3650,7 @@ public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOpt
 	public final fun getOffset ()Lcom/mapbox/maps/ScreenCoordinate;
 	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getPitch ()Ljava/lang/Double;
+	public final fun getVerticalFov ()Ljava/lang/Double;
 	public fun hashCode ()I
 	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
 	public fun toString ()Ljava/lang/String;
@@ -3654,6 +3667,7 @@ public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOpt
 	public final fun offset (Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
 	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
 	public final fun pitch (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun verticalFov (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
 }
 
 public final class com/mapbox/maps/plugin/viewport/data/ViewportOptions {

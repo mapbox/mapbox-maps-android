@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.animation
 
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxExperimental
 
 /**
  * Enum class representing all possible camera animator types.
@@ -29,5 +30,10 @@ enum class CameraAnimatorType {
   /**
    * Animator responsible for [CameraOptions.padding]
    */
-  PADDING
+  PADDING,
+  /**
+   * Animator responsible for [CameraOptions.verticalFov]
+   */
+  @MapboxExperimental
+  VERTICAL_FOV
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
-import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -187,27 +186,10 @@ class MapPluginRegistryTest {
     val plugin = Plugin.Custom("id", cameraPlugin)
     val cameraState = mockk<CameraState>()
 
-    val center = Point.fromLngLat(1.0, 2.0)
-    every { cameraState.center } returns center
-    val zoom = 5.0
-    every { cameraState.zoom } returns zoom
-    val bearing = 15.0
-    every { cameraState.bearing } returns bearing
-    val pitch = 30.0
-    every { cameraState.pitch } returns pitch
-    val insets = EdgeInsets(1.0, 2.0, 3.0, 4.0)
-    every { cameraState.padding } returns insets
-
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
     mapPluginRegistry.onCameraMove(cameraState)
     verify {
-      cameraPlugin.onCameraMove(
-          center,
-          zoom,
-          pitch,
-          bearing,
-          insets
-      )
+      cameraPlugin.onCameraMove(cameraState)
     }
   }
 

@@ -42,7 +42,8 @@ class CameraAnimatorsFactoryTest {
     EdgeInsets(0.0, 0.0, 0.0, 0.0),
     0.0,
     -0.0,
-    15.0
+    15.0,
+    12.0
   )
   private val decelerateInterpolatorNew = DecelerateInterpolator()
   private val delayNew = 20L
@@ -91,6 +92,7 @@ class CameraAnimatorsFactoryTest {
       .zoom(17.0)
       .bearing(-180.0)
       .pitch(30.0)
+      .verticalFov(28.0)
       .build()
     val animators = cameraAnimatorsFactory.getEaseTo(targetEaseToPosition, owner = customOwner)
     testAnimators(animators, targetEaseToPosition)
@@ -133,6 +135,7 @@ class CameraAnimatorsFactoryTest {
     val target = initialCameraPosition.toCameraOptions().toBuilder()
       .bearing(90.0)
       .padding(EdgeInsets(300.0, 400.0, 300.0, 400.0))
+      .verticalFov(45.0)
       .build()
     val animators = cameraAnimatorsFactory.getFlyTo(target, owner = customOwner)
     testAnimators(animators, target)
@@ -200,6 +203,11 @@ class CameraAnimatorsFactoryTest {
           Assert.assertEquals(initialCameraPosition.padding, startValue)
           Assert.assertEquals(targetCameraPosition.padding, targetValue)
         }
+
+        CameraAnimatorType.VERTICAL_FOV -> {
+          Assert.assertEquals(initialCameraPosition.verticalFov, startValue)
+          Assert.assertEquals(targetCameraPosition.verticalFov, targetValue)
+        }
       }
     }
 
@@ -242,6 +250,11 @@ class CameraAnimatorsFactoryTest {
         CameraAnimatorType.CENTER -> {
           Assert.assertEquals(initialCameraPosition.center, startValue)
           Assert.assertEquals(targetCameraPosition.center, targetValue)
+        }
+
+        CameraAnimatorType.VERTICAL_FOV -> {
+          Assert.assertEquals(initialCameraPosition.verticalFov, startValue)
+          Assert.assertEquals(targetCameraPosition.verticalFov, targetValue)
         }
       }
     }

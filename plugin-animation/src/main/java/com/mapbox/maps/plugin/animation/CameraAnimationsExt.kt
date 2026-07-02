@@ -23,6 +23,7 @@ import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraVerticalFovAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
 import com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -332,6 +333,7 @@ internal fun updateCameraValue(
     is CameraPaddingAnimator -> cameraOptionsBuilder.padding(animatedValue as? EdgeInsets)
     is CameraBearingAnimator -> cameraOptionsBuilder.bearing(animatedValue as? Double)
     is CameraPitchAnimator -> cameraOptionsBuilder.pitch(animatedValue as? Double)
+    is CameraVerticalFovAnimator -> cameraOptionsBuilder.verticalFov(animatedValue as? Double)
   }
 }
 
@@ -346,4 +348,5 @@ internal fun CameraOptions.Builder.clear() {
   zoom(null)
   bearing(null)
   pitch(null)
+  verticalFov(null)
 }

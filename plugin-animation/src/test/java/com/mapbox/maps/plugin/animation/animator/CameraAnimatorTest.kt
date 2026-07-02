@@ -111,6 +111,21 @@ class CameraAnimatorTest {
   }
 
   @Test
+  fun `CameraVerticalFovAnimator getAnimatedValueAt with startValue interpolates correctly`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(55.0)
+    )
+      .startValue(23.0)
+      .build()
+    val animator = CameraVerticalFovAnimator(options)
+    animator.interpolator = linearInterpolator
+
+    var result = animator.getAnimatedValueAt(0.25f)
+
+    assertEquals(31.0, result, 0.001)
+  }
+
+  @Test
   fun `CameraCenterAnimator getAnimatedValueAt with startCameraState uses camera state value`() {
     val options = CameraAnimatorOptions.Builder<Point>(
       targets = arrayOf(Point.fromLngLat(10.0, 10.0)),
@@ -215,6 +230,24 @@ class CameraAnimatorTest {
     val result = animator.getAnimatedValueAt(0.25f, cameraState)
 
     assertEquals(EdgeInsets(5.0, 15.0, 25.0, 35.0), result)
+  }
+
+  @Test
+  fun `CameraVerticalFovAnimator getAnimatedValueAt with startCameraState uses camera state value`() {
+    val options = CameraAnimatorOptions.Builder<Double>(
+      targets = arrayOf(50.0),
+    )
+      .build()
+    val animator = CameraVerticalFovAnimator(options)
+    animator.interpolator = linearInterpolator
+
+    val cameraState = mockk<CameraState> {
+      every { verticalFov } returns 15.0
+    }
+
+    val result = animator.getAnimatedValueAt(0.25f, cameraState)
+
+    assertEquals(23.75, result, 0.001)
   }
 
   @Test

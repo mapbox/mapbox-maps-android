@@ -11,6 +11,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxTracing
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MAPS_SDK_TRACE_PREFIX
 import com.mapbox.maps.MapboxCameraAnimationException
@@ -74,6 +75,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     CopyOnWriteArraySet<CameraAnimatorNullableChangeListener<ScreenCoordinate?>>()
   private val bearingListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
   private val pitchListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
+  private val verticalFovListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
 
@@ -147,6 +149,14 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     }
   }
 
+  private var verticalFov by Delegates.observable<Double?>(null) { _, old, new ->
+    new?.let {
+      if (old != it) {
+        verticalFovListeners.forEach { listener -> listener.onChanged(it) }
+      }
+    }
+  }
+
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -187,6 +197,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    * @param bearing bearing in degrees
    * @param padding padding
    */
+  @Suppress("OVERRIDE_DEPRECATION")
   override fun onCameraMove(
     center: Point,
     zoom: Double,
@@ -194,11 +205,21 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     bearing: Double,
     padding: EdgeInsets
   ) {
-    this.bearing = bearing
-    this.center = center
-    this.padding = padding
-    this.pitch = pitch
-    this.zoom = zoom
+    // NOP
+  }
+
+  /**
+   * Called whenever camera position changes.
+   *
+   * @param cameraState camera state containing position information.
+   */
+  override fun onCameraMove(cameraState: CameraState) {
+    this.bearing = cameraState.bearing
+    this.center = cameraState.center
+    this.padding = cameraState.padding
+    this.pitch = cameraState.pitch
+    this.zoom = cameraState.zoom
+    this.verticalFov = cameraState.verticalFov
   }
 
   /**
@@ -214,6 +235,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     pitchListeners.clear()
     anchorListeners.clear()
     paddingListeners.clear()
+    verticalFovListeners.clear()
     lifecycleListeners.clear()
     animators.clear()
   }
@@ -244,6 +266,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
       return false
     }
     if (cameraOptions.padding != null && cameraOptions.padding != padding) {
+      return false
+    }
+    if (cameraOptions.verticalFov != null && cameraOptions.verticalFov != verticalFov) {
       return false
     }
     return true
@@ -626,6 +651,24 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
    */
   override fun removeCameraPitchChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     pitchListeners.remove(listener)
+  }
+
+  /**
+   * Add [CameraAnimatorChangeListener] to receive map vertical fov updates.
+   *
+   * @param listener Instance of [CameraAnimatorChangeListener]
+   */
+  override fun addCameraVerticalFovChangeListener(listener: CameraAnimatorChangeListener<Double>) {
+    verticalFovListeners.add(listener)
+  }
+
+  /**
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
+   *
+   * @param listener Instance of [CameraAnimatorChangeListener]
+   */
+  override fun removeCameraVerticalFovChangeListener(listener: CameraAnimatorChangeListener<Double>) {
+    verticalFovListeners.remove(listener)
   }
 
   /**

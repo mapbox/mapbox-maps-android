@@ -4,9 +4,11 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import org.junit.Assert
 import org.junit.Test
 
+@OptIn(MapboxExperimental::class)
 class CameraOptionsKtxTest {
 
   @Test
@@ -17,6 +19,7 @@ class CameraOptionsKtxTest {
       5.0,
       6.0,
       7.0,
+      8.0
     )
 
     val result = cameraOptions {
@@ -25,6 +28,7 @@ class CameraOptionsKtxTest {
       zoom(expected.zoom)
       bearing(expected.bearing)
       pitch(expected.pitch)
+      verticalFov(expected.verticalFov)
     }
 
     Assert.assertEquals(expected.center, result.center)
@@ -32,6 +36,7 @@ class CameraOptionsKtxTest {
     Assert.assertEquals(expected.zoom, result.zoom)
     Assert.assertEquals(expected.bearing, result.bearing)
     Assert.assertEquals(expected.pitch, result.pitch)
+    Assert.assertEquals(expected.verticalFov, result.verticalFov)
   }
 
   @Test
@@ -42,6 +47,7 @@ class CameraOptionsKtxTest {
       5.0,
       6.0,
       7.0,
+      8.0
     )
 
     val result = cameraOptions(expected) {
@@ -53,6 +59,7 @@ class CameraOptionsKtxTest {
     Assert.assertEquals(expected.zoom, result.zoom)
     Assert.assertEquals(expected.bearing, result.bearing)
     Assert.assertEquals(expected.pitch, result.pitch)
+    Assert.assertEquals(expected.verticalFov, result.verticalFov)
   }
 
   @Test
@@ -62,7 +69,8 @@ class CameraOptionsKtxTest {
       EdgeInsets(1.0, 2.0, 3.0, 4.0),
       5.0,
       6.0,
-      7.0
+      7.0,
+      8.0
     )
     val expected = CameraOptions.Builder()
       .center(Point.fromLngLat(20.0, 30.0))
@@ -70,6 +78,7 @@ class CameraOptionsKtxTest {
       .zoom(12.0)
       .bearing(13.0)
       .pitch(14.0)
+      .verticalFov(15.0)
       .build()
 
     val result = cameraOptions(base) {
@@ -78,6 +87,7 @@ class CameraOptionsKtxTest {
       zoom(expected.zoom)
       bearing(expected.bearing)
       pitch(expected.pitch)
+      verticalFov(expected.verticalFov)
     }
 
     Assert.assertEquals(expected, result)

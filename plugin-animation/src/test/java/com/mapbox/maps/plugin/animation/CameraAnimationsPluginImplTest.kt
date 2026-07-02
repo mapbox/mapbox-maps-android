@@ -66,13 +66,13 @@ class CameraAnimationsPluginImplTest {
   private lateinit var cameraAnimatorsFactory: CameraAnimatorsFactory
   private lateinit var bearingAnimator: CameraBearingAnimator
   private lateinit var centerAnimator: CameraCenterAnimator
-
   @Before
   fun setUp() {
     ShadowLog.stream = System.out
     cameraAnimatorsFactory = mockk(relaxed = true)
     bearingAnimator = mockk(relaxed = true)
     centerAnimator = mockk(relaxed = true)
+
     every { cameraAnimatorsFactory.getEaseTo(any()) } returns arrayOf(
       bearingAnimator,
       centerAnimator
@@ -1217,15 +1217,18 @@ class CameraAnimationsPluginImplTest {
       .pitch(50.0)
       .bearing(50.0)
       .zoom(5.0)
+      .verticalFov(34.0)
       .build()
 
     val sameCameraOptions1 = CameraOptions.Builder()
       .center(Point.fromLngLat(50.0, 50.0))
       .bearing(50.0)
+      .verticalFov(34.0)
       .build()
     val sameCameraOptions2 = CameraOptions.Builder()
       .center(Point.fromLngLat(50.0, 50.0))
       .bearing(50.0)
+      .verticalFov(34.0)
       .build()
     val sameCameraOptions3 = CameraOptions.Builder()
       .zoom(5.0)
@@ -1247,14 +1250,17 @@ class CameraAnimationsPluginImplTest {
       .pitch(50.0)
       .bearing(50.0)
       .zoom(5.0)
+      .verticalFov(34.0)
       .build()
     val newCameraOptions1 = CameraOptions.Builder()
       .center(Point.fromLngLat(50.0, 50.0))
       .bearing(60.0)
+      .verticalFov(84.0)
       .build()
     val newCameraOptions2 = CameraOptions.Builder()
       .center(Point.fromLngLat(50.0, 50.0))
       .bearing(20.0)
+      .verticalFov(21.0)
       .build()
     val newCameraOptions3 = CameraOptions.Builder()
       .zoom(1.0)
@@ -1334,6 +1340,7 @@ class CameraAnimationsPluginImplTest {
       .bearing(60.0)
       .zoom(5.0)
       .padding(EdgeInsets(1.0, 2.0, 3.0, 4.0))
+      .verticalFov(34.0)
       .build()
       .toCameraState()
 
@@ -1347,6 +1354,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.addCameraBearingChangeListener { bearing = it }
     var zoom = 0.0
     cameraAnimationsPluginImpl.addCameraZoomChangeListener { zoom = it }
+    var verticalFov = 0.0
+    cameraAnimationsPluginImpl.addCameraVerticalFovChangeListener { verticalFov = it }
 
     cameraAnimationsPluginImpl.onCameraMove(cameraState)
 
@@ -1355,6 +1364,7 @@ class CameraAnimationsPluginImplTest {
     assertEquals(5.0, zoom, EPS)
     assertEquals(Point.fromLngLat(30.0, 20.0), center)
     assertEquals(EdgeInsets(1.0, 2.0, 3.0, 4.0), edgeInsets)
+    assertEquals(34.0, verticalFov, EPS)
   }
 
   @Test
@@ -1366,6 +1376,7 @@ class CameraAnimationsPluginImplTest {
       .zoom(5.0)
       .padding(EdgeInsets(50.0, 50.0, 50.0, 50.0))
       .anchor(ScreenCoordinate(50.0, 50.0))
+      .verticalFov(34.0)
       .build()
     cameraAnimationsPluginImpl.onCameraMove(cachedCameraOptions.toCameraState())
 
@@ -1375,6 +1386,7 @@ class CameraAnimationsPluginImplTest {
       .bearing(51.0)
       .zoom(5.1)
       .padding(EdgeInsets(51.0, 51.0, 51.0, 51.0))
+      .verticalFov(35.0)
       .build()
 
     every { mapCameraManagerDelegate.cameraState } returns mapCameraOptions.toCameraState()
@@ -1850,6 +1862,7 @@ class CameraAnimationsPluginImplTest {
       EdgeInsets(VALUE, VALUE, VALUE, VALUE),
       VALUE,
       VALUE,
+      VALUE,
       VALUE
     )
 
@@ -1859,17 +1872,8 @@ class CameraAnimationsPluginImplTest {
         padding ?: cameraState.padding,
         zoom ?: cameraState.zoom,
         bearing ?: cameraState.bearing,
-        pitch ?: cameraState.pitch
-      )
-    }
-
-    private fun CameraAnimationsPluginImpl.onCameraMove(cameraState: CameraState) {
-      onCameraMove(
-        center = cameraState.center,
-        zoom = cameraState.zoom,
-        pitch = cameraState.pitch,
-        bearing = cameraState.bearing,
-        padding = cameraState.padding
+        pitch ?: cameraState.pitch,
+        verticalFov ?: cameraState.verticalFov
       )
     }
 

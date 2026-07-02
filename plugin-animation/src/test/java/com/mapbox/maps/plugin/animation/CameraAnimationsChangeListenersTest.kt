@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.animation
 
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.cameraState
@@ -13,16 +12,6 @@ import kotlin.math.pow
 
 @RunWith(RobolectricTestRunner::class)
 class CameraAnimationsChangeListenersTest {
-
-  private fun CameraAnimationsPluginImpl.onCameraMove(cameraState: CameraState) {
-    onCameraMove(
-        center = cameraState.center,
-        zoom = cameraState.zoom,
-        pitch = cameraState.pitch,
-        bearing = cameraState.bearing,
-        padding = cameraState.padding
-    )
-  }
 
   @Test
   fun addCameraZoomChangeListener() {
@@ -155,6 +144,25 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorNullableChangeListener<ScreenCoordinate?> { assert(false) }
     cameraAnimationsPluginImpl.addCameraAnchorChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraAnchorChangeListener(listener)
+    cameraAnimationsPluginImpl.onCameraMove(cameraState)
+  }
+
+  @Test
+  fun addCameraVerticalFovChangeListener() {
+    val cameraAnimationsPluginImpl = CameraAnimationsPluginImpl()
+    val listener = CameraAnimatorChangeListener<Double> {
+      Assert.assertEquals(CameraAnimationsPluginImplTest.VALUE, it, 10.0.pow(-6.0))
+    }
+    cameraAnimationsPluginImpl.addCameraVerticalFovChangeListener(listener)
+    cameraAnimationsPluginImpl.onCameraMove(cameraState)
+  }
+
+  @Test
+  fun removeCameraVerticalFovChangeListener() {
+    val cameraAnimationsPluginImpl = CameraAnimationsPluginImpl()
+    val listener = CameraAnimatorChangeListener<Double> { assert(false) }
+    cameraAnimationsPluginImpl.addCameraVerticalFovChangeListener(listener)
+    cameraAnimationsPluginImpl.removeCameraVerticalFovChangeListener(listener)
     cameraAnimationsPluginImpl.onCameraMove(cameraState)
   }
 }

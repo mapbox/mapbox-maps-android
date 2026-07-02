@@ -134,6 +134,21 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       )
     }
 
+    cameraOptions.verticalFov?.let { target ->
+      animationList.add(
+        CameraVerticalFovAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.verticalFov)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.VERTICAL_FOV]
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
+      )
+    }
+
     return animationList.map { it as CameraAnimator<*> }.toTypedArray()
   }
 
@@ -322,6 +337,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       mapCameraManagerDelegate.getBounds().minZoom,
       mapCameraManagerDelegate.getBounds().maxZoom
     )
+    val startVerticalFov = currentCameraState.verticalFov
+    val endVerticalFov = cameraOptions.verticalFov ?: startVerticalFov
 
     // Determine endpoints
     var startPointRaw = currentCameraState.center.wrapCoordinate()
@@ -502,6 +519,21 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         }
       )
     }
+
+    if (endVerticalFov != startVerticalFov) {
+      animators.add(
+        CameraVerticalFovAnimator(
+          options = cameraAnimatorOptions(endVerticalFov) {
+            startValue(startVerticalFov)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.VERTICAL_FOV]
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
+      )
+    }
     return animators.toTypedArray()
   }
 
@@ -557,6 +589,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           duration = DEFAULT_ANIMATION_DURATION_MS
           interpolator = DEFAULT_INTERPOLATOR
         }
+        put(CameraAnimatorType.VERTICAL_FOV) {
+          duration = DEFAULT_ANIMATION_DURATION_MS
+          interpolator = DEFAULT_INTERPOLATOR
+        }
       }
 
     /**
@@ -585,6 +621,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       defaultAnimationParameters[CameraAnimatorType.PITCH] = block
       defaultAnimationParameters[CameraAnimatorType.ANCHOR] = block
       defaultAnimationParameters[CameraAnimatorType.PADDING] = block
+      defaultAnimationParameters[CameraAnimatorType.VERTICAL_FOV] = block
     }
   }
 }

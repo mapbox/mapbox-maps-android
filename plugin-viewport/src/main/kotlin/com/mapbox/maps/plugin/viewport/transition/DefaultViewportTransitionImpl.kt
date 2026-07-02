@@ -255,6 +255,12 @@ internal class DefaultViewportTransitionImpl(
           } else {
             cameraAnimator.setObjectValues(startCamera.padding, targetCamera.padding)
           }
+        CameraAnimatorType.VERTICAL_FOV ->
+          if (completedChildAnimators.contains(CameraAnimatorType.VERTICAL_FOV)) {
+            cameraDelegate.setCamera(cameraOptions { verticalFov(targetCamera.verticalFov) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.verticalFov, targetCamera.verticalFov)
+          }
       }
     }
   }
