@@ -95,6 +95,15 @@ class MapTelemetryImpl : MapTelemetry {
    * Register the app user turnstile event
    */
   override fun onAppUserTurnstileEvent() {
+    onAppUserTurnstileEvent(null)
+  }
+
+  /**
+   * Register the app user turnstile event with optional metadata.
+   *
+   * @param metadata optional telemetry metadata
+   */
+  override fun onAppUserTurnstileEvent(metadata: MapTelemetryMetadata?) {
     eventsService.sendTurnstileEvent(TurnstileEvent(UserSKUIdentifier.MAPS_MAUS)) { response ->
       if (response.isError) {
         logE(TAG, "sendTurnstileEvent error: ${response.error}")
@@ -102,14 +111,14 @@ class MapTelemetryImpl : MapTelemetry {
     }
 
     if (shouldSendEvents()) {
-      sendMapLoadEvent()
+      sendMapLoadEvent(metadata)
     }
   }
 
-  private fun sendMapLoadEvent() {
+  private fun sendMapLoadEvent(metadata: MapTelemetryMetadata?) {
     bgScope.launch {
       try {
-        val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext))
+        val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext), metadata)
         sendEvent(Gson().toJson(mapLoadEvent))
       } catch (e: Throwable) {
         logW(TAG, "sendMapLoadEvent error: $e")

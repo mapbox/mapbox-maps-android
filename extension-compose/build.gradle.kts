@@ -9,7 +9,13 @@ android {
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunnerArguments["dexmaker.share_classloader"] = "true"
     consumerProguardFiles("proguard-rules.pro")
+  }
+
+  packaging {
+    resources.excludes += "META-INF/LICENSE.md"
+    resources.excludes += "META-INF/LICENSE-notice.md"
   }
 
   testOptions {
@@ -79,7 +85,6 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
     implementation(libs.bundles.base.dependencies)
-
     implementation(libs.androidx.coreKtx)
     debugImplementation(libs.compose.uiTestManifest)
 
@@ -92,6 +97,8 @@ dependencies {
     androidTestImplementation(libs.androidx.uiAutomator)
     androidTestImplementation(project(":maps-sdk"))
     androidTestImplementation(libs.compose.uiTest)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.mapbox.annotations)
 
     testImplementation(libs.bundles.base.dependenciesTests)
     testImplementation(project(":maps-sdk"))

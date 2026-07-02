@@ -2,7 +2,9 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.RestrictTo
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
+import com.mapbox.maps.module.telemetry.UiFramework
 import com.mapbox.maps.plugin.*
 
 /**
@@ -34,6 +36,9 @@ data class MapInitOptions @JvmOverloads constructor(
   var antialiasingSampleCount: Int = DEFAULT_ANTIALIASING_SAMPLE_COUNT,
   var mapName: String = "",
 ) {
+
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  var uiFramework: UiFramework = UiFramework.ANDROID_VIEW
 
   /**
    * Static methods

@@ -2,6 +2,7 @@ public final class com/mapbox/maps/module/telemetry/MapTelemetryImpl : com/mapbo
 	public fun <init> (Landroid/content/Context;)V
 	public fun disableTelemetrySession ()V
 	public fun onAppUserTurnstileEvent ()V
+	public fun onAppUserTurnstileEvent (Lcom/mapbox/maps/module/telemetry/MapTelemetryMetadata;)V
 	public fun onPerformanceEvent (Landroid/os/Bundle;)V
 	public fun setUserTelemetryRequestState (Z)V
 }

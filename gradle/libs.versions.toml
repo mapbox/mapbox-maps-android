@@ -63,7 +63,7 @@ googleCarAppLibrary = "1.2.0"
 # Use kotlinCoroutines to 1.6.1 to be compatible with platform runtime.
 kotlinCoroutines = "1.6.1"
 junit = "4.13.2"
-mockk = "1.13.5"
+mockk = "1.13.7"
 robolectric = "4.14"
 robolectricEgl = "gl1.1-android-2.1_r1"
 lint = "30.4.2"
@@ -144,6 +144,7 @@ mapbox-gestures = { module = "com.mapbox.mapboxsdk:mapbox-android-gestures", ver
 mapbox-geoJSON = { module = "com.mapbox.mapboxsdk:mapbox-sdk-geojson", version.ref = "mapboxGeoJSON" }
 
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectricEgl = { module = "org.khronos:opengl-api", version.ref = "robolectricEgl" }

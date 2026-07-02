@@ -13,6 +13,7 @@ import com.mapbox.maps.base.BuildConfig
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapLoadEvent(
   @field:SerializedName("userId") val userId: String?,
+  @field:SerializedName("uiFramework") val uiFramework: String?,
   phoneState: PhoneState
 ) :
   MapBaseEvent(phoneState) {
@@ -102,6 +103,9 @@ internal class MapLoadEvent(
     if (userId != that.userId) {
       return false
     }
+    if (uiFramework != that.uiFramework) {
+      return false
+    }
     if (carrier != that.carrier) {
       return false
     }
@@ -118,6 +122,7 @@ internal class MapLoadEvent(
     result = 31 * result + sdkVersion.hashCode()
     result = 31 * result + model.hashCode()
     result = 31 * result + (userId?.hashCode() ?: 0)
+    result = 31 * result + (uiFramework?.hashCode() ?: 0)
     result = 31 * result + (carrier?.hashCode() ?: 0)
     result = 31 * result + (cellularNetworkType?.hashCode() ?: 0)
     result = 31 * result + orientation.hashCode()
@@ -140,6 +145,7 @@ internal class MapLoadEvent(
         ", sdkVersion='" + sdkVersion + '\'' +
         ", model='" + model + '\'' +
         ", userId='" + userId + '\'' +
+        ", uiFramework='" + uiFramework + '\'' +
         ", carrier='" + carrier + '\'' +
         ", cellularNetworkType='" + cellularNetworkType + '\'' +
         ", orientation='" + orientation + '\'' +

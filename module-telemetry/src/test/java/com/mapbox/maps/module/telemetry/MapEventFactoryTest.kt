@@ -45,7 +45,8 @@ class MapEventFactoryTest {
 
   @Test
   fun testMapLoadEvent() {
-    val mapLoadEvent = MapEventFactory.buildMapLoadEvent(phoneState)
+    val metadata = MapTelemetryMetadata.Builder().uiFramework(UiFramework.ANDROID_VIEW).build()
+    val mapLoadEvent = MapEventFactory.buildMapLoadEvent(phoneState, metadata)
     Assert.assertEquals(
       "Android - " + Build.VERSION.RELEASE,
       mapLoadEvent.operatingSystem
@@ -78,9 +79,20 @@ class MapEventFactoryTest {
       mapLoadEvent.accessibilityFontScale,
       0f
     )
+    Assert.assertEquals("android-view", mapLoadEvent.uiFramework)
     val json = gson.toJson(mapLoadEvent)
+    assertTrue(json.contains("\"uiFramework\":\"android-view\""))
     val event = gson.fromJson(json, MapLoadEvent::class.java)
     Assert.assertEquals(mapLoadEvent, event)
+  }
+
+  @Test
+  fun testMapLoadEventCompose() {
+    val metadata = MapTelemetryMetadata.Builder().uiFramework(UiFramework.JETPACK_COMPOSE).build()
+    val mapLoadEvent = MapEventFactory.buildMapLoadEvent(phoneState, metadata)
+    Assert.assertEquals(UiFramework.JETPACK_COMPOSE.value, mapLoadEvent.uiFramework)
+    val json = gson.toJson(mapLoadEvent)
+    assertTrue(json.contains("\"uiFramework\":\"jetpack-compose\""))
   }
 
   @Test

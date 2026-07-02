@@ -1175,6 +1175,7 @@ public abstract interface class com/mapbox/maps/module/MapTelemetry {
 	public abstract fun disableTelemetrySession ()V
 	public fun getUserTelemetryRequestState ()Z
 	public abstract fun onAppUserTurnstileEvent ()V
+	public fun onAppUserTurnstileEvent (Lcom/mapbox/maps/module/telemetry/MapTelemetryMetadata;)V
 	public abstract fun onPerformanceEvent (Landroid/os/Bundle;)V
 	public abstract fun setUserTelemetryRequestState (Z)V
 }
@@ -1187,6 +1188,33 @@ public final class com/mapbox/maps/module/TelemetryEvent {
 
 public final class com/mapbox/maps/module/TelemetryEvent$Companion {
 	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/module/TelemetryEvent;
+}
+
+public final class com/mapbox/maps/module/telemetry/MapTelemetryMetadata {
+	public synthetic fun <init> (Lcom/mapbox/maps/module/telemetry/UiFramework;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUiFramework ()Lcom/mapbox/maps/module/telemetry/UiFramework;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/module/telemetry/MapTelemetryMetadata$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/module/telemetry/MapTelemetryMetadata;
+	public final fun uiFramework (Lcom/mapbox/maps/module/telemetry/UiFramework;)Lcom/mapbox/maps/module/telemetry/MapTelemetryMetadata$Builder;
+}
+
+public final class com/mapbox/maps/module/telemetry/UiFramework {
+	public static final field ANDROID_VIEW Lcom/mapbox/maps/module/telemetry/UiFramework;
+	public static final field Companion Lcom/mapbox/maps/module/telemetry/UiFramework$Companion;
+	public static final field JETPACK_COMPOSE Lcom/mapbox/maps/module/telemetry/UiFramework;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/module/telemetry/UiFramework$Companion {
 }
 
 public abstract interface class com/mapbox/maps/plugin/ContextBinder {

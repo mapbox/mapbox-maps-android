@@ -119,7 +119,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       mapboxMap,
       this,
       MapProvider.getMapTelemetryInstance(
-        mapInitOptions.context
+        mapInitOptions.context,
+        mapInitOptions.uiFramework,
       ),
       MapProvider.getMapGeofencingConsent(),
     )

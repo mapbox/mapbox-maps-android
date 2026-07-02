@@ -6,6 +6,7 @@ import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.applyDefaultParams
+import com.mapbox.maps.module.telemetry.UiFramework
 import com.mapbox.maps.plugin.Plugin
 
 /**
@@ -56,7 +57,9 @@ public data class ComposeMapInitOptions(
       attrs = null,
       antialiasingSampleCount = antialiasingSampleCount,
       mapName = mapName
-    )
+    ).apply {
+      uiFramework = UiFramework.JETPACK_COMPOSE
+    }
   }
 
   /**

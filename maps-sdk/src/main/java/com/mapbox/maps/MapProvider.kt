@@ -11,6 +11,8 @@ import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.base.BuildConfig
 import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
+import com.mapbox.maps.module.telemetry.MapTelemetryMetadata
+import com.mapbox.maps.module.telemetry.UiFramework
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
 import kotlinx.coroutines.CoroutineName
@@ -59,7 +61,11 @@ internal object MapProvider {
     mapGeofencingConsent: MapGeofencingConsent,
   ) = MapPluginRegistry(MapDelegateProviderImpl(mapboxMap, mapController, telemetry, mapGeofencingConsent))
 
-  fun getMapTelemetryInstance(context: Context): MapTelemetry {
+  @JvmOverloads
+  fun getMapTelemetryInstance(
+    context: Context,
+    uiFramework: UiFramework? = null,
+  ): MapTelemetry {
     if (!::mapTelemetry.isInitialized) {
       mapTelemetry = MapboxModuleProvider.createModule(MapboxModuleType.MapTelemetry) {
         paramsProvider(context, MapboxModuleType.MapTelemetry)
@@ -67,7 +73,10 @@ internal object MapProvider {
     }
     // Schedule the turnstile event on the Main dispatcher to avoid blocking this call chain.
     mainScope.launch {
-      mapTelemetry.onAppUserTurnstileEvent()
+      val metadata = MapTelemetryMetadata.Builder()
+        .uiFramework(uiFramework)
+        .build()
+      mapTelemetry.onAppUserTurnstileEvent(metadata)
     }
     return mapTelemetry
   }

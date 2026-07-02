@@ -133,6 +133,16 @@ class MapTelemetryTest {
     assertTrue(
       slot.captured.attributes.toJson().contains("\"sdkIdentifier\":\"mapbox-maps-android\"")
     )
+    assertFalse(slot.captured.attributes.toJson().contains("\"uiFramework\""))
+  }
+
+  @Test
+  fun testOnAppUserTurnstileEventWithComposeFramework() {
+    val metadata = MapTelemetryMetadata.Builder().uiFramework(UiFramework.JETPACK_COMPOSE).build()
+    telemetry.onAppUserTurnstileEvent(metadata)
+    val slot = slot<Event>()
+    verify { eventsService.sendEvent(capture(slot), any()) }
+    assertTrue(slot.captured.attributes.toJson().contains("\"uiFramework\":\"jetpack-compose\""))
   }
 
   @Test

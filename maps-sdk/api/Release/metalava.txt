@@ -48,6 +48,7 @@ package com.mapbox.maps {
     method public java.util.List<com.mapbox.maps.plugin.Plugin> getPlugins();
     method public String? getStyleUri();
     method public boolean getTextureView();
+    method public com.mapbox.maps.module.telemetry.UiFramework getUiFramework();
     method public void setAntialiasingSampleCount(int);
     method public void setAttrs(android.util.AttributeSet?);
     method public void setCameraOptions(com.mapbox.maps.CameraOptions?);
@@ -55,6 +56,7 @@ package com.mapbox.maps {
     method public void setMapOptions(com.mapbox.maps.MapOptions);
     method public void setPlugins(java.util.List<? extends com.mapbox.maps.plugin.Plugin>);
     method public void setTextureView(boolean);
+    method public void setUiFramework(com.mapbox.maps.module.telemetry.UiFramework);
     property public final int antialiasingSampleCount;
     property public final android.util.AttributeSet? attrs;
     property public final com.mapbox.maps.CameraOptions? cameraOptions;
@@ -64,6 +66,7 @@ package com.mapbox.maps {
     property public final java.util.List<com.mapbox.maps.plugin.Plugin> plugins;
     property public final String? styleUri;
     property public final boolean textureView;
+    property public final com.mapbox.maps.module.telemetry.UiFramework uiFramework;
     field public static final com.mapbox.maps.MapInitOptions.Companion Companion;
   }
 

@@ -1182,8 +1182,35 @@ package com.mapbox.maps.module {
     method public void disableTelemetrySession();
     method public default boolean getUserTelemetryRequestState();
     method public void onAppUserTurnstileEvent();
+    method public default void onAppUserTurnstileEvent(com.mapbox.maps.module.telemetry.MapTelemetryMetadata?);
     method public void onPerformanceEvent(android.os.Bundle?);
     method public void setUserTelemetryRequestState(boolean);
+  }
+
+}
+
+package com.mapbox.maps.module.telemetry {
+
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class MapTelemetryMetadata {
+    method public com.mapbox.maps.module.telemetry.UiFramework? getUiFramework();
+    property public final com.mapbox.maps.module.telemetry.UiFramework? uiFramework;
+  }
+
+  public static final class MapTelemetryMetadata.Builder {
+    ctor public MapTelemetryMetadata.Builder();
+    method public com.mapbox.maps.module.telemetry.MapTelemetryMetadata build();
+    method public com.mapbox.maps.module.telemetry.MapTelemetryMetadata.Builder uiFramework(com.mapbox.maps.module.telemetry.UiFramework? uiFramework);
+  }
+
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class UiFramework {
+    method public String getValue();
+    property public final String value;
+    field public static final com.mapbox.maps.module.telemetry.UiFramework ANDROID_VIEW;
+    field public static final com.mapbox.maps.module.telemetry.UiFramework.Companion Companion;
+    field public static final com.mapbox.maps.module.telemetry.UiFramework JETPACK_COMPOSE;
+  }
+
+  public static final class UiFramework.Companion {
   }
 
 }
