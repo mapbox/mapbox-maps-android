@@ -13,7 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `rotateBy`, `moveBy`, `pitchBy`, and `scaleBy` methods to `MapViewportState` for incremental camera animations.
 * [compose] Add `rememberStyleImage(imageId, image9Patch: NinePatchImage)` and `remember9PatchStyleImage(imageId, bitmap: Bitmap)` overloads for nine-patch images.
 * Introduce new experimental `ViewAnnotationOptions.enableSymbolLayerCollision` option which allows view annotations to hide underlying map symbols to avoid visual clutter.
-    By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxCollisionBox` flag.
+    By default, the full bounding box of the view annotation is used for collision detection. If your annotation has a non-rectangular shape, it is highly recommended to mark the specific subviews that should participate via the new experimental `View.mbxViewAnnotationCollisionBox` flag.
 * Support drawing view annotation collision boxes when `MapView.debugOptions` is set to `COLLISION`.
 * Add `TileStore` option to configure the ambient cache quota, allowing control over how much disk space is used for ambient cached tile data.
 

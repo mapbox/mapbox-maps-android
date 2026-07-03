@@ -854,7 +854,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun collectCollisionBoxesInto(root: ViewGroup, current: View, out: MutableList<ScreenBox>) {
-    if (current.mbxCollisionBox) {
+    if (current.mbxViewAnnotationCollisionBox) {
       if (current.width > 0 && current.height > 0 && current.visibility != View.GONE) {
         val rect = Rect(0, 0, current.width, current.height)
         root.offsetDescendantRectToMyCoords(current, rect)

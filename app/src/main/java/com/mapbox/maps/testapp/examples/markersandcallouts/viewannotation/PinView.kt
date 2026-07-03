@@ -17,11 +17,11 @@ import android.view.animation.OvershootInterpolator
 import android.widget.LinearLayout
 import androidx.core.graphics.withTranslation
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.viewannotation.mbxCollisionBox
+import com.mapbox.maps.viewannotation.mbxViewAnnotationCollisionBox
 
 /**
  * PinView renders a pin shape (gradient-filled teardrop with hole) and a label below it.
- * Both the pin and the label are marked as [mbxCollisionBox] so they can collide
+ * Both the pin and the label are marked as [mbxViewAnnotationCollisionBox] so they can collide
  * independently with map symbols.
  */
 @OptIn(MapboxExperimental::class)
@@ -54,7 +54,7 @@ class PinView(context: Context, text: String) : LinearLayout(context) {
         setTypeface(typeface, Typeface.BOLD)
         gravity = Gravity.CENTER
         maxWidth = (130 * d).toInt()
-        mbxCollisionBox = true
+        mbxViewAnnotationCollisionBox = true
       },
       LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     )
@@ -94,7 +94,7 @@ class PinView(context: Context, text: String) : LinearLayout(context) {
     private val path = Path().apply { fillType = Path.FillType.EVEN_ODD }
 
     init {
-      mbxCollisionBox = true
+      mbxViewAnnotationCollisionBox = true
       fillPaint.setShadowLayer(10f, 0f, 0f, Color.argb(128, 0, 0, 0))
       scaleX = 0f
       scaleY = 0f

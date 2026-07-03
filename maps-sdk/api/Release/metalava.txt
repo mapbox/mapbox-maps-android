@@ -868,8 +868,8 @@ package com.mapbox.maps.viewannotation {
   }
 
   public final class ViewCollisionParticipationKt {
-    method public static boolean getMbxCollisionBox(android.view.View);
-    method public static void setMbxCollisionBox(android.view.View, boolean);
+    method public static boolean getMbxViewAnnotationCollisionBox(android.view.View);
+    method public static void setMbxViewAnnotationCollisionBox(android.view.View, boolean);
   }
 
 }
