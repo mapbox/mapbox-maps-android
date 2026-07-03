@@ -7,6 +7,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.22.4 July 03, 2026
+## Bug fixes 🐞
+* Fix style import config properties being silently discarded when set during an import URL change.
+* Fix elevated lines with `lineElevationReference` set to `LineElevationReference.GROUND` disappearing near the viewport at high pitch.
+* Fix a crash that could occur when an HTTP request was aborted while a response chunk was being processed.
+
 ## Dependencies
 * Update gl-native to [v11.22.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.4), common to [v24.22.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.22.4).
 
