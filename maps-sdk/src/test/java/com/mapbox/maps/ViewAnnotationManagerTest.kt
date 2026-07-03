@@ -830,6 +830,23 @@ class ViewAnnotationManagerTest {
     verify(exactly = 0) { mapboxMap.updateViewAnnotation(any(), any()) }
   }
 
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun viewAnnotationAvoidRegionsGetterDelegatesToMap() {
+    val regions = listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(100.0, 100.0)))
+    every { mapboxMap.viewAnnotationAvoidRegions } returns regions
+    assertEquals(regions, viewAnnotationManager.viewAnnotationAvoidRegions)
+    verifyOnce { mapboxMap.viewAnnotationAvoidRegions }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun viewAnnotationAvoidRegionsSetterDelegatesToMap() {
+    val regions = listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(100.0, 100.0)))
+    viewAnnotationManager.viewAnnotationAvoidRegions = regions
+    verifyOnce { mapboxMap.viewAnnotationAvoidRegions = regions }
+  }
+
   private companion object {
     private const val LAYER_ID = "layerId"
     private const val FEATURE_ID = "featureId"

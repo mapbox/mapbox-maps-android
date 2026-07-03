@@ -10,6 +10,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxDelicateApi
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ViewAnnotationOptions
 
 /**
@@ -34,6 +35,13 @@ interface ViewAnnotationManager {
    */
   @MapboxExperimental
   var viewAnnotationAvoidLayers: HashSet<String>
+
+  /**
+   * Rectangular screen regions that view annotations should avoid. This applies to view annotations
+   * with [ViewAnnotationOptions.enableAvoidRegions] set to `true`.
+   */
+  @MapboxExperimental
+  var viewAnnotationAvoidRegions: List<ScreenBox>
 
   /**
    * Add view annotation inflated from [resId] synchronously.

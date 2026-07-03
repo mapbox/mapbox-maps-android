@@ -1936,6 +1936,32 @@ class MapboxMapTest {
     assertEquals(layerIds, mapboxMap.getViewAnnotationAvoidLayers())
   }
 
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun setViewAnnotationAvoidRegions() {
+    val captured = slot<List<ScreenBox>>()
+    every { nativeMap.setViewAnnotationAvoidRegions(capture(captured)) } just Runs
+    val regions = listOf(
+      ScreenBox(ScreenCoordinate(1.0, 2.0), ScreenCoordinate(3.0, 4.0)),
+      ScreenBox(ScreenCoordinate(10.0, 20.0), ScreenCoordinate(30.0, 40.0)),
+    )
+    mapboxMap.viewAnnotationAvoidRegions = regions
+    verifyOnce { nativeMap.setViewAnnotationAvoidRegions(any()) }
+    assertEquals(regions, captured.captured)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun getViewAnnotationAvoidRegions() {
+    val regions = listOf(
+      ScreenBox(ScreenCoordinate(1.0, 2.0), ScreenCoordinate(3.0, 4.0)),
+      ScreenBox(ScreenCoordinate(10.0, 20.0), ScreenCoordinate(30.0, 40.0)),
+    )
+    every { nativeMap.getViewAnnotationAvoidRegions() } returns regions
+    assertEquals(regions, mapboxMap.viewAnnotationAvoidRegions)
+    verifyOnce { nativeMap.getViewAnnotationAvoidRegions() }
+  }
+
   @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
   @Test
   fun getNativeMap() {

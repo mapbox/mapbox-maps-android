@@ -85,6 +85,12 @@ internal class ViewAnnotationManagerImpl(
     set(value) {
       mapboxMap.setViewAnnotationAvoidLayers(value)
     }
+  @MapboxExperimental
+  override var viewAnnotationAvoidRegions: List<ScreenBox>
+    get() = mapboxMap.viewAnnotationAvoidRegions
+    set(value) {
+      mapboxMap.viewAnnotationAvoidRegions = value
+    }
 
   init {
     viewAnnotationsLayout.apply {

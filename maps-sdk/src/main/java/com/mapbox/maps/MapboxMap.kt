@@ -2722,6 +2722,21 @@ class MapboxMap :
     return nativeMap.getViewAnnotationAvoidLayers()
   }
 
+  /**
+   * Rectangular screen regions that view annotations should avoid. This applies to view annotations
+   * with [ViewAnnotationOptions.enableAvoidRegions] set to `true`.
+   */
+  @MapboxExperimental
+  internal var viewAnnotationAvoidRegions: List<ScreenBox>
+    get() {
+      checkNativeMap("viewAnnotationAvoidRegions")
+      return nativeMap.getViewAnnotationAvoidRegions()
+    }
+    set(value) {
+      checkNativeMap("viewAnnotationAvoidRegions")
+      nativeMap.setViewAnnotationAvoidRegions(value)
+    }
+
   @JvmSynthetic
   internal fun updateViewAnnotation(
     viewId: String,

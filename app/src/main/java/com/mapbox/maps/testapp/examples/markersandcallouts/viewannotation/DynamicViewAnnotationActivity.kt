@@ -26,6 +26,8 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ImageHolder
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.ScreenBox
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationAnchorConfig
@@ -164,6 +166,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         }
       }
       mapView.showPaddingZone()
+      mapView.setupAvoidRegions()
       refreshButton(binding.btnMode)
     }
   }
@@ -307,6 +310,71 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
   }
 
   /**
+   * Adds three avoid regions and renders a debug overlay highlighting them.
+   * These regions won't be occupied by the DVA.
+   */
+  @OptIn(com.mapbox.maps.MapboxExperimental::class)
+  private fun MapView.setupAvoidRegions() {
+    val avoidRegionsView = AvoidRegionsView(context)
+    addView(avoidRegionsView)
+    post {
+      val regions = listOf(
+        ScreenBox(
+          ScreenCoordinate(0.0, 0.0),
+          ScreenCoordinate(AVOID_REGION_SIZE, AVOID_REGION_SIZE)
+        ),
+        ScreenBox(
+          ScreenCoordinate(width - AVOID_REGION_SIZE, 0.0),
+          ScreenCoordinate(width.toDouble(), AVOID_REGION_SIZE)
+        ),
+        ScreenBox(
+          ScreenCoordinate(
+            width - AVOID_REGION_SIZE,
+            (height - AVOID_REGION_SIZE) / 2.0
+          ),
+          ScreenCoordinate(
+            width.toDouble(),
+            (height - AVOID_REGION_SIZE) / 2.0 + AVOID_REGION_SIZE
+          )
+        )
+      )
+      viewAnnotationManager.viewAnnotationAvoidRegions = regions
+      avoidRegionsView.updateRegions(regions)
+    }
+  }
+
+  /**
+   * A View that draws the view annotation avoid regions.
+   */
+  private class AvoidRegionsView(context: Context) : View(context) {
+    private val paint = Paint().apply {
+      style = Paint.Style.STROKE
+      color = Color.RED
+      strokeWidth = 3f
+    }
+    private var regions: List<ScreenBox> = emptyList()
+
+    @UiThread
+    fun updateRegions(regions: List<ScreenBox>) {
+      this.regions = regions
+      invalidate()
+    }
+
+    override fun onDraw(canvas: Canvas) {
+      super.onDraw(canvas)
+      regions.forEach { box ->
+        canvas.drawRect(
+          box.min.x.toFloat(),
+          box.min.y.toFloat(),
+          box.max.x.toFloat(),
+          box.max.y.toFloat(),
+          paint
+        )
+      }
+    }
+  }
+
+  /**
    * A View that draw a box to showcase padding position.
    */
   private class PaddingView(context: Context) : View(context) {
@@ -358,6 +426,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         )
         minZoom(8f)
         enableSymbolLayerCollision(true)
+        enableAvoidRegions(true) // Demo: route DVA avoid regions, parking prices - don't
       }
     )
     alternativeEtaView = viewAnnotationManager.addViewAnnotation(
@@ -380,6 +449,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
         )
         minZoom(8f)
         enableSymbolLayerCollision(true)
+        enableAvoidRegions(true) // Demo: route DVA avoid regions, parking prices - don't
       }
     )
     alternativeEtaView.setOnClickListener {
@@ -532,5 +602,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     const val ROUTE_ALT_GEOJSON = "dva-sf-route-alternative.geojson"
     const val PARKINGS_GEOJSON = "dva-sf-parkings.geojson"
     const val CONSTRUCTION_GEOJSON = "dva-sf-construction.geojson"
+
+    const val AVOID_REGION_SIZE = 300.0
   }
 }
