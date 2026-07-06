@@ -782,6 +782,18 @@ internal class NativeMapImpl(val map: Map) {
 
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   @MapboxExperimental
+  fun setViewAnnotationAvoidRegions(regions: List<ScreenBox>) {
+    map.setViewAnnotationAvoidRegions(regions)
+  }
+
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
+  fun getViewAnnotationAvoidRegions(): List<ScreenBox> {
+    return map.viewAnnotationAvoidRegions
+  }
+
+  @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+  @MapboxExperimental
   fun getIndoorManager(): IndoorManager {
     return map.indoorManager
   }

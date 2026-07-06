@@ -6,6 +6,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Breaking changes ⚠️
+* Add `CameraAnimatorType.VERTICAL_FOV` enum constant. This is a source-breaking change for code that uses an exhaustive `when` over `CameraAnimatorType` without an `else` branch, which will no longer compile until the new case is handled.
+
+## Features ✨ and improvements 🏁
+* Animate verticalFov along with other camera parameters.
+* Introduce new experimental `ViewAnnotationManager.viewAnnotationAvoidRegions` which allows to specify rectangular screen regions that view annotations should avoid. View annotations opt in to this behaviour via the new experimental `ViewAnnotationOptions.enableAvoidRegions` option.
+
 # 11.26.0-rc.1 June 29, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Introduce experimental `IndoorSelector` composable function available inside `MapboxMap`, displaying a scrollable floor-selection widget that appears automatically when an indoor building is in view. Exposes `IndoorSelectorState` for programmatic access to the current floor list and selected floor, and an `onFloorClicked` callback for reacting to user selections.
