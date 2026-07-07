@@ -7,6 +7,10 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.25.1 July 03, 2026
+## Bug fixes 🐞
+* Fix View Annotations sometimes failing to appear on short line segments due to collision detection over-rejection.
+* Fix a `SecurityException` crash on Android 12 (API 31–32) when the Maps SDK registers location broadcast receivers.
+
 ## Dependencies
 * Update gl-native to [v11.25.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.1), common to [v24.25.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.1).
 
