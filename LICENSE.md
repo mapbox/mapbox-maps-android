@@ -1809,7 +1809,7 @@ freely, subject to the following restrictions:
 
 ---
 
-### shaderc,v2025.2,Apache-2.0,google,https://github.com/google/shaderc
+### shaderc,v2026.2,Apache-2.0,google,https://github.com/google/shaderc
 
 ```
                                  Apache License
@@ -2018,7 +2018,7 @@ freely, subject to the following restrictions:
 
 ---
 
-### spirv-reflect,vulkan-sdk-1.4.321.0,Apache-2.0,KhronosGroup,https://github.com/KhronosGroup/SPIRV-Reflect
+### spirv-reflect,vulkan-sdk-1.4.341.0,Apache-2.0,KhronosGroup,https://github.com/KhronosGroup/SPIRV-Reflect
 
 ```
                                  Apache License
