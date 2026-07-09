@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.26.0 July 09, 2026
+## Dependencies
+* Update gl-native to [v11.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0), common to [v24.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0).
+
+
 ## Breaking changes ⚠️
 * Add `CameraAnimatorType.VERTICAL_FOV` enum constant. This is a source-breaking change for code that uses an exhaustive `when` over `CameraAnimatorType` without an `else` branch, which will no longer compile until the new case is handled.
 
