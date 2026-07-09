@@ -8,7 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.layers.addLayer
@@ -30,6 +29,7 @@ import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -57,14 +57,21 @@ class ViewAnnotationTest(
   @get:Rule
   var rule = ActivityScenarioRule(EmptyActivity::class.java)
 
+  @After
+  fun tearDown() {
+    rule.scenario.onActivity {
+      mapView.onStop()
+      mapView.onDestroy()
+    }
+  }
+
   @Before
   @UiThreadTest
   fun before() {
     val latch = CountDownLatch(2)
     actualVisibilityUpdateList = mutableListOf()
     rule.scenario.onActivity {
-      val context = InstrumentationRegistry.getInstrumentation().targetContext
-      mapView = MapView(context)
+      mapView = MapView(it)
       mapView.id = R.id.mapView
       it.setContentView(mapView)
 

@@ -33,7 +33,7 @@ class GeoJsonSourceMutateTest(
       timeoutMillis = 10000
     ) { latch ->
       rule.runOnUiThread {
-        mapView = MapView(context)
+        mapView = MapView(it)
         mapboxMap = mapView.mapboxMap
         mapView.id = R.id.mapView
         // We don't need any style, nor compass nor scalebar

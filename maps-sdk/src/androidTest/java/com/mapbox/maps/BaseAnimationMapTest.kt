@@ -40,8 +40,7 @@ abstract class BaseAnimationMapTest {
     val latch = CountDownLatch(2)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        mapView = MapView(context)
+        mapView = MapView(it)
         mapView.id = R.id.mapView
         cameraAnimationPlugin = mapView.camera
         it.setContentView(mapView)

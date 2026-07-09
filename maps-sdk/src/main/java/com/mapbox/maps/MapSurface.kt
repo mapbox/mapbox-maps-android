@@ -46,7 +46,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   val surface: Surface
 
   /**
-   * @param context the application context to init the default [MapInitOptions]
+   * @param context a visual context (Activity, WindowContext, or DisplayContext) used to initialise the default [MapInitOptions]. On API 30+, a non-visual context (e.g. applicationContext) disables VRR/refresh-rate monitoring and locks the map to 60 fps on high-refresh-rate displays.
    * @param surface the surface that will display map
    * @param mapInitOptions the init options for map
    */
@@ -71,7 +71,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   }
 
   /**
-   * @param context the application context to init the default [MapInitOptions]
+   * @param context a visual context (Activity, WindowContext, or DisplayContext) used to initialise the default [MapInitOptions]. On API 30+, a non-visual context (e.g. applicationContext) disables VRR/refresh-rate monitoring and locks the map to 60 fps on high-refresh-rate displays.
    * @param surface the surface that will display map
    * @param mapInitOptions the init options for map
    * @param renderer the MapboxSurfaceRenderer instance to be used

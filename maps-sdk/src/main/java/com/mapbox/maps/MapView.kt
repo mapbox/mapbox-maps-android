@@ -90,6 +90,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   /**
    * Build a [MapView] with [Context] and [MapInitOptions] objects.
+   *
+   * @param context a visual context (Activity, WindowContext, or DisplayContext) used to
+   * initialise the default [MapInitOptions]. On API 30+, a non-visual context
+   * (e.g. applicationContext) disables VRR/refresh-rate monitoring and locks
+   * the map to 60 fps on high-refresh-rate displays.
+   * @param mapInitOptions the init options for map
    */
   @JvmOverloads
   constructor(context: Context, mapInitOptions: MapInitOptions = MapInitOptions(context)) : this(
@@ -102,12 +108,23 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   /**
    * Build a [MapView] with [Context] and [AttributeSet] objects.
+   *
+   * @param context a visual context (Activity, WindowContext, or DisplayContext). On API 30+,
+   * a non-visual context (e.g. applicationContext) disables VRR/refresh-rate monitoring and
+   * locks the map to 60 fps on high-refresh-rate displays.
+   * @param attrs the attribute set to initialise the [MapView] with
    */
   constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
   /**
    * Build a [MapView] with a [Context] object, a [AttributeSet] object, and
    * an [Int] which represents a style resource file.
+   *
+   * @param context a visual context (Activity, WindowContext, or DisplayContext). On API 30+,
+   * a non-visual context (e.g. applicationContext) disables VRR/refresh-rate monitoring and
+   * locks the map to 60 fps on high-refresh-rate displays.
+   * @param attrs the attribute set to initialise the [MapView] with
+   * @param defStyleAttr the default style attribute resource to apply to this [MapView]
    */
   constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
     context,

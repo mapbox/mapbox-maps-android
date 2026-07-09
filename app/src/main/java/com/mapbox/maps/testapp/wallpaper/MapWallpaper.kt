@@ -1,6 +1,6 @@
 package com.mapbox.maps.testapp.wallpaper
 
-import android.content.Context
+import android.os.Build
 import android.service.wallpaper.WallpaperService
 import android.util.Log
 import android.view.SurfaceHolder
@@ -13,11 +13,9 @@ import com.mapbox.maps.*
  */
 class MapWallpaper : WallpaperService() {
 
-  override fun onCreateEngine(): Engine {
-    return MapEngine(applicationContext)
-  }
+  override fun onCreateEngine(): Engine = MapEngine()
 
-  inner class MapEngine(val context: Context) : Engine(), SurfaceHolder.Callback {
+  inner class MapEngine : Engine(), SurfaceHolder.Callback {
 
     private lateinit var mapSurface: MapSurface
     private lateinit var mapboxMap: MapboxMap
@@ -40,7 +38,9 @@ class MapWallpaper : WallpaperService() {
       super.onCreate(surfaceHolder)
       surfaceHolder.addCallback(this)
 
-      mapSurface = MapSurface(context, surfaceHolder.surface)
+      val ctx = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) displayContext ?: applicationContext
+                else applicationContext
+      mapSurface = MapSurface(ctx, surfaceHolder.surface)
       mapboxMap = mapSurface.mapboxMap
 
       // Custom configuration

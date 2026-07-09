@@ -39,7 +39,7 @@ abstract class BaseMapTest {
       timeoutMillis = 10000
     ) { latch ->
       rule.runOnUiThread {
-        mapView = MapView(context)
+        mapView = MapView(it)
         mapView.id = R.id.mapView
         it.setContentView(mapView)
         mapView.onStart()

@@ -53,11 +53,13 @@ abstract class BaseStyleTest {
 
   companion object {
     private lateinit var _scenario: ActivityScenario<AppCompatActivity>
+    private lateinit var _activity: AppCompatActivity
 
     @BeforeClass
     @JvmStatic
     fun setupClass() {
       _scenario = ActivityScenario.launch(AppCompatActivity::class.java)
+      _scenario.onActivity { _activity = it }
     }
 
     @AfterClass
@@ -75,8 +77,7 @@ abstract class BaseStyleTest {
   fun before() {
     val latch = CountDownLatch(1)
     InstrumentationRegistry.getInstrumentation().runOnMainSync {
-      val context = InstrumentationRegistry.getInstrumentation().targetContext
-      mapView = MapView(context)
+      mapView = MapView(_activity)
       mapboxMap = mapView.mapboxMap
       mapboxMap.loadStyle(
         "mapbox://styles/mapbox/empty-v9"
