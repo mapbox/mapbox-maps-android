@@ -7,9 +7,6 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.26.0 July 09, 2026
-## Dependencies
-* Update gl-native to [v11.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0), common to [v24.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0).
-
 
 ## Breaking changes ⚠️
 * Add `CameraAnimatorType.VERTICAL_FOV` enum constant. This is a source-breaking change for code that uses an exhaustive `when` over `CameraAnimatorType` without an `else` branch, which will no longer compile until the new case is handled.
@@ -17,6 +14,18 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Animate verticalFov along with other camera parameters.
 * Introduce new experimental `ViewAnnotationManager.viewAnnotationAvoidRegions` which allows to specify rectangular screen regions that view annotations should avoid. View annotations opt in to this behaviour via the new experimental `ViewAnnotationOptions.enableAvoidRegions` option.
+* Improve landmark route cutout rendering to use uniform opacity fade instead of per-fragment dithering, improving visual quality and performance in navigation scenes with 3D landmarks.
+
+## Bug fixes 🐞
+* Fix a crash that could occur when querying rendered features while map layers were being removed.
+* Fix a one-frame flash where layers could briefly disappear while a new shader variant compiled asynchronously.
+* Fix continuous tile reparsing for HD road sources using cross-source elevation on a static map, causing sustained CPU usage.
+* Fix elevated lines with `line-elevation-reference: "ground"` disappearing from view due to incorrect frustum culling over terrain.
+* Fix gaps appearing in elevated route line geometry at elevation feature boundaries.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0), common to [v24.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0).
 
 # 11.26.0-rc.1 June 29, 2026
 
