@@ -372,7 +372,7 @@ public class PointAnnotationGroupState private constructor(
    */
   public var textTransform: TextTransform? by mutableStateOf(initialTextTransform)
   /**
-   * To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`.
+   * To increase the chance of placing high-priority labels on the map, you can provide an array of `text-anchor` locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the `text-radial-offset` or the two-dimensional `text-offset`. Known issue: at the moment having both `appearances` and `text-variable-anchor` in the same layer doesn't work correctly.
    */
   public var textVariableAnchor: List<String>? by mutableStateOf(initialTextVariableAnchor)
   /**
