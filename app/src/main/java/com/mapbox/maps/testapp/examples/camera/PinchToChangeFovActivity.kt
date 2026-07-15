@@ -69,7 +69,7 @@ class PinchToChangeFovActivity : AppCompatActivity() {
 
   companion object {
     private const val DEFAULT_FOV = 36.87
-    private const val FOV_MIN = 11.0
+    private const val FOV_MIN = 1.0
     private const val FOV_MAX = 90.0
 
     private val START_CAMERA = cameraOptions {
