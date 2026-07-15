@@ -30,7 +30,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-annotation:11.27.0-rc.1'
+  implementation 'com.mapbox.plugin:maps-annotation:11.28.0-alpha.1'
 }
 ```
 
