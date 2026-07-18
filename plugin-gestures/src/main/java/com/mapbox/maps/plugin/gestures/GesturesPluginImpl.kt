@@ -20,6 +20,7 @@ import com.mapbox.android.gestures.RotateGestureDetector
 import com.mapbox.android.gestures.ShoveGestureDetector
 import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.common.Cancelable
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ClickInteraction
 import com.mapbox.maps.DragInteraction
@@ -58,6 +59,7 @@ import kotlin.math.hypot
 import kotlin.math.ln
 import kotlin.math.min
 import kotlin.math.pow
+import kotlin.math.sign
 
 /**
  * Manages gestures events on a MapView.
@@ -1458,13 +1460,22 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     // limit animation time to Android SDK default animation time
     val animationTime = (velocityXY / pitchFactor).toLong()
 
-    // start the fling animation from a simulated touch point at the bottom of the display to reduce the fling speed at high pitch level.
-    val simulateTouchPoint = ScreenCoordinate(centerScreen.x, centerScreen.y * 2.0)
-    cameraAnimationsPlugin.easeTo(
+    // Start the fling from a simulated touch point at the bottom of the display to reduce the
+    // fling speed at high pitch level. On the globe use the screen center instead: the bottom of
+    // the screen may miss the globe at low zoom, distorting the latitude-based pan speed scaling.
+    val simulateTouchPoint = if (isGlobeProjection()) {
+      centerScreen
+    } else {
+      ScreenCoordinate(centerScreen.x, centerScreen.y * 2.0)
+    }
+    val flingTarget = clampFlingPanLongitude(
       mapCameraManagerDelegate.cameraForDrag(
         simulateTouchPoint,
         ScreenCoordinate(simulateTouchPoint.x + offsetX, simulateTouchPoint.y + offsetY)
-      ),
+      )
+    )
+    cameraAnimationsPlugin.easeTo(
+      flingTarget,
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
         duration(animationTime)
@@ -1473,6 +1484,30 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       animatorListener = coreGesturesHandler.coreGestureAnimatorHandler
     )
     return true
+  }
+
+  /**
+   * The fling easeTo animates the camera center along the shortest longitude path, so a pan of
+   * 180 degrees or more (possible at low zoom) would wrap around the antimeridian and animate
+   * opposite to the swipe. Clamp the delta below half the world to keep the momentum direction.
+   */
+  private fun clampFlingPanLongitude(target: CameraOptions): CameraOptions {
+    val targetCenter = target.center ?: return target
+    // cameraForDrag returns an unwrapped center longitude relative to the current camera state,
+    // so the raw difference reflects the true pan direction and distance.
+    val currentLongitude = mapCameraManagerDelegate.cameraState.center.longitude()
+    val longitudeDelta = targetCenter.longitude() - currentLongitude
+    if (abs(longitudeDelta) < MAX_FLING_PAN_LONGITUDE) {
+      return target
+    }
+    return target.toBuilder()
+      .center(
+        Point.fromLngLat(
+          currentLongitude + MAX_FLING_PAN_LONGITUDE * sign(longitudeDelta),
+          targetCenter.latitude()
+        )
+      )
+      .build()
   }
 
   private fun handleOverScrollerFling(
@@ -1493,6 +1528,16 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   internal fun handleMoveStartEvent() {
     cancelTransitionsIfRequired()
     notifyOnMoveBeginListeners(moveGestureListener.detector)
+  }
+
+  private fun isGlobeProjection(): Boolean {
+    // as we don't depend on style extension - working with raw values here
+    val projection = style?.getStyleProjectionProperty("name") ?: return false
+    if (projection.kind == StylePropertyValueKind.UNDEFINED) {
+      // no projection defined in the style, the map defaults to mercator
+      return false
+    }
+    return (projection.value.contents as String).uppercase() == "GLOBE"
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -1925,6 +1970,10 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     private val noOpAnimator = ValueAnimator()
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
+
+    // Below 180 degrees so that the shortest-path center animation cannot wrap around
+    // the antimeridian and reverse the fling direction.
+    const val MAX_FLING_PAN_LONGITUDE = 179.0
   }
 }
 

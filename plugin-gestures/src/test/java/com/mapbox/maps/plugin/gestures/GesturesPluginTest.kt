@@ -1301,6 +1301,70 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun verifyLegacyFlingUsesBottomOfScreenTouchPointForMercator() {
+    presenter.onSizeChanged(100, 100)
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), any())
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertTrue(result)
+    verify(exactly = 1) {
+      mapCameraManagerDelegate.cameraForDrag(ScreenCoordinate(50.0, 100.0), any())
+    }
+  }
+
+  @Test
+  fun verifyLegacyFlingUsesScreenCenterTouchPointForGlobe() {
+    every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
+      Value.valueOf("globe"),
+      StylePropertyValueKind.CONSTANT
+    )
+    presenter.onSizeChanged(100, 100)
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), any())
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertTrue(result)
+    verify(exactly = 1) {
+      mapCameraManagerDelegate.cameraForDrag(ScreenCoordinate(50.0, 50.0), any())
+    }
+  }
+
+  @Test
+  fun verifyLegacyFlingClampsPanBelowHalfWorldLongitude() {
+    // current camera center is at lon 0 (mocked in setUp); a fling target further than 180
+    // degrees away would reverse direction when animated along the shortest path
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), any())
+    } returns CameraOptions.Builder().center(Point.fromLngLat(-300.0, 10.0)).build()
+
+    val cameraOptionsSlot = slot<CameraOptions>()
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertTrue(result)
+    verify(exactly = 1) {
+      cameraAnimationsPlugin.easeTo(capture(cameraOptionsSlot), any(), any())
+    }
+    assertEquals(-179.0, cameraOptionsSlot.captured.center!!.longitude(), EPS)
+    assertEquals(10.0, cameraOptionsSlot.captured.center!!.latitude(), EPS)
+  }
+
+  @Test
+  fun verifyLegacyFlingKeepsPanWithinHalfWorldLongitude() {
+    val target = CameraOptions.Builder().center(Point.fromLngLat(100.0, 10.0)).build()
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), any())
+    } returns target
+
+    val result = presenter.handleFlingEvent(motionEvent2, 10000f, 10000f)
+    assertTrue(result)
+    verify(exactly = 1) {
+      cameraAnimationsPlugin.easeTo(target, any(), any())
+    }
+  }
+
+  @Test
   fun verifyNativeFlingRespectsScrollDisabled() {
     presenter.useNativeFlingDeceleration = true
     presenter.scrollEnabled = false

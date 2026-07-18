@@ -23,6 +23,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.27.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0-rc.1), common to [v24.27.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0-rc.1).
 
+## Bug fixes 🐞
+* Fix fling animation moving the camera in the opposite direction of the swipe at low zoom levels.
 
 # 11.26.0 July 09, 2026
 
