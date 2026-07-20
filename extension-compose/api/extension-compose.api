@@ -823,6 +823,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun getLineBlur ()Ljava/lang/Double;
 	public final fun getLineBorderColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
 	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
+	public final fun getLineBorderGradientUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
 	public final fun getLineColor-QN2ZGVo ()Landroidx/compose/ui/graphics/Color;
@@ -861,6 +862,7 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLineBlur (Ljava/lang/Double;)V
 	public final fun setLineBorderColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
 	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
+	public final fun setLineBorderGradientUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineColor-Y2TPw74 (Landroidx/compose/ui/graphics/Color;)V
@@ -2523,6 +2525,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun getLineBorderColor ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getLineBorderColorTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineBorderColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
+	public final fun getLineBorderGradient ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getLineBorderGradientUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getLineBorderWidth ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getLineBorderWidthTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;
@@ -2581,6 +2585,8 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Line
 	public final fun setLineBorderColor (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setLineBorderColorTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineBorderColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
+	public final fun setLineBorderGradient (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setLineBorderGradientUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setLineBorderWidth (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setLineBorderWidthTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setLineCap (Lcom/mapbox/maps/extension/compose/style/layers/generated/LineCapValue;)V

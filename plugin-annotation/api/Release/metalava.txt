@@ -1306,6 +1306,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method @ColorInt public Integer? getLineBorderColorInt();
     method public String? getLineBorderColorString();
     method public String? getLineBorderColorUseTheme();
+    method public String? getLineBorderGradientUseTheme();
     method public Double? getLineBorderWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method @ColorInt public Integer? getLineColorInt();
@@ -1350,6 +1351,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineBorderColorInt(@ColorInt Integer?);
     method public void setLineBorderColorString(String?);
     method public void setLineBorderColorUseTheme(String?);
+    method public void setLineBorderGradientUseTheme(String?);
     method public void setLineBorderWidth(Double?);
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
     method public void setLineColorInt(@ColorInt Integer?);
@@ -1393,6 +1395,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property @ColorInt public final Integer? lineBorderColorInt;
     property public final String? lineBorderColorString;
     property public final String? lineBorderColorUseTheme;
+    property public final String? lineBorderGradientUseTheme;
     property public final Double? lineBorderWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property @ColorInt public final Integer? lineColorInt;

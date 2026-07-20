@@ -49,6 +49,8 @@ private constructor(
   initialLineBorderColor: ColorValue,
   initialLineBorderColorUseTheme: StringValue,
   initialLineBorderColorTransition: Transition,
+  initialLineBorderGradient: ColorValue,
+  initialLineBorderGradientUseTheme: StringValue,
   initialLineBorderWidth: DoubleValue,
   initialLineBorderWidthTransition: Transition,
   initialLineColor: ColorValue,
@@ -113,6 +115,8 @@ private constructor(
     initialLineBorderColor = ColorValue.INITIAL,
     initialLineBorderColorUseTheme = StringValue.INITIAL,
     initialLineBorderColorTransition = Transition.INITIAL,
+    initialLineBorderGradient = ColorValue.INITIAL,
+    initialLineBorderGradientUseTheme = StringValue.INITIAL,
     initialLineBorderWidth = DoubleValue.INITIAL,
     initialLineBorderWidthTransition = Transition.INITIAL,
     initialLineColor = ColorValue.INITIAL,
@@ -264,6 +268,22 @@ private constructor(
    *  Defines the transition of [lineBorderColor].
    */
   public var lineBorderColorTransition: Transition by lineBorderColorTransitionState
+
+  @MapboxExperimental
+  private val lineBorderGradientState: MutableState<ColorValue> = mutableStateOf(initialLineBorderGradient)
+  /**
+   *  A gradient used to color the border of a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Takes precedence over `line-border-color`. Has no effect unless `line-border-width` is greater than zero. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   */
+  @MapboxExperimental
+  public var lineBorderGradient: ColorValue by lineBorderGradientState
+
+  @MapboxExperimental
+  private val lineBorderGradientUseThemeState: MutableState<StringValue> = mutableStateOf(initialLineBorderGradientUseTheme)
+  /**
+   *  Overrides applying of color theme for [lineBorderGradient] if "none" is set. To follow default theme "default" should be set. Default value: "default".
+   */
+  @MapboxExperimental
+  public var lineBorderGradientUseTheme: StringValue by lineBorderGradientUseThemeState
 
   private val lineBorderWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineBorderWidth)
   /**
@@ -550,6 +570,8 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderColorState, "line-border-color")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderColorUseThemeState, "line-border-color-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderColorTransitionState, "line-border-color-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderGradientState, "line-border-gradient")
+    ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderGradientUseThemeState, "line-border-gradient-use-theme")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderWidthState, "line-border-width")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineBorderWidthTransitionState, "line-border-width-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineColorState, "line-color")

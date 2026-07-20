@@ -1023,6 +1023,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun getLineBorderColorInt ()Ljava/lang/Integer;
 	public final fun getLineBorderColorString ()Ljava/lang/String;
 	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
+	public final fun getLineBorderGradientUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineCap ()Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;
 	public final fun getLineColorInt ()Ljava/lang/Integer;
@@ -1066,6 +1067,7 @@ public final class com/mapbox/maps/plugin/annotation/generated/PolylineAnnotatio
 	public final fun setLineBorderColorInt (Ljava/lang/Integer;)V
 	public final fun setLineBorderColorString (Ljava/lang/String;)V
 	public final fun setLineBorderColorUseTheme (Ljava/lang/String;)V
+	public final fun setLineBorderGradientUseTheme (Ljava/lang/String;)V
 	public final fun setLineBorderWidth (Ljava/lang/Double;)V
 	public final fun setLineCap (Lcom/mapbox/maps/extension/style/layers/properties/generated/LineCap;)V
 	public final fun setLineColorInt (Ljava/lang/Integer;)V

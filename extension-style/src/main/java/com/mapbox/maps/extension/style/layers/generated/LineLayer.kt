@@ -1133,6 +1133,91 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * A gradient used to color the border of a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Takes precedence over `line-border-color`. Has no effect unless `line-border-width` is greater than zero. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   */
+  @MapboxExperimental
+  val lineBorderGradient: Expression?
+    /**
+     * A gradient used to color the border of a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Takes precedence over `line-border-color`. Has no effect unless `line-border-width` is greater than zero. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+     *
+     * Use static method [LineLayer.defaultLineBorderGradient] to get the default property.
+     *
+     * @return Expression
+     */
+    get() {
+      return getPropertyValue("line-border-gradient")
+    }
+
+  /**
+   * A gradient used to color the border of a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Takes precedence over `line-border-color`. Has no effect unless `line-border-width` is greater than zero. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   *
+   * Use static method [LineLayer.defaultLineBorderGradient] to set the default property.
+   *
+   * @param lineBorderGradient value of lineBorderGradient
+   */
+  @MapboxExperimental
+  override fun lineBorderGradient(lineBorderGradient: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-gradient", lineBorderGradient)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [lineBorderGradient].
+   */
+  @MapboxExperimental
+  val lineBorderGradientUseTheme: String?
+    /**
+     * Get the LineBorderGradientUseTheme property
+     *
+     * Use static method [LineLayer.defaultLineBorderGradientUseTheme] to get the default property.
+     *
+     * @return current LineBorderGradientUseTheme property as Expression
+     */
+    get() {
+      return getPropertyValue("line-border-gradient-use-theme")
+    }
+
+  /**
+   * Set the LineBorderGradientUseTheme as String
+   *
+   * Use static method [LineLayer.defaultLineBorderGradientUseTheme] to get the default property.
+   *
+   * @param lineBorderGradientUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun lineBorderGradientUseTheme(lineBorderGradientUseTheme: String): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-gradient-use-theme", lineBorderGradientUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * Сolor theme override for [lineBorderGradient].
+   */
+  @MapboxExperimental
+  val lineBorderGradientUseThemeAsExpression: Expression?
+    /**
+     * Get the LineBorderGradientUseTheme property
+     *
+     * Use static method [LineLayer.defaultLineBorderGradientUseTheme] to get the default property.
+     *
+     * @return current LineBorderGradientUseTheme property as Expression
+     */
+    get() = getPropertyValueAsExpressionOrLiteralExpression("line-border-gradient-use-theme")
+
+  /**
+   * Set the LineBorderGradientUseTheme as Expression
+   *
+   * Use static method [LineLayer.defaultLineBorderGradientUseTheme] to get the default property.
+   *
+   * @param lineBorderGradientUseTheme theme value for color. Overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  override fun lineBorderGradientUseTheme(lineBorderGradientUseTheme: Expression): LineLayer = apply {
+    val propertyValue = PropertyValue("line-border-gradient-use-theme", lineBorderGradientUseTheme)
+    setProperty(propertyValue)
+  }
+
+  /**
    * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
    */
   val lineBorderWidth: Double?
@@ -3534,6 +3619,34 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
+     * Default color theme for [lineBorderGradient].
+     */
+    @MapboxExperimental
+    val defaultLineBorderGradientUseTheme: String?
+      /**
+       * Get default value of the LineBorderGradient property as String
+       *
+       * @return Expression
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-gradient-use-theme").silentUnwrap()
+
+    /**
+     * Default color theme for [lineBorderGradient].
+     */
+    @MapboxExperimental
+    val defaultLineBorderGradientUseThemeAsExpression: Expression?
+      /**
+       * Get default value of the LineBorderGradient property as Expression
+       *
+       * @return Expression
+       */
+      get() {
+        return StyleManager
+          .getStyleLayerPropertyDefaultValue("line", "line-border-gradient-use-theme")
+          .silentUnwrap<Expression>() ?: defaultLineBorderGradientUseTheme?.let { Expression.literal(it) }
+      }
+
+    /**
      * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
      */
     val defaultLineBorderWidth: Double?
@@ -4835,6 +4948,30 @@ interface LineLayerDsl {
    */
   @MapboxExperimental
   fun lineBorderColorUseTheme(lineBorderColorUseTheme: Expression): LineLayer
+
+  /**
+   * A gradient used to color the border of a line feature at various distances along its length. Defined using a `step` or `interpolate` expression which outputs a color for each corresponding `line-progress` input value. `line-progress` is a percentage of the line feature's total length as measured on the webmercator projected coordinate plane (a `number` between `0` and `1`). Takes precedence over `line-border-color`. Has no effect unless `line-border-width` is greater than zero. Can only be used with GeoJSON sources that specify `"lineMetrics": true`.
+   *
+   * @param lineBorderGradient value of lineBorderGradient
+   */
+  @MapboxExperimental
+  fun lineBorderGradient(lineBorderGradient: Expression): LineLayer
+
+  /**
+   * Set the lineBorderGradientUseTheme as String for [lineBorderGradient].
+   *
+   * @param lineBorderGradientUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun lineBorderGradientUseTheme(lineBorderGradientUseTheme: String): LineLayer
+
+  /**
+   * Set the lineBorderGradientUseTheme as Expression for [lineBorderGradient].
+   *
+   * @param lineBorderGradientUseTheme overrides applying of color theme if "none" string value is set. To follow default theme "default" sting value should be set.
+   */
+  @MapboxExperimental
+  fun lineBorderGradientUseTheme(lineBorderGradientUseTheme: Expression): LineLayer
 
   /**
    * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.

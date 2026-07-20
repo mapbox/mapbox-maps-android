@@ -1379,6 +1379,34 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineBorderGradientUseTheme property
+   *
+   * This property defines whether the `lineBorderGradient` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
+   */
+  @MapboxExperimental
+  var lineBorderGradientUseTheme: String?
+    /**
+     * Get the LineBorderGradientUseTheme property
+     *
+     * @return property wrapper value around String
+     */
+    get(): String? {
+      return layer.lineBorderGradientUseTheme
+    }
+    /**
+     * Set the LineBorderGradientUseTheme property
+     * @param value property wrapper value around String
+     */
+    set(value) {
+      val wrappedValue = if (value != null) {
+        TypeUtils.wrapToValue(value)
+      } else {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-gradient-use-theme").value
+      }
+      setLayerProperty(wrappedValue, "line-border-gradient-use-theme")
+    }
+
+  /**
    * The default lineColorUseTheme for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
    * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
