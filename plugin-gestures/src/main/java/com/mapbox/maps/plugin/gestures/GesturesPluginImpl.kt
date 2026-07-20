@@ -32,7 +32,6 @@ import com.mapbox.maps.PlatformEventType
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.logE
-import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -119,7 +118,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   private var screenHeight: Double = 0.0
   private var startZoom: Double = 0.0
   private var scaleCachedAnchor: ScreenCoordinate? = null
-  private var pinchScaleOccurredInSession: Boolean = false
 
   // Rotate
   private var minimumScaleSpanWhenRotating: Float = 0f
@@ -334,7 +332,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
 
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
-      pinchScaleOccurredInSession = false
     }
 
     val result = gesturesManager.onTouchEvent(motionEvent)
@@ -856,7 +853,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       } else {
         return false
       }
-      pinchScaleOccurredInSession = true
     }
 
     screenHeight = context.resources.displayMetrics.heightPixels.toDouble()
@@ -1185,10 +1181,6 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       pointersCount: Int
     ): Boolean {
       if (!internalSettings.doubleTouchToZoomOutEnabled || pointersCount != 2) {
-        return false
-      }
-      if (pinchScaleOccurredInSession) {
-        logI(TAG, "Skipping doubleTouchToZoomOut: pinch scale occurred in the same touch session.")
         return false
       }
 

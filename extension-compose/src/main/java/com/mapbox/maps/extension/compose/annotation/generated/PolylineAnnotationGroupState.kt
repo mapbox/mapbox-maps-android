@@ -57,7 +57,6 @@ public class PolylineAnnotationGroupState private constructor(
   initialMaxZoom: Double?,
   initialMinZoom: Double?,
   initialLineBorderColorUseTheme: String?,
-  initialLineBorderGradientUseTheme: String?,
   initialLineColorUseTheme: String?,
   initialLineGradientUseTheme: String?,
   initialLineTrimColorUseTheme: String?,
@@ -98,7 +97,6 @@ public class PolylineAnnotationGroupState private constructor(
     initialMaxZoom = null,
     initialMinZoom = null,
     initialLineBorderColorUseTheme = null,
-    initialLineBorderGradientUseTheme = null,
     initialLineColorUseTheme = null,
     initialLineGradientUseTheme = null,
     initialLineTrimColorUseTheme = null,
@@ -252,11 +250,6 @@ public class PolylineAnnotationGroupState private constructor(
    */
   @MapboxExperimental
   public var lineBorderColorUseTheme: String? by mutableStateOf(initialLineBorderColorUseTheme)
-  /**
-   * This property defines whether the `lineBorderGradient` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
-   */
-  @MapboxExperimental
-  public var lineBorderGradientUseTheme: String? by mutableStateOf(initialLineBorderGradientUseTheme)
   /**
    * This property defines whether the `lineColor` uses colorTheme from the style or not. By default it will use color defined by the root theme in the style.
    */
@@ -418,11 +411,6 @@ public class PolylineAnnotationGroupState private constructor(
   }
   @Composable
   @OptIn(MapboxExperimental::class)
-  private fun UpdateLineBorderGradientUseTheme(annotationManager: PolylineAnnotationManager) {
-    annotationManager.lineBorderGradientUseTheme = lineBorderGradientUseTheme
-  }
-  @Composable
-  @OptIn(MapboxExperimental::class)
   private fun UpdateLineColorUseTheme(annotationManager: PolylineAnnotationManager) {
     annotationManager.lineColorUseTheme = lineColorUseTheme
   }
@@ -473,7 +461,6 @@ public class PolylineAnnotationGroupState private constructor(
     UpdateMaxZoom(annotationManager)
     UpdateMinZoom(annotationManager)
     UpdateLineBorderColorUseTheme(annotationManager)
-    UpdateLineBorderGradientUseTheme(annotationManager)
     UpdateLineColorUseTheme(annotationManager)
     UpdateLineGradientUseTheme(annotationManager)
     UpdateLineTrimColorUseTheme(annotationManager)
