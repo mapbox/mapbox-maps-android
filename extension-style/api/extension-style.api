@@ -2606,6 +2606,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public final fun getLineBorderColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getLineBorderColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getLineBorderGradient ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getLineBorderGradientUseTheme ()Ljava/lang/String;
+	public final fun getLineBorderGradientUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineBorderWidth ()Ljava/lang/Double;
 	public final fun getLineBorderWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getLineBorderWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2705,6 +2708,9 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer : 
 	public fun lineBorderColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineBorderGradient (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineBorderGradientUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public fun lineBorderGradientUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public fun lineBorderWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
@@ -2823,6 +2829,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/LineLayer$Co
 	public final fun getDefaultLineBorderColorTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultLineBorderColorUseTheme ()Ljava/lang/String;
 	public final fun getDefaultLineBorderColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getDefaultLineBorderGradientUseTheme ()Ljava/lang/String;
+	public final fun getDefaultLineBorderGradientUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineBorderWidth ()Ljava/lang/Double;
 	public final fun getDefaultLineBorderWidthAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultLineBorderWidthTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
@@ -2921,6 +2929,9 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun lineBorderColorTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineBorderGradient (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineBorderGradientUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
+	public abstract fun lineBorderGradientUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderWidth (D)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderWidth (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;
 	public abstract fun lineBorderWidthTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LineLayer;

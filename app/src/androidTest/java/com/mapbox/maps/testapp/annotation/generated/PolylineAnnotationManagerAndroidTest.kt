@@ -476,6 +476,18 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineBorderGradientUseTheme() {
+    rule.runOnUiThread {
+      val expectedValue = "default"
+      val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+      polylineAnnotationManager.lineBorderGradientUseTheme = expectedValue
+      assertEquals(expectedValue, polylineAnnotationManager.lineBorderGradientUseTheme)
+      polylineAnnotationManager.lineBorderGradientUseTheme = null
+      assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-gradient-use-theme").silentUnwrap(), polylineAnnotationManager.lineBorderGradientUseTheme)
+    }
+  }
+
+  @Test
   fun testLineColorUseTheme() {
     rule.runOnUiThread {
       val expectedValue = "default"

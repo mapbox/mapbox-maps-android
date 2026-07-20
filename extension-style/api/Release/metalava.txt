@@ -3082,6 +3082,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineBorderColorTransition();
     method public String? getLineBorderColorUseTheme();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineBorderColorUseThemeAsExpression();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineBorderGradient();
+    method public String? getLineBorderGradientUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineBorderGradientUseThemeAsExpression();
     method public Double? getLineBorderWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineBorderWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineBorderWidthTransition();
@@ -3181,6 +3184,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderColorUseTheme(String lineBorderColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderGradient(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderGradient);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderGradientUseTheme(String lineBorderGradientUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderGradientUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderGradientUseTheme);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderWidth(double lineBorderWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -3293,6 +3299,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineBorderColorTransition;
     property public final String? lineBorderColorUseTheme;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineBorderColorUseThemeAsExpression;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineBorderGradient;
+    property public final String? lineBorderGradientUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineBorderGradientUseThemeAsExpression;
     property public final Double? lineBorderWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineBorderWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineBorderWidthTransition;
@@ -3394,6 +3403,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineBorderColorTransition();
     method public String? getDefaultLineBorderColorUseTheme();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineBorderColorUseThemeAsExpression();
+    method public String? getDefaultLineBorderGradientUseTheme();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineBorderGradientUseThemeAsExpression();
     method public Double? getDefaultLineBorderWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineBorderWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineBorderWidthTransition();
@@ -3486,6 +3497,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineBorderColorTransition;
     property public final String? defaultLineBorderColorUseTheme;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineBorderColorUseThemeAsExpression;
+    property public final String? defaultLineBorderGradientUseTheme;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineBorderGradientUseThemeAsExpression;
     property public final Double? defaultLineBorderWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineBorderWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineBorderWidthTransition;
@@ -3584,6 +3597,9 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderColorTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderColorUseTheme(String lineBorderColorUseTheme);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderColorUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderColorUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderGradient(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderGradient);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderGradientUseTheme(String lineBorderGradientUseTheme);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderGradientUseTheme(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderGradientUseTheme);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderWidth(double lineBorderWidth = 0.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineBorderWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineBorderWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
