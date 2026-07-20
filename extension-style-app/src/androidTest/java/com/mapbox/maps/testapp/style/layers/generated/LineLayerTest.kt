@@ -519,6 +519,71 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineBorderGradientTest() {
+    val testValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    val layer = lineLayer("id", "source") {
+      lineBorderGradient(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.lineBorderGradient?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderGradientUseThemeAsExpressionTest() {
+    val expression = literal("none")
+    val layer = lineLayer("id", "source") {
+      lineBorderGradientUseTheme(expression)
+    }
+    setupLayer(layer)
+    assertEquals(expression.toString(), layer.lineBorderGradientUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderGradientUseThemeStringAsExpressionTest() {
+    val testValue = "none"
+    val layer = lineLayer("id", "source") {
+      lineBorderGradientUseTheme(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(literal(testValue).toString(), layer.lineBorderGradientUseThemeAsExpression.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineBorderGradientUseTheme() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineBorderGradientUseTheme(theme)
+    }
+    setupLayer(layer)
+    assertEquals(theme, layer.lineBorderGradientUseTheme)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineBorderWidthTest() {
     val testValue = 1.0
     val layer = lineLayer("id", "source") {
@@ -1630,6 +1695,8 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineBorderColorUseTheme should not be null", LineLayer.defaultLineBorderColorUseTheme)
     assertNotNull("defaultLineBorderColorUseThemeAsExpression should not be null", LineLayer.defaultLineBorderColorUseThemeAsExpression)
     assertNotNull("defaultLineBorderColorTransition should not be null", LineLayer.defaultLineBorderColorTransition)
+    assertNotNull("defaultLineBorderGradientUseTheme should not be null", LineLayer.defaultLineBorderGradientUseTheme)
+    assertNotNull("defaultLineBorderGradientUseThemeAsExpression should not be null", LineLayer.defaultLineBorderGradientUseThemeAsExpression)
     assertNotNull("defaultLineBorderWidth should not be null", LineLayer.defaultLineBorderWidth)
     assertNotNull("defaultLineBorderWidthAsExpression should not be null", LineLayer.defaultLineBorderWidthAsExpression)
     assertNotNull("defaultLineBorderWidthTransition should not be null", LineLayer.defaultLineBorderWidthTransition)
@@ -1713,6 +1780,29 @@ class LineLayerTest : BaseStyleTest() {
     val lineBlurTestValue = 1.0
     val lineBorderColorTestValue = "rgba(0, 0, 0, 1)"
     val lineBorderColorUseThemeTestValue = "default"
+    val lineBorderGradientTestValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    val lineBorderGradientUseThemeTestValue = "default"
     val lineBorderWidthTestValue = 1.0
     val lineColorTestValue = "rgba(0, 0, 0, 1)"
     val lineColorUseThemeTestValue = "default"
@@ -1778,6 +1868,8 @@ class LineLayerTest : BaseStyleTest() {
       lineBlur(lineBlurTestValue)
       lineBorderColor(lineBorderColorTestValue)
       lineBorderColorUseTheme(lineBorderColorUseThemeTestValue)
+      lineBorderGradient(lineBorderGradientTestValue)
+      lineBorderGradientUseTheme(lineBorderGradientUseThemeTestValue)
       lineBorderWidth(lineBorderWidthTestValue)
       lineColor(lineColorTestValue)
       lineColorUseTheme(lineColorUseThemeTestValue)
@@ -1827,6 +1919,8 @@ class LineLayerTest : BaseStyleTest() {
     assertEquals(lineBlurTestValue, cachedLayer.lineBlur)
     assertEquals(lineBorderColorTestValue, cachedLayer.lineBorderColor)
     assertEquals(lineBorderColorUseThemeTestValue, cachedLayer.lineBorderColorUseTheme)
+    assertEquals(lineBorderGradientTestValue, cachedLayer.lineBorderGradient)
+    assertEquals(lineBorderGradientUseThemeTestValue, cachedLayer.lineBorderGradientUseTheme)
     assertEquals(lineBorderWidthTestValue, cachedLayer.lineBorderWidth)
     assertEquals(lineColorTestValue, cachedLayer.lineColor)
     assertEquals(lineColorUseThemeTestValue, cachedLayer.lineColorUseTheme)

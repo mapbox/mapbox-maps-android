@@ -1216,6 +1216,123 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineBorderGradientSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    layer.bindTo(style)
+    layer.lineBorderGradient(testValue)
+    verify { style.setStyleLayerProperty("id", "line-border-gradient", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[interpolate, [linear], [heatmap-density], 0.0, [rgba, 0.0, 0.0, 0.0, 0.0], 1.0, [rgba, 0.0, 255.0, 0.0, 1.0]]")
+  }
+
+  @Test
+  fun lineBorderGradientGet() {
+    val testValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = interpolate {
+      linear()
+      heatmapDensity()
+      stop {
+        literal(0.0)
+        rgba {
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+          literal(0.0)
+        }
+      }
+      stop {
+        literal(1.0)
+        rgba {
+          literal(0.0)
+          literal(255.0)
+          literal(0.0)
+          literal(1.0)
+        }
+      }
+    }
+    assertEquals(expectedValue.toString(), layer.lineBorderGradient?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-gradient") }
+  }
+
+  @Test
+  fun lineBorderGradientUseThemeSetAfterInitialization() {
+    val layer = lineLayer("id", "source") {}
+    val theme = "none"
+    layer.bindTo(style)
+    layer.lineBorderGradientUseTheme(theme)
+    verify { style.setStyleLayerProperty("id", "line-border-gradient-use-theme", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), theme)
+  }
+
+  @Test
+  fun lineBorderGradientUseThemeSet() {
+    val theme = "none"
+    val layer = lineLayer("id", "source") {
+      lineBorderGradientUseTheme(theme)
+    }
+    layer.bindTo(style)
+    verify { style.addStyleLayer(capture(valueSlot), any()) }
+    assertTrue(valueSlot.captured.toString().contains("line-border-gradient-use-theme"))
+  }
+
+  @Test
+  fun lineBorderGradientUseThemeGet() {
+    val theme = "none"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(theme)
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    assertEquals(theme.toString(), layer.lineBorderGradientUseTheme?.toString())
+    verify { style.getStyleLayerProperty("id", "line-border-gradient-use-theme") }
+  }
+  // Expression Tests
+
+  @Test
   fun lineBorderWidthSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = 1.0
@@ -3907,6 +4024,16 @@ class LineLayerTest {
     assertEquals(transition.toValue().toString(), LineLayer.defaultLineBorderColorTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-color-transition") }
   }
+
+  @Test
+  fun defaultLineBorderGradientUseThemeTest() {
+    val testValue = "default"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    assertEquals(testValue, LineLayer.defaultLineBorderGradientUseTheme)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-border-gradient-use-theme") }
+  }
+
+  // Expression Tests
 
   @Test
   fun defaultLineBorderWidthTest() {

@@ -1004,6 +1004,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public Double? getLineBlur();
     method public androidx.compose.ui.graphics.Color? getLineBorderColor();
     method public String? getLineBorderColorUseTheme();
+    method public String? getLineBorderGradientUseTheme();
     method public Double? getLineBorderWidth();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineCap? getLineCap();
     method public androidx.compose.ui.graphics.Color? getLineColor();
@@ -1042,6 +1043,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     method public void setLineBlur(Double?);
     method public void setLineBorderColor(androidx.compose.ui.graphics.Color?);
     method public void setLineBorderColorUseTheme(String?);
+    method public void setLineBorderGradientUseTheme(String?);
     method public void setLineBorderWidth(Double?);
     method public void setLineCap(com.mapbox.maps.extension.style.layers.properties.generated.LineCap?);
     method public void setLineColor(androidx.compose.ui.graphics.Color?);
@@ -1080,6 +1082,7 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final Double? lineBlur;
     property public final androidx.compose.ui.graphics.Color? lineBorderColor;
     property public final String? lineBorderColorUseTheme;
+    property public final String? lineBorderGradientUseTheme;
     property public final Double? lineBorderWidth;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineCap? lineCap;
     property public final androidx.compose.ui.graphics.Color? lineColor;
@@ -2960,6 +2963,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.ColorValue getLineBorderColor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineBorderColorTransition();
     method public com.mapbox.maps.extension.compose.style.StringValue getLineBorderColorUseTheme();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getLineBorderGradient();
+    method public com.mapbox.maps.extension.compose.style.StringValue getLineBorderGradientUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineBorderWidth();
     method public com.mapbox.maps.extension.compose.style.Transition getLineBorderWidthTransition();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue getLineCap();
@@ -3018,6 +3023,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineBorderColor(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setLineBorderColorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineBorderColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
+    method public void setLineBorderGradient(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setLineBorderGradientUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setLineBorderWidth(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineBorderWidthTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineCap(com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue);
@@ -3076,6 +3083,8 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.ColorValue lineBorderColor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineBorderColorTransition;
     property public final com.mapbox.maps.extension.compose.style.StringValue lineBorderColorUseTheme;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue lineBorderGradient;
+    property public final com.mapbox.maps.extension.compose.style.StringValue lineBorderGradientUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineBorderWidth;
     property public final com.mapbox.maps.extension.compose.style.Transition lineBorderWidthTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.LineCapValue lineCap;
