@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.StrictMode
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.common.MapboxAgentContextFactory
 import com.mapbox.common.MapboxTracing
 import com.mapbox.common.geofencing.GeofencingError
 import com.mapbox.common.geofencing.GeofencingEvent
@@ -66,8 +67,25 @@ class MapboxApplication : Application() {
     // Enable all traces. Useful when capturing Perfetto traces
     MapboxTracing.enableAll()
     initializeStrictMode()
+    forwardMapboxAgentId()
     if (ENABLE_BACKGROUND_GEOFENCING) {
       registerGeofencingObserver()
+    }
+  }
+
+  /**
+   * Forwards the compile-time Mapbox agent id (see `-Pmapbox.agent=<id>` and
+   * [BuildConfig.MAPBOX_AGENT]) into Common's process-wide `MapboxAgentContext`, so that
+   * outbound Mapbox requests made during this process' lifetime (e.g. during a
+   * `connectedAndroidTest` run) carry an `agent/<id>` tag on the User-Agent header.
+   *
+   * This is a no-op whenever [BuildConfig.MAPBOX_AGENT] is empty, which is the default when the
+   * `mapbox.agent` Gradle property is not supplied, so regular `assembleRelease` / non-test
+   * builds of this app are unaffected.
+   */
+  private fun forwardMapboxAgentId() {
+    forwardAgentIdIfPresent(BuildConfig.MAPBOX_AGENT) { agentId ->
+      MapboxAgentContextFactory.getInstance().setMapboxAgentId(agentId)
     }
   }
 
