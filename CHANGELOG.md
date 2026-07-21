@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Expand the minimum camera field of view from 11 to 1 degrees.
+* Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
 
 ## Bug fixes 🐞
 * [gestures] Fix map snapping back after a pinch-to-zoom-in gesture.
