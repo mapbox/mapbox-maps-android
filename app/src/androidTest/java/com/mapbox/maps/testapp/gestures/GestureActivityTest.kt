@@ -23,6 +23,7 @@ import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -458,5 +459,67 @@ class GestureActivityTest : BaseMapTest() {
         mapView.gestures.removeOnScaleListener(scaleListener)
       }
     }
+  }
+
+  /**
+   * Regression test: fast pinch-to-zoom-in must not trigger a spurious animateZoomOut.
+   *
+   * StandardScaleGestureDetector and MultiFingerTapGestureDetector can both fire on the
+   * same touch session when a fast pinch satisfies both simultaneously:
+   *   scale: cumulative span > 7dp, speed > 0.6dp/ms
+   *   tap:   per-event span change < 5dp, total time < 150ms
+   * onMultiFingerTap() calls animateZoomOut(-1.0) undoing the zoom-in, and
+   * notifyOnScaleBeginListeners — a spurious onScaleBegin fires after onScaleEnd.
+   *
+   * Expected (bug absent): onScaleBegin called exactly once per pinch.
+   * Bug present:           onScaleBegin called twice (pinch + spurious animateZoomOut).
+   */
+  @Test
+  fun pinchToZoomIn_doesNotTriggerSpuriousZoomOut() {
+    val scaleBeginCount = AtomicInteger(0)
+    val scaleEndLatch = CountDownLatch(1)
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapView.gestures.addOnScaleListener(object : OnScaleListener {
+          override fun onScaleBegin(detector: StandardScaleGestureDetector) {
+            scaleBeginCount.incrementAndGet()
+          }
+          override fun onScale(detector: StandardScaleGestureDetector) {}
+          override fun onScaleEnd(detector: StandardScaleGestureDetector) {
+            scaleEndLatch.countDown()
+          }
+        })
+      }
+    }
+
+    // Gesture parameters (density-independent):
+    //   spanPerStep = 4dp < 5dp tap rejection threshold
+    //   eventInterval = 5ms → speed = 4dp/5ms = 0.8dp/ms > 0.6dp/ms scale threshold
+    //   3 steps × 5ms = 15ms < 150ms tap time limit
+    // Both detectors fire on the same session → bug triggers animateZoomOut.
+    onView(withId(R.id.mapView)).perform(
+      GesturesUiTestUtils.fastPinch(
+        startSpan = 100f * pixelRatio, // 100dp initial span — reliable multi-touch distance
+        spanPerStep = 4f * pixelRatio, // 4dp per step
+        steps = 3
+      )
+    )
+
+    if (!scaleEndLatch.await(3_000, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException(
+        "onScaleEnd not called — scale detector did not fire. " +
+          "Verify mapView is visible and gesture parameters meet the scale speed threshold."
+      )
+    }
+
+    // Wait for animateZoomOut animation (300ms) to potentially fire
+    R.id.mapView.loopFor(500)
+
+    assertEquals(
+      "animateZoomOut must not fire after a pinch-to-zoom-in gesture",
+      1,
+      scaleBeginCount.get()
+    )
   }
 }
