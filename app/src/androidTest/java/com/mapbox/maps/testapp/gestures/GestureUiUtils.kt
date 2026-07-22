@@ -15,6 +15,37 @@ object GesturesUiTestUtils {
 
   private const val DEFAULT_GESTURE_DURATION = 500L
 
+  /**
+   * Fast two-finger pinch-out gesture tuned to trigger both StandardScaleGestureDetector
+   * and MultiFingerTapGestureDetector in the same touch session.
+   *
+   * Parameters are in pixels. Typical values to trigger the race (scale by pixelRatio):
+   *   spanPerStep = 4dp × pixelRatio → per-event span change < 5dp tap rejection threshold
+   *   eventIntervalMs = 5ms → speed > 0.6dp/ms scale threshold
+   *   3 steps × 5ms = 15ms < 150ms tap time limit
+   */
+  fun fastPinch(
+    startSpan: Float,
+    spanPerStep: Float,
+    steps: Int = 3,
+    center: PointF? = null
+  ): ViewAction {
+    return object : ViewAction {
+      override fun getConstraints(): Matcher<View> = ViewMatchers.isEnabled()
+      override fun getDescription() = "fastPinch +${spanPerStep}px/step × $steps steps (~${steps * 5}ms)"
+      override fun perform(uiController: UiController, view: View) {
+        val mid = center ?: getCenterPointF(view)
+        val endSpan = startSpan + spanPerStep * steps
+        performFastPinch(
+          uiController,
+          PointF(mid.x - startSpan / 2, mid.y), PointF(mid.x + startSpan / 2, mid.y),
+          PointF(mid.x - endSpan / 2, mid.y), PointF(mid.x + endSpan / 2, mid.y),
+          steps
+        )
+      }
+    }
+  }
+
   fun pinch(
     startSpan: Float,
     endSpan: Float,
@@ -495,6 +526,77 @@ object GesturesUiTestUtils {
       injectMotionEventToUiController(uiController, event)
     } catch (ex: InjectEventSecurityException) {
       throw RuntimeException("Could not perform quick scale", ex)
+    }
+  }
+
+  private fun performFastPinch(
+    uiController: UiController,
+    startPoint1: PointF,
+    startPoint2: PointF,
+    endPoint1: PointF,
+    endPoint2: PointF,
+    steps: Int
+  ) {
+    require(steps > 0) { "steps must be > 0" }
+    val eventIntervalMs: Long = 5
+    val startTime = SystemClock.uptimeMillis()
+    var eventTime = startTime
+
+    val pp1 = MotionEvent.PointerProperties().apply { id = 0; toolType = MotionEvent.TOOL_TYPE_FINGER }
+    val pp2 = MotionEvent.PointerProperties().apply { id = 1; toolType = MotionEvent.TOOL_TYPE_FINGER }
+    val properties = arrayOf(pp1, pp2)
+
+    val pc1 = MotionEvent.PointerCoords().apply { x = startPoint1.x; y = startPoint1.y; pressure = 1f; size = 1f }
+    val pc2 = MotionEvent.PointerCoords().apply { x = startPoint2.x; y = startPoint2.y; pressure = 1f; size = 1f }
+    val coords = arrayOf(pc1, pc2)
+
+    val stepX1 = (endPoint1.x - startPoint1.x) / steps
+    val stepX2 = (endPoint2.x - startPoint2.x) / steps
+
+    try {
+      injectMotionEventToUiController(
+        uiController,
+        MotionEvent.obtain(
+          startTime, eventTime, MotionEvent.ACTION_DOWN, 1, properties, coords, 0, 0, 1f, 1f, 0, 0, 0, 0
+        )
+      )
+      injectMotionEventToUiController(
+        uiController,
+        MotionEvent.obtain(
+          startTime, eventTime,
+          MotionEvent.ACTION_POINTER_DOWN + (pp2.id shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+          2, properties, coords, 0, 0, 1f, 1f, 0, 0, 0, 0
+        )
+      )
+      repeat(steps) {
+        eventTime += eventIntervalMs
+        pc1.x += stepX1
+        pc2.x += stepX2
+        injectMotionEventToUiController(
+          uiController,
+          MotionEvent.obtain(
+            startTime, eventTime, MotionEvent.ACTION_MOVE, 2, properties, coords, 0, 0, 1f, 1f, 0, 0, 0, 0
+          )
+        )
+      }
+      eventTime += eventIntervalMs
+      injectMotionEventToUiController(
+        uiController,
+        MotionEvent.obtain(
+          startTime, eventTime,
+          MotionEvent.ACTION_POINTER_UP + (pp2.id shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+          2, properties, coords, 0, 0, 1f, 1f, 0, 0, 0, 0
+        )
+      )
+      eventTime += eventIntervalMs
+      injectMotionEventToUiController(
+        uiController,
+        MotionEvent.obtain(
+          startTime, eventTime, MotionEvent.ACTION_UP, 1, properties, coords, 0, 0, 1f, 1f, 0, 0, 0, 0
+        )
+      )
+    } catch (ex: InjectEventSecurityException) {
+      throw RuntimeException("Could not perform fast pinch", ex)
     }
   }
 

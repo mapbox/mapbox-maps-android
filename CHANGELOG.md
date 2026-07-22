@@ -8,6 +8,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expand the minimum camera field of view from 11 to 1 degrees.
 
+## Bug fixes 🐞
+* [gestures] Fix map snapping back after a pinch-to-zoom-in gesture.
+
 # 11.27.0-rc.1 July 13, 2026
 ## Features ✨ and improvements 🏁
 * Add cross-source HD road elevation for symbols, so road symbols can align to HD elevation data provided by a separate source.
