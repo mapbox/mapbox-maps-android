@@ -7,10 +7,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Clarify the documentation of `RasterLayer.rasterColor`, `rasterColorMix`, and `rasterColorRange`.
-
-## Features ✨ and improvements 🏁
 * [compose] Add companion object `MapState.clearData()` suspend function to clear temporary map data shared across maps using the same data pat.
 * [compose] Add experimental `GesturesState` with per-gesture listeners via `GestureInput` composable. Provides `detectMoveGestures`, `detectScaleGestures`, `detectRotateGestures`, `detectShoveGestures`, and `detectFlingGesture` suspend functions. `GesturesState` can be created standalone via `rememberGesturesState()` and assigned to `MapState.gesturesState`. Exposes `isGestureInProgress()` and `isUserAnimationInProgress()` methods. Gesture settings are now accessed through `MapState.gesturesState.gesturesSettings`; the old `MapState.gesturesSettings` property is deprecated.
+* Promote `SymbolLayer.symbolZOffset` to stable.
 
 # 11.28.0
 ## Bug fixes 🐞
@@ -54,7 +53,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0), common to [v24.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0).
-
 
 # 11.27.0-rc.1 July 13, 2026
 ## Features ✨ and improvements 🏁

@@ -214,7 +214,6 @@ public class PointAnnotationState private constructor(
   /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
-  @MapboxExperimental
   public var symbolZOffset: Double? by mutableStateOf(initialSymbolZOffset)
   /**
    * The color with which the text will be drawn. Default value: "#000000".

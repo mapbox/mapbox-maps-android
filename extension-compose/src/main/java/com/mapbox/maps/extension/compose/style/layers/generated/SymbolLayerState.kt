@@ -690,20 +690,16 @@ private constructor(
    */
   public var occlusionOpacityMode: OcclusionOpacityModeValue by occlusionOpacityModeState
 
-  @MapboxExperimental
   private val symbolZOffsetState: MutableState<DoubleValue> = mutableStateOf(initialSymbolZOffset)
   /**
    *  Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
-  @MapboxExperimental
   public var symbolZOffset: DoubleValue by symbolZOffsetState
 
-  @MapboxExperimental
   private val symbolZOffsetTransitionState: MutableState<Transition> = mutableStateOf(initialSymbolZOffsetTransition)
   /**
    *  Defines the transition of [symbolZOffset].
    */
-  @MapboxExperimental
   public var symbolZOffsetTransition: Transition by symbolZOffsetTransitionState
 
   private val textColorState: MutableState<ColorValue> = mutableStateOf(initialTextColor)

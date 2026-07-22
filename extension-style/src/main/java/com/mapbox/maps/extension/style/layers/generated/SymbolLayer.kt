@@ -4257,7 +4257,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
-  @MapboxExperimental
   val symbolZOffset: Double?
     /**
      * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
@@ -4277,7 +4276,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolZOffset value of symbolZOffset
    */
-  @MapboxExperimental
   override fun symbolZOffset(symbolZOffset: Double): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-z-offset", symbolZOffset)
     setProperty(propertyValue)
@@ -4289,7 +4287,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    * This is an Expression representation of "symbol-z-offset".
    *
    */
-  @MapboxExperimental
   val symbolZOffsetAsExpression: Expression?
     /**
      * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
@@ -4308,7 +4305,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param symbolZOffset value of symbolZOffset as Expression
    */
-  @MapboxExperimental
   override fun symbolZOffset(symbolZOffset: Expression): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-z-offset", symbolZOffset)
     setProperty(propertyValue)
@@ -4317,7 +4313,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * Transition options for SymbolZOffset.
    */
-  @MapboxExperimental
   val symbolZOffsetTransition: StyleTransition?
     /**
      * Get the SymbolZOffset property transition options
@@ -4337,7 +4332,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   override fun symbolZOffsetTransition(options: StyleTransition): SymbolLayer = apply {
     val propertyValue = PropertyValue("symbol-z-offset-transition", options)
     setProperty(propertyValue)
@@ -4346,7 +4340,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   /**
    * DSL for [symbolZOffsetTransition].
    */
-  @MapboxExperimental
   override fun symbolZOffsetTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer = apply {
     symbolZOffsetTransition(StyleTransition.Builder().apply(block).build())
   }
@@ -7865,7 +7858,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
      */
-    @MapboxExperimental
     val defaultSymbolZOffset: Double?
       /**
        * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
@@ -7884,7 +7876,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * This is an Expression representation of "symbol-z-offset".
      *
      */
-    @MapboxExperimental
     val defaultSymbolZOffsetAsExpression: Expression?
       /**
        * Get default value of the SymbolZOffset property as an Expression
@@ -7904,7 +7895,6 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     /**
      * Transition options for SymbolZOffset.
      */
-    @MapboxExperimental
     val defaultSymbolZOffsetTransition: StyleTransition?
       /**
        * Get the SymbolZOffset property transition options
@@ -9581,7 +9571,6 @@ interface SymbolLayerDsl {
    *
    * @param symbolZOffset value of symbolZOffset
    */
-  @MapboxExperimental
   fun symbolZOffset(symbolZOffset: Double = 0.0): SymbolLayer
 
   /**
@@ -9589,7 +9578,6 @@ interface SymbolLayerDsl {
    *
    * @param symbolZOffset value of symbolZOffset as Expression
    */
-  @MapboxExperimental
   fun symbolZOffset(symbolZOffset: Expression): SymbolLayer
 
   /**
@@ -9599,7 +9587,6 @@ interface SymbolLayerDsl {
    *
    * @param options transition options for Double
    */
-  @MapboxExperimental
   fun symbolZOffsetTransition(options: StyleTransition): SymbolLayer
 
   /**
@@ -9607,7 +9594,6 @@ interface SymbolLayerDsl {
    *
    * DSL for [symbolZOffsetTransition].
    */
-  @MapboxExperimental
   fun symbolZOffsetTransition(block: StyleTransition.Builder.() -> Unit): SymbolLayer
 
   /**

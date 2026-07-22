@@ -2274,7 +2274,6 @@ class PointAnnotationManager(
    *
    * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
    */
-  @MapboxExperimental
   var symbolZOffset: Double?
     /**
      * Get the symbolZOffset property.
