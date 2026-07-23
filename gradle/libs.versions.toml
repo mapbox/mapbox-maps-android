@@ -33,8 +33,8 @@ japicmp = "0.4.6"
 # Dependencies
 
 # GlNative and Common are used by the convention plugin
-mapboxGlNative = "11.27.0-rc.1"
-mapboxCommon = "24.27.0-rc.1"
+mapboxGlNative = "11.27.0-rc.1-SNAPSHOT-07-23--08-44.git-ca29ab0"
+mapboxCommon = "24.27.0-rc.1-SNAPSHOT-07-23--08-44.git-ca29ab0"
 
 mapboxBase = "0.12.0"
 mapboxGestures = "0.10.0"
