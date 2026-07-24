@@ -9,8 +9,14 @@ Mapbox welcomes participation and contributions from everyone.
 * Expand the minimum camera field of view from 11 to 1 degrees.
 * Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
 
+
+# 11.27.0 July 24, 2026
 ## Bug fixes 🐞
 * [gestures] Fix map snapping back after a pinch-to-zoom-in gesture.
+
+## Dependencies
+* Update gl-native to [v11.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0), common to [v24.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0).
+
 
 # 11.27.0-rc.1 July 13, 2026
 ## Features ✨ and improvements 🏁
