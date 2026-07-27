@@ -23,4 +23,17 @@
         tools:text="Mode : overview"
         tools:backgroundTint="@color/blue" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_layout_direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/mapbox_blue"
+        app:layout_constraintBottom_toTopOf="@id/btn_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Layout direction : LTR"
+        tools:backgroundTint="@color/blue" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,6 +99,14 @@ internal class ViewAnnotationManagerImpl(
         ViewGroup.LayoutParams.MATCH_PARENT,
       )
       clipChildren = false // Prevents view annotation shadows or bouncing animation clipping.
+      // Annotation views get an unset (default) Gravity, which FrameLayout resolves to
+      // Gravity.START|TOP; positionAnnotationViews() then applies translationX/Y computed by
+      // gl-native (via onDelegatingViewAnnotationPositionsUpdate) assuming a left-anchored (x=0)
+      // base position. If this layout inherits RTL from MapView, START mirrors to the right edge,
+      // so the same translationX lands on the wrong side (or fully off-screen). Pin LTR so the
+      // base position always matches gl-native's left-anchored coordinate system, regardless of
+      // the host app's locale/layoutDirection.
+      layoutDirection = View.LAYOUT_DIRECTION_LTR
     }
     // place the view annotations above the map (index 0) but below the compass, ruler and other plugin views
     mapView.addView(viewAnnotationsLayout, 1)
@@ -622,6 +630,12 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions) {
+    // viewAnnotationsLayout is pinned to LTR (see init block) so Gravity.START-based positioning
+    // isn't affected by the host app's locale. That would also flatten this view's own content
+    // (Gravity.START/END, marginStart/End, etc.) to LTR by inheritance, so resolve it against the
+    // real system locale instead - positioning is governed entirely by the parent's layoutDirection,
+    // never the child's, so this has no effect on where the view ends up on the map.
+    inflatedView.layoutDirection = View.LAYOUT_DIRECTION_LOCALE
     measureView(inflatedView)
     val inflatedViewLayoutParams = inflatedView.layoutParams as ViewGroup.LayoutParams
     // If values in layout params are negative - view is wrap_content (assuming match_parent view annotations

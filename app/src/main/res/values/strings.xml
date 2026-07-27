@@ -171,6 +171,7 @@
     <!--View Annotations-->
     <string name="content_description_close">Close callout</string>
     <string name="dynamic_mode">Mode: %1$s</string>
+    <string name="dynamic_layout_direction">Layout direction: %1$s</string>
     <string name="collision_debug">Collision debug</string>
     <string name="va_symbol_collision">Enable ViewAnnotation-Symbols collision</string>
     <string name="va_allow_overlap">Allow Overlap (view annotations)</string>

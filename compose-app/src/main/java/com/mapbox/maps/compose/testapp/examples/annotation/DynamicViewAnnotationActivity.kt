@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +46,7 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asAndroidPath
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -191,59 +194,86 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
         mutableStateOf(true)
       }
 
+      // Toggles the MapView's own layoutDirection between LTR/RTL to verify Compose-based
+      // view annotations remain visible and correctly positioned regardless of host layout
+      // direction (see ViewAnnotationManagerImpl - annotation views default to
+      // Gravity.START|TOP, which must resolve against a container pinned to LTR).
+      var isLayoutDirectionRtl by remember {
+        mutableStateOf(false)
+      }
+
       MapboxMapComposeTheme {
         ExampleScaffold(
           floatingActionButton = {
-            FloatingActionButton(
-              onClick = {
-                if ((viewportState.mapViewportStatus as? ViewportStatus.State)?.state is FollowPuckViewportState) {
-                  viewportState.transitionToOverviewState(overviewViewportStateOptions)
-                } else {
-                  viewportState.transitionToFollowPuckState(followPuckViewportStateOption)
-                }
-              },
-              shape = RoundedCornerShape(16.dp),
+            Column(
+              horizontalAlignment = Alignment.End,
+              verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-              Text(
-                modifier = Modifier.padding(10.dp),
-                text = if ((viewportState.mapViewportStatus as? ViewportStatus.State)?.state is FollowPuckViewportState) "Overview" else "Follow puck"
-              )
+              FloatingActionButton(
+                onClick = { isLayoutDirectionRtl = !isLayoutDirectionRtl },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = "Layout direction: ${if (isLayoutDirectionRtl) "RTL" else "LTR"}"
+                )
+              }
+              FloatingActionButton(
+                onClick = {
+                  if ((viewportState.mapViewportStatus as? ViewportStatus.State)?.state is FollowPuckViewportState) {
+                    viewportState.transitionToOverviewState(overviewViewportStateOptions)
+                  } else {
+                    viewportState.transitionToFollowPuckState(followPuckViewportStateOption)
+                  }
+                },
+                shape = RoundedCornerShape(16.dp),
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = if ((viewportState.mapViewportStatus as? ViewportStatus.State)?.state is FollowPuckViewportState) "Overview" else "Follow puck"
+                )
+              }
             }
           }
         ) {
-          MapboxMap(
-            Modifier.fillMaxSize(),
-            mapViewportState = viewportState,
-            style = {
-              NavigationStyle(isMainActive)
-            }
+          CompositionLocalProvider(
+            LocalLayoutDirection provides
+              if (isLayoutDirectionRtl) LayoutDirection.Rtl else LayoutDirection.Ltr
           ) {
-            MapEffect(Unit) { mapView ->
-              mapView.location.apply {
-                setLocationProvider(
-                  SimulateRouteLocationProvider(
-                    featureRouteMain.geometry() as LineString
+            MapboxMap(
+              Modifier.fillMaxSize(),
+              mapViewportState = viewportState,
+              style = {
+                NavigationStyle(isMainActive)
+              }
+            ) {
+              MapEffect(Unit) { mapView ->
+                mapView.location.apply {
+                  setLocationProvider(
+                    SimulateRouteLocationProvider(
+                      featureRouteMain.geometry() as LineString
+                    )
                   )
-                )
-                locationPuck = LocationPuck2D(
-                  bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
-                )
-                enabled = true
-                puckBearingEnabled = true
-                puckBearing = PuckBearing.COURSE
+                  locationPuck = LocationPuck2D(
+                    bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
+                  )
+                  enabled = true
+                  puckBearingEnabled = true
+                  puckBearing = PuckBearing.COURSE
+                }
+                // Only show view annotation and adjust location puck position after all the runtime layers
+                // are added.
+                mapView.mapboxMap.mapLoadedEvents.firstOrNull()?.let {
+                  mapView.location.layerAbove = LAYER_CONSTRUCTION
+                  showDynamicViewAnnotations = true
+                  viewportState.transitionToOverviewState(overviewViewportStateOptions)
+                }
               }
-              // Only show view annotation and adjust location puck position after all the runtime layers
-              // are added.
-              mapView.mapboxMap.mapLoadedEvents.firstOrNull()?.let {
-                mapView.location.layerAbove = LAYER_CONSTRUCTION
-                showDynamicViewAnnotations = true
-                viewportState.transitionToOverviewState(overviewViewportStateOptions)
-              }
-            }
 
-            if (showDynamicViewAnnotations) {
-              DynamicViewAnnotations(isMainActive) {
-                isMainActive = !isMainActive
+              if (showDynamicViewAnnotations) {
+                DynamicViewAnnotations(isMainActive, isLayoutDirectionRtl) {
+                  isMainActive = !isMainActive
+                }
               }
             }
           }
@@ -314,7 +344,11 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
 
   @Composable
   @MapboxMapComposable
-  private fun DynamicViewAnnotations(isMainActive: Boolean, toggleActiveRoute: () -> Unit) {
+  private fun DynamicViewAnnotations(
+    isMainActive: Boolean,
+    isLayoutDirectionRtl: Boolean,
+    toggleActiveRoute: () -> Unit
+  ) {
     var etaViewAnnotationAnchor by remember {
       mutableStateOf(ViewAnnotationAnchor.BOTTOM_LEFT)
     }
@@ -375,11 +409,22 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
         }
       }
     ) {
-      AlternativeDVAContent(
-        isInitial = !isMainActive,
-        alternativeEtaViewAnnotationAnchor = alternativeEtaViewAnnotationAnchor,
-        onClick = toggleActiveRoute
-      )
+      // ViewAnnotation hosts this content in its own ComposeView (see ViewAnnotation.kt), which
+      // maps-sdk pins to LAYOUT_DIRECTION_LOCALE - the nearest LocalLayoutDirection provider to
+      // this content, so it resolves against the real device locale regardless of any
+      // CompositionLocalProvider wrapped further up around the outer MapboxMap composable.
+      // Override LocalLayoutDirection directly here (Compose's nearest-provider-wins resolution)
+      // to verify content mirroring without changing the device's actual locale.
+      CompositionLocalProvider(
+        LocalLayoutDirection provides
+          if (isLayoutDirectionRtl) LayoutDirection.Rtl else LayoutDirection.Ltr
+      ) {
+        AlternativeDVAContent(
+          isInitial = !isMainActive,
+          alternativeEtaViewAnnotationAnchor = alternativeEtaViewAnnotationAnchor,
+          onClick = toggleActiveRoute
+        )
+      }
     }
 
     // parking view annotation 1
