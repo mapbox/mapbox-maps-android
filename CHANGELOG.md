@@ -11,8 +11,23 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.27.0 July 24, 2026
+## Features ✨ and improvements 🏁
+* Add cross-source HD road elevation for symbols, so road symbols can align to HD elevation data provided by a separate source.
+* Add support for animating the map's vertical field of view.
+* Improve CPU performance when frequently updating layer properties, such as animating paint and layout values.
+* Improve character rotation for some CJK characters in vertical text mode.
+
 ## Bug fixes 🐞
 * [gestures] Fix map snapping back after a pinch-to-zoom-in gesture.
+* Fix incorrect placement of Dynamic View Annotations during fast zooming and near tile boundaries when avoid-layers are configured.
+* Fix skipped draws (missing geometry on some frames) that could occur while zooming or with shadow-casting layers.
+* Fix character rotation for some CJK characters in vertical text rendering mode.
+* Fix fling animation moving the camera in the opposite direction of the swipe at low zoom levels.
+* Fix flickering single-pixel gaps appearing along route lines at elevation feature boundaries as the camera moves.
+* Fix line-aligned labels (such as angled sea names) drifting while panning during the globe-to-mercator zoom transition.
+* Fix radial gradients rendering incorrectly when the focal radius is larger than the outer radius.
+* Fix view annotations not being considered in collision checks against avoid layers, which could result in incorrect placement.
+* Internal fixes and performance improvements.
 
 ## Dependencies
 * Update gl-native to [v11.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0), common to [v24.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0).
@@ -35,8 +50,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.27.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0-rc.1), common to [v24.27.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0-rc.1).
 
-## Bug fixes 🐞
-* Fix fling animation moving the camera in the opposite direction of the swipe at low zoom levels.
 
 # 11.26.0 July 09, 2026
 
