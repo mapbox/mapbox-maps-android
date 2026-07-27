@@ -5,9 +5,15 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.28.0-rc.1 July 27, 2026
 ## Features ✨ and improvements 🏁
 * Expand the minimum camera field of view from 11 to 1 degrees.
 * Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
+
+
+## Dependencies
+* Update gl-native to [v11.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1), common to [v24.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1).
 
 
 # 11.27.0 July 24, 2026
