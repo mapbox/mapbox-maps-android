@@ -6,11 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.28.0
+## Bug fixes 🐞
+* Fix view annotations rendering incorrectly or not appearing when the host app's layout direction is RTL.
+
 # 11.28.0-rc.1 July 27, 2026
 ## Features ✨ and improvements 🏁
 * Expand the minimum camera field of view from 11 to 1 degrees.
 * Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
-
 
 ## Dependencies
 * Update gl-native to [v11.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1), common to [v24.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1).

@@ -24,6 +24,13 @@ import com.mapbox.maps.ViewAnnotationOptions
  * could be controlled by the user using update operation.
  *
  * View annotation manager instance is destroyed automatically when [MapView.onDestroy] is called.
+ *
+ * View annotations are always positioned assuming a left-to-right coordinate system, regardless
+ * of the host app's locale or the [MapView]'s own layout direction — this keeps positioning
+ * correct and predictable everywhere. Independent of that, each annotation view's own content
+ * (for example `Gravity.START`/`END`, `marginStart`/`marginEnd`) is automatically resolved
+ * against the device's actual system locale, so RTL languages continue to mirror correctly with
+ * no extra setup required.
  */
 interface ViewAnnotationManager {
 

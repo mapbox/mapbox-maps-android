@@ -54,6 +54,7 @@ class ViewAnnotationManagerTest {
     viewAnnotationsLayout = mockk()
     every { viewAnnotationsLayout.layoutParams = any() } just Runs
     every { viewAnnotationsLayout.setClipChildren(any()) } just Runs
+    every { viewAnnotationsLayout.layoutDirection = any() } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val displayMetrics = DisplayMetrics().apply { density = 1f }
@@ -65,6 +66,7 @@ class ViewAnnotationManagerTest {
   }
 
   private fun mockView(): View = mockk<View>().also {
+    every { it.layoutDirection = any() } just Runs
     every { it.layoutParams } returns frameLayoutParams
     every { it.measuredWidth } returns 10
     every { it.measuredHeight } returns 10
@@ -83,6 +85,18 @@ class ViewAnnotationManagerTest {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
     viewAnnotationManager.destroy()
     unmockkStatic(MeasureSpec::class)
+  }
+
+  @Test
+  fun viewAnnotationsLayoutIsPinnedToLtr() {
+    // Annotation views get an unset (default) Gravity, resolved by FrameLayout to
+    // Gravity.START|TOP. If this container inherited RTL from a host MapView with
+    // layoutDirection = RTL, that default would mirror to the right edge, while
+    // positionAnnotationViews() still applies translationX/Y computed assuming a
+    // left-anchored (x=0) base - landing views off-screen or in the wrong corner.
+    // The container must be pinned to LTR so it always matches that left-anchored
+    // coordinate system, regardless of the host app's locale/layoutDirection.
+    verifyOnce { viewAnnotationsLayout.layoutDirection = View.LAYOUT_DIRECTION_LTR }
   }
 
   @Test
@@ -558,6 +572,7 @@ class ViewAnnotationManagerTest {
     childViews: List<View> = emptyList(),
     selfTag: Any? = null,
   ): FrameLayout = mockk<FrameLayout>().also { root ->
+    every { root.layoutDirection = any() } just Runs
     every { root.layoutParams } returns FrameLayout.LayoutParams(100, 100)
     every { root.measuredWidth } returns 100
     every { root.measuredHeight } returns 100

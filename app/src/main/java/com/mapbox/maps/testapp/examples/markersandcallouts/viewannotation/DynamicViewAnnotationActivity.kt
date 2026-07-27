@@ -89,6 +89,10 @@ import kotlinx.coroutines.withContext
  *    annotations([ViewAnnotationOptions.allowOverlap]=true), and allow overlapping with the location
  *    puck([ViewAnnotationOptions.allowOverlapWithPuck]=true). This is useful for high priority labels
  *    that shouldn't be covered by anything.
+ *
+ * The "Layout direction" button toggles the MapView's [View.layoutDirection] between LTR and RTL,
+ * to check that view annotations (in particular the ETA / alternative ETA callouts) remain visible
+ * and correctly positioned regardless of the host view's layout direction.
  */
 class DynamicViewAnnotationActivity : AppCompatActivity() {
 
@@ -126,6 +130,7 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
 
   private var isMainActive = true
   private var isOverview = true
+  private var isLayoutDirectionRtl = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -153,6 +158,25 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
           refreshButton(binding.btnMode)
         }
       }
+
+      binding.btnLayoutDirection.setOnClickListener {
+        isLayoutDirectionRtl = !isLayoutDirectionRtl
+        val direction = if (isLayoutDirectionRtl) {
+          View.LAYOUT_DIRECTION_RTL
+        } else {
+          View.LAYOUT_DIRECTION_LTR
+        }
+        binding.mapView.layoutDirection = direction
+        // ViewAnnotationManagerImpl always resolves annotation content against
+        // View.LAYOUT_DIRECTION_LOCALE, which is what a real RTL system locale would produce.
+        // This device's locale is LTR, so mirror that resolved value directly on the existing
+        // DVAs here to verify the same mechanism (content mirrors, position stays correct because
+        // it's governed entirely by the parent viewAnnotationsLayout, not by this).
+        if (::etaView.isInitialized) etaView.layoutDirection = direction
+        if (::alternativeEtaView.isInitialized) alternativeEtaView.layoutDirection = direction
+        refreshLayoutDirectionButton(binding.btnLayoutDirection)
+      }
+      refreshLayoutDirectionButton(binding.btnLayoutDirection)
 
       loadAssets()
 
@@ -402,6 +426,13 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
   private fun refreshButton(btnMode: Button) {
     btnMode.isEnabled = true
     btnMode.text = getString(R.string.dynamic_mode, if (isOverview) "follow" else "overview")
+  }
+
+  private fun refreshLayoutDirectionButton(btnLayoutDirection: Button) {
+    btnLayoutDirection.text = getString(
+      R.string.dynamic_layout_direction,
+      if (isLayoutDirectionRtl) "RTL" else "LTR"
+    )
   }
 
   @OptIn(com.mapbox.maps.MapboxExperimental::class)
