@@ -15,7 +15,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import com.mapbox.maps.IndoorFloor
 import com.mapbox.maps.MapboxExperimental
@@ -40,7 +43,8 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
   defStyleAttr: Int = 0
 ) : IndoorSelectorView, FrameLayout(context, attrs, defStyleAttr) {
 
-  private val itemHeightPx = resources.getDimensionPixelSize(R.dimen.mapbox_indoor_item_height)
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val itemHeightPx = resources.getDimensionPixelSize(R.dimen.mapbox_indoor_item_height)
   private val cornerRadiusPx = resources.getDimension(R.dimen.mapbox_indoor_corner_radius)
 
   private val containerLayout = LinearLayout(context).apply {
@@ -166,7 +170,22 @@ internal class IndoorSelectorViewImpl @JvmOverloads constructor(
     }
 
     updateContainerHeight()
-    post { updateArrows() }
+    val targetScrollY = selectedFloorScrollOffset(floors, selectedFloorId)
+    doOnLayout {
+      scrollView.scrollTo(0, targetScrollY)
+      updateArrows()
+    }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun selectedFloorScrollOffset(floors: List<IndoorFloor>, selectedId: String?): Int {
+    val index = floors.indexOfFirst { it.id == selectedId }
+    if (index < 0) return 0
+    // Offset by 1 so the selected floor lands below the up-arrow overlay when there are floors above it.
+    val rawOffset = (index - 1).coerceAtLeast(0) * itemHeightPx
+    if (floors.size <= MAX_VISIBLE_ITEMS) return rawOffset
+    val maxScroll = (floors.size - MAX_VISIBLE_ITEMS) * itemHeightPx
+    return rawOffset.coerceAtMost(maxScroll)
   }
 
   // Updates background and text color for all floor items based on selection

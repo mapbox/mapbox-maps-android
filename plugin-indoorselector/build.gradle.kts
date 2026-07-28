@@ -9,6 +9,11 @@ android {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+    }
+  }
 }
 
 mapboxLibrary {

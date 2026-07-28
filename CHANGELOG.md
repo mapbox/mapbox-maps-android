@@ -80,6 +80,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update gl-native to [v11.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0), common to [v24.26.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.26.0).
 
+## Bug fixes 🐞
+* [plugin-indoorselector] Fix scroll position not scrolling to the selected floor when switching to a different building.
+
 # 11.26.0-rc.1 June 29, 2026
 
 ## Features ✨ and improvements 🏁
