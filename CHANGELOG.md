@@ -14,6 +14,14 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Expand the minimum camera field of view from 11 to 1 degrees.
 * Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
+* Expose `line-border-width` and `line-border-color` as public paint properties. They were previously hidden from the style specification.
+* Expand the valid field-of-view range from [11, 90] to [1, 90] degrees, allowing much narrower camera FOVs.
+
+## Bug fixes 🐞
+* Fix 3D models with a zero vertex alpha channel being rendered fully black.
+* Fix double rotation of the FF5C (fullwidth vertical line) character in vertical text.
+* Fix tile pack patch application failing when disk space runs out mid-write; the disk quota is now checked and eviction triggered before the patch is applied.
+* Internal fixes and performance improvements.
 
 ## Dependencies
 * Update gl-native to [v11.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1), common to [v24.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1).
