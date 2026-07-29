@@ -141,6 +141,7 @@ class CustomAttributionActivity : AppCompatActivity() {
       } else {
         url
       }
+      if (!isSafeUrl(webUrl)) return
       if (context is Activity) {
         try {
           val intent = Intent(Intent.ACTION_VIEW)
@@ -155,10 +156,26 @@ class CustomAttributionActivity : AppCompatActivity() {
         }
       }
     }
+
+    /**
+     * Returns true only for http/https URLs.
+     *
+     * Custom attribution consumers receive [Attribution.url] values directly from the SDK's public
+     * API. Always validate the scheme before passing a URL to startActivity, WebView.loadUrl, or
+     * any other URL handler — non-http(s) schemes (javascript:, file://, content://, intent:) can
+     * redirect to unintended handlers or execute code in a WebView context.
+     *
+     * The SDK's built-in attribution parser already rejects non-http(s) schemes, so this check is
+     * defense-in-depth for any URL that enters showWebPage from outside the parser (e.g. hardcoded
+     * strings, extra attributions added manually).
+     */
+    private fun isSafeUrl(url: String): Boolean =
+      Uri.parse(url).scheme?.lowercase() in SAFE_URL_SCHEMES
   }
 
   companion object {
     private const val FEEDBACK_KEY_WORLD = "feedback"
     private const val TELEMETRY_KEY_WORLD = "Telemetry"
+    private val SAFE_URL_SCHEMES = setOf("http", "https")
   }
 }
