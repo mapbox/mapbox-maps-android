@@ -4476,6 +4476,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public String getLayerId();
     method public Double? getMaxZoom();
     method public Double? getMinZoom();
+    method public Boolean? getRasterAllowDraping();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterAllowDrapingAsExpression();
     method public String? getRasterArrayBand();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRasterArrayBandAsExpression();
     method public Double? getRasterBrightnessMax();
@@ -4522,6 +4524,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getVisibilityAsExpression();
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterAllowDraping(boolean rasterAllowDraping);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterAllowDraping(com.mapbox.maps.extension.style.expressions.generated.Expression rasterAllowDraping);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(double rasterBrightnessMax);
@@ -4578,6 +4582,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public String layerId;
     property public Double? maxZoom;
     property public Double? minZoom;
+    property public final Boolean? rasterAllowDraping;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterAllowDrapingAsExpression;
     property public final String? rasterArrayBand;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rasterArrayBandAsExpression;
     property public final Double? rasterBrightnessMax;
@@ -4628,6 +4634,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   public static final class RasterLayer.Companion {
     method public Double? getDefaultMaxZoom();
     method public Double? getDefaultMinZoom();
+    method public Boolean? getDefaultRasterAllowDraping();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterAllowDrapingAsExpression();
     method public String? getDefaultRasterArrayBand();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultRasterArrayBandAsExpression();
     method public Double? getDefaultRasterBrightnessMax();
@@ -4669,6 +4677,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.properties.generated.Visibility? getDefaultVisibility();
     property public final Double? defaultMaxZoom;
     property public final Double? defaultMinZoom;
+    property public final Boolean? defaultRasterAllowDraping;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterAllowDrapingAsExpression;
     property public final String? defaultRasterArrayBand;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultRasterArrayBandAsExpression;
     property public final Double? defaultRasterBrightnessMax;
@@ -4713,6 +4723,8 @@ package com.mapbox.maps.extension.style.layers.generated {
   @com.mapbox.maps.extension.style.types.LayersDsl public interface RasterLayerDsl {
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer maxZoom(double maxZoom);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer minZoom(double minZoom);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterAllowDraping(boolean rasterAllowDraping = true);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterAllowDraping(com.mapbox.maps.extension.style.expressions.generated.Expression rasterAllowDraping);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(String rasterArrayBand);
     method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterArrayBand(com.mapbox.maps.extension.style.expressions.generated.Expression rasterArrayBand);
     method public com.mapbox.maps.extension.style.layers.generated.RasterLayer rasterBrightnessMax(double rasterBrightnessMax = 1.0);

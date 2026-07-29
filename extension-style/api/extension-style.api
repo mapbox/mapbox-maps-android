@@ -3658,6 +3658,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public fun getLayerId ()Ljava/lang/String;
 	public fun getMaxZoom ()Ljava/lang/Double;
 	public fun getMinZoom ()Ljava/lang/Double;
+	public final fun getRasterAllowDraping ()Ljava/lang/Boolean;
+	public final fun getRasterAllowDrapingAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterArrayBand ()Ljava/lang/String;
 	public final fun getRasterArrayBandAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterBrightnessMax ()Ljava/lang/Double;
@@ -3706,6 +3708,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public synthetic fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/Layer;
 	public fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterAllowDraping (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterAllowDraping (Z)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterArrayBand (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterArrayBand (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterBrightnessMax (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3767,6 +3771,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer$Companion {
 	public final fun getDefaultMaxZoom ()Ljava/lang/Double;
 	public final fun getDefaultMinZoom ()Ljava/lang/Double;
+	public final fun getDefaultRasterAllowDraping ()Ljava/lang/Boolean;
+	public final fun getDefaultRasterAllowDrapingAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterArrayBand ()Ljava/lang/String;
 	public final fun getDefaultRasterArrayBandAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterBrightnessMax ()Ljava/lang/Double;
@@ -3811,6 +3817,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer$
 public abstract interface class com/mapbox/maps/extension/style/layers/generated/RasterLayerDsl {
 	public abstract fun maxZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun minZoom (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterAllowDraping (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterAllowDraping (Z)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterArrayBand (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterArrayBand (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterBrightnessMax (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3867,6 +3875,7 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 }
 
 public final class com/mapbox/maps/extension/style/layers/generated/RasterLayerDsl$DefaultImpls {
+	public static synthetic fun rasterAllowDraping$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterBrightnessMax$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterBrightnessMin$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterColorMix$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
