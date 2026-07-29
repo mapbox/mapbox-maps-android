@@ -1,6 +1,7 @@
 package com.mapbox.maps.attribution
 
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.text.SpannableStringBuilder
@@ -139,6 +140,8 @@ open class AttributionParser internal constructor(
    * @return if the url is valid
    */
   private fun isUrlValid(url: String): Boolean {
+    val scheme = Uri.parse(url).scheme?.lowercase()
+    if (scheme != "http" && scheme != "https") return false
     return isValidForImproveThisMap(url) && isValidForMapbox(url)
   }
 

