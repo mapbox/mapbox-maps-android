@@ -104,6 +104,7 @@ dependencies {
     testImplementation(project(":maps-sdk"))
     testImplementation(libs.junit)
     testImplementation(libs.asyncInflater)
+    testImplementation(libs.coroutinesTest)
   }
 }
 

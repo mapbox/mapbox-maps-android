@@ -3,9 +3,9 @@ package com.mapbox.maps.extension.compose
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -57,8 +57,7 @@ import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.coroutine.styleImageMissingEvents
 import com.mapbox.maps.coroutine.styleImageRemoveUnusedEvents
 import com.mapbox.maps.coroutine.styleLoadedEvents
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
-import com.mapbox.maps.extension.compose.internal.applySettings
+import com.mapbox.maps.extension.compose.gestures.GesturesState
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.interactions.FeatureState
 import com.mapbox.maps.interactions.FeatureStateKey
@@ -85,7 +84,7 @@ import kotlin.coroutines.resume
 @Composable
 public inline fun rememberMapState(
   key: String? = null,
-  crossinline init: MapState.() -> Unit = {}
+  crossinline init: MapState.() -> Unit = {},
 ): MapState = rememberSaveable(key = key, saver = MapState.Saver) {
   MapState().apply(init)
 }
@@ -93,32 +92,42 @@ public inline fun rememberMapState(
 /**
  * The [MapState] that can be hoisted to observe map events, query rendered features and control gestures settings.
  */
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, MapboxExperimental::class)
 @Stable
-public class MapState internal constructor(initialGesturesSettings: GesturesSettings) {
+public class MapState internal constructor(initialGesturesState: GesturesState) {
 
   /**
    * Constructor for the [MapState].
    */
-  public constructor() : this(initialGesturesSettings = GesturesSettings { })
+  public constructor() : this(initialGesturesState = GesturesState())
 
   /**
    * A flow used to indicate the [MapState] is attached to the map.
    */
   private val mapboxMapFlow: MutableStateFlow<MapboxMap?> = MutableStateFlow(null)
 
-  private val gesturesState: MutableState<GesturesSettings> =
-    mutableStateOf(initialGesturesSettings)
+  /**
+   * State holder for gesture configuration and per-gesture event observation.
+   *
+   * Use [GesturesState.gesturesSettings] to configure which gestures are enabled, and
+   * [GesturesState.GestureInput][com.mapbox.maps.extension.compose.gestures.GestureInput]
+   * to observe individual gesture events.
+   */
+  @MapboxExperimental
+  public var gesturesState: GesturesState by mutableStateOf(initialGesturesState)
 
   /**
    * Gesture configuration allows to control the user touch interaction.
    */
-  public var gesturesSettings: GesturesSettings by gesturesState
-
-  @Composable
-  private fun UpdateGesturesSettings(mapboxMap: MapboxMap) {
-    mapboxMap.gesturesPlugin { applySettings(gesturesSettings) }
-  }
+  @Deprecated(
+    message = "Use gesturesState.gesturesSettings instead.",
+    replaceWith = ReplaceWith("gesturesState.gesturesSettings"),
+  )
+  public var gesturesSettings: GesturesSettings
+    get() = gesturesState.gesturesSettings
+    set(value) {
+      gesturesState.gesturesSettings = value
+    }
 
   /**
    * Conflated [Flow] of [MapLoaded] updates from [MapboxMap.subscribeMapLoaded].
@@ -443,7 +452,9 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
    */
   @Composable
   internal fun BindToMap(mapboxMap: MapboxMap) {
-    UpdateGesturesSettings(mapboxMap = mapboxMap)
+    key(gesturesState) {
+      gesturesState.BindToMap(mapboxMap = mapboxMap)
+    }
     DisposableEffect(Unit) {
       mapboxMapFlow.value = mapboxMap
       onDispose {
@@ -465,22 +476,22 @@ public class MapState internal constructor(initialGesturesSettings: GesturesSett
   /**
    * Public companion object of [MapState].
    */
+  @OptIn(MapboxExperimental::class)
   public companion object {
     /**
-     * The default saver implementation for [MapViewportState]
+     * The default [Saver] implementation for [MapState].
      */
     public val Saver: Saver<MapState, Holder> = Saver(
       save = { mapState ->
         Holder(
-          mapOf(GESTURES_SETTINGS_KEY to mapState.gesturesSettings)
+          mapOf(GESTURES_SETTINGS_KEY to with(GesturesState.Saver) { save(mapState.gesturesState) }!!)
         ).also { logD(TAG, "save: $it") }
       },
       restore = { holder ->
+        val gesturesSettings = holder.savedProperties[GESTURES_SETTINGS_KEY] as? GesturesSettings
+          ?: GesturesSettings { }
         MapState(
-          (
-            holder.savedProperties[GESTURES_SETTINGS_KEY] as? GesturesSettings
-              ?: GesturesSettings { }
-            ).also { logD(TAG, "restore: $it") }
+          GesturesState.Saver.restore(gesturesSettings.also { logD(TAG, "restore: $it") })!!
         )
       }
     )

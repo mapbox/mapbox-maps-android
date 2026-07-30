@@ -383,6 +383,16 @@
                 android:value="@string/category_basic" />
         </activity>
         <activity
+            android:name=".examples.gestures.GesturesActivity"
+            android:description="@string/description_gestures"
+            android:exported="true"
+            android:label="@string/activity_gestures"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_gestures" />
+        </activity>
+        <activity
             android:name=".examples.style.StandardStyleActivity"
             android:description="@string/description_standard_style"
             android:exported="true"

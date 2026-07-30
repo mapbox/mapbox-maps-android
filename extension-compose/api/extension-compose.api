@@ -81,6 +81,7 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun getCameraChangedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGesturesSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public final fun getGesturesState ()Lcom/mapbox/maps/extension/compose/gestures/GesturesState;
 	public final fun getMapIdleEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getMapLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getMapLoadingErrorEvents ()Lkotlinx/coroutines/flow/Flow;
@@ -107,6 +108,7 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun resetFeatureStates (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setGesturesSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
+	public final fun setGesturesState (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;)V
 }
 
 public final class com/mapbox/maps/extension/compose/MapState$Companion {
@@ -960,6 +962,47 @@ public final class com/mapbox/maps/extension/compose/annotation/generated/Polyli
 	public final fun setLinePattern (Ljava/lang/String;)V
 	public final fun setLineWidth (Ljava/lang/Double;)V
 	public final fun setLineZOffset (Ljava/lang/Double;)V
+}
+
+public final class com/mapbox/maps/extension/compose/gestures/GestureInputKt {
+	public static final fun GestureInput (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun GestureInput (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun GestureInput (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun GestureInput (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun GestureInput (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;[Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class com/mapbox/maps/extension/compose/gestures/GestureScope {
+	public static final field $stable I
+	public final fun detectFlingGesture (Lkotlin/jvm/functions/Function0;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun detectMoveGestures (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun detectMoveGestures$default (Lcom/mapbox/maps/extension/compose/gestures/GestureScope;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun detectRotateGestures (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun detectRotateGestures$default (Lcom/mapbox/maps/extension/compose/gestures/GestureScope;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun detectScaleGestures (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun detectScaleGestures$default (Lcom/mapbox/maps/extension/compose/gestures/GestureScope;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun detectShoveGestures (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun detectShoveGestures$default (Lcom/mapbox/maps/extension/compose/gestures/GestureScope;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/extension/compose/gestures/GesturesState {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/gestures/GesturesState$Companion;
+	public fun <init> ()V
+	public fun <init> (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun gestureInput (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGesturesSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public final fun isGestureInProgress ()Z
+	public final fun isUserAnimationInProgress ()Z
+	public final fun setGesturesSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
+}
+
+public final class com/mapbox/maps/extension/compose/gestures/GesturesState$Companion {
+	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
+}
+
+public final class com/mapbox/maps/extension/compose/gestures/GesturesStateKt {
+	public static final fun rememberGesturesState (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)Lcom/mapbox/maps/extension/compose/gestures/GesturesState;
 }
 
 public final class com/mapbox/maps/extension/compose/ornaments/attribution/ComposableSingletons$MapAttributionScopeKt {

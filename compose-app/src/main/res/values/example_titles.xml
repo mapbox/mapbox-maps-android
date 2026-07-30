@@ -46,4 +46,5 @@
     <string name="activity_lazy_column_map">Map in LazyColumn</string>
     <string name="activity_fling_mode">Fling mode</string>
     <string name="activity_nine_patch_image">Nine-patch image</string>
+    <string name="activity_gestures">Gesture listeners</string>
 </resources>

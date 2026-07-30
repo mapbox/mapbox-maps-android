@@ -23,6 +23,7 @@ Working examples of the Compose extension can be found in our [compose test appl
     - [Add `ViewAnnotation` to the map](#add-viewannotation-to-the-map)
   - [Configure Map ornaments(Compass, ScaleBar, Attribution, Logo)](#configure-map-ornamentscompass-scalebar-attribution-logo)
   - [Gestures settings](#gestures-settings)
+    - [Per-gesture listeners with `GestureInput`](#per-gesture-listeners-with-gestureinput)
   - [Work with runtime styling](#work-with-runtime-styling)
     - [Runtime styling with layers and sources](#runtime-styling-with-layers-and-sources)
 - [Compatibility with Maps SDK v11](#compatibility-with-maps-sdk-v11)
@@ -439,34 +440,51 @@ MapboxMap(
 
 ### Gestures settings
 
-The following example showcases how to change the `GesturesSettings` through hoisted `MapState`:
+Gesture configuration and per-gesture event listeners are exposed through `MapState.gesturesState`.
+
+The following example showcases how to change the `GesturesSettings`:
 
 ```kotlin
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContent {
-      // Hold the hoisted mapState to manipulate the map settings including gestures settings.
-      val mapState = rememberMapState()
-      Box(modifier = Modifier.fillMaxSize()) {
-        // Add a MapboxMap with the mapState.
-        MapboxMap(
-          modifier = Modifier.fillMaxSize(),
-          mapState = mapState
-        )
-        // Add a button on top of the map
-        Button(
-          onClick = {
-            mapState.apply {
-              gesturesSettings = gesturesSettings.toBuilder().setScrollEnabled(false).build()
-            }
-          }
-        ) {
-          Text(text = "Disable scroll gesture")
-        }
-      }
+val mapState = rememberMapState()
+MapboxMap(
+  modifier = Modifier.fillMaxSize(),
+  mapState = mapState
+)
+// Configure gesture settings
+mapState.gesturesState.gesturesSettings = remember { GesturesSettings { scrollEnabled = false } }
+```
+
+#### Per-gesture listeners with `GestureInput`
+
+`GestureInput` provides a `GestureScope` receiver with `detect*` suspend functions for each gesture type (move, scale, rotate, shove, fling). Listeners are automatically removed when the composable leaves the composition or the keys change.
+
+```kotlin
+val mapState = rememberMapState()
+MapboxMap(
+  modifier = Modifier.fillMaxSize(),
+  mapState = mapState
+)
+
+// Observe gestures - each detect* suspends until cancellation
+mapState.gesturesState.GestureInput {
+  coroutineScope {
+    launch {
+      detectMoveGestures(
+        onMoveBegin = { /* suppress autoscroll */ },
+        onMoveEnd = { /* resume autoscroll */ },
+      )
+    }
+    launch {
+      detectScaleGestures(
+        onScaleBegin = { /* react to pinch-to-zoom */ },
+        onScaleEnd = { /* … */ },
+      )
     }
   }
+}
 ```
+
+A non-composable `gestureInput` suspend variant is also available for use inside `LaunchedEffect` or ViewModel scopes.
 
 ### Work with runtime styling
 
@@ -564,6 +582,7 @@ Annotations support | ✅ | v11.0.0+
 ViewAnnotation support | ✅ | v11.0.0+
 MapViewportState support | ✅ | v11.0.0+
 Gestures settings support | ✅ | v11.0.0+
+Per-gesture listeners (GestureInput) | ✅ | v11.26.0+
 Access to raw MapView using MapEffect | ✅ | v11.0.0+
 Map ornament(Compass, ScaleBar, Attribution, Logo) support | ✅ | v11.3.0+
 Style composable function support | ✅ | v11.3.0+

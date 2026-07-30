@@ -43,7 +43,7 @@ public class FlingModeActivity : ComponentActivity() {
       val mapState = rememberMapState()
 
       LaunchedEffect(useNativeFling, scrollMode) {
-        mapState.gesturesSettings = GesturesSettings {
+        mapState.gesturesState.gesturesSettings = GesturesSettings {
           useNativeFlingDeceleration = useNativeFling
           this.scrollMode = scrollMode
         }

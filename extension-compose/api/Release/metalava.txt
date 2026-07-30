@@ -44,7 +44,8 @@ package com.mapbox.maps.extension.compose {
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> getCameraChangedCoalescedEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState> Object? getFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, kotlin.coroutines.Continuation<? super FS>);
-    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getGesturesSettings();
+    method @Deprecated public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getGesturesSettings();
+    method public com.mapbox.maps.extension.compose.gestures.GesturesState getGesturesState();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapIdle> getMapIdleEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoaded> getMapLoadedEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoadingError> getMapLoadingErrorEvents();
@@ -68,10 +69,12 @@ package com.mapbox.maps.extension.compose {
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState, FSK extends com.mapbox.maps.interactions.FeatureStateKey<FS>> Object? removeFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>> = null);
     method @com.mapbox.maps.MapboxExperimental public suspend Object? resetFeatureStates(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,?> descriptor, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState> Object? setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
-    method public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    method @Deprecated public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    method public void setGesturesState(com.mapbox.maps.extension.compose.gestures.GesturesState);
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> cameraChangedCoalescedEvents;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
-    property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
+    property @Deprecated public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
+    property public final com.mapbox.maps.extension.compose.gestures.GesturesState gesturesState;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapIdle> mapIdleEvents;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoaded> mapLoadedEvents;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.MapLoadingError> mapLoadingErrorEvents;
@@ -1201,6 +1204,48 @@ package com.mapbox.maps.extension.compose.annotation.generated {
     property public final String? linePattern;
     property public final Double? lineWidth;
     property public final Double? lineZOffset;
+  }
+
+}
+
+package com.mapbox.maps.extension.compose.gestures {
+
+  public final class GestureInputKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void GestureInput(com.mapbox.maps.extension.compose.gestures.GesturesState, kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.gestures.GestureScope,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void GestureInput(com.mapbox.maps.extension.compose.gestures.GesturesState, Object? key1, kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.gestures.GestureScope,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void GestureInput(com.mapbox.maps.extension.compose.gestures.GesturesState, Object? key1, Object? key2, kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.gestures.GestureScope,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void GestureInput(com.mapbox.maps.extension.compose.gestures.GesturesState, Object? key1, Object? key2, Object? key3, kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.gestures.GestureScope,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static void GestureInput(com.mapbox.maps.extension.compose.gestures.GesturesState, Object![]? keys, kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.gestures.GestureScope,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class GestureScope {
+    method public suspend Object? detectFlingGesture(kotlin.jvm.functions.Function0<kotlin.Unit> onFling, kotlin.coroutines.Continuation<? super kotlin.Unit>);
+    method public suspend Object? detectMoveGestures(kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.MoveGestureDetector,kotlin.Unit> onMoveBegin = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.MoveGestureDetector,kotlin.Unit> onMoveEnd = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.MoveGestureDetector,java.lang.Boolean> onMove = { it -> return false }, kotlin.coroutines.Continuation<? super kotlin.Unit> = { it -> return false });
+    method public suspend Object? detectRotateGestures(kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.RotateGestureDetector,kotlin.Unit> onRotateBegin = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.RotateGestureDetector,kotlin.Unit> onRotateEnd = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.RotateGestureDetector,kotlin.Unit> onRotate = { it ->  }, kotlin.coroutines.Continuation<? super kotlin.Unit> = { it ->  });
+    method public suspend Object? detectScaleGestures(kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.StandardScaleGestureDetector,kotlin.Unit> onScaleBegin = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.StandardScaleGestureDetector,kotlin.Unit> onScaleEnd = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.StandardScaleGestureDetector,kotlin.Unit> onScale = { it ->  }, kotlin.coroutines.Continuation<? super kotlin.Unit> = { it ->  });
+    method public suspend Object? detectShoveGestures(kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.ShoveGestureDetector,kotlin.Unit> onShoveBegin = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.ShoveGestureDetector,kotlin.Unit> onShoveEnd = { it ->  }, kotlin.jvm.functions.Function1<? super com.mapbox.android.gestures.ShoveGestureDetector,kotlin.Unit> onShove = { it ->  }, kotlin.coroutines.Continuation<? super kotlin.Unit> = { it ->  });
+  }
+
+  @androidx.compose.runtime.Stable @com.mapbox.maps.MapboxExperimental public final class GesturesState {
+    ctor public GesturesState(com.mapbox.maps.plugin.gestures.generated.GesturesSettings initialGesturesSettings = GesturesSettings({ 
+
+}));
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? gestureInput(kotlin.jvm.functions.Function2<? super com.mapbox.maps.extension.compose.gestures.GestureScope,? super kotlin.coroutines.Continuation<? super kotlin.Unit>,?> block, kotlin.coroutines.Continuation<? super kotlin.Unit>);
+    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getGesturesSettings();
+    method public boolean isGestureInProgress();
+    method public boolean isUserAnimationInProgress();
+    method public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    property public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
+    field public static final com.mapbox.maps.extension.compose.gestures.GesturesState.Companion Companion;
+  }
+
+  public static final class GesturesState.Companion {
+    method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.gestures.GesturesState,com.mapbox.maps.plugin.gestures.generated.GesturesSettings> getSaver();
+    property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.gestures.GesturesState,com.mapbox.maps.plugin.gestures.generated.GesturesSettings> Saver;
+  }
+
+  public final class GesturesStateKt {
+    method @androidx.compose.runtime.Composable @com.mapbox.maps.MapboxExperimental public static inline com.mapbox.maps.extension.compose.gestures.GesturesState rememberGesturesState(String? key = null, kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.compose.gestures.GesturesState,kotlin.Unit> init = {});
   }
 
 }
