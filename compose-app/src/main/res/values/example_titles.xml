@@ -47,4 +47,5 @@
     <string name="activity_fling_mode">Fling mode</string>
     <string name="activity_nine_patch_image">Nine-patch image</string>
     <string name="activity_gestures">Gesture listeners</string>
+    <string name="activity_offline">Offline tile download</string>
 </resources>

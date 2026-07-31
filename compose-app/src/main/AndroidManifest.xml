@@ -513,6 +513,17 @@
                 android:name="@string/category"
                 android:value="@string/category_basic" />
         </activity>
+        <activity
+            android:name=".examples.offline.OfflineActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_offline"
+            android:exported="true"
+            android:label="@string/activity_offline"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_offline" />
+        </activity>
     </application>
 
 </manifest>

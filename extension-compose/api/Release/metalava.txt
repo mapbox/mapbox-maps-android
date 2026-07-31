@@ -92,6 +92,7 @@ package com.mapbox.maps.extension.compose {
   }
 
   public static final class MapState.Companion {
+    method public suspend Object? clearData(kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method public androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.MapState,com.mapbox.maps.extension.compose.MapState.Holder> getSaver();
     property public final androidx.compose.runtime.saveable.Saver<com.mapbox.maps.extension.compose.MapState,com.mapbox.maps.extension.compose.MapState.Holder> Saver;
   }

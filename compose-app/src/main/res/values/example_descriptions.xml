@@ -47,4 +47,5 @@
     <string name="description_fling_mode">Toggle native OverScroller fling deceleration and scroll mode via GesturesSettings.</string>
     <string name="description_nine_patch_image">Add a nine-patch image to a symbol layer and watch it stretch as text grows.</string>
     <string name="description_gestures">Observe move, scale, rotate, shove, and fling gestures using GestureInput on GesturesState.</string>
+    <string name="description_offline">Download style packs and a tile region for offline use, then view the map without network.</string>
 </resources>

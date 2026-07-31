@@ -22,6 +22,7 @@ import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.MapsResourceOptions
 import com.mapbox.maps.QueriedRasterValues
 import com.mapbox.maps.QueriedRenderedFeature
 import com.mapbox.maps.RenderFrameFinished
@@ -478,6 +479,23 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
    */
   @OptIn(MapboxExperimental::class)
   public companion object {
+
+    /**
+     * Clears temporary map data.
+     *
+     * Clears temporary map data from the data path defined in the current options.
+     * Useful to reduce the disk usage or in case the disk cache contains invalid data.
+     *
+     * Note that calling this API will affect all maps that use the same data path and does not
+     * affect persistent map data like offline style packages.
+     *
+     * @return An [Expected] with [None] on success, or a [String] error message on failure.
+     */
+    public suspend fun clearData(): Expected<String, com.mapbox.bindgen.None> =
+      suspendCancellableCoroutine { continuation ->
+        MapsResourceOptions.clearData(continuation::resume)
+      }
+
     /**
      * The default [Saver] implementation for [MapState].
      */

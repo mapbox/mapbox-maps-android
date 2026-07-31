@@ -112,6 +112,7 @@ public final class com/mapbox/maps/extension/compose/MapState {
 }
 
 public final class com/mapbox/maps/extension/compose/MapState$Companion {
+	public final fun clearData (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getSaver ()Landroidx/compose/runtime/saveable/Saver;
 }
 
