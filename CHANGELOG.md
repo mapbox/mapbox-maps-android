@@ -5,6 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+## Features ✨ and improvements 🏁
+* Clarify the documentation of `RasterLayer.rasterColor`, `rasterColorMix`, and `rasterColorRange`.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add companion object `MapState.clearData()` suspend function to clear temporary map data shared across maps using the same data pat.
