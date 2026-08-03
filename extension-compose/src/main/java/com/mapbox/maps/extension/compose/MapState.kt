@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.compose
 
 import android.os.Parcelable
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
@@ -14,6 +15,9 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraChanged
 import com.mapbox.maps.CameraChangedCoalesced
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CanonicalTileID
+import com.mapbox.maps.CoordinateInfo
 import com.mapbox.maps.GenericEvent
 import com.mapbox.maps.MapIdle
 import com.mapbox.maps.MapLoaded
@@ -40,6 +44,7 @@ import com.mapbox.maps.StyleDataLoaded
 import com.mapbox.maps.StyleImageMissing
 import com.mapbox.maps.StyleImageRemoveUnused
 import com.mapbox.maps.StyleLoaded
+import com.mapbox.maps.TileCoverOptions
 import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.genericEvents
@@ -449,6 +454,131 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
     mapboxMapFlow.filterNotNull().first().pixelForCoordinate(coordinate)
 
   /**
+   * Calculate a geographical coordinate (i.e., longitude-latitude pair) that corresponds
+   * to a screen coordinate.
+   *
+   * The screen coordinate is in [MapOptions.size] platform pixels relative to the top left
+   * of the map (not of the whole screen).
+   *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
+   *
+   * This API isn't supported by Globe projection and will return a no-op result matching the center
+   * of the screen.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
+   *
+   * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
+   *
+   * @param pixel A screen coordinate represented by x y coordinates.
+   *
+   * @return Returns a geographical coordinate corresponding to the x y coordinates on the screen.
+   */
+  public suspend fun coordinateForPixel(pixel: ScreenCoordinate): Point =
+    mapboxMapFlow.filterNotNull().first().coordinateForPixel(pixel)
+
+  /**
+   * Calculate screen coordinates that corresponds to geographical coordinates
+   * (i.e., longitude-latitude pair).
+   *
+   * The screen coordinates are in [MapOptions.size] platform pixels relative to the top left
+   * of the map (not of the whole screen).
+   *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
+   *
+   * This API isn't supported by Globe projection and will return a no-op result matching the center
+   * of the screen.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
+   *
+   * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
+   *
+   * @param coordinates A batch of geographical coordinates on the map to convert to screen coordinates.
+   *
+   * @return Returns a batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
+   */
+  public suspend fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> =
+    mapboxMapFlow.filterNotNull().first().pixelsForCoordinates(coordinates)
+
+  /**
+   * Calculate geographical coordinates (i.e., longitude-latitude pair) that corresponds
+   * to screen coordinates.
+   *
+   * The screen coordinates are in [MapOptions.size] platform pixels relative to the top left
+   * of the map (not of the whole screen).
+   *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
+   *
+   * This API isn't supported by Globe projection and will return a no-op result matching the center
+   * of the screen.
+   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
+   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
+   *
+   * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
+   *
+   * @param pixels A batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
+   *
+   * @return Returns a batch of geographical coordinates corresponding to the screen coordinates on the screen.
+   */
+  public suspend fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> =
+    mapboxMapFlow.filterNotNull().first().coordinatesForPixels(pixels)
+
+  /**
+   * Calculates the geographical coordinate information that corresponds to a given screen coordinate.
+   *
+   * The screen coordinate is in [MapOptions.size] platform pixels relative to the top left
+   * of the map (not of the whole screen).
+   *
+   * The returned coordinate will be the closest position projected onto the map surface,
+   * in case the screen coordinate does not intersect with the map surface.
+   *
+   * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
+   *
+   * @param pixel The screen coordinate on the map, in platform pixels.
+   *
+   * @return A [CoordinateInfo] record containing the geographical coordinate and whether it is on the map surface.
+   */
+  public suspend fun coordinateInfoForPixel(pixel: ScreenCoordinate): CoordinateInfo =
+    mapboxMapFlow.filterNotNull().first().coordinateInfoForPixel(pixel)
+
+  /**
+   * Calculates the geographical coordinates information that corresponds to the given screen coordinates.
+   *
+   * The screen coordinates are in [MapOptions.size] platform pixels relative to the top left
+   * of the map (not of the whole screen).
+   *
+   * The returned coordinate will be the closest position projected onto the map surface,
+   * in case the screen coordinate does not intersect with the map surface.
+   *
+   * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
+   *
+   * @param pixels The list of screen coordinates on the map, in platform pixels.
+   *
+   * @return [CoordinateInfo] records containing geographical coordinates and whether each is on the map surface.
+   */
+  public suspend fun coordinatesInfoForPixels(pixels: List<ScreenCoordinate>): List<CoordinateInfo> =
+    mapboxMapFlow.filterNotNull().first().coordinatesInfoForPixels(pixels)
+
+  /**
+   * Returns tileIDs that cover current map camera.
+   *
+   * Note! This is an experimental API and behavior might change in future.
+   *
+   * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
+   *
+   * @param tileCoverOptions Options for the tile cover method.
+   * @param cameraOptions This is an extra parameter for future use. Has no effect for now.
+   *
+   * @return Returns a list of [CanonicalTileID] that cover the current map camera.
+   */
+  @MapboxExperimental
+  @JvmOverloads
+  public suspend fun tileCover(
+    tileCoverOptions: TileCoverOptions,
+    cameraOptions: CameraOptions? = null,
+  ): List<CanonicalTileID> =
+    mapboxMapFlow.filterNotNull().first().tileCover(tileCoverOptions, cameraOptions)
+
+  /**
    * Attach the [MapState] to the [MapboxMap].
    */
   @Composable
@@ -457,11 +587,16 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
       gesturesState.BindToMap(mapboxMap = mapboxMap)
     }
     DisposableEffect(Unit) {
-      mapboxMapFlow.value = mapboxMap
+      updateMap(mapboxMap)
       onDispose {
-        mapboxMapFlow.value = null
+        updateMap(null)
       }
     }
+  }
+
+  @VisibleForTesting
+  internal fun updateMap(mapboxMap: MapboxMap?) {
+    mapboxMapFlow.value = mapboxMap
   }
 
   /**

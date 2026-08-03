@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* [compose] Add coordinate conversion APIs to `MapState`: `coordinateForPixel`, `pixelsForCoordinates`, `coordinatesForPixels`, `coordinateInfoForPixel`, and `coordinatesInfoForPixels`. Add experimental `tileCover` to `MapViewportState`.
 * Clarify the documentation of `RasterLayer.rasterColor`, `rasterColorMix`, and `rasterColorRange`.
 * [compose] Add companion object `MapState.clearData()` suspend function to clear temporary map data shared across maps using the same data pat.
 * [compose] Add experimental `GesturesState` with per-gesture listeners via `GestureInput` composable. Provides `detectMoveGestures`, `detectScaleGestures`, `detectRotateGestures`, `detectShoveGestures`, and `detectFlingGesture` suspend functions. `GesturesState` can be created standalone via `rememberGesturesState()` and assigned to `MapState.gesturesState`. Exposes `isGestureInProgress()` and `isUserAnimationInProgress()` methods. Gesture settings are now accessed through `MapState.gesturesState.gesturesSettings`; the old `MapState.gesturesSettings` property is deprecated.

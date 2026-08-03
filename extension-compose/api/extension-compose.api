@@ -76,6 +76,10 @@ public final class com/mapbox/maps/extension/compose/MapEffectKt {
 public final class com/mapbox/maps/extension/compose/MapState {
 	public static final field Companion Lcom/mapbox/maps/extension/compose/MapState$Companion;
 	public fun <init> ()V
+	public final fun coordinateForPixel (Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun coordinateInfoForPixel (Lcom/mapbox/maps/ScreenCoordinate;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun coordinatesForPixels (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun coordinatesInfoForPixels (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun genericEvents (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getCameraChangedCoalescedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getCameraChangedEvents ()Lkotlinx/coroutines/flow/Flow;
@@ -96,6 +100,7 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun getStyleImageRemoveUnusedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getStyleLoadedEvents ()Lkotlinx/coroutines/flow/Flow;
 	public final fun pixelForCoordinate (Lcom/mapbox/geojson/Point;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun pixelsForCoordinates (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun queryRenderedFeatures (Lcom/mapbox/maps/interactions/TypedFeaturesetDescriptor;Lcom/mapbox/maps/RenderedQueryGeometry;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -109,6 +114,9 @@ public final class com/mapbox/maps/extension/compose/MapState {
 	public final fun setFeatureState (Lcom/mapbox/maps/interactions/FeaturesetFeature;Lcom/mapbox/maps/interactions/FeatureState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setGesturesSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
 	public final fun setGesturesState (Lcom/mapbox/maps/extension/compose/gestures/GesturesState;)V
+	public final fun tileCover (Lcom/mapbox/maps/TileCoverOptions;Lcom/mapbox/maps/CameraOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun tileCover (Lcom/mapbox/maps/TileCoverOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun tileCover$default (Lcom/mapbox/maps/extension/compose/MapState;Lcom/mapbox/maps/TileCoverOptions;Lcom/mapbox/maps/CameraOptions;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class com/mapbox/maps/extension/compose/MapState$Companion {

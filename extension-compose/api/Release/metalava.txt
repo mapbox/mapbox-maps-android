@@ -40,6 +40,10 @@ package com.mapbox.maps.extension.compose {
 
   @androidx.compose.runtime.Stable public final class MapState {
     ctor public MapState();
+    method public suspend Object? coordinateForPixel(com.mapbox.maps.ScreenCoordinate pixel, kotlin.coroutines.Continuation<? super com.mapbox.geojson.Point>);
+    method public suspend Object? coordinateInfoForPixel(com.mapbox.maps.ScreenCoordinate pixel, kotlin.coroutines.Continuation<? super com.mapbox.maps.CoordinateInfo>);
+    method public suspend Object? coordinatesForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.geojson.Point>>);
+    method public suspend Object? coordinatesInfoForPixels(java.util.List<com.mapbox.maps.ScreenCoordinate> pixels, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.CoordinateInfo>>);
     method @com.mapbox.maps.MapboxExperimental public kotlinx.coroutines.flow.Flow<com.mapbox.maps.GenericEvent> genericEvents(String eventName);
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> getCameraChangedCoalescedEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> getCameraChangedEvents();
@@ -60,6 +64,7 @@ package com.mapbox.maps.extension.compose {
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleImageRemoveUnused> getStyleImageRemoveUnusedEvents();
     method public kotlinx.coroutines.flow.Flow<com.mapbox.maps.StyleLoaded> getStyleLoadedEvents();
     method public suspend Object? pixelForCoordinate(com.mapbox.geojson.Point coordinate, kotlin.coroutines.Continuation<? super com.mapbox.maps.ScreenCoordinate>);
+    method public suspend Object? pixelsForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.ScreenCoordinate>>);
     method public suspend Object? queryRenderedFeatures(com.mapbox.maps.RenderedQueryGeometry geometry, com.mapbox.maps.RenderedQueryOptions options, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedRenderedFeature>>>);
     method @com.mapbox.maps.MapboxExperimental public suspend <FF extends com.mapbox.maps.interactions.FeaturesetFeature<?>> Object? queryRenderedFeatures(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,FF> descriptor, com.mapbox.maps.RenderedQueryGeometry? geometry = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, kotlin.coroutines.Continuation<? super java.util.List<? extends FF>> = null);
     method @com.mapbox.maps.MapboxExperimental public suspend <FF extends com.mapbox.maps.interactions.FeaturesetFeature<?>> Object? queryRenderedFeatures(com.mapbox.maps.interactions.TypedFeaturesetDescriptor<?,FF> descriptor, com.mapbox.maps.RenderedQueryGeometry? geometry = null, kotlin.coroutines.Continuation<? super java.util.List<? extends FF>> = null);
@@ -71,6 +76,8 @@ package com.mapbox.maps.extension.compose {
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState> Object? setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method @Deprecated public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     method public void setGesturesState(com.mapbox.maps.extension.compose.gestures.GesturesState);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions = null, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.CanonicalTileID>> = null);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.CanonicalTileID>> = null);
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> cameraChangedCoalescedEvents;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
     property @Deprecated public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
