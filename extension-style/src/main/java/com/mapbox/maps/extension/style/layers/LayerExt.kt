@@ -22,7 +22,12 @@ import com.mapbox.maps.logW
 @OptIn(MapboxExperimental::class)
 fun MapboxStyleManager.getLayer(layerId: String): Layer? {
   val source by lazy { getStyleLayerProperty(layerId, "source").unwrap<String>() }
-  return when (val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()) {
+  val type = getStyleLayerProperty(layerId, "type").silentUnwrap<String>()
+  if (type == null) {
+    logW(TAG, "Layer with layerId = $layerId has no type, returning null.")
+    return null
+  }
+  return when (type) {
     "background" -> BackgroundLayer(layerId)
     "location-indicator" -> LocationIndicatorLayer(layerId)
     "sky" -> SkyLayer(layerId)
@@ -56,7 +61,7 @@ fun MapboxStyleManager.getLayer(layerId: String): Layer? {
     "raster-particle" -> RasterParticleLayer(layerId, source)
     "clip" -> ClipLayer(layerId, source)
     else -> {
-      logW(TAG, "Layer type: $type unknown.")
+      logW(TAG, "Layer type: $type unknown for layerId = $layerId.")
       null
     }
   }?.also { result ->
