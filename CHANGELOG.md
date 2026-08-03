@@ -16,6 +16,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix view annotations rendering incorrectly or not appearing when the host app's layout direction is RTL.
 * Validate URL scheme in `AttributionParser` to reject non-http(s) attribution URLs at parse time, preventing malicious style/tile-source attributions from reaching custom attribution consumers via the public API.
 
+## Dependencies
+* Update Mapbox GeoJSON library to [v7.10.1](https://github.com/mapbox/mapbox-java/releases/tag/v7.10.1).
+
 # 11.28.0-rc.1 July 27, 2026
 ## Features ✨ and improvements 🏁
 * Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
