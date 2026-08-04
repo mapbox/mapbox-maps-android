@@ -1207,7 +1207,6 @@ public final class com/mapbox/maps/module/telemetry/MapTelemetryMetadata$Builder
 public final class com/mapbox/maps/module/telemetry/UiFramework {
 	public static final field ANDROID_VIEW Lcom/mapbox/maps/module/telemetry/UiFramework;
 	public static final field Companion Lcom/mapbox/maps/module/telemetry/UiFramework$Companion;
-	public static final field FLUTTER Lcom/mapbox/maps/module/telemetry/UiFramework;
 	public static final field JETPACK_COMPOSE Lcom/mapbox/maps/module/telemetry/UiFramework;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Ljava/lang/String;

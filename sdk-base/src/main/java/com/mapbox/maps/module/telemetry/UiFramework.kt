@@ -44,11 +44,5 @@ class UiFramework private constructor(
      */
     @JvmField
     val JETPACK_COMPOSE = UiFramework("jetpack-compose")
-
-    /**
-     * Flutter map (`MapWidget`).
-     */
-    @JvmField
-    val FLUTTER = UiFramework("flutter")
   }
 }
