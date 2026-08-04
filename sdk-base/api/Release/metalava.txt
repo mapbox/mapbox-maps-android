@@ -1207,6 +1207,7 @@ package com.mapbox.maps.module.telemetry {
     property public final String value;
     field public static final com.mapbox.maps.module.telemetry.UiFramework ANDROID_VIEW;
     field public static final com.mapbox.maps.module.telemetry.UiFramework.Companion Companion;
+    field public static final com.mapbox.maps.module.telemetry.UiFramework FLUTTER;
     field public static final com.mapbox.maps.module.telemetry.UiFramework JETPACK_COMPOSE;
   }
 
