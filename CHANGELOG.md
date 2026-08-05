@@ -12,6 +12,9 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add experimental `GesturesState` with per-gesture listeners via `GestureInput` composable. Provides `detectMoveGestures`, `detectScaleGestures`, `detectRotateGestures`, `detectShoveGestures`, and `detectFlingGesture` suspend functions. `GesturesState` can be created standalone via `rememberGesturesState()` and assigned to `MapState.gesturesState`. Exposes `isGestureInProgress()` and `isUserAnimationInProgress()` methods. Gesture settings are now accessed through `MapState.gesturesState.gesturesSettings`; the old `MapState.gesturesSettings` property is deprecated.
 * Promote `SymbolLayer.symbolZOffset` to stable.
 
+## Bug fixes 🐞
+* Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.
+
 # 11.28.0
 ## Bug fixes 🐞
 * Fix view annotations rendering incorrectly or not appearing when the host app's layout direction is RTL.
