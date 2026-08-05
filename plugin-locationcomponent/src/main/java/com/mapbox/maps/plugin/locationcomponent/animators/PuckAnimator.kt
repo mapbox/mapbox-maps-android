@@ -96,14 +96,14 @@ internal abstract class PuckAnimator<T>(
   ) {
     cancelRunning()
     if (options == null) {
-      setObjectValues(*targets)
       AnimationThreadController.postOnAnimatorThread {
+        setObjectValues(*targets)
         start()
       }
     } else {
-      options.invoke(userConfiguredAnimator)
-      userConfiguredAnimator.setObjectValues(*targets)
       AnimationThreadController.postOnAnimatorThread {
+        options.invoke(userConfiguredAnimator)
+        userConfiguredAnimator.setObjectValues(*targets)
         userConfiguredAnimator.start()
       }
     }
