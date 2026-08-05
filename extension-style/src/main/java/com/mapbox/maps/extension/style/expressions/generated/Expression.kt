@@ -440,8 +440,8 @@ class Expression : Value {
     /**
      * Returns the shortest distance in meters between the evaluated feature and the input geometry. The input
      * value can be a valid GeoJSON of type `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`, `Feature`, or
-     * `FeatureCollection`. Distance values returned may vary in precision due to loss in precision from encoding geometries,
-     * particularly below zoom level 13.
+     * `FeatureCollection`, or expression that returns a valid GeoJSON. Distance values returned may vary in precision due
+     * to loss in precision from encoding geometries, particularly below zoom level 13.
      */
     fun distance(geojson: GeoJson): ExpressionBuilder = apply {
       this@ExpressionBuilder.arguments.add(Expression.distance(geojson))
@@ -2547,8 +2547,8 @@ class Expression : Value {
     /**
      * Returns the shortest distance in meters between the evaluated feature and the input geometry. The input
      * value can be a valid GeoJSON of type `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`, `Feature`, or
-     * `FeatureCollection`. Distance values returned may vary in precision due to loss in precision from encoding geometries,
-     * particularly below zoom level 13.
+     * `FeatureCollection`, or expression that returns a valid GeoJSON. Distance values returned may vary in precision due
+     * to loss in precision from encoding geometries, particularly below zoom level 13.
      */
     @JvmStatic
     fun distance(geojson: GeoJson): Expression {

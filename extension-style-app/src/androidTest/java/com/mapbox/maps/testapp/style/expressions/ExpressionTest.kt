@@ -1932,7 +1932,7 @@ class ExpressionTest : BaseStyleTest() {
     }
     setupLayer(layer)
     assertEquals(
-      "[<, [distance, {coordinates=[[[30.0, 10.0], [40.0, 40.0], [20.0, 40.0], [10.0, 20.0], [30.0, 10.0]]], type=Polygon}], 150.0]",
+      "[<, [distance, [literal, {coordinates=[[[30.0, 10.0], [40.0, 40.0], [20.0, 40.0], [10.0, 20.0], [30.0, 10.0]]], type=Polygon}]], 150.0]",
       layer.filter.toString()
     )
   }

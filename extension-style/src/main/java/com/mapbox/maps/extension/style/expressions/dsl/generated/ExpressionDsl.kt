@@ -172,7 +172,7 @@ fun config(block: Expression.ExpressionBuilder.() -> Unit): Expression = Express
  */
 fun cos(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.cos(block)
 /**
- * Returns the shortest distance in meters between the evaluated feature and the input geometry. The input value can be a valid GeoJSON of type `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`, `Feature`, or `FeatureCollection`. Distance values returned may vary in precision due to loss in precision from encoding geometries, particularly below zoom level 13.
+ * Returns the shortest distance in meters between the evaluated feature and the input geometry. The input value can be a valid GeoJSON of type `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, `MultiPolygon`, `Feature`, or `FeatureCollection`, or expression that returns a valid GeoJSON. Distance values returned may vary in precision due to loss in precision from encoding geometries, particularly below zoom level 13.
  */
 fun distance(geojson: GeoJson): Expression = Expression.distance(geojson)
 

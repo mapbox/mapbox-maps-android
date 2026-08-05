@@ -11,6 +11,8 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add companion object `MapState.clearData()` suspend function to clear temporary map data shared across maps using the same data pat.
 * [compose] Add experimental `GesturesState` with per-gesture listeners via `GestureInput` composable. Provides `detectMoveGestures`, `detectScaleGestures`, `detectRotateGestures`, `detectShoveGestures`, and `detectFlingGesture` suspend functions. `GesturesState` can be created standalone via `rememberGesturesState()` and assigned to `MapState.gesturesState`. Exposes `isGestureInProgress()` and `isUserAnimationInProgress()` methods. Gesture settings are now accessed through `MapState.gesturesState.gesturesSettings`; the old `MapState.gesturesSettings` property is deprecated.
 * Promote `SymbolLayer.symbolZOffset` to stable.
+* Accept an object as config option value.
+* Accept an expression as `distance` expression argument.
 
 ## Bug fixes 🐞
 * Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.
