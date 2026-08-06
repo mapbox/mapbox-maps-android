@@ -15,6 +15,7 @@ internal abstract class DelegatingViewAnnotationPositionsUpdateListener : ViewAn
           leftTopCoordinate = it.leftTopCoordinate,
           anchorCoordinate = it.anchorCoordinate,
           anchorConfig = it.anchorConfig,
+          additionalLeftTopCoordinates = it.additionalLeftTopCoordinates,
         )
       }
     )
@@ -31,11 +32,13 @@ internal class DelegatingViewAnnotationPositionDescriptor(
   leftTopCoordinate: ScreenCoordinate,
   anchorCoordinate: Point,
   anchorConfig: ViewAnnotationAnchorConfig,
+  additionalLeftTopCoordinates: MutableList<ScreenCoordinate>,
 ) : ViewAnnotationPositionDescriptor(
   /* identifier = */ identifier,
   /* width = */ width,
   /* height = */ height,
   /* leftTopCoordinate = */ leftTopCoordinate,
   /* anchorCoordinate = */ anchorCoordinate,
-  /* anchorConfig = */ anchorConfig
+  /* anchorConfig = */ anchorConfig,
+  /* additionalLeftTopCoordinates = */ additionalLeftTopCoordinates
 )

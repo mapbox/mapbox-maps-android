@@ -38,6 +38,7 @@ import org.junit.runners.Parameterized
         ),
         anchorCoordinate = Point.fromLngLat(0.0, 0.0),
         anchorConfig = ViewAnnotationAnchorConfig.Builder().anchor(ViewAnnotationAnchor.CENTER).build(),
+        additionalLeftTopCoordinates = mutableListOf(),
       )
     }
 
