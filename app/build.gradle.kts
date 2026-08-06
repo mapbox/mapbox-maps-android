@@ -40,6 +40,17 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments["clearPackageData"] = "true"
+    // Optional coding-agent identifier (e.g. `-Pmapbox.agent=claude-code`), forwarded at runtime
+    // to Common's MapboxAgentContext so outbound requests can be tagged for agent-driven traffic
+    // measurement. Defaults to an empty string, which is treated as "no agent" and is a no-op.
+    val mapboxAgentId = if (project.hasProperty("mapbox.agent")) {
+      (project.property("mapbox.agent") as String)
+        .replace("\\", "\\\\")
+        .replace("\"", "\\\"")
+    } else {
+      ""
+    }
+    buildConfigField("String", "MAPBOX_AGENT", String.format("\"%s\"", mapboxAgentId))
     ndk {
       val abi: String =
         if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
