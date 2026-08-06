@@ -10,23 +10,27 @@ import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.coroutine.styleDataLoadedEvents
 import com.mapbox.maps.extension.compose.internal.MapNode
 import com.mapbox.maps.extension.compose.style.atmosphere.generated.AtmosphereState
+import com.mapbox.maps.extension.compose.style.internal.generated.StyleDefaults
 import com.mapbox.maps.extension.compose.style.precipitations.generated.RainState
 import com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState
 import com.mapbox.maps.extension.compose.style.projection.generated.Projection
 import com.mapbox.maps.extension.compose.style.terrain.generated.TerrainState
 import com.mapbox.maps.logD
 import com.mapbox.maps.logW
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(MapboxExperimental::class)
 internal class MapStyleNode(
@@ -36,13 +40,25 @@ internal class MapStyleNode(
   var atmosphereState: AtmosphereState,
   var rainState: RainState,
   var snowState: SnowState,
-  var terrainState: TerrainState
+  var terrainState: TerrainState,
+  private val styleDefaults: (String) -> StyleDefaults = { StyleDefaults.fromJson(it) },
+  private val defaultsParseDispatcher: CoroutineDispatcher = Dispatchers.Default,
+  styleDataLoadedEventsProvider: (MapboxMap) -> Flow<StyleDataLoaded> = {
+    // Test seam: @JvmSynthetic extension can't be mocked, so we inject the flow source.
+    it.styleDataLoadedEvents
+  }
 ) : MapNode() {
 
   val coroutineScope =
     CoroutineScope(Dispatchers.Main.immediate + SupervisorJob() + CoroutineName("MapStyleNodeScope"))
 
-  private val styleDataLoadedFlow = mapboxMap.styleDataLoadedEvents
+  // Defaults cache (null = waiting for first STYLE event).
+  private var cachedDefaults: StyleDefaults? = null
+
+  // Tracks attached terrain layer for detach-before-attach logic; null on first attach.
+  private var attachedTerrainState: TerrainState? = null
+
+  private val styleDataLoadedFlow = styleDataLoadedEventsProvider(mapboxMap)
 
   internal val styleSourcesLoaded: SharedFlow<StyleDataLoaded> = styleDataLoadedFlow
     .filter { it.type == StyleDataLoadedType.SOURCES }
@@ -73,10 +89,19 @@ internal class MapStyleNode(
     logD(TAG, "onAttached: parent=$parent")
     updateStyle(style)
     updateProjection(projection)
-    updateAtmosphere(atmosphereState)
-    updateRain(rainState)
-    updateSnow(snowState)
-    updateTerrain(terrainState)
+    // Single consolidated STYLE collector (launched once, not per recomposition).
+    // Reparses defaults and attaches all four on each STYLE event.
+    coroutineScope.launch {
+      styleDataLoaded.collect {
+        val styleJson = mapboxMap.styleJSON
+        val defaults = withContext(defaultsParseDispatcher) { styleDefaults(styleJson) }
+        cachedDefaults = defaults
+        attachAtmosphere(defaults)
+        attachRain(defaults)
+        attachSnow(defaults)
+        attachTerrain(defaults)
+      }
+    }
   }
 
   override fun onRemoved(parent: MapNode) {
@@ -110,11 +135,6 @@ internal class MapStyleNode(
     logD(TAG, "loadStyle $style started")
     mapboxMap.loadStyle(style) {
       logD(TAG, "loadStyle $style finished")
-
-      // TODO: create an AtmosphereState with the gl-native default prefilled then read the
-      //       properties from the style (gl-native could be optimized to only return only the
-      //       mutated ones from their default values, for now we need to read them individually) and
-      //       merge them as the `styleAtmosphereState`.
     }
   }
 
@@ -137,15 +157,9 @@ internal class MapStyleNode(
     // we have to detach (in a sense of cancelling property collector jobs) the previous state
     // before attaching the new state; otherwise the jobs will be duplicated
     this.atmosphereState.applier.detach()
-    // TODO: merge the atmosphere state from the `styleAtmosphereState` (it was captured above in
-    //       updateStyle) and the new one and then set all the properties. So we avoid possible
-    //       flickering if we would reset the AtmosphereState and then apply the new one
     this.atmosphereState = atmosphereState
-    coroutineScope.launch {
-      styleDataLoaded.collect {
-        atmosphereState.applier.attachTo(mapboxMap)
-      }
-    }
+    // Immediate attach using cached defaults; defers to first STYLE event if null.
+    cachedDefaults?.let { attachAtmosphere(it) }
   }
 
   internal fun updateRain(rainState: RainState) {
@@ -153,11 +167,7 @@ internal class MapStyleNode(
     // before attaching the new state; otherwise the jobs will be duplicated
     this.rainState.applier.detach()
     this.rainState = rainState
-    coroutineScope.launch {
-      styleDataLoaded.collect {
-        rainState.applier.attachTo(mapboxMap)
-      }
-    }
+    cachedDefaults?.let { attachRain(it) }
   }
 
   internal fun updateSnow(snowState: SnowState) {
@@ -165,31 +175,53 @@ internal class MapStyleNode(
     // before attaching the new state; otherwise the jobs will be duplicated
     this.snowState.applier.detach()
     this.snowState = snowState
-    coroutineScope.launch {
-      styleDataLoaded.collect {
-        snowState.applier.attachTo(mapboxMap)
-      }
-    }
+    cachedDefaults?.let { attachSnow(it) }
   }
 
   internal fun updateTerrain(terrainState: TerrainState) {
-    val previousTerrainState = this.terrainState
-    this.terrainState = terrainState
     // we have to detach (in a sense of cancelling property collector jobs) the previous state
     // before attaching the new state; otherwise the jobs will be duplicated
-    previousTerrainState.applier.detach()
-    coroutineScope.launch {
-      styleDataLoaded.collect {
-        // we have to treat terrain as some sort of persistent layer and attach / detach map accordingly
-        previousTerrainState.applier.rasterDemSourceState?.let {
-          it.detachFromLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
-        }
-        terrainState.applier.rasterDemSourceState?.let {
-          it.attachToLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
-        }
-        terrainState.applier.attachTo(mapboxMap)
-      }
+    this.terrainState.applier.detach()
+    this.terrainState = terrainState
+    cachedDefaults?.let { attachTerrain(it) }
+  }
+
+  /**
+   * Applies defaults merged with user properties.
+   */
+  private fun attachAtmosphere(defaults: StyleDefaults) {
+    atmosphereState.applier.attachTo(mapboxMap, defaults.atmosphere)
+  }
+
+  /**
+   * Applies defaults merged with user properties (or resets/removes if disabled).
+   */
+  private fun attachRain(defaults: StyleDefaults) {
+    rainState.applier.attachTo(mapboxMap, defaults.rain)
+  }
+
+  /**
+   * Applies defaults merged with user properties; resets/removes if disabled.
+   */
+  private fun attachSnow(defaults: StyleDefaults) {
+    snowState.applier.attachTo(mapboxMap, defaults.snow)
+  }
+
+  /**
+   * Applies defaults merged with user properties; detaches old layer before attaching new.
+   */
+  private fun attachTerrain(defaults: StyleDefaults) {
+    // Always detach-then-attach terrain (even when state unchanged).
+    // Style reload discards native sources; Kotlin bookkeeping must resync or terrain drops silently.
+    // Don't optimize by comparing old/new state.
+    attachedTerrainState?.applier?.rasterDemSourceState?.let {
+      it.detachFromLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
     }
+    terrainState.applier.rasterDemSourceState?.let {
+      it.attachToLayer("mapbox-terrain-${it.sourceId}", mapboxMap)
+    }
+    terrainState.applier.attachTo(mapboxMap, defaults.terrain)
+    attachedTerrainState = terrainState
   }
 
   internal fun updateStyleTransition(transition: TransitionOptions) {

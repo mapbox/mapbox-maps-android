@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
@@ -22,8 +23,10 @@ import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleValue
 import com.mapbox.maps.extension.compose.style.MapStyle
+import com.mapbox.maps.extension.compose.style.atmosphere.generated.rememberAtmosphereState
 import com.mapbox.maps.extension.compose.style.precipitations.generated.RainState
 import com.mapbox.maps.extension.compose.style.precipitations.generated.SnowState
 import com.mapbox.maps.extension.compose.style.precipitations.generated.rememberRainState
@@ -95,6 +98,11 @@ public class PrecipitationsActivity : ComponentActivity() {
         it.intensity = DoubleValue(snowPrecipitationState.intensity)
         it.density = DoubleValue(snowPrecipitationState.density)
       }
+      var overrideFog by remember { mutableStateOf(false) }
+      val defaultAtmosphere = rememberAtmosphereState() // all props unset (INITIAL) = "no override"
+      val customAtmosphere = rememberAtmosphereState {
+        color = ColorValue(Color.Red) // visibly override the style's fog
+      }
 
       MapboxMapComposeTheme {
         ExampleScaffold(
@@ -124,6 +132,16 @@ public class PrecipitationsActivity : ComponentActivity() {
                   text = "${snowPrecipitationState.text} snow"
                 )
               }
+              FloatingActionButton(
+                modifier = Modifier.padding(bottom = 10.dp),
+                shape = RoundedCornerShape(16.dp),
+                onClick = { overrideFog = !overrideFog }
+              ) {
+                Text(
+                  modifier = Modifier.padding(10.dp),
+                  text = if (overrideFog) "fog: custom (red)" else "fog: style default"
+                )
+              }
             }
           }
         ) {
@@ -138,6 +156,7 @@ public class PrecipitationsActivity : ComponentActivity() {
                     if (rainPrecipitationState == PrecipitationState.None) RainState.DISABLED else rainState
                   this.snowState =
                     if (snowPrecipitationState == PrecipitationState.None) SnowState.DISABLED else snowState
+                  this.atmosphereState = if (overrideFog) customAtmosphere else defaultAtmosphere // ← the reset
                 }
               )
             }

@@ -27,8 +27,11 @@ private typealias PropertyValueFlow = MutableStateFlow<Value>
  * Propagates the terrain state properties to [MapboxMap].
  *
  * There are two special cases:
- * 1. if [initial] is true then this class will behave as no-op. That is, it won't change anything related to Terrain from current [MapboxMap] state.
- * 2. if [initial] is false but [rasterDemSourceState] is `null` then terrain will be removed (the default (`Value.nullValue()`) in gl-native engine).
+ * 1. if [initial] is true then this class will behave as no-op. That is, it won't change anything
+ *    related to Terrain from current [MapboxMap] state.
+ * 2. if [initial] is false but [rasterDemSourceState] is `null` then terrain will be reset to the
+ *    style-defaults passed to [attachTo] if non-empty, or removed (`Value.nullValue()` in
+ *    gl-native engine) if the loaded style shipped no terrain of its own.
  */
 internal class TerrainStateApplier internal constructor(
   internal val rasterDemSourceState: RasterDemSourceState?,
@@ -56,29 +59,62 @@ internal class TerrainStateApplier internal constructor(
     }
   }
 
-  internal fun attachTo(mapboxMap: MapboxMap) {
+  /**
+   * Attaches this applier to [mapboxMap].
+   *
+   * @param styleDefaults the root-level `terrain` values baked into the loaded style JSON,
+   * captured once per style load (see `StyleDefaults`). Used for whole-object reset/merge:
+   * - [rasterDemSourceState] present: [styleDefaults] are merged in as the lowest-priority layer,
+   *   then the injected `source` key (there is no `type` key for terrain) is (re)applied so
+   *   defaults can never clobber it, then the user-set properties win on any remaining overlap.
+   * - [rasterDemSourceState] `null` (today: `setStyleTerrain(Value.nullValue())`, i.e. removal):
+   *   non-empty [styleDefaults] -> reset terrain to the style's own value
+   *   (`setStyleTerrain(styleDefaults)`); empty -> `Value.nullValue()` (today's removal,
+   *   unchanged).
+   *
+   * The [initial] early-return above is untouched and out of scope for this reset/merge feature.
+   */
+  internal fun attachTo(mapboxMap: MapboxMap, styleDefaults: Map<String, Value> = emptyMap()) {
     if (initial) {
       return
     }
-    mapboxMap.setStyleTerrain(
-      properties = if (rasterDemSourceState != null) {
-        Value(
-          hashMapOf<String, Value>().also { map ->
-            map["source"] = Value(rasterDemSourceState.sourceId)
-            // Get the most recent list of properties and their values
-            map.putAll(propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value })
-            logD(TAG, "Setting all properties in one go: $map")
-          }
-        ).also {
-          logD(TAG, "Adding terrain: $this")
+    // `attachTo` can legitimately be called more than once on the same instance without an
+    // intervening `detach()` -- e.g. `MapStyleNode`'s consolidated STYLE collector re-attaches
+    // every emission (real style reload/switch) using the node's *current* state. Cancel any
+    // property-collector jobs from a previous `attachTo` call first, otherwise `startCollectingPropertyFlows`
+    // below would pile up duplicate collectors (and duplicate native property-setter calls) on every
+    // re-attach.
+    detach()
+    val failureMessage: String
+    val properties = if (rasterDemSourceState != null) {
+      failureMessage = "Failed to add terrain"
+      Value(
+        hashMapOf<String, Value>().also { map ->
+          // Defaults are the lowest-priority layer.
+          map.putAll(styleDefaults)
+          // The injected source key must survive the defaults merge - there is no `type` key
+          // for terrain, and defaults must never clobber the source we were configured with.
+          map["source"] = Value(rasterDemSourceState.sourceId)
+          // Get the most recent list of properties and their values; user properties win.
+          map.putAll(propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value })
+          logD(TAG, "Setting all properties in one go: $map")
         }
-      } else {
-        Value.nullValue().also {
-          logD(TAG, "Removing terrain: $this")
-        }
-      },
-    ).onError {
-      logE(TAG, "Failed to add terrain: $it")
+      ).also {
+        logD(TAG, "Adding terrain: $this")
+      }
+    } else if (styleDefaults.isNotEmpty()) {
+      failureMessage = "Failed to reset terrain to style default"
+      Value(HashMap(styleDefaults)).also {
+        logD(TAG, "Resetting terrain to style default: $styleDefaults")
+      }
+    } else {
+      failureMessage = "Failed to remove terrain"
+      Value.nullValue().also {
+        logD(TAG, "Removing terrain: $this")
+      }
+    }
+    mapboxMap.setStyleTerrain(properties).onError {
+      logE(TAG, "$failureMessage: $it")
     }.onValue {
       if (rasterDemSourceState != null) {
         logD(TAG, "Added terrain: $this")

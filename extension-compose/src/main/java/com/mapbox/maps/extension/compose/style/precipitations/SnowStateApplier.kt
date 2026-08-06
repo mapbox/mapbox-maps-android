@@ -45,23 +45,41 @@ internal class SnowStateApplier internal constructor(
     }
   }
 
-  internal fun attachTo(mapboxMap: MapboxMap) {
+  /**
+   * Attaches this applier to [mapboxMap].
+   *
+   * @param styleDefaults the root-level `snow` values baked into the loaded style JSON, captured
+   * once per style load (see `StyleDefaults`). Used for whole-object reset/merge:
+   * - disabled: non-empty [styleDefaults] -> reset snow to the style's own value
+   *   (`setStyleSnow(styleDefaults)`); empty -> `removeSnow()` (style shipped none).
+   * - enabled: [styleDefaults] merged with the user-set properties, user overrides winning,
+   *   fills any sub-property left unset by the user.
+   */
+  internal fun attachTo(mapboxMap: MapboxMap, styleDefaults: Map<String, Value> = emptyMap()) {
+    // `attachTo` can legitimately be called more than once on the same instance without an
+    // intervening `detach()` -- e.g. `MapStyleNode`'s consolidated STYLE collector re-attaches
+    // every emission (real style reload/switch) using the node's *current* state. Cancel any
+    // property-collector jobs from a previous `attachTo` call first, otherwise `startCollectingPropertyFlows`
+    // below would pile up duplicate collectors (and duplicate native property-setter calls) on every
+    // re-attach.
+    detach()
     if (!enabled) {
-      mapboxMap.removeSnow()
+      if (styleDefaults.isNotEmpty()) {
+        logD(TAG, "Resetting snow to style default: $styleDefaults")
+        mapboxMap.setStyleSnow(Value(HashMap(styleDefaults))).onError {
+          logE(TAG, "Failed to reset snow to style default: $it")
+        }
+      } else {
+        mapboxMap.removeSnow()
+      }
       return
     }
-
-    val replayCache = propertiesFlowsToCollect.replayCache
-    if (replayCache.isNotEmpty()) {
+    val userProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
+    val merged = HashMap<String, Value>(styleDefaults).apply { putAll(userProperties) }
+    if (merged.isNotEmpty()) {
       logD(TAG, "Adding snow: $this")
       mapboxMap.setStyleSnow(
-        properties = Value(
-          hashMapOf<String, Value>().also { map ->
-            // Get the most recent list of properties and their values
-            map.putAll(replayCache.associate { it.first to it.second.value })
-            logD(TAG, "Setting all properties in one go: $map")
-          }
-        ),
+        properties = Value(merged),
       ).onError {
         logE(TAG, "Failed to add snow: $it")
       }.onValue {

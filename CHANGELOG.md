@@ -62,6 +62,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0), common to [v24.27.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.0).
+* Expand the minimum camera field of view from 11 to 1 degrees.
+* [compose] Fix root style properties (`RainState`, `SnowState`, `AtmosphereState`, `TerrainState`) not reverting to the loaded style's own value when disabled or removed. Previously the property was either nulled out entirely or left with a stale value; it now resets to what the style shipped, matching iOS behavior.
 
 # 11.27.0-rc.1 July 13, 2026
 ## Features ✨ and improvements 🏁
@@ -159,7 +161,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.25.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.1), common to [v24.25.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.25.1).
-
 
 # 11.25.0 June 11, 2026
 ## Breaking changes ⚠️
