@@ -6,6 +6,7 @@ import android.opengl.EGLSurface
 import android.opengl.GLES20
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.LogThrottler
 import com.mapbox.maps.ContextMode
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -30,6 +31,8 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
   private val contextMode: ContextMode
 
   private var eglContextCreated = false
+
+  private val eglSurfaceCreateLogThrottler = LogThrottler(EGL_SURFACE_CREATE_LOG_THROTTLE_INTERVAL_MS)
 
   constructor(
     mapboxRenderer: MapboxRenderer,
@@ -114,7 +117,8 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
         logW(
           TAG,
           "Could not create EGL surface although Android surface was valid," +
-            " retrying in $RETRY_DELAY_MS ms..."
+            " retrying in $RETRY_DELAY_MS ms...",
+          eglSurfaceCreateLogThrottler
         )
         postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
         return false
@@ -255,5 +259,9 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
       widgetRenderCreated = false
       widgetRenderer?.release()
     }
+  }
+
+  private companion object {
+    private const val EGL_SURFACE_CREATE_LOG_THROTTLE_INTERVAL_MS = 5_000L
   }
 }

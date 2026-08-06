@@ -16,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.
+* Fix logcat spam from repeated EGL surface create failures when an Android Auto `BufferQueue` is abandoned. `GLMapboxRenderThread` now throttles the retry warning log.
 
 # 11.28.0
 ## Bug fixes 🐞
@@ -39,7 +40,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1), common to [v24.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1).
-
 
 # 11.27.0 July 24, 2026
 ## Features ✨ and improvements 🏁
