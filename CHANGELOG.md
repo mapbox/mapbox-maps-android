@@ -6,10 +6,15 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.28.0
+
+# 11.28.0 August 06, 2026
 ## Bug fixes 🐞
 * Fix view annotations rendering incorrectly or not appearing when the host app's layout direction is RTL.
 * Validate URL scheme in `AttributionParser` to reject non-http(s) attribution URLs at parse time, preventing malicious style/tile-source attributions from reaching custom attribution consumers via the public API.
+
+## Dependencies
+* Update gl-native to [v11.28.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0), common to [v24.28.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0).
+
 
 # 11.28.0-rc.1 July 27, 2026
 ## Features ✨ and improvements 🏁
