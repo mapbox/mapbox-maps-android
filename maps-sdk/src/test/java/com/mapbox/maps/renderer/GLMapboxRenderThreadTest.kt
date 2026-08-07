@@ -30,6 +30,7 @@ import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -1101,6 +1102,56 @@ class GLMapboxRenderThreadTest {
     verifyNo {
       mapboxRenderer.destroyRenderer()
     }
+  }
+
+  @Test
+  fun renderRequestRecoversRenderThreadAfterSwapError() {
+    initRenderThread()
+    provideValidSurface()
+    assertTrue(mapboxRenderThread.isRendererReady)
+
+    // a non-context-lost present error parks the render thread...
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_BAD_SURFACE
+    pauseHandler()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    idleHandler()
+    assertFalse(mapboxRenderThread.isRendererReady)
+    // ...and then the error clears: the surface is usable again.
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
+
+    // the map stays parked while idle; the next render request recovers it without a resize
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    idleHandler()
+    assertTrue(
+      "Map must recover on the next render request after an EGL swap error",
+      mapboxRenderThread.isRendererReady
+    )
+  }
+
+  @Test
+  fun resizeRecoversRenderThreadAfterSwapError() {
+    initRenderThread()
+    provideValidSurface()
+    // park the render thread with a non-context-lost swap error
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_BAD_SURFACE
+    pauseHandler()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    idleHandler()
+    assertFalse(mapboxRenderThread.isRendererReady)
+    every { eglCore.swapBuffers(any()) } returns EGL14.EGL_SUCCESS
+
+    // same-size "resize", dropped by the unchanged-size guard, map stays black
+    mapboxRenderThread.onSurfaceSizeChanged(1, 1)
+    idleHandler()
+    assertFalse(mapboxRenderThread.isRendererReady)
+    verify(exactly = 2) { eglCore.swapBuffers(any()) }
+
+    // real dimension change, map recovers
+    mapboxRenderThread.onSurfaceSizeChanged(2, 2)
+    idleHandler()
+    assertTrue(mapboxRenderThread.isRendererReady)
+    verifyOnce { mapboxRenderer.onSurfaceChanged(2, 2) }
+    verify(exactly = 3) { eglCore.swapBuffers(any()) }
   }
 
   @Test

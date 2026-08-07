@@ -17,6 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.
 * Fix logcat spam from repeated EGL surface create failures when an Android Auto `BufferQueue` is abandoned. `GLMapboxRenderThread` now throttles the retry warning log.
+* Fix a permanently black map after an `eglSwapBuffers` error. `EGLCore` no longer skips `eglMakeCurrent` when a different EGL surface is requested while the context is already current.
 
 # 11.28.0
 ## Bug fixes 🐞

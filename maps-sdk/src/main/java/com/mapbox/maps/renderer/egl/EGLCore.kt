@@ -210,8 +210,10 @@ internal class EGLCore(
    * Makes our EGL context current, using the supplied surface for both "draw" and "read".
    */
   fun makeCurrent(eglSurface: EGLSurface): Boolean {
-    // do nothing if current context is applied before
-    if (EGL14.eglGetCurrentContext() == eglContext) {
+    // do nothing if this context with this exact surface is already current
+    if (EGL14.eglGetCurrentContext() == eglContext &&
+      EGL14.eglGetCurrentSurface(EGL14.EGL_DRAW) == eglSurface
+    ) {
       return true
     }
     if (eglDisplay == EGL14.EGL_NO_DISPLAY) {
