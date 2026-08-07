@@ -19,13 +19,25 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix logcat spam from repeated EGL surface create failures when an Android Auto `BufferQueue` is abandoned. `GLMapboxRenderThread` now throttles the retry warning log.
 * Fix a permanently black map after an `eglSwapBuffers` error. `EGLCore` no longer skips `eglMakeCurrent` when a different EGL surface is requested while the context is already current.
 
-# 11.28.0
+## Dependencies
+* Update Mapbox GeoJSON library to [v7.10.1](https://github.com/mapbox/mapbox-java/releases/tag/v7.10.1).
+
+# 11.28.0 August 06, 2026
+## Features ✨ and improvements 🏁
+* Introduce `LineLayer.lineBorderGradient` API to color the border of a line feature with a gradient along its length. Takes precedence over `lineBorderColor` and requires `lineBorderWidth` to be greater than zero.
+* Expose `line-border-width` and `line-border-color` as public paint properties. They were previously hidden from the style specification.
+* Expand the valid field-of-view range from [11, 90] to [1, 90] degrees, allowing much narrower camera FOVs.
+
 ## Bug fixes 🐞
 * Fix view annotations rendering incorrectly or not appearing when the host app's layout direction is RTL.
 * Validate URL scheme in `AttributionParser` to reject non-http(s) attribution URLs at parse time, preventing malicious style/tile-source attributions from reaching custom attribution consumers via the public API.
+* Fix 3D models with a zero vertex alpha channel being rendered fully black.
+* Fix double rotation of the FF5C (fullwidth vertical line) character in vertical text.
+* Fix tile pack patch application failing when disk space runs out mid-write; the disk quota is now checked and eviction triggered before the patch is applied.
+* Internal fixes and performance improvements.
 
 ## Dependencies
-* Update Mapbox GeoJSON library to [v7.10.1](https://github.com/mapbox/mapbox-java/releases/tag/v7.10.1).
+* Update gl-native to [v11.28.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0), common to [v24.28.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0).
 
 # 11.28.0-rc.1 July 27, 2026
 ## Features ✨ and improvements 🏁
