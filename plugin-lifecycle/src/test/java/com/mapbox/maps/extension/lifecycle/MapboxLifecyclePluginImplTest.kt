@@ -53,6 +53,39 @@ class MapboxLifecyclePluginImplTest {
 
     verify { mapboxLifecycleObserver.onLowMemory() }
   }
+
+  @Test
+  fun testCleanupUnregistersComponentCallbacks() {
+    val mapboxLifecycleObserver: MapboxLifecycleObserver = mockk(relaxed = true)
+    mapboxLifecyclePlugin.registerLifecycleObserver(mapView, mapboxLifecycleObserver)
+
+    mapboxLifecyclePlugin.cleanup()
+
+    verify(exactly = 1) { context.unregisterComponentCallbacks(any()) }
+  }
+
+  @Test
+  fun testCleanupIsIdempotent() {
+    val mapboxLifecycleObserver: MapboxLifecycleObserver = mockk(relaxed = true)
+    mapboxLifecyclePlugin.registerLifecycleObserver(mapView, mapboxLifecycleObserver)
+
+    mapboxLifecyclePlugin.cleanup()
+    mapboxLifecyclePlugin.cleanup()
+
+    verify(exactly = 1) { context.unregisterComponentCallbacks(any()) }
+  }
+
+  @Test
+  fun testReRegisterTearsDownPreviousRegistration() {
+    val firstObserver: MapboxLifecycleObserver = mockk(relaxed = true)
+    val secondObserver: MapboxLifecycleObserver = mockk(relaxed = true)
+
+    mapboxLifecyclePlugin.registerLifecycleObserver(mapView, firstObserver)
+    mapboxLifecyclePlugin.registerLifecycleObserver(mapView, secondObserver)
+
+    verify(exactly = 1) { context.unregisterComponentCallbacks(any()) }
+    verify(exactly = 2) { context.registerComponentCallbacks(any()) }
+  }
 }
 
 @RunWith(Parameterized::class)

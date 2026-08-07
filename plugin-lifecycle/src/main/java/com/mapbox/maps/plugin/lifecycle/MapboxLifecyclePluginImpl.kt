@@ -8,10 +8,18 @@ import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL
 import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW
 import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE
 import android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
+import android.content.Context
 import android.content.res.Configuration
 import android.view.View
-import androidx.lifecycle.*
+import androidx.annotation.UiThread
+import androidx.lifecycle.Lifecycle.Event.ON_DESTROY
+import androidx.lifecycle.Lifecycle.Event.ON_START
+import androidx.lifecycle.Lifecycle.Event.ON_STOP
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.mapbox.maps.MapboxLifecycleObserver
+import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -20,18 +28,31 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
  * Concrete implementation of MapboxLifecyclePlugin.
  */
 class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
+
+  // All fields accessed on the main thread only.
+  private var viewLifecycleOwner: ViewLifecycleOwner? = null
+  private var lifecycleObserver: LifecycleObserver? = null
+  private var componentCallback: ComponentCallbacks2? = null
+  private var registeredContext: Context? = null
+
   /**
-   * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
+   * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner.
+   *
+   * Calling this again before [cleanup] replaces the previous registration instead of
+   * stacking a second one.
    *
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
    * @param observer the observer that listen to the life cycle events
    */
+  @UiThread
   override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
-    val viewLifecycleRegistry = ViewLifecycleOwner(
-      view = mapView
-    )
+    // Tear down any prior registration (e.g. attach/detach/reattach cycles).
+    teardownRegistration()
 
-    val componentCallback = object : ComponentCallbacks2 {
+    val owner = ViewLifecycleOwner(view = mapView)
+    val context = mapView.context
+
+    val callback = object : ComponentCallbacks2 {
       override fun onConfigurationChanged(newConfig: Configuration) {
         // no need
       }
@@ -50,27 +71,50 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         }
       }
     }
-    mapView.context.registerComponentCallbacks(componentCallback)
-    viewLifecycleRegistry.lifecycle.addObserver(
-      object : LifecycleObserver {
-        @OnLifecycleEvent(Lifecycle.Event.ON_START)
-        fun onStart() {
-          observer.onStart()
-        }
+    context.registerComponentCallbacks(callback)
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-        fun onStop() {
-          observer.onStop()
-        }
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy() {
+    val lifecycleEventObserver = LifecycleEventObserver { _: LifecycleOwner, event ->
+      when (event) {
+        ON_START -> observer.onStart()
+        ON_STOP -> observer.onStop()
+        ON_DESTROY -> {
+          logI(TAG, "onDestroy is called, MapboxLifecycleObserver will be notified.")
           observer.onDestroy()
-          viewLifecycleRegistry.lifecycle.removeObserver(this)
-          viewLifecycleRegistry.cleanUp()
-          mapView.context.unregisterComponentCallbacks(componentCallback)
+          teardownRegistration()
         }
-      })
+        else -> Unit
+      }
+    }
+
+    // Store fields before addObserver: addObserver may synchronously replay ON_DESTROY
+    // if the hosting lifecycle is already destroyed, which calls teardownRegistration().
+    this.viewLifecycleOwner = owner
+    this.lifecycleObserver = lifecycleEventObserver
+    this.componentCallback = callback
+    this.registeredContext = context
+
+    owner.lifecycle.addObserver(lifecycleEventObserver)
+  }
+
+  /**
+   * Called when the map is destroyed. Unregisters the ComponentCallbacks registered with the
+   * Application so that the MapView graph can be garbage-collected even if the hosting Activity
+   * has not yet been destroyed.
+   */
+  @UiThread
+  override fun cleanup() {
+    teardownRegistration()
+  }
+
+  @UiThread
+  private fun teardownRegistration() {
+    lifecycleObserver?.let { viewLifecycleOwner?.lifecycle?.removeObserver(it) }
+    viewLifecycleOwner?.cleanUp()
+    registeredContext?.unregisterComponentCallbacks(componentCallback)
+    viewLifecycleOwner = null
+    lifecycleObserver = null
+    componentCallback = null
+    registeredContext = null
   }
 
   private companion object {
