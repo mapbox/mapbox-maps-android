@@ -2784,10 +2784,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 ---
 
-### vma,v3.3.0,MIT,Advanced Micro Devices,https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
+### vma,v3.4.0,MIT,Advanced Micro Devices,https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
 
 ```
-Copyright (c) 2017-2025 Advanced Micro Devices, Inc. All rights reserved.
+Copyright (c) 2017-2026 Advanced Micro Devices, Inc. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
