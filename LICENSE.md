@@ -2726,7 +2726,7 @@ The EGL Specification and various headers:
 
 ---
 
-### vulkan,v1.4.311,MIT,KhronosGroup,https://github.com/KhronosGroup/Vulkan-Headers
+### vulkan,v1.4.321,MIT,KhronosGroup,https://github.com/KhronosGroup/Vulkan-Headers
 
 ```
 MIT License
@@ -2743,10 +2743,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ---
 
-### volk,1.4.304,MIT,zeux,https://github.com/zeux/volk
+### volk,vulkan-sdk-1.4.321.0,MIT,zeux,https://github.com/zeux/volk
 
 ```
-Copyright (c) 2018-2024 Arseny Kapoulkine
+Copyright (c) 2018-2025 Arseny Kapoulkine
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -2770,7 +2770,7 @@ SOFTWARE.
 
 ---
 
-### vk-bootstrap,v1.4.307,MIT,Charles Giessen,https://github.com/charles-lunarg/vk-bootstrap
+### vk-bootstrap,v1.4.321,MIT,Charles Giessen,https://github.com/charles-lunarg/vk-bootstrap
 
 ```
 Copyright © 2020 Charles Giessen (charles@lunarg.com)
