@@ -5,6 +5,8 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.29.0-rc.1 August 10, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add coordinate conversion APIs to `MapState`: `coordinateForPixel`, `pixelsForCoordinates`, `coordinatesForPixels`, `coordinateInfoForPixel`, and `coordinatesInfoForPixels`. Add experimental `tileCover` to `MapViewportState`.
 * Clarify the documentation of `RasterLayer.rasterColor`, `rasterColorMix`, and `rasterColorRange`.
@@ -21,6 +23,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update Mapbox GeoJSON library to [v7.10.1](https://github.com/mapbox/mapbox-java/releases/tag/v7.10.1).
+
+## Dependencies
+* Update gl-native to [v11.29.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0-rc.1), common to [v24.29.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0-rc.1).
+
 
 # 11.28.0 August 06, 2026
 ## Features ✨ and improvements 🏁
