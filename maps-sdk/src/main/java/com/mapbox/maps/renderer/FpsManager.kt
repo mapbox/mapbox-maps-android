@@ -12,6 +12,7 @@ import kotlin.math.pow
 internal class FpsManager(
   private val handler: Handler,
   mapName: String,
+  private val performanceHintReporter: PerformanceHintReporter? = PerformanceHintReporter.obtainPerformanceHintReporter(mapName),
 ) {
   private var userRefreshRate = USER_DEFINED_REFRESH_RATE_NOT_SET
   private var userToScreenRefreshRateRatio: Double? = null
@@ -54,6 +55,7 @@ internal class FpsManager(
     }
     this.screenRefreshRate = screenRefreshRate
     screenRefreshPeriodNs = ONE_SECOND_NS / screenRefreshRate
+    performanceHintReporter?.updateTargetDuration(screenRefreshPeriodNs)
     updateUserToScreenRefreshRatio()
     if (LOG_STATISTICS) {
       logI(
@@ -92,6 +94,9 @@ internal class FpsManager(
    * - in that case we want to [updateFrameStats] even if there is no [OnFpsChangedListener] attached and no frame pacing needed
    */
   fun preRender(frameTimeNs: Long, recorderStarted: Boolean = false): Boolean {
+    // captured unconditionally so postRender() always measures the actual frame render time,
+    // regardless of which path below is taken
+    preRenderTimeNs = System.nanoTime()
     // no need to perform neither pacing nor FPS calculation when setMaxFps / setOnFpsChangedListener was not called by the user
     if (userToScreenRefreshRateRatio == null && fpsChangedListener == null && !recorderStarted) {
       return true
@@ -112,6 +117,7 @@ internal class FpsManager(
   private val onRenderingPausedRunnable = Runnable { onRenderingPaused() }
   fun postRender() {
     val frameRenderTimeNs = System.nanoTime() - preRenderTimeNs
+    performanceHintReporter?.report(frameRenderTimeNs)
     frameRenderTimeAccumulatedNs += frameRenderTimeNs
     // normally we update FPS counter and reset counters once a second (since screenRefreshRate is FPS)
     if (choreographerTicks >= screenRefreshRate) {
@@ -138,13 +144,13 @@ internal class FpsManager(
   fun destroy() {
     handler.removeCallbacksAndMessages(fpsManagerToken)
     fpsChangedListener = null
+    performanceHintReporter?.close()
   }
 
   /**
    * This is called on every VSYNC (screenRefreshRate)
    */
   private fun updateFrameStats(frameTimeNs: Long) {
-    preRenderTimeNs = System.nanoTime()
     skippedNow = 0
     if (previousFrameTimeNs != -1L) {
       val frameElapsedTimeNs = frameTimeNs - previousFrameTimeNs

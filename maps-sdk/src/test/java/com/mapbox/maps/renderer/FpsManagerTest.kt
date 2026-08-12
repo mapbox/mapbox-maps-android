@@ -305,6 +305,60 @@ class FpsManagerTest {
     )
   }
 
+  @Test
+  fun `setScreenRefreshRate passes the raw refresh period to the performance hint reporter`() {
+    val reporter = mockk<PerformanceHintReporter>(relaxed = true)
+    val manager = FpsManager(Handler(Looper.getMainLooper()), mapName = "", performanceHintReporter = reporter)
+
+    manager.setScreenRefreshRate(SCREEN_FPS)
+
+    // 60 Hz -> ONE_SECOND_NS(1_000_000_000) / 60 = 16_666_666 ns period (integer division).
+    // FpsManager passes the raw period through; PerformanceHintReporter owns scaling it down
+    // to its target ratio (see PerformanceHintReporterTest).
+    verify(exactly = 1) { reporter.updateTargetDuration(16_666_666L) }
+  }
+
+  @Test
+  fun `postRender reports actual frame duration to the performance hint reporter`() {
+    val reporter = mockk<PerformanceHintReporter>(relaxed = true)
+    val manager = FpsManager(Handler(Looper.getMainLooper()), mapName = "", performanceHintReporter = reporter)
+    manager.setScreenRefreshRate(SCREEN_FPS)
+    // preRender() only calls updateFrameStats() (which sets preRenderTimeNs, needed by postRender)
+    // when a listener or user refresh rate is set - assign a no-op listener to force that path.
+    manager.fpsChangedListener = OnFpsChangedListener { }
+
+    manager.preRender(1_000_000L)
+    manager.postRender()
+
+    verify(exactly = 1) { reporter.report(any()) }
+  }
+
+  @Test
+  fun `postRender reports a plausible frame duration in the default configuration`() {
+    // Default configuration: no fpsChangedListener, no user refresh rate set, recorderStarted
+    // defaults to false - this is the path that previously skipped updateFrameStats() (and thus
+    // preRenderTimeNs assignment) entirely, causing postRender() to report a garbage duration
+    // computed as System.nanoTime() - (-1L).
+    val reporter = mockk<PerformanceHintReporter>(relaxed = true)
+    val manager = FpsManager(Handler(Looper.getMainLooper()), mapName = "", performanceHintReporter = reporter)
+    manager.setScreenRefreshRate(SCREEN_FPS)
+
+    manager.preRender(1_000_000L)
+    manager.postRender()
+
+    verify(exactly = 1) { reporter.report(match { it < 1_000_000_000L }) }
+  }
+
+  @Test
+  fun `destroy closes the performance hint reporter`() {
+    val reporter = mockk<PerformanceHintReporter>(relaxed = true)
+    val manager = FpsManager(Handler(Looper.getMainLooper()), mapName = "", performanceHintReporter = reporter)
+
+    manager.destroy()
+
+    verify(exactly = 1) { reporter.close() }
+  }
+
   private fun pauseHandler() = Shadows.shadowOf(Looper.getMainLooper()).pause()
 
   private fun idleHandler(vsyncCount: Int, actionOnVsync: ((Long) -> Unit)) {

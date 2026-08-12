@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Report render-thread frame timing to the Android Dynamic Performance Framework (ADPF) on API 31+ devices, allowing the OS to scale CPU frequency based on actual rendering load.
+
 # 11.29.0-rc.1 August 10, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add coordinate conversion APIs to `MapState`: `coordinateForPixel`, `pixelsForCoordinates`, `coordinatesForPixels`, `coordinateInfoForPixel`, and `coordinatesInfoForPixels`. Add experimental `tileCover` to `MapViewportState`.
