@@ -15,16 +15,23 @@ Mapbox welcomes participation and contributions from everyone.
 * Promote `SymbolLayer.symbolZOffset` to stable.
 * Accept an object as config option value.
 * Accept an expression as `distance` expression argument.
+* The `distance` expression now accepts an expression (rather than only a literal) as its second argument.
 
 ## Bug fixes 🐞
 * Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.
 * Fix logcat spam from repeated EGL surface create failures when an Android Auto `BufferQueue` is abandoned. `GLMapboxRenderThread` now throttles the retry warning log.
 * Fix a permanently black map after an `eglSwapBuffers` error. `EGLCore` no longer skips `eglMakeCurrent` when a different EGL surface is requested while the context is already current.
+* Fix view annotations repositioning/jumping frequently due to lost information about their previous placement.
+* Fix border color bleeding onto neighboring line segments when using fake-round joins on very short lines.
+* Fix incorrect symbol elevation when 3D buildings are toggled via style config.
+* Fix aliasing artifacts on minified dashed lines (e.g., dense zebra-crossing patterns), and fix dashed lines breaking entirely on some Android GPUs (e.g., Mali-G71) due to a precision overflow.
+* Fix tiles above an offline pack's max zoom sometimes rendering blank instead of falling back to cache or network.
+* Fix `PermissionsManager` failing to show the background location permission dialog on Android 11+ (API 30) when requesting all location permissions at once.
+* Fix location updates getting stuck when the SDK starts without GPS connectivity and no cached location is available — even after GPS later becomes available — on devices without Google Play Services.
+* Fix a crash on Android API 21/22 during HTTP service bootstrap caused by using a `NetworkCapabilities` API only available on API 23+.
 
 ## Dependencies
 * Update Mapbox GeoJSON library to [v7.10.1](https://github.com/mapbox/mapbox-java/releases/tag/v7.10.1).
-
-## Dependencies
 * Update gl-native to [v11.29.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0-rc.1), common to [v24.29.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0-rc.1).
 
 
