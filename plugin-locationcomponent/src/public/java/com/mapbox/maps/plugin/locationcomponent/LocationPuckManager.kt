@@ -10,6 +10,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -47,27 +48,36 @@ internal class LocationPuckManager(
     }
 
   private val onLocationUpdated: ((Point) -> Unit) = {
-    lastLocation = it
-    if (settings.locationPuck is LocationPuck3D) {
-      delegateProvider.getStyle { style ->
-        val latitude =
-          if (style.isGlobeProjection()) {
-            delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
-          } else it.latitude()
-        lastMercatorScale = mercatorScale(latitude)
+    if (it.latitude().isFinite() && it.longitude().isFinite()) {
+      lastLocation = it
+      if (settings.locationPuck is LocationPuck3D) {
+        delegateProvider.getStyle { style ->
+          val latitude =
+            if (style.isGlobeProjection()) {
+              delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
+            } else it.latitude()
+          if (latitude.isFinite()) {
+            lastMercatorScale = mercatorScale(latitude)
+          }
+        }
       }
     }
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
-  internal var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
+  internal var lastBearing: Double =
+    delegateProvider.mapCameraManagerDelegate.cameraState.bearing.takeIf { it.isFinite() } ?: 0.0
   private val onBearingUpdated: ((Double) -> Unit) = {
-    lastBearing = it
+    if (it.isFinite()) {
+      lastBearing = it
+    }
   }
 
   private var lastAccuracyRadius: Double = 0.0
   private val onAccuracyRadiusUpdated: ((Double) -> Unit) = {
-    lastAccuracyRadius = it
+    if (it.isFinite()) {
+      lastAccuracyRadius = it
+    }
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -159,12 +169,25 @@ internal class LocationPuckManager(
   }
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
+    val finitePoints = points.filter { it.latitude().isFinite() && it.longitude().isFinite() }
+      .map { point ->
+        if (point.hasAltitude() && !point.altitude().isFinite()) {
+          Point.fromLngLat(point.longitude(), point.latitude())
+        } else {
+          point
+        }
+      }
+    if (finitePoints.isEmpty()) {
+      logW(TAG, "Ignoring position update, all values non-finite: ${points.toList()}")
+      return
+    }
     if (settings.enabled) {
       show()
     }
+    val finitePointsArray = finitePoints.toTypedArray()
     val targets = lastLocation?.let {
-      arrayOf(it, *points)
-    } ?: arrayOf(*points, *points)
+      arrayOf(it, *finitePointsArray)
+    } ?: arrayOf(*finitePointsArray, *finitePointsArray)
     animationManager.animatePosition(
       *targets,
       options = options
@@ -199,11 +222,16 @@ internal class LocationPuckManager(
     options: (ValueAnimator.() -> Unit)? = null,
     forceUpdate: Boolean
   ) {
-    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
-    if (!forceUpdate && abs(bearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD) {
+    val finiteBearings = bearings.filter { it.isFinite() }.toDoubleArray()
+    if (finiteBearings.isEmpty()) {
+      logW(TAG, "Ignoring bearing update, all values non-finite: ${bearings.toList()}")
       return
     }
-    val targets = doubleArrayOf(lastBearing, *bearings)
+    // Skip bearing updates if the change from the lastBearing is too small, thus avoid unnecessary calls to gl-native.
+    if (!forceUpdate && abs(finiteBearings.last() - lastBearing) < BEARING_UPDATE_THRESHOLD) {
+      return
+    }
+    val targets = doubleArrayOf(lastBearing, *finiteBearings)
     animationManager.animateBearing(
       *targets,
       options = options
@@ -211,12 +239,17 @@ internal class LocationPuckManager(
   }
 
   fun updateAccuracyRadius(vararg radius: Double, options: (ValueAnimator.() -> Unit)? = null) {
-    val targets = doubleArrayOf(lastAccuracyRadius, *radius)
+    val finiteRadius = radius.filter { it.isFinite() }.toDoubleArray()
+    if (finiteRadius.isEmpty()) {
+      logW(TAG, "Ignoring accuracy radius update, all values non-finite: ${radius.toList()}")
+      return
+    }
+    val targets = doubleArrayOf(lastAccuracyRadius, *finiteRadius)
     animationManager.animateAccuracyRadius(
       *targets,
       options = options
     )
-    updateMaxPulsingRadiusToFollowAccuracyRing(radius.last())
+    updateMaxPulsingRadiusToFollowAccuracyRing(finiteRadius.last())
   }
 
   /**
@@ -344,6 +377,7 @@ internal class LocationPuckManager(
   }
 
   private companion object {
+    const val TAG = "LocationPuckManager"
     const val MIN_ZOOM = 0.50
     const val MAX_ZOOM = 22.0
 

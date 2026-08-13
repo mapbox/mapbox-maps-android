@@ -49,9 +49,9 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   @VisibleForTesting(otherwise = PRIVATE)
   internal val locationCompassListener =
     LocationCompassEngine.CompassListener { userHeading ->
-      locationConsumers.forEach { consumer ->
-        consumer.onBearingUpdated(userHeading.toDouble())
-      }
+      userHeading.toDouble().takeIf { it.isFinite() }?.let { heading ->
+        locationConsumers.forEach { consumer -> consumer.onBearingUpdated(heading) }
+      } ?: logW(TAG, "Ignoring non-finite compass heading update: $userHeading")
     }
 
   @SuppressLint("MissingPermission")
@@ -79,19 +79,25 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   }
 
   private fun notifyLocationUpdates(location: Location) {
-    val locationPoint = if (location.hasAltitude()) {
+    if (!location.latitude.isFinite() || !location.longitude.isFinite()) {
+      logW(TAG, "Ignoring location update with non-finite coordinates.")
+      return
+    }
+    val locationPoint = if (location.hasAltitude() && location.altitude.isFinite()) {
       Point.fromLngLat(location.longitude, location.latitude, location.altitude)
     } else {
       Point.fromLngLat(location.longitude, location.latitude)
     }
+    val bearing = location.bearing.toDouble().takeIf { it.isFinite() }
+    val accuracyRadius = location.accuracy.toDouble().takeIf { it.isFinite() }
 
     locationConsumers.forEach { consumer ->
       consumer.onLocationUpdated(locationPoint)
-      if (currentPuckBearingSource == PuckBearingSource.COURSE) {
-        consumer.onBearingUpdated(location.bearing.toDouble())
+      if (currentPuckBearingSource == PuckBearingSource.COURSE && bearing != null) {
+        consumer.onBearingUpdated(bearing)
       }
-      if (consumer is LocationConsumer2) {
-        consumer.onAccuracyRadiusUpdated(location.accuracy.toDouble())
+      if (consumer is LocationConsumer2 && accuracyRadius != null) {
+        consumer.onAccuracyRadiusUpdated(accuracyRadius)
       }
     }
   }

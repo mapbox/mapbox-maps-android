@@ -227,4 +227,151 @@ class DefaultLocationProviderTest {
     verify { locationConsumer1.onBearingUpdated(90.0) }
     verify { locationConsumer2.onBearingUpdated(90.0) }
   }
+
+  @Test
+  fun testCompassListenerIgnoresNonFiniteHeading() {
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.locationCompassListener.onCompassChanged(Float.NaN)
+    defaultLocationProvider.locationCompassListener.onCompassChanged(Float.POSITIVE_INFINITY)
+    defaultLocationProvider.locationCompassListener.onCompassChanged(Float.NEGATIVE_INFINITY)
+    verify(exactly = 0) { locationConsumer1.onBearingUpdated(any()) }
+  }
+
+  @Test
+  fun testCompassListenerForwardsFiniteHeading() {
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.locationCompassListener.onCompassChanged(45.0f)
+    verify { locationConsumer1.onBearingUpdated(45.0) }
+  }
+
+  @Test
+  fun testLocationUpdateIgnoredWithNonFiniteLatLng() {
+    val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
+    val location = mockk<Location>(relaxed = true)
+    every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
+    every { location.longitude } returns Double.NaN
+    every { location.latitude } returns 34.0
+    every { location.altitude } returns 10.0
+    every { location.bearing } returns 90.0f
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
+
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    verify(exactly = 1) {
+      locationEngine.requestLocationUpdates(
+        any(),
+        capture(locationEngineCallbackSlot),
+        any()
+      )
+    }
+    locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
+    verify(exactly = 0) { locationConsumer1.onLocationUpdated(any()) }
+    verify(exactly = 0) { locationConsumer1.onBearingUpdated(any()) }
+  }
+
+  @Test
+  fun testLocationUpdateDegradesToTwoDWithNonFiniteAltitude() {
+    val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
+    val location = mockk<Location>(relaxed = true)
+    every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
+    every { location.longitude } returns 12.0
+    every { location.latitude } returns 34.0
+    every { location.altitude } returns Double.NaN
+    every { location.bearing } returns 90.0f
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
+
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    verify(exactly = 1) {
+      locationEngine.requestLocationUpdates(
+        any(),
+        capture(locationEngineCallbackSlot),
+        any()
+      )
+    }
+    locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
+    verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
+  }
+
+  @Test
+  fun testLocationUpdateIgnoresNonFiniteBearing() {
+    val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
+    val location = mockk<Location>(relaxed = true)
+    every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
+    every { location.longitude } returns 12.0
+    every { location.latitude } returns 34.0
+    every { location.altitude } returns 10.0
+    every { location.bearing } returns Float.NaN
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
+
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    verify(exactly = 1) {
+      locationEngine.requestLocationUpdates(
+        any(),
+        capture(locationEngineCallbackSlot),
+        any()
+      )
+    }
+    locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
+    verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0, 10.0)) }
+    verify(exactly = 0) { locationConsumer1.onBearingUpdated(any()) }
+  }
+
+  @Test
+  fun testLocationUpdateIgnoresNonFiniteAccuracy() {
+    val locationConsumer2Impl = mockk<LocationConsumer2>(relaxed = true)
+    val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
+    val location = mockk<Location>(relaxed = true)
+    every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
+    every { location.longitude } returns 12.0
+    every { location.latitude } returns 34.0
+    every { location.altitude } returns 10.0
+    every { location.bearing } returns 90.0f
+    every { location.accuracy } returns Float.NaN
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
+
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2Impl)
+    verify(exactly = 1) {
+      locationEngine.requestLocationUpdates(
+        any(),
+        capture(locationEngineCallbackSlot),
+        any()
+      )
+    }
+    locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
+    verify(exactly = 0) { locationConsumer2Impl.onAccuracyRadiusUpdated(radius = anyDoubleVararg(), options = null) }
+  }
+
+  @Test
+  fun testLocationUpdateForwardsFiniteAccuracy() {
+    val locationConsumer2Impl = mockk<LocationConsumer2>(relaxed = true)
+    val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
+    val location = mockk<Location>(relaxed = true)
+    every { locationEngineResult.lastLocation } returns location
+    every { location.hasAltitude() } returns true
+    every { location.longitude } returns 12.0
+    every { location.latitude } returns 34.0
+    every { location.altitude } returns 10.0
+    every { location.bearing } returns 90.0f
+    every { location.accuracy } returns 5.0f
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
+
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2Impl)
+    verify(exactly = 1) {
+      locationEngine.requestLocationUpdates(
+        any(),
+        capture(locationEngineCallbackSlot),
+        any()
+      )
+    }
+    locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
+    verify { locationConsumer2Impl.onAccuracyRadiusUpdated(5.0, options = null) }
+  }
 }

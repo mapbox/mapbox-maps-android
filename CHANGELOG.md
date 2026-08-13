@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.19.2
 ## Bug fixes 🐞
 * [lifecycle] Fix native memory leak when MapView is recreated without finishing the hosting Activity
+* Fix location component crash by filtering non-finite (NaN/Infinity) bearing, coordinate, and accuracy values in `DefaultLocationProvider` and the location puck manager.
 
 # 10.19.1 October 8, 2025
 ## Bug fixes 🐞
