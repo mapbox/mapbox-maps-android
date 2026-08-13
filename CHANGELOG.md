@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.28.2 August 13, 2026
+## Dependencies
+* Update gl-native to [v11.28.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.2), common to [v24.28.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.2).
+
+
 # 11.28.1 August 12, 2026
 ## Bug fixes 🐞
 * Fix symbols remaining elevated instead of dropping to the ground when 3D buildings are hidden via style configuration.
