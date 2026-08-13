@@ -366,6 +366,29 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test
+  @OptIn(MapboxExperimental::class)
+  fun doFrameWiresPacingAndMissedRenderCountsIntoRecorder() {
+    initRenderThread()
+    provideValidSurface()
+    // the shared initRenderThread() stub only covers preRender(any(), eq(false)); a started
+    // recorder makes MapboxRenderThread pass recorderStarted = true, which needs its own stub
+    every { fpsManager.preRender(any(), true) } returns true
+    every { fpsManager.skippedNow } returns 2
+    every { fpsManager.pacingSkipsNow } returns 1
+    every { fpsManager.missedMapRenderFramesNow } returns 3
+    val recorder = RenderThreadStatsRecorder()
+    recorder.start()
+    mapboxRenderThread.renderThreadStatsRecorder = recorder
+    pauseHandler()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    idleHandler()
+    val stats = recorder.end()
+    assertEquals(2L, stats.totalSkippedVsync)
+    assertEquals(1L, stats.pacedSkippedVsync)
+    assertEquals(3L, stats.missedMapRenderFrames)
+  }
+
+  @Test
   fun setUserRefreshRateTest() {
     initRenderThread()
     val userRefreshRate = 30

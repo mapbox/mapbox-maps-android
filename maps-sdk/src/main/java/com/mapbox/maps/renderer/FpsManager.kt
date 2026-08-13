@@ -24,6 +24,10 @@ internal class FpsManager(
   private var frameRenderTimeAccumulatedNs = 0L
   var skippedNow = 0
     private set
+  var pacingSkipsNow: Int = 0
+    private set
+  var missedMapRenderFramesNow: Int = 0
+    private set
 
   private var preRenderTimeNs = -1L
   private var choreographerTicks = 0
@@ -152,6 +156,8 @@ internal class FpsManager(
    */
   private fun updateFrameStats(frameTimeNs: Long) {
     skippedNow = 0
+    pacingSkipsNow = 0
+    missedMapRenderFramesNow = 0
     if (previousFrameTimeNs != -1L) {
       val frameElapsedTimeNs = frameTimeNs - previousFrameTimeNs
 
@@ -167,10 +173,11 @@ internal class FpsManager(
       // The map render frame time is based on the userToScreenRefreshRateRatio or the screen refresh rate (1.0)
       val mapRenderFrameRatio = userToScreenRefreshRateRatio ?: 1.0
       val mapRenderTimeNs = screenRefreshPeriodNs / mapRenderFrameRatio
-      val missedMapRenderFramesNow =
+      val missedMapRenderFramesDelta =
         (frameElapsedTimeNs / (mapRenderTimeNs + ONE_MILLISECOND_NS)).toInt()
-      if (missedMapRenderFramesNow > 0) {
-        missedMapRenderFrames += missedMapRenderFramesNow
+      if (missedMapRenderFramesDelta > 0) {
+        missedMapRenderFrames += missedMapRenderFramesDelta
+        missedMapRenderFramesNow = missedMapRenderFramesDelta
       }
     }
     previousFrameTimeNs = frameTimeNs
@@ -230,6 +237,7 @@ internal class FpsManager(
       return true
     }
     choreographerPacingSkips++
+    pacingSkipsNow = 1
     // We also increase choreographerSkips when performing pacing. Note this is not really a
     // missed map render frame since we're doing pacing.
     choreographerSkips++

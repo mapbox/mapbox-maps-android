@@ -751,15 +751,18 @@ public abstract interface annotation class com/mapbox/maps/renderer/RenderThread
 }
 
 public final class com/mapbox/maps/renderer/RenderThreadStats {
-	public synthetic fun <init> (JJJLjava/util/List;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJJJJJLjava/util/List;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Ljava/lang/Double;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFrameTimeList ()Ljava/util/List;
+	public final fun getMissedMapRenderFrames ()J
+	public final fun getPacedSkippedVsync ()J
 	public final fun getPercentile50 ()Ljava/lang/Double;
 	public final fun getPercentile90 ()Ljava/lang/Double;
 	public final fun getPercentile95 ()Ljava/lang/Double;
 	public final fun getPercentile99 ()Ljava/lang/Double;
 	public final fun getTotalDroppedFrames ()J
 	public final fun getTotalFrames ()J
+	public final fun getTotalSkippedVsync ()J
 	public final fun getTotalTime ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

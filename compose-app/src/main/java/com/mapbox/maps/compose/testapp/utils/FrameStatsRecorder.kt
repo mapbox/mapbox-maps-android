@@ -45,11 +45,11 @@ public class FrameStatsRecorder {
     }
     jsonObject.addProperty(KEY_TOTAL_FRAMES, stats.totalFrames)
     jsonObject.addProperty(KEY_TOTAL_TIME, stats.totalTime)
-    jsonObject.addProperty(KEY_DROPPED, stats.totalDroppedFrames)
+    jsonObject.addProperty(KEY_DROPPED, stats.totalSkippedVsync)
     jsonObject.addProperty(
       KEY_DROPPED_PERCENT,
       BigDecimal
-        .valueOf((stats.totalDroppedFrames.toDouble() / stats.totalFrames) * 100.0)
+        .valueOf((stats.totalSkippedVsync.toDouble() / stats.totalFrames) * 100.0)
         .setScale(2, RoundingMode.HALF_UP)
         .toDouble()
     )

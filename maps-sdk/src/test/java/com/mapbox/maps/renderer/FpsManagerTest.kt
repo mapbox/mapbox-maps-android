@@ -278,6 +278,77 @@ class FpsManagerTest {
     )
   }
 
+  @Test
+  fun pacingSkipsNowMatchesRenderedPattern() {
+    fpsManager.setUserRefreshRate(24)
+    pauseHandler()
+    val renderedPattern = mutableListOf<Boolean>()
+    val pacingSkipsPattern = mutableListOf<Int>()
+    idleHandler(vsyncCount = 10) {
+      val rendered = fpsManager.preRender(it)
+      renderedPattern.add(rendered)
+      pacingSkipsPattern.add(fpsManager.pacingSkipsNow)
+      fpsManager.postRender()
+    }
+    Assert.assertArrayEquals(
+      arrayOf(
+        false, false, true, false, true,
+        false, false, true, false, true
+      ),
+      renderedPattern.toTypedArray()
+    )
+    // pacingSkipsNow must be exactly 1 on ticks where preRender skipped rendering for pacing,
+    // and 0 on ticks where it actually rendered.
+    renderedPattern.forEachIndexed { index, rendered ->
+      Assert.assertEquals(
+        "pacingSkipsNow mismatch at tick $index",
+        if (rendered) 0 else 1,
+        pacingSkipsPattern[index]
+      )
+    }
+  }
+
+  @Test
+  fun unpacedRenderingReportsNoSkipsOrMisses() {
+    pauseHandler()
+    idleHandler(vsyncCount = 10) {
+      assert(fpsManager.preRender(it, recorderStarted = true))
+      Assert.assertEquals(0, fpsManager.pacingSkipsNow)
+      Assert.assertEquals(0, fpsManager.missedMapRenderFramesNow)
+      fpsManager.postRender()
+    }
+  }
+
+  @Test
+  fun missedMapRenderFramesNowOnSlowRender() {
+    // 60 Hz -> ONE_SECOND_NS(1_000_000_000) / 60 = 16_666_666 ns period (integer division),
+    // same computation FpsManager.setScreenRefreshRate performs internally (see
+    // `setScreenRefreshRate passes the raw refresh period to the performance hint reporter`).
+    val screenRefreshPeriodNs = 16_666_666L
+    val t0 = 1_000_000_000L
+    // Establish a baseline timestamp; recorderStarted=true forces updateFrameStats() to run even
+    // though no user refresh rate / fpsChangedListener is set (mirrors MapboxRenderThread.doFrame
+    // passing renderThreadStatsRecorder?.isRecording == true).
+    fpsManager.preRender(t0, recorderStarted = true)
+    Assert.assertEquals(0, fpsManager.missedMapRenderFramesNow)
+
+    // Jump far enough ahead (10 refresh periods) to guarantee a slow-render gap that exceeds the
+    // map-render-frame budget (unpaced, so budget == screenRefreshPeriodNs).
+    val slowFrameTimeNs = t0 + 10 * screenRefreshPeriodNs
+    fpsManager.preRender(slowFrameTimeNs, recorderStarted = true)
+
+    val frameElapsedTimeNs = slowFrameTimeNs - t0
+    val expectedMissedFrames = (frameElapsedTimeNs / (screenRefreshPeriodNs + 1_000_000L)).toInt()
+    Assert.assertTrue("Expected a positive missed map render frame delta", expectedMissedFrames > 0)
+    Assert.assertEquals(expectedMissedFrames, fpsManager.missedMapRenderFramesNow)
+    Assert.assertEquals(0, fpsManager.pacingSkipsNow)
+
+    // The very next, normally-spaced tick must reset missedMapRenderFramesNow back to 0 - proves
+    // updateFrameStats()'s per-tick reset, not just that the delta can go positive once.
+    fpsManager.preRender(slowFrameTimeNs + screenRefreshPeriodNs, recorderStarted = true)
+    Assert.assertEquals(0, fpsManager.missedMapRenderFramesNow)
+  }
+
   private fun mapIdleTest() {
     // pattern is [0, 1, 1, 1, 1]
     fpsManager.setUserRefreshRate(48)

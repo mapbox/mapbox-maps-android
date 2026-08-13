@@ -90,7 +90,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     logI(TAG, "\ttotal time: $totalTime ms")
     logI(TAG, "\ttotal frames (rendered + skipped): $totalFrames")
     logI(TAG, "\taverage FPS: ${(totalFrames / (totalTime / 1000F)).format()}")
-    logI(TAG, "\tskipped frames: $totalDroppedFrames")
+    logI(TAG, "\tskipped frames: $totalSkippedVsync (pacing: $pacedSkippedVsync, missed render: $missedMapRenderFrames)")
     logI(TAG, "\t50 percentile: ${percentile50.format()} ms")
     logI(TAG, "\t90 percentile: ${percentile90.format()} ms")
     logI(TAG, "\t95 percentile: ${percentile95.format()} ms")

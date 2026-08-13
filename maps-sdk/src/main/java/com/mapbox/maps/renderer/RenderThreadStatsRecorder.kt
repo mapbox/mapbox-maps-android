@@ -15,7 +15,9 @@ import kotlin.math.ceil
 class RenderThreadStatsRecorder {
 
   private var startTime = 0L
-  private var totalDroppedFrames = 0L
+  private var totalSkippedVsync = 0L
+  private var pacedSkippedVsync = 0L
+  private var missedMapRenderFrames = 0L
   private val frameTimeList = mutableListOf<Double>()
 
   /**
@@ -36,8 +38,10 @@ class RenderThreadStatsRecorder {
     startTime = SystemClock.elapsedRealtime()
   }
 
-  internal fun addFrameStats(frameTime: Double, droppedFrames: Int) {
-    totalDroppedFrames += droppedFrames
+  internal fun addFrameStats(frameTime: Double, droppedFrames: Int, pacingSkips: Int, missedMapFrames: Int) {
+    totalSkippedVsync += droppedFrames
+    pacedSkippedVsync += pacingSkips
+    missedMapRenderFrames += missedMapFrames
     frameTimeList.add(frameTime)
   }
 
@@ -62,8 +66,11 @@ class RenderThreadStatsRecorder {
 
     return RenderThreadStats.Builder()
       .setTotalTime(SystemClock.elapsedRealtime() - startTime)
-      .setTotalFrames(frameTimeList.size + totalDroppedFrames)
-      .setTotalDroppedFrames(totalDroppedFrames)
+      .setTotalFrames(frameTimeList.size + totalSkippedVsync)
+      .setTotalDroppedFrames(totalSkippedVsync)
+      .setTotalSkippedVsync(totalSkippedVsync)
+      .setPacedSkippedVsync(pacedSkippedVsync)
+      .setMissedMapRenderFrames(missedMapRenderFrames)
       .setFrameTimeList(frameTimeListCopy)
       .setPercentile50(percentileOfSortedList(sortedFrameTimeList, 50.0))
       .setPercentile90(percentileOfSortedList(sortedFrameTimeList, 90.0))
@@ -72,7 +79,9 @@ class RenderThreadStatsRecorder {
       .build()
       .also {
         startTime = 0L
-        totalDroppedFrames = 0L
+        totalSkippedVsync = 0L
+        pacedSkippedVsync = 0L
+        missedMapRenderFrames = 0L
         frameTimeList.clear()
       }
   }
@@ -92,9 +101,33 @@ class RenderThreadStats private constructor(
    */
   val totalFrames: Long,
   /**
-   * Total number of dropped frames.
+   * Number of VSYNC pulses skipped because a render missed its deadline (took too long).
+   *
+   * @deprecated Renamed to [totalSkippedVsync]. This field never included intentional pacing
+   * skips from [setMaximumFps][com.mapbox.maps.MapboxMap.setMaximumFps] - see [pacedSkippedVsync]
+   * for those, tracked separately.
    */
+  @Deprecated(
+    message = "Renamed to totalSkippedVsync. This field only counts missed-render-deadline VSYNCs; see pacedSkippedVsync for intentional pacing skips.",
+    replaceWith = ReplaceWith("totalSkippedVsync")
+  )
   val totalDroppedFrames: Long,
+  /**
+   * Number of VSYNC pulses skipped because a render missed its deadline (took too long).
+   * Does not include intentional pacing skips from [setMaximumFps][com.mapbox.maps.MapboxMap.setMaximumFps] -
+   * see [pacedSkippedVsync] for those. Replacement for the deprecated [totalDroppedFrames].
+   */
+  val totalSkippedVsync: Long,
+  /**
+   * Number of VSYNC pulses intentionally skipped due to frame pacing (i.e., [setMaximumFps][com.mapbox.maps.MapboxMap.setMaximumFps] is active).
+   * These are not missed render deadlines — they are expected skips.
+   */
+  val pacedSkippedVsync: Long,
+  /**
+   * Number of map render frames missed because the render took longer than the target frame time.
+   * This counts misses relative to the map render frame rate (which may differ from the screen refresh rate when [setMaximumFps][com.mapbox.maps.MapboxMap.setMaximumFps] is set).
+   */
+  val missedMapRenderFrames: Long,
   /**
    * List of rendered frames times in milliseconds.
    */
@@ -120,7 +153,7 @@ class RenderThreadStats private constructor(
    * @return Returns a string representation of the object.
    */
   override fun toString() =
-    "RenderThreadStats(totalTime=$totalTime, totalFrames=$totalFrames, totalDroppedFrames=$totalDroppedFrames, frameTimeList=$frameTimeList, percentile50=$percentile50, percentile90=$percentile90, percentile95=$percentile95, percentile99=$percentile99)"
+    "RenderThreadStats(totalTime=$totalTime, totalFrames=$totalFrames, totalDroppedFrames=$totalDroppedFrames, totalSkippedVsync=$totalSkippedVsync, pacedSkippedVsync=$pacedSkippedVsync, missedMapRenderFrames=$missedMapRenderFrames, frameTimeList=$frameTimeList, percentile50=$percentile50, percentile90=$percentile90, percentile95=$percentile95, percentile99=$percentile99)"
 
   /**
    * @return Returns true if the object is equal to the other object.
@@ -134,6 +167,9 @@ class RenderThreadStats private constructor(
     if (totalTime != other.totalTime) return false
     if (totalFrames != other.totalFrames) return false
     if (totalDroppedFrames != other.totalDroppedFrames) return false
+    if (totalSkippedVsync != other.totalSkippedVsync) return false
+    if (pacedSkippedVsync != other.pacedSkippedVsync) return false
+    if (missedMapRenderFrames != other.missedMapRenderFrames) return false
     if (percentile50 != other.percentile50) return false
     if (percentile90 != other.percentile90) return false
     if (percentile95 != other.percentile95) return false
@@ -150,6 +186,9 @@ class RenderThreadStats private constructor(
     totalTime,
     totalFrames,
     totalDroppedFrames,
+    totalSkippedVsync,
+    pacedSkippedVsync,
+    missedMapRenderFrames,
     percentile50,
     percentile90,
     percentile95,
@@ -160,6 +199,9 @@ class RenderThreadStats private constructor(
     private var totalTime: Long = 0
     private var totalFrames: Long = 0
     private var totalDroppedFrames: Long = 0
+    private var totalSkippedVsync: Long = 0
+    private var pacedSkippedVsync: Long = 0
+    private var missedMapRenderFrames: Long = 0
     private var frameTimeList: List<Double> = emptyList()
     private var percentile50: Double? = null
     private var percentile90: Double? = null
@@ -170,6 +212,10 @@ class RenderThreadStats private constructor(
     fun setTotalFrames(totalFrames: Long) = apply { this.totalFrames = totalFrames }
     fun setTotalDroppedFrames(totalDroppedFrames: Long) =
       apply { this.totalDroppedFrames = totalDroppedFrames }
+
+    fun setTotalSkippedVsync(totalSkippedVsync: Long) = apply { this.totalSkippedVsync = totalSkippedVsync }
+    fun setPacedSkippedVsync(pacedSkippedVsync: Long) = apply { this.pacedSkippedVsync = pacedSkippedVsync }
+    fun setMissedMapRenderFrames(missedMapRenderFrames: Long) = apply { this.missedMapRenderFrames = missedMapRenderFrames }
 
     fun setFrameTimeList(frameTimeList: List<Double>) = apply { this.frameTimeList = frameTimeList }
     fun setPercentile50(percentile50: Double?) = apply { this.percentile50 = percentile50 }
@@ -182,6 +228,9 @@ class RenderThreadStats private constructor(
         totalTime,
         totalFrames,
         totalDroppedFrames,
+        totalSkippedVsync,
+        pacedSkippedVsync,
+        missedMapRenderFrames,
         frameTimeList,
         percentile50,
         percentile90,

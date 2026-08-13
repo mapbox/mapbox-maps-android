@@ -697,20 +697,26 @@ package com.mapbox.maps.renderer {
 
   @com.mapbox.maps.MapboxExperimental public final class RenderThreadStats {
     method public java.util.List<java.lang.Double> getFrameTimeList();
+    method public long getMissedMapRenderFrames();
+    method public long getPacedSkippedVsync();
     method public Double? getPercentile50();
     method public Double? getPercentile90();
     method public Double? getPercentile95();
     method public Double? getPercentile99();
-    method public long getTotalDroppedFrames();
+    method @Deprecated public long getTotalDroppedFrames();
     method public long getTotalFrames();
+    method public long getTotalSkippedVsync();
     method public long getTotalTime();
     property public final java.util.List<java.lang.Double> frameTimeList;
+    property public final long missedMapRenderFrames;
+    property public final long pacedSkippedVsync;
     property public final Double? percentile50;
     property public final Double? percentile90;
     property public final Double? percentile95;
     property public final Double? percentile99;
-    property public final long totalDroppedFrames;
+    property @Deprecated public final long totalDroppedFrames;
     property public final long totalFrames;
+    property public final long totalSkippedVsync;
     property public final long totalTime;
   }
 
