@@ -1,15 +1,19 @@
 [versions]
 # Versions
 androidMinSdkVersion = "21"
+# Vulkan-enabled builds resolve android-core-vulkan, whose minSdk is 31 (Android 12+).
+androidVulkanMinSdkVersion = "31"
 androidTargetSdkVersion = "35"
 androidCompileSdkVersion = "35"
 androidMinCompileSdkVersion = "31"
 
 autoMinSdkVersion = "23"
+autoVulkanMinSdkVersion = "31"
 autoTargetSdkVersion = "35"
 autoCompileSdkVersion = "35"
 
 exampleMinSdkVersion = "23"
+exampleVulkanMinSdkVersion = "31"
 exampleTargetSdkVersion = "35"
 exampleCompileSdkVersion = "35"
 

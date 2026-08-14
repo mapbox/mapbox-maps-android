@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Breaking changes ⚠️
+* Breaking (Vulkan public preview only): the Vulkan-backed `android-core-vulkan` artifact now requires Android 12 (API 31) or later, raised from API 21. Only affects apps opted into the Vulkan preview build.
+
 ## Features ✨ and improvements 🏁
 * Deprecated `RenderThreadStats.totalDroppedFrames`. Added `totalSkippedVsync`, `pacedSkippedVsync`, and `missedMapRenderFrames` for an accurate breakdown of frame performance when `setMaximumFps()` is used.
 * Report render-thread frame timing to the Android Dynamic Performance Framework (ADPF) on API 31+ devices, allowing the OS to scale CPU frequency based on actual rendering load.

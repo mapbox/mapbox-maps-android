@@ -7,7 +7,14 @@ android {
   compileSdk = libs.versions.androidCompileSdkVersion.get().toInt()
   namespace = "com.mapbox.maps.compose.testapp"
   defaultConfig {
-    minSdk = libs.versions.androidMinSdkVersion.get().toInt()
+    // vulkanEnabled=true resolves android-core-vulkan, whose minSdk is 31 --
+    // must match or the debug APK fails manifest merging.
+    val vulkanEnabled = (project.findProperty("vulkanEnabled") as String?)?.toBoolean() == true
+    minSdk = if (vulkanEnabled) {
+      libs.versions.androidVulkanMinSdkVersion.get().toInt()
+    } else {
+      libs.versions.androidMinSdkVersion.get().toInt()
+    }
     targetSdk = libs.versions.androidTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.compose.testapp"
     versionCode = 1

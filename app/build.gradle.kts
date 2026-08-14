@@ -32,7 +32,14 @@ android {
     }
   }
   defaultConfig {
-    minSdk = libs.versions.exampleMinSdkVersion.get().toInt()
+    // vulkanEnabled=true resolves android-core-vulkan, whose minSdk is 31 --
+    // must match or the debug APK fails manifest merging.
+    val vulkanEnabled = (project.findProperty("vulkanEnabled") as String?)?.toBoolean() == true
+    minSdk = if (vulkanEnabled) {
+      libs.versions.exampleVulkanMinSdkVersion.get().toInt()
+    } else {
+      libs.versions.exampleMinSdkVersion.get().toInt()
+    }
     targetSdk = libs.versions.exampleTargetSdkVersion.get().toInt()
     applicationId = "com.mapbox.maps.testapp"
     versionCode = if (project.hasProperty("gitVersionCode")) project.property("gitVersionCode") as Int else 1
