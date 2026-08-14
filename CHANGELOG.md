@@ -10,6 +10,30 @@ Mapbox welcomes participation and contributions from everyone.
 * Deprecated `RenderThreadStats.totalDroppedFrames`. Added `totalSkippedVsync`, `pacedSkippedVsync`, and `missedMapRenderFrames` for an accurate breakdown of frame performance when `setMaximumFps()` is used.
 * Report render-thread frame timing to the Android Dynamic Performance Framework (ADPF) on API 31+ devices, allowing the OS to scale CPU frequency based on actual rendering load.
 
+
+# 11.27.2 August 13, 2026
+## Bug fixes 🐞
+* Fix potential ANRs caused by the run loop executing a large batch of queued tasks (e.g. style parsing, GeoJSON processing) in one go without yielding back to the system.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.27.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.2), common to [v24.27.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.2).
+
+# 11.28.2 August 13, 2026
+## Bug fixes 🐞
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.28.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.2), common to [v24.28.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.2).
+
+# 11.28.1 August 12, 2026
+## Bug fixes 🐞
+* Fix symbols remaining elevated instead of dropping to the ground when 3D buildings are hidden via style configuration.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.28.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.1), common to [v24.28.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.1).
+
 # 11.29.0-rc.1 August 10, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add coordinate conversion APIs to `MapState`: `coordinateForPixel`, `pixelsForCoordinates`, `coordinatesForPixels`, `coordinateInfoForPixel`, and `coordinatesInfoForPixels`. Add experimental `tileCover` to `MapViewportState`.
@@ -37,7 +61,6 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Update Mapbox GeoJSON library to [v7.10.1](https://github.com/mapbox/mapbox-java/releases/tag/v7.10.1).
 * Update gl-native to [v11.29.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0-rc.1), common to [v24.29.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0-rc.1).
-
 
 # 11.28.0 August 06, 2026
 ## Features ✨ and improvements 🏁
@@ -70,6 +93,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to [v11.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1), common to [v24.28.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.0-rc.1).
+
+# 11.27.1 August 04, 2026
+## Bug fixes 🐞
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.27.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.1), common to [v24.27.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.27.1).
+
 
 # 11.27.0 July 24, 2026
 ## Features ✨ and improvements 🏁
