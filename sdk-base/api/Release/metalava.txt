@@ -2334,6 +2334,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.plugin.delegates.MapProjectionDelegate getMapProjectionDelegate();
     method public com.mapbox.maps.MapboxStyleManager getMapStyleManagerDelegate();
     method public com.mapbox.maps.plugin.delegates.MapTransformDelegate getMapTransformDelegate();
+    method public default Integer? getMaximumFps();
     method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapboxStyleManager,kotlin.Unit> callback);
     property public abstract com.mapbox.maps.IndoorManager indoorManager;
     property public abstract com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate;
@@ -2346,6 +2347,7 @@ package com.mapbox.maps.plugin.delegates {
     property public abstract com.mapbox.maps.plugin.delegates.MapProjectionDelegate mapProjectionDelegate;
     property public abstract com.mapbox.maps.MapboxStyleManager mapStyleManagerDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapTransformDelegate mapTransformDelegate;
+    property public default Integer? maximumFps;
   }
 
   public interface MapFeatureQueryDelegate {

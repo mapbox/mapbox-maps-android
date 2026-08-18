@@ -23,7 +23,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapDelegateProviderImpl(
   val mapboxMap: MapboxMap,
-  mapController: MapController,
+  private val mapController: MapController,
   telemetry: MapTelemetry,
   mapGeofencingConsent: MapGeofencingConsent,
 ) : MapDelegateProvider {
@@ -46,4 +46,5 @@ internal class MapDelegateProviderImpl(
   override val mapInteractionDelegate: MapInteractionDelegate = mapboxMap
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   override val indoorManager: IndoorManager = mapboxMap.indoor
+  override val maximumFps: Int? get() = mapController.maximumFps
 }

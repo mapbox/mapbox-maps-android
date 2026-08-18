@@ -19,6 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 internal class OverScrollerFlingAnimator(
   context: Context,
   private val mapCameraManagerDelegate: MapCameraManagerDelegate,
+  private val maxFpsProvider: () -> Int? = NO_MAX_FPS,
 ) {
 
   private val overScroller = OverScroller(context)
@@ -39,9 +40,24 @@ internal class OverScrollerFlingAnimator(
   var limitHorizontal = false
   var limitVertical = false
 
+  private var lastProcessedFrameTimeNanos = -1L
+
   @VisibleForTesting
   val frameCallback = object : Choreographer.FrameCallback {
     override fun doFrame(frameTimeNanos: Long) {
+      val maxFps = maxFpsProvider()
+      val periodNanos = if (maxFps != null && maxFps > 0) ONE_SECOND_NANOS / maxFps else null
+      if (periodNanos != null && lastProcessedFrameTimeNanos >= 0L) {
+        val elapsedNanos = frameTimeNanos - lastProcessedFrameTimeNanos
+        if (elapsedNanos < periodNanos) {
+          // Delay to the next expected frame instead of firing on every vsync; if the scheduler
+          // wakes us up early, the elapsed check above catches it and delays the remainder.
+          postFrame(periodNanos - elapsedNanos)
+          return
+        }
+      }
+      lastProcessedFrameTimeNanos = frameTimeNanos
+
       if (!overScroller.computeScrollOffset()) {
         if (isRunning) {
           choreographer.removeFrameCallback(this)
@@ -66,7 +82,15 @@ internal class OverScrollerFlingAnimator(
         mapCameraManagerDelegate.setCamera(cameraOptions)
       }
 
-      choreographer.postFrameCallback(this)
+      postFrame(periodNanos ?: 0L)
+    }
+  }
+
+  private fun postFrame(delayNanos: Long) {
+    if (delayNanos <= 0L) {
+      choreographer.postFrameCallback(frameCallback)
+    } else {
+      choreographer.postFrameCallbackDelayed(frameCallback, delayNanos / ONE_MILLISECOND_NANOS)
     }
   }
 
@@ -86,6 +110,7 @@ internal class OverScrollerFlingAnimator(
     fromPoint = simulateOrigin
     prevX = 0
     prevY = 0
+    lastProcessedFrameTimeNanos = -1L
     isRunning = true
 
     overScroller.fling(
@@ -101,6 +126,12 @@ internal class OverScrollerFlingAnimator(
 
     onAnimationStart?.invoke()
     choreographer.postFrameCallback(frameCallback)
+  }
+
+  private companion object {
+    const val ONE_SECOND_NANOS = 1_000_000_000L
+    const val ONE_MILLISECOND_NANOS = 1_000_000L
+    val NO_MAX_FPS: () -> Int? = { null }
   }
 
   /**

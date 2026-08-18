@@ -2392,7 +2392,12 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProv
 	public abstract fun getMapProjectionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapProjectionDelegate;
 	public abstract fun getMapStyleManagerDelegate ()Lcom/mapbox/maps/MapboxStyleManager;
 	public abstract fun getMapTransformDelegate ()Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;
+	public abstract fun getMaximumFps ()Ljava/lang/Integer;
 	public abstract fun getStyle (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mapbox/maps/plugin/delegates/MapDelegateProvider$DefaultImpls {
+	public static fun getMaximumFps (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)Ljava/lang/Integer;
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate {
