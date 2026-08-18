@@ -808,6 +808,74 @@ class RasterLayerTest {
   }
 
   @Test
+  fun rasterColorScaleSet() {
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterColorScale(RasterColorScale.LINEAR)
+    verify { style.setStyleLayerProperty("id", "raster-color-scale", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "linear")
+  }
+
+  @Test
+  fun rasterColorScaleGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("linear")
+
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(RasterColorScale.LINEAR, layer.rasterColorScale)
+    verify { style.getStyleLayerProperty("id", "raster-color-scale") }
+  }
+  // Expression Tests
+
+  @Test
+  fun rasterColorScaleAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = rasterLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.rasterColorScale(expression)
+    verify { style.setStyleLayerProperty("id", "raster-color-scale", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun rasterColorScaleAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.rasterColorScaleAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "raster-color-scale") }
+  }
+
+  @Test
+  fun rasterColorScaleAsExpressionGetNull() {
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.rasterColorScaleAsExpression)
+    verify { style.getStyleLayerProperty("id", "raster-color-scale") }
+  }
+
+  @Test
+  fun rasterColorScaleAsExpressionGetFromLiteral() {
+    val value = "linear"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    val layer = rasterLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(value.toString(), layer.rasterColorScaleAsExpression?.toString())
+    assertEquals(RasterColorScale.LINEAR.value, layer.rasterColorScaleAsExpression.toString())
+    assertEquals(RasterColorScale.LINEAR, layer.rasterColorScale)
+    verify { style.getStyleLayerProperty("id", "raster-color-scale") }
+  }
+
+  @Test
   fun rasterContrastSet() {
     val layer = rasterLayer("id", "source") {}
     val testValue = 1.0
@@ -1900,6 +1968,39 @@ class RasterLayerTest {
 
     assertEquals(transition.toValue().toString(), RasterLayer.defaultRasterColorRangeTransition?.toValue().toString())
     verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-range-transition") }
+  }
+
+  @Test
+  fun defaultRasterColorScaleTest() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("linear")
+
+    assertEquals(RasterColorScale.LINEAR, RasterLayer.defaultRasterColorScale)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-scale") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultRasterColorScaleAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), RasterLayer.defaultRasterColorScaleAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-scale") }
+  }
+
+  @Test
+  fun defaultRasterColorScaleAsExpressionGetFromLiteral() {
+    val value = "linear"
+    every { styleProperty.value } returns TypeUtils.wrapToValue(value)
+
+    assertEquals(value.toString(), RasterLayer.defaultRasterColorScaleAsExpression?.toString())
+    assertEquals(RasterColorScale.LINEAR.value, RasterLayer.defaultRasterColorScaleAsExpression.toString())
+    assertEquals(RasterColorScale.LINEAR, RasterLayer.defaultRasterColorScale)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-scale") }
   }
 
   @Test

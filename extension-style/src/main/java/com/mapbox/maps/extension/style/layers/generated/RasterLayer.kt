@@ -763,6 +763,72 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
+   * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   */
+  @MapboxExperimental
+  val rasterColorScale: RasterColorScale?
+    /**
+     * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+     *
+     * Use static method [RasterLayer.defaultRasterColorScale] to get the default property.
+     *
+     * @return RasterColorScale
+     */
+    get() {
+      getPropertyValue<String?>("raster-color-scale")?.let {
+        return RasterColorScale.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+      }
+      return null
+    }
+
+  /**
+   * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   *
+   * Use static method [RasterLayer.defaultRasterColorScale] to set the default property.
+   *
+   * @param rasterColorScale value of rasterColorScale
+   */
+  @MapboxExperimental
+  override fun rasterColorScale(rasterColorScale: RasterColorScale): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-color-scale", rasterColorScale)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   *
+   * This is an Expression representation of "raster-color-scale".
+   *
+   */
+  @MapboxExperimental
+  val rasterColorScaleAsExpression: Expression?
+    /**
+     * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+     *
+     * Get the RasterColorScale property as an Expression
+     *
+     * Use static method [RasterLayer.defaultRasterColorScaleAsExpression] to get the default property.
+     */
+    get() =
+      getPropertyValue("raster-color-scale")
+        ?: rasterColorScale?.let {
+          Expression.literal(it.value)
+        }
+
+  /**
+   * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   *
+   * Use static method [RasterLayer.defaultRasterColorScaleAsExpression] to set the default property.
+   *
+   * @param rasterColorScale value of rasterColorScale as Expression
+   */
+  @MapboxExperimental
+  override fun rasterColorScale(rasterColorScale: Expression): RasterLayer = apply {
+    val propertyValue = PropertyValue("raster-color-scale", rasterColorScale)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
    */
   val rasterContrast: Double?
@@ -1785,6 +1851,48 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-range-transition").silentUnwrap()
 
     /**
+     * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+     */
+    @MapboxExperimental
+    val defaultRasterColorScale: RasterColorScale?
+      /**
+       * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+       *
+       * Get the default value of RasterColorScale property
+       *
+       * @return RasterColorScale
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-scale").silentUnwrap<String>()?.let {
+          return RasterColorScale.valueOf(it.uppercase(Locale.US).replace('-', '_'))
+        }
+        return null
+      }
+
+    /**
+     * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+     *
+     * This is an Expression representation of "raster-color-scale".
+     *
+     */
+    @MapboxExperimental
+    val defaultRasterColorScaleAsExpression: Expression?
+      /**
+       * Get default value of the RasterColorScale property as an Expression
+       *
+       * @return RasterColorScale
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-color-scale").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultRasterColorScale?.let {
+          return Expression.literal(it.value)
+        }
+        return null
+      }
+
+    /**
      * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]
      */
     val defaultRasterContrast: Double?
@@ -2390,6 +2498,22 @@ interface RasterLayerDsl {
    * DSL for [rasterColorRangeTransition].
    */
   fun rasterColorRangeTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   *
+   * @param rasterColorScale value of rasterColorScale
+   */
+  @MapboxExperimental
+  fun rasterColorScale(rasterColorScale: RasterColorScale = RasterColorScale.LINEAR): RasterLayer
+
+  /**
+   * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   *
+   * @param rasterColorScale value of rasterColorScale as Expression
+   */
+  @MapboxExperimental
+  fun rasterColorScale(rasterColorScale: Expression): RasterLayer
 
   /**
    * Increase or reduce the contrast of the image. Default value: 0. Value range: [-1, 1]

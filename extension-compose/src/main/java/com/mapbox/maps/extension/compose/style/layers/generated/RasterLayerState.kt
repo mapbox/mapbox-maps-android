@@ -44,6 +44,7 @@ private constructor(
   initialRasterColorMixTransition: Transition,
   initialRasterColorRange: DoubleRangeValue,
   initialRasterColorRangeTransition: Transition,
+  initialRasterColorScale: RasterColorScaleValue,
   initialRasterContrast: DoubleValue,
   initialRasterContrastTransition: Transition,
   initialRasterElevation: DoubleValue,
@@ -82,6 +83,7 @@ private constructor(
     initialRasterColorMixTransition = Transition.INITIAL,
     initialRasterColorRange = DoubleRangeValue.INITIAL,
     initialRasterColorRangeTransition = Transition.INITIAL,
+    initialRasterColorScale = RasterColorScaleValue.INITIAL,
     initialRasterContrast = DoubleValue.INITIAL,
     initialRasterContrastTransition = Transition.INITIAL,
     initialRasterElevation = DoubleValue.INITIAL,
@@ -187,6 +189,14 @@ private constructor(
    *  Defines the transition of [rasterColorRange].
    */
   public var rasterColorRangeTransition: Transition by rasterColorRangeTransitionState
+
+  @MapboxExperimental
+  private val rasterColorScaleState: MutableState<RasterColorScaleValue> = mutableStateOf(initialRasterColorScale)
+  /**
+   *  When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+   */
+  @MapboxExperimental
+  public var rasterColorScale: RasterColorScaleValue by rasterColorScaleState
 
   private val rasterContrastState: MutableState<DoubleValue> = mutableStateOf(initialRasterContrast)
   /**
@@ -321,6 +331,7 @@ private constructor(
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorMixTransitionState, "raster-color-mix-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorRangeState, "raster-color-range")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorRangeTransitionState, "raster-color-range-transition")
+    ActionWhenNotInitial(layerNode.setPropertyAction, rasterColorScaleState, "raster-color-scale")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterContrastState, "raster-contrast")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterContrastTransitionState, "raster-contrast-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterElevationState, "raster-elevation")

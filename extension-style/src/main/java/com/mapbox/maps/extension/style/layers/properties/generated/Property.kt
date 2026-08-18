@@ -1770,6 +1770,59 @@ class FillExtrusionTranslateAnchor private constructor(override val value: Strin
     }
   }
 }
+// RASTER_COLOR_SCALE: When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`.
+/**
+ * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+class RasterColorScale private constructor(override val value: String) : LayerProperty {
+
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is RasterColorScale &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "RasterColorScale(value=$value)"
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Raster values are spaced evenly across the color ramp.
+     */
+    @JvmField
+    val LINEAR = RasterColorScale("linear")
+    /**
+     * Raster values are spaced logarithmically, giving more of the color ramp to smaller values. Useful for data concentrated near the low end of a wide range.
+     */
+    @JvmField
+    val LOG = RasterColorScale("log")
+
+    /**
+     * Utility function to get [RasterColorScale] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): RasterColorScale {
+      return when (value) {
+        "LINEAR" -> LINEAR
+        "LOG" -> LOG
+        else -> throw RuntimeException("RasterColorScale.valueOf does not support [$value]")
+      }
+    }
+  }
+}
 // RASTER_RESAMPLING: The resampling/interpolation method to use for overscaling, also known as texture magnification filter
 /**
  * The resampling/interpolation method to use for overscaling, also known as texture magnification filter

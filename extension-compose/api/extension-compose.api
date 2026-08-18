@@ -2975,6 +2975,26 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Occl
 public final class com/mapbox/maps/extension/compose/style/layers/generated/OcclusionOpacityModeValue$Companion {
 }
 
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue : com/mapbox/maps/extension/compose/style/HoldsValue {
+	public static final field Companion Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue$Companion;
+	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;
+	public static final field LINEAR Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;
+	public static final field LOG Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;
+	public fun <init> (Lcom/mapbox/bindgen/Value;)V
+	public fun <init> (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)V
+	public final fun component1 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun isNotInitial ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue$Companion {
+}
+
 public final class com/mapbox/maps/extension/compose/style/layers/generated/RasterLayerKt {
 	public static final fun RasterLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterLayerState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun RasterLayer (Lcom/mapbox/maps/extension/compose/style/sources/SourceState;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
@@ -2997,6 +3017,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun getRasterColorMixTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
 	public final fun getRasterColorRange ()Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;
 	public final fun getRasterColorRangeTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
+	public final fun getRasterColorScale ()Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;
 	public final fun getRasterColorUseTheme ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getRasterContrast ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getRasterContrastTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -3029,6 +3050,7 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun setRasterColorMixTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
 	public final fun setRasterColorRange (Lcom/mapbox/maps/extension/compose/style/DoubleRangeValue;)V
 	public final fun setRasterColorRangeTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
+	public final fun setRasterColorScale (Lcom/mapbox/maps/extension/compose/style/layers/generated/RasterColorScaleValue;)V
 	public final fun setRasterColorUseTheme (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setRasterContrast (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setRasterContrastTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V

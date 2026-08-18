@@ -3675,6 +3675,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public final fun getRasterColorRange ()Ljava/util/List;
 	public final fun getRasterColorRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterColorRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getRasterColorScale ()Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;
+	public final fun getRasterColorScaleAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterColorUseTheme ()Ljava/lang/String;
 	public final fun getRasterColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getRasterContrast ()Ljava/lang/Double;
@@ -3729,6 +3731,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer 
 	public fun rasterColorRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorRangeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorRangeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterColorScale (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public fun rasterColorScale (Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public fun rasterContrast (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3787,6 +3791,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayer$
 	public final fun getDefaultRasterColorRange ()Ljava/util/List;
 	public final fun getDefaultRasterColorRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterColorRangeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultRasterColorScale ()Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;
+	public final fun getDefaultRasterColorScaleAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterColorUseTheme ()Ljava/lang/String;
 	public final fun getDefaultRasterColorUseThemeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultRasterContrast ()Ljava/lang/Double;
@@ -3838,6 +3844,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun rasterColorRange (Ljava/util/List;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorRangeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorRangeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterColorScale (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public abstract fun rasterColorScale (Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorUseTheme (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterColorUseTheme (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public abstract fun rasterContrast (D)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -3879,6 +3887,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/RasterLayerD
 	public static synthetic fun rasterBrightnessMax$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterBrightnessMin$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterColorMix$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
+	public static synthetic fun rasterColorScale$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterContrast$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterElevation$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
 	public static synthetic fun rasterEmissiveStrength$default (Lcom/mapbox/maps/extension/style/layers/generated/RasterLayerDsl;DILjava/lang/Object;)Lcom/mapbox/maps/extension/style/layers/generated/RasterLayer;
@@ -5499,6 +5508,21 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/P
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ProjectionName$Companion {
 	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale$Companion;
+	public static final field LINEAR Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;
+	public static final field LOG Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;
+}
+
+public final class com/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/RasterColorScale;
 }
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/RasterResampling : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {

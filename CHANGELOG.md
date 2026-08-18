@@ -47,6 +47,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Accept an object as config option value.
 * Accept an expression as `distance` expression argument.
 * The `distance` expression now accepts an expression (rather than only a literal) as its second argument.
+* Introduce experimental `RasterLayer.rasterColorScale` property, resulting in more precise visualization with long-tailed raster-array data source.
 
 ## Bug fixes 🐞
 * Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.

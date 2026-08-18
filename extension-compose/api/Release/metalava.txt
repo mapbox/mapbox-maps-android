@@ -3540,6 +3540,23 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
   public static final class OcclusionOpacityModeValue.Companion {
   }
 
+  @androidx.compose.runtime.Immutable @com.mapbox.maps.MapboxExperimental public final class RasterColorScaleValue {
+    ctor public RasterColorScaleValue(com.mapbox.bindgen.Value value);
+    ctor public RasterColorScaleValue(com.mapbox.maps.extension.style.expressions.generated.Expression expression);
+    method public com.mapbox.bindgen.Value component1();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue copy(com.mapbox.bindgen.Value value);
+    method public com.mapbox.bindgen.Value getValue();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public boolean isNotInitial();
+    property public com.mapbox.bindgen.Value value;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue.Companion Companion;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue DEFAULT;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue LINEAR;
+    field public static final com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue LOG;
+  }
+
+  public static final class RasterColorScaleValue.Companion {
+  }
+
   public final class RasterLayerKt {
     method @androidx.compose.runtime.Composable @com.mapbox.maps.extension.compose.MapboxMapComposable public static void RasterLayer(com.mapbox.maps.extension.compose.style.sources.SourceState sourceState, String layerId = remember({ 
     return generateRandomLayerId("raster")
@@ -3568,6 +3585,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.Transition getRasterColorMixTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleRangeValue getRasterColorRange();
     method public com.mapbox.maps.extension.compose.style.Transition getRasterColorRangeTransition();
+    method public com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue getRasterColorScale();
     method public com.mapbox.maps.extension.compose.style.StringValue getRasterColorUseTheme();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getRasterContrast();
     method public com.mapbox.maps.extension.compose.style.Transition getRasterContrastTransition();
@@ -3600,6 +3618,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setRasterColorMixTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setRasterColorRange(com.mapbox.maps.extension.compose.style.DoubleRangeValue);
     method public void setRasterColorRangeTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method public void setRasterColorScale(com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue);
     method public void setRasterColorUseTheme(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setRasterContrast(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setRasterContrastTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3632,6 +3651,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.Transition rasterColorMixTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleRangeValue rasterColorRange;
     property public final com.mapbox.maps.extension.compose.style.Transition rasterColorRangeTransition;
+    property public final com.mapbox.maps.extension.compose.style.layers.generated.RasterColorScaleValue rasterColorScale;
     property public final com.mapbox.maps.extension.compose.style.StringValue rasterColorUseTheme;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue rasterContrast;
     property public final com.mapbox.maps.extension.compose.style.Transition rasterContrastTransition;
