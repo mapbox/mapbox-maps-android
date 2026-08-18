@@ -1982,6 +1982,60 @@ public data class FillExtrusionTranslateAnchorValue(public override val value: V
 }
 
 /**
+ * When `raster-color` is active, specifies how raster values are distributed across the color ramp over the range specified by `raster-color-range`. Default value: "linear".
+ *
+ * @param value the property wrapped in [Value] to be used with native renderer.
+ */
+@Immutable
+@MapboxExperimental
+public data class RasterColorScaleValue(public override val value: Value) : HoldsValue {
+  /**
+   * Construct the [RasterColorScaleValue] with [Mapbox Expression](https://docs.mapbox.com/style-spec/reference/expressions/).
+   */
+  public constructor(expression: Expression) : this(expression as Value)
+
+  /**
+   * True if the this value is not [INITIAL]
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  override fun isNotInitial(): Boolean = this !== INITIAL
+
+  /**
+   * Public companion object.
+   */
+  public companion object {
+    /**
+     * Use this constant to signal that no property should be set to the Maps engine.
+     * This is needed because sending nullValue resets the value of the property to the default one
+     * defined by the Maps engine, which results in overriding the value from the loaded style.
+     * Moreover, we set a custom String to differentiate it from [DEFAULT], otherwise things
+     * like [kotlinx.coroutines.flow.Flow] or [androidx.compose.runtime.MutableState] won't be able
+     * to differentiate them because they use [equals].
+     */
+    @JvmField
+    internal val INITIAL: RasterColorScaleValue = RasterColorScaleValue(Value.valueOf("RasterColorScaleValue.INITIAL"))
+
+    /**
+     * Default value for [RasterColorScaleValue], setting default will result in restoring the property value defined in the style.
+     */
+    @JvmField
+    public val DEFAULT: RasterColorScaleValue = RasterColorScaleValue(Value.nullValue())
+
+    /**
+     * Raster values are spaced evenly across the color ramp.
+     */
+    @JvmField
+    public val LINEAR: RasterColorScaleValue = RasterColorScaleValue(Value("linear"))
+
+    /**
+     * Raster values are spaced logarithmically, giving more of the color ramp to smaller values. Useful for data concentrated near the low end of a wide range.
+     */
+    @JvmField
+    public val LOG: RasterColorScaleValue = RasterColorScaleValue(Value("log"))
+  }
+}
+
+/**
  * The resampling/interpolation method to use for overscaling, also known as texture magnification filter Default value: "linear".
  *
  * @param value the property wrapped in [Value] to be used with native renderer.

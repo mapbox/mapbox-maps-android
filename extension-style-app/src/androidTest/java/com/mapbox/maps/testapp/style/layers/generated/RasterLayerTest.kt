@@ -387,6 +387,29 @@ class RasterLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun rasterColorScaleTest() {
+    val layer = rasterLayer("id", "source") {
+      rasterColorScale(RasterColorScale.LINEAR)
+    }
+    setupLayer(layer)
+    assertEquals(RasterColorScale.LINEAR, layer.rasterColorScale)
+  }
+
+  @Test
+  @UiThreadTest
+  fun rasterColorScaleAsExpressionTest() {
+    val expression = literal("linear")
+    val layer = rasterLayer("id", "source") {
+      rasterColorScale(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.rasterColorScaleAsExpression.toString())
+    assertEquals(RasterColorScale.LINEAR, layer.rasterColorScale!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun rasterContrastTest() {
     val testValue = 1.0
     val layer = rasterLayer("id", "source") {
@@ -813,6 +836,8 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultRasterColorRange should not be null", RasterLayer.defaultRasterColorRange)
     assertNotNull("defaultRasterColorRangeAsExpression should not be null", RasterLayer.defaultRasterColorRangeAsExpression)
     assertNotNull("defaultRasterColorRangeTransition should not be null", RasterLayer.defaultRasterColorRangeTransition)
+    assertNotNull("defaultRasterColorScale should not be null", RasterLayer.defaultRasterColorScale)
+    assertNotNull("defaultRasterColorScaleAsExpression should not be null", RasterLayer.defaultRasterColorScaleAsExpression)
     assertNotNull("defaultRasterContrast should not be null", RasterLayer.defaultRasterContrast)
     assertNotNull("defaultRasterContrastAsExpression should not be null", RasterLayer.defaultRasterContrastAsExpression)
     assertNotNull("defaultRasterContrastTransition should not be null", RasterLayer.defaultRasterContrastTransition)
@@ -869,6 +894,7 @@ class RasterLayerTest : BaseStyleTest() {
     val rasterColorUseThemeTestValue = "default"
     val rasterColorMixTestValue = listOf(0.0, 1.0, 2.0, 3.0)
     val rasterColorRangeTestValue = listOf(0.0, 1.0)
+    val rasterColorScaleTestValue = RasterColorScale.LINEAR
     val rasterContrastTestValue = 1.0
     val rasterElevationTestValue = 1.0
     val rasterEmissiveStrengthTestValue = 1.0
@@ -892,6 +918,7 @@ class RasterLayerTest : BaseStyleTest() {
       rasterColorUseTheme(rasterColorUseThemeTestValue)
       rasterColorMix(rasterColorMixTestValue)
       rasterColorRange(rasterColorRangeTestValue)
+      rasterColorScale(rasterColorScaleTestValue)
       rasterContrast(rasterContrastTestValue)
       rasterElevation(rasterElevationTestValue)
       rasterEmissiveStrength(rasterEmissiveStrengthTestValue)
@@ -920,6 +947,7 @@ class RasterLayerTest : BaseStyleTest() {
     assertEquals(rasterColorUseThemeTestValue, cachedLayer.rasterColorUseTheme)
     assertEquals(rasterColorMixTestValue, cachedLayer.rasterColorMix)
     assertEquals(rasterColorRangeTestValue, cachedLayer.rasterColorRange)
+    assertEquals(rasterColorScaleTestValue, cachedLayer.rasterColorScale)
     assertEquals(rasterContrastTestValue, cachedLayer.rasterContrast)
     assertEquals(rasterElevationTestValue, cachedLayer.rasterElevation)
     assertEquals(rasterEmissiveStrengthTestValue, cachedLayer.rasterEmissiveStrength)
