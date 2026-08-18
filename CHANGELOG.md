@@ -13,6 +13,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Deprecated `RenderThreadStats.totalDroppedFrames`. Added `totalSkippedVsync`, `pacedSkippedVsync`, and `missedMapRenderFrames` for an accurate breakdown of frame performance when `setMaximumFps()` is used.
 * Report render-thread frame timing to the Android Dynamic Performance Framework (ADPF) on API 31+ devices, allowing the OS to scale CPU frequency based on actual rendering load.
 
+## Bug fixes 🐞
+* Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
 
 # 11.27.2 August 13, 2026
 ## Bug fixes 🐞

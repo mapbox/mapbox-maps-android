@@ -156,6 +156,147 @@ class OverScrollerFlingAnimatorTest {
   }
 
   @Test
+  fun `maxFps null processes every frame`() {
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { null })
+    testAnimator.fling(1000, 1000, ScreenCoordinate(100.0, 200.0))
+
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 10
+    every { anyConstructed<OverScroller>().currY } returns 20
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    testAnimator.frameCallback.doFrame(0L)
+    testAnimator.frameCallback.doFrame(8_333_333L)
+    testAnimator.frameCallback.doFrame(16_666_666L)
+
+    // computeScrollOffset is called on every processed frame
+    verify(exactly = 3) { anyConstructed<OverScroller>().computeScrollOffset() }
+  }
+
+  @Test
+  fun `maxFps 30 on 120Hz stream skips intermediate frames`() {
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { 30 })
+    testAnimator.fling(1000, 1000, ScreenCoordinate(100.0, 200.0))
+
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 10
+    every { anyConstructed<OverScroller>().currY } returns 20
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    // 30 fps target period = 1_000_000_000/30 = 33_333_333 ns
+    // Feed 5 vsyncs at ~8.33 ms apart; frame 4 at 34ms clears the period boundary
+    testAnimator.frameCallback.doFrame(0L) // processed (lastProcessed = -1)
+    testAnimator.frameCallback.doFrame(8_333_333L) // skipped (8.33ms elapsed < 33.33ms)
+    testAnimator.frameCallback.doFrame(16_666_666L) // skipped
+    testAnimator.frameCallback.doFrame(24_999_999L) // skipped
+    testAnimator.frameCallback.doFrame(34_000_000L) // processed (34ms >= 33.33ms period)
+
+    verify(exactly = 2) { anyConstructed<OverScroller>().computeScrollOffset() }
+    // with a cap set, every doFrame call - processed or skipped - reposts via a delayed
+    // callback timed to the next expected frame, not an immediate next-vsync repost.
+    verify(exactly = 5) { choreographer.postFrameCallbackDelayed(testAnimator.frameCallback, any()) }
+  }
+
+  @Test
+  fun `skipped frame delays the next callback by the remaining time to the expected frame`() {
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { 30 })
+    testAnimator.fling(1000, 1000, ScreenCoordinate(0.0, 0.0))
+
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 5
+    every { anyConstructed<OverScroller>().currY } returns 5
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    // 30fps period ~= 33ms; processing the first frame schedules the next one a full period out.
+    testAnimator.frameCallback.doFrame(0L)
+    verify { choreographer.postFrameCallbackDelayed(testAnimator.frameCallback, 33L) }
+
+    // 8ms elapsed since the processed frame -> skip, delay only the ~25ms remaining, not the full period.
+    testAnimator.frameCallback.doFrame(8_000_000L)
+    verify { choreographer.postFrameCallbackDelayed(testAnimator.frameCallback, 25L) }
+  }
+
+  @Test
+  fun `skipped frames do not call cameraForDrag`() {
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { 30 })
+    testAnimator.fling(1000, 1000, ScreenCoordinate(0.0, 0.0))
+
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 5
+    every { anyConstructed<OverScroller>().currY } returns 5
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    testAnimator.frameCallback.doFrame(0L) // processed
+    testAnimator.frameCallback.doFrame(8_000_000L) // skipped (8ms < 33.33ms period)
+
+    // cameraForDrag only called on the one processed frame
+    verify(exactly = 1) { mapCameraManagerDelegate.cameraForDrag(any(), any()) }
+    verify(exactly = 1) { anyConstructed<OverScroller>().computeScrollOffset() }
+  }
+
+  @Test
+  fun `fling resets pacing so first frame always processes`() {
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { 30 })
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 5
+    every { anyConstructed<OverScroller>().currY } returns 5
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    testAnimator.fling(1000, 1000, ScreenCoordinate(0.0, 0.0))
+    testAnimator.frameCallback.doFrame(0L) // processed
+    testAnimator.frameCallback.doFrame(8_000_000L) // skipped (< 33ms)
+
+    // second fling resets lastProcessedFrameTimeNanos to -1
+    testAnimator.fling(500, 500, ScreenCoordinate(0.0, 0.0))
+    testAnimator.frameCallback.doFrame(10_000_000L) // processed (first frame of new fling)
+
+    // frame 0 of fling1 + frame 0 of fling2 = 2 processed frames
+    verify(exactly = 2) { anyConstructed<OverScroller>().computeScrollOffset() }
+  }
+
+  @Test
+  fun `runtime maxFps raise applies on next frame without stall`() {
+    var currentFps = 30
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { currentFps })
+    testAnimator.fling(1000, 1000, ScreenCoordinate(0.0, 0.0))
+
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 5
+    every { anyConstructed<OverScroller>().currY } returns 5
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    testAnimator.frameCallback.doFrame(0L) // processed (lastProcessed=-1)
+    testAnimator.frameCallback.doFrame(8_000_000L) // skipped under 30fps (8ms < 33.33ms)
+
+    // raise to 120fps → period ≈ 8.33ms; 9ms since last processed frame qualifies
+    currentFps = 120
+    testAnimator.frameCallback.doFrame(9_000_000L) // processed
+
+    verify(exactly = 2) { anyConstructed<OverScroller>().computeScrollOffset() }
+  }
+
+  @Test
+  fun `runtime maxFps cleared mid-fling reverts to unthrottled`() {
+    var currentFps: Int? = 30
+    val testAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = { currentFps })
+    testAnimator.fling(1000, 1000, ScreenCoordinate(0.0, 0.0))
+
+    every { anyConstructed<OverScroller>().computeScrollOffset() } returns true
+    every { anyConstructed<OverScroller>().currX } returns 5
+    every { anyConstructed<OverScroller>().currY } returns 5
+    every { mapCameraManagerDelegate.cameraForDrag(any(), any()) } returns mockk()
+
+    testAnimator.frameCallback.doFrame(0L) // processed
+    testAnimator.frameCallback.doFrame(8_000_000L) // skipped (< 33ms period)
+
+    currentFps = null // cleared → no throttle branch
+    testAnimator.frameCallback.doFrame(16_000_000L) // processed
+    testAnimator.frameCallback.doFrame(24_000_000L) // processed
+
+    verify(exactly = 3) { anyConstructed<OverScroller>().computeScrollOffset() }
+  }
+
+  @Test
   fun `limitVertical zeroes Y delta`() {
     val origin = ScreenCoordinate(100.0, 200.0)
     animator.limitVertical = true

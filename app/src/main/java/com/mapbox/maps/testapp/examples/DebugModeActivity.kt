@@ -32,6 +32,7 @@ import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.compass.compass
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
@@ -76,6 +77,10 @@ class DebugModeActivity : AppCompatActivity() {
     setupScreenShapeButton()
     binding.mapView.compass.opacity = 0.5f
     binding.mapView.debugOptions = debugOptions
+    // Enable the OverScroller-based fling path so the max-FPS toggle below actually
+    // exercises OverScrollerFlingAnimator's throttle - the default (legacy easeTo fling)
+    // never calls into it.
+    binding.mapView.gestures.useNativeFlingDeceleration = true
     registerListeners(mapboxMap)
   }
   private var overlayView: HexSpotlightView? = null
@@ -243,6 +248,12 @@ class DebugModeActivity : AppCompatActivity() {
       R.id.menu_debug_mode_info -> {
         showMapInfo()
       }
+      R.id.menu_debug_mode_max_fps -> {
+        item.isChecked = !item.isChecked
+        // clearMaximumFps() is library-group-restricted; Int.MAX_VALUE via the public
+        // setMaximumFps() is an equivalent "uncapped" value for this debug toggle.
+        binding.mapView.setMaximumFps(if (item.isChecked) MAX_FPS_CAP else Int.MAX_VALUE)
+      }
       else -> {
         return super.onOptionsItemSelected(item)
       }
@@ -320,6 +331,7 @@ ${styleInfo.sdkCompatibility}
 
   private companion object {
     private const val TAG = "DebugModeActivity"
+    private const val MAX_FPS_CAP = 15
     private const val TAG_PERFORMANCE_STATISTICS = "PerformanceStatistics"
     private const val PERF_STAT_STOP_COLLECT_BUTTON = "Stop collecting"
     private const val PERF_STAT_START_COLLECT_BUTTON = "Collect Perf Stats"

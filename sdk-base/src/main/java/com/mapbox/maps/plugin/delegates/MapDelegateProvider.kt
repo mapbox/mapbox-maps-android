@@ -73,4 +73,10 @@ interface MapDelegateProvider {
   @MapboxExperimental
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   val indoorManager: IndoorManager
+
+  /**
+   * Current user-set maximum FPS cap, or null if not set. Plugins may read this each frame to
+   * throttle gesture-driven animations to match the render loop's frame rate.
+   */
+  val maximumFps: Int? get() = null
 }

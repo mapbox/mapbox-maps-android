@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.gestures
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -1912,6 +1913,9 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   /**
    * Provides all map delegate instances.
    */
+  // MapDelegateProvider is @RestrictTo(LIBRARY): plugin-gestures is a first-party Mapbox
+  // module consuming it as intended, but lint can't see across the library boundary.
+  @SuppressLint("RestrictedApi")
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     if (checkCleanedUp("onDelegateProvider")) return
     delegateProvider.getStyle {
@@ -1932,7 +1936,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
       cameraPaddingChanged = true
     }
     coreGesturesHandler = CoreGesturesHandler(mapTransformDelegate, mapCameraManagerDelegate)
-    overScrollerFlingAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate).apply {
+    overScrollerFlingAnimator = OverScrollerFlingAnimator(context, mapCameraManagerDelegate, maxFpsProvider = delegateProvider::maximumFps).apply {
       val animatorHandler = coreGesturesHandler.coreGestureAnimatorHandler
       onAnimationStart = { animatorHandler.onAnimationStart(noOpAnimator) }
       onAnimationEnd = { animatorHandler.onAnimationEnd(noOpAnimator) }

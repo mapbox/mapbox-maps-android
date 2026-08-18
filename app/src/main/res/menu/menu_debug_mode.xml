@@ -49,5 +49,10 @@
         android:id="@+id/menu_debug_mode_info"
         android:checkable="false"
         android:title="@string/show_map_info" />
+    <item
+        android:id="@+id/menu_debug_mode_max_fps"
+        android:checkable="true"
+        android:checked="false"
+        android:title="@string/toggle_max_fps" />
 
 </menu>
