@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Breaking changes ⚠️
 * Breaking (Vulkan public preview only): the Vulkan-backed `android-core-vulkan` artifact now requires Android 12 (API 31) or later, raised from API 21. Only affects apps opted into the Vulkan preview build.
+* Breaking (`@MapboxExperimental`/library-internal API only): `MapboxMap.whenSizeReady` now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed. Only affects code directly calling this restricted, experimental API.
 
 ## Features ✨ and improvements 🏁
 * Deprecated `RenderThreadStats.totalDroppedFrames`. Added `totalSkippedVsync`, `pacedSkippedVsync`, and `missedMapRenderFrames` for an accurate breakdown of frame performance when `setMaximumFps()` is used.
@@ -15,6 +16,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
+* Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
 
 # 11.27.2 August 13, 2026
 ## Bug fixes 🐞

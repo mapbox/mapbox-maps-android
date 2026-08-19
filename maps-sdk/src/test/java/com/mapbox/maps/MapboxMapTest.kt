@@ -4,6 +4,7 @@ import android.graphics.RectF
 import android.os.Looper
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.common.LogThrottler
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
@@ -1647,8 +1648,11 @@ class MapboxMapTest {
   @Test
   fun whenSizeReady() {
     val action = mockk<() -> Unit>()
-    mapboxMap.whenSizeReady(action)
+    val cancelable = mockk<Cancelable>(relaxed = true)
+    every { nativeMap.whenMapSizeReady(action) } returns cancelable
+    val result = mapboxMap.whenSizeReady(action)
     verify { nativeMap.whenMapSizeReady(action) }
+    assertEquals(cancelable, result)
   }
 
   @Test
