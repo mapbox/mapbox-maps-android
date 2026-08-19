@@ -6,6 +6,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.29.0
+## Bug fixes 🐞
+* Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed. As part of the fix, `MapboxMap.whenSizeReady` (`@MapboxExperimental`/library-internal API only) now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed.
+
 # 11.29.0-rc.1 August 10, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add coordinate conversion APIs to `MapState`: `coordinateForPixel`, `pixelsForCoordinates`, `coordinatesForPixels`, `coordinateInfoForPixel`, and `coordinatesInfoForPixels`. Add experimental `tileCover` to `MapViewportState`.
