@@ -18,6 +18,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
 * Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
 
+# 11.28.3 August 17, 2026
+## Dependencies
+* Update gl-native to [v11.28.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.3), common to [v24.28.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.3).
+
 # 11.27.2 August 13, 2026
 ## Bug fixes 🐞
 * Fix potential ANRs caused by the run loop executing a large batch of queued tasks (e.g. style parsing, GeoJSON processing) in one go without yielding back to the system.
