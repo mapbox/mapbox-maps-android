@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * Breaking (Vulkan public preview only): the Vulkan-backed `android-core-vulkan` artifact now requires Android 12 (API 31) or later, raised from API 21. Only affects apps opted into the Vulkan preview build.
 * Breaking (`@MapboxExperimental`/library-internal API only): `MapboxMap.whenSizeReady` now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed. Only affects code directly calling this restricted, experimental API.
+* Breaking (experimental API only): `tileCover` now returns `OverscaledTileID` instead of `CanonicalTileID`, so callers can distinguish overscaled tiles from their canonical zoom level and identify tiles that repeat across the antimeridian via `wrap`.
 
 ## Features ✨ and improvements 🏁
 * Deprecated `RenderThreadStats.totalDroppedFrames`. Added `totalSkippedVsync`, `pacedSkippedVsync`, and `missedMapRenderFrames` for an accurate breakdown of frame performance when `setMaximumFps()` is used.

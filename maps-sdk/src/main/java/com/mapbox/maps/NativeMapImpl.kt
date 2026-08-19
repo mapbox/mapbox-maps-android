@@ -242,7 +242,7 @@ internal class NativeMapImpl(val map: Map) {
   fun tileCover(
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions?
-  ): MutableList<CanonicalTileID> {
+  ): MutableList<OverscaledTileID> {
     return map.tileCover(tileCoverOptions, cameraOptions)
   }
 

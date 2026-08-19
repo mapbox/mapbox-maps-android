@@ -528,6 +528,12 @@ open class Snapshotter {
    * Returns tileIDs that cover current map camera
    *
    * Note! This is an experimental API and behavior might change in future.
+   * As of v11.30, this returns `OverscaledTileID` (previously `CanonicalTileID`,
+   * which is still preserved as the `canonical` field) so that callers can distinguish
+   * overscaled tiles from their canonical zoom level, and distinguish tiles that repeat
+   * across the antimeridian via their `wrap` offset. Overscaling only happens when
+   * `TileCoverOptions.maxZoom` is set and the camera's zoom exceeds it: the tile is
+   * clamped to `maxZoom`, and `canonical` holds the coordinate at that clamped zoom level.
    *
    * @param tileCoverOptions Options for the tile cover method
    * @param cameraOptions This is an extra parameter for future use. Has no effect for now.
@@ -536,7 +542,7 @@ open class Snapshotter {
   fun tileCover(
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions?
-  ): MutableList<CanonicalTileID> {
+  ): MutableList<OverscaledTileID> {
     return requireCoreSnapshotter().tileCover(tileCoverOptions, cameraOptions)
   }
 

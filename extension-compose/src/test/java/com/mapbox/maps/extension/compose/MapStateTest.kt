@@ -2,10 +2,10 @@ package com.mapbox.maps.extension.compose
 
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CanonicalTileID
 import com.mapbox.maps.CoordinateInfo
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.OverscaledTileID
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.TileCoverOptions
 import io.mockk.every
@@ -97,7 +97,7 @@ internal class MapStateTest {
   @Test
   fun `tileCover delegates to mapboxMap`() = runBlocking {
     val tileCoverOptions = TileCoverOptions.Builder().build()
-    val expected = listOf<CanonicalTileID>()
+    val expected = listOf<OverscaledTileID>()
     every { mapboxMap.tileCover(any(), any()) } returns expected
 
     val result = mapState.tileCover(tileCoverOptions)
@@ -111,7 +111,7 @@ internal class MapStateTest {
   fun `tileCover passes cameraOptions to mapboxMap`() = runBlocking {
     val tileCoverOptions = TileCoverOptions.Builder().build()
     val cameraOptions = CameraOptions.Builder().zoom(5.0).build()
-    val expected = listOf<CanonicalTileID>()
+    val expected = listOf<OverscaledTileID>()
     every { mapboxMap.tileCover(any(), any()) } returns expected
 
     val result = mapState.tileCover(tileCoverOptions, cameraOptions)
