@@ -47,11 +47,14 @@ internal class NativeMapImpl(val map: Map) {
   private val mainHandler = Handler(Looper.getMainLooper())
 
   @MainThread
-  fun whenMapSizeReady(callback: () -> (Unit)) {
-    if (sizeSet) {
+  fun whenMapSizeReady(callback: () -> (Unit)): Cancelable {
+    return if (sizeSet) {
       callback.invoke()
+      // already fired synchronously - nothing left to cancel
+      Cancelable { }
     } else {
       sizeSetCallbackList.add(callback)
+      Cancelable { sizeSetCallbackList.remove(callback) }
     }
   }
 

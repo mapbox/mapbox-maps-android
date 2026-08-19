@@ -428,12 +428,16 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     needViewAnnotationSync = false
   }
 
+  private fun clearRenderEventQueues() {
+    renderEventQueue.clear()
+    nonRenderEventQueue.clear()
+  }
+
   protected fun releaseAll(tryRecreate: Boolean = false) {
     trace("release-all") {
       mapboxRenderer.destroyRenderer()
       logI(TAG, "Native renderer destroyed.")
-      renderEventQueue.clear()
-      nonRenderEventQueue.clear()
+      clearRenderEventQueues()
       nativeMapRenderCreated = false
       releaseResources()
       if (tryRecreate) {
@@ -809,6 +813,12 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
               }
               if (nativeMapRenderCreated) {
                 releaseAll()
+              } else {
+                // the native renderer was never created (e.g. the Android surface never
+                // became valid), but a RenderEvent may still have been queued regardless
+                // (queueRenderEvent() does not check renderer state) - clear it here so it
+                // isn't left retaining its runnable's captured objects forever.
+                clearRenderEventQueues()
               }
               renderHandlerThread.clearRenderEventQueue()
               fpsManager.destroy()

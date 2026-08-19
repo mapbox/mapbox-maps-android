@@ -710,12 +710,15 @@ class MapboxMap :
   /**
    * Execute the provided [action] when map size becomes ready.
    * Will be executed synchronously if map size is ready at the moment of invocation.
+   *
+   * @return a [Cancelable] that can be used to cancel this registration if the map size
+   * never becomes ready.
    */
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MapboxExperimental
-  fun whenSizeReady(action: () -> Unit) {
+  fun whenSizeReady(action: () -> Unit): Cancelable {
     checkNativeMap("whenSizeReady")
-    nativeMap.whenMapSizeReady(action)
+    return nativeMap.whenMapSizeReady(action)
   }
 
   /**
