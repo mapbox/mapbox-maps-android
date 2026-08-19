@@ -45,7 +45,7 @@ internal fun Project.appendNdkIfNeeded(value: String): String {
 
 /**
  * Switches the gl-native artifact resolution from the OpenGL build (`android-core`) to the
- * Vulkan build (`android-core-vulkan`) when the `vulkanEnabled` gradle property is `true`.
+ * Vulkan build (`android-core-vulkan`) when a Vulkan build is requested (see [isVulkanEnabled]).
  * Must be applied before [appendNdkIfNeeded] to produce the published ordering
  * `android-core-vulkan-ndk27`.
  */
@@ -53,8 +53,13 @@ internal fun Project.appendVulkanIfNeeded(value: String): String {
   return if (project.isVulkanEnabled()) "$value-vulkan" else value
 }
 
+/**
+ * A Vulkan build is requested either by `-PvulkanEnabled=true` or by the build preset
+ * `-PMAPBOX_SDK_ANDROID_PRESET=vulkan`.
+ */
 internal fun Project.isVulkanEnabled(): Boolean =
-  project.findProperty("vulkanEnabled")?.toString()?.toBoolean() == true
+  project.findProperty("vulkanEnabled")?.toString()?.toBoolean() == true ||
+    project.findProperty("MAPBOX_SDK_ANDROID_PRESET")?.toString() == "vulkan"
 
 /**
  * @return the `defaultNdkMajor` version defined `projects/common/platform/android/gradle/libs.versions.toml`.
