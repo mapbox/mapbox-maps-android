@@ -461,6 +461,21 @@ class NativeMapTest {
   }
 
   @Test
+  fun whenMapSizeReadyCancelPreventsCallbackFromFiring() {
+    val nativeMap = NativeMapImpl(map)
+    var callbackTriggered = false
+    var otherCallbackTriggered = false
+    val callback: () -> Unit = { callbackTriggered = true }
+    val otherCallback: () -> Unit = { otherCallbackTriggered = true }
+    val cancelable = nativeMap.whenMapSizeReady(callback)
+    nativeMap.whenMapSizeReady(otherCallback)
+    cancelable.cancel()
+    nativeMap.setSize(Size(1.0f, 2.0f))
+    assert(!callbackTriggered)
+    assert(otherCallbackTriggered)
+  }
+
+  @Test
   fun initialSizeSetCallbackTestAfterSetSize() {
     val nativeMap = NativeMapImpl(map)
     var callbackTriggered = false

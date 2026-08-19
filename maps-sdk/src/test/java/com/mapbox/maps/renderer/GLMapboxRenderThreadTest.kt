@@ -524,6 +524,23 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test
+  fun destroySurfaceNotProvidedClearsRenderEventQueueTest() {
+    initRenderThread()
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    // simulate a RenderEvent that got queued (e.g. from an onSizeChanged call) before the
+    // native renderer was ever created
+    mapboxRenderThread.renderEventQueue.add(RenderEvent(runnable, true))
+    assertEquals(1, mapboxRenderThread.renderEventQueue.size)
+    mapboxRenderThread.destroy()
+    // as no surface was provided, we did not either create nor destroy native renderer...
+    verifyNo { mapboxRenderer.createRenderer() }
+    verifyNo { mapboxRenderer.destroyRenderer() }
+    // ...but the queue must still be cleared, otherwise the queued RenderEvent's runnable
+    // (and everything it captures) would be retained forever.
+    assert(mapboxRenderThread.renderEventQueue.isEmpty())
+  }
+
+  @Test
   fun queueRenderEventTest() {
     initRenderThread()
     provideValidSurface()
