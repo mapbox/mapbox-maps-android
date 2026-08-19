@@ -16,7 +16,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraChanged
 import com.mapbox.maps.CameraChangedCoalesced
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CanonicalTileID
 import com.mapbox.maps.CoordinateInfo
 import com.mapbox.maps.GenericEvent
 import com.mapbox.maps.MapIdle
@@ -27,6 +26,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.MapsResourceOptions
+import com.mapbox.maps.OverscaledTileID
 import com.mapbox.maps.QueriedRasterValues
 import com.mapbox.maps.QueriedRenderedFeature
 import com.mapbox.maps.RenderFrameFinished
@@ -562,20 +562,26 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
    * Returns tileIDs that cover current map camera.
    *
    * Note! This is an experimental API and behavior might change in future.
+   * As of v11.30, this returns [OverscaledTileID] (previously `CanonicalTileID`, which is
+   * still preserved as the `canonical` field) so that callers can distinguish overscaled
+   * tiles from their canonical zoom level, and distinguish tiles that repeat across the
+   * antimeridian via their `wrap` offset. Overscaling only happens when
+   * [TileCoverOptions.maxZoom] is set and the camera's zoom exceeds it: the tile is
+   * clamped to `maxZoom`, and `canonical` holds the coordinate at that clamped zoom level.
    *
    * It will suspend until current [MapState] is set to the [MapboxMap] composable function.
    *
    * @param tileCoverOptions Options for the tile cover method.
    * @param cameraOptions This is an extra parameter for future use. Has no effect for now.
    *
-   * @return Returns a list of [CanonicalTileID] that cover the current map camera.
+   * @return Returns a list of [OverscaledTileID] that cover the current map camera.
    */
   @MapboxExperimental
   @JvmOverloads
   public suspend fun tileCover(
     tileCoverOptions: TileCoverOptions,
     cameraOptions: CameraOptions? = null,
-  ): List<CanonicalTileID> =
+  ): List<OverscaledTileID> =
     mapboxMapFlow.filterNotNull().first().tileCover(tileCoverOptions, cameraOptions)
 
   /**

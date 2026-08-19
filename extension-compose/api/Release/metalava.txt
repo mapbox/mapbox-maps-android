@@ -76,8 +76,8 @@ package com.mapbox.maps.extension.compose {
     method @com.mapbox.maps.MapboxExperimental public suspend <FS extends com.mapbox.maps.interactions.FeatureState> Object? setFeatureState(com.mapbox.maps.interactions.FeaturesetFeature<FS> featuresetFeature, FS state, kotlin.coroutines.Continuation<? super com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None>>);
     method @Deprecated public void setGesturesSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
     method public void setGesturesState(com.mapbox.maps.extension.compose.gestures.GesturesState);
-    method @com.mapbox.maps.MapboxExperimental public suspend Object? tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions = null, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.CanonicalTileID>> = null);
-    method @com.mapbox.maps.MapboxExperimental public suspend Object? tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.CanonicalTileID>> = null);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, com.mapbox.maps.CameraOptions? cameraOptions = null, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.OverscaledTileID>> = null);
+    method @com.mapbox.maps.MapboxExperimental public suspend Object? tileCover(com.mapbox.maps.TileCoverOptions tileCoverOptions, kotlin.coroutines.Continuation<? super java.util.List<? extends com.mapbox.maps.OverscaledTileID>> = null);
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChangedCoalesced> cameraChangedCoalescedEvents;
     property public final kotlinx.coroutines.flow.Flow<com.mapbox.maps.CameraChanged> cameraChangedEvents;
     property @Deprecated public final com.mapbox.maps.plugin.gestures.generated.GesturesSettings gesturesSettings;
