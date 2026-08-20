@@ -134,6 +134,7 @@ class MapTelemetryTest {
       slot.captured.attributes.toJson().contains("\"sdkIdentifier\":\"mapbox-maps-android\"")
     )
     assertFalse(slot.captured.attributes.toJson().contains("\"uiFramework\""))
+    assertTrue(slot.captured.attributes.toJson().contains("\"version\":\"2.3\""))
   }
 
   @Test
