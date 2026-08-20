@@ -55,6 +55,9 @@ internal class MapLoadEvent(
   @SerializedName("wifi")
   val isWifi: Boolean = phoneState.isWifi
 
+  @SerializedName("version")
+  val version: String = EVENT_SCHEMA_VERSION
+
   override fun getEventName(): String {
     return EVENT_NAME
   }
@@ -97,6 +100,9 @@ internal class MapLoadEvent(
     if (sdkVersion != that.sdkVersion) {
       return false
     }
+    if (version != that.version) {
+      return false
+    }
     if (model != that.model) {
       return false
     }
@@ -120,6 +126,7 @@ internal class MapLoadEvent(
     result = 31 * result + created.hashCode()
     result = 31 * result + sdkIdentifier.hashCode()
     result = 31 * result + sdkVersion.hashCode()
+    result = 31 * result + version.hashCode()
     result = 31 * result + model.hashCode()
     result = 31 * result + (userId?.hashCode() ?: 0)
     result = 31 * result + (uiFramework?.hashCode() ?: 0)
@@ -143,6 +150,7 @@ internal class MapLoadEvent(
         ", operatingSystem='" + operatingSystem + '\'' +
         ", sdkIdentifier='" + sdkIdentifier + '\'' +
         ", sdkVersion='" + sdkVersion + '\'' +
+        ", version='" + version + '\'' +
         ", model='" + model + '\'' +
         ", userId='" + userId + '\'' +
         ", uiFramework='" + uiFramework + '\'' +
@@ -160,5 +168,12 @@ internal class MapLoadEvent(
 
   companion object {
     private const val EVENT_NAME = "map.load"
+
+    /**
+     * 2.3 schema version permits [uiFramework].
+     * Sending the wrong version fails validation and the whole event is rejected.
+     * This must be increased each time the schema is updated and a new field is added to this class.
+     */
+    private const val EVENT_SCHEMA_VERSION = "2.3"
   }
 }
