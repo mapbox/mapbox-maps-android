@@ -696,15 +696,17 @@ internal class ViewAnnotationManagerImpl(
       measureSpec,
       measureSpec,
     )
-    if (isComposeView) {
-      viewAnnotationsLayout.removeView(view)
-    }
+    // layout() while attached, detached placement creates non-hardware ViewLayers
+    // instead of RenderNodeLayer, so it never does `clip` or `shadow`.
     view.layout(
       /* l = */ 0,
       /* t = */ 0,
       /* r = */ view.measuredWidth,
       /* b = */ view.measuredHeight
     )
+    if (isComposeView) {
+      viewAnnotationsLayout.removeView(view)
+    }
   }
 
   private fun buildAttachStateListener(

@@ -17,6 +17,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
 * Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
+* Fix compose `ViewAnnotation` content not being redrawn when the shape used in `Modifier.shadow` / `Modifier.clip` changes.
+
 
 # 11.28.3 August 17, 2026
 ## Dependencies
