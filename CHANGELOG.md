@@ -8,8 +8,36 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.29.0 August 21, 2026
+## Features ✨ and improvements 🏁
+* [compose] Add coordinate conversion APIs to `MapState`: `coordinateForPixel`, `pixelsForCoordinates`, `coordinatesForPixels`, `coordinateInfoForPixel`, and `coordinatesInfoForPixels`. Add experimental `tileCover` to `MapViewportState`.
+* Clarify the documentation of `RasterLayer.rasterColor`, `rasterColorMix`, and `rasterColorRange`.
+* [compose] Add companion object `MapState.clearData()` suspend function to clear temporary map data shared across maps using the same data pat.
+* [compose] Add experimental `GesturesState` with per-gesture listeners via `GestureInput` composable. Provides `detectMoveGestures`, `detectScaleGestures`, `detectRotateGestures`, `detectShoveGestures`, and `detectFlingGesture` suspend functions. `GesturesState` can be created standalone via `rememberGesturesState()` and assigned to `MapState.gesturesState`. Exposes `isGestureInProgress()` and `isUserAnimationInProgress()` methods. Gesture settings are now accessed through `MapState.gesturesState.gesturesSettings`; the old `MapState.gesturesSettings` property is deprecated.
+* Promote `SymbolLayer.symbolZOffset` to stable.
+* Accept an object as config option value.
+* Accept an expression as `distance` expression argument.
+* The `distance` expression now accepts an expression (rather than only a literal) as its second argument.
+
 ## Bug fixes 🐞
+* Fix a `NullPointerException` crash in location puck animators when `AnimationThreadController.useBackgroundThread()` is enabled.
+* Fix logcat spam from repeated EGL surface create failures when an Android Auto `BufferQueue` is abandoned. `GLMapboxRenderThread` now throttles the retry warning log.
+* Fix a permanently black map after an `eglSwapBuffers` error. `EGLCore` no longer skips `eglMakeCurrent` when a different EGL surface is requested while the context is already current.
+* Fix view annotations repositioning/jumping frequently due to lost information about their previous placement.
+* Fix border color bleeding onto neighboring line segments when using fake-round joins on very short lines.
+* Fix incorrect symbol elevation when 3D buildings are toggled via style config.
+* Fix aliasing artifacts on minified dashed lines (e.g., dense zebra-crossing patterns), and fix dashed lines breaking entirely on some Android GPUs (e.g., Mali-G71) due to a precision overflow.
+* Fix tiles above an offline pack's max zoom sometimes rendering blank instead of falling back to cache or network.
+* Fix `PermissionsManager` failing to show the background location permission dialog on Android 11+ (API 30) when requesting all location permissions at once.
+* Fix location updates getting stuck when the SDK starts without GPS connectivity and no cached location is available — even after GPS later becomes available — on devices without Google Play Services.
+* Fix a crash on Android API 21/22 during HTTP service bootstrap caused by using a `NetworkCapabilities` API only available on API 23+.
 * Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed. As part of the fix, `MapboxMap.whenSizeReady` (`@MapboxExperimental`/library-internal API only) now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed.
+* Fix brightness-driven paint properties (such as `icon-image-cross-fade` using `["measure-light", "brightness"]`) staying frozen at a stale value after repeated `lightPreset` switches.
+* Fix a crash (`LinearRings need to be made up of 4 or more coordinates`) when querying or interacting with polygon features whose geometry contains degenerate zero-area rings.
+* Fix map flickering after the app returns to the foreground when rendering with Vulkan.
+* Fix a crash on map destruction when the persistent OpenGL buffer mapping experimental setting is disabled.
+* Fix map detail disappearing when zooming in over an area covered by an offline tile pack: the ambient cache is now consulted before the tile pack serves a stretched coarser tile.
+* Fix potential ANRs during map initialization.
+* Internal fixes and performance improvements.
 
 ## Dependencies
 * Update gl-native to [v11.29.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0), common to [v24.29.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.0).
