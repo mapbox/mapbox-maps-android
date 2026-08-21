@@ -20,6 +20,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix compose `ViewAnnotation` content not being redrawn when the shape used in `Modifier.shadow` / `Modifier.clip` changes.
 
 
+# 11.28.4 August 20, 2026
+## Bug fixes 🐞
+* Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed. As part of the fix, `MapboxMap.whenSizeReady` (`@MapboxExperimental`/library-internal API only) now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed.
+## Dependencies
+* Update gl-native to [v11.28.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.4), common to [v24.28.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.4).
+
 # 11.28.3 August 17, 2026
 ## Dependencies
 * Update gl-native to [v11.28.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.3), common to [v24.28.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.3).
