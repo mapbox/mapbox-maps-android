@@ -894,6 +894,50 @@ class GLMapboxRenderThreadTest {
     verifyOnce { eglCore.releaseSurface(any()) }
     // we notify fps manager
     verifyOnce { fpsManager.onSurfaceDestroyed() }
+    // the render event must not resurrect rendering onto the destroyed surface:
+    // one attach from surface creation, none after teardown
+    verifyOnce { eglCore.createWindowSurface(any()) }
+  }
+
+  @Test
+  fun stragglerPrepareRenderFrameAfterSurfaceDestroyedDoesNotReattach() {
+    initRenderThread(mockk<MapboxSurfaceRenderer>(relaxUnitFun = true))
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    idleHandler()
+    // simulate a MSG_PREPARE_RENDER_FRAME that survived teardown and dispatches afterwards
+    renderHandlerThread.post {
+      mapboxRenderThread.prepareRenderFrame(width = null, height = null, creatingSurface = false)
+    }
+    idleHandler()
+    verifyOnce { eglCore.createWindowSurface(any()) }
+  }
+
+  @Test
+  fun noSetupRetryLoopWhileSurfaceDestroyed() {
+    initRenderThread(mockk<MapboxSurfaceRenderer>(relaxUnitFun = true))
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    idleHandler()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    // advance well past several retry intervals; a retry loop would attach again
+    idleHandler(MapboxRenderThread.RETRY_DELAY_MS * 4)
+    verifyOnce { eglCore.createWindowSurface(any()) }
+  }
+
+  @Test
+  fun surfaceCreatedAfterSurfaceDestroyedRecovers() {
+    initRenderThread(mockk<MapboxSurfaceRenderer>(relaxUnitFun = true))
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    idleHandler()
+    val newSurface = mockk<Surface>()
+    every { newSurface.isValid } returns true
+    every { newSurface.release() } just Runs
+    mapboxRenderThread.onSurfaceCreated(newSurface, 1, 1)
+    idleHandler()
+    // teardown must not latch rendering off: the new surface attaches normally
+    verify(exactly = 2) { eglCore.createWindowSurface(any()) }
   }
 
   @Test

@@ -152,6 +152,19 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   internal var surface: Surface? = null
 
   /**
+   * Set on the render thread when [onSurfaceDestroyed] has torn down the render surface; cleared in
+   * [processAndroidSurface] when Android hands us a new one. While `true`, no path may re-attach the
+   * renderer: the Android [Surface] can still report `isValid == true` here, because the view releases
+   * it only after `surfaceDestroyed` returns, so `surface?.isValid` alone cannot tell "still usable"
+   * from "about to be freed".
+   *
+   * Volatile: read from [renderPreparedGuardedRun], reachable from any thread via [queueRenderEvent].
+   */
+  @Volatile
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var surfaceDestroyed = false
+
+  /**
    * Throttler for high-frequency render thread logs to prevent logcat spam.
    */
   private val logThrottler = LogThrottler(resolveLogThrottleIntervalMs())
@@ -406,6 +419,11 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkAndroidSurface(): Boolean {
+    if (surfaceDestroyed) {
+      // no point polling: a destroyed surface is replaced by onSurfaceCreated, never by waiting
+      logI(TAG, "Android surface was destroyed, waiting for a new one.", logThrottler)
+      return false
+    }
     return if (surface?.isValid == true) {
       true
     } else {
@@ -578,6 +596,14 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
               } else {
                 releaseRenderSurface()
               }
+              // The Android surface is gone as far as we are concerned. Record it before signalling,
+              // so a message dispatched in the gap between this signal and the main thread reacquiring
+              // the lock cannot re-attach the renderer to a window the view is about to free.
+              surfaceDestroyed = true
+              // Drop the reference only - on the SurfaceView and Vulkan paths this Surface is owned by
+              // the view. The TextureView path already released its own Surface inside releaseAll().
+              surface = null
+              renderHandlerThread.removeMessages(MSG_PREPARE_RENDER_FRAME)
               fpsManager.onSurfaceDestroyed()
               destroyCondition.signal()
             }
@@ -614,6 +640,8 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
         }
         this.surface = surface
       }
+      // a new surface supersedes any earlier teardown
+      surfaceDestroyed = false
       this.width = width
       this.height = height
       // Make sure we initialize renderer and schedule next frame to draw map.
@@ -729,8 +757,9 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     // it may happen that Android surface is valid but renderThreadPrepared=false
     // due to eglContextMadeCurrent=false when we do `releaseEglSurface()` after some egl error;
     // in this case we try to re-setup render thread; if Android surface is invalid - we can't do anything
-    // until Android system sends us the new one
-    if (surface?.isValid == true) {
+    // until Android system sends us the new one; if the surface was explicitly destroyed - isValid may
+    // still read true while the view is about to free the window, so never re-attach in that state
+    if (!surfaceDestroyed && surface?.isValid == true) {
       logI(TAG, "renderThreadPrepared=false but Android surface is valid, trying to setup render thread again...")
       renderHandlerThread.post {
         if (setUpRenderThread(creatingSurface = true)) {
@@ -819,7 +848,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @AnyThread
   internal fun onMapSet() {
     renderHandlerThread.post {
-      if (surface?.isValid == true && !renderThreadPrepared) {
+      if (!surfaceDestroyed && surface?.isValid == true && !renderThreadPrepared) {
         logI(TAG, "Map set, re-triggering render setup with pending surface")
         prepareRenderFrame(width = width, height = height, creatingSurface = true)
       }

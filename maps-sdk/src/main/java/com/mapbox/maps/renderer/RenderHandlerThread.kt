@@ -67,4 +67,11 @@ internal class RenderHandlerThread(
   fun clearRenderEventQueue() {
     handler?.removeCallbacksAndMessages(null)
   }
+
+  /**
+   * Removes pending messages of a single [what] type, leaving other posted work intact.
+   */
+  fun removeMessages(what: Int) {
+    handler?.removeMessages(what)
+  }
 }

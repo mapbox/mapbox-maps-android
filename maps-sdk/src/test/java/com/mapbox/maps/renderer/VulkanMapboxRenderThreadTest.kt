@@ -297,4 +297,37 @@ class VulkanMapboxRenderThreadTest {
 
     verifyNo { mapboxRenderer.createRenderer() }
   }
+
+  @Test
+  fun renderEventAfterSurfaceDestroyedDoesNotReattach() {
+    initRenderThread()
+    setupVulkanManagerAvailable()
+    provideValidSurface()
+
+    renderThread.onSurfaceDestroyed()
+    idleHandler()
+    renderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    idleHandler()
+
+    // the render event must not resurrect rendering onto the destroyed surface:
+    // one init from surface creation, none after teardown
+    verifyOnce { vulkanManager.init(any()) }
+  }
+
+  @Test
+  fun surfaceCreatedAfterSurfaceDestroyedRecovers() {
+    initRenderThread()
+    setupVulkanManagerAvailable()
+    provideValidSurface()
+
+    renderThread.onSurfaceDestroyed()
+    idleHandler()
+    val newSurface = mockk<Surface>(relaxUnitFun = true)
+    every { newSurface.isValid } returns true
+    renderThread.onSurfaceCreated(newSurface, 100, 100)
+    idleHandler()
+
+    // teardown must not latch rendering off: the new surface attaches normally
+    verify(exactly = 2) { vulkanManager.init(any()) }
+  }
 }
