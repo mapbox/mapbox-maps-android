@@ -910,6 +910,8 @@ class GLMapboxRenderThreadTest {
       mapboxRenderThread.prepareRenderFrame(width = null, height = null, creatingSurface = false)
     }
     idleHandler()
+    // exactly one attach — the initial one; the straggler must not re-create
+    // an EGL surface on the destroyed window
     verifyOnce { eglCore.createWindowSurface(any()) }
   }
 
