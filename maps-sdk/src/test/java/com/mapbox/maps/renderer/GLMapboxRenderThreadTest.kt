@@ -922,7 +922,8 @@ class GLMapboxRenderThreadTest {
     mapboxRenderThread.onSurfaceDestroyed()
     idleHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
-    // advance well past several retry intervals; a retry loop would attach again
+    // advance 4 retry intervals; if teardown failed to stop the retry loop,
+    // a retry would fire in this window and re-attach the destroyed surface
     idleHandler(MapboxRenderThread.RETRY_DELAY_MS * 4)
     verifyOnce { eglCore.createWindowSurface(any()) }
   }
