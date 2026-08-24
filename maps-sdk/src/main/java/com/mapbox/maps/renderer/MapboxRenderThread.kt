@@ -161,8 +161,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
    * Volatile: read from [renderPreparedGuardedRun], reachable from any thread via [queueRenderEvent].
    */
   @Volatile
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var surfaceDestroyed = false
+  private var surfaceDestroyed = false
 
   /**
    * Throttler for high-frequency render thread logs to prevent logcat spam.
