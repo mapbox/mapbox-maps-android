@@ -6,6 +6,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.30.0-rc.1 August 24, 2026
+
 ## Breaking changes ⚠️
 * Breaking (Vulkan public preview only): the Vulkan-backed `android-core-vulkan` artifact now requires Android 12 (API 31) or later, raised from API 21. Only affects apps opted into the Vulkan preview build.
 * Breaking (`@MapboxExperimental`/library-internal API only): `MapboxMap.whenSizeReady` now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed. Only affects code directly calling this restricted, experimental API.
@@ -19,6 +21,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
 * Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
 * Fix compose `ViewAnnotation` content not being redrawn when the shape used in `Modifier.shadow` / `Modifier.clip` changes.
+
+
+## Dependencies
+* Update gl-native to [v11.30.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.0-rc.1), common to [v24.30.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.0-rc.1).
 
 
 # 11.28.4 August 20, 2026
