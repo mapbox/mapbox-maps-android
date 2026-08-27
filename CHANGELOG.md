@@ -10,17 +10,23 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Breaking changes ⚠️
 * Breaking (Vulkan public preview only): the Vulkan-backed `android-core-vulkan` artifact now requires Android 12 (API 31) or later, raised from API 21. Only affects apps opted into the Vulkan preview build.
-* Breaking (`@MapboxExperimental`/library-internal API only): `MapboxMap.whenSizeReady` now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed. Only affects code directly calling this restricted, experimental API.
 * Breaking (experimental API only): `tileCover` now returns `OverscaledTileID` instead of `CanonicalTileID`, so callers can distinguish overscaled tiles from their canonical zoom level and identify tiles that repeat across the antimeridian via `wrap`.
 
 ## Features ✨ and improvements 🏁
 * Deprecated `RenderThreadStats.totalDroppedFrames`. Added `totalSkippedVsync`, `pacedSkippedVsync`, and `missedMapRenderFrames` for an accurate breakdown of frame performance when `setMaximumFps()` is used.
 * Report render-thread frame timing to the Android Dynamic Performance Framework (ADPF) on API 31+ devices, allowing the OS to scale CPU frequency based on actual rendering load.
+* Add client-side overzooming for raster-array sources: tiles requested beyond the source's data maxzoom are now cropped from an already-loaded parent tile instead of rendering nothing.
 
 ## Bug fixes 🐞
 * Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
 * Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
 * Fix compose `ViewAnnotation` content not being redrawn when the shape used in `Modifier.shadow` / `Modifier.clip` changes.
+* Fix a crash (`GeoJsonException: LinearRings need to be made up of 4 or more coordinates.`) when querying or interacting with polygon features that contain degenerate geometry.
+* Fix map flickering with Vulkan after the app returns from the background.
+* Fix a crash caused by use-after-free of the rendering context during teardown.
+* Fix potential ANRs during map initialization caused by a JNI call used for UUID generation.
+* Fix raster layer rendering precision: color ramp resolution, texel coordinate mapping, and texture filtering now match Mapbox GL JS.
+* Internal fixes and performance improvements.
 
 
 ## Dependencies
@@ -29,7 +35,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.28.4 August 20, 2026
 ## Bug fixes 🐞
-* Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed. As part of the fix, `MapboxMap.whenSizeReady` (`@MapboxExperimental`/library-internal API only) now returns a `Cancelable` instead of `Unit`, so the callback registration can actually be removed.
+* Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
 ## Dependencies
 * Update gl-native to [v11.28.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.4), common to [v24.28.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.28.4).
 
