@@ -753,7 +753,7 @@ class PolylineAnnotationManager(
   /**
    * The LineCutoutOpacity property
    *
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   var lineCutoutOpacity: Double?
