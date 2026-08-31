@@ -1585,12 +1585,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    */
   @MapboxExperimental
   val lineCutoutOpacity: Double?
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      *
      * Use static method [LineLayer.defaultLineCutoutOpacity] to get the default property.
      *
@@ -1601,7 +1601,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutOpacity] to set the default property.
    *
@@ -1614,7 +1614,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "line-cutout-opacity".
    *
@@ -1622,7 +1622,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   @MapboxExperimental
   val lineCutoutOpacityAsExpression: Expression?
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      *
      * Get the LineCutoutOpacity property as an Expression
      *
@@ -1632,7 +1632,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-cutout-opacity")
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * Use static method [LineLayer.defaultLineCutoutOpacityAsExpression] to set the default property.
    *
@@ -3841,12 +3841,12 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cutout-fade-width-transition").silentUnwrap()
 
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultLineCutoutOpacity: Double?
       /**
-       * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+       * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of LineCutoutOpacity property
        *
@@ -3857,7 +3857,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+     * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "line-cutout-opacity".
      *
@@ -5091,7 +5091,7 @@ interface LineLayerDsl {
   fun lineCutoutFadeWidthTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * @param lineCutoutOpacity value of lineCutoutOpacity
    */
@@ -5099,7 +5099,7 @@ interface LineLayerDsl {
   fun lineCutoutOpacity(lineCutoutOpacity: Double = 1.0): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * @param lineCutoutOpacity value of lineCutoutOpacity as Expression
    */
@@ -5107,7 +5107,7 @@ interface LineLayerDsl {
   fun lineCutoutOpacity(lineCutoutOpacity: Expression): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * Set the LineCutoutOpacity property transition options
    *
@@ -5117,7 +5117,7 @@ interface LineLayerDsl {
   fun lineCutoutOpacityTransition(options: StyleTransition): LineLayer
 
   /**
-   * The opacity of the aboveground objects affected by the line cutout. Cutout for tunnels isn't affected by this property, If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
+   * The opacity of the aboveground objects affected by the line cutout. It can only be used with GeoJSON sources that specify `"lineMetrics": true`. Cutout for tunnels isn't affected by this property. If set to 0, the cutout is fully transparent. Cutout opacity should have the same value for all layers that specify it. If all layers don't have the same value, it is not specified which value is used. Default value: 1. Value range: [0, 1]
    *
    * DSL for [lineCutoutOpacityTransition].
    */
