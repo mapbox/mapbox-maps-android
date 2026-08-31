@@ -601,9 +601,6 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
               // so a message dispatched in the gap between this signal and the main thread reacquiring
               // the lock cannot re-attach the renderer to a window the view is about to free.
               surfaceDestroyed = true
-              // Drop the reference only - on the SurfaceView and Vulkan paths this Surface is owned by
-              // the view. The TextureView path already released its own Surface inside releaseAll().
-              surface = null
               renderHandlerThread.removeMessages(MSG_PREPARE_RENDER_FRAME)
               fpsManager.onSurfaceDestroyed()
               destroyCondition.signal()

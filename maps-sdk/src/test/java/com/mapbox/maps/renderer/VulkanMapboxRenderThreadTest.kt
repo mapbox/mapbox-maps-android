@@ -329,5 +329,10 @@ class VulkanMapboxRenderThreadTest {
 
     // teardown must not latch rendering off: the new surface attaches normally
     verify(exactly = 2) { vulkanManager.init(any()) }
+    // recovery deliberately keeps the pre-fix full-rebuild path: the kept stale surface
+    // reference makes processAndroidSurface() release everything (releaseAll) before
+    // attaching the new surface, so the native renderer is recreated
+    verify(exactly = 2) { mapboxRenderer.createRenderer() }
+    verifyOnce { mapboxRenderer.destroyRenderer() }
   }
 }

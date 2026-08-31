@@ -941,6 +941,14 @@ class GLMapboxRenderThreadTest {
     idleHandler()
     // teardown must not latch rendering off: the new surface attaches normally
     verify(exactly = 2) { eglCore.createWindowSurface(any()) }
+    // recovery deliberately keeps the pre-fix full-rebuild path: the kept stale surface
+    // reference makes processAndroidSurface() release everything (releaseAll) before
+    // attaching the new surface, so the EGL context and native renderer are recreated
+    verify(exactly = 2) { mapboxRenderer.createRenderer() }
+    verifyOnce {
+      mapboxRenderer.destroyRenderer()
+      eglCore.release()
+    }
   }
 
   @Test
