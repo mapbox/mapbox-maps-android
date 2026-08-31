@@ -127,7 +127,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add client-side overzooming for raster-array sources: tiles requested beyond the source's data maxzoom are now cropped from an already-loaded parent tile instead of rendering nothing.
 
 ## Bug fixes 🐞
-* Fix a native crash on some devices when a `MapView` was detached while rendering was still in progress: the render thread could re-attach to a surface that Android had already destroyed.
+* Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
 * Fix fling ignoring `MapView.setMaximumFps()` when `useNativeFlingDeceleration` is enabled — fling now throttles camera updates to the configured fps cap.
 * Fixed a leak where a `MapView` and its render thread could remain permanently retained if the underlying `Surface` never became ready before the view was destroyed.
 * Fix compose `ViewAnnotation` content not being redrawn when the shape used in `Modifier.shadow` / `Modifier.clip` changes.
