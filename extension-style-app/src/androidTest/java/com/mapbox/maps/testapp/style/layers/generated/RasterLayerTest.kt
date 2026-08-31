@@ -54,30 +54,6 @@ class RasterLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun rasterAllowDrapingTest() {
-    val testValue = true
-    val layer = rasterLayer("id", "source") {
-      rasterAllowDraping(testValue)
-    }
-    setupLayer(layer)
-    assertEquals(testValue.toString(), layer.rasterAllowDraping?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  fun rasterAllowDrapingAsExpressionTest() {
-    val expression = literal(true)
-    val layer = rasterLayer("id", "source") {
-      rasterAllowDraping(expression)
-    }
-    setupLayer(layer)
-
-    assertEquals(expression.toString(), layer.rasterAllowDrapingAsExpression.toString())
-    assertEquals(true, layer.rasterAllowDraping!!)
-  }
-
-  @Test
-  @UiThreadTest
   fun rasterArrayBandTest() {
     val testValue = "abc"
     val layer = rasterLayer("id", "source") {
@@ -818,8 +794,6 @@ class RasterLayerTest : BaseStyleTest() {
     assertNotNull("defaultVisibility should not be null", RasterLayer.defaultVisibility)
     assertNotNull("defaultMinZoom should not be null", RasterLayer.defaultMinZoom)
     assertNotNull("defaultMaxZoom should not be null", RasterLayer.defaultMaxZoom)
-    assertNotNull("defaultRasterAllowDraping should not be null", RasterLayer.defaultRasterAllowDraping)
-    assertNotNull("defaultRasterAllowDrapingAsExpression should not be null", RasterLayer.defaultRasterAllowDrapingAsExpression)
     assertNotNull("defaultRasterArrayBand should not be null", RasterLayer.defaultRasterArrayBand)
     assertNotNull("defaultRasterArrayBandAsExpression should not be null", RasterLayer.defaultRasterArrayBandAsExpression)
     assertNotNull("defaultRasterBrightnessMax should not be null", RasterLayer.defaultRasterBrightnessMax)
@@ -865,7 +839,6 @@ class RasterLayerTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun getLayerTest() {
-    val rasterAllowDrapingTestValue = true
     val rasterArrayBandTestValue = "abc"
     val rasterBrightnessMaxTestValue = 1.0
     val rasterBrightnessMinTestValue = 1.0
@@ -910,7 +883,6 @@ class RasterLayerTest : BaseStyleTest() {
       sourceLayer("test")
       minZoom(minZoomTestValue)
       maxZoom(maxZoomTestValue)
-      rasterAllowDraping(rasterAllowDrapingTestValue)
       rasterArrayBand(rasterArrayBandTestValue)
       rasterBrightnessMax(rasterBrightnessMaxTestValue)
       rasterBrightnessMin(rasterBrightnessMinTestValue)
@@ -939,7 +911,6 @@ class RasterLayerTest : BaseStyleTest() {
     assertEquals("test", cachedLayer.sourceLayer)
     assertEquals(minZoomTestValue, cachedLayer.minZoom)
     assertEquals(maxZoomTestValue, cachedLayer.maxZoom)
-    assertEquals(rasterAllowDrapingTestValue, cachedLayer.rasterAllowDraping)
     assertEquals(rasterArrayBandTestValue, cachedLayer.rasterArrayBand)
     assertEquals(rasterBrightnessMaxTestValue, cachedLayer.rasterBrightnessMax)
     assertEquals(rasterBrightnessMinTestValue, cachedLayer.rasterBrightnessMin)

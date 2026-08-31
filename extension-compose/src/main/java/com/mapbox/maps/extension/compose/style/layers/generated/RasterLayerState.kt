@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.ActionWhenNotInitial
-import com.mapbox.maps.extension.compose.style.BooleanValue
 import com.mapbox.maps.extension.compose.style.ColorValue
 import com.mapbox.maps.extension.compose.style.DoubleListValue
 import com.mapbox.maps.extension.compose.style.DoubleRangeValue
@@ -32,7 +31,6 @@ import com.mapbox.maps.extension.compose.style.layers.internal.LayerNode
 public class RasterLayerState
 @OptIn(MapboxExperimental::class)
 private constructor(
-  initialRasterAllowDraping: BooleanValue,
   initialRasterArrayBand: StringValue,
   initialRasterBrightnessMax: DoubleValue,
   initialRasterBrightnessMaxTransition: Transition,
@@ -71,7 +69,6 @@ private constructor(
    */
   @OptIn(MapboxExperimental::class)
   public constructor() : this(
-    initialRasterAllowDraping = BooleanValue.INITIAL,
     initialRasterArrayBand = StringValue.INITIAL,
     initialRasterBrightnessMax = DoubleValue.INITIAL,
     initialRasterBrightnessMaxTransition = Transition.INITIAL,
@@ -111,14 +108,6 @@ private constructor(
    */
   @MapboxExperimental
   public var interactionsState: LayerInteractionsState by mutableStateOf(initialInteractionsState)
-
-  @MapboxExperimental
-  private val rasterAllowDrapingState: MutableState<BooleanValue> = mutableStateOf(initialRasterAllowDraping)
-  /**
-   *  Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   */
-  @MapboxExperimental
-  public var rasterAllowDraping: BooleanValue by rasterAllowDrapingState
 
   @MapboxExperimental
   private val rasterArrayBandState: MutableState<StringValue> = mutableStateOf(initialRasterArrayBand)
@@ -319,7 +308,6 @@ private constructor(
   @Composable
   @OptIn(MapboxExperimental::class)
   internal fun UpdateProperties(layerNode: LayerNode) {
-    ActionWhenNotInitial(layerNode.setPropertyAction, rasterAllowDrapingState, "raster-allow-draping")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterArrayBandState, "raster-array-band")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterBrightnessMaxState, "raster-brightness-max")
     ActionWhenNotInitial(layerNode.setPropertyAction, rasterBrightnessMaxTransitionState, "raster-brightness-max-transition")

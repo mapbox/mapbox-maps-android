@@ -127,74 +127,6 @@ class RasterLayerTest {
   // Property getters and setters
 
   @Test
-  fun rasterAllowDrapingSet() {
-    val layer = rasterLayer("id", "source") {}
-    val testValue = true
-    layer.bindTo(style)
-    layer.rasterAllowDraping(testValue)
-    verify { style.setStyleLayerProperty("id", "raster-allow-draping", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "true")
-  }
-
-  @Test
-  fun rasterAllowDrapingGet() {
-    val testValue = true
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val layer = rasterLayer("id", "source") { }
-    layer.bindTo(style)
-    val expectedValue = true
-    assertEquals(expectedValue.toString(), layer.rasterAllowDraping?.toString())
-    verify { style.getStyleLayerProperty("id", "raster-allow-draping") }
-  }
-  // Expression Tests
-
-  @Test
-  fun rasterAllowDrapingAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val layer = rasterLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.rasterAllowDraping(expression)
-    verify { style.setStyleLayerProperty("id", "raster-allow-draping", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
-  fun rasterAllowDrapingAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val layer = rasterLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(expression.toString(), layer.rasterAllowDrapingAsExpression?.toString())
-    verify { style.getStyleLayerProperty("id", "raster-allow-draping") }
-  }
-
-  @Test
-  fun rasterAllowDrapingAsExpressionGetNull() {
-    val layer = rasterLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals(null, layer.rasterAllowDrapingAsExpression)
-    verify { style.getStyleLayerProperty("id", "raster-allow-draping") }
-  }
-
-  @Test
-  fun rasterAllowDrapingAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-    val layer = rasterLayer("id", "source") { }
-    layer.bindTo(style)
-    assertEquals("true", layer.rasterAllowDrapingAsExpression.toString())
-    val expectedValue = true
-    assertEquals(expectedValue, layer.rasterAllowDraping)
-    verify { style.getStyleLayerProperty("id", "raster-allow-draping") }
-  }
-
-  @Test
   fun rasterArrayBandSet() {
     val layer = rasterLayer("id", "source") {}
     val testValue = "abc"
@@ -1719,38 +1651,6 @@ class RasterLayerTest {
   }
 
   // Default property getter tests
-
-  @Test
-  fun defaultRasterAllowDrapingTest() {
-    val testValue = true
-    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
-    val expectedValue = true
-    assertEquals(expectedValue.toString(), RasterLayer.defaultRasterAllowDraping?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-allow-draping") }
-  }
-  // Expression Tests
-
-  @Test
-  fun defaultRasterAllowDrapingAsExpressionTest() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), RasterLayer.defaultRasterAllowDrapingAsExpression?.toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-allow-draping") }
-  }
-
-  @Test
-  fun defaultRasterAllowDrapingAsExpressionGetFromLiteral() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
-    assertEquals("true", RasterLayer.defaultRasterAllowDrapingAsExpression.toString())
-    val expectedValue = true
-    assertEquals(expectedValue, RasterLayer.defaultRasterAllowDraping)
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-allow-draping") }
-  }
 
   @Test
   fun defaultRasterArrayBandTest() {

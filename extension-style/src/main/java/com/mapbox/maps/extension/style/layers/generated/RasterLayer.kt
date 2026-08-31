@@ -200,66 +200,6 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   // Property getters and setters
 
   /**
-   * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   */
-  @MapboxExperimental
-  val rasterAllowDraping: Boolean?
-    /**
-     * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-     *
-     * Use static method [RasterLayer.defaultRasterAllowDraping] to get the default property.
-     *
-     * @return Boolean
-     */
-    get() {
-      return getPropertyValue("raster-allow-draping")
-    }
-
-  /**
-   * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   *
-   * Use static method [RasterLayer.defaultRasterAllowDraping] to set the default property.
-   *
-   * @param rasterAllowDraping value of rasterAllowDraping
-   */
-  @MapboxExperimental
-  override fun rasterAllowDraping(rasterAllowDraping: Boolean): RasterLayer = apply {
-    val propertyValue = PropertyValue("raster-allow-draping", rasterAllowDraping)
-    setProperty(propertyValue)
-  }
-
-  /**
-   * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   *
-   * This is an Expression representation of "raster-allow-draping".
-   *
-   */
-  @MapboxExperimental
-  val rasterAllowDrapingAsExpression: Expression?
-    /**
-     * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-     *
-     * Get the RasterAllowDraping property as an Expression
-     *
-     * Use static method [RasterLayer.defaultRasterAllowDrapingAsExpression] to get the default property.
-     */
-    get() =
-      getPropertyValueAsExpressionOrLiteralExpression("raster-allow-draping")
-
-  /**
-   * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   *
-   * Use static method [RasterLayer.defaultRasterAllowDrapingAsExpression] to set the default property.
-   *
-   * @param rasterAllowDraping value of rasterAllowDraping as Expression
-   */
-  @MapboxExperimental
-  override fun rasterAllowDraping(rasterAllowDraping: Expression): RasterLayer = apply {
-    val propertyValue = PropertyValue("raster-allow-draping", rasterAllowDraping)
-    setProperty(propertyValue)
-  }
-
-  /**
    * Displayed band of raster array source layer. Defaults to the first band if not set.
    */
   @MapboxExperimental
@@ -1553,45 +1493,6 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "maxzoom").silentUnwrap()
 
     /**
-     * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-     */
-    @MapboxExperimental
-    val defaultRasterAllowDraping: Boolean?
-      /**
-       * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-       *
-       * Get the default value of RasterAllowDraping property
-       *
-       * @return Boolean
-       */
-      get() {
-        return StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-allow-draping").silentUnwrap()
-      }
-
-    /**
-     * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-     *
-     * This is an Expression representation of "raster-allow-draping".
-     *
-     */
-    @MapboxExperimental
-    val defaultRasterAllowDrapingAsExpression: Expression?
-      /**
-       * Get default value of the RasterAllowDraping property as an Expression
-       *
-       * @return Boolean
-       */
-      get() {
-        StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-allow-draping").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultRasterAllowDraping?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
      * Displayed band of raster array source layer. Defaults to the first band if not set.
      */
     @MapboxExperimental
@@ -2323,22 +2224,6 @@ interface RasterLayerDsl {
   fun maxZoom(maxZoom: Double): RasterLayer
 
   // Property getters and setters
-
-  /**
-   * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   *
-   * @param rasterAllowDraping value of rasterAllowDraping
-   */
-  @MapboxExperimental
-  fun rasterAllowDraping(rasterAllowDraping: Boolean = true): RasterLayer
-
-  /**
-   * Whether the raster layer is allowed to drape over terrain and globe. When disabled, the layer is rendered after all draped layers, which can change its position in the layer order. Disabling draping has a performance cost, since the terrain/globe geometry must be rendered again for each such layer. Default value: true.
-   *
-   * @param rasterAllowDraping value of rasterAllowDraping as Expression
-   */
-  @MapboxExperimental
-  fun rasterAllowDraping(rasterAllowDraping: Expression): RasterLayer
 
   /**
    * Displayed band of raster array source layer. Defaults to the first band if not set.

@@ -3574,7 +3574,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState getInteractionsState();
     method public com.mapbox.maps.extension.compose.style.LongValue getMaxZoom();
     method public com.mapbox.maps.extension.compose.style.LongValue getMinZoom();
-    method public com.mapbox.maps.extension.compose.style.BooleanValue getRasterAllowDraping();
     method public com.mapbox.maps.extension.compose.style.StringValue getRasterArrayBand();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getRasterBrightnessMax();
     method public com.mapbox.maps.extension.compose.style.Transition getRasterBrightnessMaxTransition();
@@ -3607,7 +3606,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setInteractionsState(com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState);
     method public void setMaxZoom(com.mapbox.maps.extension.compose.style.LongValue);
     method public void setMinZoom(com.mapbox.maps.extension.compose.style.LongValue);
-    method public void setRasterAllowDraping(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setRasterArrayBand(com.mapbox.maps.extension.compose.style.StringValue);
     method public void setRasterBrightnessMax(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setRasterBrightnessMaxTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3640,7 +3638,6 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.layers.LayerInteractionsState interactionsState;
     property public final com.mapbox.maps.extension.compose.style.LongValue maxZoom;
     property public final com.mapbox.maps.extension.compose.style.LongValue minZoom;
-    property public final com.mapbox.maps.extension.compose.style.BooleanValue rasterAllowDraping;
     property public final com.mapbox.maps.extension.compose.style.StringValue rasterArrayBand;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue rasterBrightnessMax;
     property public final com.mapbox.maps.extension.compose.style.Transition rasterBrightnessMaxTransition;

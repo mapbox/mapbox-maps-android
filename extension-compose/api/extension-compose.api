@@ -3006,7 +3006,6 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun getInteractionsState ()Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;
 	public final fun getMaxZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
 	public final fun getMinZoom ()Lcom/mapbox/maps/extension/compose/style/LongValue;
-	public final fun getRasterAllowDraping ()Lcom/mapbox/maps/extension/compose/style/BooleanValue;
 	public final fun getRasterArrayBand ()Lcom/mapbox/maps/extension/compose/style/StringValue;
 	public final fun getRasterBrightnessMax ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getRasterBrightnessMaxTransition ()Lcom/mapbox/maps/extension/compose/style/Transition;
@@ -3039,7 +3038,6 @@ public final class com/mapbox/maps/extension/compose/style/layers/generated/Rast
 	public final fun setInteractionsState (Lcom/mapbox/maps/extension/compose/style/layers/LayerInteractionsState;)V
 	public final fun setMaxZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
 	public final fun setMinZoom (Lcom/mapbox/maps/extension/compose/style/LongValue;)V
-	public final fun setRasterAllowDraping (Lcom/mapbox/maps/extension/compose/style/BooleanValue;)V
 	public final fun setRasterArrayBand (Lcom/mapbox/maps/extension/compose/style/StringValue;)V
 	public final fun setRasterBrightnessMax (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setRasterBrightnessMaxTransition (Lcom/mapbox/maps/extension/compose/style/Transition;)V
