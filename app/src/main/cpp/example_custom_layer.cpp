@@ -124,6 +124,22 @@ GLuint fill_color = 0;
 
 static GLfloat color[]= { 0.0f, 1.0f, 0.0f, 1.0f };
 
+// CustomLayerRenderParameters class/method lookups, cached once in JNI_OnLoad so nativeRender
+// (called every frame) doesn't repeat them. paramsClass is a global ref since the local ref
+// FindClass returns would not outlive JNI_OnLoad. Looked up once for the process lifetime
+// (not per-instance in nativeInitialize/nativeDeinitialize) since multiple custom-layer
+// instances can be initialized/deinitialized independently.
+jclass paramsClass = nullptr;
+jmethodID getWidthMethod = nullptr;
+jmethodID getHeightMethod = nullptr;
+jmethodID getLatitudeMethod = nullptr;
+jmethodID getLongitudeMethod = nullptr;
+jmethodID getZoomMethod = nullptr;
+jmethodID getBearingMethod = nullptr;
+jmethodID getPitchMethod = nullptr;
+jmethodID getFieldOfViewMethod = nullptr;
+jmethodID getProjectionMatrixArrayMethod = nullptr;
+
 void JNICALL nativeInitialize(JNIEnv*, jobject) {
     LOG("nativeInitialize");
 
@@ -159,47 +175,29 @@ void JNICALL nativeInitialize(JNIEnv*, jobject) {
 void JNICALL nativeRender(JNIEnv* env, jobject, jobject parameters) {
     LOG("nativeRender");
 
-    // Parse out CustomLayerRenderParameters.
-    jclass cls = env->FindClass("com/mapbox/maps/CustomLayerRenderParameters");
-    jfieldID getWidth = env->GetFieldID(cls, "width", "D");
-    jfieldID getHeight = env->GetFieldID(cls, "height", "D");
-    jfieldID getLatitude = env->GetFieldID(cls, "latitude", "D");
-    jfieldID getLongitude = env->GetFieldID(cls, "longitude", "D");
-    jfieldID getZoom = env->GetFieldID(cls, "zoom", "D");
-    jfieldID getBearing = env->GetFieldID(cls, "bearing", "D");
-    jfieldID getPitch = env->GetFieldID(cls, "pitch", "D");
-    jfieldID getFieldOfView = env->GetFieldID(cls, "fieldOfView", "D");
-    jfieldID getProjectionMatrix = env->GetFieldID(cls, "projectionMatrix", "Ljava/util/List;");
-    double width = env->GetDoubleField(parameters, getWidth);
-    double height = env->GetDoubleField(parameters, getHeight);
-    double latitude = env->GetDoubleField(parameters, getLatitude);
-    double longitude = env->GetDoubleField(parameters, getLongitude);
-    double zoom = env->GetDoubleField(parameters, getZoom);
-    double bearing = env->GetDoubleField(parameters, getBearing);
-    double pitch = env->GetDoubleField(parameters, getPitch);
-    double fieldOfView = env->GetDoubleField(parameters, getFieldOfView);
-    jobject projectionMatric = env->GetObjectField(parameters, getProjectionMatrix);
+    // Read CustomLayerRenderParameters via the method IDs cached in JNI_OnLoad --
+    // looking them up again here would repeat that work every frame.
+    double width = env->CallDoubleMethod(parameters, getWidthMethod);
+    double height = env->CallDoubleMethod(parameters, getHeightMethod);
+    double latitude = env->CallDoubleMethod(parameters, getLatitudeMethod);
+    double longitude = env->CallDoubleMethod(parameters, getLongitudeMethod);
+    double zoom = env->CallDoubleMethod(parameters, getZoomMethod);
+    double bearing = env->CallDoubleMethod(parameters, getBearingMethod);
+    double pitch = env->CallDoubleMethod(parameters, getPitchMethod);
+    double fieldOfView = env->CallDoubleMethod(parameters, getFieldOfViewMethod);
+    auto projectionMatrix = static_cast<jdoubleArray>(env->CallObjectMethod(parameters, getProjectionMatrixArrayMethod));
 
     LOG("width: %f, height: %f ", width, height);
     LOG("lat: %f, lng: %f ", latitude, longitude);
     LOG("zoom: %f, bearing: %f, pitch: %f, filedOfView: %f", zoom, bearing, pitch, fieldOfView);
 
-    // Parse out projectionMatric from CustomLayerRenderParameters.
-    jclass arrayCls = env->FindClass("java/util/List");
-    jmethodID getSize = env->GetMethodID(arrayCls, "size", "()I");
-    jmethodID getItem = env->GetMethodID(arrayCls, "get", "(I)Ljava/lang/Object;");
-    jclass doubleCls = env->FindClass("java/lang/Double");
-    jmethodID getDoubleValue = env->GetMethodID(doubleCls, "doubleValue", "()D");
-    jvalue arg;
-    int size = env->CallIntMethodA(projectionMatric, getSize, &arg);
-    double* projectionMatricArray = new double[size];
+    // Parse out projectionMatrix from CustomLayerRenderParameters.
+    int size = env->GetArrayLength(projectionMatrix);
+    jdouble* projectionMatrixArray = env->GetDoubleArrayElements(projectionMatrix, nullptr);
     for (int i = 0; i < size; i++) {
-        arg.i = i;
-        jobject element = env->CallObjectMethodA(projectionMatric, getItem, &arg);
-        projectionMatricArray[i] = env->CallDoubleMethodA(element, getDoubleValue, &arg);
-        env->DeleteLocalRef(element);
-        LOG("projectionMatrix[%d]: %f", i, projectionMatricArray[i]);
+        LOG("projectionMatrix[%d]: %f", i, projectionMatrixArray[i]);
     }
+    env->ReleaseDoubleArrayElements(projectionMatrix, projectionMatrixArray, JNI_ABORT);
 
     // Open GL code starts here
     glUseProgram(program);
@@ -252,6 +250,23 @@ extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *) {
     vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6);
 
     jclass customLayerClass = env->FindClass("com/mapbox/maps/testapp/examples/customlayer/NativeExampleCustomLayer");
+
+    // A class global ref and its method IDs stay valid for the process lifetime, so there's
+    // nothing to tear down; looking these up here (rather than per-instance in
+    // nativeInitialize/nativeDeinitialize) avoids one instance's teardown invalidating the
+    // cache while another instance is still rendering.
+    jclass localParamsCls = env->FindClass("com/mapbox/maps/CustomLayerRenderParameters");
+    paramsClass = static_cast<jclass>(env->NewGlobalRef(localParamsCls));
+    env->DeleteLocalRef(localParamsCls);
+    getWidthMethod = env->GetMethodID(paramsClass, "getWidth", "()D");
+    getHeightMethod = env->GetMethodID(paramsClass, "getHeight", "()D");
+    getLatitudeMethod = env->GetMethodID(paramsClass, "getLatitude", "()D");
+    getLongitudeMethod = env->GetMethodID(paramsClass, "getLongitude", "()D");
+    getZoomMethod = env->GetMethodID(paramsClass, "getZoom", "()D");
+    getBearingMethod = env->GetMethodID(paramsClass, "getBearing", "()D");
+    getPitchMethod = env->GetMethodID(paramsClass, "getPitch", "()D");
+    getFieldOfViewMethod = env->GetMethodID(paramsClass, "getFieldOfView", "()D");
+    getProjectionMatrixArrayMethod = env->GetMethodID(paramsClass, "getProjectionMatrixArray", "()[D");
 
     JNINativeMethod methods[] = {
         {"initialize", "()V", reinterpret_cast<void *>(&nativeInitialize)},
