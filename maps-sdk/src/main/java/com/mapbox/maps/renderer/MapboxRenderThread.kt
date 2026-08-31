@@ -419,7 +419,9 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun checkAndroidSurface(): Boolean {
     if (surfaceDestroyed) {
-      // no point polling: a destroyed surface is replaced by onSurfaceCreated, never by waiting
+      // Don't schedule a retry here (unlike the isValid check below): a destroyed surface never
+      // becomes usable again by waiting. Rendering resumes only when onSurfaceCreated delivers
+      // a new Surface, and that path re-triggers prepareRenderFrame itself.
       logI(TAG, "Android surface was destroyed, waiting for a new one.", logThrottler)
       return false
     }
