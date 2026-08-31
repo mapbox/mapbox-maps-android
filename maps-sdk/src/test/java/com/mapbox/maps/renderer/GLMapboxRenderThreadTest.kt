@@ -921,11 +921,20 @@ class GLMapboxRenderThreadTest {
     provideValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     idleHandler()
-    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
-    // advance 4 retry intervals; if teardown failed to stop the retry loop,
-    // a retry would fire in this window and re-attach the destroyed surface
+    // dispatch a straggler prepare-frame: the only entry that can reach the
+    // setup-retry site (checkAndroidSurface) after teardown
+    renderHandlerThread.post {
+      mapboxRenderThread.prepareRenderFrame(width = null, height = null, creatingSurface = false)
+    }
+    // advance 4 retry intervals so a retry loop, if any, gets time to spin
     idleHandler(MapboxRenderThread.RETRY_DELAY_MS * 4)
+    // no re-attach onto the destroyed surface...
     verifyOnce { eglCore.createWindowSurface(any()) }
+    // ...and no rescheduled prepare-frame left pending: teardown is terminal,
+    // onSurfaceCreated is the wake-up, not polling
+    assertFalse(
+      renderHandlerThread.handler!!.hasMessages(MapboxRenderThread.MSG_PREPARE_RENDER_FRAME)
+    )
   }
 
   @Test

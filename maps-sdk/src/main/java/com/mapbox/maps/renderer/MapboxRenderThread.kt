@@ -1017,10 +1017,12 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     internal val repaintRenderEvent = RenderEvent(null, true)
     /**
      * `what` code for the typed Message that carries the prepare-render-frame
-     * trace frame ID via [Message.arg1]. Kept private — this class is the sole
-     * sender (via [postPrepareRenderFrame]) and receiver (via [handlerCallback]).
+     * trace frame ID via [Message.arg1]. This class is the sole sender (via
+     * [postPrepareRenderFrame]) and receiver (via [handlerCallback]); visible
+     * only so tests can assert no retry message is left pending after teardown.
      */
-    private const val MSG_PREPARE_RENDER_FRAME = 1
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal const val MSG_PREPARE_RENDER_FRAME = 1
     /**
      * If we hit some issue caused by invalid state (most likely caused by GPU driver) we start
      * rescheduling configuration with that delay in order not to overflood handler thread message queue.
