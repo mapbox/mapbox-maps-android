@@ -163,4 +163,33 @@ class RenderHandlerThreadTest {
     renderHandlerThread.sendMessageDelayed(what = 7, arg1 = 42, delayMillis = 0)
     assertEquals(null, dispatchedArg1)
   }
+
+  @Test
+  fun removeMessagesRemovesOnlyTargetedWhat() {
+    val targetWhat = 7
+    val otherWhat = 8
+    val dispatched = mutableListOf<Int>()
+    val callback = android.os.Handler.Callback { msg ->
+      dispatched.add(msg.what)
+      true
+    }
+    val action = mockk<Runnable>(relaxed = true)
+    renderHandlerThread.start(callback)
+    val handlerLooperShadow = Shadows.shadowOf(renderHandlerThread.handlerThread.looper)
+    handlerLooperShadow.pause()
+    renderHandlerThread.sendMessageDelayed(what = targetWhat, arg1 = 0, delayMillis = 0)
+    renderHandlerThread.sendMessageDelayed(what = otherWhat, arg1 = 0, delayMillis = 0)
+    renderHandlerThread.post(action)
+    renderHandlerThread.removeMessages(targetWhat)
+    handlerLooperShadow.idleFor(Duration.ofMillis(0))
+    // only the targeted message type is purged; other messages and posted work survive
+    assertEquals(listOf(otherWhat), dispatched)
+    verify { action.run() }
+  }
+
+  @Test
+  fun removeMessagesThreadNotStarted() {
+    // NOTE: deliberately not calling renderHandlerThread.start() — must not throw.
+    renderHandlerThread.removeMessages(7)
+  }
 }

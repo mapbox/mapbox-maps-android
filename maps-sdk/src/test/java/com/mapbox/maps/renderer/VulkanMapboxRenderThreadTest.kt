@@ -335,4 +335,20 @@ class VulkanMapboxRenderThreadTest {
     verify(exactly = 2) { mapboxRenderer.createRenderer() }
     verifyOnce { mapboxRenderer.destroyRenderer() }
   }
+
+  @Test
+  fun onMapSetAfterSurfaceDestroyedDoesNotReattach() {
+    initRenderThread()
+    setupVulkanManagerAvailable()
+    provideValidSurface()
+
+    renderThread.onSurfaceDestroyed()
+    idleHandler()
+    renderThread.onMapSet()
+    idleHandler()
+
+    // one init from surface creation, none from onMapSet after teardown: the kept
+    // surface reference is stale (isValid may still be true) and must not be re-attached
+    verifyOnce { vulkanManager.init(any()) }
+  }
 }

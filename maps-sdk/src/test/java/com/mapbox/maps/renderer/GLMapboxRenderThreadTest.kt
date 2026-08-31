@@ -916,6 +916,23 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test
+  fun stragglerPrepareRenderFrameAfterSurfaceDestroyedDoesNotReattachTextureView() {
+    initRenderThread(mockk<MapboxTextureViewRenderer>(relaxUnitFun = true))
+    provideValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    idleHandler()
+    // simulate a MSG_PREPARE_RENDER_FRAME that survived teardown and dispatches afterwards;
+    // TextureView teardown is the divergent branch (full releaseAll instead of
+    // releaseRenderSurface), so it needs its own straggler coverage
+    renderHandlerThread.post {
+      mapboxRenderThread.prepareRenderFrame(width = null, height = null, creatingSurface = false)
+    }
+    idleHandler()
+    // exactly one attach — the initial one
+    verifyOnce { eglCore.createWindowSurface(any()) }
+  }
+
+  @Test
   fun noSetupRetryLoopWhileSurfaceDestroyed() {
     initRenderThread(mockk<MapboxSurfaceRenderer>(relaxUnitFun = true))
     provideValidSurface()
