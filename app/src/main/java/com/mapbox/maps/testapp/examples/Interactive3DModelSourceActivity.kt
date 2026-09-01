@@ -1,12 +1,18 @@
 package com.mapbox.maps.testapp.examples
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnLayout
+import androidx.core.view.updatePadding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
@@ -21,8 +27,8 @@ import com.mapbox.maps.extension.style.sources.generated.modelNodeOverride
 import com.mapbox.maps.extension.style.sources.generated.modelSource
 import com.mapbox.maps.extension.style.sources.generated.modelSourceModel
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityInteractive3dModelSourceBinding
-import kotlin.math.roundToInt
 
 /**
  * Showcase interactive 3D model with source-based updates.
@@ -47,124 +53,144 @@ class Interactive3DModelSourceActivity : AppCompatActivity() {
     binding = ActivityInteractive3dModelSourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    // Portrait shows the controls as a bottom sheet, landscape as a side panel
+    // pinned to the leading edge, where a sheet would leave no usable map area.
+    val isBottomSheet = resources.getBoolean(R.bool.control_panel_is_bottom_sheet)
+
+    // The panel runs into the system bars on whichever edge it is pinned to.
+    val basePaddingBottom = binding.controls.root.paddingBottom
+    val basePaddingStart = binding.controls.root.paddingStart
+    ViewCompat.setOnApplyWindowInsetsListener(binding.controls.root) { view, insets ->
+      val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+      view.updatePadding(
+        left = basePaddingStart + if (isBottomSheet) 0 else bars.left,
+        bottom = basePaddingBottom + bars.bottom
+      )
+      insets
+    }
+
     model = createCarModel()
 
-    binding.mapView.mapboxMap.apply {
-      setCamera(
+    binding.controlPanel.doOnLayout { panel ->
+      if (isBottomSheet) {
+        // Start with every control visible; the sheet can still be dragged down to
+        // its peek height, and its contents scroll if they do not all fit.
+        BottomSheetBehavior.from(panel).state = BottomSheetBehavior.STATE_EXPANDED
+      }
+
+      // Frame the car in the map area the panel leaves free: padding moves the
+      // camera's focal point away from the covered edge, so the car is centred in
+      // the visible region rather than hidden behind the controls.
+      val bottomInset = if (isBottomSheet) panel.height.toDouble() else 0.0
+      val leftInset = if (isBottomSheet) 0.0 else panel.width.toDouble()
+      binding.mapView.mapboxMap.setCamera(
         cameraOptions {
           center(CAR_POSITION)
-          zoom(19.3)
+          zoom(CAR_ZOOM)
           bearing(45.0)
           pitch(60.0)
+          padding(EdgeInsets(0.0, leftInset, bottomInset, 0.0))
         }
       )
+    }
 
-      loadStyle(
-        style(Style.STANDARD) {
-          +dynamicLight(
-            ambientLight("environment") {
-              intensity(0.4)
-            },
-            directionalLight("sun_light") {
-              castShadows(true)
-            }
-          )
-          +modelSource(SOURCE_ID) {
-            models(listOf(model))
+    binding.mapView.mapboxMap.loadStyle(
+      style(Style.STANDARD) {
+        +dynamicLight(
+          ambientLight("environment") {
+            intensity(0.4)
+          },
+          directionalLight("sun_light") {
+            castShadows(true)
           }
-          +modelLayer(LAYER_ID, SOURCE_ID) {
-            modelScale(listOf(10.0, 10.0, 10.0))
-            modelType(ModelType.LOCATION_INDICATOR)
-          }
-        }
-      ) {
-        binding.mapView.mapboxMap.setStyleImportConfigProperty(
-          "basemap",
-          "show3dObjects",
-          Value.valueOf(false)
         )
-        setupControls()
+        +modelSource(SOURCE_ID) {
+          models(listOf(model))
+        }
+        +modelLayer(LAYER_ID, SOURCE_ID) {
+          modelScale(listOf(10.0, 10.0, 10.0))
+          modelType(ModelType.LOCATION_INDICATOR)
+        }
       }
+    ) {
+      binding.mapView.mapboxMap.setStyleImportConfigProperty(
+        "basemap",
+        "show3dObjects",
+        Value.valueOf(false)
+      )
+      setupControls()
     }
   }
 
+  // The sheet swallows touches without being a click target, so there is no click
+  // for performClick to report.
+  @SuppressLint("ClickableViewAccessibility")
   private fun setupControls() {
+    // BottomSheetBehavior only intercepts vertical drags, so a horizontal swipe on
+    // the sheet background would otherwise reach the MapView underneath and pan the
+    // map. Swallow whatever the sheet's own controls did not handle. A touch
+    // listener is used rather than android:clickable, which would make the sheet a
+    // pressed view and push that pressed state onto every child slider.
+    binding.controlPanel.setOnTouchListener { _, _ -> true }
+
     // Color picker view
     updateColorPickerBackground()
-    binding.colorPickerButton.setOnClickListener {
+    binding.controls.colorPickerButton.setOnClickListener {
       showColorPickerDialog()
     }
 
     // Trunk slider
-    binding.seekBarTrunk.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-      override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        trunk = progress / 100.0
-        model.nodeOverrides(
-          listOf(
-            modelNodeOverride("trunk") {
-              orientation(listOf(mix(trunk, 0.0, -60.0), 0.0, 0.0))
-            }
-          )
+    binding.controls.sliderTrunk.addOnChangeListener { _, value, _ ->
+      trunk = value.toDouble()
+      model.nodeOverrides(
+        listOf(
+          modelNodeOverride("trunk") {
+            orientation(listOf(mix(trunk, 0.0, -60.0), 0.0, 0.0))
+          }
         )
-      }
-      override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-      override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    })
+      )
+    }
 
     // Hood slider
-    binding.seekBarHood.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-      override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        hood = progress / 100.0
-        model.nodeOverrides(
-          listOf(
-            modelNodeOverride("hood") {
-              orientation(listOf(mix(hood, 0.0, 45.0), 0.0, 0.0))
-            }
-          )
+    binding.controls.sliderHood.addOnChangeListener { _, value, _ ->
+      hood = value.toDouble()
+      model.nodeOverrides(
+        listOf(
+          modelNodeOverride("hood") {
+            orientation(listOf(mix(hood, 0.0, 45.0), 0.0, 0.0))
+          }
         )
-      }
-      override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-      override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    })
+      )
+    }
 
     // Front left door slider
-    binding.seekBarDoorLeft.progress = (doorsFrontLeft * 100).roundToInt()
-    binding.seekBarDoorLeft.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-      override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        doorsFrontLeft = progress / 100.0
-        model.nodeOverrides(
-          listOf(
-            modelNodeOverride("doors_front-left") {
-              orientation(listOf(0.0, mix(doorsFrontLeft, 0.0, -80.0), 0.0))
-            }
-          )
+    binding.controls.sliderDoorLeft.addOnChangeListener { _, value, _ ->
+      doorsFrontLeft = value.toDouble()
+      model.nodeOverrides(
+        listOf(
+          modelNodeOverride("doors_front-left") {
+            orientation(listOf(0.0, mix(doorsFrontLeft, 0.0, -80.0), 0.0))
+          }
         )
-      }
-      override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-      override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    })
+      )
+    }
 
     // Front right door slider
-    binding.seekBarDoorRight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-      override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        doorsFrontRight = progress / 100.0
-        model.nodeOverrides(
-          listOf(
-            modelNodeOverride("doors_front-right") {
-              orientation(listOf(0.0, mix(doorsFrontRight, 0.0, 80.0), 0.0))
-            }
-          )
+    binding.controls.sliderDoorRight.addOnChangeListener { _, value, _ ->
+      doorsFrontRight = value.toDouble()
+      model.nodeOverrides(
+        listOf(
+          modelNodeOverride("doors_front-right") {
+            orientation(listOf(0.0, mix(doorsFrontRight, 0.0, 80.0), 0.0))
+          }
         )
-      }
-      override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-      override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    })
+      )
+    }
 
     // Brake lights slider
-    binding.seekBarBrake.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-      override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        brakeLights = progress / 100.0
-        model.materialOverrides(
+    binding.controls.sliderBrake.addOnChangeListener { _, value, _ ->
+      brakeLights = value.toDouble()
+      model.materialOverrides(
           listOf(
             modelMaterialOverride("lights_brakes") {
               modelColor(Color.rgb(224, 0, 0))
@@ -188,12 +214,9 @@ class Interactive3DModelSourceActivity : AppCompatActivity() {
               modelEmissiveStrength(0.8)
               modelOpacity(brakeLights)
             }
-          )
         )
-      }
-      override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-      override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    })
+      )
+    }
   }
 
   private fun showColorPickerDialog() {
@@ -233,7 +256,7 @@ class Interactive3DModelSourceActivity : AppCompatActivity() {
       cornerRadius = 8f * resources.displayMetrics.density
       setStroke((2 * resources.displayMetrics.density).toInt(), Color.GRAY)
     }
-    binding.colorPickerButton.background = drawable
+    binding.controls.colorPickerButton.background = drawable
   }
 
   // Create initial model with all overrides
@@ -303,6 +326,7 @@ class Interactive3DModelSourceActivity : AppCompatActivity() {
   private companion object {
     const val SOURCE_ID = "3d-model-source"
     const val LAYER_ID = "3d-model-layer-for-source-based-updates"
+    const val CAR_ZOOM = 18.8
     const val CAR_MODEL_KEY = "car"
     const val CAR_MODEL_URI = "https://docs.mapbox.com/mapbox-gl-js/assets/ego_car.glb"
     val CAR_POSITION: Point = Point.fromLngLat(-74.0138, 40.7154)

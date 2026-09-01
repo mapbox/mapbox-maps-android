@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/controlPanelContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+<!-- Vehicle color row -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/interactive_3d_model_vehicle_color"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/colorPickerButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_rounded_corner"
+        android:clickable="true"
+        android:contentDescription="@string/interactive_3d_model_vehicle_color"
+        android:focusable="true" />
+
+</LinearLayout>
+
+<!-- Trunk -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="@string/interactive_3d_model_trunk"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderTrunk"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/interactive_3d_model_trunk"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+
+</LinearLayout>
+
+<!-- Hood -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="@string/interactive_3d_model_hood"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderHood"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/interactive_3d_model_hood"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+
+</LinearLayout>
+
+<!-- Front left door -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="@string/interactive_3d_model_left_door"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderDoorLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/interactive_3d_model_left_door"
+        android:value="0.5"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+
+</LinearLayout>
+
+<!-- Front right door -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="@string/interactive_3d_model_right_door"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderDoorRight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/interactive_3d_model_right_door"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+
+</LinearLayout>
+
+<!-- Brake lights -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="@string/interactive_3d_model_brake_lights"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="12sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderBrake"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:contentDescription="@string/interactive_3d_model_brake_lights"
+        android:value="0.0"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
+
+</LinearLayout>
+
+</LinearLayout>

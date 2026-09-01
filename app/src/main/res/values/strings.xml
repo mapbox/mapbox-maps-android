@@ -202,4 +202,12 @@
     <string name="activity_indoor_example">Indoor Example</string>
     <string name="description_indoor_example">Showcase Indoor Manager API with Mapbox Standard Style</string>
     <string name="fov_label_format">FOV: %.1f°</string>
+
+    <!-- Interactive 3D model source example -->
+    <string name="interactive_3d_model_vehicle_color">Vehicle color</string>
+    <string name="interactive_3d_model_trunk">Trunk</string>
+    <string name="interactive_3d_model_hood">Hood</string>
+    <string name="interactive_3d_model_left_door">Left door</string>
+    <string name="interactive_3d_model_right_door">Right door</string>
+    <string name="interactive_3d_model_brake_lights">Brake lights</string>
 </resources>

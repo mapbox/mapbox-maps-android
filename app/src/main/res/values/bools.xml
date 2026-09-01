@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The 3D model example shows its controls as a bottom sheet in portrait and
+         as a side panel in landscape. -->
+    <bool name="control_panel_is_bottom_sheet">true</bool>
+</resources>
