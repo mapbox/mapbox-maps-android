@@ -1,7 +1,10 @@
 #include <GLES2/gl2.h>
 #include <android/log.h>
 #include <jni.h>
+#include <algorithm>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 
 // DEBUGGING
 
@@ -81,18 +84,35 @@ void checkError(const char *cmd, const char *file, int line) {
 #define GL_CHECK_ERROR(cmd) (cmd)
 #endif
 
+// GL truncates to whatever buffer size we pass, so capping only shortens the message.
+const GLint MAX_INFO_LOG_BYTES = 64 * 1024;
+
+// GL reports the character count excluding the NUL terminator. A bogus count yields an empty
+// log rather than a clamped one, so the caller's fallback message replaces it.
+size_t infoLogLength(GLsizei written, GLint capacity) {
+    return (written > 0 && written <= capacity) ? static_cast<size_t>(written) : 0;
+}
+
 void checkLinkStatus(GLuint program) {
     GLint isLinked = 0;
     glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
     if (isLinked == GL_FALSE) {
         GLint maxLength = 0;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
-        GLchar infoLog[maxLength];
-        glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
-        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, &infoLog[0]);
+        std::string infoLog;
+        if (maxLength > 0) {
+            const GLint capacity = std::min(maxLength, MAX_INFO_LOG_BYTES);
+            infoLog.resize(capacity);
+            GLsizei written = 0;
+            glGetProgramInfoLog(program, capacity, &written, &infoLog[0]);
+            infoLog.resize(infoLogLength(written, capacity));
+        }
+        if (infoLog.empty()) {
+            infoLog = "program linking failed, no info log available";
+        }
+        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, infoLog.c_str());
         throw Error(infoLog);
     }
-
 }
 
 void checkCompileStatus(GLuint shader) {
@@ -101,11 +121,18 @@ void checkCompileStatus(GLuint shader) {
     if (isCompiled == GL_FALSE) {
         GLint maxLength = 0;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
-
-        // The maxLength includes the NULL character
-        GLchar errorLog[maxLength];
-        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, &errorLog[0]);
+        std::string errorLog;
+        if (maxLength > 0) {
+            const GLint capacity = std::min(maxLength, MAX_INFO_LOG_BYTES);
+            errorLog.resize(capacity);
+            GLsizei written = 0;
+            glGetShaderInfoLog(shader, capacity, &written, &errorLog[0]);
+            errorLog.resize(infoLogLength(written, capacity));
+        }
+        if (errorLog.empty()) {
+            errorLog = "shader compilation failed, no info log available";
+        }
+        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, errorLog.c_str());
         throw Error(errorLog);
     }
 }

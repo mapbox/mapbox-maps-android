@@ -15,10 +15,12 @@ target_include_directories(
         ${PROJECT_SOURCE_DIR}
 )
 
-# Use the same compile_options as in mapbox-gl
+# Use the same compile_options as in mapbox-gl, plus a local VLA guard
 target_compile_options(
     example-cpp-custom-layer
     PRIVATE
+        # Variable-length arrays are a non-standard extension sized from a driver-supplied value.
+        -Werror=vla
         $<$<CONFIG:Release>:-Oz>
         $<$<CONFIG:Release>:-Qunused-arguments>
         $<$<CONFIG:Release>:-flto>
