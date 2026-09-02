@@ -26,6 +26,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -96,6 +97,7 @@ import com.mapbox.maps.viewannotation.annotatedLayerFeature
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import kotlinx.coroutines.flow.firstOrNull
+import kotlin.random.Random
 
 /**
  * Example how to use dynamic view annotations on line layers and fixed positions.
@@ -349,82 +351,30 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
     isLayoutDirectionRtl: Boolean,
     toggleActiveRoute: () -> Unit
   ) {
-    var etaViewAnnotationAnchor by remember {
+    val etaViewAnnotationAnchor = remember {
       mutableStateOf(ViewAnnotationAnchor.BOTTOM_LEFT)
     }
 
-    var alternativeEtaViewAnnotationAnchor by remember {
+    val alternativeEtaViewAnnotationAnchor = remember {
       mutableStateOf(ViewAnnotationAnchor.BOTTOM_LEFT)
     }
-    // eta view
-    ViewAnnotation(
-      options = viewAnnotationOptions {
-        annotatedLayerFeature(LAYER_MAIN_ID)
-        annotationAnchors(
-          {
-            anchor(ViewAnnotationAnchor.TOP_RIGHT)
-          },
-          {
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
-          },
-          {
-            anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
-          },
-          {
-            anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
-          },
-        )
-      },
-      onUpdatedListener = object : OnViewAnnotationUpdatedListener {
-        override fun onViewAnnotationAnchorUpdated(view: View, anchor: ViewAnnotationAnchorConfig) {
-          etaViewAnnotationAnchor = anchor.anchor
-        }
-      }
-    ) {
-      MainDVAContent(isInitial = isMainActive, etaViewAnnotationAnchor = etaViewAnnotationAnchor)
-    }
 
-    // alternative eta view
-    ViewAnnotation(
-      options = viewAnnotationOptions {
-        annotatedLayerFeature(LAYER_ALT_ID)
-        annotationAnchors(
-          {
-            anchor(ViewAnnotationAnchor.TOP_RIGHT)
-          },
-          {
-            anchor(ViewAnnotationAnchor.TOP_LEFT)
-          },
-          {
-            anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
-          },
-          {
-            anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
-          },
-        )
-      },
-      onUpdatedListener = object : OnViewAnnotationUpdatedListener {
-        override fun onViewAnnotationAnchorUpdated(view: View, anchor: ViewAnnotationAnchorConfig) {
-          alternativeEtaViewAnnotationAnchor = anchor.anchor
-        }
-      }
-    ) {
-      // ViewAnnotation hosts this content in its own ComposeView (see ViewAnnotation.kt), which
-      // maps-sdk pins to LAYOUT_DIRECTION_LOCALE - the nearest LocalLayoutDirection provider to
-      // this content, so it resolves against the real device locale regardless of any
-      // CompositionLocalProvider wrapped further up around the outer MapboxMap composable.
-      // Override LocalLayoutDirection directly here (Compose's nearest-provider-wins resolution)
-      // to verify content mirroring without changing the device's actual locale.
-      CompositionLocalProvider(
-        LocalLayoutDirection provides
-          if (isLayoutDirectionRtl) LayoutDirection.Rtl else LayoutDirection.Ltr
-      ) {
-        AlternativeDVAContent(
-          isInitial = !isMainActive,
-          alternativeEtaViewAnnotationAnchor = alternativeEtaViewAnnotationAnchor,
-          onClick = toggleActiveRoute
-        )
-      }
+    if (Random.nextBoolean()) {
+      EtaView(etaViewAnnotationAnchor, isMainActive)
+      AlternativeEtaView(
+        alternativeEtaViewAnnotationAnchor,
+        isLayoutDirectionRtl,
+        isMainActive,
+        toggleActiveRoute,
+      )
+    } else {
+      AlternativeEtaView(
+        alternativeEtaViewAnnotationAnchor,
+        isLayoutDirectionRtl,
+        isMainActive,
+        toggleActiveRoute,
+      )
+      EtaView(etaViewAnnotationAnchor, isMainActive)
     }
 
     // parking view annotation 1
@@ -465,6 +415,92 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
       }
     ) {
       ConstructionDVAContent()
+    }
+  }
+
+  @Composable
+  private fun EtaView(
+    etaViewAnnotationAnchor: MutableState<ViewAnnotationAnchor>,
+    isMainActive: Boolean,
+  ) {
+    ViewAnnotation(
+      options = viewAnnotationOptions {
+        annotatedLayerFeature(LAYER_MAIN_ID)
+        annotationAnchors(
+          {
+            anchor(ViewAnnotationAnchor.TOP_RIGHT)
+          },
+          {
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+          },
+          {
+            anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
+          },
+          {
+            anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
+          },
+        )
+      },
+      onUpdatedListener = object : OnViewAnnotationUpdatedListener {
+        override fun onViewAnnotationAnchorUpdated(view: View, anchor: ViewAnnotationAnchorConfig) {
+          etaViewAnnotationAnchor.value = anchor.anchor
+        }
+      }
+    ) {
+      MainDVAContent(
+        isInitial = isMainActive,
+        etaViewAnnotationAnchor = etaViewAnnotationAnchor.value,
+      )
+    }
+  }
+
+  @Composable
+  private fun AlternativeEtaView(
+    alternativeEtaViewAnnotationAnchor: MutableState<ViewAnnotationAnchor>,
+    isLayoutDirectionRtl: Boolean,
+    isMainActive: Boolean,
+    toggleActiveRoute: () -> Unit
+  ) {
+    ViewAnnotation(
+      options = viewAnnotationOptions {
+        annotatedLayerFeature(LAYER_ALT_ID)
+        annotationAnchors(
+          {
+            anchor(ViewAnnotationAnchor.TOP_RIGHT)
+          },
+          {
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+          },
+          {
+            anchor(ViewAnnotationAnchor.BOTTOM_RIGHT)
+          },
+          {
+            anchor(ViewAnnotationAnchor.BOTTOM_LEFT)
+          },
+        )
+      },
+      onUpdatedListener = object : OnViewAnnotationUpdatedListener {
+        override fun onViewAnnotationAnchorUpdated(view: View, anchor: ViewAnnotationAnchorConfig) {
+          alternativeEtaViewAnnotationAnchor.value = anchor.anchor
+        }
+      }
+    ) {
+      // ViewAnnotation hosts this content in its own ComposeView (see ViewAnnotation.kt), which
+      // maps-sdk pins to LAYOUT_DIRECTION_LOCALE - the nearest LocalLayoutDirection provider to
+      // this content, so it resolves against the real device locale regardless of any
+      // CompositionLocalProvider wrapped further up around the outer MapboxMap composable.
+      // Override LocalLayoutDirection directly here (Compose's nearest-provider-wins resolution)
+      // to verify content mirroring without changing the device's actual locale.
+      CompositionLocalProvider(
+        LocalLayoutDirection provides
+          if (isLayoutDirectionRtl) LayoutDirection.Rtl else LayoutDirection.Ltr
+      ) {
+        AlternativeDVAContent(
+          isInitial = !isMainActive,
+          alternativeEtaViewAnnotationAnchor = alternativeEtaViewAnnotationAnchor.value,
+          onClick = toggleActiveRoute
+        )
+      }
     }
   }
 
