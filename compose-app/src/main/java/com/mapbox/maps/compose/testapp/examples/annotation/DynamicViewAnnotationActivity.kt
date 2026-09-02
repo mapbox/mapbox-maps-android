@@ -96,6 +96,7 @@ import com.mapbox.maps.viewannotation.annotatedLayerFeature
 import com.mapbox.maps.viewannotation.annotationAnchors
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import kotlinx.coroutines.flow.firstOrNull
+import kotlin.random.Random
 
 /**
  * Example how to use dynamic view annotations on line layers and fixed positions.
@@ -499,13 +500,13 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
               .padding(30.dp)
         ) {
           Text(
-            text = "25 min",
+            text = "25 min".repeat(Random.nextInt(1, 6)),
             fontSize = 25.sp,
             color = Color.White
           )
           if (isInitial) {
             Text(
-              text = "This is the initially suggested route",
+              text = "This is the initially suggested route".repeat(Random.nextInt(1, 3)),
               fontSize = 12.sp,
               color = Color.White
             )
@@ -557,18 +558,18 @@ public class DynamicViewAnnotationActivity : ComponentActivity() {
           )
           Column {
             Text(
-              text = "Save 10 min",
+              text = "Save 10 min".repeat(Random.nextInt(1, 5)),
               fontSize = 18.sp,
               color = Color.Black
             )
             Text(
-              text = "Avoid traffic",
+              text = "Avoid traffic".repeat(Random.nextInt(1, 4)),
               fontSize = 12.sp,
               color = Color.Black
             )
             if (isInitial) {
               Text(
-                text = "This is the initially suggested route",
+                text = "This is the initially suggested route".repeat(Random.nextInt(1, 3)),
                 fontSize = 12.sp,
                 color = Color.Black
               )
