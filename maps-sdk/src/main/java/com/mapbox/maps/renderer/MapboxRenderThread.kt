@@ -638,7 +638,9 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
         }
         this.surface = surface
       }
-      // a new surface supersedes any earlier teardown
+      // a new surface supersedes any earlier teardown; without this reset checkAndroidSurface()
+      // keeps returning false and nothing ever re-attaches — pinned by
+      // surfaceCreatedAfterSurfaceDestroyedRecovers in both GL and Vulkan render thread tests
       awaitingNewSurface = false
       this.width = width
       this.height = height
@@ -770,7 +772,8 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     } else if (!paused) {
       logI(
         TAG,
-        "renderThreadPrepared=false and Android surface is not valid (isValid=${surface?.isValid}). Waiting for new one.",
+        "renderThreadPrepared=false and Android surface is not usable " +
+          "(awaitingNewSurface=$awaitingNewSurface, isValid=${surface?.isValid}). Waiting for new one.",
         logThrottler
       )
     }

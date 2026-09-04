@@ -955,6 +955,26 @@ class GLMapboxRenderThreadTest {
   }
 
   @Test
+  fun pendingPrepareRenderFrameIsPurgedOnSurfaceDestroyed() {
+    initRenderThread(mockk<MapboxSurfaceRenderer>(relaxUnitFun = true))
+    provideValidSurface()
+    // a real pending retry, the kind checkAndroidSurface() schedules while the surface
+    // is momentarily invalid; it must not outlive the teardown that follows
+    renderHandlerThread.sendMessageDelayed(
+      MapboxRenderThread.MSG_PREPARE_RENDER_FRAME, 0, MapboxRenderThread.RETRY_DELAY_MS
+    )
+    assertTrue(
+      renderHandlerThread.handler!!.hasMessages(MapboxRenderThread.MSG_PREPARE_RENDER_FRAME)
+    )
+    mapboxRenderThread.onSurfaceDestroyed()
+    // teardown purges the queue itself — without it the message survives and only the
+    // awaitingNewSurface guard stops the re-attach, which no attach-count assertion can see
+    assertFalse(
+      renderHandlerThread.handler!!.hasMessages(MapboxRenderThread.MSG_PREPARE_RENDER_FRAME)
+    )
+  }
+
+  @Test
   fun surfaceCreatedAfterSurfaceDestroyedRecovers() {
     initRenderThread(mockk<MapboxSurfaceRenderer>(relaxUnitFun = true))
     provideValidSurface()
