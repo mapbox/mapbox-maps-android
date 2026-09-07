@@ -6,6 +6,26 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.31.0-rc.1 September 07, 2026
+
+## Breaking changes ⚠️
+* Remove the experimental `raster-allow-draping` property from `RasterLayer`.
+
+## Features ✨ and improvements 🏁
+* Add experimental MapOptions.emissiveColorPrecision to control emissive color accuracy for draped layers.
+
+## Bug fixes 🐞
+* Ignored SDF images from text-field don't affect collision detection anymore
+* Fix requests hanging on stale HTTP/2 connections by proactively evicting unresponsive connections and network transitions.
+
+## 💫️ Other
+* Deprecated TileStoreImportOptions.getArchiveFileDescriptors() (List<Long>) in favor of getArchiveFileDescriptorsArray() (long[]), which avoids per-element boxing. The deprecated getter may now return an immutable list when there are 0 or 1 descriptors.
+* Deprecated CustomLayerRenderParameters.getProjectionMatrix() (List<Double>) in favor of getProjectionMatrixArray() (double[]), which avoids per-element boxing.
+
+## Dependencies
+* Update gl-native to [v11.31.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0-rc.1), common to [v24.31.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0-rc.1).
+
+
 # 11.29.1 August 27, 2026
 ## Dependencies
 * Update gl-native to [v11.29.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.1), common to [v24.29.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.29.1).
