@@ -92,7 +92,7 @@ fun accumulated(): Expression = Expression.accumulated()
 fun acos(block: Expression.ExpressionBuilder.() -> Unit): Expression = Expression.acos(block)
 
 /**
- * Returns a string which matches one of the values specified in the text-anchor layout property, depending on the best-fit anchor for the symbol during rendering. Using this expression the content of the layer can be dynamically configured for the specific anchor type.
+ * Returns a string which matches one of the values specified in the text-anchor layout property, depending on the best-fit anchor for the symbol during rendering. Using this expression the content of the layer can be dynamically configured for the specific anchor type. Only symbol layout properties supporting data expressions can use it, except text-anchor and text-variable-anchor, which define the anchor themselves. It is also not supported in the properties prefixed with symbol-. It is rejected in filters, in visibility, in paint properties, in appearance conditions and in every other layer type.
  */
 @MapboxExperimental
 fun activeAnchor(): Expression = Expression.activeAnchor()
