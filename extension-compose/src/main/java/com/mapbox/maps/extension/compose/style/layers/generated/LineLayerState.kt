@@ -233,13 +233,13 @@ private constructor(
 
   private val lineZOffsetState: MutableState<DoubleValue> = mutableStateOf(initialLineZOffset)
   /**
-   *  Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   *  Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    */
   public var lineZOffset: DoubleValue by lineZOffsetState
 
   private val lineBlurState: MutableState<DoubleValue> = mutableStateOf(initialLineBlur)
   /**
-   *  Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   *  Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   public var lineBlur: DoubleValue by lineBlurState
 
@@ -287,7 +287,7 @@ private constructor(
 
   private val lineBorderWidthState: MutableState<DoubleValue> = mutableStateOf(initialLineBorderWidth)
   /**
-   *  The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   *  The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    */
   public var lineBorderWidth: DoubleValue by lineBorderWidthState
 

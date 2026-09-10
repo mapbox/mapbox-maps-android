@@ -1545,11 +1545,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    */
   val modelTranslation: List<Double>?
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+     * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
      *
      * Use static method [ModelLayer.defaultModelTranslation] to get the default property.
      *
@@ -1560,7 +1560,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
     }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * Use static method [ModelLayer.defaultModelTranslation] to set the default property.
    *
@@ -1572,14 +1572,14 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
   }
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * This is an Expression representation of "model-translation".
    *
    */
   val modelTranslationAsExpression: Expression?
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+     * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
      *
      * Get the ModelTranslation property as an Expression
      *
@@ -1589,7 +1589,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       getPropertyValueAsExpressionOrLiteralExpression("model-translation")
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * Use static method [ModelLayer.defaultModelTranslationAsExpression] to set the default property.
    *
@@ -2502,11 +2502,11 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+     * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
      */
     val defaultModelTranslation: List<Double>?
       /**
-       * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+       * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
        *
        * Get the default value of ModelTranslation property
        *
@@ -2517,7 +2517,7 @@ class ModelLayer(override val layerId: String, val sourceId: String) : ModelLaye
       }
 
     /**
-     * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+     * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
      *
      * This is an Expression representation of "model-translation".
      *
@@ -3060,21 +3060,21 @@ interface ModelLayerDsl {
   fun modelScaleMode(modelScaleMode: Expression): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * @param modelTranslation value of modelTranslation
    */
   fun modelTranslation(modelTranslation: List<Double> = listOf(0.0, 0.0, 0.0)): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * @param modelTranslation value of modelTranslation as Expression
    */
   fun modelTranslation(modelTranslation: Expression): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * Set the ModelTranslation property transition options
    *
@@ -3083,7 +3083,7 @@ interface ModelLayerDsl {
   fun modelTranslationTransition(options: StyleTransition): ModelLayer
 
   /**
-   * The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   * The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    *
    * DSL for [modelTranslationTransition].
    */

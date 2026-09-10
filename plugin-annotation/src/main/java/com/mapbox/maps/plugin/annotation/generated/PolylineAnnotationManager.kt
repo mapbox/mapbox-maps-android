@@ -481,7 +481,7 @@ class PolylineAnnotationManager(
   /**
    * The default lineZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    */
   var lineZOffset: Double?
     /**
@@ -515,7 +515,7 @@ class PolylineAnnotationManager(
   /**
    * The default lineBlur for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   var lineBlur: Double?
     /**
@@ -620,7 +620,7 @@ class PolylineAnnotationManager(
   /**
    * The default lineBorderWidth for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    */
   var lineBorderWidth: Double?
     /**

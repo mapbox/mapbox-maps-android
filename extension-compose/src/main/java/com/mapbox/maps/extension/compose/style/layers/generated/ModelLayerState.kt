@@ -278,7 +278,7 @@ private constructor(
 
   private val modelTranslationState: MutableState<DoubleListValue> = mutableStateOf(initialModelTranslation)
   /**
-   *  The translation of the model in meters in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0].
+   *  The translation of the model in form of [longitudal, latitudal, altitude] offsets. Default value: [0,0,0]. The unit of modelTranslation is in meters.
    */
   public var modelTranslation: DoubleListValue by modelTranslationState
 

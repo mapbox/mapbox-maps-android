@@ -1657,12 +1657,12 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    */
   @MapboxExperimental
   val fillZOffset: Double?
     /**
-     * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
      *
      * Use static method [FillLayer.defaultFillZOffset] to get the default property.
      *
@@ -1673,7 +1673,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
     }
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * Use static method [FillLayer.defaultFillZOffset] to set the default property.
    *
@@ -1686,7 +1686,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   }
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * This is an Expression representation of "fill-z-offset".
    *
@@ -1694,7 +1694,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
   @MapboxExperimental
   val fillZOffsetAsExpression: Expression?
     /**
-     * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
      *
      * Get the FillZOffset property as an Expression
      *
@@ -1704,7 +1704,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       getPropertyValueAsExpressionOrLiteralExpression("fill-z-offset")
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * Use static method [FillLayer.defaultFillZOffsetAsExpression] to set the default property.
    *
@@ -2614,12 +2614,12 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
      */
     @MapboxExperimental
     val defaultFillZOffset: Double?
       /**
-       * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+       * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
        *
        * Get the default value of FillZOffset property
        *
@@ -2630,7 +2630,7 @@ class FillLayer(override val layerId: String, val sourceId: String) : FillLayerD
       }
 
     /**
-     * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
      *
      * This is an Expression representation of "fill-z-offset".
      *
@@ -3156,7 +3156,7 @@ interface FillLayerDsl {
   fun fillTunnelStructureColorUseTheme(fillTunnelStructureColorUseTheme: Expression): FillLayer
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * @param fillZOffset value of fillZOffset
    */
@@ -3164,7 +3164,7 @@ interface FillLayerDsl {
   fun fillZOffset(fillZOffset: Double = 0.0): FillLayer
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * @param fillZOffset value of fillZOffset as Expression
    */
@@ -3172,7 +3172,7 @@ interface FillLayerDsl {
   fun fillZOffset(fillZOffset: Expression): FillLayer
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * Set the FillZOffset property transition options
    *
@@ -3182,7 +3182,7 @@ interface FillLayerDsl {
   fun fillZOffsetTransition(options: StyleTransition): FillLayer
 
   /**
-   * Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    *
    * DSL for [fillZOffsetTransition].
    */

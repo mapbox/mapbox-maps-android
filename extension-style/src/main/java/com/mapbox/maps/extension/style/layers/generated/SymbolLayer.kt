@@ -4255,11 +4255,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    */
   val symbolZOffset: Double?
     /**
-     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
      *
      * Use static method [SymbolLayer.defaultSymbolZOffset] to get the default property.
      *
@@ -4270,7 +4270,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
     }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * Use static method [SymbolLayer.defaultSymbolZOffset] to set the default property.
    *
@@ -4282,14 +4282,14 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * This is an Expression representation of "symbol-z-offset".
    *
    */
   val symbolZOffsetAsExpression: Expression?
     /**
-     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
      *
      * Get the SymbolZOffset property as an Expression
      *
@@ -4299,7 +4299,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       getPropertyValueAsExpressionOrLiteralExpression("symbol-z-offset")
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * Use static method [SymbolLayer.defaultSymbolZOffsetAsExpression] to set the default property.
    *
@@ -7856,11 +7856,11 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
      */
     val defaultSymbolZOffset: Double?
       /**
-       * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+       * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
        *
        * Get the default value of SymbolZOffset property
        *
@@ -7871,7 +7871,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
       }
 
     /**
-     * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+     * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
      *
      * This is an Expression representation of "symbol-z-offset".
      *
@@ -9567,21 +9567,21 @@ interface SymbolLayerDsl {
   fun occlusionOpacityMode(occlusionOpacityMode: Expression): SymbolLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * @param symbolZOffset value of symbolZOffset
    */
   fun symbolZOffset(symbolZOffset: Double = 0.0): SymbolLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * @param symbolZOffset value of symbolZOffset as Expression
    */
   fun symbolZOffset(symbolZOffset: Expression): SymbolLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * Set the SymbolZOffset property transition options
    *
@@ -9590,7 +9590,7 @@ interface SymbolLayerDsl {
   fun symbolZOffsetTransition(options: StyleTransition): SymbolLayer
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * DSL for [symbolZOffsetTransition].
    */

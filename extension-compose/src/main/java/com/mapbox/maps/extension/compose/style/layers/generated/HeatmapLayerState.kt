@@ -113,7 +113,7 @@ private constructor(
 
   private val heatmapRadiusState: MutableState<DoubleValue> = mutableStateOf(initialHeatmapRadius)
   /**
-   *  Radius of influence of one heatmap point in pixels. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius. Default value: 30. Minimum value: 1. The unit of heatmapRadius is in pixels.
+   *  Radius of influence of one heatmap point. Increasing the value makes the heatmap smoother, but less detailed. `queryRenderedFeatures` on heatmap layers will return points within this radius. Default value: 30. Minimum value: 1. The unit of heatmapRadius is in pixels.
    */
   public var heatmapRadius: DoubleValue by heatmapRadiusState
 

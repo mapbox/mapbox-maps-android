@@ -212,7 +212,7 @@ public class PointAnnotationState private constructor(
    */
   public var iconOpacity: Double? by mutableStateOf(initialIconOpacity)
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    */
   public var symbolZOffset: Double? by mutableStateOf(initialSymbolZOffset)
   /**

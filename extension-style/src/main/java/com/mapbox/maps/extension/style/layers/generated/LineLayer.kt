@@ -807,11 +807,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    */
   val lineZOffset: Double?
     /**
-     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+     * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
      *
      * Use static method [LineLayer.defaultLineZOffset] to get the default property.
      *
@@ -822,7 +822,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    *
    * Use static method [LineLayer.defaultLineZOffset] to set the default property.
    *
@@ -834,14 +834,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    *
    * This is an Expression representation of "line-z-offset".
    *
    */
   val lineZOffsetAsExpression: Expression?
     /**
-     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+     * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
      *
      * Get the LineZOffset property as an Expression
      *
@@ -851,7 +851,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-z-offset")
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    *
    * Use static method [LineLayer.defaultLineZOffsetAsExpression] to set the default property.
    *
@@ -863,11 +863,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   val lineBlur: Double?
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+     * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      *
      * Use static method [LineLayer.defaultLineBlur] to get the default property.
      *
@@ -878,7 +878,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * Use static method [LineLayer.defaultLineBlur] to set the default property.
    *
@@ -890,14 +890,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * This is an Expression representation of "line-blur".
    *
    */
   val lineBlurAsExpression: Expression?
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+     * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      *
      * Get the LineBlur property as an Expression
      *
@@ -907,7 +907,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-blur")
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * Use static method [LineLayer.defaultLineBlurAsExpression] to set the default property.
    *
@@ -1218,11 +1218,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    */
   val lineBorderWidth: Double?
     /**
-     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
      *
      * Use static method [LineLayer.defaultLineBorderWidth] to get the default property.
      *
@@ -1233,7 +1233,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     }
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * Use static method [LineLayer.defaultLineBorderWidth] to set the default property.
    *
@@ -1245,14 +1245,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * This is an Expression representation of "line-border-width".
    *
    */
   val lineBorderWidthAsExpression: Expression?
     /**
-     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
      *
      * Get the LineBorderWidth property as an Expression
      *
@@ -1262,7 +1262,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       getPropertyValueAsExpressionOrLiteralExpression("line-border-width")
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * Use static method [LineLayer.defaultLineBorderWidthAsExpression] to set the default property.
    *
@@ -3439,11 +3439,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+     * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
      */
     val defaultLineZOffset: Double?
       /**
-       * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+       * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
        *
        * Get the default value of LineZOffset property
        *
@@ -3454,7 +3454,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+     * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
      *
      * This is an Expression representation of "line-z-offset".
      *
@@ -3476,11 +3476,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+     * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      */
     val defaultLineBlur: Double?
       /**
-       * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+       * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
        *
        * Get the default value of LineBlur property
        *
@@ -3491,7 +3491,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+     * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
      *
      * This is an Expression representation of "line-blur".
      *
@@ -3647,11 +3647,11 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
      */
     val defaultLineBorderWidth: Double?
       /**
-       * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+       * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
        *
        * Get the default value of LineBorderWidth property
        *
@@ -3662,7 +3662,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
-     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+     * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
      *
      * This is an Expression representation of "line-border-width".
      *
@@ -4853,35 +4853,35 @@ interface LineLayerDsl {
   fun lineWidthUnit(lineWidthUnit: Expression): LineLayer
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    *
    * @param lineZOffset value of lineZOffset
    */
   fun lineZOffset(lineZOffset: Double = 0.0): LineLayer
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    *
    * @param lineZOffset value of lineZOffset as Expression
    */
   fun lineZOffset(lineZOffset: Expression): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * @param lineBlur value of lineBlur
    */
   fun lineBlur(lineBlur: Double = 0.0): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * @param lineBlur value of lineBlur as Expression
    */
   fun lineBlur(lineBlur: Expression): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * Set the LineBlur property transition options
    *
@@ -4890,7 +4890,7 @@ interface LineLayerDsl {
   fun lineBlurTransition(options: StyleTransition): LineLayer
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * DSL for [lineBlurTransition].
    */
@@ -4974,21 +4974,21 @@ interface LineLayerDsl {
   fun lineBorderGradientUseTheme(lineBorderGradientUseTheme: Expression): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * @param lineBorderWidth value of lineBorderWidth
    */
   fun lineBorderWidth(lineBorderWidth: Double = 0.0): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * @param lineBorderWidth value of lineBorderWidth as Expression
    */
   fun lineBorderWidth(lineBorderWidth: Expression): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * Set the LineBorderWidth property transition options
    *
@@ -4997,7 +4997,7 @@ interface LineLayerDsl {
   fun lineBorderWidthTransition(options: StyleTransition): LineLayer
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * DSL for [lineBorderWidthTransition].
    */

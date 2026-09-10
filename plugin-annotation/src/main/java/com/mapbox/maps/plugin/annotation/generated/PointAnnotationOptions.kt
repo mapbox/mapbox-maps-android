@@ -537,14 +537,14 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
   }
 
   /**
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    */
   var symbolZOffset: Double? = null
 
   /**
    * Set symbol-z-offset to initialise the pointAnnotation with.
    *
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    *
    * @param symbolZOffset the symbol-z-offset value
    * @return this

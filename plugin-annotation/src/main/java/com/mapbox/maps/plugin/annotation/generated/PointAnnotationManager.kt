@@ -2272,7 +2272,7 @@ class PointAnnotationManager(
   /**
    * The default symbolZOffset for all annotations added to this annotation manager if not overwritten by individual annotation settings.
    *
-   * Specifies an uniform elevation from the ground, in meters. Default value: 0. Minimum value: 0.
+   * Specifies an uniform elevation from the ground. Default value: 0. Minimum value: 0. The unit of symbolZOffset is in meters.
    */
   var symbolZOffset: Double?
     /**

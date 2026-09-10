@@ -69,11 +69,11 @@ public class PolylineAnnotationState private constructor(
    */
   public var lineJoin: LineJoin? by mutableStateOf(initialLineJoin)
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    */
   public var lineZOffset: Double? by mutableStateOf(initialLineZOffset)
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   public var lineBlur: Double? by mutableStateOf(initialLineBlur)
   /**
@@ -81,7 +81,7 @@ public class PolylineAnnotationState private constructor(
    */
   public var lineBorderColor: Color? by mutableStateOf(initialLineBorderColor)
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    */
   public var lineBorderWidth: Double? by mutableStateOf(initialLineBorderWidth)
   /**

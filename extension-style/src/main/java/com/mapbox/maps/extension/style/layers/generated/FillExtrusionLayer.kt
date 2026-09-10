@@ -237,12 +237,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   // Property getters and setters
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   val fillExtrusionEdgeRadius: Double?
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+     * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadius] to get the default property.
      *
@@ -253,7 +253,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadius] to set the default property.
    *
@@ -266,7 +266,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-edge-radius".
    *
@@ -274,7 +274,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionEdgeRadiusAsExpression: Expression?
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+     * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      *
      * Get the FillExtrusionEdgeRadius property as an Expression
      *
@@ -284,7 +284,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-edge-radius")
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionEdgeRadiusAsExpression] to set the default property.
    *
@@ -394,12 +394,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    */
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundRadius: Double?
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadius] to get the default property.
      *
@@ -410,7 +410,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadius] to set the default property.
    *
@@ -423,7 +423,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-radius".
    *
@@ -431,7 +431,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionAmbientOcclusionGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
      *
      * Get the FillExtrusionAmbientOcclusionGroundRadius property as an Expression
      *
@@ -441,7 +441,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-ambient-occlusion-ground-radius")
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionAmbientOcclusionGroundRadiusAsExpression] to set the default property.
    *
@@ -1592,12 +1592,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadius: Double?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to get the default property.
      *
@@ -1608,7 +1608,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadius] to set the default property.
    *
@@ -1621,7 +1621,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
    *
@@ -1629,7 +1629,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightGroundRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      *
      * Get the FillExtrusionFloodLightGroundRadius property as an Expression
      *
@@ -1639,7 +1639,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-ground-radius")
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightGroundRadiusAsExpression] to set the default property.
    *
@@ -1786,12 +1786,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    */
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadius: Double?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to get the default property.
      *
@@ -1802,7 +1802,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadius] to set the default property.
    *
@@ -1815,7 +1815,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
    *
@@ -1823,7 +1823,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   @MapboxExperimental
   val fillExtrusionFloodLightWallRadiusAsExpression: Expression?
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      *
      * Get the FillExtrusionFloodLightWallRadius property as an Expression
      *
@@ -1833,7 +1833,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-flood-light-wall-radius")
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionFloodLightWallRadiusAsExpression] to set the default property.
    *
@@ -2762,12 +2762,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "maxzoom").silentUnwrap()
 
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+     * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      */
     @MapboxExperimental
     val defaultFillExtrusionEdgeRadius: Double?
       /**
-       * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+       * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionEdgeRadius property
        *
@@ -2778,7 +2778,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+     * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-edge-radius".
      *
@@ -2852,12 +2852,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-ambient-occlusion-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionAmbientOcclusionGroundRadius: Double?
       /**
-       * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+       * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
        *
        * Get the default value of FillExtrusionAmbientOcclusionGroundRadius property
        *
@@ -2868,7 +2868,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+     * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
      *
      * This is an Expression representation of "fill-extrusion-ambient-occlusion-ground-radius".
      *
@@ -3507,12 +3507,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-ground-attenuation-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightGroundRadius: Double?
       /**
-       * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+       * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
        *
        * Get the default value of FillExtrusionFloodLightGroundRadius property
        *
@@ -3523,7 +3523,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+     * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-ground-radius".
      *
@@ -3609,12 +3609,12 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-flood-light-intensity-transition").silentUnwrap()
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      */
     @MapboxExperimental
     val defaultFillExtrusionFloodLightWallRadius: Double?
       /**
-       * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+       * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
        *
        * Get the default value of FillExtrusionFloodLightWallRadius property
        *
@@ -3625,7 +3625,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+     * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
      *
      * This is an Expression representation of "fill-extrusion-flood-light-wall-radius".
      *
@@ -4215,7 +4215,7 @@ interface FillExtrusionLayerDsl {
   // Property getters and setters
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius
    */
@@ -4223,7 +4223,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionEdgeRadius(fillExtrusionEdgeRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   * Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    *
    * @param fillExtrusionEdgeRadius value of fillExtrusionEdgeRadius as Expression
    */
@@ -4265,7 +4265,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * @param fillExtrusionAmbientOcclusionGroundRadius value of fillExtrusionAmbientOcclusionGroundRadius
    */
@@ -4273,7 +4273,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadius(fillExtrusionAmbientOcclusionGroundRadius: Double = 3.0): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * @param fillExtrusionAmbientOcclusionGroundRadius value of fillExtrusionAmbientOcclusionGroundRadius as Expression
    */
@@ -4281,7 +4281,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadius(fillExtrusionAmbientOcclusionGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * Set the FillExtrusionAmbientOcclusionGroundRadius property transition options
    *
@@ -4291,7 +4291,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionAmbientOcclusionGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   * The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    *
    * DSL for [fillExtrusionAmbientOcclusionGroundRadiusTransition].
    */
@@ -4642,7 +4642,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundAttenuationTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius
    */
@@ -4650,7 +4650,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * @param fillExtrusionFloodLightGroundRadius value of fillExtrusionFloodLightGroundRadius as Expression
    */
@@ -4658,7 +4658,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadius(fillExtrusionFloodLightGroundRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * Set the FillExtrusionFloodLightGroundRadius property transition options
    *
@@ -4668,7 +4668,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightGroundRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   * The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    *
    * DSL for [fillExtrusionFloodLightGroundRadiusTransition].
    */
@@ -4710,7 +4710,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightIntensityTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius
    */
@@ -4718,7 +4718,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Double = 0.0): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * @param fillExtrusionFloodLightWallRadius value of fillExtrusionFloodLightWallRadius as Expression
    */
@@ -4726,7 +4726,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadius(fillExtrusionFloodLightWallRadius: Expression): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * Set the FillExtrusionFloodLightWallRadius property transition options
    *
@@ -4736,7 +4736,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionFloodLightWallRadiusTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   * The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    *
    * DSL for [fillExtrusionFloodLightWallRadiusTransition].
    */

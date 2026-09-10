@@ -859,12 +859,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    */
   @MapboxExperimental
   val rasterElevation: Double?
     /**
-     * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+     * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
      *
      * Use static method [RasterLayer.defaultRasterElevation] to get the default property.
      *
@@ -875,7 +875,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
     }
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * Use static method [RasterLayer.defaultRasterElevation] to set the default property.
    *
@@ -888,7 +888,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   }
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * This is an Expression representation of "raster-elevation".
    *
@@ -896,7 +896,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
   @MapboxExperimental
   val rasterElevationAsExpression: Expression?
     /**
-     * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+     * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
      *
      * Get the RasterElevation property as an Expression
      *
@@ -906,7 +906,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       getPropertyValueAsExpressionOrLiteralExpression("raster-elevation")
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * Use static method [RasterLayer.defaultRasterElevationAsExpression] to set the default property.
    *
@@ -1842,12 +1842,12 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       get() = StyleManager.getStyleLayerPropertyDefaultValue("raster", "raster-contrast-transition").silentUnwrap()
 
     /**
-     * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+     * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
      */
     @MapboxExperimental
     val defaultRasterElevation: Double?
       /**
-       * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+       * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
        *
        * Get the default value of RasterElevation property
        *
@@ -1858,7 +1858,7 @@ class RasterLayer(override val layerId: String, val sourceId: String) : RasterLa
       }
 
     /**
-     * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+     * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
      *
      * This is an Expression representation of "raster-elevation".
      *
@@ -2431,7 +2431,7 @@ interface RasterLayerDsl {
   fun rasterContrastTransition(block: StyleTransition.Builder.() -> Unit): RasterLayer
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * @param rasterElevation value of rasterElevation
    */
@@ -2439,7 +2439,7 @@ interface RasterLayerDsl {
   fun rasterElevation(rasterElevation: Double = 0.0): RasterLayer
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * @param rasterElevation value of rasterElevation as Expression
    */
@@ -2447,7 +2447,7 @@ interface RasterLayerDsl {
   fun rasterElevation(rasterElevation: Expression): RasterLayer
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * Set the RasterElevation property transition options
    *
@@ -2457,7 +2457,7 @@ interface RasterLayerDsl {
   fun rasterElevationTransition(options: StyleTransition): RasterLayer
 
   /**
-   * Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   * Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    *
    * DSL for [rasterElevationTransition].
    */

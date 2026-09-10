@@ -239,10 +239,10 @@ public class AtmosphereState private constructor(
   private val verticalRangeState: MutableState<DoubleRangeValue> = mutableStateOf(verticalRange)
 
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the
-   * fog should gradually fade out. When both parameters are set to zero, the fog will be
-   * rendered without any vertical constraints.
-   * Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually
+   * fade out. When both parameters are set to zero, the fog will be rendered without any
+   * vertical constraints.
+   * Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    */
   public var verticalRange: DoubleRangeValue by verticalRangeState
 
@@ -250,7 +250,7 @@ public class AtmosphereState private constructor(
 
   /**
    * Defines the transition of [verticalRange].
-   * Default value: [0,0]. Minimum value: 0.
+   * Default value: [0,0]. Minimum value: 0. The unit of verticalRangeTransition is in meters.
    */
   public var verticalRangeTransition: Transition by verticalRangeTransitionState
 

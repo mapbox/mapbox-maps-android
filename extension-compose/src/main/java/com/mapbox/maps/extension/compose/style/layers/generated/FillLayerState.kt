@@ -286,7 +286,7 @@ private constructor(
   @MapboxExperimental
   private val fillZOffsetState: MutableState<DoubleValue> = mutableStateOf(initialFillZOffset)
   /**
-   *  Specifies an uniform elevation in meters. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0.
+   *  Specifies an uniform elevation. Note: If the value is zero, the layer will be rendered on the ground. Non-zero values will elevate the layer from the sea level, which can cause it to be rendered below the terrain. Default value: 0. Minimum value: 0. The unit of fillZOffset is in meters.
    */
   @MapboxExperimental
   public var fillZOffset: DoubleValue by fillZOffsetState

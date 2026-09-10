@@ -158,7 +158,7 @@ private constructor(
   @MapboxExperimental
   private val fillExtrusionEdgeRadiusState: MutableState<DoubleValue> = mutableStateOf(initialFillExtrusionEdgeRadius)
   /**
-   *  Radius of a fill extrusion edge in meters. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
+   *  Radius of a fill extrusion edge. If not zero, rounds extrusion edges for a smoother appearance. Default value: 0. Value range: [0, 1]
    */
   @MapboxExperimental
   public var fillExtrusionEdgeRadius: DoubleValue by fillExtrusionEdgeRadiusState
@@ -182,7 +182,7 @@ private constructor(
   @MapboxExperimental
   private val fillExtrusionAmbientOcclusionGroundRadiusState: MutableState<DoubleValue> = mutableStateOf(initialFillExtrusionAmbientOcclusionGroundRadius)
   /**
-   *  The extent of the ambient occlusion effect on the ground beneath the extruded buildings in meters. Default value: 3. Minimum value: 0.
+   *  The extent of the ambient occlusion effect on the ground beneath the extruded buildings. Default value: 3. Minimum value: 0. The unit of fillExtrusionAmbientOcclusionGroundRadius is in meters.
    */
   @MapboxExperimental
   public var fillExtrusionAmbientOcclusionGroundRadius: DoubleValue by fillExtrusionAmbientOcclusionGroundRadiusState
@@ -342,7 +342,7 @@ private constructor(
   @MapboxExperimental
   private val fillExtrusionFloodLightGroundRadiusState: MutableState<DoubleValue> = mutableStateOf(initialFillExtrusionFloodLightGroundRadius)
   /**
-   *  The extent of the flood light effect on the ground beneath the extruded buildings in meters. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
+   *  The extent of the flood light effect on the ground beneath the extruded buildings. Note: this experimental property is evaluated once per tile, during tile initialization. Changing the property value could trigger tile reload. The `feature-state` styling is deprecated and will get removed soon. Default value: 0. The unit of fillExtrusionFloodLightGroundRadius is in meters.
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightGroundRadius: DoubleValue by fillExtrusionFloodLightGroundRadiusState
@@ -374,7 +374,7 @@ private constructor(
   @MapboxExperimental
   private val fillExtrusionFloodLightWallRadiusState: MutableState<DoubleValue> = mutableStateOf(initialFillExtrusionFloodLightWallRadius)
   /**
-   *  The extent of the flood light effect on the walls of the extruded buildings in meters. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
+   *  The extent of the flood light effect on the walls of the extruded buildings. Default value: 0. Minimum value: 0. The unit of fillExtrusionFloodLightWallRadius is in meters.
    */
   @MapboxExperimental
   public var fillExtrusionFloodLightWallRadius: DoubleValue by fillExtrusionFloodLightWallRadiusState

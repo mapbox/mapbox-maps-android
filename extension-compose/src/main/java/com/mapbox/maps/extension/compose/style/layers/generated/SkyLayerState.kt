@@ -134,7 +134,7 @@ private constructor(
 
   private val skyGradientRadiusState: MutableState<DoubleValue> = mutableStateOf(initialSkyGradientRadius)
   /**
-   *  The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`. Default value: 90. Value range: [0, 180]
+   *  The angular distance from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`. Default value: 90. Value range: [0, 180]
    */
   public var skyGradientRadius: DoubleValue by skyGradientRadiusState
 

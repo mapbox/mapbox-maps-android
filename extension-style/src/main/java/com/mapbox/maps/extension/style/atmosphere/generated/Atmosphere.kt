@@ -770,11 +770,11 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
     setProperty(propertyValue)
   }
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    */
   val verticalRange: List<Double>?
     /**
-     * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+     * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
      *
      * @return vertical-range as List<Double>
      */
@@ -783,7 +783,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
     }
 
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    *
    * @param verticalRange as List<Double>
    */
@@ -822,13 +822,13 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   }
 
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    *
    * This is an Expression representation of "vertical-range".
    */
   val verticalRangeAsExpression: Expression?
     /**
-     * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+     * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
      *
      * Get the verticalRange property as an Expression
      *
@@ -844,7 +844,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
       return null
     }
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    *
    * @param verticalRange value of verticalRange as Expression
    */
@@ -1154,14 +1154,14 @@ interface AtmosphereDslReceiver {
    */
   fun starIntensityTransition(block: StyleTransition.Builder.() -> Unit): Atmosphere
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    *
    * @param verticalRange as List<Double>
    */
   fun verticalRange(verticalRange: List<Double> = listOf(0.0, 0.0)): Atmosphere
 
   /**
-   * An array of two number values, specifying the vertical range, measured in meters, over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0.
+   * An array of two number values, specifying the vertical range over which the fog should gradually fade out. When both parameters are set to zero, the fog will be rendered without any vertical constraints. Default value: [0,0]. Minimum value: 0. The unit of verticalRange is in meters.
    *
    * @param verticalRange value of verticalRange as Expression
    */

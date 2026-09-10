@@ -202,7 +202,7 @@ private constructor(
   @MapboxExperimental
   private val rasterElevationState: MutableState<DoubleValue> = mutableStateOf(initialRasterElevation)
   /**
-   *  Defines an uniform elevation from the base specified in raster-elevation-reference, in meters. Default value: 0. Minimum value: 0.
+   *  Defines an uniform elevation from the base specified in raster-elevation-reference. Default value: 0. Minimum value: 0. The unit of rasterElevation is in meters.
    */
   @MapboxExperimental
   public var rasterElevation: DoubleValue by rasterElevationState

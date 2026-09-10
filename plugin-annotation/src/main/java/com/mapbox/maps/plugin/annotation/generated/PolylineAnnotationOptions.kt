@@ -77,14 +77,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    */
   var lineZOffset: Double? = null
 
   /**
    * Set line-z-offset to initialise the polylineAnnotation with.
    *
-   * Vertical offset from ground, in meters. Not supported for globe projection at the moment. Default value: 0.
+   * Vertical offset from ground. Not supported for globe projection at the moment. Default value: 0. The unit of lineZOffset is in meters.
    *
    * @param lineZOffset the line-z-offset value
    * @return this
@@ -95,14 +95,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    */
   var lineBlur: Double? = null
 
   /**
    * Set line-blur to initialise the polylineAnnotation with.
    *
-   * Blur applied to the line, in pixels. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
+   * Blur applied to the line. Default value: 0. Minimum value: 0. The unit of lineBlur is in pixels.
    *
    * @param lineBlur the line-blur value
    * @return this
@@ -144,14 +144,14 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
   }
 
   /**
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    */
   var lineBorderWidth: Double? = null
 
   /**
    * Set line-border-width to initialise the polylineAnnotation with.
    *
-   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0.
+   * The width of the line border. A value of zero means no border. Default value: 0. Minimum value: 0. The unit of lineBorderWidth is in pixels.
    *
    * @param lineBorderWidth the line-border-width value
    * @return this
