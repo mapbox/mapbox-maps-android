@@ -6,6 +6,15 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.30.1 September 11, 2026
+## Dependencies
+* Update gl-native to [v11.30.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.1), common to [v24.30.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.1).
+
+
+## Bug fixes 🐞
+* Fix brightness-dependent paint properties not updating after a light or light preset change, such as switching lightPreset in the Standard style.
+* Fix Vulkan rendering corruption caused by staging buffers being freed before asynchronous texture uploads completed.
+
 # 11.30.0 September 03, 2026
 ## Dependencies
 * Update gl-native to [v11.30.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.0), common to [v24.30.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.0).
