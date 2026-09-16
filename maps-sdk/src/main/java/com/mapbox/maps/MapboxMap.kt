@@ -992,11 +992,6 @@ class MapboxMap :
    * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
    * might not represent the minimum bounding box.
    *
-   * This API isn't supported by Globe projection and will return a no-op result matching the world
-   * bounds.
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
-   *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
    * @return The [CoordinateBounds] object representing a given `camera`.
@@ -1010,11 +1005,6 @@ class MapboxMap :
    * Returns the [CoordinateBounds] for a given camera.
    *
    * This method is useful if the `camera` shows the antimeridian.
-   *
-   * This API isn't supported by Globe projection and will return a no-op result matching the world
-   * bounds.
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
@@ -1037,11 +1027,6 @@ class MapboxMap :
    *
    * See also {@link #coordinateBoundsZoomForCameraUnwrapped}
    *
-   * This API isn't supported by Globe projection and will return a no-op result matching the world
-   * bounds
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
-   *
    *  @return Returns the coordinate bounds and zoom for a given camera.
    */
   override fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom {
@@ -1057,11 +1042,6 @@ class MapboxMap :
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * This method is particularly useful, if the camera shows the antimeridian.
-   *
-   * This API isn't supported by Globe projection and will return a no-op result matching the
-   * world bounds.
-   * See [com.mapbox.maps.extension.style.projection.generated.setProjection]
-   * and [com.mapbox.maps.extension.style.projection.generated.getProjection]
    *
    *  @return Returns the unwrapped coordinate bounds and zoom for a given camera.
    */

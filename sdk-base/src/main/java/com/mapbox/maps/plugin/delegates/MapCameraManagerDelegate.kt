@@ -197,8 +197,6 @@ interface MapCameraManagerDelegate {
    * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
    * might not represent the minimum bounding box.
    *
-   * This API isn't supported by Globe projection.
-   *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
    * @return The [CoordinateBounds] object representing a given `camera`.
@@ -211,8 +209,6 @@ interface MapCameraManagerDelegate {
    *
    * This method is useful if the `camera` shows the antimeridian.
    *
-   * This API isn't supported by Globe projection.
-   *
    * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
    * @return The [CoordinateBounds] object representing a given `camera`.
@@ -221,8 +217,6 @@ interface MapCameraManagerDelegate {
 
   /**
    * Returns the coordinate bounds and zoom for a given camera.
-   *
-   * This API isn't supported by Globe projection.
    *
    * @param camera The camera information to use
    *
@@ -236,8 +230,6 @@ interface MapCameraManagerDelegate {
 
   /**
    * Returns the unwrapped coordinate bounds and zoom for a given camera.
-   *
-   * This API isn't supported by Globe projection.
    *
    * @param camera The camera information to use
    *
