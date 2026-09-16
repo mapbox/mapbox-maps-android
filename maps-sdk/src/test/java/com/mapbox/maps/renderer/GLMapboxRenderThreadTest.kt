@@ -4,6 +4,9 @@ import android.opengl.EGL14
 import android.opengl.EGLContext
 import android.util.Log
 import android.view.Surface
+import com.mapbox.bindgen.Value
+import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.countDownEvery
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logE
@@ -13,6 +16,8 @@ import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.shadows.ShadowLogThrottler
+import com.mapbox.maps.shadows.ShadowSettingsService
+import com.mapbox.maps.shadows.ShadowSettingsServiceFactory
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
@@ -31,6 +36,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -48,7 +54,9 @@ import java.util.concurrent.locks.ReentrantLock
 @RunWith(RobolectricTestRunner::class)
 @Config(
   shadows = [
-    ShadowLogThrottler::class
+    ShadowLogThrottler::class,
+    ShadowSettingsServiceFactory::class,
+    ShadowSettingsService::class
   ]
 )
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -63,6 +71,7 @@ class GLMapboxRenderThreadTest {
   private lateinit var surface: Surface
   private lateinit var fpsManager: FpsManager
   private lateinit var destroyCondition: Condition
+  private val loggedWarnings = mutableListOf<String>()
 
   private fun initRenderThread(mapboxRenderer: MapboxRenderer = mockk(relaxUnitFun = true)) {
     this.mapboxRenderer = mapboxRenderer
@@ -88,10 +97,19 @@ class GLMapboxRenderThreadTest {
     renderHandlerThread.start(mapboxRenderThread.handlerCallback)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     ShadowLog.stream = System.out
+    mockRenderLoopWatchdogEnabled(enabled = false)
     every { logE(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
-    every { logW(any(), any()) } answers { Log.e(firstArg(), secondArg()) }
+    every { logW(any(), any()) } answers { loggedWarnings.add(secondArg()); Log.e(firstArg(), secondArg()) }
     every { logI(any(), any()) } answers { Log.i(firstArg(), secondArg()) }
     every { logI(any(), any(), any()) } answers { Log.i(firstArg(), secondArg()) }
+  }
+
+  private fun mockRenderLoopWatchdogEnabled(enabled: Boolean) {
+    every { SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT) } returns mockk(relaxed = true) {
+      every { get("com.mapbox.maps.android.renderLoopWatchdogEnabled", Value(false)) } returns mockk() {
+        every { getValue() } returns Value(enabled)
+      }
+    }
   }
 
   private fun mockSurface() {
@@ -140,11 +158,17 @@ class GLMapboxRenderThreadTest {
       every { it.run() } answers { latch.countDown() }
     }
 
+  @Before
+  fun setup() {
+    mockkStatic(SettingsServiceFactory::class)
+  }
+
   @After
   fun cleanup() {
     cleanupShadows()
     renderHandlerThread.stop()
     unmockkStatic("com.mapbox.maps.MapboxLogger")
+    unmockkStatic(SettingsServiceFactory::class)
     unmockkAll()
   }
 
@@ -296,6 +320,83 @@ class GLMapboxRenderThreadTest {
     verifyOnce {
       eglCore.makeNothingCurrent()
     }
+  }
+
+  @Test
+  fun renderLoopWatchdogReportsStallWithoutInterfering() {
+    initRenderThread()
+    mockRenderLoopWatchdogEnabled(enabled = true)
+    provideValidSurface()
+    // Simulate a platform that never delivers the VSYNC callback to the render thread.
+    ShadowChoreographer.setPostFrameCallbackDelay(Int.MAX_VALUE)
+    pauseHandler()
+    mapboxRenderThread.resume()
+    // resume() requests a frame; prepareRenderFrame runs on the render thread and arms the callback
+    idleHandler()
+    assertTrue(mapboxRenderThread.awaitingNextVsync)
+    val frameCountBefore = mapboxRenderThread.frameCount
+    val requestStamp = mapboxRenderThread.frameRequestedUptimeMs
+    // Let the watchdog tick past the stall threshold on the main thread. No frame completed.
+    ShadowLooper.idleMainLooper(
+      MapboxRenderThread.RENDER_STALL_THRESHOLD_MS + MapboxRenderThread.RENDER_WATCHDOG_INTERVAL_MS,
+      TimeUnit.MILLISECONDS
+    )
+    // exactly one report: the second tick inside the stall falls within the log interval
+    assertEquals(1, loggedWarnings.count { it.startsWith("Render loop stall: frame pending") })
+    // diagnostic only: the pending frame and the render thread are left untouched
+    idleHandler()
+    assertEquals(frameCountBefore, mapboxRenderThread.frameCount)
+    assertTrue(mapboxRenderThread.awaitingNextVsync)
+    assertEquals(requestStamp, mapboxRenderThread.frameRequestedUptimeMs)
+    // once VSYNC flows again a frame completes and the watchdog reports recovery. The original
+    // callback armed under Int.MAX_VALUE never fires, so force a fresh one at a normal delay.
+    ShadowChoreographer.setPostFrameCallbackDelay(16)
+    mapboxRenderThread.awaitingNextVsync = false
+    mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+    idleHandler(16)
+    ShadowLooper.idleMainLooper(MapboxRenderThread.RENDER_WATCHDOG_INTERVAL_MS, TimeUnit.MILLISECONDS)
+    assertEquals(1, loggedWarnings.count { it.startsWith("Render loop recovered after") })
+    mapboxRenderThread.pause()
+  }
+
+  @Test
+  fun renderLoopWatchdogStaysQuietWhileFramesComplete() {
+    initRenderThread()
+    mockRenderLoopWatchdogEnabled(enabled = true)
+    provideValidSurface()
+    val choreographerCallbackDelayMs = 16L
+    ShadowChoreographer.setPostFrameCallbackDelay(choreographerCallbackDelayMs.toInt())
+    pauseHandler()
+    mapboxRenderThread.resume()
+    // Frames keep completing on the render thread while the watchdog ticks on the main thread.
+    repeat(5) {
+      mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
+      idleHandler(choreographerCallbackDelayMs)
+      ShadowLooper.idleMainLooper(MapboxRenderThread.RENDER_WATCHDOG_INTERVAL_MS, TimeUnit.MILLISECONDS)
+    }
+    assertTrue(mapboxRenderThread.frameCount >= 5)
+    assertTrue(loggedWarnings.none { it.startsWith("Render loop stall") })
+    mapboxRenderThread.pause()
+  }
+
+  @Test
+  fun renderLoopWatchdogNotRunningWhilePaused() {
+    initRenderThread()
+    mockRenderLoopWatchdogEnabled(enabled = true)
+    provideValidSurface()
+    ShadowChoreographer.setPostFrameCallbackDelay(Int.MAX_VALUE)
+    pauseHandler()
+    // watchdog started by resume(), a frame is requested and never completes ...
+    mapboxRenderThread.resume()
+    idleHandler()
+    assertTrue(mapboxRenderThread.awaitingNextVsync)
+    // ... but the map is paused before the threshold elapses: the watchdog must stop.
+    mapboxRenderThread.pause()
+    ShadowLooper.idleMainLooper(
+      MapboxRenderThread.RENDER_STALL_THRESHOLD_MS * 3,
+      TimeUnit.MILLISECONDS
+    )
+    assertTrue(loggedWarnings.none { it.startsWith("Render loop stall") })
   }
 
   @Test

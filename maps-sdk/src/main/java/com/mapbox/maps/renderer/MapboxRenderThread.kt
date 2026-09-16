@@ -10,9 +10,12 @@ import androidx.annotation.AnyThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
+import com.mapbox.bindgen.Value
 import com.mapbox.common.LogThrottler
 import com.mapbox.common.MapboxTracing
 import com.mapbox.common.MapboxTracing.MAPBOX_TRACE_ID
+import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -20,6 +23,7 @@ import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.locks.Condition
 import java.util.concurrent.locks.ReentrantLock
@@ -103,6 +107,11 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
    */
   private val destroyCondition: Condition
 
+  private val renderLoopWatchdogEnabled by lazy {
+    SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT)
+      .get(RENDER_LOOP_WATCHDOG_ENABLED_KEY, Value(false)).value == Value(true)
+  }
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
@@ -162,6 +171,27 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
+
+  /**
+   * Uptime (ms) at which the currently pending frame was requested, i.e. when [awaitingNextVsync]
+   * flipped to true. Read by the render-loop watchdog on the main thread.
+   */
+  @Volatile
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var frameRequestedUptimeMs = 0L
+
+  /**
+   * Number of [doFrame] invocations so far. Read by the render-loop watchdog to detect progress.
+   */
+  @Volatile
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var frameCount = 0L
+
+  // Render-loop watchdog state
+  private val watchdogRunning = AtomicBoolean(false)
+  private var watchdogStalledSinceUptimeMs = 0L
+  private var watchdogFrameCountAtStall = 0L
+  private var watchdogLastLogUptimeMs = 0L
 
   @OptIn(MapboxExperimental::class)
   internal var renderThreadStatsRecorder: RenderThreadStatsRecorder? = null
@@ -507,6 +537,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
       notifyRenderersSizeChanged(width, height)
     }
     Choreographer.getInstance().postFrameCallback(this)
+    frameRequestedUptimeMs = SystemClock.uptimeMillis()
     awaitingNextVsync = true
   }
 
@@ -647,6 +678,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
       if (renderThreadPrepared && !paused) {
         draw(frameTimeNanos)
       }
+      frameCount++
       awaitingNextVsync = false
       // It's critical to drain queue after setting `awaitingNextVsync` to false as some tasks may recursively schedule other tasks when executed.
       // With `awaitingNextVsync = false` we will always schedule recursive tasks for later execution
@@ -764,6 +796,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun pause() {
     paused = true
+    stopRenderLoopWatchdog()
     logI(TAG, "Renderer paused")
   }
 
@@ -776,6 +809,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     )
     // schedule render if we resume not after first create (e.g. bring map back to front)
     renderPreparedGuardedRun(::postPrepareRenderFrame)
+    startRenderLoopWatchdog()
   }
 
   /**
@@ -796,6 +830,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun destroy() {
     trace("destroy") {
       logI(TAG, "destroy")
+      stopRenderLoopWatchdog()
       surfaceProcessingLock.withLock {
         if (renderHandlerThread.isRunning) {
           renderHandlerThread.post {
@@ -851,6 +886,97 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  /**
+   * Render-loop watchdog, ticking on the main thread while the renderer is resumed.
+   *
+   * Detects a frame that has been pending ([awaitingNextVsync] is true) for longer than
+   * [RENDER_STALL_THRESHOLD_MS] without [doFrame] completing, while the renderer is prepared and
+   * the Android surface is valid. A stall like this leaves the map showing a stale frame although
+   * the rest of the process keeps working (NAVPOR-10989: ~80 s after a CarPlay to native switch).
+   *
+   * On detection it logs the render thread's stack trace, which tells apart the two possible
+   * causes (thread idle waiting for a VSYNC that never arrives vs. thread blocked inside the frame,
+   * e.g. in `eglSwapBuffers`). It deliberately does not attempt any recovery: masking the stall
+   * would hide the platform fault in a reproduction. Recovery, if wanted, belongs to the host.
+   */
+  private val renderLoopWatchdog = object : Runnable {
+    override fun run() {
+      if (!watchdogRunning.get()) {
+        return
+      }
+      checkRenderLoop()
+      if (watchdogRunning.get()) {
+        mainHandler.postDelayed(this, RENDER_WATCHDOG_INTERVAL_MS)
+      }
+    }
+  }
+
+  @UiThread
+  private fun startRenderLoopWatchdog() {
+    if (!renderLoopWatchdogEnabled) {
+      return
+    }
+    if (watchdogRunning.compareAndSet(false, true)) {
+      watchdogStalledSinceUptimeMs = 0L
+      mainHandler.postDelayed(renderLoopWatchdog, RENDER_WATCHDOG_INTERVAL_MS)
+    }
+  }
+
+  @UiThread
+  private fun stopRenderLoopWatchdog() {
+    if (!renderLoopWatchdogEnabled) {
+      return
+    }
+    watchdogRunning.set(false)
+    mainHandler.removeCallbacks(renderLoopWatchdog)
+    watchdogStalledSinceUptimeMs = 0L
+  }
+
+  /**
+   * Single watchdog check. Internal for tests; production code runs it via [renderLoopWatchdog].
+   */
+  @UiThread
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun checkRenderLoop() {
+    val now = SystemClock.uptimeMillis()
+    val pendingSinceMs = now - frameRequestedUptimeMs
+    val stalled = !paused &&
+      awaitingNextVsync &&
+      renderThreadPrepared &&
+      surface?.isValid == true &&
+      pendingSinceMs >= RENDER_STALL_THRESHOLD_MS
+    if (!stalled) {
+      if (watchdogStalledSinceUptimeMs != 0L) {
+        logW(
+          TAG,
+          "Render loop recovered after ${now - watchdogStalledSinceUptimeMs} ms " +
+            "(frames completed since stall: ${frameCount - watchdogFrameCountAtStall})"
+        )
+        watchdogStalledSinceUptimeMs = 0L
+      }
+      return
+    }
+    if (watchdogStalledSinceUptimeMs == 0L) {
+      watchdogStalledSinceUptimeMs = now
+      watchdogFrameCountAtStall = frameCount
+      // Force the interval check below to pass so the first stall is reported immediately,
+      // rather than being suppressed until RENDER_STALL_LOG_INTERVAL_MS of uptime has passed.
+      watchdogLastLogUptimeMs = now - RENDER_STALL_LOG_INTERVAL_MS
+    }
+    if (now - watchdogLastLogUptimeMs < RENDER_STALL_LOG_INTERVAL_MS) {
+      return
+    }
+    watchdogLastLogUptimeMs = now
+    logW(
+      TAG,
+      "Render loop stall: frame pending for $pendingSinceMs ms, stalled for " +
+        "${now - watchdogStalledSinceUptimeMs} ms, frameCount=$frameCount, " +
+        "renderEventQueue=${renderEventQueue.size}, nonRenderEventQueue=${nonRenderEventQueue.size}, " +
+        "render thread state=${renderHandlerThread.handlerThread.state}\n" +
+        renderHandlerThread.handlerThread.stackTrace.joinToString(separator = "\n") { "    at $it" }
+    )
+  }
+
   private fun drainQueue(originalQueue: ConcurrentLinkedQueue<RenderEvent>) {
     var event = originalQueue.poll()
     while (event != null) {
@@ -883,5 +1009,23 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
      * when coming back from background.
      */
     internal const val RESET_THREAD_SERVICE_TYPE_DELAY_MS = 300L
+    /**
+     * Render-loop watchdog tick interval on the main thread.
+     */
+    internal const val RENDER_WATCHDOG_INTERVAL_MS = 1_000L
+    /**
+     * A frame pending for at least this long while the renderer is resumed and the surface is valid
+     * is reported as a render loop stall.
+     */
+    internal const val RENDER_STALL_THRESHOLD_MS = 2_000L
+    /**
+     * Minimum interval between stall reports (each includes the render thread stack trace).
+     */
+    internal const val RENDER_STALL_LOG_INTERVAL_MS = 10_000L
+    /**
+     * Opt-in switch for the render-loop watchdog (diagnostic only -- it logs a stall report,
+     * it does not attempt recovery).
+     */
+    private const val RENDER_LOOP_WATCHDOG_ENABLED_KEY = "com.mapbox.maps.android.renderLoopWatchdogEnabled"
   }
 }
