@@ -8,6 +8,18 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix incorrect and missing metadata in style spec reference
 
+# 11.31.0 September 17, 2026
+## Dependencies
+* Update gl-native to [v11.31.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0), common to [v24.31.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0).
+
+
+## Bug fixes 🐞
+* Fix a crash when querying rendered or source features whose tile geometry has out-of-range coordinates.
+* Fix arbitrary view annotation placement when multiple world copies are visible at low zoom or near the antimeridian: the copy is now chosen by proximity to the viewport center, or by the coordinate a GeoJSON annotation names, and held while it stays placeable. Coordinates authored outside [-180, 180] no longer fail to place.
+* Fix an issue where setStyleSourceProperty on a style import's source had no effect: sources with matching URLs merge into the root-level one by default, and the change wasn't applied to it.
+* Fix brightness-dependent paint properties not updating after a light or light preset change, such as switching lightPreset in the Standard style.
+* Fix Vulkan rendering corruption caused by staging buffers being freed before asynchronous texture uploads completed.
+
 # 11.31.0-rc.1 September 07, 2026
 
 ## Breaking changes ⚠️
