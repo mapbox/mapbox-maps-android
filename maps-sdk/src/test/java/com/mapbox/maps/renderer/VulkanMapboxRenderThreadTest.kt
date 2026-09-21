@@ -2,11 +2,16 @@ package com.mapbox.maps.renderer
 
 import android.util.Log
 import android.view.Surface
+import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.SettingsService
+import com.mapbox.common.SettingsServiceFactory
 import com.mapbox.maps.IVulkanManager
 import com.mapbox.maps.NativeMapImpl
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
 import com.mapbox.maps.shadows.ShadowLogThrottler
+import com.mapbox.maps.shadows.ShadowSettingsService
+import com.mapbox.maps.shadows.ShadowSettingsServiceFactory
 import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import io.mockk.every
@@ -33,7 +38,9 @@ import java.util.concurrent.locks.ReentrantLock
 @Config(
   shadows = [
     ShadowLogThrottler::class,
-    ShadowSurfaceWrapper::class
+    ShadowSurfaceWrapper::class,
+    ShadowSettingsServiceFactory::class,
+    ShadowSettingsService::class
   ]
 )
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -48,6 +55,10 @@ class VulkanMapboxRenderThreadTest {
   private lateinit var surface: Surface
 
   private fun initRenderThread() {
+    mockkStatic(SettingsServiceFactory::class)
+    every { SettingsServiceFactory.getInstance(any()) } returns mockk<SettingsService> {
+      every { get(any(), any()) } answers { ExpectedFactory.createValue(secondArg()) }
+    }
     mapboxRenderer = mockk(relaxUnitFun = true)
     vulkanManager = mockk(relaxUnitFun = true)
     nativeMap = mockk(relaxUnitFun = true)

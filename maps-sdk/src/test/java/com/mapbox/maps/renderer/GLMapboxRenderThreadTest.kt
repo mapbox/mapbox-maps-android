@@ -4,7 +4,9 @@ import android.opengl.EGL14
 import android.opengl.EGLContext
 import android.util.Log
 import android.view.Surface
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
+import com.mapbox.common.SettingsService
 import com.mapbox.common.SettingsServiceFactory
 import com.mapbox.common.SettingsServiceStorageType
 import com.mapbox.countDownEvery
@@ -75,6 +77,10 @@ class GLMapboxRenderThreadTest {
 
   private fun initRenderThread(mapboxRenderer: MapboxRenderer = mockk(relaxUnitFun = true)) {
     this.mapboxRenderer = mapboxRenderer
+    mockkStatic(SettingsServiceFactory::class)
+    every { SettingsServiceFactory.getInstance(any()) } returns mockk<SettingsService> {
+      every { get(any(), any()) } answers { ExpectedFactory.createValue(secondArg()) }
+    }
     mockEglCore()
     mockWidgetRenderer()
     renderHandlerThread = RenderHandlerThread(mapName = "")
