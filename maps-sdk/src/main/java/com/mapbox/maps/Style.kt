@@ -224,6 +224,15 @@ class Style internal constructor(
    * Sets style import config.
    * This method can be used to perform batch update for a style import configurations.
    *
+   * Note: this replaces the whole config of the given style import. Any config property that is
+   * not present in [configs] is reset to the default value defined by the style import schema.
+   * To update only a subset of the properties, use [setStyleImportConfigProperty] for each
+   * property that should change.
+   *
+   * Note: unlike [setStyleImportConfigProperty], this method does not apply the transition
+   * duration defined in the style import schema, so switching between the two changes the
+   * transition behavior as well.
+   *
    * @param importId A style import identifier.
    * @param configs A map of style import configurations.
    *
