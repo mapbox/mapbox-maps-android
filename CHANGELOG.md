@@ -5,8 +5,26 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.32.0-rc.1 September 21, 2026
 ## Bug fixes 🐞
 * Fix incorrect and missing metadata in style spec reference
+* Fix incorrect usage of the active-anchor expression being silently allowed in filters, paint properties, and non-symbol layers.
+* Fix symbol occlusion opacity transitions not honoring the configured placement transition duration, reducing flickering from frequent visibility changes.
+
+## Breaking changes ⚠️
+* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
+* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
+
+## Features ✨ and improvements 🏁
+* Fix inaccurate latitude/longitude bounds calculation for the camera when using globe projection.
+
+## 💫️ Other
+* [tile_store] Trigger region loading progress callbacks when the load process gets rate limited
+
+## Dependencies
+* Update gl-native to [v11.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1), common to [v24.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1).
+
 
 # 11.31.0 September 17, 2026
 ## Dependencies
