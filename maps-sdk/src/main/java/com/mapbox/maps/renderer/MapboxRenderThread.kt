@@ -154,7 +154,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   /**
    * Throttler for high-frequency render thread logs to prevent logcat spam.
    */
-  private val logThrottler = LogThrottler(resolveLogThrottleIntervalMs())
+  private val logThrottler = LogThrottler(LOG_THROTTLE_INTERVAL_MS)
 
   @RenderThread
   private var width: Int = 0
@@ -1000,10 +1000,9 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
      */
     internal const val RETRY_DELAY_MS = 50L
     /**
-     * Default interval for throttling high-frequency render thread logs (in milliseconds),
-     * used when [LOG_THROTTLE_INTERVAL_SETTINGS_KEY] is unset or holds a non-Long value.
+     * Interval for throttling high-frequency render thread logs (in milliseconds).
      */
-    internal const val LOG_THROTTLE_INTERVAL_MS = 300L
+    private const val LOG_THROTTLE_INTERVAL_MS = 300L
     /**
      * Delay before calling resetThreadServiceType() on resume to ensure CPU affinity is properly set.
      * This delay helps address timing issues where CPU affinity might not be set immediately
@@ -1028,31 +1027,5 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
      * it does not attempt recovery).
      */
     private const val RENDER_LOOP_WATCHDOG_ENABLED_KEY = "com.mapbox.maps.android.renderLoopWatchdogEnabled"
-
-    /**
-     * Override for the render thread's log throttle interval. Not a typed Kotlin API, but the
-     * key string is a de facto contract once used -- treat renaming or removing it like a public
-     * API change. Read once per [MapboxRenderThread] construction; setting it after a `MapView`
-     * already exists has no effect on that instance -- set it before creating the `MapView`
-     * (e.g. a warm-up instance built before attaching it to the UI):
-     *
-     * ```kotlin
-     * SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-     *   .set("com.mapbox.maps.android.renderThreadLogThrottleIntervalMs", Value(5_000L))
-     * ```
-     *
-     * A missing key, a lookup error, or a non-Long value at that key all default to
-     * [LOG_THROTTLE_INTERVAL_MS].
-     */
-    private const val LOG_THROTTLE_INTERVAL_SETTINGS_KEY =
-      "com.mapbox.maps.android.renderThreadLogThrottleIntervalMs"
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun resolveLogThrottleIntervalMs(): Long {
-      val result = SettingsServiceFactory
-        .getInstance(SettingsServiceStorageType.NON_PERSISTENT)
-        .get(LOG_THROTTLE_INTERVAL_SETTINGS_KEY, Value(LOG_THROTTLE_INTERVAL_MS))
-      return (result.value?.contents as? Long) ?: LOG_THROTTLE_INTERVAL_MS
-    }
   }
 }
