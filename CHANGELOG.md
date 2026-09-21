@@ -8,8 +8,26 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
 
+
+# 11.32.0-rc.1 September 21, 2026
 ## Bug fixes 🐞
 * Fix incorrect and missing metadata in style spec reference
+* Fix incorrect usage of the active-anchor expression being silently allowed in filters, paint properties, and non-symbol layers.
+* Fix symbol occlusion opacity transitions not honoring the configured placement transition duration, reducing flickering from frequent visibility changes.
+
+## Breaking changes ⚠️
+* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
+* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
+
+## Features ✨ and improvements 🏁
+* Fix inaccurate latitude/longitude bounds calculation for the camera when using globe projection.
+
+## 💫️ Other
+* [tile_store] Trigger region loading progress callbacks when the load process gets rate limited
+
+## Dependencies
+* Update gl-native to [v11.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1), common to [v24.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1).
+
 
 # 11.31.0 September 17, 2026
 ## Dependencies
