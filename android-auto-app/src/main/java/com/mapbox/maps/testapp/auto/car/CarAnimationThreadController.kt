@@ -15,9 +15,9 @@ import com.mapbox.maps.threading.AnimationThreadController
 @OptIn(MapboxExperimental::class)
 class CarAnimationThreadController : MapboxCarMapObserver {
   override fun onAttached(mapboxCarMapSurface: MapboxCarMapSurface) {
-    if (deviceRequiresBackgroundThreadAnimations()) {
+//    if (deviceRequiresBackgroundThreadAnimations()) {
       AnimationThreadController.useBackgroundThread()
-    }
+//    }
   }
 
   override fun onDetached(mapboxCarMapSurface: MapboxCarMapSurface) {
