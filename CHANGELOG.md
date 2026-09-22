@@ -7,29 +7,29 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.32.0-rc.1 September 21, 2026
+## Breaking changes ⚠️
+* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
+
+## Features ✨ and improvements 🏁
+* [tile_store] Trigger region loading progress callbacks when the load process gets rate limited.
+
 ## Bug fixes 🐞
 * Fix incorrect and missing metadata in style spec reference
 * Fix incorrect usage of the active-anchor expression being silently allowed in filters, paint properties, and non-symbol layers.
 * Fix symbol occlusion opacity transitions not honoring the configured placement transition duration, reducing flickering from frequent visibility changes.
-
-## Breaking changes ⚠️
-* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
-* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
-
-## Features ✨ and improvements 🏁
 * Fix inaccurate latitude/longitude bounds calculation for the camera when using globe projection.
-
-## 💫️ Other
-* [tile_store] Trigger region loading progress callbacks when the load process gets rate limited
 
 ## Dependencies
 * Update gl-native to [v11.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1), common to [v24.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1).
 
-
 # 11.31.0 September 17, 2026
-## Dependencies
-* Update gl-native to [v11.31.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0), common to [v24.31.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0).
+## Breaking changes ⚠️
+* Remove the experimental `raster-allow-draping` property from `RasterLayer`.
 
+## Features ✨ and improvements 🏁
+* Add experimental MapOptions.emissiveColorPrecision to control emissive color accuracy for draped layers.
+* Deprecated `TileStoreImportOptions.getArchiveFileDescriptors()` in favor of `getArchiveFileDescriptorsArray()`, which avoids per-element boxing. The deprecated getter may now return an immutable list when there are 0 or 1 descriptors.
+* Deprecated `CustomLayerRenderParameters.getProjectionMatrix()` in favor of `getProjectionMatrixArray()`, which avoids per-element boxing.
 
 ## Bug fixes 🐞
 * Fix a crash when querying rendered or source features whose tile geometry has out-of-range coordinates.
@@ -37,6 +37,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix an issue where setStyleSourceProperty on a style import's source had no effect: sources with matching URLs merge into the root-level one by default, and the change wasn't applied to it.
 * Fix brightness-dependent paint properties not updating after a light or light preset change, such as switching lightPreset in the Standard style.
 * Fix Vulkan rendering corruption caused by staging buffers being freed before asynchronous texture uploads completed.
+* Ignored SDF images from text-field don't affect collision detection anymore
+* Fix requests hanging on stale HTTP/2 connections by proactively evicting unresponsive connections and network transitions.
+
+## Dependencies
+* Update gl-native to [v11.31.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0), common to [v24.31.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.0).
 
 # 11.31.0-rc.1 September 07, 2026
 
