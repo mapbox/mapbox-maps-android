@@ -114,7 +114,7 @@ public abstract class SourceState internal constructor(
   }
 
   internal fun attachToLayer(layerId: String, mapboxMap: MapboxMap) {
-    logD(TAG, "$sourceType - $sourceId attachToLayer: layerId=$layerId")
+    logD(TAG) { "$sourceType - $sourceId attachToLayer: layerId=$layerId" }
     this.mapboxMap?.let {
       if (it !== mapboxMap) {
         logW(TAG, "The source state should not be used across multiple map instances!")
@@ -128,7 +128,7 @@ public abstract class SourceState internal constructor(
   }
 
   internal fun detachFromLayer(layerId: String, mapboxMap: MapboxMap) {
-    logD(TAG, "$sourceType $sourceId detachFromLayer: layerId=$layerId")
+    logD(TAG) { "$sourceType $sourceId detachFromLayer: layerId=$layerId" }
     associatedLayers.remove(layerId)
     if (associatedLayers.isEmpty() && !sourceAddedExternally) {
       detachFrom(mapboxMap)
@@ -141,7 +141,7 @@ public abstract class SourceState internal constructor(
    * source properties changes.
    */
   private fun attachTo(mapboxMap: MapboxMap) {
-    logD(TAG, "attachTo() called for $sourceId")
+    logD(TAG) { "attachTo() called for $sourceId" }
     val sourceAdded = if (mapboxMap.styleSourceExists(sourceId)) {
       /*
       If the sourceId is already present then it means that either:
@@ -185,7 +185,7 @@ public abstract class SourceState internal constructor(
    * @return false if the source was already added or if it failed to be added.
    */
   private fun addSource(mapboxMap: MapboxMap, cachedProperties: Map<String, Value>): Boolean {
-    logD(TAG, "Adding source: $sourceType - $sourceId")
+    logD(TAG) { "Adding source: $sourceType - $sourceId" }
     if (mapboxMap.styleSourceExists(sourceId)) {
       logW(TAG, "Source already exists: $sourceId")
       throw IllegalStateException("Source $sourceId already exists in map $mapboxMap")
@@ -203,14 +203,14 @@ public abstract class SourceState internal constructor(
     // Get the most recent list of properties (builder or not) and their values
     properties.putAll(propertiesFlowsToCollect.replayCache.associate { it.name to it.valueFlow.value })
 
-    logD(TAG, "Setting all properties in one go: $properties")
+    logD(TAG) { "Setting all properties in one go: $properties" }
     return mapboxMap.addStyleSource(sourceId, Value.valueOf(properties)).fold(
       {
         logE(TAG, "Failed to add source: $it")
         false
       },
       {
-        logD(TAG, "Added source: $sourceType - $sourceId")
+        logD(TAG) { "Added source: $sourceType - $sourceId" }
         if (isGeoJsonSource && geoJSONData != GeoJSONData.DEFAULT) {
           // Set the GeoJSON data after the source is added
           // Note that if the source was a pre-existing one outside of compose we will override it
@@ -227,7 +227,7 @@ public abstract class SourceState internal constructor(
   private fun CoroutineScope.launchCollectGeoJsonData(mapboxMap: MapboxMap) =
     launch(Dispatchers.IO) {
       geoJSONDataChannel.consumeEach { data ->
-        logD(TAG, "setGeoJsonSourceData: $data")
+        logD(TAG) { "setGeoJsonSourceData: $data" }
 
         mapboxMap.setStyleGeoJSONSourceData(
           sourceId = sourceId,
@@ -258,7 +258,7 @@ public abstract class SourceState internal constructor(
    */
   private fun CoroutineScope.launchCollectProperty(details: PropertyDetails, mapboxMap: MapboxMap) =
     launch {
-      logD(TAG, "startCollectingPropertyFlows: start collecting $details")
+      logD(TAG) { "startCollectingPropertyFlows: start collecting $details" }
       // Builder property are updated differently than normal ones
       if (details.isBuilderProperty) {
         details.valueFlow.collectBuilderProperty(details.name, mapboxMap)
@@ -269,7 +269,7 @@ public abstract class SourceState internal constructor(
 
   private suspend fun PropertyValueFlow.collectBuilderProperty(name: String, mapboxMap: MapboxMap) {
     collect { value ->
-      logD(TAG, "collectBuilderProperty: name=$name, value=$value ...")
+      logD(TAG) { "collectBuilderProperty: name=$name, value=$value ..." }
       // Before removing the source we request its values from gl-native if it is a Source that was
       // added outside of compose.
       val cachedProperties: Map<String, Value> = if (sourceAddedExternally) {
@@ -294,12 +294,12 @@ public abstract class SourceState internal constructor(
 
   private suspend fun PropertyValueFlow.collectProperty(name: String, mapboxMap: MapboxMap) {
     collect { value ->
-      logD(TAG, "settingProperty: name=$name, value=$value ...")
+      logD(TAG) { "settingProperty: name=$name, value=$value ..." }
       mapboxMap.setStyleSourceProperty(sourceId, name, value)
         .onError { error ->
           logW(TAG, "Failed to set source property $name as $value on $sourceId: $error")
         }.onValue {
-          logD(TAG, "settingProperty: name=$name, value=$value executed")
+          logD(TAG) { "settingProperty: name=$name, value=$value executed" }
         }
     }
   }
@@ -320,7 +320,7 @@ public abstract class SourceState internal constructor(
   }
 
   private fun removeSource(mapboxMap: MapboxMap) {
-    logD(TAG, "Removing $sourceType source: $sourceId")
+    logD(TAG) { "Removing $sourceType source: $sourceId" }
     mapboxMap.removeStyleSourceUnchecked(sourceId).onError {
       logW(TAG, "Failed to remove $sourceType Source $sourceId: $it")
     }
@@ -350,7 +350,7 @@ public abstract class SourceState internal constructor(
     if (currentFlow != null) {
       currentFlow.valueFlow.value = value
     } else {
-      logD(TAG, "setProperty: emitting new property to listen to: $name")
+      logD(TAG) { "setProperty: emitting new property to listen to: $name" }
       // Add the new property to the set of property flows we want to collect
       val details = PropertyDetails(name, isBuilderProperty, MutableStateFlow(value))
       propertiesFlowsToCollect.tryEmit(details)
