@@ -27,6 +27,7 @@ public class StandardStyleConfigurationState private constructor(
   initialColorCommercial: ColorValue,
   initialColorEducation: ColorValue,
   initialColorGreenspace: ColorValue,
+  initialColorHdRoads: ColorValue,
   initialColorIndoorLabelHighlight: ColorValue,
   initialColorIndoorLabelSelect: ColorValue,
   initialColorIndustrial: ColorValue,
@@ -50,6 +51,7 @@ public class StandardStyleConfigurationState private constructor(
   initialShow3dLandmarks: BooleanValue,
   initialShow3dTrees: BooleanValue,
   initialShowAdminBoundaries: BooleanValue,
+  initialShowHdRoads: BooleanValue,
   initialShowIndoor: BooleanValue,
   initialShowIndoorLabels: BooleanValue,
   initialShowLandmarkIconLabels: BooleanValue,
@@ -72,6 +74,7 @@ public class StandardStyleConfigurationState private constructor(
     initialColorCommercial = ColorValue.INITIAL,
     initialColorEducation = ColorValue.INITIAL,
     initialColorGreenspace = ColorValue.INITIAL,
+    initialColorHdRoads = ColorValue.INITIAL,
     initialColorIndoorLabelHighlight = ColorValue.INITIAL,
     initialColorIndoorLabelSelect = ColorValue.INITIAL,
     initialColorIndustrial = ColorValue.INITIAL,
@@ -95,6 +98,7 @@ public class StandardStyleConfigurationState private constructor(
     initialShow3dLandmarks = BooleanValue.INITIAL,
     initialShow3dTrees = BooleanValue.INITIAL,
     initialShowAdminBoundaries = BooleanValue.INITIAL,
+    initialShowHdRoads = BooleanValue.INITIAL,
     initialShowIndoor = BooleanValue.INITIAL,
     initialShowIndoorLabels = BooleanValue.INITIAL,
     initialShowLandmarkIconLabels = BooleanValue.INITIAL,
@@ -113,7 +117,7 @@ public class StandardStyleConfigurationState private constructor(
   public var showPedestrianRoads: BooleanValue by mutableStateOf(initialShowPedestrianRoads)
 
   /**
-   * Show or hide all 3D objects, including buildings, landmarks, and trees.
+   * Show or hide all 3D objects, including buildings, landmarks, indoor areas, and trees.
    */
   public var show3dObjects: BooleanValue by mutableStateOf(initialShow3dObjects)
 
@@ -156,6 +160,11 @@ public class StandardStyleConfigurationState private constructor(
    * Set a custom color for greenspaces such as forests, parks, and woods.
    */
   public var colorGreenspace: ColorValue by mutableStateOf(initialColorGreenspace)
+
+  /**
+   * Set a custom color for detailed lane surfaces.
+   */
+  public var colorHdRoads: ColorValue by mutableStateOf(initialColorHdRoads)
 
   /**
    * Set a custom color for indoor labels when setting highlight state.
@@ -273,6 +282,11 @@ public class StandardStyleConfigurationState private constructor(
   public var showAdminBoundaries: BooleanValue by mutableStateOf(initialShowAdminBoundaries)
 
   /**
+   * Show or hide detailed lanes.
+   */
+  public var showHdRoads: BooleanValue by mutableStateOf(initialShowHdRoads)
+
+  /**
    * Show or hide indoor areas in major airports.
    */
   public var showIndoor: BooleanValue by mutableStateOf(initialShowIndoor)
@@ -315,6 +329,7 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_COLOR_COMMERCIAL = "colorCommercial"
     internal const val CONFIG_COLOR_EDUCATION = "colorEducation"
     internal const val CONFIG_COLOR_GREENSPACE = "colorGreenspace"
+    internal const val CONFIG_COLOR_HD_ROADS = "colorHdRoads"
     internal const val CONFIG_COLOR_INDOOR_LABEL_HIGHLIGHT = "colorIndoorLabelHighlight"
     internal const val CONFIG_COLOR_INDOOR_LABEL_SELECT = "colorIndoorLabelSelect"
     internal const val CONFIG_COLOR_INDUSTRIAL = "colorIndustrial"
@@ -338,6 +353,7 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_SHOW3D_LANDMARKS = "show3dLandmarks"
     internal const val CONFIG_SHOW3D_TREES = "show3dTrees"
     internal const val CONFIG_SHOW_ADMIN_BOUNDARIES = "showAdminBoundaries"
+    internal const val CONFIG_SHOW_HD_ROADS = "showHdRoads"
     internal const val CONFIG_SHOW_INDOOR = "showIndoor"
     internal const val CONFIG_SHOW_INDOOR_LABELS = "showIndoorLabels"
     internal const val CONFIG_SHOW_LANDMARK_ICON_LABELS = "showLandmarkIconLabels"

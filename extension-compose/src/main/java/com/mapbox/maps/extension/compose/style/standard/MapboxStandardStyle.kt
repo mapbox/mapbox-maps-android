@@ -234,6 +234,9 @@ public fun MapboxStandardStyle(
             if (colorGreenspace.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_GREENSPACE, colorGreenspace.value)
             }
+            if (colorHdRoads.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_HD_ROADS, colorHdRoads.value)
+            }
             if (colorIndoorLabelHighlight.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_INDOOR_LABEL_HIGHLIGHT, colorIndoorLabelHighlight.value)
             }
@@ -302,6 +305,9 @@ public fun MapboxStandardStyle(
             }
             if (showAdminBoundaries.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_SHOW_ADMIN_BOUNDARIES, showAdminBoundaries.value)
+            }
+            if (showHdRoads.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_SHOW_HD_ROADS, showHdRoads.value)
             }
             if (showIndoor.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_SHOW_INDOOR, showIndoor.value)

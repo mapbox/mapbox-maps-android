@@ -5551,6 +5551,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorCommercial();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorEducation();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorGreenspace();
+    method public com.mapbox.maps.extension.compose.style.ColorValue getColorHdRoads();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndoorLabelHighlight();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndoorLabelSelect();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndustrial();
@@ -5575,6 +5576,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dObjects();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShow3dTrees();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowAdminBoundaries();
+    method public com.mapbox.maps.extension.compose.style.BooleanValue getShowHdRoads();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowIndoor();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowIndoorLabels();
     method public com.mapbox.maps.extension.compose.style.BooleanValue getShowLandmarkIconLabels();
@@ -5590,6 +5592,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setColorCommercial(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorEducation(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorGreenspace(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorHdRoads(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorIndoorLabelHighlight(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorIndoorLabelSelect(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorIndustrial(com.mapbox.maps.extension.compose.style.ColorValue);
@@ -5614,6 +5617,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setShow3dObjects(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShow3dTrees(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowAdminBoundaries(com.mapbox.maps.extension.compose.style.BooleanValue);
+    method public void setShowHdRoads(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowIndoor(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowIndoorLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
     method public void setShowLandmarkIconLabels(com.mapbox.maps.extension.compose.style.BooleanValue);
@@ -5629,6 +5633,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorCommercial;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorEducation;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorGreenspace;
+    property public final com.mapbox.maps.extension.compose.style.ColorValue colorHdRoads;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndoorLabelHighlight;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndoorLabelSelect;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndustrial;
@@ -5653,6 +5658,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dObjects;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue show3dTrees;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showAdminBoundaries;
+    property public final com.mapbox.maps.extension.compose.style.BooleanValue showHdRoads;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showIndoor;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showIndoorLabels;
     property public final com.mapbox.maps.extension.compose.style.BooleanValue showLandmarkIconLabels;
