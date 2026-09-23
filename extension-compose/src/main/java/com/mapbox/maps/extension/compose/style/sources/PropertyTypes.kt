@@ -328,15 +328,7 @@ public data class GeoJSONData(internal val data: GeoJSONSourceData) {
   /**
    * Override toString method.
    */
-  override fun toString(): String {
-    return when (data.typeInfo) {
-      GeoJSONSourceData.Type.GEOMETRY -> data.geometry.toJson()
-      GeoJSONSourceData.Type.FEATURE -> data.feature.toJson()
-      GeoJSONSourceData.Type.LIST -> data.list.toString()
-      GeoJSONSourceData.Type.STRING -> data.string
-      else -> "unknown"
-    }
-  }
+  override fun toString(): String = dataContents?.toString() ?: "unknown"
 
   /**
    * Public companion object.
