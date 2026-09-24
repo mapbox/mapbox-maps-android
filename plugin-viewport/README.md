@@ -50,7 +50,7 @@ allprojects {
 }
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-viewport:11.31.0'
+  implementation 'com.mapbox.plugin:maps-viewport:11.31.1'
 }
 ```
 
