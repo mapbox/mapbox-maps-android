@@ -12,7 +12,6 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.match
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
 
 /**
  * Add point data to a style from a vector tileset and use the match and
@@ -32,7 +31,7 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
       style(Style.LIGHT) {
 
         +vectorSource("ethnicity-source") {
-          url("http://api.mapbox.com/v4/examples.8fgz4egr.json?access_token=" + getString(R.string.mapbox_access_token))
+          url("mapbox://examples.8fgz4egr")
         }
 
         +circleLayer("population", "ethnicity-source") {

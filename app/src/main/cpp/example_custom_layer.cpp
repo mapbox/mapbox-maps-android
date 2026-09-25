@@ -1,7 +1,10 @@
 #include <GLES2/gl2.h>
 #include <android/log.h>
 #include <jni.h>
+#include <algorithm>
 #include <sstream>
+#include <stdexcept>
+#include <vector>
 
 // DEBUGGING
 
@@ -87,10 +90,10 @@ void checkLinkStatus(GLuint program) {
     if (isLinked == GL_FALSE) {
         GLint maxLength = 0;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
-        GLchar infoLog[maxLength];
-        glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
-        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, &infoLog[0]);
-        throw Error(infoLog);
+        std::vector<GLchar> infoLog(std::max(maxLength, 1), '\0');
+        glGetProgramInfoLog(program, infoLog.size(), nullptr, infoLog.data());
+        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, infoLog.data());
+        throw Error(infoLog.data());
     }
 
 }
@@ -103,10 +106,10 @@ void checkCompileStatus(GLuint shader) {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
 
         // The maxLength includes the NULL character
-        GLchar errorLog[maxLength];
-        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, &errorLog[0]);
-        throw Error(errorLog);
+        std::vector<GLchar> errorLog(std::max(maxLength, 1), '\0');
+        glGetShaderInfoLog(shader, errorLog.size(), nullptr, errorLog.data());
+        __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, errorLog.data());
+        throw Error(errorLog.data());
     }
 }
 

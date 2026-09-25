@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- api.open-notify.org (SpaceStationLocationActivity) is only served over HTTP. -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">api.open-notify.org</domain>
+    </domain-config>
+</network-security-config>

@@ -121,7 +121,7 @@ class TileJsonActivity : AppCompatActivity() {
     const val DEFAULT_RASTER_TILE_DELAY = 0.0
     const val TILE_REQUEST = "tile"
     const val NETWORK_REQUEST = "network"
-    const val OSM_RASTER_TILE_URL = "http://tile.openstreetmap.org/{z}/{x}/{y}.png"
+    const val OSM_RASTER_TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
     const val RASTER_TILE_SIZE_PIXELS = 256L
 
     val MERCATOR_BOUNDS = listOf(-180.0, -85.0, 180.0, 85.0)

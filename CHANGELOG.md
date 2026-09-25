@@ -3,10 +3,16 @@
 Mapbox welcomes participation and contributions from everyone.
 
 
-# 10.19.2
+# 10.20.0
 ## Bug fixes 🐞
 * [lifecycle] Fix native memory leak when MapView is recreated without finishing the hosting Activity
 * Fix location component crash by filtering non-finite (NaN/Infinity) bearing, coordinate, and accuracy values in `DefaultLocationProvider` and the location puck manager.
+
+## Features ✨ and improvements 🏁
+* Fewer main-thread stalls when updating large GeoJSON sources. Each map update hands the renderer a snapshot of the style that includes GeoJSON source data. Destroying the previous snapshot used to run on the main thread or the renderer thread (when placement was updated) and could take more than 2ms with heavy GeoJSON. That destruction now runs on the worker thread pool.
+
+## Dependencies
+* Update gl-native to v10.20.0 and common to v23.13.1.
 
 # 10.19.1 October 8, 2025
 ## Bug fixes 🐞
