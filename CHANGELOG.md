@@ -6,15 +6,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.31.1 September 24, 2026
-## Dependencies
-* Update gl-native to [v11.31.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.1), common to [v24.31.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.1).
-
-
-## Bug fixes 🐞
-* Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
-* Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
-
 # 11.31.0 September 17, 2026
 
 ## Breaking changes ⚠️
