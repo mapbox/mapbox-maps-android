@@ -78,9 +78,19 @@ mapboxLibrary {
   }
 }
 
+val mapsSdkVersion: String = project.property("VERSION_NAME") as String
+val ndkMajor: String? = project.findProperty("ndkMajor")?.toString()
+val mapsSdkArtifact =
+  if (ndkMajor != null && ndkMajor != commonLibs.versions.defaultNdkMajor.get()) {
+    "android-ndk$ndkMajor"
+  } else {
+    "android"
+  }
+val mapsSdk = "com.mapbox.maps:$mapsSdkArtifact:$mapsSdkVersion"
+
 dependencies {
   dependencies {
-    compileOnly(project(":maps-sdk"))
+    compileOnly(mapsSdk)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
@@ -95,13 +105,13 @@ dependencies {
     androidTestImplementation(libs.androidx.testJUnit)
     androidTestImplementation(libs.androidx.espresso)
     androidTestImplementation(libs.androidx.uiAutomator)
-    androidTestImplementation(project(":maps-sdk"))
+    androidTestImplementation(mapsSdk)
     androidTestImplementation(libs.compose.uiTest)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mapbox.annotations)
 
     testImplementation(libs.bundles.base.dependenciesTests)
-    testImplementation(project(":maps-sdk"))
+    testImplementation(mapsSdk)
     testImplementation(libs.junit)
     testImplementation(libs.asyncInflater)
     testImplementation(libs.coroutinesTest)
@@ -109,8 +119,12 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle.kts")
-  from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/track-public-apis.gradle")
-  from("$rootDir/gradle/dependency-updates.gradle")
+  from("$rootDir/../gradle/ktlint.gradle.kts")
+  from("$rootDir/../gradle/lint.gradle")
+  from("$rootDir/../gradle/track-public-apis.gradle")
+  from("$rootDir/../gradle/dependency-updates.gradle")
+}
+
+tasks.matching { it.name == "apiCheck" }.configureEach {
+  mustRunAfter("checkReleaseApiMetalava")
 }

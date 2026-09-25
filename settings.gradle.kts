@@ -20,10 +20,8 @@ dependencyResolutionManagement {
 
 include(
   ":android-auto-app",
-  ":compose-app",
   ":app",
   ":extension-androidauto",
-  ":extension-compose",
   ":extension-style",
   ":extension-style-lint-rules",
   ":extension-localization",

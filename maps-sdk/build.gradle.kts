@@ -16,6 +16,10 @@ mapboxLibrary {
     if (commonApiDocFile.exists()) {
       extraApiDocs.addAll(commonApiDocFile.readLines())
     }
+    val composeApiDocFile = rootProject.file("api-doc-list-maps-compose.txt")
+    if (composeApiDocFile.exists()) {
+      extraApiDocs.addAll(composeApiDocFile.readLines())
+    }
     val gesturesApiDocFile = rootProject.file("api-doc-list-maps-gestures.txt")
     if (gesturesApiDocFile.exists()) {
       extraApiDocs.addAll(gesturesApiDocFile.readLines())

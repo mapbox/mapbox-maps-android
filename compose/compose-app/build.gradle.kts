@@ -69,9 +69,20 @@ android {
   }
 }
 
+val mapsSdkVersion: String = project.property("VERSION_NAME") as String
+val ndkMajor: String? = project.findProperty("ndkMajor")?.toString()
+val mapsSdkArtifact =
+  if (ndkMajor != null && ndkMajor != commonLibs.versions.defaultNdkMajor.get()) {
+    "android-ndk$ndkMajor"
+  } else {
+    "android"
+  }
+
 dependencies {
-  implementation(project(":maps-sdk"))
+  implementation("com.mapbox.maps:$mapsSdkArtifact:$mapsSdkVersion")
   implementation(project(":extension-compose"))
+// Uncomment this instead to use the released artifact instead of the local project source
+// implementation("com.mapbox.extension:maps-compose:${mapsSdkVersion}")
   implementation(platform(libs.compose.bom))
   implementation(libs.compose.ui)
   implementation(libs.compose.material)
@@ -94,7 +105,7 @@ dependencies {
 }
 
 project.apply {
-  from("$rootDir/gradle/ktlint.gradle.kts")
-  from("$rootDir/gradle/lint.gradle")
-  from("$rootDir/gradle/dependency-updates.gradle")
+  from("$rootDir/../gradle/ktlint.gradle.kts")
+  from("$rootDir/../gradle/lint.gradle")
+  from("$rootDir/../gradle/dependency-updates.gradle")
 }

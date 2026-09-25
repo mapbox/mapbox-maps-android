@@ -81,6 +81,37 @@ To verify if everything has been correctly setup so far, you can run the followi
 $ make sdk-build
 ```
 
+### Building the Compose extension
+
+The Compose extension lives under `compose/` as a **standalone Gradle project**. It includes two sub-modules:
+
+- `extension-compose` - the published library
+- `compose-app` - demo application
+
+Open the project in Android Studio by importing the `compose/` folder.
+
+#### Building against local `maps-sdk` changes
+
+The compose project always resolves `com.mapbox.maps:android` as a Maven artifact (version =
+`VERSION_NAME` in `compose/gradle.properties`). If you changed `maps-sdk` and no matching
+artifact is published yet, publish your local build to Maven Local first — `mavenLocal()` is
+the first repository in the compose project, so it wins over the remote registries:
+
+```
+$ ./gradlew publishToMavenLocal
+$ cd compose && ./gradlew :compose-app:assembleDebug
+```
+
+#### Make targets (from `compose/`)
+
+```
+$ make check        # ktlint + lint
+$ make fix          # ktlintFormat
+$ make test         # unit tests
+$ make check-api    # validate public API
+$ make update-api   # regenerate API snapshot after intentional API changes
+```
+
 ### Building with the Vulkan renderer
 
 The Vulkan rendering backend is published as a separate gl-native artifact
@@ -92,7 +123,9 @@ the command line:
 
 ```
 $ ./gradlew :app:assembleDebug -Pmapbox.abis=arm64-v8a -PvulkanEnabled=true
-$ ./gradlew :compose-app:assembleDebug -Pmapbox.abis=arm64-v8a -PvulkanEnabled=true
+# For the compose app: publish the Vulkan-flavoured maps-sdk to Maven Local, then build
+$ ./gradlew publishToMavenLocal -Pmapbox.abis=arm64-v8a -PvulkanEnabled=true
+$ cd compose && ./gradlew :compose-app:assembleDebug -Pmapbox.abis=arm64-v8a
 ```
 
 …or flip the default in the root `gradle.properties`:
@@ -168,6 +201,9 @@ be performed. The bots named `check-api-*` will validate if there's any API brea
 the existing one, `check-api-*` tasks will start to fail. `make update-api` should be executed manually,
 the resulting diff in `.api` file should be verified: only signatures you expected to change should be changed.
 * Commit the resulting `.api` diff along with code changes.
+
+For `extension-compose`, run `make update-api` from the `compose/` directory; the API snapshot lives
+in `compose/extension-compose/api/`.
 
 ## Code
 

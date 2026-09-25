@@ -10,7 +10,7 @@ test:
 .PHONY: sdk-build
 sdk-build:
 	./gradlew assembleRelease -x app:assembleRelease -x android-auto-app:assembleRelease\
-		-x compose-app:assembleRelease -x extension-style-app:assembleRelease
+		-x extension-style-app:assembleRelease
 
 .PHONY: proguard
 proguard:
@@ -54,12 +54,14 @@ generate-sanity-test:
 check-api:
 	# validate api surface for both metalava and kotlin binary compatibility validator
 	./gradlew checkApi;
+	$(MAKE) -C compose check-api
 
 # Metalava & kotlin binary compatibility validator: update API
 .PHONY: update-api
 update-api:
 	# generate api file for both metalava and kotlin binary compatibility validator
 	./gradlew updateApi;
+	$(MAKE) -C compose update-api
 
 # Metalava: update metalava version
 .PHONY: update-metalava
