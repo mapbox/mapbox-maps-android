@@ -3,7 +3,8 @@
 Mapbox welcomes participation and contributions from everyone.
 
 
-# 10.20.0
+
+# 10.20.0 September 25, 2026
 ## Bug fixes 🐞
 * [lifecycle] Fix native memory leak when MapView is recreated without finishing the hosting Activity
 * Fix location component crash by filtering non-finite (NaN/Infinity) bearing, coordinate, and accuracy values in `DefaultLocationProvider` and the location puck manager.
@@ -13,6 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Update gl-native to v10.20.0 and common to v23.13.1.
+
 
 # 10.19.1 October 8, 2025
 ## Bug fixes 🐞
