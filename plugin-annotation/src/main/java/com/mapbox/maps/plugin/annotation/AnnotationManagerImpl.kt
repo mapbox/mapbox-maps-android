@@ -24,6 +24,7 @@ import com.mapbox.maps.PlatformEventType
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.SourceDataLoadedType
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
@@ -86,6 +87,21 @@ internal constructor(
   internal val dataDrivenPropertyDefaultValues: JsonObject = JsonObject()
 
   private val interactionsCancelableSet = mutableSetOf<Cancelable>()
+
+  // Interim until the style owns image lifetime natively: images are removed only after
+  // the source push that dropped their annotations has been applied.
+  private val pendingStyleImageRemovals = mutableSetOf<String>()
+  private var sourceDataIdCounter = 0L
+  private val sourceUpdateIds = SourceUpdateIds()
+  private val dragSourceUpdateIds = SourceUpdateIds()
+  private var sourceDataLoadedCancelable: Cancelable? = null
+
+  /** Id of the last update sent to a source vs the last one the map reported applied. */
+  private class SourceUpdateIds {
+    var lastSentId = 0L
+    var lastAppliedId = 0L
+    val isApplied get() = lastAppliedId >= lastSentId
+  }
 
   /**
    * The list of layer ids that's associated with the annotation manager.
@@ -219,6 +235,10 @@ internal constructor(
     if (layer is SymbolLayer || layer is CircleLayer) {
       // Only apply cluster for PointAnnotations or CircleAnnotations
       initClusterLayers(styleManager, annotationSourceOptions, typeName, id)
+    }
+    if (layer is SymbolLayer) {
+      // only point annotations own style images
+      subscribeSourceDataLoaded()
     }
     updateSource()
     registerInteractions()
@@ -611,6 +631,7 @@ internal constructor(
    * Delete all the added annotations
    */
   override fun deleteAll() {
+    styleImages.parkAllForRemoval()
     if (annotationMap.isNotEmpty()) {
       annotationMap.clear()
       updateSource()
@@ -619,7 +640,7 @@ internal constructor(
       dragAnnotationMap.clear()
       updateDragSource()
     }
-    styleImages.clear()
+    flushPendingStyleImageRemovals() // nothing pushed → nothing to wait for
   }
 
   private fun updateDragSource() {
@@ -629,11 +650,11 @@ internal constructor(
         TAG,
         "Can't update dragSource: drag source or layer has not been added to style."
       )
-      return
+    } else {
+      addIconToStyle(style, dragAnnotationMap.values)
+      setFeaturesWithUpdateId(dragSource, dragSourceUpdateIds, dragAnnotationMap.values)
     }
-    addIconToStyle(style, dragAnnotationMap.values)
-    val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
-    dragSource.featureCollection(FeatureCollection.fromFeatures(features))
+    flushPendingStyleImageRemovals()
   }
 
   /**
@@ -643,11 +664,51 @@ internal constructor(
     val style = delegateProvider.mapStyleManagerDelegate
     if (!style.styleSourceExists(source.sourceId) || !style.styleLayerExists(layer.layerId)) {
       logW(TAG, "Can't update source: source or layer has not been added to style.")
-      return
+    } else {
+      addIconToStyle(style, annotationMap.values)
+      setFeaturesWithUpdateId(source, sourceUpdateIds, annotationMap.values)
     }
-    addIconToStyle(style, annotationMap.values)
-    val features = convertAnnotationsToFeatures(annotationMap.values)
-    source.featureCollection(FeatureCollection.fromFeatures(features))
+    flushPendingStyleImageRemovals()
+  }
+
+  private fun setFeaturesWithUpdateId(
+    target: GeoJsonSource,
+    updateIds: SourceUpdateIds,
+    annotations: Collection<T>
+  ) {
+    updateIds.lastSentId = ++sourceDataIdCounter
+    target.featureCollection(
+      FeatureCollection.fromFeatures(convertAnnotationsToFeatures(annotations)),
+      updateIds.lastSentId.toString()
+    )
+  }
+
+  private fun subscribeSourceDataLoaded() {
+    sourceDataLoadedCancelable = delegateProvider.mapListenerDelegate.subscribeSourceDataLoaded { event ->
+      // A superseded push only acks under the newest id, so track the highest applied id per source.
+      val id = event.dataId?.toLongOrNull() ?: return@subscribeSourceDataLoaded
+      if (event.type != SourceDataLoadedType.METADATA) return@subscribeSourceDataLoaded
+      val updateIds = when (event.sourceId) {
+        source.sourceId -> sourceUpdateIds
+        dragSource.sourceId -> dragSourceUpdateIds
+        else -> return@subscribeSourceDataLoaded
+      }
+      updateIds.lastAppliedId = maxOf(updateIds.lastAppliedId, id)
+      flushPendingStyleImageRemovals()
+    }
+  }
+
+  /** Removes parked images once both sources have applied their last push. */
+  private fun flushPendingStyleImageRemovals() {
+    if (pendingStyleImageRemovals.isEmpty() || !sourceUpdateIds.isApplied || !dragSourceUpdateIds.isApplied) return
+    val style = delegateProvider.mapStyleManagerDelegate
+    pendingStyleImageRemovals.forEach { imageId ->
+      // re-referenced while parked: a new annotation reuses the live image
+      if (!styleImages.isReferenced(imageId) && style.hasStyleImage(imageId)) {
+        style.removeStyleImage(imageId)
+      }
+    }
+    pendingStyleImageRemovals.clear()
   }
 
   // Add a bitmap to the style.
@@ -772,6 +833,14 @@ internal constructor(
       }
     }
     styleImages.clear()
+    pendingStyleImageRemovals.forEach { imageId ->
+      if (style.hasStyleImage(imageId)) {
+        style.removeStyleImage(imageId)
+      }
+    }
+    pendingStyleImageRemovals.clear()
+    sourceDataLoadedCancelable?.cancel()
+    sourceDataLoadedCancelable = null
 
     unregisterInteractions()
     annotationMap.clear()
@@ -1024,7 +1093,7 @@ internal constructor(
 
     /**
      * Decrements the reference count for the icon image of [annotation].
-     * When the count reaches zero the image is removed from the map style.
+     * When the count reaches zero the image is parked for removal.
      */
     fun remove(annotation: T) {
       val imageId = (annotation as? PointAnnotation)?.iconImageInternal ?: return
@@ -1032,13 +1101,19 @@ internal constructor(
       val newCount = (images[imageId] ?: return) - 1
       if (newCount <= 0) {
         images.remove(imageId)
-        if (style.hasStyleImage(imageId)) {
-          style.removeStyleImage(imageId)
-        }
+        pendingStyleImageRemovals.add(imageId)
       } else {
         images[imageId] = newCount
       }
     }
+
+    /** Parks every tracked image for removal and clears the reference-count map. */
+    fun parkAllForRemoval() {
+      pendingStyleImageRemovals.addAll(images.keys)
+      images.clear()
+    }
+
+    fun isReferenced(imageId: String) = images.containsKey(imageId)
 
     /**
      * Removes all tracked images from the map style and clears the reference-count map.

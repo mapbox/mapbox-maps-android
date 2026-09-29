@@ -55,6 +55,7 @@ class AnnotationPluginImplTest {
     every { delegateProvider.mapCameraManagerDelegate } returns mockk()
     every { delegateProvider.mapFeatureQueryDelegate } returns mockk()
     every { delegateProvider.mapInteractionDelegate } returns mockk(relaxed = true)
+    every { delegateProvider.mapListenerDelegate } returns mockk(relaxed = true)
     every { gesturesPlugin.getGesturesManager().moveGestureDetector } returns mockk(relaxed = true)
 
     annotationPluginImpl = AnnotationPluginImpl()

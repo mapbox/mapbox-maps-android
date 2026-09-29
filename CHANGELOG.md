@@ -9,6 +9,11 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
 
 
+# 11.32.0
+## Bug fixes 🐞
+* Fix point annotation icons disappearing a frame before the annotations when deleting them. Annotation source updates now carry a numeric `dataId` in `SourceDataLoaded`.
+
+
 # 11.32.0-rc.1 September 21, 2026
 ## Bug fixes 🐞
 * Fix incorrect and missing metadata in style spec reference

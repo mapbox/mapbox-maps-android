@@ -73,12 +73,13 @@ class CircleAnnotationManagerTest {
     every { delegateProvider.mapInteractionDelegate } returns mapInteractionDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mockk()
     every { mapInteractionDelegate.addInteraction(any()) } returns Cancelable { }
+    every { delegateProvider.mapListenerDelegate.subscribeSourceDataLoaded(any()) } returns Cancelable { }
     every { gesturesPlugin.getGesturesManager().moveGestureDetector } returns moveGestureDetector
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
-    every { source.featureCollection(any()) } answers { source }
+    every { source.featureCollection(any(), any()) } answers { source }
 
     manager = CircleAnnotationManager(delegateProvider)
     manager.layer = layer
