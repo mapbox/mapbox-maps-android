@@ -2136,11 +2136,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    */
   val fillExtrusionOpacity: Double?
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
      *
      * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacity] to get the default property.
      *
@@ -2151,7 +2151,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
     }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacity] to set the default property.
    *
@@ -2163,14 +2163,14 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
   }
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * This is an Expression representation of "fill-extrusion-opacity".
    *
    */
   val fillExtrusionOpacityAsExpression: Expression?
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
      *
      * Get the FillExtrusionOpacity property as an Expression
      *
@@ -2180,7 +2180,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       getPropertyValueAsExpressionOrLiteralExpression("fill-extrusion-opacity")
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * Use static method [FillExtrusionLayer.defaultFillExtrusionOpacityAsExpression] to set the default property.
    *
@@ -3801,11 +3801,11 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       get() = StyleManager.getStyleLayerPropertyDefaultValue("fill-extrusion", "fill-extrusion-line-width-transition").silentUnwrap()
 
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
      */
     val defaultFillExtrusionOpacity: Double?
       /**
-       * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+       * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
        *
        * Get the default value of FillExtrusionOpacity property
        *
@@ -3816,7 +3816,7 @@ class FillExtrusionLayer(override val layerId: String, val sourceId: String) : F
       }
 
     /**
-     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+     * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
      *
      * This is an Expression representation of "fill-extrusion-opacity".
      *
@@ -4824,21 +4824,21 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionLineWidthTransition(block: StyleTransition.Builder.() -> Unit): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity
    */
   fun fillExtrusionOpacity(fillExtrusionOpacity: Double = 1.0): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * @param fillExtrusionOpacity value of fillExtrusionOpacity as Expression
    */
   fun fillExtrusionOpacity(fillExtrusionOpacity: Expression): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * Set the FillExtrusionOpacity property transition options
    *
@@ -4847,7 +4847,7 @@ interface FillExtrusionLayerDsl {
   fun fillExtrusionOpacityTransition(options: StyleTransition): FillExtrusionLayer
 
   /**
-   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   * The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    *
    * DSL for [fillExtrusionOpacityTransition].
    */

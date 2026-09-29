@@ -425,7 +425,7 @@ private constructor(
 
   private val fillExtrusionOpacityState: MutableState<DoubleValue> = mutableStateOf(initialFillExtrusionOpacity)
   /**
-   *  The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. Default value: 1. Value range: [0, 1]
+   *  The opacity of the entire fill extrusion layer. This is rendered on a per-layer, not per-feature, basis, and data-driven styling is not available. When consecutive `fill-extrusion` and `building` layers are semi-transparent, they are rendered together: they occlude each other and are only transparent against other layers. If another layer type is placed between them, each layer is blended separately and later layers are visible through earlier ones. Default value: 1. Value range: [0, 1]
    */
   public var fillExtrusionOpacity: DoubleValue by fillExtrusionOpacityState
 
