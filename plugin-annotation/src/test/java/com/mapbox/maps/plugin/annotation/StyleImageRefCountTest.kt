@@ -10,6 +10,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.SourceDataLoaded
+import com.mapbox.maps.SourceDataLoadedCallback
+import com.mapbox.maps.SourceDataLoadedType
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -22,6 +25,7 @@ import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapInteractionDelegate
+import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import io.mockk.Runs
 import io.mockk.every
@@ -46,6 +50,7 @@ class StyleImageRefCountTest {
   private val style: MapboxStyleManager = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapInteractionDelegate: MapInteractionDelegate = mockk()
+  private val mapListenerDelegate: MapListenerDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: SymbolLayer = mockk()
   private val source: GeoJsonSource = mockk()
@@ -53,6 +58,9 @@ class StyleImageRefCountTest {
   private val dragSource: GeoJsonSource = mockk()
 
   private lateinit var manager: PointAnnotationManager
+
+  /** Every `SourceDataLoaded` subscription made by a manager under test. */
+  private val sourceDataLoadedCallbacks = mutableListOf<SourceDataLoadedCallback>()
 
   private val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
   private val bitmap2 = Bitmap.createBitmap(60, 60, Bitmap.Config.ARGB_8888)
@@ -76,17 +84,21 @@ class StyleImageRefCountTest {
     every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(any()) } returns gesturesPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapInteractionDelegate } returns mapInteractionDelegate
+    every { delegateProvider.mapListenerDelegate } returns mapListenerDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mockk()
     every { mapInteractionDelegate.addInteraction(any()) } returns Cancelable { }
+    every {
+      mapListenerDelegate.subscribeSourceDataLoaded(capture(sourceDataLoadedCallbacks))
+    } returns Cancelable { }
     every { gesturesPlugin.getGesturesManager().moveGestureDetector } returns mockk()
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
-    every { source.featureCollection(any()) } answers { source }
+    every { source.featureCollection(any(), any()) } answers { source }
     every { dragLayer.layerId } returns "draglayer0"
     every { dragSource.sourceId } returns "dragsource0"
-    every { dragSource.featureCollection(any()) } answers { dragSource }
+    every { dragSource.featureCollection(any(), any()) } answers { dragSource }
     val expected = mockk<Expected<String, None>>(relaxed = true)
     every { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) } returns expected
     every { expected.error } returns null
@@ -115,6 +127,7 @@ class StyleImageRefCountTest {
       every { style.hasStyleImage(imageId) } returns true
 
       manager.delete(annotation)
+      ackSourceData()
 
       verify(exactly = 1) { style.removeStyleImage(imageId) }
     }
@@ -133,6 +146,7 @@ class StyleImageRefCountTest {
       every { style.hasStyleImage(imageIdB) } returns true
 
       manager.deleteAll()
+      ackSourceData()
 
       verify(exactly = 1) { style.removeStyleImage(imageIdA) }
       verify(exactly = 1) { style.removeStyleImage(imageIdB) }
@@ -172,6 +186,7 @@ class StyleImageRefCountTest {
 
       manager.delete(annotationA)
       manager.delete(annotationB)
+      ackSourceData()
 
       verify(exactly = 1) { style.removeStyleImage(imageId) }
     }
@@ -197,6 +212,7 @@ class StyleImageRefCountTest {
 
       // Once B is also deleted, the image should be released.
       manager.delete(annotationB)
+      ackSourceData()
       verify(exactly = 1) { style.removeStyleImage(imageId) }
     }
   }
@@ -241,6 +257,7 @@ class StyleImageRefCountTest {
       every { style.hasStyleImage(imageId) } returns true
 
       manager.deleteAll()
+      ackSourceData()
 
       verify(exactly = 1) { style.removeStyleImage(imageId) }
     }
@@ -266,6 +283,7 @@ class StyleImageRefCountTest {
       // Cache the ID and delete A - image removed from style
       val cachedId = annotationA.iconImageInternal!!
       manager.delete(annotationA)
+      ackSourceData()
       every { style.hasStyleImage(imageId) } returns false
       verify(exactly = 1) { style.addStyleImage(imageId, any(), any(), any(), any(), any(), any()) }
 
@@ -299,10 +317,10 @@ class StyleImageRefCountTest {
     val dragSource2: GeoJsonSource = mockk()
     every { layer2.layerId } returns "layer1"
     every { source2.sourceId } returns "source1"
-    every { source2.featureCollection(any()) } answers { source2 }
+    every { source2.featureCollection(any(), any()) } answers { source2 }
     every { dragLayer2.layerId } returns "draglayer1"
     every { dragSource2.sourceId } returns "dragsource1"
-    every { dragSource2.featureCollection(any()) } answers { dragSource2 }
+    every { dragSource2.featureCollection(any(), any()) } answers { dragSource2 }
     every { layer2.iconImage(any<Expression>()) } answers { layer2 }
     every { dragLayer2.iconImage(any<Expression>()) } answers { dragLayer2 }
 
@@ -333,6 +351,7 @@ class StyleImageRefCountTest {
 
       // Manager 1 deletes all — removes only its own style image
       manager.deleteAll()
+      ackSourceData()
 
       verify(exactly = 1) { style.removeStyleImage(imageId1) }
       // Manager 2's style image must NOT be removed
@@ -354,6 +373,7 @@ class StyleImageRefCountTest {
 
       // Delete A → image removed (ref count → 0, removeStyleImage called)
       manager.delete(annotationA)
+      ackSourceData()
       every { style.hasStyleImage(imageId) } returns false
 
       // Create B with the same bitmap → image must be re-uploaded
@@ -365,7 +385,222 @@ class StyleImageRefCountTest {
 
       // Delete B → second removal
       manager.delete(annotationB)
+      ackSourceData()
       verify(exactly = 2) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  @Test
+  fun `delete does not remove style image before the source update is applied`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotation = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotation)
+
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+
+      ackSourceData()
+
+      verify(exactly = 1) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  @Test
+  fun `deleteAll does not remove style images before the source update is applied`() {
+    val imageIdA = imageIdFor(bitmap)
+    val imageIdB = imageIdFor(bitmap2)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageIdA) } returns false
+      every { style.hasStyleImage(imageIdB) } returns false
+      createWithBitmap(bitmap)
+      createWithBitmap(bitmap2)
+      every { style.hasStyleImage(imageIdA) } returns true
+      every { style.hasStyleImage(imageIdB) } returns true
+
+      manager.deleteAll()
+
+      verify(exactly = 0) { style.removeStyleImage(imageIdA) }
+      verify(exactly = 0) { style.removeStyleImage(imageIdB) }
+
+      ackSourceData()
+
+      verify(exactly = 1) { style.removeStyleImage(imageIdA) }
+      verify(exactly = 1) { style.removeStyleImage(imageIdB) }
+    }
+  }
+
+  /** An unrelated source acking its own data must not release our parked images. */
+  @Test
+  fun `ack for a different source does not flush pending removals`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotation = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotation)
+      ackSourceData(sourceIds = listOf("some-other-source"))
+
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /** A TILE event says nothing about a GeoJSON data push. */
+  @Test
+  fun `tile type ack does not flush pending removals`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotation = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotation)
+      ackSourceData(type = SourceDataLoadedType.TILE)
+
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /**
+   * While a removal is pending the image is still in the style, so a new annotation with the
+   * same bitmap reuses it. Flushing blindly would leave that annotation icon-less for good.
+   */
+  @Test
+  fun `pending removal is skipped when the image is referenced again before the ack`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotationA = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotationA)
+      // Same bitmap -> same image id -> ref count back to 1 while removal is parked.
+      createWithBitmap(bitmap)
+
+      ackSourceData()
+
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /** Same as above via deleteAll, which parks every image at once. */
+  @Test
+  fun `deleteAll pending removal is skipped when the image is referenced again before the ack`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.deleteAll()
+      val annotationB = createWithBitmap(bitmap)
+
+      ackSourceData()
+
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+
+      // The re-referenced image is released normally once its new owner goes.
+      manager.delete(annotationB)
+      ackSourceData()
+
+      verify(exactly = 1) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /**
+   * An ack for an older push must not release an image parked by a later one. Highest applied id,
+   * not exact match: a superseded push never acks under its own id.
+   */
+  @Test
+  fun `stale ack does not flush pending removals`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotation = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotation)
+      // "0" is below every data id the manager can have issued.
+      ackSourceData(dataId = "0")
+
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+
+      ackSourceData()
+
+      verify(exactly = 1) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /** Teardown releases parked images; layers and sources are gone, no ack will come. */
+  @Test
+  fun `onDestroy flushes pending removals without an ack`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotation = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotation)
+      verify(exactly = 0) { style.removeStyleImage(imageId) }
+
+      manager.onDestroy()
+
+      verify(exactly = 1) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /** Teardown also releases images still used by live annotations. */
+  @Test
+  fun `onDestroy removes images of live annotations`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.onDestroy()
+
+      verify(exactly = 1) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /** Pushes made before the first delete must be acked too, or a later flush waits forever. */
+  @Test
+  fun `subscribes to SourceDataLoaded on construction`() {
+    verify(exactly = 1) { mapListenerDelegate.subscribeSourceDataLoaded(any()) }
+  }
+
+  /** A source that was never pushed is settled by definition. */
+  @Test
+  fun `ack on main source alone flushes when drag source was never pushed`() {
+    val imageId = imageIdFor(bitmap)
+    withBitmapStatics {
+      every { style.hasStyleImage(imageId) } returns false
+      val annotation = createWithBitmap(bitmap)
+      every { style.hasStyleImage(imageId) } returns true
+
+      manager.delete(annotation)
+      ackSourceData(sourceIds = listOf("source0"))
+
+      verify(exactly = 1) { style.removeStyleImage(imageId) }
+    }
+  }
+
+  /**
+   * Simulates the map acknowledging a GeoJSON push. [dataId] defaults to a value above any id
+   * the manager can have issued, since a superseded push acks under a later id.
+   */
+  private fun ackSourceData(
+    sourceIds: List<String> = listOf("source0", "dragsource0", "source1", "dragsource1"),
+    dataId: String = Long.MAX_VALUE.toString(),
+    type: SourceDataLoadedType = SourceDataLoadedType.METADATA
+  ) {
+    sourceIds.forEach { sourceId ->
+      val event = SourceDataLoaded(sourceId, type, true, null, dataId, mockk())
+      sourceDataLoadedCallbacks.toList().forEach { it.run(event) }
     }
   }
 

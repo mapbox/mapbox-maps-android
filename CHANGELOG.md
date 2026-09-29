@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.32.0
+## Bug fixes 🐞
+* Fix point annotation icons disappearing a frame before the annotations when deleting them. Annotation source updates now carry a numeric `dataId` in `SourceDataLoaded`.
+
+
 # 11.32.0-rc.1 September 21, 2026
 ## Breaking changes ⚠️
 * `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.

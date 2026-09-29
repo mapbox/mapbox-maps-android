@@ -76,13 +76,14 @@ class PolygonAnnotationManagerTest {
     every { delegateProvider.mapInteractionDelegate } returns mapInteractionDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mockk()
     every { mapInteractionDelegate.addInteraction(any()) } returns Cancelable { }
+    every { delegateProvider.mapListenerDelegate.subscribeSourceDataLoaded(any()) } returns Cancelable { }
     every { gesturesPlugin.getGesturesManager().moveGestureDetector } returns moveGestureDetector
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { mapCameraManagerDelegate.cameraState } returns mockk(relaxed = true)
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
-    every { source.featureCollection(any()) } answers { source }
+    every { source.featureCollection(any(), any()) } answers { source }
 
     manager = PolygonAnnotationManager(delegateProvider)
     manager.layer = layer
