@@ -4,9 +4,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 
-# 10.20.1
+
+# 10.20.1 October 01, 2026
 ## Dependencies
 * Update gl-native to v10.20.2.
+
 
 # 10.20.0 September 25, 2026
 ## Bug fixes 🐞
