@@ -4,6 +4,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 
+# 10.20.1
+## Dependencies
+* Update gl-native to v10.20.2.
+
 # 10.20.0 September 25, 2026
 ## Bug fixes 🐞
 * [lifecycle] Fix native memory leak when MapView is recreated without finishing the hosting Activity
