@@ -435,6 +435,13 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  /**
+   * Whether the Surface can be attached to right now. After [onSurfaceDestroyed] it still reports
+   * `isValid == true`, so both halves matter. [checkAndroidSurface] keeps them apart on purpose:
+   * an invalid Surface is worth a retry, a destroyed one is not.
+   */
+  private fun isSurfaceUsable(): Boolean = !awaitingNewSurface && surface?.isValid == true
+
   @RenderThread
   private fun notifyRenderersSizeChanged(width: Int, height: Int) {
     mapboxRenderer.onSurfaceChanged(width = width, height = height)
@@ -759,7 +766,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     // in this case we try to re-setup render thread; if Android surface is invalid - we can't do anything
     // until Android system sends us the new one; if the surface was explicitly destroyed - isValid may
     // still read true while the view is about to free the window, so never re-attach in that state
-    if (!awaitingNewSurface && surface?.isValid == true) {
+    if (isSurfaceUsable()) {
       logI(TAG, "renderThreadPrepared=false but Android surface is valid, trying to setup render thread again...")
       renderHandlerThread.post {
         if (setUpRenderThread(creatingSurface = true)) {
@@ -849,7 +856,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @AnyThread
   internal fun onMapSet() {
     renderHandlerThread.post {
-      if (!awaitingNewSurface && surface?.isValid == true && !renderThreadPrepared) {
+      if (isSurfaceUsable() && !renderThreadPrepared) {
         logI(TAG, "Map set, re-triggering render setup with pending surface")
         prepareRenderFrame(width = width, height = height, creatingSurface = true)
       }
