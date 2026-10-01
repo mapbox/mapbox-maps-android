@@ -15,6 +15,10 @@ android {
   defaultConfig {
     minSdk = libs.versions.androidMinSdkVersion.get().toInt()
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    val runTelemetryIntegrationTests =
+      (project.findProperty("mapbox.runTelemetryIntegrationTests") as? String)
+        ?.toBooleanStrictOrNull() ?: true
+    buildConfigField("boolean", "RUN_TELEMETRY_INTEGRATION_TESTS", runTelemetryIntegrationTests.toString())
     ndk {
       val abi: String =
         if (System.getenv("ANDROID_ABI") != null) System.getenv("ANDROID_ABI") else ""
