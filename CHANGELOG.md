@@ -12,9 +12,19 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
 
 
-# 11.32.0
+## Bug fixes 🐞
+* Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
+* Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
+* Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
+
+
+# 11.32.0 October 01, 2026
 ## Bug fixes 🐞
 * Fix point annotation icons disappearing a frame before the annotations when deleting them. Annotation source updates now carry a numeric `dataId` in `SourceDataLoaded`.
+
+
+## Dependencies
+* Update gl-native to [v11.32.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0), common to [v24.32.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0).
 
 
 # 11.32.0-rc.1 September 21, 2026
