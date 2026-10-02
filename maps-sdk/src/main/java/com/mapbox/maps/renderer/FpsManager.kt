@@ -252,27 +252,31 @@ internal class FpsManager(
       val droppedFps = choreographerSkips.toDouble() / choreographerTicks
       val fps = (1.0 - droppedFps) * screenRefreshRate
       listener.onFpsChanged(fps)
-      if (choreographerTicks == choreographerSkips) {
-        logI(
-          TAG,
-          "VSYNC based FPS is $fps, " +
-            "skipped $choreographerSkips ($choreographerPacingSkips due to pacing) " +
-            "out of $choreographerTicks VSYNC pulses"
-        )
-      } else {
-        val actualAmountOfFramesRendered = choreographerTicks - choreographerSkips
-        val averageRenderTimeNs =
-          frameRenderTimeAccumulatedNs.toDouble() / actualAmountOfFramesRendered
-        val averageFps =
-          String.format("%.2f", (screenRefreshPeriodNs / averageRenderTimeNs) * screenRefreshRate)
-        logI(
-          TAG,
-          "Average map core rendering time is " +
-            "${averageRenderTimeNs / ONE_MILLISECOND_NS} ms (or $averageFps FPS), " +
-            "missed $missedMapRenderFrames map render frames, " +
-            "skipped $choreographerSkips ($choreographerPacingSkips due to render pacing) " +
-            "out of $choreographerTicks VSYNC pulses"
-        )
+      // logging goes through the native logger and back to Java, which is too expensive
+      // to do on the render thread every second
+      if (LOG_STATISTICS) {
+        if (choreographerTicks == choreographerSkips) {
+          logI(
+            TAG,
+            "VSYNC based FPS is $fps, " +
+              "skipped $choreographerSkips ($choreographerPacingSkips due to pacing) " +
+              "out of $choreographerTicks VSYNC pulses"
+          )
+        } else {
+          val actualAmountOfFramesRendered = choreographerTicks - choreographerSkips
+          val averageRenderTimeNs =
+            frameRenderTimeAccumulatedNs.toDouble() / actualAmountOfFramesRendered
+          val averageFps =
+            String.format("%.2f", (screenRefreshPeriodNs / averageRenderTimeNs) * screenRefreshRate)
+          logI(
+            TAG,
+            "Average map core rendering time is " +
+              "${averageRenderTimeNs / ONE_MILLISECOND_NS} ms (or $averageFps FPS), " +
+              "missed $missedMapRenderFrames map render frames, " +
+              "skipped $choreographerSkips ($choreographerPacingSkips due to render pacing) " +
+              "out of $choreographerTicks VSYNC pulses"
+          )
+        }
       }
     }
     previousDrawnFrameIndex = 0
