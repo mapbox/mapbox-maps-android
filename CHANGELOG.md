@@ -6,15 +6,22 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.32.0 October 01, 2026
+## Breaking changes ⚠️
+* `TileStore.loadTileRegion()` now completes with a `TileRegionErrorType.PARTIAL_LOAD` failure instead of success when some of the region's resources failed to load.
+
+## Features ✨ and improvements 🏁
+* [tile_store] Trigger region loading progress callbacks when the load process gets rate limited.
+
 ## Bug fixes 🐞
 * Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
 * Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
 * Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
-
-
-# 11.32.0 October 01, 2026
-## Bug fixes 🐞
 * Fix point annotation icons disappearing a frame before the annotations when deleting them. Annotation source updates now carry a numeric `dataId` in `SourceDataLoaded`.
+* Fix incorrect and missing metadata in style spec reference
+* Fix incorrect usage of the active-anchor expression being silently allowed in filters, paint properties, and non-symbol layers.
+* Fix symbol occlusion opacity transitions not honoring the configured placement transition duration, reducing flickering from frequent visibility changes.
+* Fix inaccurate latitude/longitude bounds calculation for the camera when using globe projection.
 
 
 ## Dependencies
