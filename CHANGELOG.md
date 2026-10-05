@@ -10,6 +10,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
 * Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
 
+
+# 11.33.0-rc.1 October 05, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
 * [androidauto] Add `MapboxCarMapGestureHandler.onClick` to handle clicks on the car map. `DefaultMapboxCarMapGestureHandler` forwards them to the map, so that map interactions such as `ClickInteraction` also work in Android Auto.
@@ -17,12 +19,21 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
+* Fix view annotations stuck to stale cached layer's geometry
+* Fix double darkening artifacts when rendering transparent fill-extrusion and building layers together.
 
 
 ## Bug fixes 🐞
 * Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
 * Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
 * Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
+
+
+## 💫️ Other
+* Breaking change: The base size of icons in the `text-field` property is now calculated at the tile zoom level with the largest text size. As a result, the icons can be smaller when the text size depends on the zoom level.
+
+## Dependencies
+* Update gl-native to [v11.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1), common to [v24.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1).
 
 
 # 11.32.0 October 01, 2026
