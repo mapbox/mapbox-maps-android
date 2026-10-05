@@ -205,8 +205,10 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   private var watchdogFrameCountAtStall = 0L
   private var watchdogLastLogUptimeMs = 0L
 
+  // Owned by the render thread so a recorder can never be shared between maps, and a val so the
+  // render thread always sees it without synchronization.
   @OptIn(MapboxExperimental::class)
-  internal var renderThreadStatsRecorder: RenderThreadStatsRecorder? = null
+  internal val renderThreadStatsRecorder = RenderThreadStatsRecorder()
 
   /**
    * Handler for posting tasks to the main thread.
@@ -452,7 +454,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   @OptIn(MapboxExperimental::class)
   private fun draw(frameTimeNanos: Long) {
-    if (!fpsManager.preRender(frameTimeNanos, renderThreadStatsRecorder?.isRecording == true)) {
+    if (!fpsManager.preRender(frameTimeNanos, renderThreadStatsRecorder.isRecording)) {
       // when we have FPS limited and desire to skip core render - we must schedule new draw call
       // otherwise map may remain in not fully loaded state
       postPrepareRenderFrame()
@@ -704,7 +706,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @RenderThread
   final override fun doFrame(frameTimeNanos: Long) {
     trace("do-frame") {
-      val startTime = if (renderThreadStatsRecorder?.isRecording == true) {
+      val startTime = if (renderThreadStatsRecorder.isRecording) {
         SystemClock.elapsedRealtimeNanos()
       } else {
         0L
@@ -719,13 +721,13 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
       // With `awaitingNextVsync = false` we will always schedule recursive tasks for later execution
       // via `renderHandlerThread.postDelayed` instead of updating queue concurrently that is being drained (which may lead to deadlock in core).
       drainQueue(nonRenderEventQueue)
-      val endTime = if (renderThreadStatsRecorder?.isRecording == true) {
+      val endTime = if (renderThreadStatsRecorder.isRecording) {
         SystemClock.elapsedRealtimeNanos()
       } else {
         0L
       }
       if (startTime != 0L && endTime != 0L) {
-        renderThreadStatsRecorder?.addFrameStats(
+        renderThreadStatsRecorder.addFrameStats(
           (endTime - startTime) / 1e6,
           fpsManager.skippedNow,
           fpsManager.pacingSkipsNow,

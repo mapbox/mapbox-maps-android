@@ -483,13 +483,12 @@ class GLMapboxRenderThreadTest {
     every { fpsManager.skippedNow } returns 2
     every { fpsManager.pacingSkipsNow } returns 1
     every { fpsManager.missedMapRenderFramesNow } returns 3
-    val recorder = RenderThreadStatsRecorder()
+    val recorder = mapboxRenderThread.renderThreadStatsRecorder
     recorder.start()
-    mapboxRenderThread.renderThreadStatsRecorder = recorder
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderThread.repaintRenderEvent)
     idleHandler()
-    val stats = recorder.end()
+    val stats = recorder.stop()
     assertEquals(2L, stats.totalSkippedVsync)
     assertEquals(1L, stats.pacedSkippedVsync)
     assertEquals(3L, stats.missedMapRenderFrames)

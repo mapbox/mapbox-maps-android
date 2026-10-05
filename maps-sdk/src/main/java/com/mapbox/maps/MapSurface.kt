@@ -283,12 +283,12 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   }
 
   /**
-   * Set [RenderThreadStatsRecorder] to record frame stats.
+   * The [RenderThreadStatsRecorder] of this map. Call [RenderThreadStatsRecorder.start] and
+   * [RenderThreadStatsRecorder.end] on it to record frame stats.
    */
   @MapboxExperimental
-  override fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder) {
-    mapController.setRenderThreadStatsRecorder(renderThreadStatsRecorder)
-  }
+  override val renderThreadStatsRecorder: RenderThreadStatsRecorder
+    get() = mapController.renderThreadStatsRecorder
 
   /**
    * Called to resume rendering

@@ -324,9 +324,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.setOnFpsChangedListener(listener)
   }
 
-  override fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder) {
-    renderer.renderThread.renderThreadStatsRecorder = renderThreadStatsRecorder
-  }
+  @MapboxExperimental
+  override val renderThreadStatsRecorder: RenderThreadStatsRecorder
+    get() = renderer.renderThread.renderThreadStatsRecorder
 
   @OptIn(MapboxExperimental::class)
   override fun addWidget(widget: Widget) {

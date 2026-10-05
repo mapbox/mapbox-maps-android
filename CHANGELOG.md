@@ -5,11 +5,17 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+## Breaking changes ⚠️
+* Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
+* Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
+* Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
+
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
 
 ## Bug fixes 🐞
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
+* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
 
 
 ## Bug fixes 🐞
