@@ -78,10 +78,11 @@ interface MapControllable : MapboxLifecycleObserver {
   fun setOnFpsChangedListener(listener: OnFpsChangedListener)
 
   /**
-   * Set [RenderThreadStatsRecorder] to record frame stats.
+   * The [RenderThreadStatsRecorder] of this map. Call [RenderThreadStatsRecorder.start] and
+   * [RenderThreadStatsRecorder.end] on it to record frame stats.
    */
   @MapboxExperimental
-  fun setRenderThreadStatsRecorder(renderThreadStatsRecorder: RenderThreadStatsRecorder)
+  val renderThreadStatsRecorder: RenderThreadStatsRecorder
 
   /**
    * Add [Widget] to the map.
