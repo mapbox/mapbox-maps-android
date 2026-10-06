@@ -24,9 +24,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
 * Fix view annotations stuck to stale cached layer's geometry
 * Fix double darkening artifacts when rendering transparent fill-extrusion and building layers together.
-
-
-## Bug fixes 🐞
 * Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
 * Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
 * Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
