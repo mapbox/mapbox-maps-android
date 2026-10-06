@@ -2180,7 +2180,7 @@ freely, subject to the following restrictions:
 
 ---
 
-### shaderc,v2026.3,Apache-2.0,google,https://github.com/google/shaderc
+### shaderc,v2026.4,Apache-2.0,google,https://github.com/google/shaderc
 
 ```
                                  Apache License
