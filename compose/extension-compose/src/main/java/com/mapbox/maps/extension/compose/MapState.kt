@@ -370,9 +370,6 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
    * Removes a specified property or all property from a feature's state object, depending on the value of
    * [stateKey].
    *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using [getFeatureState].
-   *
    * @param featuresetFeature The featureset feature coming from an interaction callback.
    * @param stateKey The generic key of the property to remove. If `null`, all feature's state object properties are removed.
    *
@@ -402,9 +399,6 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
    * Reset all the feature states within a style source.
    *
    * Remove all feature state entries from the specified style source or source layer.
-   *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using [getFeatureState].
    *
    * @param descriptor [TypedFeaturesetDescriptor] object representing either a featureset or a single layer.
    *

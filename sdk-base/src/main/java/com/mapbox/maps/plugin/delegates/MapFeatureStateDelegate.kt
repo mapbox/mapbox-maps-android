@@ -20,10 +20,6 @@ interface MapFeatureStateDelegate {
    * `state` object will be updated. A property in the feature `state` object that is not listed in `state` will
    * retain its previous value. The properties must be paint properties, layout properties are not supported.
    *
-   * Note that updates to feature `state` are asynchronous, so changes made by this method might not be
-   * immediately visible using `getStateFeature`. And the corresponding source needs to be in use to ensure the
-   * feature data it contains can be successfully updated.
-   *
    * @param sourceId The style source identifier.
    * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
    * @param featureId The feature identifier of the feature whose state should be updated.
@@ -43,9 +39,6 @@ interface MapFeatureStateDelegate {
   /**
    * Get the state map of a feature within a style source.
    *
-   * Note that updates to feature state are asynchronous, so changes made by other methods might not be
-   * immediately visible.
-   *
    * @param sourceId The style source identifier.
    * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
    * @param featureId The feature identifier of the feature whose state should be queried.
@@ -64,9 +57,6 @@ interface MapFeatureStateDelegate {
    *
    * Remove a specified property or all property from a feature's state object, depending on the value of
    * `stateKey`.
-   *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using `getStateFeature`.
    *
    * @param sourceId The style source identifier.
    * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
@@ -88,9 +78,6 @@ interface MapFeatureStateDelegate {
    *
    * Remove all feature state entries from the specified style source or source layer.
    *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using `getStateFeature`.
-   *
    * @param sourceId The style source identifier.
    * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
    * @param callback The `feature state operation callback` called when the operation completes or ends.
@@ -110,8 +97,8 @@ interface MapFeatureStateDelegate {
    * The final feature state is determined by applying states in order from lower to higher priority. As a result, multiple expressions that set states with different keys can affect the same features simultaneously.
    * If an expression is added for a feature set, properties from that feature set are used, not the properties from original sources.
    *
-   * Note that updates to feature state expressions are asynchronous, so changes made by this method might not be
-   * immediately visible and will have some delay. The displayed data will not be affected immediately.
+   * Note that feature state expressions are evaluated asynchronously, so visual changes may appear
+   * a few frames later, even after the callback is called.
    *
    * @param featureStateExpressionId Unique identifier for the state expression.
    * @param featureset The featureset descriptor that specifies which featureset the expression applies to.
@@ -135,8 +122,8 @@ interface MapFeatureStateDelegate {
    *
    * Remove a specific expression from the feature state expressions based on the expression ID.
    *
-   * Note that updates to feature state expressions are asynchronous, so changes made by this method might not be
-   * immediately visible and will have some delay.
+   * Note that feature state expressions are evaluated asynchronously, so visual changes may appear
+   * a few frames later, even after the callback is called.
    *
    * @param featureStateExpressionId The unique identifier of the expression to remove.
    * @param callback The `feature state operation callback` called when the operation completes.
@@ -150,8 +137,8 @@ interface MapFeatureStateDelegate {
   /**
    * Reset all feature state expressions.
    *
-   * Note that updates to feature state expressions are asynchronous, so changes made by this method might not be
-   * immediately visible and will have some delay.
+   * Note that feature state expressions are evaluated asynchronously, so visual changes may appear
+   * a few frames later, even after the callback is called.
    *
    * @param callback The `feature state operation callback` called when the operation completes.
    */

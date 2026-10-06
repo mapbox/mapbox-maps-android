@@ -112,9 +112,6 @@ public sealed interface FeaturesetFeatureScope {
    * Removes a specified property or all property from a feature's state object, depending on the value of
    * [stateKey].
    *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using `getFeatureState`.
-   *
    * @param stateKey The typed key of the property to remove. If `null`, all feature's state object properties are removed.
    * @param callback The [FeatureStateOperationCallback] called when the operation completes or ends.
    *
@@ -129,9 +126,6 @@ public sealed interface FeaturesetFeatureScope {
    * Reset all the feature states within a style source.
    *
    * Remove all feature state entries from the specified style source or source layer.
-   *
-   * Note that updates to feature state are asynchronous, so changes made by this method might not be
-   * immediately visible using `getFeatureState`.
    *
    * @param callback The [FeatureStateOperationCallback] called when the operation completes or ends.
    *

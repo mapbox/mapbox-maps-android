@@ -142,9 +142,6 @@ suspend fun MapboxMap.getGeoJsonClusterExpansionZoom(
 /**
  * Get the state map of a feature within a style source.
  *
- * Note that updates to feature state are asynchronous, so changes made by other methods might not be
- * immediately visible.
- *
  * @param sourceId The style source identifier.
  * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
  * @param featureId The feature identifier of the feature whose state should be queried.
@@ -170,9 +167,6 @@ suspend fun MapboxMap.getFeatureState(
  *
  * Remove a specified property or all property from a feature's state object, depending on the value of
  * `stateKey`.
- *
- * Note that updates to feature state are asynchronous, so changes made by this method might not be
- * immediately visible using `getStateFeature`.
  *
  * @param sourceId The style source identifier.
  * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
@@ -202,9 +196,6 @@ suspend fun MapboxMap.removeFeatureState(
  *
  * Remove all feature state entries from the specified style source or source layer.
  *
- * Note that updates to feature state are asynchronous, so changes made by this method might not be
- * immediately visible using `getStateFeature`.
- *
  * @param sourceId The style source identifier.
  * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
  *
@@ -228,10 +219,6 @@ suspend fun MapboxMap.resetFeatureStates(
  * Update entries in the `state` object of a given feature within a style source. Only properties of the
  * `state` object will be updated. A property in the feature `state` object that is not listed in `state` will
  * retain its previous value. The properties must be paint properties, layout properties are not supported.
- *
- * Note that updates to feature `state` are asynchronous, so changes made by this method might not be
- * immediately visible using `getStateFeature`. And the corresponding source needs to be in use to ensure the
- * feature data it contains can be successfully updated.
  *
  * @param sourceId The style source identifier.
  * @param sourceLayerId The style source layer identifier (for multi-layer sources such as vector sources).
