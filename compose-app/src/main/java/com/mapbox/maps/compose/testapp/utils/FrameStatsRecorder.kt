@@ -29,14 +29,13 @@ public class FrameStatsRecorder {
   private lateinit var recorder: RenderThreadStatsRecorder
   private var writeSummaryJob: Job = Job().apply { cancel() }
 
-  public fun register(mapView: MapView) {
-    recorder = RenderThreadStatsRecorder()
-    mapView.setRenderThreadStatsRecorder(recorder)
+  public fun start(mapView: MapView) {
+    recorder = mapView.renderThreadStatsRecorder
     recorder.start()
   }
 
   private fun getStatisticalModel(): JsonObject {
-    val stats = recorder.end()
+    val stats = recorder.stop()
     val jsonObject = JsonObject()
     // for TTRC SLAs no recorded render calls happen after "CreateMap" command
     // so we return an empty JSON
@@ -110,7 +109,7 @@ public class FrameStatsRecorder {
 public fun RecordFrameStats() {
   DisposableMapEffect(Unit) {
     val frameStatsRecorder = FrameStatsRecorder()
-    frameStatsRecorder.register(it)
+    frameStatsRecorder.start(it)
     onDispose {
       frameStatsRecorder.stop(it)
     }
