@@ -14,6 +14,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
 
 # 11.33.0-rc.1 October 05, 2026
+## Breaking changes ⚠️
+* The base size of icons in the `text-field` property is now calculated at the tile zoom level with the largest text size. As a result, the icons can be smaller when the text size depends on the zoom level.
+
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
 
@@ -27,10 +30,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
 * Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
 * Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
-
-
-## 💫️ Other
-* Breaking change: The base size of icons in the `text-field` property is now calculated at the tile zoom level with the largest text size. As a result, the icons can be smaller when the text size depends on the zoom level.
 
 ## Dependencies
 * Update gl-native to [v11.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1), common to [v24.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1).
