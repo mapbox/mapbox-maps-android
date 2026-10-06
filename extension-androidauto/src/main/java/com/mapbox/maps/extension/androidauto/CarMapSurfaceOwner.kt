@@ -1,10 +1,12 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
+import androidx.annotation.OptIn
 import androidx.annotation.RestrictTo
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
 import androidx.car.app.SurfaceContainer
+import androidx.car.app.annotations.ExperimentalCarApi
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.ScreenCoordinate
@@ -163,6 +165,18 @@ internal class CarMapSurfaceOwner(
         it.onStableAreaChanged(area, edge)
       }
     }
+  }
+
+  /**
+   * Forwards the click to the [MapboxCarMapGestureHandler.onClick].
+   *
+   * @see SurfaceCallback.onClick
+   */
+  @OptIn(markerClass = [ExperimentalCarApi::class])
+  override fun onClick(x: Float, y: Float) {
+    logD(TAG, "onClick $x, $y")
+    val carMapSurface = mapboxCarMapSurface ?: return
+    gestureHandler?.onClick(carMapSurface, x, y)
   }
 
   /**

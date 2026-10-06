@@ -5,6 +5,8 @@ package com.mapbox.maps.extension.androidauto
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapCenterAltitudeMode
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.PlatformEventInfo
+import com.mapbox.maps.PlatformEventType
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.animation.camera
@@ -28,6 +30,7 @@ class DefaultMapboxCarMapGestureHandlerTest {
         every { setGestureInProgress(any()) } just runs
         every { cameraForDrag(any(), any()) } returns CameraOptions.Builder().build()
         every { setCamera(any<CameraOptions>()) } just runs
+        every { dispatch(any()) } just runs
       }
       every { camera } returns mockk(relaxed = true)
     }
@@ -173,5 +176,17 @@ class DefaultMapboxCarMapGestureHandlerTest {
     carMapGestures.onScale(surface, 400.0f, 200.0f, 1.02f)
 
     assertEquals(expectedToZoom, cameraOptionsSlot.captured.zoom!!, 0.0001)
+  }
+
+  @Test
+  fun `onClick dispatches the click to the map`() {
+    val mapboxMap = surface.mapSurface.mapboxMap
+
+    carMapGestures.onClick(surface, 10f, 20f)
+
+    val event = slot<PlatformEventInfo>()
+    verify { mapboxMap.dispatch(capture(event)) }
+    assertEquals(PlatformEventType.CLICK, event.captured.type)
+    assertEquals(ScreenCoordinate(10.0, 20.0), event.captured.screenCoordinate)
   }
 }

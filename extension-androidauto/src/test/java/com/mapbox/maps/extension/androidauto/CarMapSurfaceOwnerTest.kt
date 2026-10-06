@@ -350,6 +350,25 @@ class CarMapSurfaceOwnerTest {
   }
 
   @Test
+  fun `onClick is forwarded to the gesture handler`() {
+    carMapSurfaceOwner.setup(carContext, mapInitOptions)
+    carMapSurfaceOwner.onSurfaceAvailable(mockk(relaxed = true))
+
+    carMapSurfaceOwner.onClick(10f, 20f)
+
+    verify(exactly = 1) {
+      carMapGestures.onClick(carMapSurfaceOwner.mapboxCarMapSurface!!, 10f, 20f)
+    }
+  }
+
+  @Test
+  fun `onClick is ignored before the surface is ready`() {
+    carMapSurfaceOwner.onClick(10f, 20f)
+
+    verify(exactly = 0) { carMapGestures.onClick(any(), any(), any()) }
+  }
+
+  @Test
   fun `gesture detector is not called before surface is ready`() {
     carMapSurfaceOwner.onScroll(1f, 1f)
     carMapSurfaceOwner.onFling(1f, 1f)

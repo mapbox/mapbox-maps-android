@@ -35,6 +35,7 @@ package com.mapbox.maps.extension.androidauto {
   }
 
   public interface MapboxCarMapGestureHandler {
+    method public default void onClick(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float);
     method public default void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float);
     method public default void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, float, float, float);
     method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate, float, float);

@@ -2,7 +2,10 @@ package com.mapbox.maps.extension.androidauto
 
 import androidx.car.app.SurfaceCallback
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.PlatformEventInfo
+import com.mapbox.maps.PlatformEventType
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.animation.camera
@@ -15,6 +18,29 @@ import com.mapbox.maps.util.CoreGesturesHandler
  */
 open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
   private var coreGestureHandler: CoreGesturesHandler? = null
+
+  /**
+   * Dispatches the click to the [MapboxMap], so that map interactions registered with
+   * [MapboxMap.addInteraction] receive it, e.g. a [com.mapbox.maps.ClickInteraction].
+   *
+   * @see [MapboxCarMapGestureHandler.onClick]
+   * @see [SurfaceCallback.onClick] for instructions to enable.
+   *
+   * @param mapboxCarMapSurface loaded and ready car map surface
+   * @param x the horizontal screen coordinate of the click in pixels
+   * @param y the vertical screen coordinate of the click in pixels
+   */
+  @OptIn(MapboxExperimental::class)
+  override fun onClick(
+    mapboxCarMapSurface: MapboxCarMapSurface,
+    x: Float,
+    y: Float
+  ) {
+    logI(TAG, "click $x, $y")
+    mapboxCarMapSurface.mapSurface.mapboxMap.dispatch(
+      PlatformEventInfo(PlatformEventType.CLICK, ScreenCoordinate(x.toDouble(), y.toDouble()))
+    )
+  }
 
   /**
    * @see [MapboxCarMapGestureHandler.onScroll]

@@ -1,5 +1,6 @@
 public class com/mapbox/maps/extension/androidauto/DefaultMapboxCarMapGestureHandler : com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
 	public fun <init> ()V
+	public fun onClick (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
 	public fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
 	public fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
 	public fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
@@ -28,6 +29,7 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapEx {
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
+	public fun onClick (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
 	public fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
 	public fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
 	public fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V

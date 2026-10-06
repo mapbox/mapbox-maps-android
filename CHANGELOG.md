@@ -12,6 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
+* [androidauto] Add `MapboxCarMapGestureHandler.onClick` to handle clicks on the car map. `DefaultMapboxCarMapGestureHandler` forwards them to the map, so that map interactions such as `ClickInteraction` also work in Android Auto.
 
 ## Bug fixes 🐞
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.

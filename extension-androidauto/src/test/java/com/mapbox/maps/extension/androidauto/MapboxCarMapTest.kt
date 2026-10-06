@@ -245,10 +245,12 @@ class MapboxCarMapTest {
     surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onClick(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onScroll(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onFling(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onScale(0.0f, 0.0f, 0.0f)
 
+    assertTrue(testGestures.capturedOnClick)
     assertTrue(testGestures.capturedOnScroll)
     assertTrue(testGestures.capturedOnFling)
     assertTrue(testGestures.capturedOnScale)
@@ -260,6 +262,7 @@ class MapboxCarMapTest {
     val testGestures = TestMapboxCarMapGestures()
     mapboxCarMap.setGestureHandler(testGestures)
 
+    surfaceCallbackSlot.captured.onClick(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onScroll(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onFling(0.0f, 0.0f)
     surfaceCallbackSlot.captured.onScale(0.0f, 0.0f, 0.0f)
@@ -267,15 +270,25 @@ class MapboxCarMapTest {
     surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
     surfaceCallbackSlot.captured.onStableAreaChanged(mockk(relaxed = true))
 
+    assertFalse(testGestures.capturedOnClick)
     assertFalse(testGestures.capturedOnScroll)
     assertFalse(testGestures.capturedOnFling)
     assertFalse(testGestures.capturedOnScale)
   }
 
   private class TestMapboxCarMapGestures : MapboxCarMapGestureHandler {
+    var capturedOnClick = false
     var capturedOnScroll = false
     var capturedOnScale = false
     var capturedOnFling = false
+
+    override fun onClick(
+      mapboxCarMapSurface: MapboxCarMapSurface,
+      x: Float,
+      y: Float
+    ) {
+      capturedOnClick = true
+    }
 
     override fun onScroll(
       mapboxCarMapSurface: MapboxCarMapSurface,

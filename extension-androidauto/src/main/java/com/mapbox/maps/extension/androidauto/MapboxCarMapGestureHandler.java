@@ -15,6 +15,24 @@ import com.mapbox.maps.ScreenCoordinate;
 public interface MapboxCarMapGestureHandler {
 
   /**
+   * Allows you to implement or observe the map click handler. The surface is
+   * {@link MapboxCarMapObserver#onAttached} before this can be triggered.
+   *
+   * @see SurfaceCallback#onClick for instructions to enable.
+   *
+   * @param mapboxCarMapSurface loaded and ready car map surface
+   * @param x the horizontal screen coordinate of the click in pixels
+   * @param y the vertical screen coordinate of the click in pixels
+   */
+  default void onClick(
+    @NonNull MapboxCarMapSurface mapboxCarMapSurface,
+    float x,
+    float y
+  ) {
+    // Optional override
+  }
+
+  /**
    * Allows you to implement or observe the map scroll gesture handler. The surface is
    * [MapboxCarMapObserver.onAttached] before this can be triggered.
    *

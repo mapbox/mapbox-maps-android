@@ -82,6 +82,9 @@ class CarJavaInterfaceChecker {
     mapboxCarMap.setGestureHandler(emptyGestures);
     MapboxCarMapGestureHandler gestures = new MapboxCarMapGestureHandler() {
       @Override
+      public void onClick(@NonNull MapboxCarMapSurface mapboxCarMapSurface, float x, float y) {}
+
+      @Override
       public void onScale(@NonNull MapboxCarMapSurface mapboxCarMapSurface, float focusX, float focusY, float scaleFactor) {}
 
       @Override
