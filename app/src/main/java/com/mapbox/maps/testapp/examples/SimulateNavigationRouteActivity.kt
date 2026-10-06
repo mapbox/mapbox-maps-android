@@ -13,7 +13,6 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.logI
 import com.mapbox.maps.renderer.RenderThreadStats
-import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.testapp.examples.SimulateNavigationRouteActivity.Companion.SIMULATION_DURATION
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.NavigationSimulator
@@ -61,8 +60,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         )
       }
       repeat(repetitions) {
-        val renderThreadStatsRecorder = RenderThreadStatsRecorder()
-        mapView.setRenderThreadStatsRecorder(renderThreadStatsRecorder)
+        val renderThreadStatsRecorder = mapView.renderThreadStatsRecorder
         val navigationSimulator = NavigationSimulator(mapView, routePoints)
         navigationSimulator.disableGestures()
         renderThreadStatsRecorder.start()
@@ -78,7 +76,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
           }
         )
         delay(SIMULATION_DURATION)
-        logStats(renderThreadStatsRecorder.end())
+        logStats(renderThreadStatsRecorder.stop())
         navigationSimulator.onDestroy()
       }
       finish()
