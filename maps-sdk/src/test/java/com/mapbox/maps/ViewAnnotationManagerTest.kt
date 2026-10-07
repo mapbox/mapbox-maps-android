@@ -1,9 +1,11 @@
 package com.mapbox.maps
 
 import android.graphics.Rect
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.View.MeasureSpec
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
@@ -22,6 +24,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
@@ -739,7 +742,7 @@ class ViewAnnotationManagerTest {
   }
 
   @Test
-  fun collisionBoxesFallBackToWholeBoundsWhenMarkedSubviewBecomesGone() {
+  fun collisionBoxesFollowSubviewHiding() {
     val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
     every {
       mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
@@ -747,6 +750,7 @@ class ViewAnnotationManagerTest {
     val options = viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) }
     val addSlot = slot<ViewAnnotationOptions>()
 
+    var visibility = View.VISIBLE
     val child = mockk<View>().also {
       every { it.tag } returns null
       every { it.getTag(any()) } returns null
@@ -754,19 +758,79 @@ class ViewAnnotationManagerTest {
       every { it.setTag(any(), any()) } just Runs
       every { it.width } returns 50
       every { it.height } returns 30
-      // Initial add: subview visible -> contributes a box. Layout pass: subview is GONE
-      // -> no subview marked -> fall back to whole-bounds (null) and push an update.
-      every { it.visibility } returnsMany listOf(View.VISIBLE, View.GONE)
+      every { it.visibility } answers { visibility }
     }
     val root = mockAnnotationRoot(childViews = listOf(child))
     val listener = captureLayoutListener(root, options, addOptionsSlot = addSlot)
-
-    listener.onGlobalLayout()
-
-    assertNotNull(addSlot.captured.collisionBoxes)
     assertEquals(1, addSlot.captured.collisionBoxes!!.size)
+
+    // Last box GONE: an explicit empty list is pushed (core treats null as "no change").
+    visibility = View.GONE
+    listener.onGlobalLayout()
     assertEquals(1, capturedUpdates.size)
-    assertNull(capturedUpdates[0].collisionBoxes)
+    assertEquals(emptyList<ScreenBox>(), capturedUpdates[0].collisionBoxes)
+
+    visibility = View.VISIBLE
+    listener.onGlobalLayout()
+    assertEquals(2, capturedUpdates.size)
+    assertEquals(50.0, capturedUpdates[1].collisionBoxes!![0].max.x, 0.0)
+  }
+
+  @Test
+  fun collisionBoxesFollowFrameChange() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every {
+      mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
+    } returns ExpectedFactory.createNone()
+    val options = viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) }
+
+    val child = mockCollisionChild(width = 30, height = 30)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    var offsetY = 10
+    every { root.offsetDescendantRectToMyCoords(child, any()) } answers {
+      secondArg<Rect>().offset(10, offsetY)
+    }
+    val listener = captureLayoutListener(root, options)
+
+    offsetY = 40
+    listener.onGlobalLayout()
+    assertEquals(1, capturedUpdates.size)
+    val box = capturedUpdates[0].collisionBoxes!!.single()
+    assertEquals(10.0, box.min.x, 0.0)
+    assertEquals(40.0, box.min.y, 0.0)
+    assertEquals(40.0, box.max.x, 0.0)
+    assertEquals(70.0, box.max.y, 0.0)
+  }
+
+  @Test
+  fun collisionBoxesSyncWithoutSymbolLayerCollision() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every {
+      mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
+    } returns ExpectedFactory.createNone()
+    val options = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+      enableSymbolLayerCollision(false)
+    }
+
+    var marked = false
+    val child = mockk<View>().also {
+      every { it.tag } returns null
+      every { it.getTag(any()) } returns null
+      every { it.getTag(R.id.collisionBox) } answers { marked }
+      every { it.setTag(any(), any()) } just Runs
+      every { it.width } returns 50
+      every { it.height } returns 30
+      every { it.visibility } returns View.VISIBLE
+    }
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    val listener = captureLayoutListener(root, options)
+
+    // Boxes sync without the symbol collision flag: core uses them for puck/annotation overlap too.
+    marked = true
+    listener.onGlobalLayout()
+    assertEquals(1, capturedUpdates.size)
+    assertEquals(1, capturedUpdates[0].collisionBoxes!!.size)
   }
 
   @Test
@@ -819,6 +883,95 @@ class ViewAnnotationManagerTest {
   }
 
   @Test
+  fun collisionBoxesIncludeInvisibleSubview() {
+    // INVISIBLE keeps the layout, so the box still collides (unlike GONE).
+    val addSlot = slot<ViewAnnotationOptions>()
+    every { mapboxMap.addViewAnnotation(any(), capture(addSlot)) } returns ExpectedFactory.createNone()
+
+    val child = mockCollisionChild(visibility = View.INVISIBLE)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+
+    viewAnnotationManager.addViewAnnotation(root, viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) })
+
+    assertNotNull(addSlot.captured.collisionBoxes)
+    assertEquals(1, addSlot.captured.collisionBoxes!!.size)
+  }
+
+  @Test
+  fun collisionBoxesExcludeMarkedSubviewInsideGoneContainer() {
+    val addSlot = slot<ViewAnnotationOptions>()
+    every { mapboxMap.addViewAnnotation(any(), capture(addSlot)) } returns ExpectedFactory.createNone()
+
+    val nestedMarked = mockCollisionChild(width = 30, height = 15)
+    val goneContainer = mockk<FrameLayout>().also { w ->
+      every { w.tag } returns null
+      every { w.getTag(any()) } returns null
+      every { w.visibility } returns View.GONE
+      every { w.childCount } returns 1
+      every { w.getChildAt(0) } returns nestedMarked
+    }
+    val root = mockAnnotationRoot(childViews = listOf(goneContainer))
+
+    viewAnnotationManager.addViewAnnotation(root, viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) })
+
+    assertNull(addSlot.captured.collisionBoxes)
+  }
+
+  @Test
+  fun collisionBoxesFollowFlagMarkedAfterAdd() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every { mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates)) } returns ExpectedFactory.createNone()
+    val options = viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) }
+    val addSlot = slot<ViewAnnotationOptions>()
+
+    var marked = false
+    val child = mockk<View>().also {
+      every { it.tag } returns null
+      every { it.getTag(any()) } returns null
+      every { it.getTag(R.id.collisionBox) } answers { marked }
+      every { it.setTag(any(), any()) } just Runs
+      every { it.width } returns 50
+      every { it.height } returns 30
+      every { it.visibility } returns View.VISIBLE
+    }
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    val listener = captureLayoutListener(root, options, addOptionsSlot = addSlot)
+
+    assertNull(addSlot.captured.collisionBoxes)
+
+    marked = true
+    listener.onGlobalLayout()
+    assertEquals(1, capturedUpdates.size)
+    assertEquals(1, capturedUpdates[0].collisionBoxes!!.size)
+    assertEquals(50.0, capturedUpdates[0].collisionBoxes!![0].max.x, 0.0)
+
+    // Unmarking the last box clears with an explicit empty list.
+    marked = false
+    listener.onGlobalLayout()
+    assertEquals(2, capturedUpdates.size)
+    assertEquals(emptyList<ScreenBox>(), capturedUpdates[1].collisionBoxes)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun collisionBoxFlagSetterRequestsLayoutOnlyOnChange() {
+    val view = mockk<View>()
+    var tag: Any? = null
+    every { view.getTag(R.id.collisionBox) } answers { tag }
+    every { view.setTag(R.id.collisionBox, any()) } answers { tag = secondArg() }
+    every { view.requestLayout() } just Runs
+
+    view.mbxViewAnnotationCollisionBox = true
+    verify(exactly = 1) { view.requestLayout() }
+
+    view.mbxViewAnnotationCollisionBox = true // no change, no extra layout pass
+    verify(exactly = 1) { view.requestLayout() }
+
+    view.mbxViewAnnotationCollisionBox = false
+    verify(exactly = 2) { view.requestLayout() }
+  }
+
+  @Test
   fun userCollisionBoxesPreventAutoCollection() {
     every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val userBoxes = listOf(
@@ -860,6 +1013,149 @@ class ViewAnnotationManagerTest {
     val regions = listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(100.0, 100.0)))
     viewAnnotationManager.viewAnnotationAvoidRegions = regions
     verifyOnce { mapboxMap.viewAnnotationAvoidRegions = regions }
+  }
+
+  // --- Placement helpers ---
+
+  /**
+   * Adds [root] as an annotation, makes the layout behave like a real parent for it and returns
+   * the identifier the manager generated, so the test can place and unplace the annotation.
+   */
+  private fun addPlaceableAnnotation(root: FrameLayout): String {
+    val idSlot = slot<String>()
+    every {
+      mapboxMap.addViewAnnotation(capture(idSlot), any())
+    } returns ExpectedFactory.createNone()
+
+    var visibility = View.VISIBLE
+    every { root.visibility } answers { visibility }
+    every { root.visibility = any() } answers { visibility = firstArg() }
+    every { root.translationX = any() } just Runs
+    every { root.translationY = any() } just Runs
+    every { root.bringToFront() } just Runs
+
+    var attached = false
+    every { viewAnnotationsLayout.addView(any(), any<ViewGroup.LayoutParams>()) } answers {
+      attached = true
+    }
+    every { viewAnnotationsLayout.removeView(any()) } answers { attached = false }
+    every { viewAnnotationsLayout.indexOfChild(root) } answers { if (attached) 0 else -1 }
+
+    viewAnnotationManager.addViewAnnotation(root, viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) })
+    return idSlot.captured
+  }
+
+  /**
+   * Delivers a position update the way the map does it: the list arrives on the render thread and
+   * the positioning itself is scheduled on the main thread for the next frame.
+   */
+  private fun pushPositions(vararg identifiers: String) {
+    val descriptors = identifiers.map { identifier ->
+      DelegatingViewAnnotationPositionDescriptor(
+        identifier = identifier,
+        width = 100.0,
+        height = 100.0,
+        leftTopCoordinate = ScreenCoordinate(0.0, 0.0),
+        anchorCoordinate = Point.fromLngLat(0.0, 0.0),
+        anchorConfig = ViewAnnotationAnchorConfig.Builder()
+          .anchor(ViewAnnotationAnchor.CENTER)
+          .build(),
+      )
+    }
+    val renderThreadCall = Thread {
+      viewAnnotationManager.onDelegatingViewAnnotationPositionsUpdate(descriptors)
+    }
+    renderThreadCall.start()
+    renderThreadCall.join()
+    viewAnnotationManager.onDelegatingViewAnnotationPositionsUpdate(emptyList())
+    shadowOf(Looper.getMainLooper()).runToEndOfTasks()
+  }
+
+  // --- Placement tests ---
+
+  @Test
+  fun annotationReportingCollisionBoxesStaysAttachedWhenTheMapDropsIt() {
+    val child = mockCollisionChild(width = 50, height = 30)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    val id = addPlaceableAnnotation(root)
+
+    pushPositions(id)
+    assertEquals(View.VISIBLE, root.visibility)
+
+    pushPositions()
+
+    // The view keeps its layout observer, so the boxes can still be corrected.
+    verify(exactly = 0) { viewAnnotationsLayout.removeView(root) }
+    assertEquals(View.INVISIBLE, root.visibility)
+  }
+
+  @Test
+  fun annotationWithoutCollisionBoxesIsRemovedWhenTheMapDropsIt() {
+    // Nothing marks a subview here, so there are no boxes to correct and the old path is kept.
+    val root = mockAnnotationRoot(childViews = emptyList())
+    val id = addPlaceableAnnotation(root)
+
+    pushPositions(id)
+    pushPositions()
+
+    verifyOnce { viewAnnotationsLayout.removeView(root) }
+  }
+
+  @Test
+  fun annotationHiddenByPlacementIsShownAgainWithoutBeingAddedTwice() {
+    val child = mockCollisionChild(width = 50, height = 30)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    val id = addPlaceableAnnotation(root)
+
+    pushPositions(id)
+    pushPositions()
+    assertEquals(View.INVISIBLE, root.visibility)
+
+    pushPositions(id)
+
+    assertEquals(View.VISIBLE, root.visibility)
+    verifyOnce { viewAnnotationsLayout.addView(root, any<ViewGroup.LayoutParams>()) }
+  }
+
+  @Test
+  fun visibilitySetByTheAppWhileHiddenByPlacementIsKept() {
+    val child = mockCollisionChild(width = 50, height = 30)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    val id = addPlaceableAnnotation(root)
+
+    pushPositions(id)
+    pushPositions()
+
+    // The app hides the annotation itself while the map is not placing it.
+    root.visibility = View.GONE
+    pushPositions(id)
+
+    // The SDK only takes back the INVISIBLE it set itself, so the app's value survives.
+    // This is the same result the removeView path gave before.
+    assertEquals(View.GONE, root.visibility)
+  }
+
+  @Test
+  fun viewMadeVisibleByTheAppWhileHiddenByPlacementIsHiddenAgain() {
+    val child = mockCollisionChild(width = 50, height = 30)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+    val attachSlot = slot<View.OnAttachStateChangeListener>()
+    every { root.addOnAttachStateChangeListener(capture(attachSlot)) } just Runs
+    val drawSlot = slot<ViewTreeObserver.OnDrawListener>()
+    every { viewTreeObserver.addOnDrawListener(capture(drawSlot)) } just Runs
+    val id = addPlaceableAnnotation(root)
+    attachSlot.captured.onViewAttachedToWindow(root)
+
+    pushPositions(id)
+    pushPositions()
+    assertEquals(View.INVISIBLE, root.visibility)
+
+    // The app shows the view itself while the map is not placing it.
+    root.visibility = View.VISIBLE
+    drawSlot.captured.onDraw()
+
+    // The view stays attached with a stale translation, so the SDK hides it again until core places it.
+    assertEquals(View.INVISIBLE, root.visibility)
   }
 
   private companion object {

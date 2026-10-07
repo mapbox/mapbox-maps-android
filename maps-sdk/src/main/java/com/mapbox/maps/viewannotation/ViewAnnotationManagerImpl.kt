@@ -55,7 +55,12 @@ internal class ViewAnnotationManagerImpl(
     var lastPushedCollisionBoxes: List<ScreenBox>? = null,
     // collision-frame overlays currently attached to [view]'s ViewOverlay; null when debug is off
     var debugFrames: List<Drawable>? = null,
-    var userCollisionBoxes: Boolean = false
+    // true if the app supplied [ViewAnnotationOptions.collisionBoxes], disabling auto-collection
+    var userCollisionBoxes: Boolean = false,
+    // true while placement keeps this view attached but not shown; see [positionAnnotationViews]
+    var hiddenByPlacement: Boolean = false,
+    // app-set [View.getVisibility] saved before [hiddenByPlacement] forces INVISIBLE
+    var visibilityBeforeHiding: Int = View.VISIBLE
   ) {
     // Helper function to understand if view is visible from Android visibility perspective.
     val isVisible
@@ -728,6 +733,14 @@ internal class ViewAnnotationManagerImpl(
   // triggers on every frame and checks if visibility changed
   // as OnGlobalLayoutListener does not cover cases for View.INVISIBLE properly
   private fun buildDrawListener(viewAnnotation: ViewAnnotation) = ViewTreeObserver.OnDrawListener {
+    // Core is not placing this annotation, the SDK owns its visibility until it does.
+    if (viewAnnotation.hiddenByPlacement) {
+      // The app may show the view meanwhile; it would be drawn at a stale position until the next placement.
+      if (viewAnnotation.view.isVisible) {
+        viewAnnotation.view.visibility = View.INVISIBLE
+      }
+      return@OnDrawListener
+    }
     if (viewAnnotation.handleVisibilityAutomatically) {
       val isAndroidViewVisible = viewAnnotation.view.isVisible
 
@@ -809,7 +822,8 @@ internal class ViewAnnotationManagerImpl(
       val boxes = collectCollisionBoxes(viewAnnotation.view)
       if (boxes != viewAnnotation.lastPushedCollisionBoxes) {
         viewAnnotation.lastPushedCollisionBoxes = boxes
-        builder.collisionBoxes(boxes)
+        // Core treats null as "no change"; an explicit empty list reverts to full bounds.
+        builder.collisionBoxes(boxes ?: emptyList())
         return true
       }
     }
@@ -876,8 +890,10 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun collectCollisionBoxesInto(root: ViewGroup, current: View, out: MutableList<ScreenBox>) {
+    // Root visibility is annotation-managed, not a user opt-out; GONE subtrees don't collide.
+    if (current !== root && current.visibility == View.GONE) return
     if (current.mbxViewAnnotationCollisionBox) {
-      if (current.width > 0 && current.height > 0 && current.visibility != View.GONE) {
+      if (current.width > 0 && current.height > 0) {
         val rect = Rect(0, 0, current.width, current.height)
         root.offsetDescendantRectToMyCoords(current, rect)
         out.add(
@@ -935,6 +951,22 @@ internal class ViewAnnotationManagerImpl(
           }
         }
 
+        // The annotation is placeable again; if the SDK still keeps it INVISIBLE, restore the app's old visibility.
+        if (viewAnnotation.hiddenByPlacement) {
+          viewAnnotation.hiddenByPlacement = false
+          if (viewAnnotation.view.visibility == View.INVISIBLE) {
+            viewAnnotation.view.visibility = viewAnnotation.visibilityBeforeHiding
+          }
+          updateVisibilityAndNotifyUpdateListeners(
+            viewAnnotation,
+            if (viewAnnotation.view.isVisible) {
+              ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
+            } else {
+              ViewAnnotationVisibility.INVISIBLE
+            }
+          )
+        }
+
         if (
           !viewAnnotation.isVisible &&
           viewAnnotationsLayout.indexOfChild(viewAnnotation.view) == -1
@@ -974,8 +1006,7 @@ internal class ViewAnnotationManagerImpl(
       }
     }
 
-    // remove visible views that are not present in positions list
-    // TODO should we make them invisible instead?
+    // hide visible views that are not present in positions list
     viewAnnotations
       .filter {
         it.value.view.isVisible
@@ -986,7 +1017,18 @@ internal class ViewAnnotationManagerImpl(
         }
       }
       .forEach { (_, viewAnnotation) ->
-        viewAnnotationsLayout.removeView(viewAnnotation.view)
+        if (
+          viewAnnotation.lastPushedCollisionBoxes != null &&
+          viewAnnotationsLayout.indexOfChild(viewAnnotation.view) != -1
+        ) {
+          // Keep it attached so layout and collision boxes can keep updating;
+          // detaching would leave stale boxes in core and the annotation could stay hidden.
+          viewAnnotation.visibilityBeforeHiding = viewAnnotation.view.visibility
+          viewAnnotation.hiddenByPlacement = true
+          viewAnnotation.view.visibility = View.INVISIBLE
+        } else {
+          viewAnnotationsLayout.removeView(viewAnnotation.view)
+        }
         updateVisibilityAndNotifyUpdateListeners(
           viewAnnotation,
           ViewAnnotationVisibility.INVISIBLE

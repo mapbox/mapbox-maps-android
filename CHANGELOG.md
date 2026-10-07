@@ -10,6 +10,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
 * Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
 
+## Features ✨ and improvements 🏁
+* Collision boxes of a view annotation now follow the view at runtime: marking a subview with the experimental `View.mbxViewAnnotationCollisionBox` after the annotation is added, hiding it (`GONE`) or removing the last marked one reaches the map. Marked views inside a `GONE` subtree no longer collide.
 
 # 11.33.0-rc.1 October 05, 2026
 ## Features ✨ and improvements 🏁
