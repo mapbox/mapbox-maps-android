@@ -72,7 +72,9 @@ abstract class CameraAnimator<out T>(
   private val immediate get() = duration == 0L && startDelay == 0L
 
   init {
-    setObjectValues(targets[0], targets[0])
+    // Set temporary values right away. The override below posts writes to the
+    // animator thread, but nothing is running yet and the evaluator needs values first.
+    super.setObjectValues(targets[0], targets[0])
     setEvaluator(evaluator)
   }
 
@@ -82,12 +84,18 @@ abstract class CameraAnimator<out T>(
   abstract val type: CameraAnimatorType
 
   /**
-   * Set the animator object values
+   * Set the animator values on the animator thread.
    *
-   * @param values varags of object values
+   * When animations run on the background animator thread, changing values from another
+   * thread can race with Android's internal animation state and crash in `KeyframeSet.getValue`.
+   * Routing all writes through the animator thread keeps those updates ordered and safe.
+   *
+   * @param values vararg object values
    */
   final override fun setObjectValues(vararg values: Any?) {
-    super.setObjectValues(*values)
+    postOnAnimatorThread {
+      super.setObjectValues(*values)
+    }
   }
 
   /**
