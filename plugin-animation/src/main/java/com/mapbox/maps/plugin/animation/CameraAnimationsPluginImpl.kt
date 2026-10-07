@@ -352,7 +352,11 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
             // finally register update listener in order to update map properly -
             // if it's not specific use-case using 0-duration animations with background thread
             if (!usingBackgroundThread || startingAnimator.duration != 0L) {
-              registerInternalUpdateListener(startingAnimator)
+              // Register after updateObjectValues() on the animator thread so early frames
+              // can't observe the animator before its real animation values are installed.
+              postOnAnimatorThread {
+                registerInternalUpdateListener(startingAnimator)
+              }
             }
             if (debugMode) {
               logI(

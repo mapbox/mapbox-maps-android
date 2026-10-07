@@ -49,6 +49,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
 
+## Bug fixes 🐞
+* Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
+
+## Bug fixes 🐞
+* Fix a NullPointerException crash on MapboxAnimThread during camera animations and follow-puck viewport transitions when using AnimationThreadController.useBackgroundThread().
+
 # 11.33.0-rc.1 October 05, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
