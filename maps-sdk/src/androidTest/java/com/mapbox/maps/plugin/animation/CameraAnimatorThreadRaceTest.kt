@@ -16,8 +16,8 @@ import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraTypeEvaluator
 import com.mapbox.maps.threading.AnimationThreadController
 import org.junit.After
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -255,10 +255,9 @@ class CameraAnimatorThreadRaceTest {
   }
 
   private fun assertNoAnimatorThreadCrash(run: RunResult) {
-    val observed = crash.get() ?: return
-    val (threadName, throwable) = observed
+    val (threadName, throwable) = crash.get() ?: return
     val stack = StringWriter().also { throwable.printStackTrace(PrintWriter(it)) }.toString()
-    assertNull("Animator thread '$threadName' crashed while the main thread mutated the animator.\n$run\n$stack", observed)
+    fail("Animator thread '$threadName' crashed while the main thread mutated the animator.\n$run\n$stack")
   }
 
   // ---- animator under test -------------------------------------------------------------------
