@@ -32,7 +32,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.extension:maps-style:11.30.5'
+  implementation 'com.mapbox.extension:maps-style:11.30.4'
 }
 ```
 
