@@ -7,9 +7,6 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 # 11.30.5 October 09, 2026
-## Dependencies
-* Update gl-native to [v11.30.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.5), common to [v24.30.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.5).
-
 ## Breaking changes ⚠️
 * Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
@@ -18,6 +15,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
 * Fixed wrong symbol position for placement and queryRenderedFeatures after symbol-z-offset property update
+
+## Dependencies
+* Update gl-native to [v11.30.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.5), common to [v24.30.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.5).
+
 # 11.30.4 October 01, 2026
 ## Dependencies
 * Update gl-native to [v11.30.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.4), common to [v24.30.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.30.4).
