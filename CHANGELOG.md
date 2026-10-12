@@ -38,6 +38,21 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1), common to [v24.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1).
 
 
+# 11.32.1 October 12, 2026
+## Dependencies
+* Update gl-native to [v11.32.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.1), common to [v24.32.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.1).
+
+## Breaking changes ⚠️
+* Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
+* Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
+* Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
+
+## Bug fixes 🐞
+* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
+
+## Features ✨ and improvements 🏁
+* Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
+
 # 11.32.0 October 01, 2026
 ## Bug fixes 🐞
 * Fix point annotation icons disappearing a frame before the annotations when deleting them. Annotation source updates now carry a numeric `dataId` in `SourceDataLoaded`.
