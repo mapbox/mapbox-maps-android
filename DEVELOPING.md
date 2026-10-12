@@ -64,8 +64,17 @@ or update them inline in the source code:
 
 The SDK_REGISTRY_TOKEN is a Mapbox access token, used during compile time, with a scope set to `DOWNLOADS:READ`.
 This token allows to download all required Mapbox dependencies from a Mapbox Maven instance.
-The DOWNLOADS:READ scope can be set when creating a new access token on https://account.mapbox.com/.
+The DOWNLOADS:READ scope can be set when creating a new access token on https://account.mapbox.com/access-tokens/.
+It is a secret scope, so the resulting token is a secret token starting with `sk.`; a public token (`pk.`) will not work.
 The token configuration can be found in the root `build.gradle.kts` of the project.
+
+Besides exporting it as an environment variable, the token can also be set as a Gradle property in `~/.gradle/gradle.properties`:
+
+```
+SDK_REGISTRY_TOKEN=sk.xxx
+```
+
+The build fails early with setup instructions if the token is missing.
 
 #### Mapbox Access token
 
