@@ -5,6 +5,11 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.32.1 October 12, 2026
+## Dependencies
+* Update gl-native to [v11.32.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.1), common to [v24.32.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.1).
+
 ## Breaking changes ⚠️
 * Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
@@ -12,6 +17,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
+
+## Features ✨ and improvements 🏁
+* Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
 
 # 11.32.0 October 01, 2026
 ## Breaking changes ⚠️
