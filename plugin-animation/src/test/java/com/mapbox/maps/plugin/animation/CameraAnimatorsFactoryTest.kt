@@ -2,11 +2,14 @@ package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraBounds
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapOptions
+import com.mapbox.maps.MercatorCoordinate
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Size
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
@@ -27,6 +30,13 @@ import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper.shadowMainLooper
 import java.time.Duration
+import kotlin.math.PI
+import kotlin.math.atan
+import kotlin.math.cos
+import kotlin.math.exp
+import kotlin.math.hypot
+import kotlin.math.ln
+import kotlin.math.tan
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
@@ -141,6 +151,57 @@ class CameraAnimatorsFactoryTest {
     testAnimators(animators, target)
   }
 
+  // A long flight at high zoom must arrive at the end point smoothly. The path formula
+  // used to land meters short of the target and then snap to it on the last frame.
+  @Test
+  fun testFlyToLongFlightArrivesWithoutJump() {
+    val from = Point.fromLngLat(27.558721, 53.901516) // Minsk
+    val to = Point.fromLngLat(121.450615, 31.225972) // Shanghai
+    val size = Size(1024.0f, 768.0f)
+    val bounds = mockk<CameraBounds> {
+      every { minZoom } returns 0.0
+      every { maxZoom } returns 22.0
+    }
+
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      from,
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      20.0,
+      0.0,
+      30.0,
+      36.87
+    )
+    every { mapCameraManagerDelegate.getBounds() } returns bounds
+    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(size).pixelRatio(1.0f).build()
+    every { mapTransformDelegate.getSize() } returns size
+    every { mapProjectionDelegate.project(any(), any()) } answers {
+      project(firstArg(), secondArg())
+    }
+    every { mapProjectionDelegate.unproject(any(), any()) } answers {
+      unproject(firstArg(), secondArg())
+    }
+
+    val target = CameraOptions.Builder().center(to).zoom(20.0).pitch(30.0).build()
+    val center = cameraAnimatorsFactory.getFlyTo(target)
+      .first { it.type == CameraAnimatorType.CENTER }
+    center.interpolator = LinearInterpolator()
+
+    // One frame before the end of a 10 second flight at 60 fps.
+    center.setCurrentFraction(1.0f - 17.0f / 10000.0f)
+    val beforeLast = center.animatedValue as Point
+    center.setCurrentFraction(1.0f)
+    val last = center.animatedValue as Point
+
+    Assert.assertEquals(to.latitude(), last.latitude(), 1e-9)
+    Assert.assertEquals(to.longitude(), last.longitude(), 1e-9)
+
+    // The last step is a few centimeters at most. Degrees to meters at this latitude.
+    val metersPerDegree = 111320.0
+    val dy = (last.latitude() - beforeLast.latitude()) * metersPerDegree
+    val dx = (last.longitude() - beforeLast.longitude()) * metersPerDegree * cos(to.latitude() * PI / 180.0)
+    Assert.assertTrue("last step is ${hypot(dx, dy)} m", hypot(dx, dy) < 0.05)
+  }
+
   @Test
   fun testScaleByAnimators() {
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
@@ -159,6 +220,22 @@ class CameraAnimatorsFactoryTest {
     val target = CameraOptions.Builder().pitch(initialCameraPosition.pitch + pitchBy).build()
     val animators = cameraAnimatorsFactory.getPitchBy(pitchBy, owner = customOwner)
     testAnimators(animators, target)
+  }
+
+  // Web Mercator with 512 px tiles, same as the native projection.
+  private fun project(point: Point, zoomScale: Double): MercatorCoordinate {
+    val worldSize = 512.0 * zoomScale
+    val x = (180.0 + point.longitude()) / 360.0 * worldSize
+    val y = (180.0 - 180.0 / PI * ln(tan(PI / 4.0 + point.latitude() * PI / 360.0))) / 360.0 * worldSize
+    return MercatorCoordinate(x, y)
+  }
+
+  private fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point {
+    val worldSize = 512.0 * zoomScale
+    val lng = coordinate.x / worldSize * 360.0 - 180.0
+    val y = 180.0 - coordinate.y / worldSize * 360.0
+    val lat = 360.0 / PI * atan(exp(y * PI / 180.0)) - 90.0
+    return Point.fromLngLat(lng, lat)
   }
 
   private fun testAnimators(
