@@ -277,26 +277,49 @@ public class AtmosphereState private constructor(
   }
 
   @OptIn(MapboxExperimental::class)
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (color.isNotInitial()) capacity++
+    if (colorTransition.isNotInitial()) capacity++
+    if (colorUseTheme.isNotInitial()) capacity++
+    if (highColor.isNotInitial()) capacity++
+    if (highColorTransition.isNotInitial()) capacity++
+    if (highColorUseTheme.isNotInitial()) capacity++
+    if (horizonBlend.isNotInitial()) capacity++
+    if (horizonBlendTransition.isNotInitial()) capacity++
+    if (range.isNotInitial()) capacity++
+    if (rangeTransition.isNotInitial()) capacity++
+    if (spaceColor.isNotInitial()) capacity++
+    if (spaceColorTransition.isNotInitial()) capacity++
+    if (spaceColorUseTheme.isNotInitial()) capacity++
+    if (starIntensity.isNotInitial()) capacity++
+    if (starIntensityTransition.isNotInitial()) capacity++
+    if (verticalRange.isNotInitial()) capacity++
+    if (verticalRangeTransition.isNotInitial()) capacity++
+    return capacity
+  }
+
+  @OptIn(MapboxExperimental::class)
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("color" to color.value).takeIf { color.isNotInitial() },
-      ("color-transition" to colorTransition.value).takeIf { colorTransition.isNotInitial() },
-      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.isNotInitial() },
-      ("high-color" to highColor.value).takeIf { highColor.isNotInitial() },
-      ("high-color-transition" to highColorTransition.value).takeIf { highColorTransition.isNotInitial() },
-      ("high-color-use-theme" to highColorUseTheme.value).takeIf { highColorUseTheme.isNotInitial() },
-      ("horizon-blend" to horizonBlend.value).takeIf { horizonBlend.isNotInitial() },
-      ("horizon-blend-transition" to horizonBlendTransition.value).takeIf { horizonBlendTransition.isNotInitial() },
-      ("range" to range.value).takeIf { range.isNotInitial() },
-      ("range-transition" to rangeTransition.value).takeIf { rangeTransition.isNotInitial() },
-      ("space-color" to spaceColor.value).takeIf { spaceColor.isNotInitial() },
-      ("space-color-transition" to spaceColorTransition.value).takeIf { spaceColorTransition.isNotInitial() },
-      ("space-color-use-theme" to spaceColorUseTheme.value).takeIf { spaceColorUseTheme.isNotInitial() },
-      ("star-intensity" to starIntensity.value).takeIf { starIntensity.isNotInitial() },
-      ("star-intensity-transition" to starIntensityTransition.value).takeIf { starIntensityTransition.isNotInitial() },
-      ("vertical-range" to verticalRange.value).takeIf { verticalRange.isNotInitial() },
-      ("vertical-range-transition" to verticalRangeTransition.value).takeIf { verticalRangeTransition.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      color.run { if (isNotInitial()) put("color", value) }
+      colorTransition.run { if (isNotInitial()) put("color-transition", value) }
+      colorUseTheme.run { if (isNotInitial()) put("color-use-theme", value) }
+      highColor.run { if (isNotInitial()) put("high-color", value) }
+      highColorTransition.run { if (isNotInitial()) put("high-color-transition", value) }
+      highColorUseTheme.run { if (isNotInitial()) put("high-color-use-theme", value) }
+      horizonBlend.run { if (isNotInitial()) put("horizon-blend", value) }
+      horizonBlendTransition.run { if (isNotInitial()) put("horizon-blend-transition", value) }
+      range.run { if (isNotInitial()) put("range", value) }
+      rangeTransition.run { if (isNotInitial()) put("range-transition", value) }
+      spaceColor.run { if (isNotInitial()) put("space-color", value) }
+      spaceColorTransition.run { if (isNotInitial()) put("space-color-transition", value) }
+      spaceColorUseTheme.run { if (isNotInitial()) put("space-color-use-theme", value) }
+      starIntensity.run { if (isNotInitial()) put("star-intensity", value) }
+      starIntensityTransition.run { if (isNotInitial()) put("star-intensity-transition", value) }
+      verticalRange.run { if (isNotInitial()) put("vertical-range", value) }
+      verticalRangeTransition.run { if (isNotInitial()) put("vertical-range-transition", value) }
+    }
 
   /**
    * See [Any.equals]

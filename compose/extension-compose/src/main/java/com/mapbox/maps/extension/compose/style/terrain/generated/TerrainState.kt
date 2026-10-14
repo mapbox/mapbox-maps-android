@@ -116,11 +116,18 @@ public class TerrainState private constructor(
     ActionWhenNotInitial(action, exaggerationTransitionState, "exaggeration-transition")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (exaggeration.isNotInitial()) capacity++
+    if (exaggerationTransition.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("exaggeration" to exaggeration.value).takeIf { exaggeration.isNotInitial() },
-      ("exaggeration-transition" to exaggerationTransition.value).takeIf { exaggerationTransition.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      exaggeration.run { if (isNotInitial()) put("exaggeration", value) }
+      exaggerationTransition.run { if (isNotInitial()) put("exaggeration-transition", value) }
+    }
 
   /**
    * See [Any.equals]

@@ -137,14 +137,24 @@ public class ModelSourceState private constructor(
     ActionWhenNotInitial(setBuilderPropertyAction, modelsState, "models")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (url.isNotInitial()) capacity++
+    if (maxZoom.isNotInitial()) capacity++
+    if (minZoom.isNotInitial()) capacity++
+    if (tiles.isNotInitial()) capacity++
+    if (models.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("url" to url.value).takeIf { url.isNotInitial() },
-      ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
-      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
-      ("tiles" to tiles.value).takeIf { tiles.isNotInitial() },
-      ("models" to models.value).takeIf { models.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      url.run { if (isNotInitial()) put("url", value) }
+      maxZoom.run { if (isNotInitial()) put("maxzoom", value) }
+      minZoom.run { if (isNotInitial()) put("minzoom", value) }
+      tiles.run { if (isNotInitial()) put("tiles", value) }
+      models.run { if (isNotInitial()) put("models", value) }
+    }
 
   /**
    * See [Any.equals]

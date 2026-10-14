@@ -311,25 +311,46 @@ public class GeoJsonSourceState private constructor(
     ActionWhenNotInitial(setPropertyAction, tileCacheBudgetState, "tile-cache-budget")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (maxZoom.isNotInitial()) capacity++
+    if (minZoom.isNotInitial()) capacity++
+    if (attribution.isNotInitial()) capacity++
+    if (buffer.isNotInitial()) capacity++
+    if (tolerance.isNotInitial()) capacity++
+    if (cluster.isNotInitial()) capacity++
+    if (clusterRadius.isNotInitial()) capacity++
+    if (clusterMaxZoom.isNotInitial()) capacity++
+    if (clusterMinPoints.isNotInitial()) capacity++
+    if (clusterProperties.isNotInitial()) capacity++
+    if (lineMetrics.isNotInitial()) capacity++
+    if (generateId.isNotInitial()) capacity++
+    if (promoteId.isNotInitial()) capacity++
+    if (autoMaxZoom.isNotInitial()) capacity++
+    if (prefetchZoomDelta.isNotInitial()) capacity++
+    if (tileCacheBudget.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
-      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
-      ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
-      ("buffer" to buffer.value).takeIf { buffer.isNotInitial() },
-      ("tolerance" to tolerance.value).takeIf { tolerance.isNotInitial() },
-      ("cluster" to cluster.value).takeIf { cluster.isNotInitial() },
-      ("clusterRadius" to clusterRadius.value).takeIf { clusterRadius.isNotInitial() },
-      ("clusterMaxZoom" to clusterMaxZoom.value).takeIf { clusterMaxZoom.isNotInitial() },
-      ("clusterMinPoints" to clusterMinPoints.value).takeIf { clusterMinPoints.isNotInitial() },
-      ("clusterProperties" to clusterProperties.value).takeIf { clusterProperties.isNotInitial() },
-      ("lineMetrics" to lineMetrics.value).takeIf { lineMetrics.isNotInitial() },
-      ("generateId" to generateId.value).takeIf { generateId.isNotInitial() },
-      ("promoteId" to promoteId.value).takeIf { promoteId.isNotInitial() },
-      ("autoMaxZoom" to autoMaxZoom.value).takeIf { autoMaxZoom.isNotInitial() },
-      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.isNotInitial() },
-      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      maxZoom.run { if (isNotInitial()) put("maxzoom", value) }
+      minZoom.run { if (isNotInitial()) put("minzoom", value) }
+      attribution.run { if (isNotInitial()) put("attribution", value) }
+      buffer.run { if (isNotInitial()) put("buffer", value) }
+      tolerance.run { if (isNotInitial()) put("tolerance", value) }
+      cluster.run { if (isNotInitial()) put("cluster", value) }
+      clusterRadius.run { if (isNotInitial()) put("clusterRadius", value) }
+      clusterMaxZoom.run { if (isNotInitial()) put("clusterMaxZoom", value) }
+      clusterMinPoints.run { if (isNotInitial()) put("clusterMinPoints", value) }
+      clusterProperties.run { if (isNotInitial()) put("clusterProperties", value) }
+      lineMetrics.run { if (isNotInitial()) put("lineMetrics", value) }
+      generateId.run { if (isNotInitial()) put("generateId", value) }
+      promoteId.run { if (isNotInitial()) put("promoteId", value) }
+      autoMaxZoom.run { if (isNotInitial()) put("autoMaxZoom", value) }
+      prefetchZoomDelta.run { if (isNotInitial()) put("prefetch-zoom-delta", value) }
+      tileCacheBudget.run { if (isNotInitial()) put("tile-cache-budget", value) }
+    }
 
   /**
    * See [Any.equals]

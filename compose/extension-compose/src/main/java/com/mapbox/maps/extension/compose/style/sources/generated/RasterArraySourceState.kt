@@ -201,19 +201,34 @@ public class RasterArraySourceState private constructor(
     ActionWhenNotInitial(setPropertyAction, tileCacheBudgetState, "tile-cache-budget")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (url.isNotInitial()) capacity++
+    if (tiles.isNotInitial()) capacity++
+    if (bounds.isNotInitial()) capacity++
+    if (minZoom.isNotInitial()) capacity++
+    if (maxZoom.isNotInitial()) capacity++
+    if (tileSize.isNotInitial()) capacity++
+    if (attribution.isNotInitial()) capacity++
+    if (rasterLayers.isNotInitial()) capacity++
+    if (volatile.isNotInitial()) capacity++
+    if (tileCacheBudget.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("url" to url.value).takeIf { url.isNotInitial() },
-      ("tiles" to tiles.value).takeIf { tiles.isNotInitial() },
-      ("bounds" to bounds.value).takeIf { bounds.isNotInitial() },
-      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
-      ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
-      ("tileSize" to tileSize.value).takeIf { tileSize.isNotInitial() },
-      ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
-      ("rasterLayers" to rasterLayers.value).takeIf { rasterLayers.isNotInitial() },
-      ("volatile" to volatile.value).takeIf { volatile.isNotInitial() },
-      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      url.run { if (isNotInitial()) put("url", value) }
+      tiles.run { if (isNotInitial()) put("tiles", value) }
+      bounds.run { if (isNotInitial()) put("bounds", value) }
+      minZoom.run { if (isNotInitial()) put("minzoom", value) }
+      maxZoom.run { if (isNotInitial()) put("maxzoom", value) }
+      tileSize.run { if (isNotInitial()) put("tileSize", value) }
+      attribution.run { if (isNotInitial()) put("attribution", value) }
+      rasterLayers.run { if (isNotInitial()) put("rasterLayers", value) }
+      volatile.run { if (isNotInitial()) put("volatile", value) }
+      tileCacheBudget.run { if (isNotInitial()) put("tile-cache-budget", value) }
+    }
 
   /**
    * See [Any.equals]

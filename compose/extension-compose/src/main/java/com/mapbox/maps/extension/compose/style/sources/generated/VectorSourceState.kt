@@ -271,24 +271,44 @@ public class VectorSourceState private constructor(
     ActionWhenNotInitial(setPropertyAction, tileNetworkRequestsDelayState, "tile-network-requests-delay")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (url.isNotInitial()) capacity++
+    if (tiles.isNotInitial()) capacity++
+    if (bounds.isNotInitial()) capacity++
+    if (scheme.isNotInitial()) capacity++
+    if (minZoom.isNotInitial()) capacity++
+    if (maxZoom.isNotInitial()) capacity++
+    if (attribution.isNotInitial()) capacity++
+    if (promoteId.isNotInitial()) capacity++
+    if (volatile.isNotInitial()) capacity++
+    if (prefetchZoomDelta.isNotInitial()) capacity++
+    if (tileCacheBudget.isNotInitial()) capacity++
+    if (minimumTileUpdateInterval.isNotInitial()) capacity++
+    if (maxOverscaleFactorForParentTiles.isNotInitial()) capacity++
+    if (tileRequestsDelay.isNotInitial()) capacity++
+    if (tileNetworkRequestsDelay.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("url" to url.value).takeIf { url.isNotInitial() },
-      ("tiles" to tiles.value).takeIf { tiles.isNotInitial() },
-      ("bounds" to bounds.value).takeIf { bounds.isNotInitial() },
-      ("scheme" to scheme.value).takeIf { scheme.isNotInitial() },
-      ("minzoom" to minZoom.value).takeIf { minZoom.isNotInitial() },
-      ("maxzoom" to maxZoom.value).takeIf { maxZoom.isNotInitial() },
-      ("attribution" to attribution.value).takeIf { attribution.isNotInitial() },
-      ("promoteId" to promoteId.value).takeIf { promoteId.isNotInitial() },
-      ("volatile" to volatile.value).takeIf { volatile.isNotInitial() },
-      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.isNotInitial() },
-      ("tile-cache-budget" to tileCacheBudget.value).takeIf { tileCacheBudget.isNotInitial() },
-      ("minimum-tile-update-interval" to minimumTileUpdateInterval.value).takeIf { minimumTileUpdateInterval.isNotInitial() },
-      ("max-overscale-factor-for-parent-tiles" to maxOverscaleFactorForParentTiles.value).takeIf { maxOverscaleFactorForParentTiles.isNotInitial() },
-      ("tile-requests-delay" to tileRequestsDelay.value).takeIf { tileRequestsDelay.isNotInitial() },
-      ("tile-network-requests-delay" to tileNetworkRequestsDelay.value).takeIf { tileNetworkRequestsDelay.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      url.run { if (isNotInitial()) put("url", value) }
+      tiles.run { if (isNotInitial()) put("tiles", value) }
+      bounds.run { if (isNotInitial()) put("bounds", value) }
+      scheme.run { if (isNotInitial()) put("scheme", value) }
+      minZoom.run { if (isNotInitial()) put("minzoom", value) }
+      maxZoom.run { if (isNotInitial()) put("maxzoom", value) }
+      attribution.run { if (isNotInitial()) put("attribution", value) }
+      promoteId.run { if (isNotInitial()) put("promoteId", value) }
+      volatile.run { if (isNotInitial()) put("volatile", value) }
+      prefetchZoomDelta.run { if (isNotInitial()) put("prefetch-zoom-delta", value) }
+      tileCacheBudget.run { if (isNotInitial()) put("tile-cache-budget", value) }
+      minimumTileUpdateInterval.run { if (isNotInitial()) put("minimum-tile-update-interval", value) }
+      maxOverscaleFactorForParentTiles.run { if (isNotInitial()) put("max-overscale-factor-for-parent-tiles", value) }
+      tileRequestsDelay.run { if (isNotInitial()) put("tile-requests-delay", value) }
+      tileNetworkRequestsDelay.run { if (isNotInitial()) put("tile-network-requests-delay", value) }
+    }
 
   /**
    * See [Any.equals]

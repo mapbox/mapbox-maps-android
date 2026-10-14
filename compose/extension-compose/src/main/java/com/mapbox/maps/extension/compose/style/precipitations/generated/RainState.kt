@@ -339,31 +339,58 @@ public class RainState private constructor(
     ActionWhenNotInitial(action, vignetteTransitionState, "vignette-transition")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (centerThinning.isNotInitial()) capacity++
+    if (centerThinningTransition.isNotInitial()) capacity++
+    if (color.isNotInitial()) capacity++
+    if (colorTransition.isNotInitial()) capacity++
+    if (colorUseTheme.isNotInitial()) capacity++
+    if (density.isNotInitial()) capacity++
+    if (densityTransition.isNotInitial()) capacity++
+    if (direction.isNotInitial()) capacity++
+    if (directionTransition.isNotInitial()) capacity++
+    if (distortionStrength.isNotInitial()) capacity++
+    if (distortionStrengthTransition.isNotInitial()) capacity++
+    if (dropletSize.isNotInitial()) capacity++
+    if (dropletSizeTransition.isNotInitial()) capacity++
+    if (intensity.isNotInitial()) capacity++
+    if (intensityTransition.isNotInitial()) capacity++
+    if (opacity.isNotInitial()) capacity++
+    if (opacityTransition.isNotInitial()) capacity++
+    if (vignette.isNotInitial()) capacity++
+    if (vignetteColor.isNotInitial()) capacity++
+    if (vignetteColorTransition.isNotInitial()) capacity++
+    if (vignetteColorUseTheme.isNotInitial()) capacity++
+    if (vignetteTransition.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("center-thinning" to centerThinning.value).takeIf { centerThinning.isNotInitial() },
-      ("center-thinning-transition" to centerThinningTransition.value).takeIf { centerThinningTransition.isNotInitial() },
-      ("color" to color.value).takeIf { color.isNotInitial() },
-      ("color-transition" to colorTransition.value).takeIf { colorTransition.isNotInitial() },
-      ("color-use-theme" to colorUseTheme.value).takeIf { colorUseTheme.isNotInitial() },
-      ("density" to density.value).takeIf { density.isNotInitial() },
-      ("density-transition" to densityTransition.value).takeIf { densityTransition.isNotInitial() },
-      ("direction" to direction.value).takeIf { direction.isNotInitial() },
-      ("direction-transition" to directionTransition.value).takeIf { directionTransition.isNotInitial() },
-      ("distortion-strength" to distortionStrength.value).takeIf { distortionStrength.isNotInitial() },
-      ("distortion-strength-transition" to distortionStrengthTransition.value).takeIf { distortionStrengthTransition.isNotInitial() },
-      ("droplet-size" to dropletSize.value).takeIf { dropletSize.isNotInitial() },
-      ("droplet-size-transition" to dropletSizeTransition.value).takeIf { dropletSizeTransition.isNotInitial() },
-      ("intensity" to intensity.value).takeIf { intensity.isNotInitial() },
-      ("intensity-transition" to intensityTransition.value).takeIf { intensityTransition.isNotInitial() },
-      ("opacity" to opacity.value).takeIf { opacity.isNotInitial() },
-      ("opacity-transition" to opacityTransition.value).takeIf { opacityTransition.isNotInitial() },
-      ("vignette" to vignette.value).takeIf { vignette.isNotInitial() },
-      ("vignette-color" to vignetteColor.value).takeIf { vignetteColor.isNotInitial() },
-      ("vignette-color-transition" to vignetteColorTransition.value).takeIf { vignetteColorTransition.isNotInitial() },
-      ("vignette-color-use-theme" to vignetteColorUseTheme.value).takeIf { vignetteColorUseTheme.isNotInitial() },
-      ("vignette-transition" to vignetteTransition.value).takeIf { vignetteTransition.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      centerThinning.run { if (isNotInitial()) put("center-thinning", value) }
+      centerThinningTransition.run { if (isNotInitial()) put("center-thinning-transition", value) }
+      color.run { if (isNotInitial()) put("color", value) }
+      colorTransition.run { if (isNotInitial()) put("color-transition", value) }
+      colorUseTheme.run { if (isNotInitial()) put("color-use-theme", value) }
+      density.run { if (isNotInitial()) put("density", value) }
+      densityTransition.run { if (isNotInitial()) put("density-transition", value) }
+      direction.run { if (isNotInitial()) put("direction", value) }
+      directionTransition.run { if (isNotInitial()) put("direction-transition", value) }
+      distortionStrength.run { if (isNotInitial()) put("distortion-strength", value) }
+      distortionStrengthTransition.run { if (isNotInitial()) put("distortion-strength-transition", value) }
+      dropletSize.run { if (isNotInitial()) put("droplet-size", value) }
+      dropletSizeTransition.run { if (isNotInitial()) put("droplet-size-transition", value) }
+      intensity.run { if (isNotInitial()) put("intensity", value) }
+      intensityTransition.run { if (isNotInitial()) put("intensity-transition", value) }
+      opacity.run { if (isNotInitial()) put("opacity", value) }
+      opacityTransition.run { if (isNotInitial()) put("opacity-transition", value) }
+      vignette.run { if (isNotInitial()) put("vignette", value) }
+      vignetteColor.run { if (isNotInitial()) put("vignette-color", value) }
+      vignetteColorTransition.run { if (isNotInitial()) put("vignette-color-transition", value) }
+      vignetteColorUseTheme.run { if (isNotInitial()) put("vignette-color-use-theme", value) }
+      vignetteTransition.run { if (isNotInitial()) put("vignette-transition", value) }
+    }
 
   /**
    * See [Any.equals]

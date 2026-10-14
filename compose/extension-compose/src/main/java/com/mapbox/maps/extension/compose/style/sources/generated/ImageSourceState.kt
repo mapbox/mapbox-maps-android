@@ -118,12 +118,20 @@ public class ImageSourceState private constructor(
     ActionWhenNotInitial(setPropertyAction, prefetchZoomDeltaState, "prefetch-zoom-delta")
   }
 
+  private fun getPropertiesCapacity(): Int {
+    var capacity = 0
+    if (url.isNotInitial()) capacity++
+    if (coordinates.isNotInitial()) capacity++
+    if (prefetchZoomDelta.isNotInitial()) capacity++
+    return capacity
+  }
+
   private fun getProperties(): Map<String, Value> =
-    listOfNotNull(
-      ("url" to url.value).takeIf { url.isNotInitial() },
-      ("coordinates" to coordinates.value).takeIf { coordinates.isNotInitial() },
-      ("prefetch-zoom-delta" to prefetchZoomDelta.value).takeIf { prefetchZoomDelta.isNotInitial() },
-    ).toMap()
+    buildMap(getPropertiesCapacity()) {
+      url.run { if (isNotInitial()) put("url", value) }
+      coordinates.run { if (isNotInitial()) put("coordinates", value) }
+      prefetchZoomDelta.run { if (isNotInitial()) put("prefetch-zoom-delta", value) }
+    }
 
   /**
    * See [Any.equals]
