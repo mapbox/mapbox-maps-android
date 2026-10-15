@@ -90,6 +90,9 @@ abstract class CameraAnimator<out T>(
    * thread can race with Android's internal animation state and crash in `KeyframeSet.getValue`.
    * Routing all writes through the animator thread keeps those updates ordered and safe.
    *
+   * All writes go through the animator thread.
+   * If we're already on that thread, the write runs immediately; otherwise it is posted.
+   *
    * @param values vararg object values
    */
   final override fun setObjectValues(vararg values: Any?) {
