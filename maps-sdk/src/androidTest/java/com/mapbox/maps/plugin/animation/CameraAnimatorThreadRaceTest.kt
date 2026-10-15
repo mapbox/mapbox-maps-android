@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.TypeEvaluator
-import android.animation.ValueAnimator
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -143,22 +142,16 @@ class CameraAnimatorThreadRaceTest {
   }
 
   /**
-   * Starts [animator], hammers reads on the animator thread, and runs [write] in batches on the
-   * main thread for [RACE_BUDGET_MS]. Each batch waits for the animator thread to drain the writes
-   * it posted before scheduling the next one, so the queue stays bounded.
+   * Repeatedly reads [animator] on the animator thread and runs [write] in batches on the main
+   * thread for [RACE_BUDGET_MS]. The animator never starts: the reader uses
+   * `setCurrentFraction`, the same per-frame read path. Each batch waits for its posted writes to
+   * finish before scheduling the next one, so the queue stays bounded.
    */
   private fun race(
     animator: ZoomAnimator,
     evaluator: RecordingEvaluator,
     write: () -> Unit,
   ): RunResult {
-    animator.duration = ANIMATION_DURATION_MS
-    animator.repeatCount = ValueAnimator.INFINITE
-    animator.repeatMode = ValueAnimator.RESTART
-    animator.markRegistered()
-    animator.start()
-    awaitFirstRead(evaluator)
-
     val reads = AtomicLong()
     val stopReader = AtomicBoolean(false)
     val readerDone = CountDownLatch(1)
@@ -211,17 +204,6 @@ class CameraAnimatorThreadRaceTest {
 
     stopReader.set(true)
     readerDone.await(GRACE_MS, TimeUnit.MILLISECONDS)
-    if (crash.get() == null) {
-      // Tear down from the main thread. If MapboxAnimThread has already died, its looper is null
-      // and calling postOnAnimatorThread from another thread could run cancel() inline.
-      val drained = CountDownLatch(1)
-      mainHandler.post {
-        animator.cancel()
-        AnimationThreadController.postOnAnimatorThread { drained.countDown() }
-      }
-      drained.await(GRACE_MS, TimeUnit.MILLISECONDS)
-    }
-
     return RunResult(
       writes = writes.get(),
       reads = reads.get(),
@@ -229,13 +211,6 @@ class CameraAnimatorThreadRaceTest {
       sawFarTarget = evaluator.sawFarTarget.get(),
       elapsedMs = elapsedMs,
     )
-  }
-
-  private fun awaitFirstRead(evaluator: RecordingEvaluator) {
-    val until = SystemClock.elapsedRealtime() + STARTUP_TIMEOUT_MS
-    while (evaluator.readThreads.isEmpty() && crash.get() == null && SystemClock.elapsedRealtime() < until) {
-      SystemClock.sleep(5L)
-    }
   }
 
   /**
@@ -279,15 +254,6 @@ class CameraAnimatorThreadRaceTest {
       resolvedCount.incrementAndGet()
       return super.resolveAnimationObjectValues(startValue)
     }
-
-    /**
-     * `start()` will not run until the plugin marks the animator as registered. That wiring is
-     * private and needs a live map, so the test sets the flag directly because it only gates start.
-     */
-    fun markRegistered() {
-      CameraAnimator::class.java.getDeclaredField("registered").apply { isAccessible = true }
-        .setBoolean(this, true)
-    }
   }
 
   /** Stand-in for `Evaluators.DOUBLE` that records which thread evaluates and what values it sees. */
@@ -312,7 +278,7 @@ class CameraAnimatorThreadRaceTest {
     /** First target; also the temporary value the base class installs in `init`. */
     const val NEAR_TARGET = 5.0
 
-    /** Second target; only appears in values written after start, never in the initial seed. */
+    /** Second target; only appears in values written by the harness, never in the initial seed. */
     const val FAR_TARGET = 15.0
 
     const val BASE_ZOOM = 6.0
@@ -321,7 +287,6 @@ class CameraAnimatorThreadRaceTest {
     /** Power of two so the write loop can mask instead of divide. */
     const val CAMERA_STATE_POOL = 64
 
-    const val ANIMATION_DURATION_MS = 500L
     const val WRITE_BATCH = 20_000
     const val READ_CHUNK = 512
     const val READ_FRACTION_STEP = 0.01f
@@ -330,6 +295,5 @@ class CameraAnimatorThreadRaceTest {
     /** Without the fix the race fails quickly; a crash-free run of this length passes. */
     const val RACE_BUDGET_MS = 10_000L
     const val GRACE_MS = 5_000L
-    const val STARTUP_TIMEOUT_MS = 5_000L
   }
 }
