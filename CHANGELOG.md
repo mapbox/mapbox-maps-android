@@ -200,6 +200,17 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1), common to [v24.33.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0-rc.1).
 
 
+# 11.32.2 October 15, 2026
+## Dependencies
+* Update gl-native to [v11.32.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.2), common to [v24.32.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.2).
+
+
+## Bug fixes 🐞
+* Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
+* Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
+* Fix stale layer geometry cache on readding view annotations
+* Fix view annotations stuck to stale cached layer's geometry
+
 # 11.32.1 October 12, 2026
 ## Dependencies
 * Update gl-native to [v11.32.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.1), common to [v24.32.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.1).
