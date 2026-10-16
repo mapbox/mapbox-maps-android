@@ -22,11 +22,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
 * Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
-* Fix view annotations stuck to stale cached layer's geometry
+* Fix view annotations stuck to stale cached layer's geometry.
 * Fix double darkening artifacts when rendering transparent fill-extrusion and building layers together.
-* Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
-* Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
-* Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
 
 ## Dependencies
 * Update gl-native to [v11.33.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0), common to [v24.33.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0).
