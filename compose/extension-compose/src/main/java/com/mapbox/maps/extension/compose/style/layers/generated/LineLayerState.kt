@@ -36,7 +36,6 @@ private constructor(
   initialLineCap: LineCapValue,
   initialLineCrossSlope: DoubleValue,
   initialLineElevationGroundScale: DoubleValue,
-  initialLineElevationGroundScaleTransition: Transition,
   initialLineElevationReference: LineElevationReferenceValue,
   initialLineJoin: LineJoinValue,
   initialLineMiterLimit: DoubleValue,
@@ -102,7 +101,6 @@ private constructor(
     initialLineCap = LineCapValue.INITIAL,
     initialLineCrossSlope = DoubleValue.INITIAL,
     initialLineElevationGroundScale = DoubleValue.INITIAL,
-    initialLineElevationGroundScaleTransition = Transition.INITIAL,
     initialLineElevationReference = LineElevationReferenceValue.INITIAL,
     initialLineJoin = LineJoinValue.INITIAL,
     initialLineMiterLimit = DoubleValue.INITIAL,
@@ -186,12 +184,6 @@ private constructor(
    *  Controls how much the elevation of lines with `line-elevation-reference` set to `sea` scales with terrain exaggeration. A value of 0 keeps the line at a fixed altitude above sea level. A value of 1 scales the elevation proportionally with terrain exaggeration. Default value: 0. Value range: [0, 1]
    */
   public var lineElevationGroundScale: DoubleValue by lineElevationGroundScaleState
-
-  private val lineElevationGroundScaleTransitionState: MutableState<Transition> = mutableStateOf(initialLineElevationGroundScaleTransition)
-  /**
-   *  Defines the transition of [lineElevationGroundScale].
-   */
-  public var lineElevationGroundScaleTransition: Transition by lineElevationGroundScaleTransitionState
 
   private val lineElevationReferenceState: MutableState<LineElevationReferenceValue> = mutableStateOf(initialLineElevationReference)
   /**
@@ -551,13 +543,18 @@ private constructor(
    */
   public var filter: Filter by filterState
 
+  /**
+   *  Defines the transition of [lineElevationGroundScale].
+   */
+  @Deprecated("This property has been deprecated and will do no operations")
+  public var lineElevationGroundScaleTransition: Transition = Transition.INITIAL
+
   @Composable
   @OptIn(MapboxExperimental::class)
   internal fun UpdateProperties(layerNode: LayerNode) {
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCapState, "line-cap")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineCrossSlopeState, "line-cross-slope")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineElevationGroundScaleState, "line-elevation-ground-scale")
-    ActionWhenNotInitial(layerNode.setPropertyAction, lineElevationGroundScaleTransitionState, "line-elevation-ground-scale-transition")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineElevationReferenceState, "line-elevation-reference")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineJoinState, "line-join")
     ActionWhenNotInitial(layerNode.setPropertyAction, lineMiterLimitState, "line-miter-limit")

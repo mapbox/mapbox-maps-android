@@ -12,7 +12,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.types.*
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.*
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -144,39 +143,6 @@ class LineLayerTest : BaseStyleTest() {
 
     assertEquals(expression.toString(), layer.lineElevationGroundScaleAsExpression.toString())
     assertEquals(null, layer.lineElevationGroundScale)
-  }
-
-  @Ignore("LineElevationGroundScale transition is not supported by the native engine")
-  @Test
-  @UiThreadTest
-  fun lineElevationGroundScaleTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = lineLayer("id", "source") {
-      lineElevationGroundScaleTransition(transition)
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.lineElevationGroundScaleTransition)
-  }
-
-  @Ignore("LineElevationGroundScale transition is not supported by the native engine")
-  @Test
-  @UiThreadTest
-  fun lineElevationGroundScaleTransitionSetDslTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    val layer = lineLayer("id", "source") {
-      lineElevationGroundScaleTransition {
-        duration(100)
-        delay(200)
-      }
-    }
-    setupLayer(layer)
-    assertEquals(transition, layer.lineElevationGroundScaleTransition)
   }
 
   @Test
@@ -1670,8 +1636,6 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineCrossSlopeAsExpression should not be null", LineLayer.defaultLineCrossSlopeAsExpression)
     assertNotNull("defaultLineElevationGroundScale should not be null", LineLayer.defaultLineElevationGroundScale)
     assertNotNull("defaultLineElevationGroundScaleAsExpression should not be null", LineLayer.defaultLineElevationGroundScaleAsExpression)
-    // LineElevationGroundScale transition is not supported by the native engine
-    // assertNotNull("defaultLineElevationGroundScaleTransition should not be null", LineLayer.defaultLineElevationGroundScaleTransition)
     assertNotNull("defaultLineElevationReference should not be null", LineLayer.defaultLineElevationReference)
     assertNotNull("defaultLineElevationReferenceAsExpression should not be null", LineLayer.defaultLineElevationReferenceAsExpression)
     assertNotNull("defaultLineJoin should not be null", LineLayer.defaultLineJoin)

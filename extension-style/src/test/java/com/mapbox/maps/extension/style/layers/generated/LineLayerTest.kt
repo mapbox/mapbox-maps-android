@@ -362,46 +362,6 @@ class LineLayerTest {
   }
 
   @Test
-  fun lineElevationGroundScaleTransitionSet() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineElevationGroundScaleTransition(
-      transitionOptions {
-        duration(100)
-        delay(200)
-      }
-    )
-    verify { style.setStyleLayerProperty("id", "line-elevation-ground-scale-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
-  fun lineElevationGroundScaleTransitionGet() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    assertEquals(transition.toValue().toString(), layer.lineElevationGroundScaleTransition?.toValue().toString())
-    verify { style.getStyleLayerProperty("id", "line-elevation-ground-scale-transition") }
-  }
-
-  @Test
-  fun lineElevationGroundScaleTransitionSetDsl() {
-    val layer = lineLayer("id", "source") {}
-    layer.bindTo(style)
-    layer.lineElevationGroundScaleTransition {
-      duration(100)
-      delay(200)
-    }
-    verify { style.setStyleLayerProperty("id", "line-elevation-ground-scale-transition", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
-  }
-
-  @Test
   fun lineElevationReferenceSet() {
     val layer = lineLayer("id", "source") {}
     layer.bindTo(style)
@@ -3659,19 +3619,6 @@ class LineLayerTest {
     assertEquals(1.0, LineLayer.defaultLineElevationGroundScaleAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, LineLayer.defaultLineElevationGroundScale!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale") }
-  }
-
-  @Test
-  fun defaultLineElevationGroundScaleTransitionTest() {
-    val transition = transitionOptions {
-      duration(100)
-      delay(200)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
-    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
-
-    assertEquals(transition.toValue().toString(), LineLayer.defaultLineElevationGroundScaleTransition?.toValue().toString())
-    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale-transition") }
   }
 
   @Test

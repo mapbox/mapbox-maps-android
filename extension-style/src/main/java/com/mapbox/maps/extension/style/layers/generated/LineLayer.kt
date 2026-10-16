@@ -417,6 +417,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   /**
    * Transition options for LineElevationGroundScale.
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   val lineElevationGroundScaleTransition: StyleTransition?
     /**
      * Get the LineElevationGroundScale property transition options
@@ -425,9 +426,7 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
      *
      * @return transition options for Double
      */
-    get() {
-      return getPropertyValue("line-elevation-ground-scale-transition")
-    }
+    get() = null
 
   /**
    * Set the LineElevationGroundScale property transition options
@@ -436,16 +435,17 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
    *
    * @param options transition options for Double
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun lineElevationGroundScaleTransition(options: StyleTransition): LineLayer = apply {
-    val propertyValue = PropertyValue("line-elevation-ground-scale-transition", options)
-    setProperty(propertyValue)
+    // no-op
   }
 
   /**
    * DSL for [lineElevationGroundScaleTransition].
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   override fun lineElevationGroundScaleTransition(block: StyleTransition.Builder.() -> Unit): LineLayer = apply {
-    lineElevationGroundScaleTransition(StyleTransition.Builder().apply(block).build())
+    // no-op
   }
 
   /**
@@ -3197,13 +3197,14 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
     /**
      * Transition options for LineElevationGroundScale.
      */
+    @Deprecated("This property has been deprecated and will do no operations")
     val defaultLineElevationGroundScaleTransition: StyleTransition?
       /**
        * Get the LineElevationGroundScale property transition options
        *
        * @return transition options for Double
        */
-      get() = StyleManager.getStyleLayerPropertyDefaultValue("line", "line-elevation-ground-scale-transition").silentUnwrap()
+      get() = null
 
     /**
      * Selects the base of line-elevation. Some modes might require precomputed elevation data in the tileset. Default value: "none".
@@ -4757,6 +4758,7 @@ interface LineLayerDsl {
    *
    * @param options transition options for Double
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   fun lineElevationGroundScaleTransition(options: StyleTransition): LineLayer
 
   /**
@@ -4764,6 +4766,7 @@ interface LineLayerDsl {
    *
    * DSL for [lineElevationGroundScaleTransition].
    */
+  @Deprecated("This property has been deprecated and will do no operations")
   fun lineElevationGroundScaleTransition(block: StyleTransition.Builder.() -> Unit): LineLayer
 
   /**

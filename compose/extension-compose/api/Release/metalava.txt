@@ -3033,7 +3033,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineDepthOcclusionFactor();
     method public com.mapbox.maps.extension.compose.style.Transition getLineDepthOcclusionFactorTransition();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineElevationGroundScale();
-    method public com.mapbox.maps.extension.compose.style.Transition getLineElevationGroundScaleTransition();
+    method @Deprecated public com.mapbox.maps.extension.compose.style.Transition getLineElevationGroundScaleTransition();
     method public com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue getLineElevationReference();
     method public com.mapbox.maps.extension.compose.style.DoubleValue getLineEmissiveStrength();
     method public com.mapbox.maps.extension.compose.style.Transition getLineEmissiveStrengthTransition();
@@ -3093,7 +3093,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     method public void setLineDepthOcclusionFactor(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineDepthOcclusionFactorTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineElevationGroundScale(com.mapbox.maps.extension.compose.style.DoubleValue);
-    method public void setLineElevationGroundScaleTransition(com.mapbox.maps.extension.compose.style.Transition);
+    method @Deprecated public void setLineElevationGroundScaleTransition(com.mapbox.maps.extension.compose.style.Transition);
     method public void setLineElevationReference(com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue);
     method public void setLineEmissiveStrength(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setLineEmissiveStrengthTransition(com.mapbox.maps.extension.compose.style.Transition);
@@ -3153,7 +3153,7 @@ package com.mapbox.maps.extension.compose.style.layers.generated {
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineDepthOcclusionFactor;
     property public final com.mapbox.maps.extension.compose.style.Transition lineDepthOcclusionFactorTransition;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineElevationGroundScale;
-    property public final com.mapbox.maps.extension.compose.style.Transition lineElevationGroundScaleTransition;
+    property @Deprecated public final com.mapbox.maps.extension.compose.style.Transition lineElevationGroundScaleTransition;
     property public final com.mapbox.maps.extension.compose.style.layers.generated.LineElevationReferenceValue lineElevationReference;
     property public final com.mapbox.maps.extension.compose.style.DoubleValue lineEmissiveStrength;
     property public final com.mapbox.maps.extension.compose.style.Transition lineEmissiveStrengthTransition;
