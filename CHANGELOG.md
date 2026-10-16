@@ -11,14 +11,22 @@ Mapbox welcomes participation and contributions from everyone.
 * Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
 * Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
+* The base size of icons in the `text-field` property is now calculated at the tile zoom level with the largest text size. As a result, the icons can be smaller when the text size depends on the zoom level.
 
 ## Features ✨ and improvements 🏁
 * Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
+* [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
 
 ## Bug fixes 🐞
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
 * Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
 * Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
+* Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
+* Fix view annotations stuck to stale cached layer's geometry
+* Fix double darkening artifacts when rendering transparent fill-extrusion and building layers together.
+* Fix newly revealed raster tiles under terrain flashing an empty background before data loads.
+* Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
+* Fix icons and other layers using measure-light brightness getting stuck on a stale appearance when the light preset changes.
 
 ## Dependencies
 * Update gl-native to [v11.33.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0), common to [v24.33.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.0).
