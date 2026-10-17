@@ -7,6 +7,8 @@ pluginManagement {
   includeBuild("mapbox-convention-plugin")
 }
 
+apply(from = "gradle/sdk-registry-token.settings.gradle.kts")
+
 dependencyResolutionManagement {
   versionCatalogs {
     create("commonLibs") {
