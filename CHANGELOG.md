@@ -6,6 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.32.3 October 19, 2026
+## Dependencies
+* Update gl-native to [v11.32.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.3), common to [v24.32.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.3).
+
+
+## Bug fixes 🐞
+* Fix a crash that could occur when a raster-array source reports a missing icon after its last requestor is removed.
+
 # 11.32.2 October 15, 2026
 ## Bug fixes 🐞
 * Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
