@@ -8,6 +8,10 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a crash during camera animations and follow-puck viewport transitions when the experimental background animation thread is enabled.
 
+# 11.34.0
+## Bug fixes 🐞
+* Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
+
 # 11.34.0-rc.1 October 19, 2026
 
 ## Features ✨ and improvements 🏁

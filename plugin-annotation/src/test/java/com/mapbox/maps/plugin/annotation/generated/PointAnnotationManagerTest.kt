@@ -18,6 +18,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -243,6 +244,25 @@ class PointAnnotationManagerTest {
     assertTrue(sourceString.contains("lineMetrics = true"))
     assertTrue(sourceString.contains("buffer = 20"))
     assertTrue(sourceString.contains("tolerance = 10.0"))
+  }
+
+  @Test
+  fun clusterCircleLayersAreEmissive() {
+    val layers = mutableListOf<Layer>()
+    every { style.addPersistentLayer(capture(layers), any()) } just Runs
+
+    manager = PointAnnotationManager(
+      delegateProvider,
+      AnnotationConfig(
+        annotationSourceOptions = AnnotationSourceOptions(clusterOptions = ClusterOptions())
+      )
+    )
+
+    val clusterCircleLayers = layers.filterIsInstance<CircleLayer>().filter { it.layerId.contains("cluster-circle-layer") }
+    assertTrue(clusterCircleLayers.isNotEmpty())
+    clusterCircleLayers.forEach {
+      assertTrue(it.toString().contains("circle-emissive-strength = 1.0"))
+    }
   }
 
   @Test

@@ -518,6 +518,7 @@ internal constructor(
   ) =
     circleLayer("mapbox-android-$typeName-cluster-circle-layer-$level-$id", source.sourceId) {
       circleColor(colorLevels[level].second)
+      circleEmissiveStrength(1.0)
       annotationSourceOptions?.clusterOptions?.let {
         if (it.circleRadiusExpression == null) {
           circleRadius(it.circleRadius)
