@@ -679,8 +679,18 @@ package com.mapbox.maps.debugoptions {
 
 package com.mapbox.maps.plugin {
 
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final class DisabledPlugin implements com.mapbox.maps.plugin.MapPlugin {
+    ctor public DisabledPlugin(String message);
+    method public String getMessage();
+    property public final String message;
+  }
+
   public final class InvalidViewPluginHostException extends java.lang.Exception {
     ctor public InvalidViewPluginHostException(String message);
+  }
+
+  public final class PluginDisabledException extends java.lang.RuntimeException {
+    ctor public PluginDisabledException(String message);
   }
 
 }

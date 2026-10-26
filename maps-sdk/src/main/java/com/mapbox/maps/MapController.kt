@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
 import com.mapbox.common.MapboxTracing
+import com.mapbox.maps.plugin.DisabledPlugin
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
@@ -23,6 +24,7 @@ import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_SCALEBAR_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_VIEWPORT_PLUGIN_ID
+import com.mapbox.maps.plugin.PluginDisabledException
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.createCameraAnimationPlugin
 import com.mapbox.maps.plugin.annotation.createAnnotationPlugin
@@ -373,7 +375,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   // Plugin API
   //
 
-  override fun <T : MapPlugin> getPlugin(id: String): T? = pluginRegistry.getPlugin(id)
+  override fun <T : MapPlugin> getPlugin(id: String): T? = pluginRegistry.getPlugin<T?>(id)
+    .also { plugin ->
+      if (plugin is DisabledPlugin) {
+        throw PluginDisabledException(plugin.message)
+      }
+    }
 
   fun createPlugin(
     mapView: MapView?,
@@ -389,7 +396,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     for (plugin in options.plugins) {
       MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX createPlugin: ${plugin.id}" }) {
         try {
-          val pluginObject = when (plugin.id) {
+          val pluginObject = plugin.instance ?: when (plugin.id) {
             MAPBOX_GESTURES_PLUGIN_ID -> {
               createGesturePlugin(options.context, options.attrs, options.mapOptions.pixelRatio)
             }
@@ -427,8 +434,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
               createIndoorSelectorPlugin()
             }
             else -> {
-              plugin.instance
-                ?: throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
+              throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
             }
           }
           createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))

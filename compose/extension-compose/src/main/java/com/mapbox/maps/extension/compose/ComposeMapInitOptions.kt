@@ -6,8 +6,8 @@ import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.applyDefaultParams
+import com.mapbox.maps.extension.compose.internal.ComposePlugins
 import com.mapbox.maps.module.telemetry.UiFramework
-import com.mapbox.maps.plugin.Plugin
 
 /**
  * Defines configuration [ComposeMapInitOptions] for a [MapboxMap] composable function.
@@ -41,14 +41,7 @@ public data class ComposeMapInitOptions(
       context = context,
       mapOptions = mapOptions,
       // specifically disable following plugins because these are handled within compose extension.
-      plugins = MapInitOptions.defaultPluginList - setOf<Plugin>(
-        Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
-        Plugin.Mapbox(Plugin.MAPBOX_LOGO_PLUGIN_ID),
-        Plugin.Mapbox(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
-        Plugin.Mapbox(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
-        Plugin.Mapbox(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
-        Plugin.Mapbox(Plugin.MAPBOX_INDOOR_SELECTOR_PLUGIN_ID),
-      ),
+      plugins = ComposePlugins.plugins,
       // specifically set cameraOptions to null, since the camera is controlled through MapViewportState.
       cameraOptions = null,
       textureView = textureView,

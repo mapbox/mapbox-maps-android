@@ -735,7 +735,19 @@ public final class com/mapbox/maps/debugoptions/MapViewDebugOptions {
 public final class com/mapbox/maps/debugoptions/MapViewDebugOptions$Companion {
 }
 
+public final class com/mapbox/maps/plugin/DisabledPlugin : com/mapbox/maps/plugin/MapPlugin {
+	public fun <init> (Ljava/lang/String;)V
+	public fun cleanup ()V
+	public final fun getMessage ()Ljava/lang/String;
+	public fun initialize ()V
+	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+}
+
 public final class com/mapbox/maps/plugin/InvalidViewPluginHostException : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/plugin/PluginDisabledException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 }
 

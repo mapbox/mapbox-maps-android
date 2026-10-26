@@ -27,6 +27,8 @@ sealed class Plugin(
   /**
    * Should be used to create custom user-defined plugins.
    *
+   * This class should not be used with one of the Mapbox plugin ids defined in the [Companion] object.
+   *
    * @param id unique id
    * @param instance instance of user-defined [MapPlugin]
    */

@@ -5,6 +5,10 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+## Features ✨ and improvements 🏁
+* Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
+
 ## Bug fixes 🐞
 * Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
 * Fix a crash during camera animations and follow-puck viewport transitions when the experimental background animation thread is enabled.

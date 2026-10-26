@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import com.mapbox.common.Cancelable
 import com.mapbox.common.EventsService
 import com.mapbox.common.TelemetryService
+import com.mapbox.maps.plugin.DisabledPlugin
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
@@ -474,6 +475,25 @@ class MapControllerTest {
       mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, createdPlugin)
       mockMapboxMap.cameraAnimationsPlugin = createdPlugin.instance as CameraAnimationsPlugin
     }
+  }
+
+  @Test
+  fun initializePluginsUsesProvidedInstanceForKnownMapboxId() {
+    val disabledPlugin = DisabledPlugin("compass disabled")
+    every { mockMapInitOptions.plugins } answers {
+      listOf(Plugin.Custom(Plugin.MAPBOX_COMPASS_PLUGIN_ID, disabledPlugin))
+    }
+    val createPluginSlot = slot<Plugin>()
+    every {
+      mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, capture(createPluginSlot))
+    } just Runs
+
+    testMapController.initializePlugins(mockMapInitOptions, mockMapView)
+
+    // The supplied placeholder instance must win over the built-in compass factory.
+    val createdPlugin = createPluginSlot.captured
+    assertEquals(Plugin.MAPBOX_COMPASS_PLUGIN_ID, createdPlugin.id)
+    assertSame(disabledPlugin, createdPlugin.instance)
   }
 
   @Test
