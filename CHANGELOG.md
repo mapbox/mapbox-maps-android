@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.33.1 October 27, 2026
+## Dependencies
+* Update gl-native to [v11.33.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.1), common to [v24.33.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.1).
+
+
 # 11.33.0 October 16, 2026
 ## Breaking changes ⚠️
 * Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
