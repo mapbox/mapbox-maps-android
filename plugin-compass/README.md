@@ -32,9 +32,9 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-compass:11.33.0'
+  implementation 'com.mapbox.plugin:maps-compass:11.34.1'
   // Mapbox Maps Compass Plugin depends on the Mapbox Maps Animation Plugin
-  implementation 'com.mapbox.plugin:maps-animation:11.33.0'
+  implementation 'com.mapbox.plugin:maps-animation:11.34.1'
 }
 ```
 

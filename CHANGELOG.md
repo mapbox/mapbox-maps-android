@@ -6,6 +6,20 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.34.1 October 29, 2026
+## Dependencies
+* Update gl-native to [v11.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1), common to [v24.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1).
+
+## Bug fixes 🐞
+* Fix a crash during camera animations and follow-puck viewport transitions when the experimental background animation thread is enabled.
+* Fix a crash in the offline manager when loading a style pack.
+
+# 11.34.0
+## Bug fixes 🐞
+* Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
+
+# 11.34.0-rc.1 October 19, 2026
+
 ## Features ✨ and improvements 🏁
 * Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
 
