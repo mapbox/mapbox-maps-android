@@ -5,8 +5,14 @@ Mapbox welcomes participation and contributions from everyone.
 > **16 KB Page Size Support:** Starting with version 11.7.0 and 10.19.0, **NDK 27 is supported** with dedicated artifacts that include [support for 16 KB page sizes](https://developer.android.com/guide/practices/page-sizes). If your app does not require 16 KB page size support, you can keep using our default artifacts without `-ndk27` suffix. For more information about our NDK support, see https://docs.mapbox.com/android/maps/guides/#ndk-support
 
 # main
+
+# 11.34.1 October 29, 2026
+## Dependencies
+* Update gl-native to [v11.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1), common to [v24.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1).
+
 ## Bug fixes 🐞
 * Fix a crash during camera animations and follow-puck viewport transitions when the experimental background animation thread is enabled.
+* Fix a crash in the offline manager when loading a style pack.
 
 # 11.34.0
 ## Bug fixes 🐞
