@@ -1,6 +1,12 @@
 package com.mapbox.maps.extension.compose.annotation
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -10,12 +16,16 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.test.swipeUp
+import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.extension.compose.MapEffect
@@ -27,6 +37,8 @@ import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.viewannotation.annotationAnchor
 import com.mapbox.maps.viewannotation.geometry
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -79,6 +91,76 @@ public class ViewAnnotationTest {
         .onAllNodesWithText(VIEW_ANNOTATION_TEXT)
         .fetchSemanticsNodes().isEmpty()
     }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  public fun testScrollableAnnotationScrollsContentInsteadOfPanningMap() {
+    lateinit var scrollState: ScrollState
+    lateinit var capturedMapView: MapView
+
+    composeTestRule.setContent {
+      MapboxMap(
+        Modifier
+          .fillMaxSize()
+          .testTag(MAP_TEST_TAG),
+        mapViewportState = rememberMapViewportState {
+          setCameraOptions {
+            zoom(ZOOM)
+            center(HELSINKI)
+          }
+        },
+        mapState = rememberMapState(),
+      ) {
+        MapEffect(Unit) { mapView ->
+          capturedMapView = mapView
+        }
+        ViewAnnotation(
+          options = viewAnnotationOptions {
+            geometry(HELSINKI)
+            annotationAnchor { anchor(ViewAnnotationAnchor.CENTER) }
+            // Size must be specified: when composeTestRule adds view annotations the view layout
+            // is not yet attached (mapView / viewAnnotationView / rootView).
+            width(100.0)
+            height(100.0)
+            allowOverlap(true)
+          }
+        ) {
+          scrollState = rememberScrollState()
+          Column(
+            modifier = Modifier
+              .size(100.dp)
+              .testTag(SCROLLABLE_TAG)
+              .verticalScroll(scrollState)
+          ) {
+            // Content is much taller than the annotation so the column can scroll.
+            repeat(20) { index ->
+              Text(text = "Scrollable item #$index", modifier = Modifier.height(40.dp))
+            }
+          }
+        }
+      }
+    }
+
+    composeTestRule.waitForIdle()
+    composeTestRule.waitUntil(timeoutMillis = VIEW_APPEAR_TIMEOUT_MS) {
+      composeTestRule.onAllNodesWithTag(SCROLLABLE_TAG).fetchSemanticsNodes().size == 1
+    }
+
+    val centerBefore = composeTestRule.runOnIdle { capturedMapView.mapboxMap.cameraState.center }
+
+    // Drag upwards starting on the annotation: this should scroll the Column, NOT pan the map.
+    composeTestRule.onNodeWithTag(SCROLLABLE_TAG).performTouchInput {
+      swipeUp(durationMillis = 200L)
+    }
+    composeTestRule.waitForIdle()
+
+    val scrollOffset = composeTestRule.runOnIdle { scrollState.value }
+    val centerAfter = composeTestRule.runOnIdle { capturedMapView.mapboxMap.cameraState.center }
+
+    assertTrue("Column should have scrolled, but offset=$scrollOffset", scrollOffset > 0)
+    assertEquals(centerBefore.latitude(), centerAfter.latitude(), 1e-9)
+    assertEquals(centerBefore.longitude(), centerAfter.longitude(), 1e-9)
   }
 
   @Test
@@ -236,6 +318,7 @@ public class ViewAnnotationTest {
     private const val ZOOM: Double = 9.0
     private const val VIEW_ANNOTATION_TEXT = "Test annotation"
     private const val MAP_TEST_TAG = "map_tag"
+    private const val SCROLLABLE_TAG = "scrollable_annotation"
     private const val VIEW_APPEAR_TIMEOUT_MS = 5000L
     private const val VIEW_DISAPPEAR_TIMEOUT_MS = 5000L
   }

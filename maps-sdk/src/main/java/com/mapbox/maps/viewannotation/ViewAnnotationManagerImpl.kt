@@ -119,6 +119,34 @@ internal class ViewAnnotationManagerImpl(
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
 
+  /**
+   * The top-most currently visible view annotation whose bounds contain the given point (in
+   * [MapView]-local pixel coordinates), or null if none. [viewAnnotationsLayout] is MATCH_PARENT
+   * anchored at the origin, and annotation views are positioned via
+   * [View.setTranslationX]/[View.setTranslationY], so MapView-local coordinates can be tested
+   * directly against each view's translated bounds.
+   *
+   * Used by [MapView.onInterceptTouchEvent] to detect whether a drag started over an annotation, in
+   * which case the annotation is given a chance to claim the gesture before the map pans.
+   */
+  internal fun viewAnnotationViewAt(x: Float, y: Float): View? {
+    val annotationByView = viewAnnotations.values.associateBy { it.view }
+    for (i in viewAnnotationsLayout.childCount - 1 downTo 0) {
+      val view = viewAnnotationsLayout.getChildAt(i)
+      val annotation = annotationByView[view] ?: continue
+      if (
+        annotation.isVisible &&
+        x >= view.translationX &&
+        x < view.translationX + view.width &&
+        y >= view.translationY &&
+        y < view.translationY + view.height
+      ) {
+        return view
+      }
+    }
+    return null
+  }
+
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,

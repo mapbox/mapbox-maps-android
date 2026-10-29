@@ -32,6 +32,9 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
 
+## Bug fixes 🐞
+* Fix scrollable views inside view annotations being unable to scroll due to MapView intercepting drag gestures.
+
 # 11.33.0-rc.1 October 05, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.

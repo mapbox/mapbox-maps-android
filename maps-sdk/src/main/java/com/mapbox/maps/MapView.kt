@@ -33,7 +33,8 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
 import kotlinx.coroutines.launch
 import java.nio.IntBuffer
-import kotlin.math.hypot
+import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -60,6 +61,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   private val debugOptionsController: DebugOptionsController by debugOptionsControllerDelegate
   private var interceptedViewAnnotationEvents: MutableList<MotionEvent> = mutableListOf()
   private val touchSlop: Int by lazy { ViewConfiguration.get(context).scaledTouchSlop }
+  private val gestureRouter = ViewAnnotationGestureRouter(this)
   private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
   private val viewAnnotationManagerDelegate = lazy {
     ViewAnnotationManagerImpl(this).also {
@@ -74,6 +76,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * represented as Android views.
    */
   val viewAnnotationManager: ViewAnnotationManager by viewAnnotationManagerDelegate
+
+  internal val isViewAnnotationManagerInitialized: Boolean
+    get() = viewAnnotationManagerDelegate.isInitialized()
 
   /**
    * [Set] of debug options for the current [MapView] and its native [MapboxMap].
@@ -517,19 +522,26 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
     return when (event.actionMasked) {
-      MotionEvent.ACTION_DOWN,
+      MotionEvent.ACTION_DOWN -> {
+        recycleAndClearInterceptedViewAnnotationEvents()
+        gestureRouter.onDown(event)
+        interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
+        false
+      }
+
       MotionEvent.ACTION_POINTER_DOWN -> {
         interceptedViewAnnotationEvents.add(MotionEvent.obtain(event))
         false
       }
 
       MotionEvent.ACTION_MOVE -> {
-        interceptedViewAnnotationEvents.any { it.hypot(event, touchSlop) }
+        val crossedSlop = isCrossedSlop(event)
+        gestureRouter.shouldInterceptMove(crossedSlop)
       }
 
       MotionEvent.ACTION_UP,
       MotionEvent.ACTION_CANCEL -> {
-        interceptedViewAnnotationEvents.clear()
+        recycleAndClearInterceptedViewAnnotationEvents()
         return false
       }
 
@@ -550,24 +562,31 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  private fun MotionEvent.hypot(moveEvent: MotionEvent, touchSlop: Int): Boolean {
-    for (i in 0 until moveEvent.pointerCount) {
-      val pointerId = moveEvent.getPointerId(i)
-      val originalCoordinateIndex = findPointerIndex(pointerId)
-      val moveCoordinateIndex = moveEvent.findPointerIndex(pointerId)
-      if (originalCoordinateIndex == -1 || moveCoordinateIndex == -1) {
-        continue
-      }
-      if (
-        hypot(
-          x = getX(originalCoordinateIndex) - moveEvent.getX(moveCoordinateIndex),
-          y = getY(originalCoordinateIndex) - moveEvent.getY(moveCoordinateIndex)
-        ) > touchSlop
-      ) {
-        return true
-      }
+  private fun recycleAndClearInterceptedViewAnnotationEvents() {
+    interceptedViewAnnotationEvents.forEach { it.recycle() }
+    interceptedViewAnnotationEvents.clear()
+  }
+
+  private fun isCrossedSlop(moveEvent: MotionEvent): Boolean {
+    val downEvent = interceptedViewAnnotationEvents.firstOrNull() ?: return false
+    val primaryPointerId = downEvent.getPointerId(0)
+    val moveCoordinateIndex = moveEvent.findPointerIndex(primaryPointerId)
+    if (moveCoordinateIndex == -1) {
+      return false
     }
-    return false
+    val dx = abs(downEvent.getX(0) - moveEvent.getX(moveCoordinateIndex))
+    val dy = abs(downEvent.getY(0) - moveEvent.getY(moveCoordinateIndex))
+    return max(dx, dy) > touchSlop
+  }
+
+  /**
+   * Called by a descendant view (e.g. a scrollable Compose annotation) to claim the current gesture.
+   * While a descendant disallows interception, this [MapView] won't intercept the ongoing touch
+   * sequence for panning, letting the child consume it instead.
+   */
+  override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+    gestureRouter.requestDisallowInterceptTouchEvent(disallowIntercept)
+    super.requestDisallowInterceptTouchEvent(disallowIntercept)
   }
 
   /**

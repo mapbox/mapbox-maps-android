@@ -59,6 +59,7 @@ class ViewAnnotationManagerTest {
     every { viewAnnotationsLayout.setClipChildren(any()) } just Runs
     every { viewAnnotationsLayout.layoutDirection = any() } just Runs
     every { viewAnnotationsLayout.removeView(any()) } just Runs
+    every { viewAnnotationsLayout.childCount } returns 0
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val displayMetrics = DisplayMetrics().apply { density = 1f }
     every { mapView.resources.displayMetrics } returns displayMetrics
@@ -996,6 +997,81 @@ class ViewAnnotationManagerTest {
 
     // Auto-collection is skipped when user supplied collision boxes
     verify(exactly = 0) { mapboxMap.updateViewAnnotation(any(), any()) }
+  }
+
+  @Test
+  fun viewAnnotationViewAtReturnsNullWhenNoAnnotations() {
+    assertNull(viewAnnotationManager.viewAnnotationViewAt(0f, 0f))
+  }
+
+  @Test
+  fun viewAnnotationViewAtReturnsNullWhenAnnotationNotYetVisible() {
+    // Freshly added annotation is in INITIAL (not visible / not positioned) state, so it must not
+    // be reported as being under the pointer.
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) }
+    )
+
+    assertNull(viewAnnotationManager.viewAnnotationViewAt(5f, 5f))
+  }
+
+  @Test
+  fun viewAnnotationViewAtReturnsVisibleAnnotationContainingPoint() {
+    val idSlot = slot<String>()
+    every { mapboxMap.addViewAnnotation(capture(idSlot), any()) } returns ExpectedFactory.createNone()
+
+    // Stub the translated bounds the annotation will occupy once positioned: [0,0] - [100,100].
+    every { view.parent } returns mockk()
+    every { view.translationX } returns 0f
+    every { view.translationY } returns 0f
+    every { view.translationX = any() } just Runs
+    every { view.translationY = any() } just Runs
+    every { view.width } returns 100
+    every { view.height } returns 100
+    every { view.visibility = any() } just Runs
+    every { view.bringToFront() } just Runs
+    every { viewAnnotationsLayout.indexOfChild(any()) } returns -1
+    every { viewAnnotationsLayout.addView(any(), any<ViewGroup.LayoutParams>()) } just Runs
+
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) }
+    )
+
+    positionAnnotation(idSlot.captured)
+
+    // Once positioned the view is attached to the layout; hit-testing walks the layout's children.
+    every { viewAnnotationsLayout.childCount } returns 1
+    every { viewAnnotationsLayout.getChildAt(0) } returns view
+
+    assertEquals(view, viewAnnotationManager.viewAnnotationViewAt(50f, 50f))
+    // Point outside the translated bounds returns null.
+    assertNull(viewAnnotationManager.viewAnnotationViewAt(150f, 150f))
+  }
+
+  /**
+   * Drives the annotation positioning pipeline so the annotation transitions to
+   * VISIBLE_AND_POSITIONED. [ViewAnnotationManagerImpl.onDelegatingViewAnnotationPositionsUpdate]
+   * caches positions when invoked off the main thread and schedules a Choreographer frame to apply
+   * them when invoked on the main thread, so we call it from both.
+   */
+  private fun positionAnnotation(id: String) {
+    val descriptor = DelegatingViewAnnotationPositionDescriptor(
+      id,
+      100.0,
+      100.0,
+      ScreenCoordinate(0.0, 0.0),
+      anchorCoordinate = Point.fromLngLat(0.0, 0.0),
+      anchorConfig = ViewAnnotationAnchorConfig.Builder().anchor(ViewAnnotationAnchor.CENTER).build(),
+    )
+    // Off the main thread: cache the descriptors.
+    Thread {
+      viewAnnotationManager.onDelegatingViewAnnotationPositionsUpdate(listOf(descriptor))
+    }.apply { start(); join() }
+    // On the main thread: schedule positioning of the cached descriptors and run the frame callback.
+    viewAnnotationManager.onDelegatingViewAnnotationPositionsUpdate(listOf(descriptor))
+    shadowOf(Looper.getMainLooper()).idle()
   }
 
   @OptIn(MapboxExperimental::class)
