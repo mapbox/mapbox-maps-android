@@ -6,26 +6,55 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
+
 # 11.34.1 October 29, 2026
-## Dependencies
-* Update gl-native to [v11.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1), common to [v24.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1).
+## Features ✨ and improvements 🏁
+* Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
+* Add a method to force-flush idle HTTP connections, allowing subsequent requests to establish fresh sockets.
+* Add an opt-in factory setting to automatically reset the TileStore to a fresh state if a database migration fails.
+* Add METADATA_MIGRATION_FAILED event subscription for tracking TileStore metadata database migration failures.
 
 ## Bug fixes 🐞
+* Fix a crash that could occur when a raster-array source reports a missing icon after its last requestor is removed.
+* Fix some cases where paint properties were not updated correctly, including during SD/HD transitions, use-theme changes, and symbol/line feature state updates.
+* Fix a sudden camera jump at the end of long flyTo camera animations.
+* Fix shadow rendering not updating on fill extrusion layers when GeoJSON data changes.
+* Fix stale layer geometry cache on readding view annotations
+* Align with gl-js on keeping tile-order for rendered features with equal layer sort-keys
+* Fixed wrong symbol position for placement and queryRenderedFeatures after symbol-z-offset property update
+* Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
 * Fix a crash during camera animations and follow-puck viewport transitions when the experimental background animation thread is enabled.
 * Fix a crash in the offline manager when loading a style pack.
 
-# 11.34.0
-## Bug fixes 🐞
-* Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
+## Dependencies
+* Update gl-native to [v11.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1), common to [v24.34.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.1).
+
 
 # 11.34.0-rc.1 October 19, 2026
 
 ## Features ✨ and improvements 🏁
-* Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
+* Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
+* Add a method to force-flush idle HTTP connections, allowing subsequent requests to establish fresh sockets.
+* Add an opt-in factory setting to automatically reset the TileStore to a fresh state if a database migration fails.
+* Add METADATA_MIGRATION_FAILED event subscription for tracking TileStore metadata database migration failures.
 
 ## Bug fixes 🐞
-* Fix annotation cluster circles rendering black with the Standard style `night` light preset. Cluster circle layers now set `circle-emissive-strength` to `1.0`, so `ClusterOptions.colorLevels` colors are no longer darkened by the basemap lighting.
-* Fix a crash during camera animations and follow-puck viewport transitions when the experimental background animation thread is enabled.
+* Fix a crash that could occur when a raster-array source reports a missing icon after its last requestor is removed.
+* Fix some cases where paint properties were not updated correctly, including during SD/HD transitions, use-theme changes, and symbol/line feature state updates.
+* Fix a sudden camera jump at the end of long flyTo camera animations.
+* Fix shadow rendering not updating on fill extrusion layers when GeoJSON data changes.
+* Fix stale layer geometry cache on readding view annotations
+* Align with gl-js on keeping tile-order for rendered features with equal layer sort-keys
+* Fixed wrong symbol position for placement and queryRenderedFeatures after symbol-z-offset property update
+
+## 💫️ Other
+* Update feature state API documentation comments for accuracy.
+
+## Dependencies
+* Update gl-native to [v11.34.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.0-rc.1), common to [v24.34.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.0-rc.1).
+
 
 # 11.33.0 October 16, 2026
 ## Dependencies
