@@ -83,6 +83,7 @@ internal class LocationPuckManager(
         onBearingUpdated,
         onAccuracyRadiusUpdated
       )
+      animationManager.onPuckVisibilityChanged(false)
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applySettings(settings)
       lastLocation?.let {
@@ -236,11 +237,13 @@ internal class LocationPuckManager(
     if (forceUpdate || isHidden) {
       isHidden = false
       locationLayerRenderer.show()
+      animationManager.onPuckVisibilityChanged(true)
     }
   }
 
   fun hide() {
     isHidden = true
+    animationManager.onPuckVisibilityChanged(false)
     locationLayerRenderer.hide()
   }
 

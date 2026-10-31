@@ -23,6 +23,9 @@ internal class PuckAnimatorManager(
     PuckAccuracyRadiusAnimator(indicatorAccuracyRadiusChangedListener)
   private var pulsingAnimator = PuckPulsingAnimator(pixelRatio)
 
+  private var isStarted = false
+  private var isPuckVisible = false
+
   internal var puckAnimationEnabled: Boolean
     get() = bearingAnimator.enabled
     set(value) {
@@ -69,16 +72,29 @@ internal class PuckAnimatorManager(
   }
 
   fun onStart() {
-    if (pulsingAnimator.enabled) {
-      pulsingAnimator.animateInfinite()
-    }
+    isStarted = true
+    updatePulsingState()
   }
 
   fun onStop() {
+    isStarted = false
     bearingAnimator.cancelRunning()
     positionAnimator.cancelRunning()
     pulsingAnimator.cancelRunning()
     accuracyRadiusAnimator.cancelRunning()
+  }
+
+  fun onPuckVisibilityChanged(visible: Boolean) {
+    isPuckVisible = visible
+    updatePulsingState()
+  }
+
+  private fun updatePulsingState() {
+    if (isStarted && isPuckVisible && pulsingAnimator.enabled) {
+      pulsingAnimator.animateInfinite()
+    } else {
+      pulsingAnimator.cancelRunning()
+    }
   }
 
   fun animateBearing(
@@ -110,11 +126,9 @@ internal class PuckAnimatorManager(
       enabled = settings.pulsingEnabled
       if (settings.pulsingEnabled) {
         maxRadius = target
-        animateInfinite()
-      } else {
-        cancelRunning()
       }
     }
+    updatePulsingState()
   }
 
   fun applySettings(settings: LocationComponentSettings) {
@@ -122,12 +136,8 @@ internal class PuckAnimatorManager(
       enabled = settings.pulsingEnabled
       maxRadius = settings.pulsingMaxRadius.toDouble()
       pulsingColor = settings.pulsingColor
-      if (settings.pulsingEnabled) {
-        animateInfinite()
-      } else {
-        cancelRunning()
-      }
     }
+    updatePulsingState()
     accuracyRadiusAnimator.apply {
       enabled = settings.showAccuracyRing
       accuracyCircleColor = settings.accuracyRingColor

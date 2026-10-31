@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Bug fixes 🐞
+* Stop location puck pulse animations while the puck is hidden or the location component is stopped.
+
 # 11.35.0-rc.1 November 02, 2026
 
 ## Features ✨ and improvements 🏁

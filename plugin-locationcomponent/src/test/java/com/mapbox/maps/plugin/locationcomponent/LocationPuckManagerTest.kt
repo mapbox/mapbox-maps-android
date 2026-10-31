@@ -98,6 +98,27 @@ class LocationPuckManagerTest {
   }
 
   @Test
+  fun visibilityGatesPulsingAcrossLocationAndStyleReload() {
+    locationPuckManager.initialize(style)
+    verify { animationManager.onPuckVisibilityChanged(false) }
+    verify(exactly = 0) { animationManager.onPuckVisibilityChanged(true) }
+
+    locationPuckManager.updateCurrentPosition(Point.fromLngLat(10.0, 20.0))
+    verify { animationManager.onPuckVisibilityChanged(true) }
+    locationPuckManager.hide()
+    assertTrue(locationPuckManager.isHidden)
+
+    io.mockk.clearMocks(animationManager, answers = false)
+    locationPuckManager.lastLocation = Point.fromLngLat(10.0, 20.0)
+    locationPuckManager.updateSettings(settings)
+    verifyOrder {
+      animationManager.onPuckVisibilityChanged(false)
+      animationManager.applySettings(settings)
+      animationManager.onPuckVisibilityChanged(true)
+    }
+  }
+
+  @Test
   fun testInitialise() {
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
