@@ -71,6 +71,20 @@ class LocationIndicatorLayerRendererTest {
   }
 
   @Test
+  fun hiddenRendererIgnoresPendingPulseUpdates() {
+    locationLayerRenderer.updatePulsingUi(Color.BLUE, 10f, 0.5f)
+    verify(exactly = 0) { layerWrapper.emphasisCircleRadius(any()) }
+    locationLayerRenderer.show()
+    locationLayerRenderer.updatePulsingUi(Color.BLUE, 10f, 0.5f)
+    verify(exactly = 1) { layerWrapper.emphasisCircleRadius(10.0) }
+    clearMocks(layerWrapper, answers = false)
+    locationLayerRenderer.hide()
+    locationLayerRenderer.updatePulsingUi(Color.BLUE, 15f, 0.4f)
+    verify(exactly = 0) { layerWrapper.emphasisCircleRadius(any()) }
+    verify(exactly = 0) { layerWrapper.emphasisCircleColor(any()) }
+  }
+
+  @Test
   fun sanity() {
     Assert.assertNotNull(locationLayerRenderer)
   }

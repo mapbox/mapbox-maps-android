@@ -6,6 +6,7 @@ import android.os.Looper
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -36,6 +37,9 @@ class PuckAnimatorManagerTest {
 
   @Before
   fun setUp() {
+    var pulsingEnabled = false
+    every { pulsingAnimator.enabled } answers { pulsingEnabled }
+    every { pulsingAnimator.enabled = any() } answers { pulsingEnabled = firstArg() }
     puckAnimatorManager = PuckAnimatorManager(
       mockk(),
       mockk(),
@@ -63,6 +67,7 @@ class PuckAnimatorManagerTest {
   @Test
   fun onStartOne() {
     every { pulsingAnimator.enabled } returns true
+    puckAnimatorManager.onPuckVisibilityChanged(true)
     puckAnimatorManager.onStart()
     verify(exactly = 1) { pulsingAnimator.animateInfinite() }
   }
@@ -162,6 +167,8 @@ class PuckAnimatorManagerTest {
 
   @Test
   fun applyAnimationSettingsOne() {
+    puckAnimatorManager.onPuckVisibilityChanged(true)
+    puckAnimatorManager.onStart()
     val settings = mockk<LocationComponentSettings>(relaxed = true)
     every { settings.pulsingEnabled } returns true
     every { settings.pulsingMaxRadius } returns 20.0f
@@ -222,6 +229,8 @@ class PuckAnimatorManagerTest {
 
   @Test
   fun testUpdatePulsingPuckRadius() {
+    puckAnimatorManager.onPuckVisibilityChanged(true)
+    puckAnimatorManager.onStart()
     val updatedRadius = 50.0
     val settings = mockk<LocationComponentSettings>(relaxed = true)
     every { settings.pulsingEnabled } returns true
@@ -248,6 +257,48 @@ class PuckAnimatorManagerTest {
       pulsingAnimator.cancelRunning()
     }
     verify(exactly = 0) { pulsingAnimator.maxRadius = updatedRadius }
+  }
+
+  @Test
+  fun pulsingWaitsForVisibilityAndResumesAfterStop() {
+    val settings = mockk<LocationComponentSettings>(relaxed = true)
+    every { settings.pulsingEnabled } returns true
+    puckAnimatorManager.applySettings(settings)
+    puckAnimatorManager.onStart()
+    verify(exactly = 0) { pulsingAnimator.animateInfinite() }
+
+    puckAnimatorManager.onPuckVisibilityChanged(true)
+    verify(exactly = 1) { pulsingAnimator.animateInfinite() }
+    clearMocks(pulsingAnimator, answers = false)
+
+    puckAnimatorManager.onPuckVisibilityChanged(false)
+    puckAnimatorManager.updatePulsingRadius(50.0, settings)
+    puckAnimatorManager.applySettings(settings)
+    verify(exactly = 0) { pulsingAnimator.animateInfinite() }
+    verify { pulsingAnimator.cancelRunning() }
+
+    puckAnimatorManager.onPuckVisibilityChanged(true)
+    verify(exactly = 1) { pulsingAnimator.animateInfinite() }
+    puckAnimatorManager.onStop()
+    clearMocks(pulsingAnimator, answers = false)
+    puckAnimatorManager.updatePulsingRadius(60.0, settings)
+    puckAnimatorManager.applySettings(settings)
+    verify(exactly = 0) { pulsingAnimator.animateInfinite() }
+    puckAnimatorManager.onStart()
+    verify(exactly = 1) { pulsingAnimator.animateInfinite() }
+  }
+
+  @Test
+  fun visibilityDoesNotOverrideDisabledPulsing() {
+    val settings = mockk<LocationComponentSettings>(relaxed = true)
+    every { settings.pulsingEnabled } returns false
+    puckAnimatorManager.applySettings(settings)
+    puckAnimatorManager.onStart()
+    repeat(3) {
+      puckAnimatorManager.onPuckVisibilityChanged(true)
+      puckAnimatorManager.onPuckVisibilityChanged(false)
+    }
+    verify(exactly = 0) { pulsingAnimator.animateInfinite() }
   }
 
   companion object {
