@@ -94,6 +94,22 @@ class LocationComponentPluginImplTest {
     locationComponentPlugin = LocationComponentPluginImpl()
   }
 
+  @Test
+  fun settingsWhileStoppedDoNotReactivateLocationComponent() {
+    preparePluginInitialisationWithEnabled()
+    locationComponentPlugin.onStop()
+    io.mockk.clearMocks(locationPuckManager, locationProvider, answers = false)
+
+    locationComponentPlugin.pulsingEnabled = true
+    locationComponentPlugin.pulsingColor = Color.GREEN
+    verify(exactly = 0) { locationPuckManager.onStart() }
+    verify(exactly = 0) { locationProvider.registerLocationConsumer(any()) }
+
+    locationComponentPlugin.onStart()
+    verify(exactly = 1) { locationPuckManager.onStart() }
+    verify(exactly = 1) { locationProvider.registerLocationConsumer(any()) }
+  }
+
   @After
   fun cleanUp() {
     unmockkAll()
