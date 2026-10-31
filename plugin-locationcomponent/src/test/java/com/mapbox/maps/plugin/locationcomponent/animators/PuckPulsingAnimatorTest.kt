@@ -24,6 +24,14 @@ class PuckPulsingAnimatorTest {
   }
 
   @Test
+  fun repeatedStartsDoNotAccumulateRepeatListeners() {
+    every { pulsingAnimator.animate(any(), any()) } just Runs
+    val listenerCount = pulsingAnimator.listeners?.size ?: 0
+    repeat(5) { pulsingAnimator.animateInfinite() }
+    Assert.assertEquals(listenerCount, pulsingAnimator.listeners?.size ?: 0)
+  }
+
+  @Test
   fun creation() {
     Assert.assertEquals(PuckPulsingAnimator.PULSING_DEFAULT_DURATION, pulsingAnimator.duration)
     Assert.assertEquals(ValueAnimator.RESTART, pulsingAnimator.repeatMode)

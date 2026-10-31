@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Bug fixes 🐞
+* Stop location puck pulse animations while the puck is hidden or the location component is stopped.
+
 ## Features ✨ and improvements 🏁
 * Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
 
