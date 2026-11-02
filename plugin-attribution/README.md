@@ -33,7 +33,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-attribution:11.34.1'
+  implementation 'com.mapbox.plugin:maps-attribution:11.35.0-rc.1'
 }
 ```
 
