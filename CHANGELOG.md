@@ -6,6 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.34.2 November 03, 2026
+## Dependencies
+* Update gl-native to [v11.34.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.2), common to [v24.34.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.2).
+
+
+## Bug fixes 🐞
+* Fix a bug where point annotations jitter when zooming out
+
 # 11.34.1 October 29, 2026
 ## Features ✨ and improvements 🏁
 * Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
