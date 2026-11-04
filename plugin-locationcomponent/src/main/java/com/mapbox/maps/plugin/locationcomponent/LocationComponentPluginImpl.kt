@@ -35,6 +35,8 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
 
   private lateinit var weakContext: WeakReference<Context>
 
+  private var isStarted = false
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var locationPuckManager: LocationPuckManager? = null
 
@@ -200,11 +202,12 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
    * Called whenever activity's/fragment's lifecycle is entering a "started" state.
    */
   override fun onStart() {
+    isStarted = true
     activateLocationComponent()
   }
 
   private fun activateLocationComponent() {
-    if (internalSettings.enabled) {
+    if (isStarted && internalSettings.enabled) {
       val style = delegateProvider.mapStyleManagerDelegate
       if (locationPuckManager?.isLayerInitialised() == true && isLocationComponentActivated) {
         return
@@ -238,6 +241,7 @@ internal class LocationComponentPluginImpl : LocationComponentPlugin, LocationCo
    * Called whenever activity's/fragment's lifecycle is entering a "stopped" state.
    */
   override fun onStop() {
+    isStarted = false
     isLocationComponentActivated = false
     locationPuckManager?.onStop()
     locationProvider?.unRegisterLocationConsumer(this)

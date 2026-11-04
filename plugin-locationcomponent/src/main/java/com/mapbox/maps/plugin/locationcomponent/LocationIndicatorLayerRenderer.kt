@@ -27,6 +27,7 @@ internal class LocationIndicatorLayerRenderer(
 ) : LocationLayerRenderer {
 
   private var style: MapboxStyleManager? = null
+  private var isVisible = false
 
   override fun initializeComponents(style: MapboxStyleManager) {
     this.style = style
@@ -126,6 +127,7 @@ internal class LocationIndicatorLayerRenderer(
   }
 
   private fun setLayerVisibility(visible: Boolean) {
+    isVisible = visible
     layer.visibility(visible)
   }
 
@@ -156,6 +158,7 @@ internal class LocationIndicatorLayerRenderer(
     radius: Float,
     opacity: Float?
   ) {
+    if (!isVisible) return
     val rgbaArray = colorToRgbaArray(pulsingColorInt)
     rgbaArray[3] = opacity ?: 1f
     layer.emphasisCircleRadius(radius.toDouble())
