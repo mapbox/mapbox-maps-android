@@ -21,6 +21,12 @@ internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
     repeatMode = RESTART
     repeatCount = INFINITE
     interpolator = PULSING_DEFAULT_INTERPOLATOR
+    addListener(object : AnimatorListenerAdapter() {
+      override fun onAnimationRepeat(animation: Animator) {
+        super.onAnimationRepeat(animation)
+        setObjectValues(0.0, maxRadius)
+      }
+    })
   }
 
   fun animateInfinite() {
@@ -30,12 +36,6 @@ internal class PuckPulsingAnimator(private val pixelRatio: Float = 1.0f) :
     if (!isRunning) {
       animate(0.0, maxRadius)
     }
-    addListener(object : AnimatorListenerAdapter() {
-      override fun onAnimationRepeat(animation: Animator) {
-        super.onAnimationRepeat(animation)
-        setObjectValues(0.0, maxRadius)
-      }
-    })
   }
 
   override fun updateLayer(fraction: Float, value: Double) {
