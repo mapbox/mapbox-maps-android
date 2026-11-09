@@ -149,6 +149,21 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       )
     }
 
+    cameraOptions.positionPoint?.let { target ->
+      animationList.add(
+        CameraPositionPointAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.positionPoint)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.POSITION_POINT]
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
+      )
+    }
+
     return animationList.map { it as CameraAnimator<*> }.toTypedArray()
   }
 
@@ -270,10 +285,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val mapSizePixels = mapTransformDelegate.getMapOptions().size
     val cameraBearingDegrees = cameraOptions.bearing
     if (mapSizePixels != null) {
-      var mapCenter = CameraTransform.getMapCenter(
-        cameraOptions.padding,
-        mapSizePixels
-      )
+      var mapCenter = CameraTransform.getMapCenter(cameraOptions, mapSizePixels)
       val cameraBearingRadians = -cameraBearingDegrees.deg2rad()
       val offset = first.offset(mapCenter)
       val distance = hypot(offset.x, offset.y)
@@ -339,6 +351,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     )
     val startVerticalFov = currentCameraState.verticalFov
     val endVerticalFov = cameraOptions.verticalFov ?: startVerticalFov
+    val startPositionPoint = currentCameraState.positionPoint
+    val endPositionPoint = cameraOptions.positionPoint ?: startPositionPoint
 
     // Determine endpoints
     var startPointRaw = currentCameraState.center.wrapCoordinate()
@@ -537,6 +551,21 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         }
       )
     }
+
+    if (endPositionPoint != startPositionPoint) {
+      animators.add(
+        CameraPositionPointAnimator(
+          options = cameraAnimatorOptions(endPositionPoint) {
+            startValue(startPositionPoint)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.POSITION_POINT]
+        ).apply {
+          owner?.let { customOwner ->
+            this.owner = customOwner
+          }
+        }
+      )
+    }
     return animators.toTypedArray()
   }
 
@@ -596,6 +625,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           duration = DEFAULT_ANIMATION_DURATION_MS
           interpolator = DEFAULT_INTERPOLATOR
         }
+        put(CameraAnimatorType.POSITION_POINT) {
+          duration = DEFAULT_ANIMATION_DURATION_MS
+          interpolator = DEFAULT_INTERPOLATOR
+        }
       }
 
     /**
@@ -625,6 +658,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       defaultAnimationParameters[CameraAnimatorType.ANCHOR] = block
       defaultAnimationParameters[CameraAnimatorType.PADDING] = block
       defaultAnimationParameters[CameraAnimatorType.VERTICAL_FOV] = block
+      defaultAnimationParameters[CameraAnimatorType.POSITION_POINT] = block
     }
   }
 }

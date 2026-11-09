@@ -1661,6 +1661,7 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimatorType : java/la
 	public static final field CENTER Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field PADDING Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field PITCH Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field POSITION_POINT Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field VERTICAL_FOV Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static final field ZOOM Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;

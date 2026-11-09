@@ -2,6 +2,7 @@ package com.mapbox.maps.dsl
 
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
@@ -19,7 +20,8 @@ class CameraOptionsKtxTest {
       5.0,
       6.0,
       7.0,
-      8.0
+      8.0,
+      CameraPositionPoint(0.5, -0.5)
     )
 
     val result = cameraOptions {
@@ -29,6 +31,7 @@ class CameraOptionsKtxTest {
       bearing(expected.bearing)
       pitch(expected.pitch)
       verticalFov(expected.verticalFov)
+      positionPoint(expected.positionPoint)
     }
 
     Assert.assertEquals(expected.center, result.center)
@@ -37,6 +40,7 @@ class CameraOptionsKtxTest {
     Assert.assertEquals(expected.bearing, result.bearing)
     Assert.assertEquals(expected.pitch, result.pitch)
     Assert.assertEquals(expected.verticalFov, result.verticalFov)
+    Assert.assertEquals(expected.positionPoint, result.positionPoint)
   }
 
   @Test
@@ -47,7 +51,8 @@ class CameraOptionsKtxTest {
       5.0,
       6.0,
       7.0,
-      8.0
+      8.0,
+      CameraPositionPoint(0.5, -0.5)
     )
 
     val result = cameraOptions(expected) {
@@ -60,6 +65,7 @@ class CameraOptionsKtxTest {
     Assert.assertEquals(expected.bearing, result.bearing)
     Assert.assertEquals(expected.pitch, result.pitch)
     Assert.assertEquals(expected.verticalFov, result.verticalFov)
+    Assert.assertEquals(expected.positionPoint, result.positionPoint)
   }
 
   @Test
@@ -70,7 +76,8 @@ class CameraOptionsKtxTest {
       5.0,
       6.0,
       7.0,
-      8.0
+      8.0,
+      CameraPositionPoint(0.5, -0.5)
     )
     val expected = CameraOptions.Builder()
       .center(Point.fromLngLat(20.0, 30.0))
@@ -79,6 +86,7 @@ class CameraOptionsKtxTest {
       .bearing(13.0)
       .pitch(14.0)
       .verticalFov(15.0)
+      .positionPoint(CameraPositionPoint(-0.25, 0.25))
       .build()
 
     val result = cameraOptions(base) {
@@ -88,6 +96,7 @@ class CameraOptionsKtxTest {
       bearing(expected.bearing)
       pitch(expected.pitch)
       verticalFov(expected.verticalFov)
+      positionPoint(expected.positionPoint)
     }
 
     Assert.assertEquals(expected, result)

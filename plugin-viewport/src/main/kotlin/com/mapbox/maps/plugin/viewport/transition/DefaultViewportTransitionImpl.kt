@@ -261,6 +261,12 @@ internal class DefaultViewportTransitionImpl(
           } else {
             cameraAnimator.setObjectValues(startCamera.verticalFov, targetCamera.verticalFov)
           }
+        CameraAnimatorType.POSITION_POINT ->
+          if (completedChildAnimators.contains(CameraAnimatorType.POSITION_POINT)) {
+            cameraDelegate.setCamera(cameraOptions { positionPoint(targetCamera.positionPoint) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.positionPoint, targetCamera.positionPoint)
+          }
       }
     }
   }

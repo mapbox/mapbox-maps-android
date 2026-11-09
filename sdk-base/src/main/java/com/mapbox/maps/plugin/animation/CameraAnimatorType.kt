@@ -35,5 +35,10 @@ enum class CameraAnimatorType {
    * Animator responsible for [CameraOptions.verticalFov]
    */
   @MapboxExperimental
-  VERTICAL_FOV
+  VERTICAL_FOV,
+  /**
+   * Animator responsible for [CameraOptions.positionPoint]
+   */
+  @MapboxExperimental
+  POSITION_POINT
 }

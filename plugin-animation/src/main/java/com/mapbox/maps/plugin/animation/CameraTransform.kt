@@ -28,10 +28,18 @@ internal object CameraTransform {
 
   fun ScreenCoordinate.offset(arg: ScreenCoordinate) = ScreenCoordinate(x - arg.x, y - arg.y)
 
-  fun getMapCenter(edgeInsets: EdgeInsets, mapSize: Size): ScreenCoordinate {
-    val centerX = (mapSize.width - edgeInsets.left - edgeInsets.right) / 2.0 + edgeInsets.left
-    val centerY = (mapSize.height - edgeInsets.top - edgeInsets.bottom) / 2.0 + edgeInsets.top
-    return ScreenCoordinate(centerX, centerY)
+  /**
+   * The screen point the camera center is placed at: the position point resolved within the padded box.
+   */
+  fun getMapCenter(cameraState: CameraState, mapSize: Size): ScreenCoordinate {
+    val edgeInsets = cameraState.padding
+    val positionPoint = cameraState.positionPoint
+    val halfWidth = (mapSize.width - edgeInsets.left - edgeInsets.right) / 2.0
+    val halfHeight = (mapSize.height - edgeInsets.top - edgeInsets.bottom) / 2.0
+    return ScreenCoordinate(
+      edgeInsets.left + halfWidth * (1.0 + positionPoint.x),
+      edgeInsets.top + halfHeight * (1.0 + positionPoint.y)
+    )
   }
 
   fun unwrapForShortestPath(start: Point, end: Point): Point {
@@ -53,10 +61,7 @@ internal object CameraTransform {
     mapCameraManagerDelegate: MapCameraManagerDelegate
   ): Point {
     val mapOptions = mapTransformDelegate.getMapOptions()
-    val mapCenter = getMapCenter(
-      cameraState.padding,
-      mapOptions.size!!
-    )
+    val mapCenter = getMapCenter(cameraState, mapOptions.size!!)
     val pointOnScreenX = mapCenter.x - offset.x
     val pointOnScreenY = mapCenter.y - offset.y
     val pointOnScreen = ScreenCoordinate(pointOnScreenX, pointOnScreenY)

@@ -6,6 +6,7 @@ import android.view.animation.LinearInterpolator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraBounds
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapOptions
@@ -20,6 +21,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.toCameraOptions
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -103,6 +105,7 @@ class CameraAnimatorsFactoryTest {
       .bearing(-180.0)
       .pitch(30.0)
       .verticalFov(28.0)
+      .positionPoint(CameraPositionPoint(0.5, -0.5))
       .build()
     val animators = cameraAnimatorsFactory.getEaseTo(targetEaseToPosition, owner = customOwner)
     testAnimators(animators, targetEaseToPosition)
@@ -117,6 +120,28 @@ class CameraAnimatorsFactoryTest {
     val target = CameraOptions.Builder().center(targetCenter).build()
     val animators = cameraAnimatorsFactory.getMoveBy(offset, owner = customOwner)
     testAnimators(animators, target)
+  }
+
+  @Test
+  fun testMoveByPansFromThePositionPoint() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      initialCenter,
+      EdgeInsets(100.0, 0.0, 0.0, 200.0),
+      15.0,
+      0.0,
+      0.0,
+      36.87,
+      CameraPositionPoint(0.5, -1.0)
+    )
+    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(Size(800f, 600f)).build()
+    val pixel = slot<ScreenCoordinate>()
+    every { mapCameraManagerDelegate.coordinateForPixel(capture(pixel)) } returns initialCenter
+
+    cameraAnimatorsFactory.getMoveBy(ScreenCoordinate(10.0, 20.0))
+
+    // The padded box spans x in [0, 600] and y in [100, 600], so the point (0.5, -1) is at (450, 100).
+    Assert.assertEquals(440.0, pixel.captured.x, 1e-9)
+    Assert.assertEquals(80.0, pixel.captured.y, 1e-9)
   }
 
   @Test
@@ -146,9 +171,46 @@ class CameraAnimatorsFactoryTest {
       .bearing(90.0)
       .padding(EdgeInsets(300.0, 400.0, 300.0, 400.0))
       .verticalFov(45.0)
+      .positionPoint(CameraPositionPoint(-0.25, 0.75))
       .build()
     val animators = cameraAnimatorsFactory.getFlyTo(target, owner = customOwner)
     testAnimators(animators, target)
+  }
+
+  @Test
+  fun testEaseToWithoutPositionPointCreatesNoPositionPointAnimator() {
+    val target = CameraOptions.Builder().zoom(17.0).build()
+
+    val animators = cameraAnimatorsFactory.getEaseTo(target)
+
+    Assert.assertTrue(animators.none { it.type == CameraAnimatorType.POSITION_POINT })
+  }
+
+  @Test
+  fun testFlyToWithoutPositionPointCreatesNoPositionPointAnimator() {
+    mockFlyToDelegates()
+
+    val animators = cameraAnimatorsFactory.getFlyTo(
+      initialCameraPosition.toCameraOptions().toBuilder().positionPoint(null).bearing(90.0).build()
+    )
+
+    Assert.assertTrue(animators.none { it.type == CameraAnimatorType.POSITION_POINT })
+  }
+
+  @Test
+  fun testFlyToWithPositionPointEqualToCurrentCreatesNoPositionPointAnimator() {
+    mockFlyToDelegates()
+
+    val animators = cameraAnimatorsFactory.getFlyTo(initialCameraPosition.toCameraOptions())
+
+    Assert.assertTrue(animators.none { it.type == CameraAnimatorType.POSITION_POINT })
+  }
+
+  private fun mockFlyToDelegates() {
+    val size = Size(800.0f, 600.0f)
+    every { mapProjectionDelegate.unproject(any(), any()) } returns initialCenter
+    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(size).build()
+    every { mapTransformDelegate.getSize() } returns size
   }
 
   // A long flight at high zoom must arrive at the end point smoothly. The path formula
@@ -285,6 +347,11 @@ class CameraAnimatorsFactoryTest {
           Assert.assertEquals(initialCameraPosition.verticalFov, startValue)
           Assert.assertEquals(targetCameraPosition.verticalFov, targetValue)
         }
+
+        CameraAnimatorType.POSITION_POINT -> {
+          Assert.assertEquals(initialCameraPosition.positionPoint, startValue)
+          Assert.assertEquals(targetCameraPosition.positionPoint, targetValue)
+        }
       }
     }
 
@@ -332,6 +399,11 @@ class CameraAnimatorsFactoryTest {
         CameraAnimatorType.VERTICAL_FOV -> {
           Assert.assertEquals(initialCameraPosition.verticalFov, startValue)
           Assert.assertEquals(targetCameraPosition.verticalFov, targetValue)
+        }
+
+        CameraAnimatorType.POSITION_POINT -> {
+          Assert.assertEquals(initialCameraPosition.positionPoint, startValue)
+          Assert.assertEquals(targetCameraPosition.positionPoint, targetValue)
         }
       }
     }

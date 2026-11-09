@@ -10,6 +10,7 @@ import android.os.Looper.getMainLooper
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
@@ -1282,6 +1283,33 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
+  fun skipsAlreadyAppliedPositionPoint() {
+    val startCameraOptions = CameraOptions.Builder()
+      .positionPoint(CameraPositionPoint(0.5, -0.5))
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(startCameraOptions)
+
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun doesNotSkipNewPositionPoint() {
+    val startCameraOptions = CameraOptions.Builder()
+      .positionPoint(CameraPositionPoint(0.5, -0.5))
+      .build()
+    val newCameraOptions = CameraOptions.Builder()
+      .positionPoint(CameraPositionPoint(0.5, 0.5))
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(newCameraOptions)
+
+    verify(exactly = 1) { mapCameraManagerDelegate.setCamera(newCameraOptions) }
+  }
+
+  @Test
   fun doesNotSkipCameraOptionsWithAnchor() {
     val startCameraOptions = CameraOptions.Builder()
       .center(Point.fromLngLat(50.0, 50.0))
@@ -1873,7 +1901,8 @@ class CameraAnimationsPluginImplTest {
         zoom ?: cameraState.zoom,
         bearing ?: cameraState.bearing,
         pitch ?: cameraState.pitch,
-        verticalFov ?: cameraState.verticalFov
+        verticalFov ?: cameraState.verticalFov,
+        positionPoint ?: cameraState.positionPoint
       )
     }
 

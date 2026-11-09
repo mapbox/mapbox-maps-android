@@ -11,6 +11,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxTracing
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MAPS_SDK_TRACE_PREFIX
@@ -157,6 +158,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     }
   }
 
+  private var positionPoint: CameraPositionPoint? = null
+
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -220,6 +223,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     this.pitch = cameraState.pitch
     this.zoom = cameraState.zoom
     this.verticalFov = cameraState.verticalFov
+    this.positionPoint = cameraState.positionPoint
   }
 
   /**
@@ -269,6 +273,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
       return false
     }
     if (cameraOptions.verticalFov != null && cameraOptions.verticalFov != verticalFov) {
+      return false
+    }
+    if (cameraOptions.positionPoint != null && cameraOptions.positionPoint != positionPoint) {
       return false
     }
     return true

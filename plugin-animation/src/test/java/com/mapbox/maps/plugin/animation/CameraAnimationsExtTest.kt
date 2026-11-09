@@ -4,6 +4,8 @@ import android.animation.Animator.DURATION_INFINITE
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
@@ -13,6 +15,7 @@ import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraPositionPointAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraVerticalFovAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
 import io.mockk.every
@@ -302,7 +305,14 @@ class CameraAnimationsExtTest {
       every { getAnimatedValueAt(0.5f, mockCameraState) } returns 20.0
     }
 
-    val animators = listOf(centerAnimator, zoomAnimator, bearingAnimator, pitchAnimator, anchorAnimator, paddingAnimator, verticalFovAnimator)
+    val positionPointAnimator = mockk<CameraPositionPointAnimator>() {
+      every { duration } returns 1000L
+      every { totalDuration } returns 1000L
+      every { startDelay } returns 0L
+      every { getAnimatedValueAt(0.5f, mockCameraState) } returns CameraPositionPoint(0.5, -0.5)
+    }
+
+    val animators = listOf(centerAnimator, zoomAnimator, bearingAnimator, pitchAnimator, anchorAnimator, paddingAnimator, verticalFovAnimator, positionPointAnimator)
     val result = animators.calculateCameraAnimationHint(listOf(0.5f), mockCameraState)
 
     assertEquals(1, result?.stages?.size)
@@ -314,6 +324,21 @@ class CameraAnimationsExtTest {
     assertEquals(ScreenCoordinate(100.0, 100.0), result?.stages?.get(0)?.camera?.anchor)
     assertEquals(EdgeInsets(5.0, 5.0, 5.0, 5.0), result?.stages?.get(0)?.camera?.padding)
     assertEquals(20.0, result?.stages?.get(0)?.camera?.verticalFov ?: -1.0, 0.001)
+    assertEquals(CameraPositionPoint(0.5, -0.5), result?.stages?.get(0)?.camera?.positionPoint)
+  }
+
+  @Test
+  fun `updateCameraValue sets position point and clear resets it`() {
+    val builder = CameraOptions.Builder()
+    val animator = mockk<CameraPositionPointAnimator>()
+
+    updateCameraValue(animator, CameraPositionPoint(0.25, 0.75), builder)
+
+    assertEquals(CameraPositionPoint(0.25, 0.75), builder.build().positionPoint)
+
+    builder.clear()
+
+    assertNull(builder.build().positionPoint)
   }
 
   @Test

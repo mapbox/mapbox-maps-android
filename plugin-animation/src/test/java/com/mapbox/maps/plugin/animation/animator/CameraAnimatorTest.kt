@@ -1,8 +1,10 @@
 package com.mapbox.maps.plugin.animation.animator
 
 import android.animation.Animator
+import android.view.animation.Interpolator
 import androidx.core.view.animation.PathInterpolatorCompat
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
@@ -123,6 +125,67 @@ class CameraAnimatorTest {
     var result = animator.getAnimatedValueAt(0.25f)
 
     assertEquals(31.0, result, 0.001)
+  }
+
+  @Test
+  fun `CameraPositionPointAnimator getAnimatedValueAt with startValue interpolates correctly`() {
+    val options = CameraAnimatorOptions.Builder<CameraPositionPoint>(
+      targets = arrayOf(CameraPositionPoint(1.0, -0.5))
+    )
+      .startValue(CameraPositionPoint(-1.0, 0.5))
+      .build()
+    val animator = CameraPositionPointAnimator(options)
+    animator.interpolator = linearInterpolator
+
+    val result = animator.getAnimatedValueAt(0.25f)
+
+    assertEquals(CameraPositionPoint(-0.5, 0.25), result)
+  }
+
+  @Test
+  fun `CameraPositionPointAnimator getAnimatedValueAt with startCameraState uses camera state value`() {
+    val options = CameraAnimatorOptions.Builder<CameraPositionPoint>(
+      targets = arrayOf(CameraPositionPoint(1.0, 1.0))
+    )
+      .build()
+    val animator = CameraPositionPointAnimator(options)
+    animator.interpolator = linearInterpolator
+
+    val cameraState = mockk<CameraState> {
+      every { positionPoint } returns CameraPositionPoint(0.0, -1.0)
+    }
+
+    val result = animator.getAnimatedValueAt(0.5f, cameraState)
+
+    assertEquals(CameraPositionPoint(0.5, 0.0), result)
+  }
+
+  @Test
+  fun `CameraPositionPointAnimator clamps overshooting fraction to valid range`() {
+    val options = CameraAnimatorOptions.Builder<CameraPositionPoint>(
+      targets = arrayOf(CameraPositionPoint(0.8, -0.8))
+    )
+      .startValue(CameraPositionPoint(0.0, 0.0))
+      .build()
+    val animator = CameraPositionPointAnimator(options)
+    animator.interpolator = Interpolator { 1.5f * it }
+
+    val result = animator.getAnimatedValueAt(1.0f)
+
+    assertEquals(1.0, result.x, 0.0001)
+    assertEquals(-1.0, result.y, 0.0001)
+  }
+
+  @Test
+  fun `CameraPositionPointAnimator evaluator clamps undershooting fraction to valid range`() {
+    val result = CameraPositionPointAnimator.POSITION_POINT_EVALUATOR.evaluate(
+      -0.5f,
+      CameraPositionPoint(0.9, -0.9),
+      CameraPositionPoint(-0.9, 0.9)
+    )
+
+    assertEquals(1.0, result.x, 0.0001)
+    assertEquals(-1.0, result.y, 0.0001)
   }
 
   @Test

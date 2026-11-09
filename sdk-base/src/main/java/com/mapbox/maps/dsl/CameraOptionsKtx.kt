@@ -24,5 +24,6 @@ inline fun cameraOptions(
   .zoom(cameraState.zoom)
   .pitch(cameraState.pitch)
   .verticalFov(cameraState.verticalFov)
+  .positionPoint(cameraState.positionPoint)
   .apply(block)
   .build()

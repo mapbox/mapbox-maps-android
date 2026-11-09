@@ -11,6 +11,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraAnimationHint
 import com.mapbox.maps.CameraAnimationHintStage
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
@@ -23,6 +24,7 @@ import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraPositionPointAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraVerticalFovAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
 import com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate
@@ -334,6 +336,7 @@ internal fun updateCameraValue(
     is CameraBearingAnimator -> cameraOptionsBuilder.bearing(animatedValue as? Double)
     is CameraPitchAnimator -> cameraOptionsBuilder.pitch(animatedValue as? Double)
     is CameraVerticalFovAnimator -> cameraOptionsBuilder.verticalFov(animatedValue as? Double)
+    is CameraPositionPointAnimator -> cameraOptionsBuilder.positionPoint(animatedValue as? CameraPositionPoint)
   }
 }
 
@@ -349,4 +352,5 @@ internal fun CameraOptions.Builder.clear() {
   bearing(null)
   pitch(null)
   verticalFov(null)
+  positionPoint(null)
 }

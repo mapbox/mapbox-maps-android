@@ -16,6 +16,7 @@ val CameraOptions.isEmpty: Boolean
     if (bearing != null) return false
     if (pitch != null) return false
     if (verticalFov != null) return false
+    if (positionPoint != null) return false
 
     return true
   }

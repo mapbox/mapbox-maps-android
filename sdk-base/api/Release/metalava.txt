@@ -1591,6 +1591,7 @@ package com.mapbox.maps.plugin.animation {
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType CENTER;
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType PADDING;
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType PITCH;
+    enum_constant @com.mapbox.maps.MapboxExperimental public static final com.mapbox.maps.plugin.animation.CameraAnimatorType POSITION_POINT;
     enum_constant @com.mapbox.maps.MapboxExperimental public static final com.mapbox.maps.plugin.animation.CameraAnimatorType VERTICAL_FOV;
     enum_constant public static final com.mapbox.maps.plugin.animation.CameraAnimatorType ZOOM;
   }
