@@ -159,14 +159,6 @@ internal class MapboxViewportTransitionFactory(
     val animators = mutableListOf<Animator>()
     val currentMapCameraState = cameraManager.cameraState
 
-    cameraOptions.center?.let { center ->
-      animators += createCenterAnimator(
-        center = center,
-        duration = transitionDurationMs,
-        interpolator = LINEAR_INTERPOLATOR
-      )
-    }
-
     cameraOptions.zoom?.let { zoom ->
       animators += createZoomAnimator(
         zoom = zoom,
@@ -197,6 +189,14 @@ internal class MapboxViewportTransitionFactory(
     cameraOptions.padding?.let { padding ->
       animators += createPaddingAnimator(
         padding = padding,
+        duration = transitionDurationMs,
+        interpolator = LINEAR_INTERPOLATOR
+      )
+    }
+
+    cameraOptions.center?.let { center ->
+      animators += createCenterAnimator(
+        center = center,
         duration = transitionDurationMs,
         interpolator = LINEAR_INTERPOLATOR
       )

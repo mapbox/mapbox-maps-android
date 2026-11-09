@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -41,11 +42,14 @@ class OverviewViewportStateImplTest {
   private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>()
   private val cameraPlugin = mockk<CameraAnimationsPlugin>()
-  private val cameraOptions = mockk<CameraOptions>()
+  private val cameraOptions = mockk<CameraOptions>(relaxed = true)
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
+  private val styleManager = mockk<MapboxStyleManager>(relaxed = true)
+  private val getStyleCallbackSlot: MutableList<(MapboxStyleManager) -> Unit> = mutableListOf()
   private lateinit var overviewState: OverviewViewportStateImpl
   private val cameraForCoordinateSlot: MutableList<(CameraOptions) -> Unit> = mutableListOf()
   private val initialGeometry = Point.fromLngLat(0.0, 0.0)
+  private val newStateGeometry = Point.fromLngLat(10.0, 20.0)
 
   @Before
   fun setup() {
@@ -53,6 +57,9 @@ class OverviewViewportStateImplTest {
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
+    every { delegateProvider.getStyle(capture(getStyleCallbackSlot)) } answers {
+      getStyleCallbackSlot.last().invoke(styleManager)
+    }
     every {
       mapCameraDelegate.cameraForCoordinates(
         any(),
@@ -78,6 +85,7 @@ class OverviewViewportStateImplTest {
     unmockkStatic(CAMERA_ANIMATIONS_UTILS)
     unmockkAll()
     cameraForCoordinateSlot.clear()
+    getStyleCallbackSlot.clear()
   }
 
   @Test
@@ -366,5 +374,130 @@ class OverviewViewportStateImplTest {
     assertFalse(overviewState.isOverviewStateRunning)
     verify { animatorSet.cancel() }
     verify { cameraPlugin.unregisterAnimators(animator) }
+  }
+
+  private fun createStateWithDeferredStyle(): OverviewViewportStateImpl {
+    every { delegateProvider.getStyle(capture(getStyleCallbackSlot)) } just runs
+    return OverviewViewportStateImpl(
+      delegateProvider,
+      OverviewViewportStateOptions.Builder().geometry(newStateGeometry).build(),
+      transitionFactory
+    )
+  }
+
+  private fun verifyCameraForCoordinates(geometry: Point, exactly: Int) {
+    verify(exactly = exactly) {
+      mapCameraDelegate.cameraForCoordinates(
+        coordinates = listOf(geometry),
+        camera = CameraOptions.Builder().padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+          .bearing(0.0).pitch(0.0).verticalFov(DEFAULT_OVERVIEW_VIEWPORT_STATE_VERTICAL_FOV).build(),
+        coordinatesPadding = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        maxZoom = null,
+        offset = ScreenCoordinate(0.0, 0.0),
+        capture(cameraForCoordinateSlot)
+      )
+    }
+  }
+
+  /**
+   * When the style is not loaded yet, the framing is still computed immediately,
+   * without waiting for the style. This lets a transition start without a pending
+   * window that a competing camera action could cancel.
+   * */
+  @Test
+  fun testFramingRecomputedWhenStyleLoads() {
+    createStateWithDeferredStyle()
+
+    verifyCameraForCoordinates(newStateGeometry, exactly = 1)
+    verify { delegateProvider.getStyle(any()) }
+
+    // Once the style loads, the framing is recomputed so it reflects the style's projection.
+    getStyleCallbackSlot.last().invoke(styleManager)
+    verifyCameraForCoordinates(newStateGeometry, exactly = 2)
+  }
+
+  @Test
+  fun testFramingEvaluatedOnceWhenStyleAlreadyLoaded() {
+    every {
+      mapCameraDelegate.cameraForCoordinates(
+        any(),
+        any(),
+        any(),
+        any(),
+        any(),
+        capture(cameraForCoordinateSlot)
+      )
+    } answers {
+      cameraForCoordinateSlot.last().invoke(cameraOptions)
+    }
+
+    val state = OverviewViewportStateImpl(
+      delegateProvider,
+      OverviewViewportStateOptions.Builder().geometry(newStateGeometry).build(),
+      transitionFactory
+    )
+
+    verifyCameraForCoordinates(newStateGeometry, exactly = 1)
+
+    val dataObserver = mockk<ViewportStateDataObserver>()
+    every { dataObserver.onNewData(any()) } returns true
+    state.observeDataSource(dataObserver)
+    verify(exactly = 1) {
+      dataObserver.onNewData(cameraOptions)
+    }
+  }
+
+  @Test
+  fun testParkedStateReframesWhenStyleLoads() {
+    val animatorSet = mockk<AnimatorSet>()
+    val animator = mockk<ValueAnimator>()
+    every { transitionFactory.transitionLinear(any(), any()) } returns animatorSet
+    every { animatorSet.addListener(any()) } just runs
+    every { animatorSet.childAnimations } returns arrayListOf(animator)
+    every { animatorSet.start() } just runs
+    every { animatorSet.cancel() } just runs
+
+    val state = createStateWithDeferredStyle()
+    state.startUpdatingCamera()
+
+    verifyCameraForCoordinates(newStateGeometry, exactly = 1)
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
+
+    getStyleCallbackSlot.last().invoke(styleManager)
+    verifyCameraForCoordinates(newStateGeometry, exactly = 2)
+    cameraForCoordinateSlot.last().invoke(cameraOptions)
+
+    verify(exactly = 2) {
+      transitionFactory.transitionLinear(any(), any())
+    }
+  }
+
+  @Test
+  fun testReframesWhenOverviewReRequestedAfterProjectionChange() {
+    val state = createStateWithDeferredStyle()
+    verifyCameraForCoordinates(newStateGeometry, exactly = 1)
+
+    // style.setProjection(...) happened externally; re-request overview with the same options.
+    state.options = state.options.toBuilder().build()
+
+    verifyCameraForCoordinates(newStateGeometry, exactly = 2)
+  }
+
+  @Test
+  fun testOnlyLatestGeometryEvaluatedWhenStyleLoadsAfterMultipleOptionChanges() {
+    val state = createStateWithDeferredStyle()
+    val geometryA = Point.fromLngLat(1.0, 1.0)
+    val geometryB = Point.fromLngLat(2.0, 2.0)
+
+    state.options = state.options.toBuilder().geometry(geometryA).build()
+    state.options = state.options.toBuilder().geometry(geometryB).build()
+
+    // The style loads: every pending getStyle callback fires
+    getStyleCallbackSlot.toList().forEach { it.invoke(styleManager) }
+
+    // Only the latest geometry is recomputed on style load
+    verifyCameraForCoordinates(geometryB, exactly = 2)
+    verifyCameraForCoordinates(geometryA, exactly = 1)
+    verifyCameraForCoordinates(newStateGeometry, exactly = 1)
   }
 }
