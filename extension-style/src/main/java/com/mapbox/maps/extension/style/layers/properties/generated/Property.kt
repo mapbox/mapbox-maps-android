@@ -782,17 +782,17 @@ class SymbolZOrder private constructor(override val value: String) : LayerProper
    */
   companion object {
     /**
-     * Sorts symbols by `symbol-sort-key` if set. Otherwise, sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`.
+     * Behaves as [SymbolZOrder.SOURCE], if `symbol-sort-key` is set. Otherwise behaves as [SymbolZOrder.VIEWPORT_Y]. I.e.: Sorts symbols by `symbol-sort-key` if `symbol-sort-key` is set. Otherwise, sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`. Or else, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     val AUTO = SymbolZOrder("auto")
     /**
-     * Sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`.
+     * Sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     val VIEWPORT_Y = SymbolZOrder("viewport-y")
     /**
-     * Sorts symbols by `symbol-sort-key` if set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
+     * Sorts symbols by `symbol-sort-key` if `symbol-sort-key` is set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     val SOURCE = SymbolZOrder("source")

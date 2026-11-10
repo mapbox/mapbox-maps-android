@@ -908,19 +908,19 @@ public data class SymbolZOrderValue(public override val value: Value) : HoldsVal
     public val DEFAULT: SymbolZOrderValue = SymbolZOrderValue(Value.nullValue())
 
     /**
-     * Sorts symbols by `symbol-sort-key` if set. Otherwise, sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`.
+     * Behaves as [SymbolZOrder.SOURCE], if `symbol-sort-key` is set. Otherwise behaves as [SymbolZOrder.VIEWPORT_Y]. I.e.: Sorts symbols by `symbol-sort-key` if `symbol-sort-key` is set. Otherwise, sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`. Or else, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     public val AUTO: SymbolZOrderValue = SymbolZOrderValue(Value("auto"))
 
     /**
-     * Sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`.
+     * Sorts symbols by their y-position relative to the viewport if any of the following is set to `true`: `icon-allow-overlap`, `text-allow-overlap`, `icon-ignore-placement`, `text-ignore-placement`. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     public val VIEWPORT_Y: SymbolZOrderValue = SymbolZOrderValue(Value("viewport-y"))
 
     /**
-     * Sorts symbols by `symbol-sort-key` if set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
+     * Sorts symbols by `symbol-sort-key` if `symbol-sort-key` is set. Otherwise, no sorting is applied; symbols are rendered in the same order as the source data.
      */
     @JvmField
     public val SOURCE: SymbolZOrderValue = SymbolZOrderValue(Value("source"))
