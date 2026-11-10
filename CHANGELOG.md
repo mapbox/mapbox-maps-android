@@ -117,6 +117,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [androidauto] Add `MapboxCarMapGestureHandler.onClick` to handle clicks on the car map. `DefaultMapboxCarMapGestureHandler` forwards them to the map, so that map interactions such as `ClickInteraction` also work in Android Auto.
 
 ## Bug fixes 🐞
+* Fix `flyTo` freezing the camera center when the target padding collapses the viewport. A near-collapsed padding (off by a fraction of a pixel) is now treated the same as an exactly collapsed one.
 * Fix a native crash that could occur when the app went to background or the `MapView` was detached while the map was still rendering.
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
 * Fix view annotations stuck to stale cached layer's geometry

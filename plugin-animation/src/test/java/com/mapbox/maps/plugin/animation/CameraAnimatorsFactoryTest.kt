@@ -178,6 +178,61 @@ class CameraAnimatorsFactoryTest {
   }
 
   @Test
+  fun testFlyToTreatsNearCollapsedPaddingAsExactlyCollapsed() {
+    val size = Size(3200.0f, 1800.0f)
+
+    every { mapProjectionDelegate.project(any(), any()) } answers {
+      val point = firstArg<Point>()
+      MercatorCoordinate(point.longitude(), point.latitude())
+    }
+    every { mapProjectionDelegate.unproject(any(), any()) } answers {
+      val coordinate = firstArg<MercatorCoordinate>()
+      Point.fromLngLat(coordinate.x, coordinate.y)
+    }
+    every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
+    every { mapTransformDelegate.getMapOptions() } returns
+      MapOptions.Builder().size(size).pixelRatio(2.0f).build()
+    every { mapTransformDelegate.getSize() } returns size
+
+    val targetCenter = Point.fromLngLat(-0.07520, 51.50550)
+    val exactPadding = EdgeInsets(900.0, 1600.0, 900.0, 1600.0)
+    val nearPadding = EdgeInsets(
+      900.0 - 5e-10,
+      1600.0 + 5e-10,
+      900.0 - 5e-10,
+      1600.0 + 5e-10
+    )
+
+    fun flyToCenter(padding: EdgeInsets, fraction: Float): Point {
+      val target = initialCameraPosition.toCameraOptions().toBuilder()
+        .center(targetCenter)
+        .padding(padding)
+        .build()
+      val centerAnimator = cameraAnimatorsFactory.getFlyTo(target, owner = customOwner)
+        .first { it.type == CameraAnimatorType.CENTER }
+      centerAnimator.setCurrentFraction(fraction)
+      return centerAnimator.animatedValue as Point
+    }
+
+    for (fraction in listOf(0.25f, 0.5f, 0.75f)) {
+      val exactCenter = flyToCenter(exactPadding, fraction)
+      val nearCenter = flyToCenter(nearPadding, fraction)
+      Assert.assertEquals(
+        "center longitude at $fraction",
+        exactCenter.longitude(),
+        nearCenter.longitude(),
+        1e-9
+      )
+      Assert.assertEquals(
+        "center latitude at $fraction",
+        exactCenter.latitude(),
+        nearCenter.latitude(),
+        1e-9
+      )
+    }
+  }
+
+  @Test
   fun testEaseToWithoutPositionPointCreatesNoPositionPointAnimator() {
     val target = CameraOptions.Builder().zoom(17.0).build()
 

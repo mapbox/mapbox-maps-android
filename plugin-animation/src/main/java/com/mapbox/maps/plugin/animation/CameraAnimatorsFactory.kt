@@ -366,12 +366,14 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     val size = mapTransformDelegate.getSize()
     val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
-    val w0 = if (size.width.toDouble() != endPadding.left + endPadding.right &&
-      size.height.toDouble() != endPadding.bottom + endPadding.top
+    val viewportWidth = size.width - endPadding.left - endPadding.right
+    val viewportHeight = size.height - endPadding.top - endPadding.bottom
+    val w0 = if (viewportWidth > COLLAPSED_VIEWPORT_THRESHOLD &&
+      viewportHeight > COLLAPSED_VIEWPORT_THRESHOLD
     ) {
       max(
-        (size.width - endPadding.left - endPadding.right) / pixelRatio,
-        (size.height - endPadding.top - endPadding.bottom) / pixelRatio
+        viewportWidth / pixelRatio,
+        viewportHeight / pixelRatio
       )
     } else {
       max(
@@ -581,6 +583,12 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
      * Default animation duration
      */
     const val DEFAULT_ANIMATION_DURATION_MS = 300L
+
+    /**
+     * Viewport (map size minus padding, in px) at or below this counts as collapsed.
+     * Bigger than `cameraForCoordinates` rounding error (~1e-12 px), smaller than any real viewport (whole pixels).
+     */
+    private const val COLLAPSED_VIEWPORT_THRESHOLD = 1e-3
 
     /**
      * Interpolator based on Bezier Curve which is default in v9 version of the SDK
