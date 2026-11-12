@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.viewport
 import android.os.Handler
 import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxStyleManager
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -74,6 +75,9 @@ class ViewportPluginImplTest {
     every { statusObserver.onViewportStatusChanged(any(), any(), any()) } just runs
     every { transitionUpdateCancelable.cancel() } just runs
     every { mapCameraManagerDelegate.cameraForCoordinates(any(), any(), any(), any(), any(), any()) } just runs
+    every { delegateProvider.getStyle(any()) } answers {
+      firstArg<(MapboxStyleManager) -> Unit>().invoke(mockk(relaxed = true))
+    }
     viewportPlugin = ViewportPluginImpl(handler)
     viewportPlugin.onDelegateProvider(delegateProvider)
     viewportPlugin.addStatusObserver(statusObserver)

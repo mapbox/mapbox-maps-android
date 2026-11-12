@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class OverviewViewportStateImpl(
-  mapDelegateProvider: MapDelegateProvider,
+  private val mapDelegateProvider: MapDelegateProvider,
   initialOptions: OverviewViewportStateOptions,
   private val transitionFactory: MapboxViewportTransitionFactory = MapboxViewportTransitionFactory(
     mapDelegateProvider
@@ -80,6 +80,26 @@ internal class OverviewViewportStateImpl(
 
   private fun evaluateViewportData(callback: (CameraOptions) -> Unit): Cancelable {
     var cancelled = false
+    var styleResolved = false
+    mapDelegateProvider.getStyle {
+      styleResolved = true
+      evaluateCameraForCoordinates(callback) { cancelled }
+    }
+    if (!styleResolved) {
+      evaluateCameraForCoordinates(callback) { cancelled }
+    }
+    return Cancelable {
+      cancelled = true
+    }
+  }
+
+  private fun evaluateCameraForCoordinates(
+    callback: (CameraOptions) -> Unit,
+    cancelled: () -> Boolean
+  ) {
+    if (cancelled()) {
+      return
+    }
     cameraDelegate.cameraForCoordinates(
       coordinates = options.geometry.extractCoordinates(),
       camera = cameraOptions {
@@ -92,12 +112,9 @@ internal class OverviewViewportStateImpl(
       maxZoom = options.maxZoom,
       offset = options.offset
     ) {
-      if (!cancelled) {
+      if (!cancelled()) {
         callback.invoke(it)
       }
-    }
-    return Cancelable {
-      cancelled = true
     }
   }
 

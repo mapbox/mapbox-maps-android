@@ -6,6 +6,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.35.0
+## Bug fixes 🐞
+* Fix the overview viewport state occasionally producing incorrect camera framing when requested before the map style has loaded, e.g. right at map startup.
+
 # 11.35.0-rc.1 November 02, 2026
 
 ## Features ✨ and improvements 🏁
