@@ -7,6 +7,11 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 ## Bug fixes 🐞
+* [compose] Avoid expensive logging when updating source, terrain, atmosphere, rain or snow properties.
+
+# 11.35.0
+
+## Bug fixes 🐞
 * Fix the overview viewport state occasionally producing incorrect camera framing when requested before the map style has loaded, e.g. right at map startup.
 
 # 11.35.0-rc.1 November 02, 2026

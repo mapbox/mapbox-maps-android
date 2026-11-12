@@ -339,10 +339,9 @@ public abstract class SourceState internal constructor(
     value: Value,
     isBuilderProperty: Boolean
   ) {
-    logD(
-      TAG,
+    logD(TAG) {
       "setProperty() called with: name = $name, value = $value, isBuilderProperty = $isBuilderProperty"
-    )
+    }
     val setOfFlows = propertiesFlowsToCollect.replayCache
     val currentFlow: PropertyDetails? = setOfFlows.firstOrNull {
       it.name == name

@@ -122,7 +122,7 @@ internal class AtmosphereStateApplier internal constructor(
   }
 
   internal fun setProperty(name: String, value: Value) {
-    logD(TAG, "setProperty() called with: name = $name, value = $value")
+    logD(TAG) { "setProperty() called with: name = $name, value = $value" }
     val setOfFlows = propertiesFlowsToCollect.replayCache
     val currentFlow: Pair<String, MutableStateFlow<Value>>? = setOfFlows.firstOrNull {
       it.first == name
