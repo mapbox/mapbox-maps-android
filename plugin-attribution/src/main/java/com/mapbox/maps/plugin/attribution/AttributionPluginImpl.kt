@@ -3,12 +3,14 @@ package com.mapbox.maps.plugin.attribution
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.attribution.generated.AttributionAttributeParser
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettingsBase
+import com.mapbox.maps.plugin.consolidatedattribution.ConsolidatedAttributionPlugin
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 
@@ -21,14 +23,28 @@ internal class AttributionPluginImpl(
 ) : AttributionPlugin, AttributionSettingsBase(), View.OnClickListener {
 
   private lateinit var attributionView: AttributionView
+  private lateinit var pluginView: View
+  private var delegateProvider: MapDelegateProvider? = null
   private lateinit var mapAttributionDelegate: MapAttributionDelegate
   private lateinit var dialogManager: AttributionDialogManager
+
+  /** Set while the consolidated attribution control stands in for the attribution button. */
+  internal var hiddenByConsolidatedAttribution = false
+    set(value) {
+      if (field == value) {
+        return
+      }
+      field = value
+      if (::attributionView.isInitialized) {
+        applyVisibility()
+      }
+    }
 
   override var internalSettings: AttributionSettings = AttributionSettings { }
 
   override fun applySettings() {
     attributionView.setGravity(internalSettings.position)
-    attributionView.setEnable(internalSettings.enabled)
+    applyVisibility()
     attributionView.setIconColor(internalSettings.iconColor)
     attributionView.setAttributionMargins(
       internalSettings.marginLeft.toInt(),
@@ -37,6 +53,15 @@ internal class AttributionPluginImpl(
       internalSettings.marginBottom.toInt()
     )
     attributionView.requestLayout()
+  }
+
+  private fun applyVisibility() {
+    if (hiddenByConsolidatedAttribution) {
+      // Skips the "attribution disabled" warning: the consolidated control shows the attribution.
+      pluginView.visibility = View.GONE
+    } else {
+      attributionView.setEnable(internalSettings.enabled)
+    }
   }
 
   /**
@@ -89,9 +114,7 @@ internal class AttributionPluginImpl(
       attrs,
       pixelRatio
     )
-    dialogManager = AttributionDialogManagerImpl(
-      mapView.context
-    )
+    dialogManager = AttributionDialogManagerImpl(mapView.context)
 
     return viewImplProvider(mapView.context)
   }
@@ -99,7 +122,12 @@ internal class AttributionPluginImpl(
   /**
    * Called when the plugin is first added to the map.
    */
+  @OptIn(MapboxExperimental::class)
   override fun initialize() {
+    // The consolidated plugin may have been created first.
+    hiddenByConsolidatedAttribution = delegateProvider?.mapPluginProviderDelegate
+      ?.getPlugin<ConsolidatedAttributionPlugin>(Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID)
+      ?.enabled == true
     applySettings()
   }
 
@@ -108,6 +136,7 @@ internal class AttributionPluginImpl(
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapAttributionDelegate = delegateProvider.mapAttributionDelegate
+    this.delegateProvider = delegateProvider
   }
 
   /**
@@ -118,6 +147,7 @@ internal class AttributionPluginImpl(
   override fun onPluginView(view: View) {
     attributionView = view as? AttributionView
       ?: throw IllegalArgumentException("The provided view needs to implement AttributionView")
+    pluginView = view
     attributionView.setViewOnClickListener(this)
   }
 

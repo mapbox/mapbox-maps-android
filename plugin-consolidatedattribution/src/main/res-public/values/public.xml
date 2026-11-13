@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the consolidated attribution control is visible on the map. When enabled, it replaces the separate Mapbox logo and attribution icon. -->
+    <public name="mapbox_consolidatedAttributionEnabled" type="attr" />
+
+    <!-- Defines where the consolidated attribution control is positioned on the map. -->
+    <public name="mapbox_consolidatedAttributionGravity" type="attr" />
+
+    <!-- Defines the margin to the left that the consolidated attribution control honors. -->
+    <public name="mapbox_consolidatedAttributionMarginLeft" type="attr" />
+
+    <!-- Defines the margin to the top that the consolidated attribution control honors. -->
+    <public name="mapbox_consolidatedAttributionMarginTop" type="attr" />
+
+    <!-- Defines the margin to the right that the consolidated attribution control honors. -->
+    <public name="mapbox_consolidatedAttributionMarginRight" type="attr" />
+
+    <!-- Defines the margin to the bottom that the consolidated attribution control honors. -->
+    <public name="mapbox_consolidatedAttributionMarginBottom" type="attr" />
+
+    <!-- Defines how much of the consolidated attribution control remains visible once it collapses. -->
+    <public name="mapbox_consolidatedAttributionCollapsedStyle" type="attr" />
+
+    <!-- Defines the material filling the background of the consolidated attribution control. Light and dark rendering follows the night mode of the host configuration rather than this property. -->
+    <public name="mapbox_consolidatedAttributionMaterial" type="attr" />
+
+    <!-- Defines how often the consolidated attribution control plays its intro expansion. -->
+    <public name="mapbox_consolidatedAttributionIntroExpansion" type="attr" />
+
+    <!-- Nudges the background of the consolidated attribution control toward the hue of this color, bringing the control closer to the host application palette. Defaults to fully transparent, which applies no tint. Only the hue is taken, so the background keeps the brightness and the translucency selected by the material. The tint applies to the light appearance only, and the Mapbox logo, the attribution text and the chevron are never tinted. -->
+    <public name="mapbox_consolidatedAttributionTintColor" type="attr" />
+</resources>
+<!-- End of generated file. -->

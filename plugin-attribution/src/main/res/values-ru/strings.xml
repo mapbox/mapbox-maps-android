@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">На устройстве нет веб-браузера, нельзя показать веб-страницу.</string>
     <string name="mapbox_attributionsDialogTitle">Предоставлено Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Сделать карты Mapbox лучше</string>
-    <string name="mapbox_attributionTelemetryMessage">Вы помогаете улучшать карты OpenStreetMap и Mapbox, предоставляя обезличенные данные об использовании.</string>
+    <string name="mapbox_attributionTelemetryMessage">Мы используем анонимизированные данные для улучшения OpenStreetMap и Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Участвовать</string>
     <string name="mapbox_attributionTelemetryNegative">Прекратить участие</string>
     <string name="mapbox_attributionTelemetryNeutral">Дополнительная информация</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Отключить геозонирование</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Включить геозонирование</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Оставьте геозонирование отключенным</string>
+    <string name="mapbox_attribution_close_button_description">Закрыть</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Телеметрия</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Подробнее</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Мы используем анонимизированные данные для улучшения OpenStreetMap и Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Вы можете помочь улучшить карты OpenStreetMap и Mapbox, предоставив анонимные данные об использовании.</string>
 </resources>

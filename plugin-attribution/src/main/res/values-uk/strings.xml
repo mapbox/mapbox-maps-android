@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">На пристрої не встановлено веб-браузер, не вдається відкрити веб-сторінку.</string>
     <string name="mapbox_attributionsDialogTitle">Мапи від Mapbox</string>
     <string name="mapbox_attributionTelemetryTitle">Зробимо мапи Mapbox кращими</string>
-    <string name="mapbox_attributionTelemetryMessage">Ви допомагаєте покращити OpenStreetMap та Mapbox надаючи анонімні дані про користування.</string>
+    <string name="mapbox_attributionTelemetryMessage">Ми використовуємо анонімізовані дані, щоб покращити OpenStreetMap та Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Брати участь</string>
     <string name="mapbox_attributionTelemetryNegative">Припинити участь</string>
     <string name="mapbox_attributionTelemetryNeutral">Більше інформації</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Вимкнути геофенсинг</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Увімкнути геофенсинг</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Залишити геофенсинг вимкненим</string>
+    <string name="mapbox_attribution_close_button_description">Закрити</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Телеметрія</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Докладніше</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Ми використовуємо анонімізовані дані, щоб покращити OpenStreetMap та Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Ви можете допомогти покращити OpenStreetMap та Mapbox, надавши анонімні дані про користування.</string>
 </resources>

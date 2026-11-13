@@ -21,11 +21,15 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.compose.ui.test.swipeUp
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
@@ -309,7 +313,9 @@ public class MapIntegrationTests {
       .context
       .resources
       .getString(R.string.mapbox_attributionsDialogTitle)
-    composeTestRule.onNodeWithText(attributionDialogTitle).assertExists()
+    // The attribution sheet is a plain Dialog holding Android views, so it is asserted with
+    // Espresso rather than as a node in the composition.
+    onView(withText(attributionDialogTitle)).inRoot(isDialog()).check(matches(isDisplayed()))
   }
 
   @Test

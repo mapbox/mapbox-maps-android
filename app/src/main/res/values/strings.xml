@@ -203,6 +203,35 @@
     <string name="description_indoor_example">Showcase Indoor Manager API with Mapbox Standard Style</string>
     <string name="fov_label_format">FOV: %.1f°</string>
 
+    <!-- Consolidated Attribution Example -->
+    <string name="consolidated_attribution_mode_label">Mode</string>
+    <string name="consolidated_attribution_mode_legacy">Legacy</string>
+    <string name="consolidated_attribution_mode_consolidated">Consolidated</string>
+    <string name="consolidated_attribution_collapsed_style_label">Collapsed style</string>
+    <string name="consolidated_attribution_style_icon_only">Icon only</string>
+    <string name="consolidated_attribution_style_wordmark">Icon + wordmark</string>
+    <string name="consolidated_attribution_material_label">Material (light/dark follows night mode)</string>
+    <string name="consolidated_attribution_material_solid">Solid</string>
+    <string name="consolidated_attribution_material_translucent">Translucent</string>
+    <string name="consolidated_attribution_position_label">Position</string>
+    <string name="consolidated_attribution_position_bl">↙ BL</string>
+    <string name="consolidated_attribution_position_br">↘ BR</string>
+    <string name="consolidated_attribution_position_tl">↖ TL</string>
+    <string name="consolidated_attribution_position_tr">↗ TR</string>
+    <string name="consolidated_attribution_map_style_label">Style</string>
+    <string name="consolidated_attribution_map_style_standard">Standard</string>
+    <string name="consolidated_attribution_map_style_standard_satellite">Standard Satellite</string>
+    <string name="consolidated_attribution_map_style_light">Light</string>
+    <string name="consolidated_attribution_map_style_dark">Dark</string>
+    <string name="consolidated_attribution_map_style_streets">Streets</string>
+    <string name="consolidated_attribution_map_style_satellite_streets">Satellite Streets</string>
+    <string name="consolidated_attribution_map_style_outdoors">Outdoors</string>
+    <string name="consolidated_attribution_map_style_many">Many attributions</string>
+    <string name="consolidated_attribution_map_style_one">One attribution (no link)</string>
+    <string name="consolidated_attribution_tint_label">Tint (light appearance only)</string>
+    <string name="consolidated_attribution_tint_none">No tint</string>
+    <string name="consolidated_attribution_tint_swatch">Tint %1$s</string>
+
     <!-- Interactive 3D model source example -->
     <string name="interactive_3d_model_vehicle_color">Vehicle color</string>
     <string name="interactive_3d_model_trunk">Trunk</string>

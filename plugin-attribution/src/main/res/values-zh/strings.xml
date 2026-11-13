@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">设备上未安装网页浏览器，无法打开网页。</string>
     <string name="mapbox_attributionsDialogTitle">由 Mapbox 地图提供支持</string>
     <string name="mapbox_attributionTelemetryTitle">让 Mapbox 地图变得更好</string>
-    <string name="mapbox_attributionTelemetryMessage">您通过贡献匿名使用数据来帮助改进 OpenStreetMap 和 Mapbox 地图。</string>
+    <string name="mapbox_attributionTelemetryMessage">我们使用匿名数据来改进 OpenStreetMap 和 Mapbox。</string>
     <string name="mapbox_attributionTelemetryPositive">参加</string>
     <string name="mapbox_attributionTelemetryNegative">停止参与</string>
     <string name="mapbox_attributionTelemetryNeutral">更多信息</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">禁用地理围栏</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">启用地理围栏</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">保持地理围栏禁用</string>
+    <string name="mapbox_attribution_close_button_description">关闭</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox 遥测</string>
+    <string name="mapbox_attribution_telemetry_learn_more">进一步了解</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">我们使用匿名数据来改进 OpenStreetMap 和 Mapbox。</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">您可以通过贡献匿名使用数据来帮助改进 OpenStreetMap 和 Mapbox 地图。</string>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Attribution sheet rows, built at runtime by AttributionSheetView. -->
+    <dimen name="mapbox_attribution_sheet_row_min_height">48dp</dimen>
+    <dimen name="mapbox_attribution_sheet_row_vertical_padding">12dp</dimen>
+    <dimen name="mapbox_attribution_sheet_side_padding">16dp</dimen>
+    <dimen name="mapbox_attribution_sheet_description_text_size">13sp</dimen>
+    <dimen name="mapbox_attribution_sheet_description_padding_top">4dp</dimen>
+    <dimen name="mapbox_attribution_sheet_description_padding_bottom">12dp</dimen>
+</resources>

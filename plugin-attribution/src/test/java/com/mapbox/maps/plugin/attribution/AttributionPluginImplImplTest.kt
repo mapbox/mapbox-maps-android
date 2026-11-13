@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
+import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.consolidatedattribution.ConsolidatedAttributionPlugin
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import io.mockk.*
@@ -35,6 +37,11 @@ class AttributionPluginImplImplTest {
     mockkStatic(Color::class)
     every { Color.parseColor(any()) } returns Color.WHITE
     every { delegateProvider.mapAttributionDelegate } returns mapAttributionDelegate
+    every {
+      delegateProvider.mapPluginProviderDelegate.getPlugin<ConsolidatedAttributionPlugin>(
+        Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID
+      )
+    } returns null
     every { mapView.context } returns context
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getBoolean(any(), any()) } returns true
@@ -117,5 +124,21 @@ class AttributionPluginImplImplTest {
   fun setContentDescriptionWithNull() {
     attributionPlugin.setContentDescription(null)
     verify { attributionView.setContentDescription(null) }
+  }
+
+  @Test
+  fun hiddenByConsolidatedAttributionSkipsTheWarning() {
+    attributionPlugin.setHiddenByConsolidatedAttribution(true)
+
+    verify { attributionView.visibility = View.GONE }
+    verify(exactly = 0) { attributionView.setEnable(false) }
+  }
+
+  @Test
+  fun shownAgainWhenConsolidatedAttributionIsDisabled() {
+    attributionPlugin.setHiddenByConsolidatedAttribution(true)
+    attributionPlugin.setHiddenByConsolidatedAttribution(false)
+
+    verify(exactly = 2) { attributionView.setEnable(true) }
   }
 }

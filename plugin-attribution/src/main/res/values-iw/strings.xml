@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">לא מותקן דפדפן אינטרנט במכשיר, לא ניתן לפתוח דף אינטרנט.</string>
     <string name="mapbox_attributionsDialogTitle">מופעל על ידי Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">הפוך את Mapbox Maps לטוב יותר</string>
-    <string name="mapbox_attributionTelemetryMessage">אתה עוזר לשפר את מפות OpenStreetMap ו- Mapbox על ידי תרומה של נתוני שימוש אנונימיים.</string>
+    <string name="mapbox_attributionTelemetryMessage">אנו משתמשים בנתונים אנונימיים כדי לשפר את OpenStreetMap ו-Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">לְהִשְׂתַתֵף</string>
     <string name="mapbox_attributionTelemetryNegative">תפסיק להשתתף</string>
     <string name="mapbox_attributionTelemetryNeutral">עוד מידע</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">השבת גיאופנסינג</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">אפשר גיאופנסינג</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">השאר גיאופנסינג מושבת</string>
+    <string name="mapbox_attribution_close_button_description">סגירה</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Telemetry</string>
+    <string name="mapbox_attribution_telemetry_learn_more">פרטים נוספים</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">אנו משתמשים בנתונים אנונימיים כדי לשפר את OpenStreetMap ו-Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">אתה יכול לעזור לשפר את מפות OpenStreetMap ו-Mapbox על ידי תרומה של נתוני שימוש אנונימיים.</string>
 </resources>

@@ -5,7 +5,7 @@
     <string name="mapbox_attributionsDialogTitle">Powered by Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Make Mapbox Maps Better</string>
     <string name="mapbox_attributionGeofencingTitle">Allow this app to use Geofencing</string>
-    <string name="mapbox_attributionTelemetryMessage">You are helping to make OpenStreetMap and Mapbox maps better by contributing anonymous usage data.</string>
+    <string name="mapbox_attributionTelemetryMessage">We use anonymized data to make OpenStreetMap and Mapbox better.</string>
     <string name="mapbox_attributionGeofencingMessage">This app uses Mapbox Geofencing to detect your device’s presence in areas the app developer has defined. Only the app developer can see where those areas are. You have the option to disable Mapbox Geofencing, which may affect app functionality.</string>
     <string name="mapbox_attributionTelemetryPositive">Participate</string>
     <string name="mapbox_attributionTelemetryNegative">Stop participating</string>
@@ -15,4 +15,10 @@
     <string name="mapbox_attributionGeofencingRevokedPositive">Enable Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Keep Geofencing disabled</string>
     <string name="mapbox_warning_attribution_disabled">Attribution must be enabled if you use data from sources that require it. See https://docs.mapbox.com/help/getting-started/attribution/ for more details.</string>
+    <string name="mapbox_attribution_close_button_description">Close</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Telemetry</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Learn more</string>
+    <string name="mapbox_attribution_geofencing_switch_label">Mapbox Geofencing</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">We use anonymized data to make OpenStreetMap and Mapbox better.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">You can help make OpenStreetMap and Mapbox maps better by contributing anonymous usage data.</string>
 </resources>

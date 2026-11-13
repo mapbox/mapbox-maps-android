@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Full-bleed map; MapView is inserted programmatically so it can be recreated. -->
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Controls panel docked to the bottom edge, so the map and its ornaments stay above it. -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        android:elevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Mode -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggle_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mode_legacy"
+                    style="@style/ConsolidatedAttribution.SegmentButton"
+                    android:text="@string/consolidated_attribution_mode_legacy" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mode_consolidated"
+                    style="@style/ConsolidatedAttribution.SegmentButton"
+                    android:text="@string/consolidated_attribution_mode_consolidated" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- Style: outside the consolidated block, since the attribution list is worth
+                 comparing in legacy mode too. Presets are added in code. -->
+            <TextView
+                style="@style/ConsolidatedAttribution.SectionCaption"
+                android:text="@string/consolidated_attribution_map_style_label" />
+
+            <Spinner
+                android:id="@+id/spinner_map_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ConsolidatedAttribution.SpinnerTheme" />
+
+            <!-- Consolidated-only controls (hidden in legacy mode) -->
+            <LinearLayout
+                android:id="@+id/consolidated_controls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Position -->
+                <TextView
+                    style="@style/ConsolidatedAttribution.SectionCaption"
+                    android:text="@string/consolidated_attribution_position_label" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggle_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/position_bl"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_position_bl" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/position_br"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_position_br" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/position_tl"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_position_tl" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/position_tr"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_position_tr" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <!-- Collapsed style -->
+                <TextView
+                    style="@style/ConsolidatedAttribution.SectionCaption"
+                    android:text="@string/consolidated_attribution_collapsed_style_label" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggle_collapsed_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/collapsed_icon_only"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_style_icon_only" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/collapsed_wordmark"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_style_wordmark" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <!-- Material -->
+                <TextView
+                    style="@style/ConsolidatedAttribution.SectionCaption"
+                    android:text="@string/consolidated_attribution_material_label" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggle_material"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/material_solid"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_material_solid" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/material_translucent"
+                        style="@style/ConsolidatedAttribution.SegmentButton"
+                        android:text="@string/consolidated_attribution_material_translucent" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <!-- Tint: swatches are added in code, so the presets live in one place. -->
+                <TextView
+                    style="@style/ConsolidatedAttribution.SectionCaption"
+                    android:text="@string/consolidated_attribution_tint_label" />
+
+                <LinearLayout
+                    android:id="@+id/tint_swatches"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

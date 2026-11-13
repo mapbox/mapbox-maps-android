@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+    <declare-styleable name="mapbox_MapView">
+        <!-- Whether the consolidated attribution control is visible on the map. When enabled, it replaces the separate Mapbox logo and attribution icon. -->
+        <attr name="mapbox_consolidatedAttributionEnabled" format="boolean"/>
+
+        <!-- Defines where the consolidated attribution control is positioned on the map. -->
+        <attr name="mapbox_consolidatedAttributionGravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30" />
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50" />
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03" />
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05" />
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10" />
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70" />
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01" />
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07" />
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11" />
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77" />
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80" />
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08" />
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003" />
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005" />
+        </attr>
+        <!-- Defines the margin to the left that the consolidated attribution control honors. -->
+        <attr name="mapbox_consolidatedAttributionMarginLeft" format="dimension"/>
+        <!-- Defines the margin to the top that the consolidated attribution control honors. -->
+        <attr name="mapbox_consolidatedAttributionMarginTop" format="dimension"/>
+        <!-- Defines the margin to the right that the consolidated attribution control honors. -->
+        <attr name="mapbox_consolidatedAttributionMarginRight" format="dimension"/>
+        <!-- Defines the margin to the bottom that the consolidated attribution control honors. -->
+        <attr name="mapbox_consolidatedAttributionMarginBottom" format="dimension"/>
+        <!-- Defines how much of the consolidated attribution control remains visible once it collapses. -->
+        <attr name="mapbox_consolidatedAttributionCollapsedStyle" format="enum">
+          <!-- Only the Mapbox icon remains visible when the control is collapsed. -->
+          <enum name="icon_only" value="0"/>
+          <!-- The Mapbox icon and the wordmark remain visible when the control is collapsed. -->
+          <enum name="icon_and_wordmark" value="1"/>
+        </attr>
+        <!-- Defines the material filling the background of the consolidated attribution control. Light and dark rendering follows the night mode of the host configuration rather than this property. -->
+        <attr name="mapbox_consolidatedAttributionMaterial" format="enum">
+          <!-- An opaque pill background. -->
+          <enum name="solid" value="0"/>
+          <!-- A semi-transparent pill background that lets the map show through. -->
+          <enum name="translucent" value="1"/>
+        </attr>
+        <!-- Defines how often the consolidated attribution control plays its intro expansion. -->
+        <attr name="mapbox_consolidatedAttributionIntroExpansion" format="enum">
+          <!-- The control expands once and stays collapsed on later launches. Use on devices with a single user. -->
+          <enum name="once" value="0"/>
+          <!-- The control expands once on every app launch. Use on shared devices, such as kiosks or shared tablets, so every user sees the full attribution. -->
+          <enum name="every_launch" value="1"/>
+        </attr>
+        <!-- Nudges the background of the consolidated attribution control toward the hue of this color, bringing the control closer to the host application palette. Defaults to fully transparent, which applies no tint. Only the hue is taken, so the background keeps the brightness and the translucency selected by the material. The tint applies to the light appearance only, and the Mapbox logo, the attribution text and the chevron are never tinted. -->
+        <attr name="mapbox_consolidatedAttributionTintColor" format="color"/>
+    </declare-styleable>
+</resources>
+<!-- End of generated file. -->

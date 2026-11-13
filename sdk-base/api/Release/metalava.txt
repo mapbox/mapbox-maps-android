@@ -1218,6 +1218,57 @@ package com.mapbox.maps.module.telemetry {
 
 package com.mapbox.maps.plugin {
 
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ConsolidatedAttributionCollapsedStyle implements android.os.Parcelable {
+    ctor public ConsolidatedAttributionCollapsedStyle(String value);
+    method public int getOrdinal();
+    method public String getValue();
+    method public static com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle valueOf(String value);
+    property public final int ordinal;
+    property public final String value;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle.Companion Companion;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle ICON_AND_WORDMARK;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle ICON_ONLY;
+  }
+
+  public static final class ConsolidatedAttributionCollapsedStyle.Companion {
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle valueOf(String value);
+    method public java.util.List<com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle> values();
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ConsolidatedAttributionIntroExpansion implements android.os.Parcelable {
+    ctor public ConsolidatedAttributionIntroExpansion(String value);
+    method public int getOrdinal();
+    method public String getValue();
+    method public static com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion valueOf(String value);
+    property public final int ordinal;
+    property public final String value;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion.Companion Companion;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion EVERY_LAUNCH;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion ONCE;
+  }
+
+  public static final class ConsolidatedAttributionIntroExpansion.Companion {
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion valueOf(String value);
+    method public java.util.List<com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion> values();
+  }
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ConsolidatedAttributionMaterial implements android.os.Parcelable {
+    ctor public ConsolidatedAttributionMaterial(String value);
+    method public int getOrdinal();
+    method public String getValue();
+    method public static com.mapbox.maps.plugin.ConsolidatedAttributionMaterial valueOf(String value);
+    property public final int ordinal;
+    property public final String value;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionMaterial.Companion Companion;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionMaterial SOLID;
+    field public static final com.mapbox.maps.plugin.ConsolidatedAttributionMaterial TRANSLUCENT;
+  }
+
+  public static final class ConsolidatedAttributionMaterial.Companion {
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionMaterial valueOf(String value);
+    method public java.util.List<com.mapbox.maps.plugin.ConsolidatedAttributionMaterial> values();
+  }
+
   public fun interface ContextBinder {
     method public void bind(android.content.Context context, android.util.AttributeSet? attrs, float pixelRatio);
   }
@@ -1444,6 +1495,7 @@ package com.mapbox.maps.plugin {
     field public static final String MAPBOX_ATTRIBUTION_PLUGIN_ID = "MAPBOX_ATTRIBUTION_PLUGIN_ID";
     field public static final String MAPBOX_CAMERA_PLUGIN_ID = "MAPBOX_CAMERA_PLUGIN_ID";
     field public static final String MAPBOX_COMPASS_PLUGIN_ID = "MAPBOX_COMPASS_PLUGIN_ID";
+    field @com.mapbox.maps.MapboxExperimental public static final String MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID = "MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID";
     field public static final String MAPBOX_GESTURES_PLUGIN_ID = "MAPBOX_GESTURES_PLUGIN_ID";
     field public static final String MAPBOX_INDOOR_SELECTOR_PLUGIN_ID = "MAPBOX_INDOOR_SELECTOR_PLUGIN_ID";
     field public static final String MAPBOX_LIFECYCLE_PLUGIN_ID = "MAPBOX_LIFECYCLE_PLUGIN_ID";
@@ -2277,6 +2329,157 @@ package com.mapbox.maps.plugin.compass.generated {
 
   public final class CompassSettingsKt {
     method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.plugin.compass.generated.CompassSettings! CompassSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.compass.generated.CompassSettings.Builder,? extends kotlin.Unit> initializer);
+  }
+
+}
+
+package com.mapbox.maps.plugin.consolidatedattribution {
+
+  @com.mapbox.maps.MapboxExperimental public interface ConsolidatedAttributionPlugin extends com.mapbox.maps.plugin.ViewPlugin com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettingsInterface com.mapbox.maps.plugin.LifecyclePlugin {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.delegates.MapAttributionDelegate getMapAttributionDelegate();
+    method @com.mapbox.maps.MapboxExperimental public void setCustomAttributionDialogManager(com.mapbox.maps.plugin.attribution.AttributionDialogManager dialogManager);
+  }
+
+}
+
+package com.mapbox.maps.plugin.consolidatedattribution.generated {
+
+  @com.mapbox.maps.MapboxExperimental @kotlinx.parcelize.Parcelize public final class ConsolidatedAttributionSettings implements android.os.Parcelable {
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle getCollapsedStyle();
+    method public boolean getEnabled();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion getIntroExpansion();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionMaterial getMaterial();
+    method public int getPosition();
+    method public int getTintColor();
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder toBuilder();
+    property public final com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle collapsedStyle;
+    property public final boolean enabled;
+    property public final com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion introExpansion;
+    property public final float marginBottom;
+    property public final float marginLeft;
+    property public final float marginRight;
+    property public final float marginTop;
+    property public final com.mapbox.maps.plugin.ConsolidatedAttributionMaterial material;
+    property public final int position;
+    property public final int tintColor;
+  }
+
+  public static final class ConsolidatedAttributionSettings.Builder {
+    ctor public ConsolidatedAttributionSettings.Builder();
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings build();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle getCollapsedStyle();
+    method public boolean getEnabled();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion getIntroExpansion();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionMaterial getMaterial();
+    method public int getPosition();
+    method public int getTintColor();
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setCollapsedStyle(com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle collapsedStyle);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setEnabled(boolean enabled);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setIntroExpansion(com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion introExpansion);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setMarginBottom(float marginBottom);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setMarginLeft(float marginLeft);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setMarginRight(float marginRight);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setMarginTop(float marginTop);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setMaterial(com.mapbox.maps.plugin.ConsolidatedAttributionMaterial material);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setPosition(int position);
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder setTintColor(int tintColor);
+    property public final com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle collapsedStyle;
+    property public final boolean enabled;
+    property public final com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion introExpansion;
+    property public final float marginBottom;
+    property public final float marginLeft;
+    property public final float marginRight;
+    property public final float marginTop;
+    property public final com.mapbox.maps.plugin.ConsolidatedAttributionMaterial material;
+    property public final int position;
+    property public final int tintColor;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public abstract class ConsolidatedAttributionSettingsBase implements com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettingsInterface {
+    ctor public ConsolidatedAttributionSettingsBase();
+    method protected abstract void applySettings();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle getCollapsedStyle();
+    method public boolean getEnabled();
+    method protected abstract com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings getInternalSettings();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion getIntroExpansion();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionMaterial getMaterial();
+    method public int getPosition();
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings getSettings();
+    method public int getTintColor();
+    method public void setCollapsedStyle(com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle);
+    method public void setEnabled(boolean);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings);
+    method public void setIntroExpansion(com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion);
+    method public void setMarginBottom(float);
+    method public void setMarginLeft(float);
+    method public void setMarginRight(float);
+    method public void setMarginTop(float);
+    method public void setMaterial(com.mapbox.maps.plugin.ConsolidatedAttributionMaterial);
+    method public void setPosition(int);
+    method public void setTintColor(int);
+    method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder,kotlin.Unit> block);
+    property public com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle collapsedStyle;
+    property public boolean enabled;
+    property protected abstract com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings internalSettings;
+    property public com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion introExpansion;
+    property public float marginBottom;
+    property public float marginLeft;
+    property public float marginRight;
+    property public float marginTop;
+    property public com.mapbox.maps.plugin.ConsolidatedAttributionMaterial material;
+    property public int position;
+    property public int tintColor;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public interface ConsolidatedAttributionSettingsInterface {
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle getCollapsedStyle();
+    method public boolean getEnabled();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion getIntroExpansion();
+    method public float getMarginBottom();
+    method public float getMarginLeft();
+    method public float getMarginRight();
+    method public float getMarginTop();
+    method public com.mapbox.maps.plugin.ConsolidatedAttributionMaterial getMaterial();
+    method public int getPosition();
+    method public com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings getSettings();
+    method public int getTintColor();
+    method public void setCollapsedStyle(com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle);
+    method public void setEnabled(boolean);
+    method public void setIntroExpansion(com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion);
+    method public void setMarginBottom(float);
+    method public void setMarginLeft(float);
+    method public void setMarginRight(float);
+    method public void setMarginTop(float);
+    method public void setMaterial(com.mapbox.maps.plugin.ConsolidatedAttributionMaterial);
+    method public void setPosition(int);
+    method public void setTintColor(int);
+    method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder,kotlin.Unit> block);
+    property public abstract com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle collapsedStyle;
+    property public abstract boolean enabled;
+    property public abstract com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion introExpansion;
+    property public abstract float marginBottom;
+    property public abstract float marginLeft;
+    property public abstract float marginRight;
+    property public abstract float marginTop;
+    property public abstract com.mapbox.maps.plugin.ConsolidatedAttributionMaterial material;
+    property public abstract int position;
+    property public abstract int tintColor;
+  }
+
+  public final class ConsolidatedAttributionSettingsKt {
+    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings! ConsolidatedAttributionSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings.Builder,? extends kotlin.Unit> initializer);
   }
 
 }

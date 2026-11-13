@@ -6,6 +6,10 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Add the experimental `maps-consolidatedattribution` plugin. It shows the Mapbox logo and the data attributions in one pill, which replaces the logo and attribution ornaments while enabled. To turn it on, add `Plugin.Mapbox(Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID)` to `MapInitOptions.plugins` and set `consolidatedAttribution.enabled = true`. In Compose, put `ConsolidatedAttribution()` in the `attribution` slot and leave `logo` empty.
+* The attribution button now opens a bottom sheet with the data credits and the telemetry and geofencing switches, instead of a dialog. In Compose, `Attribution`'s `telemetryDialog` and `geofencingConsentDialog` are now used only with a custom `attributionDialog`. Pass `AttributionDialog` there to keep the previous flow.
+
 ## Bug fixes 🐞
 * [compose] Avoid expensive logging when updating source, terrain, atmosphere, rain or snow properties.
 

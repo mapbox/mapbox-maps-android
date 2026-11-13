@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Không có trình duyệt web được cài đặt trên thiết bị, không thể mở trang web.</string>
     <string name="mapbox_attributionsDialogTitle">Được hỗ trợ bởi Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Làm cho bản đồ Mapbox tốt hơn</string>
-    <string name="mapbox_attributionTelemetryMessage">Bạn đang giúp cải thiện bản đồ OpenStreetMap và Mapbox bằng cách đóng góp dữ liệu sử dụng ẩn danh.</string>
+    <string name="mapbox_attributionTelemetryMessage">Chúng tôi sử dụng dữ liệu ẩn danh để cải thiện OpenStreetMap và Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Tham gia</string>
     <string name="mapbox_attributionTelemetryNegative">Ngừng tham gia</string>
     <string name="mapbox_attributionTelemetryNeutral">Thêm thông tin</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Vô hiệu hóa Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Bật Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Giữ Geofencing ở trạng thái vô hiệu hóa</string>
+    <string name="mapbox_attribution_close_button_description">Đóng</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Đo từ xa Mapbox</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Tìm hiểu thêm</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Chúng tôi sử dụng dữ liệu ẩn danh để cải thiện OpenStreetMap và Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Bạn có thể giúp cải thiện bản đồ OpenStreetMap và Mapbox bằng cách đóng góp dữ liệu sử dụng ẩn danh.</string>
 </resources>

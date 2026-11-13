@@ -1,0 +1,12 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.consolidatedattribution {
+
+  public final class ConsolidatedAttributionControllerKt {
+  }
+
+  public final class ConsolidatedAttributionUtils {
+    method public static com.mapbox.maps.plugin.consolidatedattribution.ConsolidatedAttributionPlugin getConsolidatedAttribution(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+}
+

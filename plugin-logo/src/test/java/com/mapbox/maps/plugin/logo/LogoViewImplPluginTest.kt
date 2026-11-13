@@ -1,7 +1,10 @@
 package com.mapbox.maps.plugin.logo
 
 import android.view.Gravity
+import android.view.View
 import android.widget.FrameLayout
+import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.consolidatedattribution.ConsolidatedAttributionPlugin
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import io.mockk.every
@@ -105,5 +108,45 @@ class LogoViewImplPluginTest {
 
     assertEquals(false, logoPlugin.enabled)
     verify { logoView.logoEnabled = false }
+  }
+
+  @Test
+  fun hiddenByConsolidatedAttributionSkipsTheWarning() {
+    logoPlugin.setHiddenByConsolidatedAttribution(true)
+
+    verify { logoView.visibility = View.GONE }
+    verify(exactly = 0) { logoView.logoEnabled = false }
+  }
+
+  @Test
+  fun stayHiddenOnSettingsChange() {
+    logoPlugin.setHiddenByConsolidatedAttribution(true)
+    logoPlugin.updateSettings { marginBottom = 1f }
+
+    verify(exactly = 0) { logoView.logoEnabled = any() }
+  }
+
+  @Test
+  fun shownAgainWhenConsolidatedAttributionIsDisabled() {
+    logoPlugin.setHiddenByConsolidatedAttribution(true)
+    logoPlugin.setHiddenByConsolidatedAttribution(false)
+
+    verify { logoView.logoEnabled = true }
+  }
+
+  @Test
+  fun hiddenOnInitializeWhenConsolidatedAttributionIsEnabled() {
+    val consolidated = mockk<ConsolidatedAttributionPlugin>()
+    every { consolidated.enabled } returns true
+    every {
+      delegateProvider.mapPluginProviderDelegate.getPlugin<ConsolidatedAttributionPlugin>(
+        Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID
+      )
+    } returns consolidated
+
+    logoPlugin.initialize()
+
+    verify { logoView.visibility = View.GONE }
+    verify(exactly = 0) { logoView.logoEnabled = any() }
   }
 }

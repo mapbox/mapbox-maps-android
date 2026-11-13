@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Ingen webbläsare installerad på enheten, kan inte öppna webbsidan.</string>
     <string name="mapbox_attributionsDialogTitle">Drivs av Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Gör Mapbox Maps bättre</string>
-    <string name="mapbox_attributionTelemetryMessage">Du hjälper till att göra OpenStreetMap- och Mapbox-kartor bättre genom att bidra med anonym användningsdata.</string>
+    <string name="mapbox_attributionTelemetryMessage">Vi använder anonymiserad data för att förbättra OpenStreetMap och Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Delta</string>
     <string name="mapbox_attributionTelemetryNegative">Sluta delta</string>
     <string name="mapbox_attributionTelemetryNeutral">Mer information</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Inaktivera Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Aktivera Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Håll Geofencing inaktiverat</string>
+    <string name="mapbox_attribution_close_button_description">Stäng</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Telemetri</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Läs mer</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Vi använder anonymiserad data för att förbättra OpenStreetMap och Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Du kan hjälpa till att göra OpenStreetMap- och Mapbox-kartor bättre genom att bidra med anonym användningsdata.</string>
 </resources>

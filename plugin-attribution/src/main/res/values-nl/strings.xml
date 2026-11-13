@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Er is geen webbrowser geïnstalleerd op het apparaat. Kan webpagina niet openen.</string>
     <string name="mapbox_attributionsDialogTitle">Mogelijk gemaakt door Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Maak Mapbox-kaarten beter</string>
-    <string name="mapbox_attributionTelemetryMessage">U helpt OpenStreetMap- en Mapbox-kaarten beter te maken door anonieme gebruiksgegevens bij te dragen.</string>
+    <string name="mapbox_attributionTelemetryMessage">We gebruiken geanonimiseerde gegevens om OpenStreetMap en Mapbox te verbeteren.</string>
     <string name="mapbox_attributionTelemetryPositive">Deelnemen</string>
     <string name="mapbox_attributionTelemetryNegative">Stop met deelnemen</string>
     <string name="mapbox_attributionTelemetryNeutral">Meer informatie</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Geofencing uitschakelen</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Geofencing inschakelen</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Geofencing uitgeschakeld houden</string>
+    <string name="mapbox_attribution_close_button_description">Sluit</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox-telemetrie</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Meer informatie</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">We gebruiken geanonimiseerde gegevens om OpenStreetMap en Mapbox te verbeteren.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">U kunt helpen OpenStreetMap- en Mapbox-kaarten beter te maken door anonieme gebruiksgegevens bij te dragen.</string>
 </resources>

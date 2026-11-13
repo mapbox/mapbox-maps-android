@@ -48,4 +48,41 @@
         <item name="android:textColor">@android:color/background_dark</item>
     </style>
 
+    <!--
+        AppTheme paints both spinner item styles with background_light, i.e. white text on the
+        white popup. Scoped to this example's spinner via android:theme, the same way
+        CameraPredefinedAnimationsActivityTheme works around it.
+    -->
+    <style name="ConsolidatedAttribution.SpinnerTheme" parent="AppTheme">
+        <item name="android:spinnerItemStyle">@style/ConsolidatedAttribution.SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/ConsolidatedAttribution.SpinnerDropDownItem</item>
+    </style>
+
+    <style name="ConsolidatedAttribution.SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="ConsolidatedAttribution.SpinnerDropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="ConsolidatedAttribution.SegmentButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+    </style>
+
+    <style name="ConsolidatedAttribution.SectionCaption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
 </resources>

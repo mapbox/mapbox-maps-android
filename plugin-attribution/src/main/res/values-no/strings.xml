@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Ingen nettleser installert på enheten, kan ikke åpne nettsiden.</string>
     <string name="mapbox_attributionsDialogTitle">Drevet av Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Gjør Mapbox Maps bedre</string>
-    <string name="mapbox_attributionTelemetryMessage">Du er med på å gjøre OpenStreetMap- og Mapbox-kart bedre ved å bidra med anonyme bruksdata.</string>
+    <string name="mapbox_attributionTelemetryMessage">Vi bruker anonymiserte data for å gjøre OpenStreetMap og Mapbox bedre.</string>
     <string name="mapbox_attributionTelemetryPositive">Delta</string>
     <string name="mapbox_attributionTelemetryNegative">Slutt å delta</string>
     <string name="mapbox_attributionTelemetryNeutral">Mer informasjon</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Deaktiver Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Aktiver Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Hold Geofencing deaktivert</string>
+    <string name="mapbox_attribution_close_button_description">Lukk</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Telemetri</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Finn ut mer</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Vi bruker anonymiserte data for å gjøre OpenStreetMap og Mapbox bedre.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Du kan bidra til å gjøre OpenStreetMap- og Mapbox-kart bedre ved å bidra med anonyme bruksdata.</string>
 </resources>

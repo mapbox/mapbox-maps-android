@@ -1,6 +1,7 @@
 public final class com/mapbox/maps/plugin/logo/LogoUtils {
 	public static final synthetic fun createLogoPlugin ()Lcom/mapbox/maps/plugin/logo/LogoPlugin;
 	public static final fun getLogo (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/logo/LogoPlugin;
+	public static final fun setHiddenByConsolidatedAttribution (Lcom/mapbox/maps/plugin/logo/LogoPlugin;Z)V
 }
 
 public final class com/mapbox/maps/plugin/logo/LogoViewImpl : androidx/appcompat/widget/AppCompatImageView, com/mapbox/maps/plugin/logo/LogoView {

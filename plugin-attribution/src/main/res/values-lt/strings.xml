@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Įrenginyje neįdiegta žiniatinklio naršyklė, negalima atidaryti tinklalapio.</string>
     <string name="mapbox_attributionsDialogTitle">Parengta naudojant „Mapbox Maps“.</string>
     <string name="mapbox_attributionTelemetryTitle">Patobulinkite „Mapbox“ žemėlapius</string>
-    <string name="mapbox_attributionTelemetryMessage">Pateikdami anoniminius naudojimo duomenis, padedate tobulinti „OpenStreetMap“ ir „Mapbox“ žemėlapius.</string>
+    <string name="mapbox_attributionTelemetryMessage">Mes naudojame anonimizuotus duomenis, kad patobulintume „OpenStreetMap“ ir „Mapbox“.</string>
     <string name="mapbox_attributionTelemetryPositive">Dalyvauti</string>
     <string name="mapbox_attributionTelemetryNegative">Nustokite dalyvauti</string>
     <string name="mapbox_attributionTelemetryNeutral">Daugiau informacijos</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Išjungti geotvorą</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Įgalinti Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Išjunkite geotvorą</string>
+    <string name="mapbox_attribution_close_button_description">Uždaryti</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox telemetrija</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Sužinoti daugiau</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Mes naudojame anonimizuotus duomenis, kad patobulintume „OpenStreetMap“ ir „Mapbox“.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Galite padėti pagerinti OpenStreetMap ir Mapbox žemėlapius pateikdami anoniminius naudojimo duomenis.</string>
 </resources>

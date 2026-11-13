@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,9 +49,15 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.mapbox.annotation.MapboxDelicateApi
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
@@ -56,13 +68,22 @@ import com.mapbox.maps.StyleAttributionsChangedCallback
 import com.mapbox.maps.extension.compose.MapboxMapScopeMarker
 import com.mapbox.maps.extension.compose.R
 import com.mapbox.maps.extension.compose.ornaments.attribution.internal.AttributionComposePlugin
+import com.mapbox.maps.extension.compose.ornaments.attribution.internal.ConsolidatedAttributionComposePlugin
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import com.mapbox.maps.logW
+import com.mapbox.maps.plugin.ConsolidatedAttributionCollapsedStyle
+import com.mapbox.maps.plugin.ConsolidatedAttributionIntroExpansion
+import com.mapbox.maps.plugin.ConsolidatedAttributionMaterial
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.attribution.Attribution
+import com.mapbox.maps.plugin.attribution.AttributionDialogManager
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
 import com.mapbox.maps.plugin.attribution.isMapboxFeedback
+import com.mapbox.maps.plugin.attribution.showAttributionSheet
+import com.mapbox.maps.plugin.consolidatedattribution.ConsolidatedAttributionView
+import com.mapbox.maps.plugin.consolidatedattribution.generated.ConsolidatedAttributionSettings
+import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -82,6 +103,109 @@ public class MapAttributionScope internal constructor(
   private val boxScope: BoxScope
 ) {
   /**
+   * Add the experimental consolidated attribution ornament to the map.
+   *
+   * A single pill with the Mapbox logo and the data attributions. It expands once on first launch,
+   * then collapses after a few seconds or on map interaction. It replaces the [Attribution] and
+   * [Logo][com.mapbox.maps.extension.compose.ornaments.logo.MapLogoScope.Logo] ornaments, so leave
+   * the logo slot empty:
+   * ```
+   * MapboxMap(
+   *   attribution = { ConsolidatedAttribution() },
+   *   logo = {},
+   * ) { ... }
+   * ```
+   *
+   * By default the control is placed at the [Alignment.BottomStart] of the map with padding of
+   * 8dp.
+   *
+   * @param modifier Modifier to be applied to the control.
+   * @param contentPadding The default padding applied to the control; paddings from [modifier] are
+   *   applied on top of this default padding.
+   * @param alignment The alignment of the control within the Map.
+   * @param collapsedStyle How much of the control remains visible once it collapses.
+   * @param material The background material. Light and dark colors follow the night mode.
+   * @param tintColor Shifts the background toward this color's hue. [Color.Transparent] applies
+   *   no tint.
+   * @param introExpansion How often the intro expansion plays. Use
+   *   [ConsolidatedAttributionIntroExpansion.EVERY_LAUNCH] on shared devices.
+   * @param attributionDialogManager Custom [AttributionDialogManager] invoked when the control is
+   *   tapped. Defaults to the SDK's attribution sheet.
+   */
+  @com.mapbox.maps.MapboxExperimental
+  @Composable
+  public fun ConsolidatedAttribution(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(8.dp),
+    alignment: Alignment = Alignment.BottomStart,
+    collapsedStyle: ConsolidatedAttributionCollapsedStyle = ConsolidatedAttributionCollapsedStyle.ICON_AND_WORDMARK,
+    material: ConsolidatedAttributionMaterial = ConsolidatedAttributionMaterial.SOLID,
+    tintColor: Color = Color.Transparent,
+    introExpansion: ConsolidatedAttributionIntroExpansion = ConsolidatedAttributionIntroExpansion.ONCE,
+    attributionDialogManager: AttributionDialogManager? = null,
+  ) {
+    val pluginId = remember { ConsolidatedAttributionComposePlugin.getNextId() }
+    val settings = remember(collapsedStyle, material, tintColor, introExpansion) {
+      ConsolidatedAttributionSettings {
+        setEnabled(true)
+        setCollapsedStyle(collapsedStyle)
+        setMaterial(material)
+        setTintColor(tintColor.toArgb())
+        setIntroExpansion(introExpansion)
+      }
+    }
+    // Measured here so the padding is taken into account; the view can't see it.
+    with(boxScope) {
+      BoxWithConstraints(
+        modifier = Modifier
+          .padding(contentPadding)
+          .then(modifier)
+          .align(alignment)
+      ) {
+        val availableWidthPx = with(LocalDensity.current) { maxWidth.roundToPx() }
+        var pillView by remember { mutableStateOf<ConsolidatedAttributionView?>(null) }
+        AndroidView(
+          // The view extends past the pill by its touch inset; lay out the pill, not the view.
+          modifier = Modifier.layout { measurable, constraints ->
+            val insetX = pillView?.touchInsetX ?: 0
+            val insetY = pillView?.touchInsetY ?: 0
+            val placeable = measurable.measure(constraints.offset(2 * insetX, 2 * insetY))
+            layout(
+              constraints.constrainWidth(placeable.width - 2 * insetX),
+              constraints.constrainHeight(placeable.height - 2 * insetY),
+            ) {
+              placeable.place(-insetX, -insetY)
+            }
+          },
+          factory = { context ->
+            ConsolidatedAttributionView(context).also { pill ->
+              pillView = pill
+              mapView.createPlugin(
+                Plugin.Custom(pluginId, ConsolidatedAttributionComposePlugin(pill))
+              )
+            }
+          }
+        ) { pill ->
+          val plugin = mapView.getPlugin<ConsolidatedAttributionComposePlugin>(pluginId)
+          if (plugin == null) {
+            logW(TAG, "No consolidated attribution plugin registered as $pluginId; the pill keeps its previous settings.")
+            return@AndroidView
+          }
+          // Null restores the SDK sheet.
+          plugin.controller.setCustomAttributionDialogManager(attributionDialogManager)
+          pill.mapViewWidth = availableWidthPx
+          plugin.controller.applyAppearance(settings)
+        }
+      }
+    }
+    DisposableEffect(Unit) {
+      onDispose {
+        mapView.removePlugin(pluginId)
+      }
+    }
+  }
+
+  /**
    * Add a [Attribution] ornament to the map.
    *
    * Please note that it's **required** to show Mapbox Attribution button in your map. See [Mapbox ToS](https://www.mapbox.com/legal/tos)
@@ -92,7 +216,9 @@ public class MapAttributionScope internal constructor(
    * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Attribution] within the Map.
    * @param iconColor The color tint applied to the attribution icon. Defaults to Mapbox blue (#1E8CAB).
-   * @param attributionDialog Defines AlertDialog when the attribution is clicked.
+   * @param attributionDialog The dialog shown when the attribution is clicked. Null shows the
+   *   SDK's attribution sheet, which has the telemetry and geofencing switches. [telemetryDialog]
+   *   is only used with a custom dialog.
    * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
    */
   @Composable
@@ -101,17 +227,13 @@ public class MapAttributionScope internal constructor(
     contentPadding: PaddingValues = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp),
     alignment: Alignment = Alignment.BottomStart,
     iconColor: Color = Color(0xFF1E8CAB),
-    attributionDialog: @Composable (
-      attributions: List<Attribution>,
-      onDismissRequest: () -> Unit,
-      onAttributionClick: (Attribution) -> Unit
-    ) -> Unit = { attributions, onDismissRequest, onAttributionClick ->
-      AttributionDialog(
-        attributions = attributions,
-        onDismissRequest = onDismissRequest,
-        onAttributionClick = onAttributionClick
-      )
-    },
+    attributionDialog: (
+      @Composable (
+        attributions: List<Attribution>,
+        onDismissRequest: () -> Unit,
+        onAttributionClick: (Attribution) -> Unit
+      ) -> Unit
+    )? = null,
     telemetryDialog: @Composable (
       onDismissRequest: () -> Unit,
       onMoreInfo: () -> Unit,
@@ -155,7 +277,9 @@ public class MapAttributionScope internal constructor(
    * @param contentPadding The default padding applied to the [Attribution], paddings from [modifier] will be applied on top of this default padding.
    * @param alignment The alignment of the [Attribution] within the Map.
    * @param iconColor The color tint applied to the attribution icon. Defaults to Mapbox blue (#1E8CAB).
-   * @param attributionDialog Defines AlertDialog when the attribution is clicked.
+   * @param attributionDialog The dialog shown when the attribution is clicked. Null shows the
+   *   SDK's attribution sheet, which has the telemetry and geofencing switches. [telemetryDialog]
+   *   and [geofencingConsentDialog] are only used with a custom dialog.
    * @param telemetryDialog Defines TelemetryDialog when the Mapbox telemetry is clicked.
    * @param geofencingConsentDialog Defines GeofencingConsentDialog when the Mapbox Geofencing is clicked.
    */
@@ -166,17 +290,13 @@ public class MapAttributionScope internal constructor(
     contentPadding: PaddingValues = PaddingValues(92.dp, 4.dp, 4.dp, 4.dp),
     alignment: Alignment = Alignment.BottomStart,
     iconColor: Color = Color(0xFF1E8CAB),
-    attributionDialog: @Composable (
-      attributions: List<Attribution>,
-      onDismissRequest: () -> Unit,
-      onAttributionClick: (Attribution) -> Unit
-    ) -> Unit = { attributions, onDismissRequest, onAttributionClick ->
-      AttributionDialog(
-        attributions = attributions,
-        onDismissRequest = onDismissRequest,
-        onAttributionClick = onAttributionClick
-      )
-    },
+    attributionDialog: (
+      @Composable (
+        attributions: List<Attribution>,
+        onDismissRequest: () -> Unit,
+        onAttributionClick: (Attribution) -> Unit
+      ) -> Unit
+    )? = null,
     telemetryDialog: @Composable (
       onDismissRequest: () -> Unit,
       onMoreInfo: () -> Unit,
@@ -284,35 +404,63 @@ public class MapAttributionScope internal constructor(
       )
     }
 
-    // Show Attribution Dialog
+    // Show the attribution sheet, or the host's own dialog in its place.
     if (showAttributionDialog) {
-      attributionDialog(
-        attributions = attributionState.attributions,
-        onDismissRequest = {
-          showAttributionDialog = false
-        },
-        onAttributionClick = { attribution ->
-          showAttributionDialog = false
-          when (attribution.url) {
-            Attribution.ABOUT_TELEMETRY_URL -> showTelemetryDialog = true
-            Attribution.GEOFENCING_URL_MARKER -> showGeofencingConsentDialog = true
-            else -> {
-              if (attribution.url.isNotEmpty()) {
-                if (attribution.isMapboxFeedback()) {
-                  coroutineScope.launch {
-                    val url = attributionState.buildMapboxFeedbackUrl()
-                    showWebPage(url)
+      val delegate = attributionState.mapAttributionDelegate
+      val context = LocalContext.current
+      if (attributionDialog != null) {
+        attributionDialog(
+          attributions = attributionState.attributions,
+          onDismissRequest = {
+            showAttributionDialog = false
+          },
+          onAttributionClick = { attribution ->
+            showAttributionDialog = false
+            when (attribution.url) {
+              Attribution.ABOUT_TELEMETRY_URL -> showTelemetryDialog = true
+              Attribution.GEOFENCING_URL_MARKER -> showGeofencingConsentDialog = true
+              else -> {
+                if (attribution.url.isNotEmpty()) {
+                  if (attribution.isMapboxFeedback()) {
+                    coroutineScope.launch {
+                      val url = attributionState.buildMapboxFeedbackUrl()
+                      showWebPage(url)
+                    }
+                  } else {
+                    showWebPage(attribution.url)
                   }
                 } else {
-                  showWebPage(attribution.url)
+                  logE(TAG, "Attribution url for ${attribution.title} is empty")
                 }
-              } else {
-                logE(TAG, "Attribution url for ${attribution.title} is empty")
               }
             }
           }
+        )
+      } else if (delegate == null) {
+        // Not bound to the map yet; the sheet opens when the delegate arrives.
+        logD(TAG, "Attribution sheet requested before the map delegates were available")
+      } else {
+        // The sheet is a Dialog, not a composable, so show it from an effect.
+        val lifecycle = LocalLifecycleOwner.current.lifecycle
+        DisposableEffect(delegate, context, lifecycle) {
+          val dialog = showAttributionSheet(context, delegate)?.apply {
+            setOnDismissListener { showAttributionDialog = false }
+          }
+          // Close on stop, like AttributionDialogManagerImpl.onStop.
+          val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+              showAttributionDialog = false
+            }
+          }
+          lifecycle.addObserver(observer)
+          onDispose {
+            lifecycle.removeObserver(observer)
+            // Not a user dismissal, so drop the listener first.
+            dialog?.setOnDismissListener(null)
+            dialog?.dismiss()
+          }
         }
-      )
+      }
     }
 
     // Show Attribution image button.
@@ -628,6 +776,12 @@ public class MapAttributionScope internal constructor(
      */
     public val userConsentState: UserConsentState? by _userConsentState
 
+    /** Null until the ornament is bound to the map. */
+    private val _mapAttributionDelegate: MutableState<MapAttributionDelegate?> =
+      mutableStateOf(null)
+
+    internal val mapAttributionDelegate: MapAttributionDelegate? by _mapAttributionDelegate
+
     /**
      * Build the Mapbox feedback url with the current map states.
      */
@@ -737,6 +891,8 @@ public class MapAttributionScope internal constructor(
         if (plugin != null) {
           attributionPluginFlow.value = mapView to plugin
         }
+        // Snapshot state, since the composition reads it.
+        _mapAttributionDelegate.value = plugin?.mapAttributionDelegate
       }
       UpdateAttributionState(mapView, plugin)
     }

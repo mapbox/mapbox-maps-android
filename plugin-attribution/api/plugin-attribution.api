@@ -5,9 +5,14 @@ public final class com/mapbox/maps/plugin/attribution/AttributionDialogManagerIm
 	public fun showAttribution (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)V
 }
 
+public final class com/mapbox/maps/plugin/attribution/AttributionSheetDialogKt {
+	public static final fun showAttributionSheet (Landroid/content/Context;Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)Landroid/app/Dialog;
+}
+
 public final class com/mapbox/maps/plugin/attribution/AttributionUtils {
 	public static final synthetic fun createAttributionPlugin ()Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;
 	public static final fun getAttribution (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;
+	public static final fun setHiddenByConsolidatedAttribution (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;Z)V
 }
 
 public final class com/mapbox/maps/plugin/attribution/AttributionViewImpl : androidx/appcompat/widget/AppCompatImageView, com/mapbox/maps/plugin/attribution/AttributionView {

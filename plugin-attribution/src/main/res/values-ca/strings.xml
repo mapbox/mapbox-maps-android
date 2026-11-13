@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">No hi ha navegador web instal·lat al dispositiu, no es pot obrir la pàgina web.</string>
     <string name="mapbox_attributionsDialogTitle">Desenvolupat per Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Millorar els mapes de Mapbox</string>
-    <string name="mapbox_attributionTelemetryMessage">Esteu ajudant a millorar els mapes OpenStreetMap i Mapbox aportant dades d\'ús anònimes.</string>
+    <string name="mapbox_attributionTelemetryMessage">Fem servir dades anonimitzades per millorar OpenStreetMap i Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Participa</string>
     <string name="mapbox_attributionTelemetryNegative">Deixa de participar</string>
     <string name="mapbox_attributionTelemetryNeutral">Més informació</string>
@@ -15,4 +15,9 @@
     <string name="mapbox_attributionGeofencingRevokedPositive">Activa el geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Mantenir el geofencing desactivat</string>
 
+    <string name="mapbox_attribution_close_button_description">Tanca</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Telemetria de Mapbox</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Més informació</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Fem servir dades anonimitzades per millorar OpenStreetMap i Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Podeu ajudar a millorar els mapes OpenStreetMap i Mapbox aportant dades d\'ús anònimes.</string>
 </resources>

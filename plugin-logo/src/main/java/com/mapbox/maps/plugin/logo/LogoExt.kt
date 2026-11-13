@@ -22,3 +22,12 @@ val MapPluginProviderDelegate.logo: LogoPlugin
 fun createLogoPlugin(): LogoPlugin {
   return LogoViewPlugin()
 }
+
+/**
+ * Hide the logo while the consolidated attribution control stands in for it.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+fun LogoPlugin.setHiddenByConsolidatedAttribution(hidden: Boolean) {
+  (this as? LogoViewPlugin)?.hiddenByConsolidatedAttribution = hidden
+}

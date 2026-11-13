@@ -1,6 +1,11 @@
 package com.mapbox.maps.testapp
 
+import android.content.Context
+import android.util.AttributeSet
+import android.util.Xml
+import androidx.annotation.LayoutRes
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import org.xmlpull.v1.XmlPullParser
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -21,4 +26,13 @@ fun ActivityScenarioRule<EmptyActivity>.runOnUiThread(action: (EmptyActivity) ->
   this.scenario.onActivity { activity ->
     activity.runOnUiThread { action(activity) }
   }
+}
+
+/**
+ * Attributes of the root view in [layoutId], to build that view from code.
+ */
+fun Context.layoutAttributes(@LayoutRes layoutId: Int): AttributeSet {
+  val parser = resources.getLayout(layoutId)
+  while (parser.next() != XmlPullParser.START_TAG) Unit
+  return Xml.asAttributeSet(parser)
 }

@@ -292,4 +292,208 @@ class DistanceUnits(val value: String) : Parcelable {
   }
  }
 
+/**
+ * Defines how much of the consolidated attribution control remains visible once it collapses.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+@Parcelize
+class ConsolidatedAttributionCollapsedStyle(val value: String) : Parcelable {
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is ConsolidatedAttributionCollapsedStyle &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "ConsolidatedAttributionCollapsedStyle(value=$value)"
+
+  /**
+   * Returns the ordinal of this constant.
+   */
+  @IgnoredOnParcel
+  val ordinal: Int = when (this.value) {
+    "icon-only" -> 0
+    "icon-and-wordmark" -> 1
+    else -> -1
+  }
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * Only the Mapbox icon remains visible when the control is collapsed.
+     */
+     @JvmField
+    val ICON_ONLY = ConsolidatedAttributionCollapsedStyle("icon-only")
+    /**
+     * The Mapbox icon and the wordmark remain visible when the control is collapsed.
+     */
+     @JvmField
+    val ICON_AND_WORDMARK = ConsolidatedAttributionCollapsedStyle("icon-and-wordmark")
+
+    /**
+     * Utility function to get [ConsolidatedAttributionCollapsedStyle] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): ConsolidatedAttributionCollapsedStyle {
+      return when (value) {
+        "ICON_ONLY" -> ICON_ONLY
+        "ICON_AND_WORDMARK" -> ICON_AND_WORDMARK
+        else -> throw RuntimeException("ConsolidatedAttributionCollapsedStyle.valueOf does not support [$value]")
+      }
+    }
+
+    /**
+     * Returns an array containing the constants of this type, in the order they're declared. This method may be used to iterate over the constants.
+     */
+     fun values(): List<ConsolidatedAttributionCollapsedStyle> = listOf(ICON_ONLY, ICON_AND_WORDMARK)
+  }
+ }
+
+/**
+ * Defines the material filling the background of the consolidated attribution control. Light and dark rendering follows the night mode of the host configuration rather than this property.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+@Parcelize
+class ConsolidatedAttributionMaterial(val value: String) : Parcelable {
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is ConsolidatedAttributionMaterial &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "ConsolidatedAttributionMaterial(value=$value)"
+
+  /**
+   * Returns the ordinal of this constant.
+   */
+  @IgnoredOnParcel
+  val ordinal: Int = when (this.value) {
+    "solid" -> 0
+    "translucent" -> 1
+    else -> -1
+  }
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * An opaque pill background.
+     */
+     @JvmField
+    val SOLID = ConsolidatedAttributionMaterial("solid")
+    /**
+     * A semi-transparent pill background that lets the map show through.
+     */
+     @JvmField
+    val TRANSLUCENT = ConsolidatedAttributionMaterial("translucent")
+
+    /**
+     * Utility function to get [ConsolidatedAttributionMaterial] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): ConsolidatedAttributionMaterial {
+      return when (value) {
+        "SOLID" -> SOLID
+        "TRANSLUCENT" -> TRANSLUCENT
+        else -> throw RuntimeException("ConsolidatedAttributionMaterial.valueOf does not support [$value]")
+      }
+    }
+
+    /**
+     * Returns an array containing the constants of this type, in the order they're declared. This method may be used to iterate over the constants.
+     */
+     fun values(): List<ConsolidatedAttributionMaterial> = listOf(SOLID, TRANSLUCENT)
+  }
+ }
+
+/**
+ * Defines how often the consolidated attribution control plays its intro expansion.
+ *
+ * @param value String value of this property
+ */
+@MapboxExperimental
+@Parcelize
+class ConsolidatedAttributionIntroExpansion(val value: String) : Parcelable {
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   */
+  override fun equals(other: Any?) = other is ConsolidatedAttributionIntroExpansion &&
+    value == other.value
+
+  /**
+   * Returns a hash code value for the object.
+   */
+  override fun hashCode() = value.hashCode()
+
+  /**
+   * Returns a String for the object.
+   */
+  override fun toString() = "ConsolidatedAttributionIntroExpansion(value=$value)"
+
+  /**
+   * Returns the ordinal of this constant.
+   */
+  @IgnoredOnParcel
+  val ordinal: Int = when (this.value) {
+    "once" -> 0
+    "every-launch" -> 1
+    else -> -1
+  }
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * The control expands once and stays collapsed on later launches. Use on devices with a single user.
+     */
+     @JvmField
+    val ONCE = ConsolidatedAttributionIntroExpansion("once")
+    /**
+     * The control expands once on every app launch. Use on shared devices, such as kiosks or shared tablets, so every user sees the full attribution.
+     */
+     @JvmField
+    val EVERY_LAUNCH = ConsolidatedAttributionIntroExpansion("every-launch")
+
+    /**
+     * Utility function to get [ConsolidatedAttributionIntroExpansion] instance from given [value].
+     */
+    @JvmStatic
+    fun valueOf(value: String): ConsolidatedAttributionIntroExpansion {
+      return when (value) {
+        "ONCE" -> ONCE
+        "EVERY_LAUNCH" -> EVERY_LAUNCH
+        else -> throw RuntimeException("ConsolidatedAttributionIntroExpansion.valueOf does not support [$value]")
+      }
+    }
+
+    /**
+     * Returns an array containing the constants of this type, in the order they're declared. This method may be used to iterate over the constants.
+     */
+     fun values(): List<ConsolidatedAttributionIntroExpansion> = listOf(ONCE, EVERY_LAUNCH)
+  }
+ }
+
 // End of generated file.

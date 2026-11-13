@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Non hai ningún navegador web instalado no dispositivo, non se pode abrir a páxina web.</string>
     <string name="mapbox_attributionsDialogTitle">Desenvolvido por Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Mellora os mapas de Mapbox</string>
-    <string name="mapbox_attributionTelemetryMessage">Estás contribuíndo a mellorar os mapas de OpenStreetMap e Mapbox aportando datos de uso anónimos.</string>
+    <string name="mapbox_attributionTelemetryMessage">Usamos datos anonimizados para mellorar OpenStreetMap e Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Participa</string>
     <string name="mapbox_attributionTelemetryNegative">Deixa de participar</string>
     <string name="mapbox_attributionTelemetryNeutral">Máis información</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Desactivar Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Activar Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Manter o geofencing desactivado</string>
+    <string name="mapbox_attribution_close_button_description">Pechar</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Telemetría Mapbox</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Máis información</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Usamos datos anonimizados para mellorar OpenStreetMap e Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Podes contribuír a mellorar os mapas de OpenStreetMap e Mapbox aportando datos de uso anónimos.</string>
 </resources>

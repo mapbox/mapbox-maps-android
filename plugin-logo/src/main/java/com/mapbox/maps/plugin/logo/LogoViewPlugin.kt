@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.consolidatedattribution.ConsolidatedAttributionPlugin
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.logo.generated.LogoAttributeParser
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
 import com.mapbox.maps.plugin.logo.generated.LogoSettingsBase
@@ -19,6 +23,20 @@ internal class LogoViewPlugin(
 ) : LogoPlugin, LogoSettingsBase() {
 
   private lateinit var logoView: LogoView
+  private lateinit var pluginView: View
+  private var delegateProvider: MapDelegateProvider? = null
+
+  /** Set while the consolidated attribution control stands in for the logo. */
+  internal var hiddenByConsolidatedAttribution = false
+    set(value) {
+      if (field == value) {
+        return
+      }
+      field = value
+      if (::logoView.isInitialized) {
+        applyVisibility()
+      }
+    }
 
   override var internalSettings: LogoSettings = LogoSettings { }
 
@@ -30,8 +48,17 @@ internal class LogoViewPlugin(
       internalSettings.marginBottom.toInt()
     )
     logoView.logoGravity = internalSettings.position
-    logoView.logoEnabled = internalSettings.enabled
+    applyVisibility()
     logoView.requestLayout()
+  }
+
+  private fun applyVisibility() {
+    if (hiddenByConsolidatedAttribution) {
+      // Skips the "logo disabled" warning: the consolidated control shows the logo.
+      pluginView.visibility = View.GONE
+    } else {
+      logoView.logoEnabled = internalSettings.enabled
+    }
   }
 
   /**
@@ -43,7 +70,6 @@ internal class LogoViewPlugin(
       if (internalSettings.enabled != value) {
         internalSettings = internalSettings.toBuilder().setEnabled(value).build()
         applySettings()
-        logoView.logoEnabled = value
       }
     }
 
@@ -64,8 +90,17 @@ internal class LogoViewPlugin(
   /**
    * Called when the plugin is first added to the map.
    */
+  @OptIn(MapboxExperimental::class)
   override fun initialize() {
+    // The consolidated plugin may have been created first.
+    hiddenByConsolidatedAttribution = delegateProvider?.mapPluginProviderDelegate
+      ?.getPlugin<ConsolidatedAttributionPlugin>(Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID)
+      ?.enabled == true
     applySettings()
+  }
+
+  override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
+    this.delegateProvider = delegateProvider
   }
 
   /**
@@ -76,5 +111,6 @@ internal class LogoViewPlugin(
   override fun onPluginView(view: View) {
     logoView = view as? LogoView
       ?: throw IllegalArgumentException("The provided view needs to implement LogoContract.LogoView")
+    pluginView = view
   }
 }

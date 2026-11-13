@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Aucun navigateur Web n\'est installé sur l\'appareil, impossible d\'ouvrir la page Web.</string>
     <string name="mapbox_attributionsDialogTitle">Développé par Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Améliorer les cartes Mapbox</string>
-    <string name="mapbox_attributionTelemetryMessage">Vous contribuez à améliorer les cartes OpenStreetMap et Mapbox en fournissant des données d\'utilisation anonymes.</string>
+    <string name="mapbox_attributionTelemetryMessage">Nous utilisons des données anonymisées pour améliorer OpenStreetMap et Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Participer</string>
     <string name="mapbox_attributionTelemetryNegative">Arrêter de participer</string>
     <string name="mapbox_attributionTelemetryNeutral">Plus d\'informations</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Désactiver le géorepérage</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Activer le géorepérage</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Gardez le géorepérage désactivé</string>
+    <string name="mapbox_attribution_close_button_description">Fermer</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Télémétrie Mapbox</string>
+    <string name="mapbox_attribution_telemetry_learn_more">En savoir plus</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Nous utilisons des données anonymisées pour améliorer OpenStreetMap et Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Vous pouvez contribuer à améliorer les cartes OpenStreetMap et Mapbox en fournissant des données d\'utilisation anonymes.</string>
 </resources>

@@ -3,9 +3,15 @@ package com.mapbox.maps.plugin.attribution {
 
   public final class AttributionDialogManagerImpl implements com.mapbox.maps.plugin.attribution.AttributionDialogManager android.content.DialogInterface.OnClickListener {
     ctor public AttributionDialogManagerImpl(android.content.Context context);
-    method public void onClick(android.content.DialogInterface dialog, int which);
+    method @Deprecated public void onClick(android.content.DialogInterface dialog, int which);
     method public void onStop();
     method public void showAttribution(com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate);
+  }
+
+  public final class AttributionSheetDialogKt {
+  }
+
+  public final class AttributionUrlKt {
   }
 
   public final class AttributionUtils {

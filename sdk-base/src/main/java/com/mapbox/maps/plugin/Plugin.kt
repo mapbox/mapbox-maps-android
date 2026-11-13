@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin
 
+import com.mapbox.maps.MapboxExperimental
+
 /**
  * Class describing plugin instance.
  *
@@ -89,6 +91,11 @@ sealed class Plugin(
      * Id for Mapbox Attribution Plugin.
      */
     const val MAPBOX_ATTRIBUTION_PLUGIN_ID = "MAPBOX_ATTRIBUTION_PLUGIN_ID"
+    /**
+     * Id for Mapbox Consolidated Attribution Plugin.
+     */
+    @MapboxExperimental
+    const val MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID = "MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID"
     /**
      * Id for Mapbox Location Component Plugin.
      */

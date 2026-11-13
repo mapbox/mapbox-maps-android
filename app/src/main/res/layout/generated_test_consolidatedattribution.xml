@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<com.mapbox.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mapView"
+    mapbox:mapbox_consolidatedAttributionEnabled = "false"
+    mapbox:mapbox_consolidatedAttributionGravity = "bottom|end"
+    mapbox:mapbox_consolidatedAttributionMarginLeft = "10dp"
+    mapbox:mapbox_consolidatedAttributionMarginTop = "10dp"
+    mapbox:mapbox_consolidatedAttributionMarginRight = "10dp"
+    mapbox:mapbox_consolidatedAttributionMarginBottom = "10dp"
+    mapbox:mapbox_consolidatedAttributionCollapsedStyle = "icon_and_wordmark"
+    mapbox:mapbox_consolidatedAttributionMaterial = "solid"
+    mapbox:mapbox_consolidatedAttributionIntroExpansion = "once"
+    mapbox:mapbox_consolidatedAttributionTintColor = "#000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+<!-- End of generated file. -->

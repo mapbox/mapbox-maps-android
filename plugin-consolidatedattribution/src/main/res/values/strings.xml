@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_consolidated_attr_icon_a11y_label">Mapbox</string>
+    <string name="mapbox_consolidated_attr_icon_a11y_hint">Shows map credits and settings</string>
+</resources>

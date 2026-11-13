@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">V zařízení není nainstalován webový prohlížeč, nelze otevřít webovou stránku.</string>
     <string name="mapbox_attributionsDialogTitle">Provozováno na Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Vylepšete Mapbox Maps</string>
-    <string name="mapbox_attributionTelemetryMessage">Pomáháte zlepšovat mapy OpenStreetMap a Mapbox tím, že přispíváte anonymními údaji o používání.</string>
+    <string name="mapbox_attributionTelemetryMessage">Pro vylepšení OpenStreetMap a Mapboxu používáme anonymizovaná data.</string>
     <string name="mapbox_attributionTelemetryPositive">Účastnit se</string>
     <string name="mapbox_attributionTelemetryNegative">Přestat se účastnit</string>
     <string name="mapbox_attributionTelemetryNeutral">Více informací</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Zakázat Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Povolit Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Ponechat geofencing vypnutý</string>
+    <string name="mapbox_attribution_close_button_description">Zavřít</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Telemetrie Mapboxu</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Další informace</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Pro vylepšení OpenStreetMap a Mapboxu používáme anonymizovaná data.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Můžete pomoci vylepšit mapy OpenStreetMap a Mapbox tím, že přispějete anonymními údaji o používání.</string>
 </resources>

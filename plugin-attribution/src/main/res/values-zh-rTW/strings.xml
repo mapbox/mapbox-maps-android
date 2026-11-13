@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">設備中未安裝任何瀏覽器，不能打開該網頁。</string>
     <string name="mapbox_attributionsDialogTitle">Powered by Mapbox</string>
     <string name="mapbox_attributionTelemetryTitle">讓Mapbox地圖變得更好</string>
-    <string name="mapbox_attributionTelemetryMessage">您的匿名數據幫助OpenStreetMap和Mapbox的地圖變得更好。</string>
+    <string name="mapbox_attributionTelemetryMessage">我們使用匿名資料來改進 OpenStreetMap 和 Mapbox。</string>
     <string name="mapbox_attributionTelemetryPositive">繼續參與</string>
     <string name="mapbox_attributionTelemetryNegative">不再參與</string>
     <string name="mapbox_attributionTelemetryNeutral">更多資訊</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">禁用地理圍欄</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">啟用地理圍欄</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">保持地理圍欄禁用</string>
+    <string name="mapbox_attribution_close_button_description">關閉</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox 遙測</string>
+    <string name="mapbox_attribution_telemetry_learn_more">進一步瞭解</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">我們使用匿名資料來改進 OpenStreetMap 和 Mapbox。</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">您可以透過貢獻匿名使用資料來幫助改進 OpenStreetMap 和 Mapbox 地圖。</string>
 </resources>

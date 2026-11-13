@@ -22,3 +22,12 @@ val MapPluginProviderDelegate.attribution: AttributionPlugin
 fun createAttributionPlugin(): AttributionPlugin {
   return AttributionPluginImpl()
 }
+
+/**
+ * Hide the attribution button while the consolidated attribution control stands in for it.
+ * @suppress
+ */
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+fun AttributionPlugin.setHiddenByConsolidatedAttribution(hidden: Boolean) {
+  (this as? AttributionPluginImpl)?.hiddenByConsolidatedAttribution = hidden
+}

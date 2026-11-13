@@ -1,0 +1,46 @@
+public final class com/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionController {
+	public fun <init> (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionView;)V
+	public final fun applyAppearance (Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;)V
+	public final fun attachTapHandling (Landroid/content/Context;)V
+	public final fun cleanup ()V
+	public final fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
+	public final fun initialize ()V
+	public final fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public final fun onMapWidthChanged (I)V
+	public final fun onStop ()V
+	public final fun setCustomAttributionDialogManager (Lcom/mapbox/maps/plugin/attribution/AttributionDialogManager;)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionUtils {
+	public static final synthetic fun createConsolidatedAttributionPlugin ()Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;
+	public static final fun getConsolidatedAttribution (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionView : android/widget/LinearLayout {
+	public static final field Companion Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionView$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun applyCollapsedStyle (Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;)V
+	public final fun applyMaterial (Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;I)V
+	public final fun collapseImmediately ()V
+	public final fun collapseOnInteraction ()V
+	public final fun getCollapsedStyle ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public final fun getIntroExpansion ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public final fun getMapViewWidth ()I
+	public final fun getMaterial ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public final fun getTintColor ()I
+	public final fun getTouchInsetX ()I
+	public final fun getTouchInsetY ()I
+	public fun performClick ()Z
+	public final fun setAttributionText (Ljava/lang/String;)V
+	public final fun setIntroExpansion (Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;)V
+	public final fun setMapViewWidth (I)V
+	public final fun setOnTapListener (Landroid/view/View$OnClickListener;)V
+	public final fun setPillMargins (IIII)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionView$Companion {
+}
+

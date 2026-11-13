@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">На прыладзе адсутнічае вэб-браўзер, нельга паказаць вэб-старонку.</string>
     <string name="mapbox_attributionsDialogTitle">Hа платформе Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Зрабіць карты Mapbox лепей</string>
-    <string name="mapbox_attributionTelemetryMessage">Вы дапамагаеце паляпшаць карты OpenStreetMap і Mapbox, падаючы абязлічаныя даныя аб выкарыстанні.</string>
+    <string name="mapbox_attributionTelemetryMessage">Мы выкарыстоўваем ананімныя дадзеныя, каб палепшыць OpenStreetMap і Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Удзельнічаць</string>
     <string name="mapbox_attributionTelemetryNegative">Спыніць удзел</string>
     <string name="mapbox_attributionTelemetryNeutral">Дадатковая інфармацыя</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Адключыць Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Уключыць Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Захаваць Geofencing адключаным</string>
+    <string name="mapbox_attribution_close_button_description">Закрыць</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox Тэлеметрыя</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Даведацца больш</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Мы выкарыстоўваем ананімныя дадзеныя, каб палепшыць OpenStreetMap і Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Вы можаце дапамагчы палепшыць карты OpenStreetMap і Mapbox падаючы абязлічаныя даныя аб выкарыстанні.</string>
 </resources>

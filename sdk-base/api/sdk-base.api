@@ -1218,6 +1218,93 @@ public final class com/mapbox/maps/module/telemetry/UiFramework {
 public final class com/mapbox/maps/module/telemetry/UiFramework$Companion {
 }
 
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle$Companion;
+	public static final field ICON_AND_WORDMARK Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public static final field ICON_ONLY Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOrdinal ()I
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public final fun values ()Ljava/util/List;
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion$Companion;
+	public static final field EVERY_LAUNCH Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public static final field ONCE Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOrdinal ()I
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public final fun values ()Ljava/util/List;
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionMaterial : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field Companion Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial$Companion;
+	public static final field SOLID Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public static final field TRANSLUCENT Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOrdinal ()I
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionMaterial$Companion {
+	public final fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public final fun values ()Ljava/util/List;
+}
+
+public final class com/mapbox/maps/plugin/ConsolidatedAttributionMaterial$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public abstract interface class com/mapbox/maps/plugin/ContextBinder {
 	public abstract fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
 }
@@ -1480,6 +1567,7 @@ public abstract class com/mapbox/maps/plugin/Plugin {
 	public static final field MAPBOX_ATTRIBUTION_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_CAMERA_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_COMPASS_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_GESTURES_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_INDOOR_SELECTOR_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_LIFECYCLE_PLUGIN_ID Ljava/lang/String;
@@ -2330,6 +2418,150 @@ public abstract interface class com/mapbox/maps/plugin/compass/generated/Compass
 
 public final class com/mapbox/maps/plugin/compass/generated/CompassSettingsKt {
 	public static final synthetic fun CompassSettings (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
+}
+
+public abstract interface class com/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin : com/mapbox/maps/plugin/LifecyclePlugin, com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsInterface {
+	public abstract fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
+	public abstract fun setCustomAttributionDialogManager (Lcom/mapbox/maps/plugin/attribution/AttributionDialogManager;)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onPluginView (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;Landroid/view/View;)V
+	public static fun onStart (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/consolidatedattribution/ConsolidatedAttributionPlugin;)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public synthetic fun <init> (ZIFFFFLcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCollapsedStyle ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public final fun getEnabled ()Z
+	public final fun getIntroExpansion ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public final fun getMarginBottom ()F
+	public final fun getMarginLeft ()F
+	public final fun getMarginRight ()F
+	public final fun getMarginTop ()F
+	public final fun getMaterial ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public final fun getPosition ()I
+	public final fun getTintColor ()I
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
+	public final fun getCollapsedStyle ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public final fun getEnabled ()Z
+	public final fun getIntroExpansion ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public final fun getMarginBottom ()F
+	public final fun getMarginLeft ()F
+	public final fun getMarginRight ()F
+	public final fun getMarginTop ()F
+	public final fun getMaterial ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public final fun getPosition ()I
+	public final fun getTintColor ()I
+	public final fun setCollapsedStyle (Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setCollapsedStyle (Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;)V
+	public final fun setEnabled (Z)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setEnabled (Z)V
+	public final fun setIntroExpansion (Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setIntroExpansion (Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;)V
+	public final fun setMarginBottom (F)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setMarginBottom (F)V
+	public final fun setMarginLeft (F)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setMarginLeft (F)V
+	public final fun setMarginRight (F)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setMarginRight (F)V
+	public final fun setMarginTop (F)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setMarginTop (F)V
+	public final fun setMaterial (Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setMaterial (Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;)V
+	public final fun setPosition (I)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setPosition (I)V
+	public final fun setTintColor (I)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Builder;
+	public final synthetic fun setTintColor (I)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public abstract class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsBase : com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getCollapsedStyle ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public fun getEnabled ()Z
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
+	public fun getIntroExpansion ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public fun getMarginBottom ()F
+	public fun getMarginLeft ()F
+	public fun getMarginRight ()F
+	public fun getMarginTop ()F
+	public fun getMaterial ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public fun getPosition ()I
+	public fun getSettings ()Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
+	public fun getTintColor ()I
+	public fun setCollapsedStyle (Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;)V
+	public fun setEnabled (Z)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;)V
+	public fun setIntroExpansion (Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;)V
+	public fun setMarginBottom (F)V
+	public fun setMarginLeft (F)V
+	public fun setMarginRight (F)V
+	public fun setMarginTop (F)V
+	public fun setMaterial (Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;)V
+	public fun setPosition (I)V
+	public fun setTintColor (I)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsData$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsData;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsData;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
+public abstract interface class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsInterface {
+	public abstract fun getCollapsedStyle ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;
+	public abstract fun getEnabled ()Z
+	public abstract fun getIntroExpansion ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;
+	public abstract fun getMarginBottom ()F
+	public abstract fun getMarginLeft ()F
+	public abstract fun getMarginRight ()F
+	public abstract fun getMarginTop ()F
+	public abstract fun getMaterial ()Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;
+	public abstract fun getPosition ()I
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
+	public abstract fun getTintColor ()I
+	public abstract fun setCollapsedStyle (Lcom/mapbox/maps/plugin/ConsolidatedAttributionCollapsedStyle;)V
+	public abstract fun setEnabled (Z)V
+	public abstract fun setIntroExpansion (Lcom/mapbox/maps/plugin/ConsolidatedAttributionIntroExpansion;)V
+	public abstract fun setMarginBottom (F)V
+	public abstract fun setMarginLeft (F)V
+	public abstract fun setMarginRight (F)V
+	public abstract fun setMarginTop (F)V
+	public abstract fun setMaterial (Lcom/mapbox/maps/plugin/ConsolidatedAttributionMaterial;)V
+	public abstract fun setPosition (I)V
+	public abstract fun setTintColor (I)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettingsKt {
+	public static final synthetic fun ConsolidatedAttributionSettings (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/consolidatedattribution/generated/ConsolidatedAttributionSettings;
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapAttributionDelegate {

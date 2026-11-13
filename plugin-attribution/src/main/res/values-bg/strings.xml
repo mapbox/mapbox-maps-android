@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">Няма инсталиран уеб браузър на устройството, не може да отвори уеб страница.</string>
     <string name="mapbox_attributionsDialogTitle">Осъществено от Mapbox Maps</string>
     <string name="mapbox_attributionTelemetryTitle">Направете Mapbox Maps по-добри</string>
-    <string name="mapbox_attributionTelemetryMessage">Вие помагате да направим картите на OpenStreetMap и Mapbox по-добри, като предоставяте анонимни данни за употребата.</string>
+    <string name="mapbox_attributionTelemetryMessage">Използваме анонимизирани данни, за да подобрим OpenStreetMap и Mapbox.</string>
     <string name="mapbox_attributionTelemetryPositive">Участвайте</string>
     <string name="mapbox_attributionTelemetryNegative">Спрете да участвате</string>
     <string name="mapbox_attributionTelemetryNeutral">Повече информация</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">Деактивирайте Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">Активирайте Geofencing</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">Поддържайте Geofencing деактивирано</string>
+    <string name="mapbox_attribution_close_button_description">Затвори</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Телеметрия на Mapbox</string>
+    <string name="mapbox_attribution_telemetry_learn_more">Научете повече</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">Използваме анонимизирани данни, за да подобрим OpenStreetMap и Mapbox.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">Можете да помогнете за подобряването на картите на OpenStreetMap и Mapbox, като предоставите анонимни данни за употребата.</string>
 </resources>

@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">기기에 웹 브라우저가 설치되어 있지 않아 웹 페이지를 열 수 없습니다.</string>
     <string name="mapbox_attributionsDialogTitle">Mapbox 지도 제공</string>
     <string name="mapbox_attributionTelemetryTitle">Mapbox 지도를 더 좋게 만들기</string>
-    <string name="mapbox_attributionTelemetryMessage">익명의 사용 데이터를 제공하여 OpenStreetMap 및 Mapbox 지도를 개선하는 데 도움을 주고 계십니다.</string>
+    <string name="mapbox_attributionTelemetryMessage">저희는 익명화된 데이터를 사용하여 OpenStreetMap과 Mapbox를 개선합니다.</string>
     <string name="mapbox_attributionTelemetryPositive">참가하다</string>
     <string name="mapbox_attributionTelemetryNegative">참여 중지</string>
     <string name="mapbox_attributionTelemetryNeutral">더 많은 정보</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">지오펜싱 비활성화</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">지오펜싱 활성화</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">지오펜싱을 비활성화 상태로 유지</string>
+    <string name="mapbox_attribution_close_button_description">닫기</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox 원격 측정</string>
+    <string name="mapbox_attribution_telemetry_learn_more">더 알아보기</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">저희는 익명화된 데이터를 사용하여 OpenStreetMap과 Mapbox를 개선합니다.</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">익명의 사용 데이터를 제공하면 OpenStreetMap 및 Mapbox 지도를 개선하는 데 도움이 될 수 있습니다.</string>
 </resources>

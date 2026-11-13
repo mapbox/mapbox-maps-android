@@ -3,7 +3,7 @@
     <string name="mapbox_attributionErrorNoBrowser">デバイスに Web ブラウザがインストールされていないため、Web ページを開けません。</string>
     <string name="mapbox_attributionsDialogTitle">Mapbox マップを利用</string>
     <string name="mapbox_attributionTelemetryTitle">Mapbox マップをより良くする</string>
-    <string name="mapbox_attributionTelemetryMessage">匿名の使用状況データを提供することで、OpenStreetMap と Mapbox の地図をより良くすることに貢献しています。</string>
+    <string name="mapbox_attributionTelemetryMessage">OpenStreetMap と Mapbox を改善するために匿名化されたデータを使用します。</string>
     <string name="mapbox_attributionTelemetryPositive">参加する</string>
     <string name="mapbox_attributionTelemetryNegative">参加をやめる</string>
     <string name="mapbox_attributionTelemetryNeutral">より詳しい情報</string>
@@ -14,4 +14,9 @@
     <string name="mapbox_attributionGeofencingConsentedNegative">ジオフェンシングを無効にする</string>
     <string name="mapbox_attributionGeofencingRevokedPositive">ジオフェンシングを有効にする</string>
     <string name="mapbox_attributionGeofencingRevokedNegative">ジオフェンシングを無効のままにする</string>
+    <string name="mapbox_attribution_close_button_description">閉じる</string>
+    <string name="mapbox_attribution_telemetry_switch_label">Mapbox テレメトリ</string>
+    <string name="mapbox_attribution_telemetry_learn_more">詳しい情報</string>
+    <string name="mapbox_attribution_telemetry_message_enabled">OpenStreetMap と Mapbox を改善するために匿名化されたデータを使用します。</string>
+    <string name="mapbox_attribution_telemetry_message_disabled">匿名の使用状況データを提供することで、OpenStreetMap と Mapbox の地図をより良くすることができます。</string>
 </resources>

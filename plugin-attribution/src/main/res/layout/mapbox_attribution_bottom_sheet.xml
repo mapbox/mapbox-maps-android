@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Root layout for AttributionSheetView.
+  Attribution item rows are added programmatically to @id/mapbox_attribution_items_container.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?android:attr/colorBackground">
+
+    <!-- Header row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/mapbox_attribution_sheet_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mapbox_attributionsDialogTitle"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/mapbox_attribution_close_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/mapbox_ic_close"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/mapbox_attribution_close_button_description"
+            android:padding="8dp" />
+
+    </LinearLayout>
+
+    <!-- Separator -->
+    <View
+        android:id="@+id/mapbox_attribution_header_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px" />
+
+    <!-- Scrollable attribution item rows, built at runtime -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/mapbox_attribution_items_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+    <!-- Bottom gap; AttributionSheetView adds the system bar inset to it. -->
+    <View
+        android:id="@+id/mapbox_attribution_bottom_inset"
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+</LinearLayout>

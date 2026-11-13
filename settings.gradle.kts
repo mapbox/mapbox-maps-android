@@ -32,6 +32,7 @@ include(
   ":plugin-annotation",
   ":plugin-attribution",
   ":plugin-compass",
+  ":plugin-consolidatedattribution",
   ":plugin-gestures",
   ":plugin-indoorselector",
   ":plugin-lifecycle",
