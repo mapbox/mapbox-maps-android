@@ -11,8 +11,21 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 11.35.0
 
+* Fix map-aligned icons (such as road and oneway arrows) shimmering at high pitch.
+* Disable OpenGL persistent buffer mapping on Bifrost Mali GPUs (G31, G51, G52, G71, G72, G76) and older.
+* Fix a thread leak that could occur when restarting the location provider while the previous one was still stopping.
+
+## 💫️ Other
+* Update the vendored brotli library to v1.2.1 to address a security vulnerability.
+
+
+# 11.35.0 November 13, 2026
 ## Bug fixes 🐞
 * Fix the overview viewport state occasionally producing incorrect camera framing when requested before the map style has loaded, e.g. right at map startup.
+
+## Dependencies
+* Update gl-native to [v11.35.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.0), common to [v24.35.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.0).
+
 
 # 11.35.0-rc.1 November 02, 2026
 
