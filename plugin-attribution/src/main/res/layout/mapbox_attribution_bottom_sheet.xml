@@ -36,7 +36,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/mapbox_ic_close"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/mapbox_attribution_close_button_description"
             android:padding="8dp" />
 
