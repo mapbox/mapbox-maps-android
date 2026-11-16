@@ -6,13 +6,23 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.36.0-rc.1 November 16, 2026
+
 ## Features ✨ and improvements 🏁
 * Add the experimental `maps-consolidatedattribution` plugin. It shows the Mapbox logo and the data attributions in one pill, which replaces the logo and attribution ornaments while enabled. To turn it on, add `Plugin.Mapbox(Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID)` to `MapInitOptions.plugins` and set `consolidatedAttribution.enabled = true`. In Compose, put `ConsolidatedAttribution()` in the `attribution` slot and leave `logo` empty.
 * The attribution button now opens a bottom sheet with the data credits and the telemetry and geofencing switches, instead of a dialog. In Compose, `Attribution`'s `telemetryDialog` and `geofencingConsentDialog` are now used only with a custom `attributionDialog`. Pass `AttributionDialog` there to keep the previous flow.
+* Add signed normalized type wrappers that hold finite values in [-1, 1].
+* Add an experimental `positionPoint` to `CameraOptions` and `CameraState` to control where the center appears within the padded viewport, with pitch and zoom pivoting at that point.
 
 ## Bug fixes 🐞
 * [compose] Avoid expensive logging when updating source, terrain, atmosphere, rain or snow properties.
 * Fix `flyTo` freezing the camera center when the target padding collapses the viewport. A near-collapsed padding (off by a fraction of a pixel) is now treated the same as an exactly collapsed one.
+* Fix symbols with zoom- and feature-dependent text or icon size being drawn too large between zoom stops when using a global scale factor.
+* Fix a bug where chained `let` and `var` expressions cause the renderer to hang.
+
+## Dependencies
+* Update gl-native to [v11.36.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0-rc.1), common to [v24.36.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0-rc.1).
+
 
 # 11.35.0 November 13, 2026
 ## Features ✨ and improvements 🏁

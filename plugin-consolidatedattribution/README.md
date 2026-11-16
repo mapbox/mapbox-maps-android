@@ -24,7 +24,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-consolidatedattribution:11.36.0'
+  implementation 'com.mapbox.plugin:maps-consolidatedattribution:11.36.0-rc.1'
 }
 ```
 
