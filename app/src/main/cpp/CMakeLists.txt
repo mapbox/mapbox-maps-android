@@ -21,11 +21,11 @@ target_compile_options(
     PRIVATE
         # Variable-length arrays are a non-standard extension sized from a driver-supplied value.
         -Werror=vla
-        $<$<CONFIG:Release>:-Oz>
-        $<$<CONFIG:Release>:-Qunused-arguments>
-        $<$<CONFIG:Release>:-flto>
-        $<$<CONFIG:Release>:-fvisibility=hidden>
-        $<$<CONFIG:Release>:-fvisibility-inlines-hidden>)
+        $<$<NOT:$<CONFIG:Debug>>:-Oz>
+        $<$<NOT:$<CONFIG:Debug>>:-Qunused-arguments>
+        $<$<NOT:$<CONFIG:Debug>>:-flto>
+        $<$<NOT:$<CONFIG:Debug>>:-fvisibility=hidden>
+        $<$<NOT:$<CONFIG:Debug>>:-fvisibility-inlines-hidden>)
 
 # Use the same linker options as in mapbox-gl
 target_link_libraries(
@@ -33,11 +33,11 @@ target_link_libraries(
     PRIVATE
         GLESv2
         log
-        $<$<CONFIG:Release>:-Wl,--gc-sections>
-        $<$<CONFIG:Release>:-Wl,--icf=all>
-        $<$<CONFIG:Release>:-flto>
-        $<$<CONFIG:Release>:-fuse-ld=lld>
-        $<$<CONFIG:Release>:-Wl,--lto-new-pass-manager>
-        $<$<CONFIG:Release>:-Wl,--pack-dyn-relocs=android>
-        $<$<CONFIG:Release>:-Wl,--lto-O3>
+        $<$<NOT:$<CONFIG:Debug>>:-Wl,--gc-sections>
+        $<$<NOT:$<CONFIG:Debug>>:-Wl,--icf=all>
+        $<$<NOT:$<CONFIG:Debug>>:-flto>
+        $<$<NOT:$<CONFIG:Debug>>:-fuse-ld=lld>
+        $<$<NOT:$<CONFIG:Debug>>:-Wl,--lto-new-pass-manager>
+        $<$<NOT:$<CONFIG:Debug>>:-Wl,--pack-dyn-relocs=android>
+        $<$<NOT:$<CONFIG:Debug>>:-Wl,--lto-O3>
 )
