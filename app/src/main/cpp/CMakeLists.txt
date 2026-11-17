@@ -37,7 +37,6 @@ target_link_libraries(
         $<$<NOT:$<CONFIG:Debug>>:-Wl,--icf=all>
         $<$<NOT:$<CONFIG:Debug>>:-flto>
         $<$<NOT:$<CONFIG:Debug>>:-fuse-ld=lld>
-        $<$<NOT:$<CONFIG:Debug>>:-Wl,--lto-new-pass-manager>
         $<$<NOT:$<CONFIG:Debug>>:-Wl,--pack-dyn-relocs=android>
         $<$<NOT:$<CONFIG:Debug>>:-Wl,--lto-O3>
 )
