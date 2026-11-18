@@ -244,6 +244,25 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1), common to [v24.32.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.0-rc.1).
 
 
+# 11.31.2 November 18, 2026
+## Dependencies
+* Update gl-native to [v11.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2), common to [v24.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2).
+
+## Breaking changes ⚠️
+* Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
+* Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
+* Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
+
+## Bug fixes 🐞
+* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
+* Fix a bug where point annotations jitter when zooming out
+* Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
+* Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
+* Fix stale layer geometry cache on readding view annotations
+* Fix view annotations stuck to stale cached layer's geometry
+
+## Features ✨ and improvements 🏁
+* Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
 # 11.31.1 September 25, 2026
 ## Bug fixes 🐞
 * Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
