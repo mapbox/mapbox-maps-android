@@ -106,6 +106,14 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.35.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.0-rc.1), common to [v24.35.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.0-rc.1).
 
 
+# 11.34.3 November 18, 2026
+## Dependencies
+* Update gl-native to [v11.34.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.3), common to [v24.34.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.3).
+
+
+## Bug fixes 🐞
+* Disable OpenGL persistent buffer mapping on Bifrost Mali GPUs (G31, G51, G52, G71, G72, G76) and older.
+
 # 11.34.2 November 03, 2026
 ## Dependencies
 * Update gl-native to [v11.34.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.2), common to [v24.34.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.2).
