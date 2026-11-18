@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.view.updateLayoutParams
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -49,13 +50,28 @@ class ViewAnnotationCollisionObservingActivity : AppCompatActivity() {
   private lateinit var mapView: MapView
   private var redShifted = false
 
+  /**
+   * Shows where the avoid region is. The region itself draws nothing, so without this it is not
+   * possible to see what the red box is being moved into. Only a reading aid: it is added above
+   * the map, takes no part in collision, and is not touchable.
+   */
+  private lateinit var regionOverlay: View
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
     pin = TwoBoxPinView(this)
 
+    regionOverlay = View(this).apply {
+      setBackgroundColor(REGION_OVERLAY_COLOR)
+      isClickable = false
+      visibility = View.GONE
+      layoutParams = FrameLayout.LayoutParams(0, 0, Gravity.TOP or Gravity.START)
+    }
+
     val root = FrameLayout(this)
     root.addView(mapView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    root.addView(regionOverlay)
     root.addView(buildControls())
     setContentView(root)
 
@@ -123,9 +139,30 @@ class ViewAnnotationCollisionObservingActivity : AppCompatActivity() {
     toggle("Remove red box (falls back to full bounds)") { pin.setRedRemoved(it) }
     toggle("Red box GONE (stops colliding)") { pin.setRedGone(it) }
     toggle("Avoid region below red box") { on ->
-      mapView.viewAnnotationManager.viewAnnotationAvoidRegions = if (on) avoidRegionBelowRedBox() else emptyList()
+      val regions = if (on) avoidRegionBelowRedBox() else emptyList()
+      mapView.viewAnnotationManager.viewAnnotationAvoidRegions = regions
+      showRegionOverlay(regions.firstOrNull())
     }
     return panel
+  }
+
+  /**
+   * Draws [box] over the map so the region is visible, or hides the overlay when [box] is null.
+   * The region is already in screen coordinates and the map fills the root, so the numbers can be
+   * used directly as margins.
+   */
+  private fun showRegionOverlay(box: ScreenBox?) {
+    if (box == null) {
+      regionOverlay.visibility = View.GONE
+      return
+    }
+    regionOverlay.updateLayoutParams<FrameLayout.LayoutParams> {
+      width = (box.max.x - box.min.x).toInt()
+      height = (box.max.y - box.min.y).toInt()
+      leftMargin = box.min.x.toInt()
+      topMargin = box.min.y.toInt()
+    }
+    regionOverlay.visibility = View.VISIBLE
   }
 
   /**
@@ -177,6 +214,9 @@ class ViewAnnotationCollisionObservingActivity : AppCompatActivity() {
       """{"version":8,"glyphs":"mapbox://fonts/mapbox/{fontstack}/{range}.pbf","sources":{},"layers":[]}"""
     const val REGION_GAP_DP = 5
     const val REGION_HEIGHT_DP = 30
+
+    // Red at 33 percent, so the grid stays readable through the region overlay.
+    const val REGION_OVERLAY_COLOR = 0x55FF0000
 
     // Black at 60 percent, the same as the iOS example's control panel.
     const val PANEL_COLOR = 0x99000000.toInt()

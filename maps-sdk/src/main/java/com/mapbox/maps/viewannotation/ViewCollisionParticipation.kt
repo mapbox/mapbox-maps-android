@@ -10,6 +10,14 @@ import com.mapbox.maps.R
  * When at least one subview is marked, only marked subviews' frames are used
  * as collision boxes. When none are marked, the full annotation bounds are used.
  *
+ * The boxes always count for collision between view annotations. They count against the style's
+ * own symbols only when the annotation sets `enableSymbolLayerCollision(true)`, which is what
+ * lets an annotation hide a label underneath it.
+ *
+ * Marking is ignored when the annotation's own `ViewAnnotationOptions` carry `collisionBoxes`.
+ * Those boxes are used instead, and they keep being used: once options have supplied them, this
+ * annotation stops reading marked subviews, even if a later update leaves them unset.
+ *
  * A view removed from the hierarchy or with visibility `GONE` stops colliding.
  * A view with visibility `INVISIBLE` keeps its layout and still collides.
  *

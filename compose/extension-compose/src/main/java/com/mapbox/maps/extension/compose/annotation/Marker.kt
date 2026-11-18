@@ -39,7 +39,7 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
@@ -145,6 +145,8 @@ public fun Marker(
   val stableOptions = remember(point, offsetAdjustment) {
     viewAnnotationOptions {
       geometry(point)
+      // Collide with the pin and text bounding boxes instead of the fixed 200dp container.
+      enableSymbolLayerCollision(true)
       annotationAnchor {
         anchor(ViewAnnotationAnchor.TOP)
         offsetY(120.0 + offsetAdjustment)
@@ -160,10 +162,10 @@ public fun Marker(
     val view = LocalView.current
     val disappearConfig = animationState?.disappearConfig
 
-    // Cache the ComposeView reference to avoid walking the parent tree on every composition
+    // Cache the host view reference to avoid walking the parent tree on every composition
     val composeView = remember(view) {
       var targetView: android.view.View? = view
-      while (targetView != null && targetView !is ComposeView) {
+      while (targetView != null && targetView !is AbstractComposeView) {
         targetView = targetView.parent as? android.view.View
       }
       targetView
@@ -241,6 +243,7 @@ private fun MarkerImage(
 @Composable
 private fun MarkerText(
   text: String,
+  modifier: Modifier = Modifier,
   fontColor: Color = Color.Black,
   fontStrokeColor: Color = Color.White,
   fontSize: TextUnit = 15.sp,
@@ -286,7 +289,7 @@ private fun MarkerText(
   val actualHeight = with(density) { textLayout.height.toDp() }
 
   Canvas(
-    Modifier
+    modifier
       .width(actualWidth)
       .height(actualHeight)
   ) {
@@ -389,14 +392,16 @@ private fun MarkerContent(
       ) {
         // Animated pin
         Box(
-          modifier = Modifier.graphicsLayer {
-            scaleX = animScale
-            scaleY = animScale
-            rotationZ = animRotation
-            alpha = animAlpha
-            transformOrigin = TransformOrigin(0.5f, 1f)
-            clip = false
-          }
+          modifier = Modifier
+            .mbxViewAnnotationCollisionBox()
+            .graphicsLayer {
+              scaleX = animScale
+              scaleY = animScale
+              rotationZ = animRotation
+              alpha = animAlpha
+              transformOrigin = TransformOrigin(0.5f, 1f)
+              clip = false
+            }
         ) {
           MarkerImage(color, innerColor, stroke)
 
@@ -411,7 +416,7 @@ private fun MarkerContent(
         }
 
         text?.let {
-          MarkerText(text)
+          MarkerText(text, Modifier.mbxViewAnnotationCollisionBox())
         }
       }
     }

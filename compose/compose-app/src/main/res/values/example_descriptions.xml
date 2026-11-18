@@ -9,6 +9,9 @@
     <string name="description_polygon_annotation">Add PolygonAnnotation on the Map</string>
     <string name="description_polyline_annotation">Add PolylineAnnotation on the Map</string>
     <string name="description_view_annotation">Add ViewAnnotation on the Map</string>
+    <string name="description_view_annotation_collision">Mark parts of a compose view annotation as collision boxes, with the collision debug overlay on</string>
+    <string name="description_view_annotation_collision_transform">See which transforms of a marked composable are reported as a collision box and which are not</string>
+    <string name="description_view_annotation_collision_observing">Marking, moving, hiding and removing parts of a compose annotation update its collision boxes on their own</string>
     <string name="description_dynamic_view_annotation">Showcase using dynamic ViewAnnotation</string>
     <string name="description_map_viewport_animation">Use map viewport animations</string>
     <string name="description_map_viewport_state_predefined_animators">Use incremental camera animations (rotateBy, moveBy, pitchBy, scaleBy) via MapViewportState</string>

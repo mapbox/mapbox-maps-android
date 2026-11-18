@@ -921,6 +921,7 @@ public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationMan
 	public abstract fun removeAllViewAnnotations ()V
 	public abstract fun removeOnViewAnnotationUpdatedListener (Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;)V
 	public abstract fun removeViewAnnotation (Landroid/view/View;)Z
+	public abstract fun setCollisionBoxes (Landroid/view/View;Ljava/util/List;)Z
 	public abstract fun setViewAnnotationAvoidLayers (Ljava/util/HashSet;)V
 	public abstract fun setViewAnnotationAvoidRegions (Ljava/util/List;)V
 	public abstract fun setViewAnnotationUpdateMode (Lcom/mapbox/maps/viewannotation/ViewAnnotationUpdateMode;)V

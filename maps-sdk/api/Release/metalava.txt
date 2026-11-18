@@ -871,6 +871,7 @@ package com.mapbox.maps.viewannotation {
     method public void removeAllViewAnnotations();
     method public void removeOnViewAnnotationUpdatedListener(com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener listener);
     method public boolean removeViewAnnotation(android.view.View view);
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public boolean setCollisionBoxes(android.view.View view, java.util.List<com.mapbox.maps.ScreenBox> boxes);
     method public void setViewAnnotationAvoidLayers(java.util.HashSet<java.lang.String>);
     method public void setViewAnnotationAvoidRegions(java.util.List<com.mapbox.maps.ScreenBox>);
     method public void setViewAnnotationUpdateMode(com.mapbox.maps.viewannotation.ViewAnnotationUpdateMode mode);

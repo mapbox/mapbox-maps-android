@@ -13,7 +13,6 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
@@ -53,6 +52,8 @@ internal class ViewAnnotationManagerImpl(
     val id: String = UUID.randomUUID().toString(),
     // last collision boxes pushed to core; used to skip no-op updates
     var lastPushedCollisionBoxes: List<ScreenBox>? = null,
+    // boxes handed in via [setCollisionBoxes]; when set they replace the child View walk
+    var overrideCollisionBoxes: List<ScreenBox>? = null,
     // collision-frame overlays currently attached to [view]'s ViewOverlay; null when debug is off
     var debugFrames: List<Drawable>? = null,
     // true if the app supplied [ViewAnnotationOptions.collisionBoxes], disabling auto-collection
@@ -715,6 +716,10 @@ internal class ViewAnnotationManagerImpl(
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
   }
 
+  // Compose hosts an annotation's content in a tagged view; see [measureView].
+  private val View.isComposeAnnotation: Boolean
+    get() = getTag(R.id.composeView) != null
+
   private fun measureView(view: View) {
     val measureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
     val isComposeView = view.getTag(R.id.composeView) != null
@@ -764,7 +769,16 @@ internal class ViewAnnotationManagerImpl(
     // Core is not placing this annotation, the SDK owns its visibility until it does.
     if (viewAnnotation.hiddenByPlacement) {
       // The app may show the view meanwhile; it would be drawn at a stale position until the next placement.
-      if (viewAnnotation.view.isVisible) {
+      // Each kind of annotation is held hidden the same way it was hidden in
+      // [positionAnnotationViews]: a compose annotation stays visible and fully transparent, so that it
+      // keeps laying out and keeps reporting corrected collision boxes, and any other view is made
+      // invisible. Using View.INVISIBLE here for a compose annotation would stop it drawing, and with
+      // that stop the collision boxes it still owes the map.
+      if (viewAnnotation.view.isComposeAnnotation) {
+        if (viewAnnotation.view.alpha != 0f) {
+          viewAnnotation.view.alpha = 0f
+        }
+      } else if (viewAnnotation.view.isVisible) {
         viewAnnotation.view.visibility = View.INVISIBLE
       }
       return@OnDrawListener
@@ -845,9 +859,24 @@ internal class ViewAnnotationManagerImpl(
       if (subviewDebugFrames) refreshDebugFrames(viewAnnotation)
     }
 
+  @MapboxExperimental
+  override fun setCollisionBoxes(view: View, boxes: List<ScreenBox>): Boolean {
+    val viewAnnotation = viewAnnotations.values.find { it.view == view } ?: return false
+    viewAnnotation.overrideCollisionBoxes = boxes
+    val builder = ViewAnnotationOptions.Builder()
+    if (updateCollisionBoxes(builder, viewAnnotation)) {
+      getValue(mapboxMap.updateViewAnnotation(viewAnnotation.id, builder.build()))
+      if (subviewDebugFrames) refreshDebugFrames(viewAnnotation)
+    }
+    return true
+  }
+
   private fun updateCollisionBoxes(builder: ViewAnnotationOptions.Builder, viewAnnotation: ViewAnnotation): Boolean {
     if (!viewAnnotation.userCollisionBoxes) {
-      val boxes = collectCollisionBoxes(viewAnnotation.view)
+      // Boxes handed in by a UI layer the SDK cannot walk win over the child View walk.
+      // Kept as they are: an empty list means "go back to the whole annotation", which is not
+      // the same as null ("nothing to report, leave core alone").
+      val boxes = viewAnnotation.overrideCollisionBoxes ?: collectCollisionBoxes(viewAnnotation.view)
       if (boxes != viewAnnotation.lastPushedCollisionBoxes) {
         viewAnnotation.lastPushedCollisionBoxes = boxes
         // Core treats null as "no change"; an explicit empty list reverts to full bounds.
@@ -910,6 +939,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun collectCollisionBoxes(root: View): List<ScreenBox>? {
+    // Compose content is never walked: its boxes come from setCollisionBoxes.
     if (root.getTag(R.id.composeView) != null) return null
     if (root !is ViewGroup) return null
     val boxes = mutableListOf<ScreenBox>()
@@ -979,10 +1009,18 @@ internal class ViewAnnotationManagerImpl(
           }
         }
 
-        // The annotation is placeable again; if the SDK still keeps it INVISIBLE, restore the app's old visibility.
+        // The annotation is placeable again; undo whichever way it was hidden.
         if (viewAnnotation.hiddenByPlacement) {
           viewAnnotation.hiddenByPlacement = false
-          if (viewAnnotation.view.visibility == View.INVISIBLE) {
+          if (viewAnnotation.view.isComposeAnnotation) {
+            viewAnnotation.view.alpha = 1f
+            // A compose annotation is hidden by its alpha, so normally there is no visibility to undo.
+            // Undo it anyway: if anything else made the host invisible while it was hidden, restoring
+            // the alpha alone would leave it invisible with no way back.
+            if (viewAnnotation.view.visibility == View.INVISIBLE) {
+              viewAnnotation.view.visibility = viewAnnotation.visibilityBeforeHiding
+            }
+          } else if (viewAnnotation.view.visibility == View.INVISIBLE) {
             viewAnnotation.view.visibility = viewAnnotation.visibilityBeforeHiding
           }
           updateVisibilityAndNotifyUpdateListeners(
@@ -1053,7 +1091,15 @@ internal class ViewAnnotationManagerImpl(
           // detaching would leave stale boxes in core and the annotation could stay hidden.
           viewAnnotation.visibilityBeforeHiding = viewAnnotation.view.visibility
           viewAnnotation.hiddenByPlacement = true
-          viewAnnotation.view.visibility = View.INVISIBLE
+          if (viewAnnotation.view.isComposeAnnotation) {
+            // Compose measures and places its content as part of drawing, and an INVISIBLE view is
+            // never drawn. Hiding it that way stops the collision boxes being reported, so the box
+            // that made this annotation unplaceable could never be corrected and the annotation
+            // would stay hidden. Keep it drawn and fully transparent instead.
+            viewAnnotation.view.alpha = 0f
+          } else {
+            viewAnnotation.view.visibility = View.INVISIBLE
+          }
         } else {
           viewAnnotationsLayout.removeView(viewAnnotation.view)
         }

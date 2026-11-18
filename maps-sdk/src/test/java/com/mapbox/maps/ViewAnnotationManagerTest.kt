@@ -1076,6 +1076,155 @@ class ViewAnnotationManagerTest {
 
   @OptIn(MapboxExperimental::class)
   @Test
+  fun handedOverCollisionBoxesWinOverWalkingChildren() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every {
+      mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
+    } returns ExpectedFactory.createNone()
+    val addSlot = slot<ViewAnnotationOptions>()
+    val override = listOf(
+      ScreenBox(ScreenCoordinate(4.0, 6.0), ScreenCoordinate(24.0, 16.0)),
+      ScreenBox(ScreenCoordinate(30.0, 40.0), ScreenCoordinate(70.0, 60.0)),
+    )
+
+    // A marked child is present as well: the handed-over boxes must win over the child walk.
+    val child = mockCollisionChild(width = 50, height = 30)
+    val root = mockAnnotationRoot(childViews = listOf(child))
+
+    captureLayoutListener(
+      root,
+      viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) },
+      addOptionsSlot = addSlot
+    )
+    assertEquals(1, addSlot.captured.collisionBoxes!!.size)
+
+    viewAnnotationManager.setCollisionBoxes(root, override)
+
+    assertEquals(1, capturedUpdates.size)
+    assertEquals(override, capturedUpdates[0].collisionBoxes)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun collisionBoxesOnAComposeRootComeOnlyFromTheCaller() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every {
+      mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
+    } returns ExpectedFactory.createNone()
+    val addSlot = slot<ViewAnnotationOptions>()
+    val override = listOf(ScreenBox(ScreenCoordinate(1.0, 2.0), ScreenCoordinate(11.0, 12.0)))
+
+    // A compose root is never walked for child views, so the caller is the only source. The
+    // marked child is what makes that worth asserting: without the early return the walk would
+    // find it and push its box.
+    val root = mockAnnotationRoot(childViews = listOf(mockCollisionChild()))
+    every { root.getTag(R.id.composeView) } returns ""
+    // A compose root is attached to the layout for measuring, then detached again.
+    every { viewAnnotationsLayout.addView(any<View>()) } just Runs
+
+    captureLayoutListener(
+      root,
+      viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) },
+      addOptionsSlot = addSlot
+    )
+    assertNull(addSlot.captured.collisionBoxes)
+
+    viewAnnotationManager.setCollisionBoxes(root, override)
+
+    assertEquals(override, capturedUpdates[0].collisionBoxes)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun anEmptyBoxListRevertsToWholeAnnotation() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every {
+      mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
+    } returns ExpectedFactory.createNone()
+
+    val override = listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(10.0, 10.0)))
+    val root = mockAnnotationRoot()
+    every { root.getTag(R.id.composeView) } returns ""
+    // A compose root is attached to the layout for measuring, then detached again.
+    every { viewAnnotationsLayout.addView(any<View>()) } just Runs
+
+    captureLayoutListener(root, viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) })
+    viewAnnotationManager.setCollisionBoxes(root, override)
+    assertEquals(1, capturedUpdates[0].collisionBoxes!!.size)
+
+    // The last marked composable is gone. An explicit empty list has to be sent,
+    // because the map reads null as "no change" and would keep the old box.
+    viewAnnotationManager.setCollisionBoxes(root, emptyList())
+
+    assertEquals(2, capturedUpdates.size)
+    assertEquals(emptyList<ScreenBox>(), capturedUpdates[1].collisionBoxes)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun setCollisionBoxesPushesWithoutALayoutPass() {
+    val capturedUpdates = mutableListOf<ViewAnnotationOptions>()
+    every {
+      mapboxMap.updateViewAnnotation(any(), capture(capturedUpdates))
+    } returns ExpectedFactory.createNone()
+    val addSlot = slot<ViewAnnotationOptions>()
+
+    val root = mockAnnotationRoot()
+    every { root.getTag(R.id.composeView) } returns ""
+    every { viewAnnotationsLayout.addView(any<View>()) } just Runs
+
+    captureLayoutListener(
+      root,
+      viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) },
+      addOptionsSlot = addSlot
+    )
+    assertNull(addSlot.captured.collisionBoxes)
+
+    // Inside a compose map no layout pass ever happens, so the caller hands the boxes over.
+    val override = listOf(
+      ScreenBox(ScreenCoordinate(2.0, 3.0), ScreenCoordinate(12.0, 13.0)),
+      ScreenBox(ScreenCoordinate(4.0, 5.0), ScreenCoordinate(14.0, 15.0)),
+    )
+    viewAnnotationManager.setCollisionBoxes(root, override)
+
+    assertEquals(1, capturedUpdates.size)
+    assertEquals(override, capturedUpdates[0].collisionBoxes)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun setCollisionBoxesSendsNothingWhenTheBoxesDidNotChange() {
+    every {
+      mapboxMap.updateViewAnnotation(any(), any())
+    } returns ExpectedFactory.createNone()
+
+    val override = listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(10.0, 10.0)))
+    val root = mockAnnotationRoot()
+    every { root.getTag(R.id.composeView) } returns ""
+    every { viewAnnotationsLayout.addView(any<View>()) } just Runs
+
+    captureLayoutListener(root, viewAnnotationOptions { geometry(DEFAULT_GEOMETRY) })
+
+    viewAnnotationManager.setCollisionBoxes(root, override)
+    clearMocks(mapboxMap, answers = false, recordedCalls = true, verificationMarks = true)
+
+    // The same list again: nothing new to tell the map.
+    viewAnnotationManager.setCollisionBoxes(root, override)
+
+    verify(exactly = 0) { mapboxMap.updateViewAnnotation(any(), any()) }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun setCollisionBoxesIgnoresAViewThatIsNotAnAnnotation() {
+    // False tells the caller nothing was recorded, so it can hand the boxes over again later.
+    assertFalse(viewAnnotationManager.setCollisionBoxes(mockk(), emptyList()))
+
+    verify(exactly = 0) { mapboxMap.updateViewAnnotation(any(), any()) }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
   fun viewAnnotationAvoidRegionsGetterDelegatesToMap() {
     val regions = listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(100.0, 100.0)))
     every { mapboxMap.viewAnnotationAvoidRegions } returns regions
@@ -1232,6 +1381,93 @@ class ViewAnnotationManagerTest {
 
     // The view stays attached with a stale translation, so the SDK hides it again until core places it.
     assertEquals(View.INVISIBLE, root.visibility)
+  }
+
+  /**
+   * The compose counterpart of [addPlaceableAnnotation]. A compose annotation is held hidden by
+   * its alpha rather than by its visibility, so the test needs both, and it needs the per frame
+   * draw listener that keeps a hidden annotation hidden. Returns the identifier the manager
+   * generated along with that listener.
+   */
+  @OptIn(MapboxExperimental::class)
+  private fun addPlaceableComposeAnnotation(
+    root: FrameLayout
+  ): Pair<String, ViewTreeObserver.OnDrawListener> {
+    every { root.getTag(R.id.composeView) } returns ""
+    // A compose root is attached to the layout for measuring, then detached again.
+    every { viewAnnotationsLayout.addView(any<View>()) } just Runs
+    every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
+
+    var alpha = 1f
+    every { root.alpha } answers { alpha }
+    every { root.alpha = any() } answers { alpha = firstArg() }
+
+    val attachSlot = slot<View.OnAttachStateChangeListener>()
+    every { root.addOnAttachStateChangeListener(capture(attachSlot)) } just Runs
+    val drawSlot = slot<ViewTreeObserver.OnDrawListener>()
+    every { viewTreeObserver.addOnDrawListener(capture(drawSlot)) } just Runs
+
+    val identifier = addPlaceableAnnotation(root)
+    attachSlot.captured.onViewAttachedToWindow(root)
+
+    // Boxes of its own are what keeps a dropped annotation attached instead of removed.
+    viewAnnotationManager.setCollisionBoxes(
+      root,
+      listOf(ScreenBox(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(10.0, 10.0)))
+    )
+    return identifier to drawSlot.captured
+  }
+
+  @Test
+  fun aComposeAnnotationDroppedByTheMapIsHeldTransparentAndNotInvisible() {
+    val root = mockAnnotationRoot()
+    val (identifier, onDraw) = addPlaceableComposeAnnotation(root)
+
+    pushPositions(identifier)
+    pushPositions()
+    assertEquals(0f, root.alpha, 0f)
+
+    // The draw listener runs on every frame for as long as the map refuses to place it.
+    onDraw.onDraw()
+    onDraw.onDraw()
+
+    // Making it invisible here would stop compose drawing, and compose measures and places as
+    // part of drawing: the box that made this annotation unplaceable could never be corrected.
+    assertEquals(View.VISIBLE, root.visibility)
+    assertEquals(0f, root.alpha, 0f)
+  }
+
+  @Test
+  fun aComposeAnnotationDroppedByTheMapIsShownAgainWhenItIsPlacedAgain() {
+    val root = mockAnnotationRoot()
+    val (identifier, onDraw) = addPlaceableComposeAnnotation(root)
+
+    pushPositions(identifier)
+    pushPositions()
+    onDraw.onDraw()
+    assertEquals(0f, root.alpha, 0f)
+
+    pushPositions(identifier)
+
+    assertEquals(1f, root.alpha, 0f)
+    assertEquals(View.VISIBLE, root.visibility)
+  }
+
+  @Test
+  fun aComposeAnnotationMadeInvisibleWhileDroppedIsStillShownAgain() {
+    val root = mockAnnotationRoot()
+    val (identifier, _) = addPlaceableComposeAnnotation(root)
+
+    pushPositions(identifier)
+    pushPositions()
+
+    // Something other than the placement code made the host invisible while it was hidden.
+    // Restoring the alpha on its own would leave it invisible with no way back.
+    root.visibility = View.INVISIBLE
+    pushPositions(identifier)
+
+    assertEquals(View.VISIBLE, root.visibility)
+    assertEquals(1f, root.alpha, 0f)
   }
 
   private companion object {

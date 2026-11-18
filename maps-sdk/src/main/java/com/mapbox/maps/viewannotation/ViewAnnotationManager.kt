@@ -2,6 +2,7 @@ package com.mapbox.maps.viewannotation
 
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.annotation.RestrictTo
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.AnnotatedLayerFeature
@@ -252,6 +253,27 @@ interface ViewAnnotationManager {
     pitch: Double? = null,
     result: (CameraOptions) -> Unit
   )
+
+  /**
+   * Use [boxes] as the collision boxes of [view] instead of looking for marked subviews, and send
+   * them to the map straight away.
+   *
+   * This exists for UI layers the SDK cannot walk, such as compose content, where the marked parts
+   * are not Android views. Such a layer reports the boxes itself, in coordinates relative to the
+   * annotation's top-left corner.
+   *
+   * An empty list means the whole annotation is the collision box again.
+   *
+   * Sends nothing to the map if the boxes did not change.
+   *
+   * @param view the view annotation the boxes belong to.
+   * @param boxes the collision boxes, relative to the annotation's top-left corner.
+   * @return false if [view] is not a view annotation, in which case nothing was recorded and the
+   *   caller should hand the boxes over again once the annotation has been added.
+   */
+  @MapboxExperimental
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  fun setCollisionBoxes(view: View, boxes: List<ScreenBox>): Boolean
 
   /**
    * Static methods and variables.

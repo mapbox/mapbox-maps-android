@@ -1,5 +1,7 @@
 package com.mapbox.maps.extension.compose.annotation
 
+import android.content.Context
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -7,14 +9,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeNode
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxExperimental
@@ -147,7 +151,7 @@ internal class ViewAnnotationNode(
     // cleanup (so it removes the observer and releases the reference) and call disposeComposition()
     // ourselves — the role the observer would have played on ON_DESTROY. We force the strategy
     // cleanup by installing a new no-op EmptyStrategy, which triggers the old strategy's disposer.
-    (view as? ComposeView)?.apply {
+    (view as? AbstractComposeView)?.apply {
       setViewCompositionStrategy(EmptyStrategy)
       disposeComposition()
     }
@@ -159,7 +163,7 @@ internal class ViewAnnotationNode(
  * Composable function to add a [ViewAnnotation] to the Map.
  *
  * @param options Various options needed for displaying view annotation.
- * @param modifier Modifier that will be applied to the [ComposeView] where the view annotation is created.
+ * @param modifier Modifier that will be applied to the view where the view annotation is created.
  * @param onUpdatedListener A listener to be invoked when the [ViewAnnotation] is updated.
  * @param content The content to draw in the [ViewAnnotation]
  */
@@ -180,7 +184,7 @@ public fun ViewAnnotation(
       val viewAnnotationManager =
         mapApplier?.mapView?.viewAnnotationManager ?: error("Error adding view annotation")
 
-      val composeView = ComposeView(mapApplier.mapView.context).apply {
+      val composeView = ViewAnnotationHostView(mapApplier.mapView.context).apply {
         this.layoutParams = ViewGroup.LayoutParams(
           FrameLayout.LayoutParams.WRAP_CONTENT,
           FrameLayout.LayoutParams.WRAP_CONTENT
@@ -196,6 +200,11 @@ public fun ViewAnnotation(
         // So that it preserves CompositionLocals and propagate invalidations.
         setParentCompositionContext(currentComposeContext)
         setContent {
+          // Collects the bounds of composables marked with [mbxViewAnnotationCollisionBox] and
+          // hands them to the SDK as the collision boxes of this annotation.
+          val collisionBoxes = remember {
+            ViewAnnotationCollisionBoxRegistry(this, viewAnnotationManager)
+          }
           Box(
               Modifier
                   .then(modifier)
@@ -203,6 +212,9 @@ public fun ViewAnnotation(
                   .wrapContentSize(unbounded = true)
                   .graphicsLayer(clip = false)
                   .onGloballyPositioned { coordinates ->
+                      // Marked composables are measured against the root of the compose tree,
+                      // which the registry resolves from the coordinates handed over here.
+                      collisionBoxes.setRootCoordinates(coordinates)
                       viewAnnotationManager.updateViewAnnotation(
                           this,
                           with(currentOptions.value) {
@@ -220,7 +232,11 @@ public fun ViewAnnotation(
                     requestLayout()
                   }
           ) {
-            content()
+            CompositionLocalProvider(
+              LocalViewAnnotationCollisionBoxRegistry provides collisionBoxes
+            ) {
+              content()
+            }
           }
         }
       }
@@ -251,6 +267,51 @@ public fun ViewAnnotation(
       }
     }
   )
+}
+
+/**
+ * The view that holds the compose content of one view annotation.
+ *
+ * It does what `ComposeView` does, and adds one rule about touches. When the map cannot place an
+ * annotation it hides it by making this view fully transparent rather than invisible, because
+ * compose measures and places its content as part of drawing: an invisible annotation would stop
+ * reporting its collision boxes, and the box that made it unplaceable could never be corrected.
+ * A transparent view still receives touches, so while it is hidden this view passes none on and
+ * a tap reaches the map underneath, as it would if the annotation were not there.
+ *
+ * `ComposeView` itself is final, so the content handling it provides is repeated here.
+ */
+internal class ViewAnnotationHostView(context: Context) : AbstractComposeView(context) {
+
+  private val content = mutableStateOf<(@Composable () -> Unit)?>(null)
+
+  override val shouldCreateCompositionOnAttachedToWindow: Boolean
+    get() = content.value != null
+
+  fun setContent(content: @Composable () -> Unit) {
+    this.content.value = content
+    if (isAttachedToWindow) createComposition()
+  }
+
+  @Composable
+  override fun Content() {
+    content.value?.invoke()
+  }
+
+  override fun dispatchTouchEvent(event: MotionEvent): Boolean =
+    if (alpha == 0f) false else super.dispatchTouchEvent(event)
+
+  override fun setAlpha(alpha: Float) {
+    super.setAlpha(alpha)
+    // A transparent view stays in the accessibility tree, so a screen reader could still reach an
+    // annotation the map could not place and read out something nobody can see. The view has to
+    // stay in the hierarchy for compose to keep measuring it, so its subtree is hidden instead.
+    importantForAccessibility = if (alpha == 0f) {
+      IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+    } else {
+      IMPORTANT_FOR_ACCESSIBILITY_AUTO
+    }
+  }
 }
 
 /**

@@ -256,6 +256,11 @@ public final class com/mapbox/maps/extension/compose/annotation/MarkerKt {
 	public static final fun Marker-02sZxzM (Lcom/mapbox/geojson/Point;JJLandroidx/compose/ui/graphics/Color;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationCollisionBoxKt {
+	public static final fun mbxViewAnnotationCollisionBox (Landroidx/compose/ui/Modifier;Z)Landroidx/compose/ui/Modifier;
+	public static synthetic fun mbxViewAnnotationCollisionBox$default (Landroidx/compose/ui/Modifier;ZILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+}
+
 public final class com/mapbox/maps/extension/compose/annotation/ViewAnnotationKt {
 	public static final fun ViewAnnotation (Lcom/mapbox/maps/ViewAnnotationOptions;Landroidx/compose/ui/Modifier;Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }

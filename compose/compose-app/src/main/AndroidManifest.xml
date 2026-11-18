@@ -12,6 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MapboxMapCompose">
         <activity
+            android:name=".examples.annotation.ViewAnnotationCollisionObservingActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_view_annotation_collision_observing"
+            android:exported="true"
+            android:label="@string/activity_view_annotation_collision_observing"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
+        <activity
+            android:name=".examples.annotation.ViewAnnotationCollisionTransformActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_view_annotation_collision_transform"
+            android:exported="true"
+            android:label="@string/activity_view_annotation_collision_transform"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
+        <activity
             android:name=".ExampleOverviewActivity"
             android:exported="true"
             android:launchMode="singleTop">
@@ -136,6 +158,17 @@
             android:description="@string/description_view_annotation"
             android:exported="true"
             android:label="@string/activity_view_annotation"
+            android:parentActivityName=".ExampleOverviewActivity">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+        </activity>
+        <activity
+            android:name=".examples.annotation.ViewAnnotationCollisionActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:description="@string/description_view_annotation_collision"
+            android:exported="true"
+            android:label="@string/activity_view_annotation_collision"
             android:parentActivityName=".ExampleOverviewActivity">
             <meta-data
                 android:name="@string/category"

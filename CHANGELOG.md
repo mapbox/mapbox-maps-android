@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.36.0-rc.1 November 16, 2026
 
 ## Features ✨ and improvements 🏁
+* [compose] Add experimental `Modifier.mbxViewAnnotationCollisionBox` to mark parts of a `ViewAnnotation` as collision boxes, matching the SwiftUI modifier and the `View` property of the same name. When at least one composable is marked, the map uses only the marked ones instead of the whole annotation. `Marker` now marks its pin and its label and takes part in symbol layer collision, so after upgrading a `Marker` hides the map labels it covers, and it uses the shapes of its pin and label to decide that rather than its full bounds.
 * Add the experimental `maps-consolidatedattribution` plugin. It shows the Mapbox logo and the data attributions in one pill, which replaces the logo and attribution ornaments while enabled. To turn it on, add `Plugin.Mapbox(Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID)` to `MapInitOptions.plugins` and set `consolidatedAttribution.enabled = true`. In Compose, put `ConsolidatedAttribution()` in the `attribution` slot and leave `logo` empty.
 * The attribution button now opens a bottom sheet with the data credits and the telemetry and geofencing switches, instead of a dialog. In Compose, `Attribution`'s `telemetryDialog` and `geofencingConsentDialog` are now used only with a custom `attributionDialog`. Pass `AttributionDialog` there to keep the previous flow.
 * Add signed normalized type wrappers that hold finite values in [-1, 1].

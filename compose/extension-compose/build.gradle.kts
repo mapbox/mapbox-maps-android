@@ -109,6 +109,10 @@ dependencies {
     androidTestImplementation(libs.compose.uiTest)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mapbox.annotations)
+    // mockk reflects over every declared method to build a proxy, and
+    // ViewAnnotationManager.addViewAnnotation takes an AsyncLayoutInflater. Without this the
+    // class cannot be resolved on device and mocking the manager fails with NoClassDefFoundError.
+    androidTestImplementation(libs.asyncInflater)
 
     testImplementation(libs.bundles.base.dependenciesTests)
     testImplementation(mapsSdk)
