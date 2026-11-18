@@ -36,6 +36,14 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.36.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0-rc.1), common to [v24.36.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0-rc.1).
 
 
+# 11.35.1 November 18, 2026
+## Dependencies
+* Update gl-native to [v11.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1), common to [v24.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1).
+
+
+## Bug fixes 🐞
+* [compose] Avoid expensive logging when updating source, terrain, atmosphere, rain or snow properties.
+
 # 11.35.0 November 13, 2026
 ## Features ✨ and improvements 🏁
 * Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
