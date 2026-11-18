@@ -7,6 +7,7 @@ import android.view.Display
 import android.view.MotionEvent
 import android.view.Surface
 import android.view.WindowManager
+import com.mapbox.maps.coroutine.isRenderable
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
@@ -17,9 +18,11 @@ import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
+import junit.framework.Assert.assertSame
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -186,6 +189,14 @@ class MapSurfaceTest {
     val listener = MapView.OnSnapshotReady { }
     mapSurface.snapshot(listener)
     verifyOnce { mapController.snapshot(listener) }
+  }
+
+  @Test
+  fun isRenderableComesFromController() {
+    val isRenderable = MutableStateFlow(true)
+    every { mapController.isRenderable } returns isRenderable
+
+    assertSame(isRenderable, mapSurface.isRenderable)
   }
 
   @Test

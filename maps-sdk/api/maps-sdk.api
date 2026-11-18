@@ -147,6 +147,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun onStart ()V
 	public fun onStop ()V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
+	public fun onVisibilityAggregated (Z)V
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
 	public final fun removeOnMaximumFpsChangedListener (Lcom/mapbox/maps/renderer/OnMaximumFpsChangedListener;)V
 	public final fun removePlugin (Ljava/lang/String;)V
@@ -673,6 +674,14 @@ public final class com/mapbox/maps/coroutine/MapFeatureQueryDelegateExtKt {
 	public static final synthetic fun queryRenderedFeatures (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final synthetic fun queryRenderedRasterValues (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/RenderedRasterQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final synthetic fun querySourceFeatures (Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/mapbox/maps/coroutine/MapSurfaceExtKt {
+	public static final synthetic fun isRenderable (Lcom/mapbox/maps/MapSurface;)Lkotlinx/coroutines/flow/StateFlow;
+}
+
+public final class com/mapbox/maps/coroutine/MapViewExtKt {
+	public static final synthetic fun isRenderable (Lcom/mapbox/maps/MapView;)Lkotlinx/coroutines/flow/StateFlow;
 }
 
 public final class com/mapbox/maps/coroutine/MapboxMapExtKt {

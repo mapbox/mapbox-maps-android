@@ -65,6 +65,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
 
   override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
     renderThread.onSurfaceDestroyed()
+    notifySurfaceAvailability(false)
     surface.release()
     return true
   }
@@ -75,5 +76,6 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
       width = width,
       height = height
     )
+    notifySurfaceAvailability(true)
   }
 }
