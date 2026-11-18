@@ -51,6 +51,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.plus
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
@@ -73,6 +76,37 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   private val maximumFpsListeners =
     CopyOnWriteArrayList<OnMaximumFpsChangedListener>()
+
+  // Main-thread only, like cachedMaximumFps.
+  private var hostVisible = true
+  private var surfaceAvailable = false
+  private val _isRenderable = MutableStateFlow(false)
+
+  /**
+   * True while the map is started, has a surface to draw on and its host reports it as visible.
+   */
+  internal val isRenderable: StateFlow<Boolean> = _isRenderable.asStateFlow()
+
+  /**
+   * Called by the host view when its aggregated visibility changes. Hosts that cannot tell
+   * (e.g. [MapSurface]) never call it, so the map stays visible for them.
+   */
+  @MainThread
+  internal fun setHostVisible(visible: Boolean) {
+    hostVisible = visible
+    updateRenderable()
+  }
+
+  @MainThread
+  internal fun setSurfaceAvailable(available: Boolean) {
+    surfaceAvailable = available
+    updateRenderable()
+  }
+
+  private fun updateRenderable() {
+    _isRenderable.value =
+      lifecycleState == LifecycleState.STATE_STARTED && surfaceAvailable && hostVisible
+  }
 
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   private val cameraChangedCoalescedCallback: CameraChangedCoalescedCallback
@@ -138,6 +172,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     renderer.setMap(nativeMap)
+    renderer.setSurfaceAvailabilityListener(::setSurfaceAvailable)
     this.mapInitOptions.cameraOptions?.let {
       mapboxMap.setCamera(it)
     }
@@ -194,6 +229,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_STARTED
+    updateRenderable()
 
     mapboxMap.style?.let {
       if (it != style) {
@@ -220,6 +256,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_STOPPED
+    updateRenderable()
 
     cancelableSubscriberSet.forEach {
       it.cancel()
@@ -240,9 +277,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_DESTROYED
+    updateRenderable()
 
     // Cancel the lifecycle coroutine scope to prevent memory leaks
     lifecycleScope.cancel()
+
+    renderer.setSurfaceAvailabilityListener(null)
 
     pluginRegistry.onDestroy()
     nativeObserver.onDestroy()

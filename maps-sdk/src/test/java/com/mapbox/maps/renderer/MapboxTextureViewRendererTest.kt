@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.graphics.SurfaceTexture
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -34,5 +35,16 @@ internal class MapboxTextureViewRendererTest : MapboxRendererTest() {
     textureViewRenderer.onSurfaceTextureDestroyed(surfaceTexture)
     verify { renderThread.onSurfaceDestroyed() }
     verify { surfaceTexture.release() }
+  }
+
+  @Test
+  fun surfaceAvailabilityReportedWhenSurfaceTextureIsAvailableAndDestroyed() {
+    val reported = mutableListOf<Boolean>()
+    textureViewRenderer.setSurfaceAvailabilityListener { reported += it }
+
+    textureViewRenderer.onSurfaceTextureAvailable(mockk(relaxed = true), 1, 1)
+    textureViewRenderer.onSurfaceTextureDestroyed(mockk(relaxUnitFun = true))
+
+    assertEquals(listOf(true, false), reported)
   }
 }

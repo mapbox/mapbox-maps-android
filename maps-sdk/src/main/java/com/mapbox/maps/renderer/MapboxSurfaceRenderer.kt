@@ -54,6 +54,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
         height = height
       )
       createSurface = false
+      notifySurfaceAvailability(true)
     }
     renderThread.onSurfaceSizeChanged(
       width = width,
@@ -63,6 +64,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   fun surfaceDestroyed() {
     renderThread.onSurfaceDestroyed()
+    notifySurfaceAvailability(false)
   }
 
   fun surfaceCreated() {

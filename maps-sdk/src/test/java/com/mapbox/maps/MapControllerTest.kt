@@ -205,10 +205,12 @@ class MapControllerTest {
     every { mockPluginRegistry.onDestroy() } just Runs
     every { mockNativeObserver.onDestroy() } just Runs
     every { mockRenderer.onDestroy() } just Runs
+    every { mockRenderer.setSurfaceAvailabilityListener(null) } just Runs
 
     testMapController.onDestroy()
 
     verifySequence {
+      mockRenderer.setSurfaceAvailabilityListener(null)
       mockPluginRegistry.onDestroy()
       mockNativeObserver.onDestroy()
       mockRenderer.onDestroy()
@@ -609,6 +611,73 @@ class MapControllerTest {
       mockOnStyleDataLoadedListener
     )
     testMapController.addWidget(mockk())
+  }
+
+  @Test
+  fun isRenderableIsFalseUntilStarted() {
+    testMapController.setSurfaceAvailable(true)
+    testMapController.setHostVisible(true)
+
+    assertFalse(testMapController.isRenderable.value)
+  }
+
+  @Test
+  fun isRenderableNeedsSurface() {
+    startMap()
+
+    assertFalse(testMapController.isRenderable.value)
+    testMapController.setSurfaceAvailable(true)
+    assertTrue(testMapController.isRenderable.value)
+    testMapController.setSurfaceAvailable(false)
+    assertFalse(testMapController.isRenderable.value)
+  }
+
+  @Test
+  fun isRenderableNeedsVisibleHost() {
+    startMap()
+    testMapController.setSurfaceAvailable(true)
+
+    testMapController.setHostVisible(false)
+    assertFalse(testMapController.isRenderable.value)
+    testMapController.setHostVisible(true)
+    assertTrue(testMapController.isRenderable.value)
+  }
+
+  @Test
+  fun isRenderableIsFalseAfterStop() {
+    startMap()
+    testMapController.setSurfaceAvailable(true)
+    every { mockPluginRegistry.onStop() } just Runs
+    every { mockRenderer.onStop() } just Runs
+
+    testMapController.onStop()
+
+    assertFalse(testMapController.isRenderable.value)
+  }
+
+  @Test
+  fun isRenderableIsFalseAfterDestroy() {
+    startMap()
+    testMapController.setSurfaceAvailable(true)
+    every { mockMapboxMap.onDestroy() } just Runs
+    every { mockPluginRegistry.onDestroy() } just Runs
+    every { mockNativeObserver.onDestroy() } just Runs
+    every { mockRenderer.onDestroy() } just Runs
+    every { mockRenderer.setSurfaceAvailabilityListener(null) } just Runs
+
+    testMapController.onDestroy()
+
+    assertFalse(testMapController.isRenderable.value)
+  }
+
+  private fun startMap() {
+    every { mockMapboxMap.isStyleLoadInitiated } returns true
+    every { mockPluginRegistry.onStart() } just Runs
+    every { mockRenderer.onStart() } just Runs
+    every { mockNativeObserver.subscribeCameraChangedCoalesced(any()) } returns cancelable
+    every { mockNativeObserver.subscribeStyleDataLoaded(any()) } returns cancelable
+    every { mockMapboxMap.style } returns null
+    testMapController.onStart()
   }
 
   @OptIn(MapboxExperimental::class)

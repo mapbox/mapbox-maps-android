@@ -613,6 +613,14 @@ package com.mapbox.maps.coroutine {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.bindgen.Expected<java.lang.String,java.util.List<? extends com.mapbox.maps.QueriedSourceFeature>>! querySourceFeatures(com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate, String sourceId, com.mapbox.maps.SourceQueryOptions options);
   }
 
+  public final class MapSurfaceExtKt {
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.StateFlow<java.lang.Boolean> isRenderable(com.mapbox.maps.MapSurface);
+  }
+
+  public final class MapViewExtKt {
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @kotlin.jvm.JvmSynthetic public static kotlinx.coroutines.flow.StateFlow<java.lang.Boolean> isRenderable(com.mapbox.maps.MapView);
+  }
+
   public final class MapboxMapExtKt {
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
     method @kotlin.jvm.JvmSynthetic public static suspend com.mapbox.maps.Style! awaitLoadStyle(com.mapbox.maps.MapboxMap, String style);
