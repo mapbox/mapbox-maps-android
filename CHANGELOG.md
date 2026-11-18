@@ -6,6 +6,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.35.1 November 18, 2026
+## Dependencies
+* Update gl-native to [v11.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1), common to [v24.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1).
+
+
 ## Bug fixes 🐞
 * [compose] Avoid expensive logging when updating source, terrain, atmosphere, rain or snow properties.
 
