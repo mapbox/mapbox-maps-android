@@ -41,16 +41,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Update gl-native to [v11.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1), common to [v24.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1).
 
 
-## Bug fixes 🐞
-* [compose] Avoid expensive logging when updating source, terrain, atmosphere, rain or snow properties.
-
 # 11.35.0 November 13, 2026
 ## Features ✨ and improvements 🏁
 * Accessing a getter for a plugin that was intentionally disabled (compass, logo, attribution, scalebar, lifecycle, indoorSelector) because the Compose extension replaces with its own APIs, now throws a descriptive `PluginDisabledException`, instead of an unhelpful `NullPointerException`.
 * Add support for WebP textures when loading 3D models.
 * Improve ETC2 texture compression quality and speed for raster tiles by about 1.25x on average.
 * Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
-* Add a method to force-flush idle HTTP connections, allowing subsequent requests to establish fresh sockets.
 * Add an opt-in factory setting to automatically reset the TileStore to a fresh state if a database migration fails.
 * Add METADATA_MIGRATION_FAILED event subscription for tracking TileStore metadata database migration failures.
 
@@ -88,7 +84,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Add support for WebP textures when loading 3D models.
 * Improve ETC2 texture compression quality and speed for raster tiles by about 1.25x on average.
 * Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
-* Add a method to force-flush idle HTTP connections, allowing subsequent requests to establish fresh sockets.
 * Add an opt-in factory setting to automatically reset the TileStore to a fresh state if a database migration fails.
 * Add METADATA_MIGRATION_FAILED event subscription for tracking TileStore metadata database migration failures.
 
@@ -115,12 +110,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.34.3 November 18, 2026
+
+## Bug fixes 🐞
+* Fix the map display cycling through its last few frames instead of updating on devices with older Mali GPUs (Bifrost G31, G51, G52, G71, G72, G76 and earlier), by disabling OpenGL persistent buffer mapping on them.
+* Internal fixes and performance improvements.
+
 ## Dependencies
 * Update gl-native to [v11.34.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.3), common to [v24.34.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.3).
 
-
-## Bug fixes 🐞
-* Disable OpenGL persistent buffer mapping on Bifrost Mali GPUs (G31, G51, G52, G71, G72, G76) and older.
 
 # 11.34.2 November 03, 2026
 ## Dependencies
@@ -128,12 +125,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 ## Bug fixes 🐞
-* Fix a bug where point annotations jitter when zooming out
+* Fix a bug where point annotations jitter when zooming out.
 
 # 11.34.1 October 29, 2026
 ## Features ✨ and improvements 🏁
 * Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
-* Add a method to force-flush idle HTTP connections, allowing subsequent requests to establish fresh sockets.
 * Add an opt-in factory setting to automatically reset the TileStore to a fresh state if a database migration fails.
 * Add METADATA_MIGRATION_FAILED event subscription for tracking TileStore metadata database migration failures.
 
@@ -157,7 +153,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Add `evictAllConnections()` to the HTTP service to forcefully flush idle network connections.
-* Add a method to force-flush idle HTTP connections, allowing subsequent requests to establish fresh sockets.
 * Add an opt-in factory setting to automatically reset the TileStore to a fresh state if a database migration fails.
 * Add METADATA_MIGRATION_FAILED event subscription for tracking TileStore metadata database migration failures.
 
@@ -178,12 +173,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.33.2 November 18, 2026
+
+## Bug fixes 🐞
+* Fix the map display cycling through its last few frames instead of updating on devices with older Mali GPUs (Bifrost G31, G51, G52, G71, G72, G76 and earlier), by disabling OpenGL persistent buffer mapping on them.
+
 ## Dependencies
 * Update gl-native to [v11.33.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.2), common to [v24.33.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.2).
 
-
-## Bug fixes 🐞
-* Disable OpenGL persistent buffer mapping on Bifrost Mali GPUs (G31, G51, G52, G71, G72, G76) and older.
 
 # 11.33.1 October 27, 2026
 ## Dependencies
@@ -238,12 +234,13 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.32.4 November 18, 2026
+
+## Bug fixes 🐞
+* Fix the map display cycling through its last few frames instead of updating on devices with older Mali GPUs (Bifrost G31, G51, G52, G71, G72, G76 and earlier), by disabling OpenGL persistent buffer mapping on them.
+
 ## Dependencies
 * Update gl-native to [v11.32.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.4), common to [v24.32.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.4).
 
-
-## Bug fixes 🐞
-* Disable OpenGL persistent buffer mapping on Bifrost Mali GPUs (G31, G51, G52, G71, G72, G76) and older.
 
 # 11.32.3 October 19, 2026
 ## Dependencies
@@ -261,8 +258,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
 * Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
-* Fix stale layer geometry cache on readding view annotations
-* Fix view annotations stuck to stale cached layer's geometry
+* Fix stale layer geometry cache on re-adding view annotations.
+* Fix view annotations stuck to stale cached layer's geometry.
 
 # 11.32.1 October 12, 2026
 ## Dependencies
@@ -309,24 +306,28 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.31.2 November 18, 2026
-## Dependencies
-* Update gl-native to [v11.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2), common to [v24.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2).
 
 ## Breaking changes ⚠️
 * Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
 * Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
 
-## Bug fixes 🐞
-* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
-* Fix a bug where point annotations jitter when zooming out
-* Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
-* Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
-* Fix stale layer geometry cache on readding view annotations
-* Fix view annotations stuck to stale cached layer's geometry
-
 ## Features ✨ and improvements 🏁
 * Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
+* Stop logging FPS statistics every second while an `OnFpsChangedListener` is set, which slowed down the render thread. The listener still receives FPS values.
+
+## Bug fixes 🐞
+* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
+* Fix symbols, including point annotations, briefly jumping to a different position while zooming out when the layer uses `symbol-sort-key`.
+* Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
+* Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
+* Fix view annotations staying on outdated layer geometry until the next camera change, after the layer's source data was updated or after the annotations were removed and added again.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2), common to [v24.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2).
+
+
 # 11.31.1 September 25, 2026
 ## Bug fixes 🐞
 * Fix the location indicator (puck) being incorrectly occluded by terrain when transitioning from orthographic to perspective view.
