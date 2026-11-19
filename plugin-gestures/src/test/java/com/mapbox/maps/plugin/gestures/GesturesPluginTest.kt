@@ -1102,6 +1102,34 @@ class GesturesPluginTest {
     verify(exactly = 1) { mapTransformDelegate.setGestureInProgress(false) }
   }
 
+  private fun shoveAndCapturePitch(startPitch: Double, delta: Float): Double {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      startPitch
+    )
+    every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(10.0, 10.0)
+    val resultCameraOptions = slot<CameraOptions>()
+    every { cameraAnimationsPlugin.easeTo(capture(resultCameraOptions), any()) } returns mockk(relaxed = true)
+    presenter.handleShove(mockk<ShoveGestureDetector>(relaxUnitFun = true), delta)
+    return resultCameraOptions.captured.pitch!!
+  }
+
+  @Test
+  fun verifyShoveDoesNotClampPitchAboveMaximum() {
+    // Fixed view point: axis pitch of 100 is valid, shove must not jump it down to 85.
+    assertEquals(100.0, shoveAndCapturePitch(100.0, 0.0f), EPS)
+    assertEquals(101.0, shoveAndCapturePitch(100.0, -10.0f), EPS)
+  }
+
+  @Test
+  fun verifyShoveDoesNotClampPitchBelowZero() {
+    assertEquals(-14.93, shoveAndCapturePitch(-14.93, 0.0f), EPS)
+    assertEquals(-16.0, shoveAndCapturePitch(-15.0, 10.0f), EPS)
+  }
+
   @Test
   fun verifyMapCenterAltitudeModeIsSEABeforeGesture() {
     every { mapCameraManagerDelegate.getCenterAltitudeMode() } returns MapCenterAltitudeMode.SEA
@@ -1298,6 +1326,31 @@ class GesturesPluginTest {
     verify(exactly = 1) {
       cameraAnimationsPlugin.easeTo(any(), any(), any())
     }
+  }
+
+  private fun legacyFlingDragTarget(pitch: Double): ScreenCoordinate {
+    presenter.useNativeFlingDeceleration = false
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      pitch
+    )
+    val target = slot<ScreenCoordinate>()
+    every {
+      mapCameraManagerDelegate.cameraForDrag(any(), capture(target))
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+    assertTrue(presenter.handleFlingEvent(motionEvent2, 10000f, 10000f))
+    return target.captured
+  }
+
+  @Test
+  fun verifyLegacyFlingTreatsPitchOutsideLimitsAsNearestLimit() {
+    val atMinimum = legacyFlingDragTarget(MINIMUM_PITCH)
+    assertEquals(atMinimum, legacyFlingDragTarget(-30.0))
+    val atMaximum = legacyFlingDragTarget(MAXIMUM_PITCH)
+    assertEquals(atMaximum, legacyFlingDragTarget(120.0))
   }
 
   @Test

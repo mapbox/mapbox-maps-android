@@ -5,6 +5,9 @@ import android.view.animation.Interpolator
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.MercatorCoordinate
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -164,7 +167,49 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       )
     }
 
+    createViewPointAnimator(currentCameraState, cameraOptions, owner)?.let { animationList.add(it) }
+
     return animationList.map { it as CameraAnimator<*> }.toTypedArray()
+  }
+
+  /**
+   * The "follows position point" end is resolved once, from the padding and position point the
+   * camera ends up with, rather than on every frame.
+   */
+  private fun createViewPointAnimator(
+    currentCameraState: CameraState,
+    cameraOptions: CameraOptions,
+    owner: String?
+  ): CameraViewPointAnimator? {
+    val start = currentCameraState.viewPoint
+    val end = cameraOptions.viewPoint ?: return null
+    if (start.isCameraViewPointFollowsPositionPoint && end.isCameraViewPointFollowsPositionPoint) {
+      return null
+    }
+    var startState = start
+    var followingPoint = CameraViewPoint(0.0, 0.0)
+    if (start.isCameraViewPointFollowsPositionPoint || end.isCameraViewPointFollowsPositionPoint) {
+      val ownerState = if (start.isCameraViewPointFollowsPositionPoint) currentCameraState else null
+      followingPoint = CameraTransform.getFollowingViewPoint(
+        padding = ownerState?.padding ?: cameraOptions.padding ?: currentCameraState.padding,
+        positionPoint = ownerState?.positionPoint ?: cameraOptions.positionPoint ?: currentCameraState.positionPoint,
+        mapSize = mapTransformDelegate.getSize()
+      )
+      if (start.isCameraViewPointFollowsPositionPoint) {
+        startState = CameraViewPointState.valueOf(followingPoint)
+      }
+    }
+    return CameraViewPointAnimator(
+      options = cameraAnimatorOptions(end) {
+        startValue(startState)
+      },
+      followingPoint = followingPoint,
+      block = defaultAnimationParameters[CameraAnimatorType.VIEW_POINT]
+    ).apply {
+      owner?.let { customOwner ->
+        this.owner = customOwner
+      }
+    }
   }
 
   /**
@@ -444,7 +489,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     else
       (r1 - r0) / rho
 
-    val animators = mutableListOf(
+    val animators = mutableListOf<CameraAnimator<*>>(
       CameraCenterAnimator(
         evaluator = { fraction, _, _ ->
           val safeFraction = fraction.getSafeFraction()
@@ -568,6 +613,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         }
       )
     }
+    createViewPointAnimator(currentCameraState, cameraOptions, owner)?.let { animators.add(it) }
     return animators.toTypedArray()
   }
 
@@ -637,6 +683,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           duration = DEFAULT_ANIMATION_DURATION_MS
           interpolator = DEFAULT_INTERPOLATOR
         }
+        put(CameraAnimatorType.VIEW_POINT) {
+          duration = DEFAULT_ANIMATION_DURATION_MS
+          interpolator = DEFAULT_INTERPOLATOR
+        }
       }
 
     /**
@@ -667,6 +717,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       defaultAnimationParameters[CameraAnimatorType.PADDING] = block
       defaultAnimationParameters[CameraAnimatorType.VERTICAL_FOV] = block
       defaultAnimationParameters[CameraAnimatorType.POSITION_POINT] = block
+      defaultAnimationParameters[CameraAnimatorType.VIEW_POINT] = block
     }
   }
 }

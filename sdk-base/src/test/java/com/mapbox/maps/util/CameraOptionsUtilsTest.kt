@@ -2,6 +2,8 @@ package com.mapbox.maps.util
 
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraPositionPoint
+import com.mapbox.maps.CameraViewPointFollowsPositionPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.MapboxExperimental
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -18,6 +20,12 @@ class CameraOptionsUtilsTest {
   @Test
   fun `CameraOptions with positionPoint is not empty`() {
     assertFalse(CameraOptions.Builder().positionPoint(CameraPositionPoint(0.0, 0.0)).build().isEmpty)
+  }
+
+  @Test
+  fun `CameraOptions with viewPoint is not empty`() {
+    val viewPoint = CameraViewPointState.valueOf(CameraViewPointFollowsPositionPoint())
+    assertFalse(CameraOptions.Builder().viewPoint(viewPoint).build().isEmpty)
   }
 
   @Test

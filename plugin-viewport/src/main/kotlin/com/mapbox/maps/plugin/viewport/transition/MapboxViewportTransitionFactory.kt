@@ -8,8 +8,11 @@ import androidx.core.view.animation.PathInterpolatorCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.CameraAnimatorType
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.animation.getCameraAnimatorsFactory
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
 import kotlin.math.abs
@@ -99,6 +102,12 @@ internal class MapboxViewportTransitionFactory(
       )
     }
 
+    animators += createViewPointAnimators(
+      cameraOptions = cameraOptions,
+      startDelay = pitchAndPaddingDelay,
+      duration = pitchAndPaddingDuration
+    )
+
     return createAnimatorSet(animators).constrainDurationTo(transitionMaxDurationMs)
   }
 
@@ -148,6 +157,11 @@ internal class MapboxViewportTransitionFactory(
         duration = 1200L
       )
     }
+
+    animators += createViewPointAnimators(
+      cameraOptions = cameraOptions,
+      duration = 1200L
+    )
 
     return createAnimatorSet(animators).constrainDurationTo(transitionMaxDurationMs)
   }
@@ -202,7 +216,38 @@ internal class MapboxViewportTransitionFactory(
       )
     }
 
+    animators += createViewPointAnimators(
+      cameraOptions = cameraOptions,
+      duration = transitionDurationMs,
+      interpolator = LINEAR_INTERPOLATOR
+    )
+
     return createAnimatorSet(animators)
+  }
+
+  // The animation plugin resolves the "follows position point" ends of the view point from the padding and
+  // position point the camera ends up with, so these are passed along with the target view point.
+  @OptIn(MapboxExperimental::class)
+  private fun createViewPointAnimators(
+    cameraOptions: CameraOptions,
+    startDelay: Long = 0L,
+    duration: Long,
+    interpolator: Interpolator = SLOW_OUT_SLOW_IN_INTERPOLATOR
+  ): List<Animator> {
+    val targetViewPoint = cameraOptions.viewPoint ?: return emptyList()
+    val viewPointOptions = CameraOptions.Builder()
+      .viewPoint(targetViewPoint)
+      .padding(cameraOptions.padding)
+      .positionPoint(cameraOptions.positionPoint)
+      .build()
+    return cameraPlugin.getCameraAnimatorsFactory()
+      .getEaseTo(viewPointOptions, VIEWPORT_CAMERA_OWNER)
+      .filter { it.type == CameraAnimatorType.VIEW_POINT }
+      .onEach {
+        it.startDelay = startDelay
+        it.duration = duration
+        it.interpolator = interpolator
+      }
   }
 
   private fun createCenterAnimator(

@@ -267,6 +267,14 @@ internal class DefaultViewportTransitionImpl(
           } else {
             cameraAnimator.setObjectValues(startCamera.positionPoint, targetCamera.positionPoint)
           }
+        CameraAnimatorType.VIEW_POINT ->
+          targetCamera.viewPoint?.let { targetViewPoint ->
+            if (completedChildAnimators.contains(CameraAnimatorType.VIEW_POINT)) {
+              cameraDelegate.setCamera(cameraOptions { viewPoint(targetViewPoint) })
+            } else {
+              cameraAnimator.setObjectValues(startCamera.viewPoint, targetViewPoint)
+            }
+          }
       }
     }
   }

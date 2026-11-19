@@ -1,12 +1,19 @@
 package com.mapbox.maps.plugin.viewport.transition
 
+import android.animation.Animator
 import android.animation.AnimatorSet
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.CameraAnimatorType
+import com.mapbox.maps.plugin.animation.CameraAnimatorsFactory
+import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.animation.createCameraAnimationPlugin
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -14,6 +21,8 @@ import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.DEFAULT_TRANSITION_MAX_DURATION_MS
 import com.mapbox.maps.plugin.viewport.TRANSITION_UTILS
+import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -22,6 +31,8 @@ import io.mockk.unmockkStatic
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -186,6 +197,99 @@ class MapboxViewportTransitionFactoryTest {
 
     verify { animatorSet.constrainDurationTo(DEFAULT_TRANSITION_MAX_DURATION_MS) }
     assertEquals(constrainedSet, animator)
+  }
+
+  private val animatorsFactory = mockk<CameraAnimatorsFactory>()
+
+  private fun mockViewPointAnimators(): Pair<CameraAnimator<*>, CameraAnimator<*>> {
+    val viewPointAnimator = mockk<CameraAnimator<*>>(relaxed = true) {
+      every { type } returns CameraAnimatorType.VIEW_POINT
+    }
+    val paddingAnimator = mockk<CameraAnimator<*>>(relaxed = true) {
+      every { type } returns CameraAnimatorType.PADDING
+    }
+    // getCameraAnimatorsFactory() is JvmSynthetic and cannot be mocked, so a real plugin carries the mock factory.
+    val realPlugin = createCameraAnimationPlugin()
+    realPlugin.javaClass.getMethod("setCameraAnimationsFactory", CameraAnimatorsFactory::class.java)
+      .invoke(realPlugin, animatorsFactory)
+    every { mapPluginProviderDelegate.camera } returns realPlugin
+    transitionsFactory = MapboxViewportTransitionFactory(delegateProvider)
+    every {
+      animatorsFactory.getEaseTo(any(), any())
+    } returns arrayOf(paddingAnimator, viewPointAnimator)
+    return viewPointAnimator to paddingAnimator
+  }
+
+  private val viewPointTarget = CameraViewPointState.valueOf(CameraViewPoint(0.0, 0.8))
+
+  @Test
+  fun `transitions - view point animator is created from target view point`() {
+    every { mapCameraDelegate.cameraState } returns mockk(relaxed = true)
+    val (viewPointAnimator, paddingAnimator) = mockViewPointAnimators()
+    val cameraOptions = CameraOptions.Builder().viewPoint(viewPointTarget).build()
+
+    listOf(
+      { transitionsFactory.transitionFromLowZoomToHighZoom(cameraOptions, DEFAULT_TRANSITION_MAX_DURATION_MS) },
+      { transitionsFactory.transitionFromHighZoomToLowZoom(cameraOptions, DEFAULT_TRANSITION_MAX_DURATION_MS) },
+      { transitionsFactory.transitionLinear(cameraOptions, DEFAULT_STATE_ANIMATION_DURATION_MS) },
+    ).forEach { it() }
+
+    val animatorsList = mutableListOf<List<Animator>>()
+    verify(exactly = 3) { createAnimatorSet(capture(animatorsList)) }
+    animatorsList.forEach {
+      assertTrue(it.contains(viewPointAnimator))
+      assertFalse(it.contains(paddingAnimator))
+    }
+    verify(exactly = 3) {
+      animatorsFactory.getEaseTo(
+        match {
+          it.viewPoint!!.cameraViewPoint == viewPointTarget.cameraViewPoint
+        },
+        VIEWPORT_CAMERA_OWNER
+      )
+    }
+  }
+
+  @Test
+  fun `transitions - view point animator is timed like the padding animator`() {
+    every { mapCameraDelegate.cameraState } returns mockk(relaxed = true)
+    val (viewPointAnimator, _) = mockViewPointAnimators()
+    val cameraOptions = CameraOptions.Builder()
+      .viewPoint(viewPointTarget)
+      .padding(EdgeInsets(100.0, 0.0, 0.0, 0.0))
+      .build()
+
+    listOf(
+      { transitionsFactory.transitionFromLowZoomToHighZoom(cameraOptions, DEFAULT_TRANSITION_MAX_DURATION_MS) },
+      { transitionsFactory.transitionFromHighZoomToLowZoom(cameraOptions, DEFAULT_TRANSITION_MAX_DURATION_MS) },
+      { transitionsFactory.transitionLinear(cameraOptions, DEFAULT_STATE_ANIMATION_DURATION_MS) },
+    ).forEach { transition ->
+      clearMocks(viewPointAnimator, answers = false)
+      val animators = slot<List<Animator>>()
+      every { createAnimatorSet(capture(animators)) } returns animatorSet
+      transition()
+
+      val padding = animators.captured.single { (it as? CameraAnimator<*>)?.type == CameraAnimatorType.PADDING }
+      verify { viewPointAnimator.startDelay = padding.startDelay }
+      verify { viewPointAnimator.duration = padding.duration }
+      verify { viewPointAnimator.interpolator = padding.interpolator }
+    }
+  }
+
+  @Test
+  fun `transitions - view point animator is skipped without target view point`() {
+    every { mapCameraDelegate.cameraState } returns mockk(relaxed = true)
+    val (viewPointAnimator, _) = mockViewPointAnimators()
+
+    transitionsFactory.transitionFromHighZoomToLowZoom(
+      TEST_CAMERA_OPTIONS,
+      DEFAULT_TRANSITION_MAX_DURATION_MS
+    )
+
+    val animators = slot<List<Animator>>()
+    verify { createAnimatorSet(capture(animators)) }
+    assertFalse(animators.captured.contains(viewPointAnimator))
+    verify(exactly = 0) { animatorsFactory.getEaseTo(any(), any()) }
   }
 
   @After

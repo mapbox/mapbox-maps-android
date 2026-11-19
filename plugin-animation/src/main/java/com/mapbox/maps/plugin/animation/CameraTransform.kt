@@ -42,6 +42,28 @@ internal object CameraTransform {
     )
   }
 
+  /**
+   * The view point that places the optical axis at the position point, for the given padding and map size.
+   */
+  fun getFollowingViewPoint(
+    padding: EdgeInsets,
+    positionPoint: CameraPositionPoint,
+    mapSize: Size
+  ): CameraViewPoint {
+    if (mapSize.width <= 0f || mapSize.height <= 0f) {
+      return CameraViewPoint(0.0, 0.0)
+    }
+    val halfWidth = (mapSize.width - padding.left - padding.right) / 2.0
+    val halfHeight = (mapSize.height - padding.top - padding.bottom) / 2.0
+    val x = padding.left + halfWidth * (1.0 + positionPoint.x)
+    val y = padding.top + halfHeight * (1.0 + positionPoint.y)
+    // Padding larger than the map can push the position point out of the viewport, while core rejects such points.
+    return CameraViewPoint(
+      (x * 2.0 / mapSize.width - 1.0).coerceIn(-1.0, 1.0),
+      (y * 2.0 / mapSize.height - 1.0).coerceIn(-1.0, 1.0)
+    )
+  }
+
   fun unwrapForShortestPath(start: Point, end: Point): Point {
     val delta = abs(end.longitude() - start.longitude())
     if (delta <= LONGITUDE_MAX || delta >= DEGREES_MAX) return start

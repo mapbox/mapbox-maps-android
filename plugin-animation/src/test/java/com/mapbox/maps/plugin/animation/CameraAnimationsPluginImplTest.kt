@@ -12,6 +12,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointFollowsPositionPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
@@ -25,6 +28,7 @@ import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraViewPointAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
@@ -1310,6 +1314,162 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
+  fun skipsAlreadyAppliedViewPoint() {
+    val startCameraOptions = CameraOptions.Builder()
+      .viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.5, -0.5)))
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(
+      CameraOptions.Builder().viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.5, -0.5))).build()
+    )
+
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
+  }
+
+  @Test
+  fun doesNotSkipNewViewPoint() {
+    val startCameraOptions = CameraOptions.Builder()
+      .viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.5, -0.5)))
+      .build()
+    val newCameraOptions = CameraOptions.Builder()
+      .viewPoint(CameraViewPointState.valueOf(CameraViewPointFollowsPositionPoint()))
+      .build()
+
+    cameraAnimationsPluginImpl.onCameraMove(startCameraOptions.toCameraState())
+    cameraAnimationsPluginImpl.performMapJump(newCameraOptions)
+
+    verify(exactly = 1) { mapCameraManagerDelegate.setCamera(newCameraOptions) }
+  }
+
+  private fun trackAppliedViewPoint(applied: MutableList<CameraOptions>, initial: CameraViewPointState): () -> Unit {
+    var live = initial
+    every { mapCameraManagerDelegate.cameraState } answers {
+      CameraOptions.Builder().viewPoint(live).build().toCameraState()
+    }
+    every { mapCameraManagerDelegate.setCamera(capture(applied)) } answers {
+      applied.last().viewPoint?.let { live = it }
+    }
+    return { live = CameraViewPointState.valueOf(CameraViewPoint(-0.25, 0.75)) }
+  }
+
+  private fun releaseAnimator() = CameraViewPointAnimator(
+    CameraAnimatorOptions.Builder<CameraViewPointState>(
+      targets = arrayOf(CameraViewPointState.valueOf(CameraViewPointFollowsPositionPoint()))
+    )
+      .startValue(CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+      .build()
+  ) { duration = 100L }
+
+  @Test
+  fun cancelingViewPointReleaseSetsFollowsPositionPoint() {
+    val applied = mutableListOf<CameraOptions>()
+    trackAppliedViewPoint(applied, CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+    val animator = releaseAnimator()
+
+    cameraAnimationsPluginImpl.registerAnimators(animator)
+    animator.start()
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
+    animator.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    assertTrue(applied.last().viewPoint!!.isCameraViewPointFollowsPositionPoint)
+  }
+
+  @Test
+  fun endingViewPointReleaseManuallySetsFollowsPositionPoint() {
+    val applied = mutableListOf<CameraOptions>()
+    trackAppliedViewPoint(applied, CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+    val animator = releaseAnimator()
+
+    cameraAnimationsPluginImpl.registerAnimators(animator)
+    animator.start()
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
+    animator.end()
+    shadowOf(getMainLooper()).idle()
+
+    assertTrue(applied.last().viewPoint!!.isCameraViewPointFollowsPositionPoint)
+  }
+
+  @Test
+  fun cancelingViewPointReleaseKeepsViewPointSetByApp() {
+    val applied = mutableListOf<CameraOptions>()
+    val setViewPointFromApp = trackAppliedViewPoint(applied, CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+    val animator = releaseAnimator()
+
+    cameraAnimationsPluginImpl.registerAnimators(animator)
+    animator.start()
+    // the release has applied a frame before the app takes over
+    cameraAnimationsPluginImpl.performMapJump(
+      CameraOptions.Builder().viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.9, 0.9))).build()
+    )
+    setViewPointFromApp()
+    animator.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    assertTrue(applied.none { it.viewPoint?.isCameraViewPointFollowsPositionPoint == true })
+  }
+
+  @Test
+  fun endingViewPointReleaseManuallyKeepsViewPointSetByApp() {
+    val applied = mutableListOf<CameraOptions>()
+    val setViewPointFromApp = trackAppliedViewPoint(applied, CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+    val animator = releaseAnimator()
+
+    cameraAnimationsPluginImpl.registerAnimators(animator)
+    animator.start()
+    // the release has applied a frame before the app takes over
+    cameraAnimationsPluginImpl.performMapJump(
+      CameraOptions.Builder().viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.9, 0.9))).build()
+    )
+    setViewPointFromApp()
+    animator.end()
+    shadowOf(getMainLooper()).idle()
+
+    assertTrue(applied.none { it.viewPoint?.isCameraViewPointFollowsPositionPoint == true })
+  }
+
+  private fun pinnedViewPointAnimator() = CameraViewPointAnimator(
+    CameraAnimatorOptions.Builder<CameraViewPointState>(
+      targets = arrayOf(CameraViewPointState.valueOf(CameraViewPoint(0.5, 0.5)))
+    )
+      .startValue(CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+      .build()
+  ) { duration = 100L }
+
+  @Test
+  fun cancelingViewPointReleaseKeepsFollowsOffWhileAnotherViewPointAnimatorIsLive() {
+    val applied = mutableListOf<CameraOptions>()
+    trackAppliedViewPoint(applied, CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+    val release = releaseAnimator()
+    val other = pinnedViewPointAnimator()
+
+    cameraAnimationsPluginImpl.registerAnimators(release, other)
+    release.start()
+    other.start()
+    release.cancel()
+    shadowOf(getMainLooper()).idle()
+
+    assertTrue(applied.none { it.viewPoint?.isCameraViewPointFollowsPositionPoint == true })
+  }
+
+  @Test
+  fun endingViewPointReleaseManuallyKeepsFollowsOffWhileAnotherViewPointAnimatorIsLive() {
+    val applied = mutableListOf<CameraOptions>()
+    trackAppliedViewPoint(applied, CameraViewPointState.valueOf(CameraViewPoint(1.0, 1.0)))
+    val release = releaseAnimator()
+    val other = pinnedViewPointAnimator()
+
+    cameraAnimationsPluginImpl.registerAnimators(release, other)
+    release.start()
+    other.start()
+    release.end()
+    shadowOf(getMainLooper()).idle()
+
+    assertTrue(applied.none { it.viewPoint?.isCameraViewPointFollowsPositionPoint == true })
+  }
+
+  @Test
   fun doesNotSkipCameraOptionsWithAnchor() {
     val startCameraOptions = CameraOptions.Builder()
       .center(Point.fromLngLat(50.0, 50.0))
@@ -1902,7 +2062,8 @@ class CameraAnimationsPluginImplTest {
         bearing ?: cameraState.bearing,
         pitch ?: cameraState.pitch,
         verticalFov ?: cameraState.verticalFov,
-        positionPoint ?: cameraState.positionPoint
+        positionPoint ?: cameraState.positionPoint,
+        viewPoint ?: cameraState.viewPoint
       )
     }
 

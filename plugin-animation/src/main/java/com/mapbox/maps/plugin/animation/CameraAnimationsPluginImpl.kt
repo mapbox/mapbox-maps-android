@@ -13,6 +13,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPointFollowsPositionPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MAPS_SDK_TRACE_PREFIX
 import com.mapbox.maps.MapboxCameraAnimationException
@@ -28,7 +30,9 @@ import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraViewPointAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
+import com.mapbox.maps.plugin.animation.animator.isSameAs
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -160,6 +164,11 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
 
   private var positionPoint: CameraPositionPoint? = null
 
+  private var viewPoint: CameraViewPointState? = null
+
+  // Last view point this plugin applied, to tell whether the camera's view point was changed by someone else since.
+  private var lastWrittenViewPoint: CameraViewPointState? = null
+
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -224,6 +233,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     this.zoom = cameraState.zoom
     this.verticalFov = cameraState.verticalFov
     this.positionPoint = cameraState.positionPoint
+    this.viewPoint = cameraState.viewPoint
   }
 
   /**
@@ -278,6 +288,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
     if (cameraOptions.positionPoint != null && cameraOptions.positionPoint != positionPoint) {
       return false
     }
+    cameraOptions.viewPoint?.let { userViewPoint ->
+      if (!userViewPoint.isSameAs(viewPoint)) return false
+    }
     return true
   }
 
@@ -292,6 +305,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
       }
       return
     }
+    cameraOptions.viewPoint?.let { lastWrittenViewPoint = it }
     // move native map to new position
     try {
       // setCamera triggers OnCameraMove that updates camera options and notifies listeners
@@ -409,6 +423,19 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
             if (runningAnimatorsQueue.isEmpty()) {
               mapTransformDelegate.setUserAnimationInProgress(false)
             }
+            // The last frame of an animator ended manually is dropped, so "follows" has to be applied here too.
+            val interrupted = finishStatus == AnimationFinishStatus.CANCELED || (endedManually && !canceled)
+            if (interrupted && this is CameraViewPointAnimator && releasesToFollow &&
+              !hasOtherLiveViewPointAnimator(this) && !viewPointChangedByOthers()
+            ) {
+              // An interrupted release would otherwise leave the view point pinned. This callback can arrive after
+              // the app has set its own view point or started another view point animator, which must win.
+              performMapJump(
+                CameraOptions.Builder()
+                  .viewPoint(CameraViewPointState.valueOf(CameraViewPointFollowsPositionPoint()))
+                  .build()
+              )
+            }
             lifecycleListeners.forEach {
               when (finishStatus) {
                 AnimationFinishStatus.CANCELED -> it.onAnimatorCancelling(type, this, owner)
@@ -421,6 +448,16 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin, MapCameraPlu
         }
       })
     }
+  }
+
+  private fun viewPointChangedByOthers(): Boolean {
+    val written = lastWrittenViewPoint ?: return false
+    return !written.isSameAs(mapCameraManagerDelegate.cameraState.viewPoint)
+  }
+
+  // Internal animators are unregistered when they finish, so a registered one is pending or running.
+  private fun hasOtherLiveViewPointAnimator(animator: CameraAnimator<*>) = animators.any {
+    it !== animator && it.type == CameraAnimatorType.VIEW_POINT && !it.canceled && (it.isInternal || it.isStarted)
   }
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {

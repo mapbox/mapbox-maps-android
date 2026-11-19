@@ -8,12 +8,16 @@ import com.mapbox.maps.CameraBounds
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointFollowsPositionPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.MercatorCoordinate
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Size
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraViewPointAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -106,6 +110,7 @@ class CameraAnimatorsFactoryTest {
       .pitch(30.0)
       .verticalFov(28.0)
       .positionPoint(CameraPositionPoint(0.5, -0.5))
+      .viewPoint(CameraViewPointState.valueOf(CameraViewPoint(-0.5, 0.25)))
       .build()
     val animators = cameraAnimatorsFactory.getEaseTo(targetEaseToPosition, owner = customOwner)
     testAnimators(animators, targetEaseToPosition)
@@ -172,6 +177,7 @@ class CameraAnimatorsFactoryTest {
       .padding(EdgeInsets(300.0, 400.0, 300.0, 400.0))
       .verticalFov(45.0)
       .positionPoint(CameraPositionPoint(-0.25, 0.75))
+      .viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.5, -0.5)))
       .build()
     val animators = cameraAnimatorsFactory.getFlyTo(target, owner = customOwner)
     testAnimators(animators, target)
@@ -259,6 +265,116 @@ class CameraAnimatorsFactoryTest {
     val animators = cameraAnimatorsFactory.getFlyTo(initialCameraPosition.toCameraOptions())
 
     Assert.assertTrue(animators.none { it.type == CameraAnimatorType.POSITION_POINT })
+  }
+
+  private fun pinned(x: Double, y: Double) = CameraViewPointState.valueOf(CameraViewPoint(x, y))
+
+  private fun follows() = CameraViewPointState.valueOf(CameraViewPointFollowsPositionPoint())
+
+  private fun stateWithViewPoint(
+    viewPoint: CameraViewPointState,
+    padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0),
+    positionPoint: CameraPositionPoint = CameraPositionPoint(0.0, 0.0)
+  ) = CameraState(initialCenter, padding, 0.0, 0.0, 15.0, 12.0, positionPoint, viewPoint)
+
+  private fun viewPointAnimators(animators: Array<CameraAnimator<*>>) =
+    animators.filterIsInstance<CameraViewPointAnimator>()
+
+  @Test
+  fun testEaseToWithoutViewPointCreatesNoViewPointAnimator() {
+    every { mapCameraManagerDelegate.cameraState } returns stateWithViewPoint(pinned(0.5, 0.5))
+
+    val animators = cameraAnimatorsFactory.getEaseTo(CameraOptions.Builder().zoom(17.0).build())
+
+    Assert.assertTrue(viewPointAnimators(animators).isEmpty())
+  }
+
+  @Test
+  fun testEaseToFollowsToFollowsCreatesNoViewPointAnimator() {
+    val animators = cameraAnimatorsFactory.getEaseTo(
+      CameraOptions.Builder().viewPoint(follows()).build()
+    )
+
+    Assert.assertTrue(viewPointAnimators(animators).isEmpty())
+  }
+
+  @Test
+  fun testEaseToPinnedToSamePinnedStillCreatesViewPointAnimator() {
+    every { mapCameraManagerDelegate.cameraState } returns stateWithViewPoint(pinned(0.5, 0.5))
+
+    val animators = viewPointAnimators(
+      cameraAnimatorsFactory.getEaseTo(CameraOptions.Builder().viewPoint(pinned(0.5, 0.5)).build())
+    )
+
+    Assert.assertEquals(1, animators.size)
+    Assert.assertFalse(animators[0].releasesToFollow)
+  }
+
+  @Test
+  fun testEaseToFollowsToPinnedStartsAtFollowingViewPoint() {
+    // Padded box spans x in [100, 800] and y in [0, 600]; the position point (0, 0) is at (450, 300).
+    every { mapCameraManagerDelegate.cameraState } returns stateWithViewPoint(
+      follows(),
+      padding = EdgeInsets(0.0, 100.0, 0.0, 0.0)
+    )
+    every { mapTransformDelegate.getSize() } returns Size(800f, 600f)
+
+    val animators = viewPointAnimators(
+      cameraAnimatorsFactory.getEaseTo(CameraOptions.Builder().viewPoint(pinned(-1.0, -1.0)).build())
+    )
+
+    Assert.assertEquals(1, animators.size)
+    val start = animators[0].startValue!!
+    Assert.assertTrue(start.isCameraViewPoint)
+    Assert.assertEquals(450.0 * 2 / 800 - 1.0, start.cameraViewPoint.x, 1e-9)
+    Assert.assertEquals(0.0, start.cameraViewPoint.y, 1e-9)
+    Assert.assertEquals(CameraViewPoint(-1.0, -1.0), animators[0].targets.last().cameraViewPoint)
+    Assert.assertFalse(animators[0].releasesToFollow)
+  }
+
+  @Test
+  fun testEaseToPinnedToFollowsUsesTargetPaddingAndPositionPoint() {
+    every { mapCameraManagerDelegate.cameraState } returns stateWithViewPoint(pinned(0.0, 0.0))
+    every { mapTransformDelegate.getSize() } returns Size(800f, 600f)
+    val target = CameraOptions.Builder()
+      .viewPoint(follows())
+      .padding(EdgeInsets(100.0, 0.0, 0.0, 0.0))
+      .positionPoint(CameraPositionPoint(0.0, -1.0))
+      .build()
+
+    val animators = viewPointAnimators(cameraAnimatorsFactory.getEaseTo(target))
+
+    Assert.assertEquals(1, animators.size)
+    Assert.assertTrue(animators[0].releasesToFollow)
+    // The position point sits on the top edge of the padded box, i.e. at y = 100 of 600.
+    animators[0].interpolator = LinearInterpolator()
+    val halfway = animators[0].getAnimatedValueAt(0.5f)
+    Assert.assertEquals(0.0, halfway.cameraViewPoint.x, 1e-9)
+    Assert.assertEquals((100.0 * 2 / 600 - 1.0) / 2, halfway.cameraViewPoint.y, 1e-9)
+  }
+
+  @Test
+  fun testFlyToPinnedToFollowsCreatesReleasingViewPointAnimator() {
+    mockFlyToDelegates()
+    every { mapCameraManagerDelegate.cameraState } returns stateWithViewPoint(pinned(0.25, 0.25))
+
+    val animators = viewPointAnimators(
+      cameraAnimatorsFactory.getFlyTo(
+        stateWithViewPoint(follows()).toCameraOptions()
+      )
+    )
+
+    Assert.assertEquals(1, animators.size)
+    Assert.assertTrue(animators[0].releasesToFollow)
+  }
+
+  @Test
+  fun testFlyToFollowsToFollowsCreatesNoViewPointAnimator() {
+    mockFlyToDelegates()
+
+    val animators = cameraAnimatorsFactory.getFlyTo(initialCameraPosition.toCameraOptions())
+
+    Assert.assertTrue(viewPointAnimators(animators).isEmpty())
   }
 
   private fun mockFlyToDelegates() {
@@ -407,6 +523,10 @@ class CameraAnimatorsFactoryTest {
           Assert.assertEquals(initialCameraPosition.positionPoint, startValue)
           Assert.assertEquals(targetCameraPosition.positionPoint, targetValue)
         }
+
+        CameraAnimatorType.VIEW_POINT -> {
+          Assert.assertEquals(targetCameraPosition.viewPoint!!.cameraViewPoint, (targetValue as CameraViewPointState).cameraViewPoint)
+        }
       }
     }
 
@@ -459,6 +579,10 @@ class CameraAnimatorsFactoryTest {
         CameraAnimatorType.POSITION_POINT -> {
           Assert.assertEquals(initialCameraPosition.positionPoint, startValue)
           Assert.assertEquals(targetCameraPosition.positionPoint, targetValue)
+        }
+
+        CameraAnimatorType.VIEW_POINT -> {
+          Assert.assertEquals(targetCameraPosition.viewPoint!!.cameraViewPoint, (targetValue as CameraViewPointState).cameraViewPoint)
         }
       }
     }

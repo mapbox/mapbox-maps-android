@@ -40,5 +40,10 @@ enum class CameraAnimatorType {
    * Animator responsible for [CameraOptions.positionPoint]
    */
   @MapboxExperimental
-  POSITION_POINT
+  POSITION_POINT,
+  /**
+   * Animator responsible for [CameraOptions.viewPoint]
+   */
+  @MapboxExperimental
+  VIEW_POINT
 }

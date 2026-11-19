@@ -1152,11 +1152,9 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     detector: ShoveGestureDetector,
     deltaPixelsSinceLast: Float
   ): Boolean {
-    // Get pitch value (scale and clamp)
-    var pitch = mapCameraManagerDelegate.cameraState.pitch
-    val optimizedPitch =
-      pitch - (SHOVE_PIXEL_CHANGE_FACTOR * (deltaPixelsSinceLast))
-    pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
+    // Core applies the pitch limits; with a fixed view point the axis pitch is allowed outside [0, 85].
+    val pitch = mapCameraManagerDelegate.cameraState.pitch -
+      SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast
     if (cameraPaddingChanged || sizeChanged) {
       cameraCenterScreenCoordinate =
         mapCameraManagerDelegate.pixelForCoordinate(mapCameraManagerDelegate.cameraState.center)
@@ -1436,7 +1434,8 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
     velocityXY: Double
   ): Boolean {
     val screenDensity = pixelRatio
-    val pitch = mapCameraManagerDelegate.cameraState.pitch
+    // The axis pitch can lie outside [0, 85] with a fixed view point.
+    val pitch = mapCameraManagerDelegate.cameraState.pitch.coerceIn(MINIMUM_PITCH, MAXIMUM_PITCH)
 
     // We limit the amount of fling displacement based on the camera pitch value.
     val pitchFactorAdditionalComponent = when {

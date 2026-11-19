@@ -6,12 +6,17 @@ import androidx.core.view.animation.PathInterpolatorCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointFollowsPositionPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -186,6 +191,111 @@ class CameraAnimatorTest {
 
     assertEquals(1.0, result.x, 0.0001)
     assertEquals(-1.0, result.y, 0.0001)
+  }
+
+  private fun pinned(x: Double, y: Double) = CameraViewPointState.valueOf(CameraViewPoint(x, y))
+
+  private fun follows() = CameraViewPointState.valueOf(CameraViewPointFollowsPositionPoint())
+
+  private fun viewPointAnimator(
+    start: CameraViewPointState,
+    end: CameraViewPointState,
+    followingPoint: CameraViewPoint = CameraViewPoint(0.0, 0.0)
+  ) = CameraViewPointAnimator(
+    CameraAnimatorOptions.Builder<CameraViewPointState>(targets = arrayOf(end)).startValue(start).build(),
+    followingPoint
+  ).also { it.interpolator = linearInterpolator }
+
+  @Test
+  fun `CameraViewPointAnimator interpolates between pinned view points`() {
+    val animator = viewPointAnimator(pinned(-1.0, 0.5), pinned(1.0, -0.5))
+
+    val result = animator.getAnimatedValueAt(0.25f)
+
+    assertTrue(result.isCameraViewPoint)
+    assertEquals(-0.5, result.cameraViewPoint.x, 0.0001)
+    assertEquals(0.25, result.cameraViewPoint.y, 0.0001)
+  }
+
+  @Test
+  fun `CameraViewPointAnimator writes the exact pinned target on the last frame`() {
+    // Interpolating to these values yields 0.09999999999999998 and 0.8999999999999999, so only the pinned-target path is exact.
+    val animator = viewPointAnimator(pinned(0.7, 0.2), pinned(0.1, 0.9))
+
+    val result = animator.getAnimatedValueAt(1.0f)
+
+    // State equality is tolerance-based, so compare the coordinates bit for bit.
+    assertEquals(0.1, result.cameraViewPoint.x, 0.0)
+    assertEquals(0.9, result.cameraViewPoint.y, 0.0)
+  }
+
+  @Test
+  fun `CameraViewPointAnimator is never skipped even when start equals target`() {
+    val animator = viewPointAnimator(pinned(0.3, 0.3), pinned(0.3, 0.3))
+    animator.updateObjectValues { mockk<CameraState>(relaxed = true) }
+
+    assertFalse(animator.skipped)
+  }
+
+  @Test
+  fun `CameraViewPointAnimator releases to the following view point and ends on follows`() {
+    val target = follows()
+    val animator = viewPointAnimator(pinned(1.0, 1.0), target, followingPoint = CameraViewPoint(-1.0, 0.0))
+
+    val halfway = animator.getAnimatedValueAt(0.5f)
+
+    assertTrue(halfway.isCameraViewPoint)
+    assertEquals(0.0, halfway.cameraViewPoint.x, 0.0001)
+    assertEquals(0.5, halfway.cameraViewPoint.y, 0.0001)
+    assertTrue(animator.getAnimatedValueAt(1.0f).isCameraViewPointFollowsPositionPoint)
+    assertTrue(animator.releasesToFollow)
+  }
+
+  @Test
+  fun `CameraViewPointAnimator starts from the following view point when released`() {
+    val animator = viewPointAnimator(follows(), pinned(1.0, 1.0), followingPoint = CameraViewPoint(-1.0, -1.0))
+
+    val quarter = animator.getAnimatedValueAt(0.25f)
+
+    assertEquals(-0.5, quarter.cameraViewPoint.x, 0.0001)
+    assertEquals(-0.5, quarter.cameraViewPoint.y, 0.0001)
+    assertFalse(animator.releasesToFollow)
+  }
+
+  @Test
+  fun `CameraViewPointAnimator clamps overshooting easing to valid range`() {
+    val animator = viewPointAnimator(pinned(0.0, 0.0), pinned(0.8, -0.8))
+    animator.interpolator = Interpolator { 1.5f * it }
+
+    val result = animator.getAnimatedValueAt(0.9f)
+
+    assertEquals(1.0, result.cameraViewPoint.x, 0.0001)
+    assertEquals(-1.0, result.cameraViewPoint.y, 0.0001)
+  }
+
+  @Test
+  fun `CameraViewPointAnimator getAnimatedValueAt with startCameraState uses camera state value`() {
+    val animator = CameraViewPointAnimator(
+      CameraAnimatorOptions.Builder<CameraViewPointState>(targets = arrayOf(pinned(1.0, 1.0))).build()
+    ).also { it.interpolator = linearInterpolator }
+    val cameraState = mockk<CameraState> {
+      every { viewPoint } returns pinned(0.0, -1.0)
+    }
+
+    val result = animator.getAnimatedValueAt(0.5f, cameraState)
+
+    assertEquals(0.5, result.cameraViewPoint.x, 0.0001)
+    assertEquals(0.0, result.cameraViewPoint.y, 0.0001)
+  }
+
+  @Test
+  fun `isSameAs compares view point states by kind and coordinates`() {
+    assertTrue(pinned(0.5, 0.5).isSameAs(pinned(0.5, 0.5)))
+    assertFalse(pinned(0.5, 0.5).isSameAs(pinned(0.5, 0.6)))
+    assertTrue(follows().isSameAs(follows()))
+    assertFalse(follows().isSameAs(pinned(0.0, 0.0)))
+    assertFalse(pinned(0.0, 0.0).isSameAs(follows()))
+    assertFalse(follows().isSameAs(null))
   }
 
   @Test

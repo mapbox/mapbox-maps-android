@@ -7,6 +7,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.CameraAnchorAnimator
@@ -17,6 +19,7 @@ import com.mapbox.maps.plugin.animation.animator.CameraPaddingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPositionPointAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraVerticalFovAnimator
+import com.mapbox.maps.plugin.animation.animator.CameraViewPointAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraZoomAnimator
 import io.mockk.every
 import io.mockk.mockk
@@ -325,6 +328,21 @@ class CameraAnimationsExtTest {
     assertEquals(EdgeInsets(5.0, 5.0, 5.0, 5.0), result?.stages?.get(0)?.camera?.padding)
     assertEquals(20.0, result?.stages?.get(0)?.camera?.verticalFov ?: -1.0, 0.001)
     assertEquals(CameraPositionPoint(0.5, -0.5), result?.stages?.get(0)?.camera?.positionPoint)
+  }
+
+  @Test
+  fun `updateCameraValue sets view point and clear resets it`() {
+    val builder = CameraOptions.Builder()
+    val animator = mockk<CameraViewPointAnimator>()
+    val viewPoint = CameraViewPointState.valueOf(CameraViewPoint(0.25, 0.75))
+
+    updateCameraValue(animator, viewPoint, builder)
+
+    assertEquals(CameraViewPoint(0.25, 0.75), builder.build().viewPoint?.cameraViewPoint)
+
+    builder.clear()
+
+    assertNull(builder.build().viewPoint)
   }
 
   @Test

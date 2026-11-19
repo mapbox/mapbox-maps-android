@@ -4,6 +4,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraPositionPoint
 import com.mapbox.maps.CameraState
+import com.mapbox.maps.CameraViewPoint
+import com.mapbox.maps.CameraViewPointState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import org.junit.Assert
@@ -21,7 +23,8 @@ class CameraOptionsKtxTest {
       6.0,
       7.0,
       8.0,
-      CameraPositionPoint(0.5, -0.5)
+      CameraPositionPoint(0.5, -0.5),
+      CameraViewPointState.valueOf(CameraViewPoint(-0.25, 0.75))
     )
 
     val result = cameraOptions {
@@ -32,6 +35,7 @@ class CameraOptionsKtxTest {
       pitch(expected.pitch)
       verticalFov(expected.verticalFov)
       positionPoint(expected.positionPoint)
+      viewPoint(expected.viewPoint)
     }
 
     Assert.assertEquals(expected.center, result.center)
@@ -41,6 +45,7 @@ class CameraOptionsKtxTest {
     Assert.assertEquals(expected.pitch, result.pitch)
     Assert.assertEquals(expected.verticalFov, result.verticalFov)
     Assert.assertEquals(expected.positionPoint, result.positionPoint)
+    Assert.assertEquals(expected.viewPoint.cameraViewPoint, result.viewPoint?.cameraViewPoint)
   }
 
   @Test
@@ -52,7 +57,8 @@ class CameraOptionsKtxTest {
       6.0,
       7.0,
       8.0,
-      CameraPositionPoint(0.5, -0.5)
+      CameraPositionPoint(0.5, -0.5),
+      CameraViewPointState.valueOf(CameraViewPoint(-0.25, 0.75))
     )
 
     val result = cameraOptions(expected) {
@@ -66,6 +72,7 @@ class CameraOptionsKtxTest {
     Assert.assertEquals(expected.pitch, result.pitch)
     Assert.assertEquals(expected.verticalFov, result.verticalFov)
     Assert.assertEquals(expected.positionPoint, result.positionPoint)
+    Assert.assertEquals(expected.viewPoint.cameraViewPoint, result.viewPoint?.cameraViewPoint)
   }
 
   @Test
@@ -77,7 +84,8 @@ class CameraOptionsKtxTest {
       6.0,
       7.0,
       8.0,
-      CameraPositionPoint(0.5, -0.5)
+      CameraPositionPoint(0.5, -0.5),
+      CameraViewPointState.valueOf(CameraViewPoint(-0.25, 0.75))
     )
     val expected = CameraOptions.Builder()
       .center(Point.fromLngLat(20.0, 30.0))
@@ -87,6 +95,8 @@ class CameraOptionsKtxTest {
       .pitch(14.0)
       .verticalFov(15.0)
       .positionPoint(CameraPositionPoint(-0.25, 0.25))
+      // the variant has no value equality, so the same instance is shared
+      .viewPoint(CameraViewPointState.valueOf(CameraViewPoint(0.5, 0.5)))
       .build()
 
     val result = cameraOptions(base) {
@@ -97,6 +107,7 @@ class CameraOptionsKtxTest {
       pitch(expected.pitch)
       verticalFov(expected.verticalFov)
       positionPoint(expected.positionPoint)
+      viewPoint(expected.viewPoint)
     }
 
     Assert.assertEquals(expected, result)
