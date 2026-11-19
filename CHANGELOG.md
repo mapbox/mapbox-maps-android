@@ -318,7 +318,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
-* Fix symbols, including point annotations, briefly jumping to a different position while zooming out when the layer uses `symbol-sort-key`.
+* Fix a bug where point annotations jitter when zooming out.
 * Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
 * Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
 * Fix view annotations staying on outdated layer geometry until the next camera change, after the layer's source data was updated or after the annotations were removed and added again.
