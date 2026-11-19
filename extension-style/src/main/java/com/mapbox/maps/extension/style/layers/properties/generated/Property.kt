@@ -2284,15 +2284,23 @@ class ProjectionName private constructor(override val value: String) : LayerProp
      */
     @JvmField
     val GLOBE = ProjectionName("globe")
+    /**
+     * An Albers equal-area projection centered on the continental United States. You can configure the projection for a different region by setting `center` and `parallels` properties. You may want to set max bounds to constrain the map to the relevant region.
+     */
+    @MapboxExperimental
+    @JvmField
+    val ALBERS = ProjectionName("albers")
 
     /**
      * Utility function to get [ProjectionName] instance from given [value].
      */
     @JvmStatic
+    @OptIn(MapboxExperimental::class)
     fun valueOf(value: String): ProjectionName {
       return when (value) {
         "MERCATOR" -> MERCATOR
         "GLOBE" -> GLOBE
+        "ALBERS" -> ALBERS
         else -> throw RuntimeException("ProjectionName.valueOf does not support [$value]")
       }
     }

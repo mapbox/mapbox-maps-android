@@ -4778,12 +4778,18 @@ package com.mapbox.maps.extension.compose.style.precipitations.generated {
 package com.mapbox.maps.extension.compose.style.projection.generated {
 
   @androidx.compose.runtime.Immutable public final class Projection {
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.compose.style.projection.generated.Projection albers(java.util.List<java.lang.Double>? center = null, java.util.List<java.lang.Double>? parallels = null);
     method public com.mapbox.bindgen.Value component1();
     method public com.mapbox.maps.extension.compose.style.projection.generated.Projection copy(com.mapbox.bindgen.Value value);
+    method public java.util.List<java.lang.Double>? getCenter();
+    method public java.util.List<java.lang.Double>? getParallels();
     method public String? getProjectionNameOrNull();
     method public com.mapbox.bindgen.Value getValue();
+    property public final java.util.List<java.lang.Double>? center;
+    property public final java.util.List<java.lang.Double>? parallels;
     property public final String? projectionNameOrNull;
     property public final com.mapbox.bindgen.Value value;
+    field @com.mapbox.maps.MapboxExperimental public static final com.mapbox.maps.extension.compose.style.projection.generated.Projection ALBERS;
     field public static final com.mapbox.maps.extension.compose.style.projection.generated.Projection.Companion Companion;
     field public static final com.mapbox.maps.extension.compose.style.projection.generated.Projection DEFAULT;
     field public static final com.mapbox.maps.extension.compose.style.projection.generated.Projection GLOBE;
@@ -4791,6 +4797,7 @@ package com.mapbox.maps.extension.compose.style.projection.generated {
   }
 
   public static final class Projection.Companion {
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.compose.style.projection.generated.Projection albers(java.util.List<java.lang.Double>? center = null, java.util.List<java.lang.Double>? parallels = null);
   }
 
 }

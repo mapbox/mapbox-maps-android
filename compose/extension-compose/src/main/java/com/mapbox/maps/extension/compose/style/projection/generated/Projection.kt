@@ -4,6 +4,9 @@ package com.mapbox.maps.extension.compose.style.projection.generated
 
 import androidx.compose.runtime.Immutable
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.DoubleListValue
+import com.mapbox.maps.extension.compose.style.internal.ComposeTypeUtils
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 
 /**
@@ -26,6 +29,22 @@ public data class Projection internal constructor(
   @Suppress("UNCHECKED_CAST")
   val projectionNameOrNull: String?
     get() = (value.contents as? HashMap<String, Value>)?.get("name")?.contents as? String
+
+  /**
+   * The reference longitude and latitude of the projection. `center` takes the form of [lng, lat]. This property is only configurable for conic projections (Albers and Lambert Conformal Conic). All other projections are centered on [0, 0]. Minimum value: [-180,-90]. Maximum value: [180,90].
+   */
+  @MapboxExperimental
+  @Suppress("UNCHECKED_CAST")
+  public val center: List<Double>?
+    get() = (value.contents as? HashMap<String, Value>)?.get("center")?.let { DoubleListValue(it).doubleListOrNull }
+
+  /**
+   * The standard parallels of the projection, denoting the desired latitude range with minimal distortion. `parallels` takes the form of [lat0, lat1]. This property is only configurable for conic projections (Albers and Lambert Conformal Conic). Minimum value: [-90,-90]. Maximum value: [90,90].
+   */
+  @MapboxExperimental
+  @Suppress("UNCHECKED_CAST")
+  public val parallels: List<Double>?
+    get() = (value.contents as? HashMap<String, Value>)?.get("parallels")?.let { DoubleListValue(it).doubleListOrNull }
 
   /**
    * True if the this value is not [INITIAL]
@@ -65,6 +84,33 @@ public data class Projection internal constructor(
      */
     @JvmField
     public val GLOBE: Projection = Projection(ProjectionName.GLOBE)
+
+    /**
+     * An Albers equal-area projection centered on the continental United States. You can configure the projection for a different region by setting `center` and `parallels` properties. You may want to set max bounds to constrain the map to the relevant region.
+     */
+    @JvmField
+    @MapboxExperimental
+    public val ALBERS: Projection = Projection(ProjectionName.ALBERS)
+
+    /**
+     * An Albers equal-area projection centered on the continental United States. You can configure the projection for a different region by setting `center` and `parallels` properties. You may want to set max bounds to constrain the map to the relevant region.
+     *
+     * @param center The reference longitude and latitude of the projection. `center` takes the form of [lng, lat]. This property is only configurable for conic projections (Albers and Lambert Conformal Conic). All other projections are centered on [0, 0]. Minimum value: [-180,-90]. Maximum value: [180,90].
+     * @param parallels The standard parallels of the projection, denoting the desired latitude range with minimal distortion. `parallels` takes the form of [lat0, lat1]. This property is only configurable for conic projections (Albers and Lambert Conformal Conic). Minimum value: [-90,-90]. Maximum value: [90,90].
+     */
+    @MapboxExperimental
+    @JvmStatic
+    public fun albers(
+      center: List<Double>? = null,
+      parallels: List<Double>? = null,
+    ): Projection = Projection(
+      Value.valueOf(
+        hashMapOf("name" to Value(ProjectionName.ALBERS.value)).apply {
+          center?.let { put("center", ComposeTypeUtils.wrapToValue(it)) }
+          parallels?.let { put("parallels", ComposeTypeUtils.wrapToValue(it)) }
+        }
+      )
+    )
   }
 }
 // End of generated file.

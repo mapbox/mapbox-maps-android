@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.compose.testapp.ExampleScaffold
 import com.mapbox.maps.compose.testapp.examples.utils.CityLocations
 import com.mapbox.maps.compose.testapp.ui.theme.MapboxMapComposeTheme
@@ -43,10 +44,11 @@ import kotlin.random.Random
  */
 public class StyleStatesActivity : ComponentActivity() {
 
+  @OptIn(MapboxExperimental::class)
   private val projections =
   // Standard style default projection is GLOBE so we make sure that MERCATOR is before and after
     // default so the map changes visually.
-    listOf(Projection.DEFAULT, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR)
+    listOf(Projection.DEFAULT, Projection.MERCATOR, Projection.GLOBE, Projection.MERCATOR, Projection.ALBERS)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

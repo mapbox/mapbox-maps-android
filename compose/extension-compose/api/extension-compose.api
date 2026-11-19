@@ -4063,14 +4063,18 @@ public final class com/mapbox/maps/extension/compose/style/precipitations/genera
 }
 
 public final class com/mapbox/maps/extension/compose/style/projection/generated/Projection {
+	public static final field ALBERS Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public static final field Companion Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection$Companion;
 	public static final field DEFAULT Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public static final field GLOBE Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public static final field MERCATOR Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
+	public static final fun albers (Ljava/util/List;Ljava/util/List;)Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public final fun component1 ()Lcom/mapbox/bindgen/Value;
 	public final fun copy (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;Lcom/mapbox/bindgen/Value;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCenter ()Ljava/util/List;
+	public final fun getParallels ()Ljava/util/List;
 	public final fun getProjectionNameOrNull ()Ljava/lang/String;
 	public final fun getValue ()Lcom/mapbox/bindgen/Value;
 	public fun hashCode ()I
@@ -4078,6 +4082,8 @@ public final class com/mapbox/maps/extension/compose/style/projection/generated/
 }
 
 public final class com/mapbox/maps/extension/compose/style/projection/generated/Projection$Companion {
+	public final fun albers (Ljava/util/List;Ljava/util/List;)Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
+	public static synthetic fun albers$default (Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection$Companion;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/compose/style/sources/ClusterProperties : com/mapbox/maps/extension/compose/style/HoldsValue {

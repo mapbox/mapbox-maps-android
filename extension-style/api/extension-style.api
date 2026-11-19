@@ -5487,6 +5487,7 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/O
 }
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/ProjectionName : com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field ALBERS Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 	public static final field Companion Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName$Companion;
 	public static final field GLOBE Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 	public static final field MERCATOR Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
@@ -6295,7 +6296,11 @@ public final class com/mapbox/maps/extension/style/precipitations/generated/Snow
 public final class com/mapbox/maps/extension/style/projection/generated/Projection : com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension {
 	public fun <init> (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)V
 	public fun bindTo (Lcom/mapbox/maps/MapboxStyleManager;)V
+	public final fun center (Ljava/util/List;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public final fun getCenter ()Ljava/util/List;
 	public final fun getName ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
+	public final fun getParallels ()Ljava/util/List;
+	public final fun parallels (Ljava/util/List;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/ProjectionKt {

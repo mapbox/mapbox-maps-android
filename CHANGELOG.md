@@ -6,6 +6,16 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+## Features ✨ and improvements 🏁
+* Add the experimental Albers equal-area projection: `ProjectionName.ALBERS`. Use the experimental `Projection.center` and `Projection.parallels` to configure it for a region.
+    ```kotlin
+    mapboxMap.setProjection(
+      projection(ProjectionName.ALBERS)
+        .center(listOf(10.0, 50.0))
+        .parallels(listOf(43.0, 62.0))
+    )
+    ```
+
 # 11.36.0-rc.1 November 16, 2026
 
 ## Features ✨ and improvements 🏁

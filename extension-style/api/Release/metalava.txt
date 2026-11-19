@@ -6705,6 +6705,7 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     method public String getValue();
     method public static com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName valueOf(String value);
     property public String value;
+    field @com.mapbox.maps.MapboxExperimental public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName ALBERS;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName.Companion Companion;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName GLOBE;
     field public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName MERCATOR;
@@ -7562,8 +7563,14 @@ package com.mapbox.maps.extension.style.projection.generated {
   @UiThread public final class Projection implements com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension {
     ctor public Projection(com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name);
     method public void bindTo(com.mapbox.maps.MapboxStyleManager delegate);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.projection.generated.Projection center(java.util.List<java.lang.Double> center);
+    method public java.util.List<java.lang.Double>? getCenter();
     method public com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName getName();
+    method public java.util.List<java.lang.Double>? getParallels();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.extension.style.projection.generated.Projection parallels(java.util.List<java.lang.Double> parallels);
+    property public final java.util.List<java.lang.Double>? center;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name;
+    property public final java.util.List<java.lang.Double>? parallels;
   }
 
   public final class ProjectionKt {
