@@ -12,24 +12,28 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.31.2 November 18, 2026
-## Dependencies
-* Update gl-native to [v11.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2), common to [v24.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2).
 
 ## Breaking changes ⚠️
 * Remove the deprecated experimental `RenderThreadStats.totalDroppedFrames`. Use `totalSkippedVsync` instead, which holds the same value.
 * Replace the experimental `setRenderThreadStatsRecorder()` with a `renderThreadStatsRecorder` property on `MapView` and `MapSurface`. Each map now owns its recorder, and the `RenderThreadStatsRecorder` constructor is no longer public.
 * Rename the experimental `RenderThreadStatsRecorder.end()` to `stop()`, to match `start()`.
 
-## Bug fixes 🐞
-* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
-* Fix a bug where point annotations jitter when zooming out
-* Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
-* Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
-* Fix stale layer geometry cache on readding view annotations
-* Fix view annotations stuck to stale cached layer's geometry
-
 ## Features ✨ and improvements 🏁
 * Add x86_64 support to the Vulkan AAR for Android, in addition to arm64-v8a.
+* Stop logging FPS statistics every second while an `OnFpsChangedListener` is set, which slowed down the render thread. The listener still receives FPS values.
+
+## Bug fixes 🐞
+* Fix a race in the experimental `RenderThreadStatsRecorder` where calling `stop()` while the map was rendering could return inconsistent stats or carry frames over into the next recording session. Recording never makes the render thread wait.
+* Fix a bug where point annotations jitter when zooming out.
+* Fix a crash that could occur when multiple maps render simultaneously while displaying view annotations.
+* Fix view annotations flickering or jumping position when camera padding leaves insufficient room to fit them.
+* Fix view annotations staying on outdated layer geometry until the next camera change, after the layer's source data was updated or after the annotations were removed and added again.
+* Internal fixes and performance improvements.
+
+## Dependencies
+* Update gl-native to [v11.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2), common to [v24.31.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.2).
+
+
 # 11.31.1 September 25, 2026
 ## Dependencies
 * Update gl-native to [v11.31.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.1), common to [v24.31.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.1).
