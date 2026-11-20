@@ -32,6 +32,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix symbols with zoom- and feature-dependent text or icon size being drawn too large between zoom stops when using a global scale factor.
 * Fix a bug where chained `let` and `var` expressions cause the renderer to hang.
 
+# 11.31.3 November 20, 2026
+## Dependencies
+* Update gl-native to [v11.31.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.3), common to [v24.31.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.3).
+
+
+# 11.31.2 November 18, 2026
 ## Dependencies
 * Update gl-native to [v11.36.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0-rc.1), common to [v24.36.0-rc.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0-rc.1).
 
