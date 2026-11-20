@@ -6,11 +6,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.33.4 November 20, 2026
-## Dependencies
-* Update gl-native to [v11.33.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.4), common to [v24.33.4](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.4).
-
-
 # 11.33.3 November 20, 2026
 ## Dependencies
 * Update gl-native to [v11.33.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.3), common to [v24.33.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.33.3).
