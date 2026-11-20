@@ -6,6 +6,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
+# 11.35.2 November 20, 2026
+## Dependencies
+* Update gl-native to [v11.35.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.2), common to [v24.35.2](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.2).
+
+
+## Bug fixes 🐞
+* Fix a bug where chained `let` and `var` expressions cause the renderer to hang.
+
 # 11.35.1 November 18, 2026
 ## Dependencies
 * Update gl-native to [v11.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1), common to [v24.35.1](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.35.1).
