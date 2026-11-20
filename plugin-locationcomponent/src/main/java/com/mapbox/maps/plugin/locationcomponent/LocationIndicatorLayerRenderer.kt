@@ -130,8 +130,7 @@ internal class LocationIndicatorLayerRenderer(
   }
 
   private fun setLayerLocation(latLng: Point) {
-    val values = listOf(latLng.latitude(), latLng.longitude(), 0.0)
-    layer.location(values)
+    layer.location(doubleArrayOf(latLng.latitude(), latLng.longitude(), 0.0))
   }
 
   private fun setLayerBearing(bearing: Double) {

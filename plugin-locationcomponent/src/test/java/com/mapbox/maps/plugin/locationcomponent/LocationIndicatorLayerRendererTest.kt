@@ -16,6 +16,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_I
 import com.mapbox.maps.plugin.locationcomponent.utils.BitmapUtils
 import io.mockk.*
 import org.junit.Assert
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -31,7 +32,7 @@ class LocationIndicatorLayerRendererTest {
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
   private val expressionSlot = CapturingSlot<List<Value>>()
-  private val doubleListSlot = CapturingSlot<List<Double>>()
+  private val locationSlot = CapturingSlot<DoubleArray>()
 
   private val puckOptions = mockk<LocationPuck2D>(relaxed = true)
   private val topBitmap = mockk<Bitmap>(relaxed = true)
@@ -126,8 +127,8 @@ class LocationIndicatorLayerRendererTest {
 
     locationLayerRenderer.initializeComponents(style)
 
-    verify { layerWrapper.location(capture(doubleListSlot)) }
-    assertEquals(latLng.toLocationList(), doubleListSlot.captured)
+    verify { layerWrapper.location(capture(locationSlot)) }
+    assertArrayEquals(latLng.toLocationArray(), locationSlot.captured, 0.0)
     verify { layerWrapper.bearing(bearing.toDouble()) }
     verify { layerWrapper.accuracyRadius(accuracy.toDouble()) }
   }
@@ -181,7 +182,7 @@ class LocationIndicatorLayerRendererTest {
     locationLayerRenderer.setLatLng(latLng)
 
     verify {
-      layerWrapper.location(latLng.toLocationList())
+      layerWrapper.location(latLng.toLocationArray())
     }
   }
 
@@ -242,5 +243,5 @@ class LocationIndicatorLayerRendererTest {
     verify(exactly = 1) { newStyle.removeStyleLayer(any()) }
   }
 
-  private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)
+  private fun Point.toLocationArray() = doubleArrayOf(latitude(), longitude(), 0.0)
 }

@@ -26,7 +26,7 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
 
   fun slot(slot: String?) = updateProperty("slot", Value(slot ?: ""))
 
-  fun location(location: List<Double>) = updateProperty("location", Value(location.map(::Value)))
+  fun location(location: DoubleArray) = updateProperty("location", Value(location))
 
   fun accuracyRadiusColor(expression: List<Value>) = updateProperty("accuracy-radius-color", Value(expression))
 

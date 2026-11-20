@@ -52,9 +52,8 @@ class LocationIndicatorLayerWrapperTest {
 
   @Test
   fun testLocation() {
-    val location = arrayListOf(1.0, 2.0)
-    layer.location(location)
-    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "location", Value(location.map(::Value))) }
+    layer.location(doubleArrayOf(1.0, 2.0))
+    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "location", Value(arrayListOf(Value(1.0), Value(2.0)))) }
   }
 
   @Test
