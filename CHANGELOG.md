@@ -33,6 +33,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix a bug where chained `let` and `var` expressions cause the renderer to hang.
 
 # 11.31.3 November 20, 2026
+# 11.32.5 November 20, 2026
+## Dependencies
+* Update gl-native to [v11.32.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.5), common to [v24.32.5](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.32.5).
+
+
+# 11.32.4 November 18, 2026
 ## Dependencies
 * Update gl-native to [v11.31.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.3), common to [v24.31.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.31.3).
 
