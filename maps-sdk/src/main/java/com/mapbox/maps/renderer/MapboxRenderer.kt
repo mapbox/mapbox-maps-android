@@ -58,6 +58,22 @@ internal abstract class MapboxRenderer(
     @MainThread
     set
 
+  private var surfaceAvailabilityListener: ((available: Boolean) -> Unit)? = null
+
+  /**
+   * Sets the listener that is notified when a surface to draw on becomes available (`true`) or is
+   * destroyed (`false`), on the main thread. Replaces the previous listener.
+   */
+  @UiThread
+  internal fun setSurfaceAvailabilityListener(listener: ((available: Boolean) -> Unit)?) {
+    surfaceAvailabilityListener = listener
+  }
+
+  @UiThread
+  protected fun notifySurfaceAvailability(available: Boolean) {
+    surfaceAvailabilityListener?.invoke(available)
+  }
+
   @UiThread
   fun onDestroy() {
     widgetRenderer.cleanUpAllWidgets()

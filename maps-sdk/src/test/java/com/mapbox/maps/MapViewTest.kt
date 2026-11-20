@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.view.MotionEvent
 import androidx.test.core.app.ApplicationProvider
+import com.mapbox.maps.coroutine.isRenderable
 import com.mapbox.maps.debugoptions.DebugOptionsController
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
@@ -13,12 +14,14 @@ import io.mockk.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -96,6 +99,14 @@ class MapViewTest {
   fun onLowMemory() {
     mapView.onLowMemory()
     verify { mapController.onLowMemory() }
+  }
+
+  @Test
+  fun isRenderableComesFromController() {
+    val isRenderable = MutableStateFlow(true)
+    every { mapController.isRenderable } returns isRenderable
+
+    assertSame(isRenderable, mapView.isRenderable)
   }
 
   @Test

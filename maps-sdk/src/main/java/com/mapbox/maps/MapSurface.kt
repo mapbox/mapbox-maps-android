@@ -32,7 +32,9 @@ import kotlinx.coroutines.launch
 class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   val context: Context
-  private val mapController: MapController
+
+  @get:JvmSynthetic
+  internal val mapController: MapController
   private val mapInitOptions: MapInitOptions
   private val renderer: MapboxSurfaceRenderer
   private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null

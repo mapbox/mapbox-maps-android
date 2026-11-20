@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.opengl.GLES20
+import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
@@ -12,6 +13,7 @@ import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.MainThread
+import androidx.annotation.RequiresApi
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.MapboxTracing
@@ -198,6 +200,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     super.onAttachedToWindow()
     if (!isInEditMode) {
       mapController.onAttachedToWindow(this)
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        // The platform reports the visibility of a view that is attached as hidden only when it
+        // changes, so read the initial value here.
+        mapController.setHostVisible(isShown && windowVisibility == VISIBLE)
+      }
     }
   }
 
@@ -465,6 +472,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     mapController.removeOnMaximumFpsChangedListener(listener)
+  }
+
+  @RequiresApi(Build.VERSION_CODES.N)
+  override fun onVisibilityAggregated(isVisible: Boolean) {
+    super.onVisibilityAggregated(isVisible)
+    if (!isInEditMode) {
+      mapController.setHostVisible(isVisible)
+    }
   }
 
   /**
