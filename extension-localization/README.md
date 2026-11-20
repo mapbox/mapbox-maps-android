@@ -31,7 +31,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.extension:maps-localization:11.34.5'
+  implementation 'com.mapbox.extension:maps-localization:11.36.0-rc.1'
 }
 ```
 
