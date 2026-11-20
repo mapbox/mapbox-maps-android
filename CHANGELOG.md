@@ -12,12 +12,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 
 # 11.34.3 November 18, 2026
+
+## Bug fixes 🐞
+* Fix the map display cycling through its last few frames instead of updating on devices with older Mali GPUs (Bifrost G31, G51, G52, G71, G72, G76 and earlier), by disabling OpenGL persistent buffer mapping on them.
+* Internal fixes and performance improvements.
+
 ## Dependencies
 * Update gl-native to [v11.34.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.3), common to [v24.34.3](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.34.3).
 
-
-## Bug fixes 🐞
-* Disable OpenGL persistent buffer mapping on Bifrost Mali GPUs (G31, G51, G52, G71, G72, G76) and older.
 
 # 11.34.2 November 03, 2026
 
