@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.opengl.EGL14
 import android.opengl.EGLContext
 import android.opengl.EGLSurface
+import com.mapbox.maps.isLoggableD
 import com.mapbox.maps.logD
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
@@ -37,6 +38,7 @@ class EGLCoreTest {
     every { logW(any(), any()) } just Runs
     every { logE(any(), any()) } just Runs
     every { logD(any(), any<String>()) } just Runs
+    every { isLoggableD() } returns true
     EGL14.EGL_NO_CONTEXT = mockk<EGLContext>()
     EGL14.EGL_NO_SURFACE = mockk<EGLSurface>()
     EGL14.EGL_NO_DISPLAY = mockk()

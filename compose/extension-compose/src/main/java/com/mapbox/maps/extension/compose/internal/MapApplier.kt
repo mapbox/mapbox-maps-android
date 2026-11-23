@@ -55,14 +55,14 @@ internal class MapApplier(
 ) : AbstractApplier<MapNode>(RootMapNode()) {
 
   override fun onClear() {
-    logD(TAG, "onClear: current=$current")
+    logD(TAG) { "onClear: current=$current" }
     root.children.forEach { it.onClear() }
     root.children.clear()
     printNodesTree("MapNodeCleared")
   }
 
   override fun insertBottomUp(index: Int, instance: MapNode) {
-    logD(TAG, "insertBottomUp: $index, $instance")
+    logD(TAG) { "insertBottomUp: $index, $instance" }
     current.children.add(index, instance)
     instance.onAttached(parent = current)
     // If the inserted node is a LayerPositionAwareNode, we need to notify the next
@@ -92,7 +92,7 @@ internal class MapApplier(
    * elements being reordered to A C B D E.
    */
   override fun move(from: Int, to: Int, count: Int) {
-    logD(TAG, "move: $from, $to, $count")
+    logD(TAG) { "move: $from, $to, $count" }
     current.children.move(from, to, count)
 
     // Let's move the children nodes in the tree
@@ -103,7 +103,7 @@ internal class MapApplier(
   }
 
   override fun remove(index: Int, count: Int) {
-    logD(TAG, "remove: $index, $count")
+    logD(TAG) { "remove: $index, $count" }
     var layerPositionAwareNodeRemoved = false
     repeat(count) { offset ->
       val child = current.children[index + offset]
@@ -139,7 +139,7 @@ internal class MapApplier(
   }
 
   private fun walkChildren(tag: String = TAG, prefix: String = "\t", node: MapNode) {
-    logD(tag, "$prefix - $node")
+    logD(tag) { "$prefix - $node" }
     node.children.forEach {
       walkChildren(tag = tag, prefix = "$prefix\t", node = it)
     }

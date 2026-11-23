@@ -57,7 +57,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
         "createPlugin('${plugin.id}') called after destroy."
       )
     }
-    logD(TAG, "createPlugin('${plugin.id}') from thread '${Thread.currentThread().name}'")
+    logD(TAG) { "createPlugin('${plugin.id}') from thread '${Thread.currentThread().name}'" }
     val mapPlugin = plugin.instance
     if (mapPlugin == null) {
       throw MapboxConfigurationException("MapPlugin instance is missing for ${plugin.id}!")
@@ -133,7 +133,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
         "removePlugin('$id') called after destroy."
       )
     }
-    logD(TAG, "removePlugin('$id') from thread '${Thread.currentThread().name}'")
+    logD(TAG) { "removePlugin('$id') from thread '${Thread.currentThread().name}'" }
     val plugin = plugins[id]
     when (plugin) {
       is MapCameraPlugin -> cameraPlugins.remove(plugin)

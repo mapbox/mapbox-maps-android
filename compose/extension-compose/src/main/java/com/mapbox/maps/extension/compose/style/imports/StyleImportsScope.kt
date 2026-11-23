@@ -59,7 +59,7 @@ internal class StyleImportNode(
         }.onError { error ->
           logW(TAG, "addStyleImport error: $error")
         }.onValue {
-          logD(TAG, "added StyleImport($importId, $style, $config, null)")
+          logD(TAG) { "added StyleImport($importId, $style, $config, null)" }
         }
         if (!styleColorTheme.isStyleDefault) {
           mapboxMap.setImportColorTheme(importId, styleColorTheme.colorTheme)

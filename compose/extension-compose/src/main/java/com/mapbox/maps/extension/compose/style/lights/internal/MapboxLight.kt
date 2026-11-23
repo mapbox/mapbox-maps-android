@@ -25,7 +25,7 @@ internal sealed class MapboxLight {
             logE(TAG, "setStyleLights error: $it")
           }
           .onValue {
-            logD(TAG, "setStyleLights: $lights")
+            logD(TAG) { "setStyleLights: $lights" }
           }
       }
       directionalLightState.forEach {
@@ -45,7 +45,7 @@ internal sealed class MapboxLight {
             logE(TAG, "setStyleLights error: $it")
           }
           .onValue {
-            logD(TAG, "setStyleLights: $lights")
+            logD(TAG) { "setStyleLights: $lights" }
           }
       }
       flatLightState.UpdateProperties(mapboxMap = mapboxMap)

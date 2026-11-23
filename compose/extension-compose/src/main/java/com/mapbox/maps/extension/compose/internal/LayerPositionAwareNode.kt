@@ -28,10 +28,9 @@ internal interface LayerPositionAwareNode {
    * Reposition all the layers associated with the current Node to the given [layerPosition].
    */
   private fun MapboxStyleManager.repositionLayersForCurrentNode(layerPosition: LayerPosition?) {
-    logD(
-      TAG,
+    logD(TAG) {
       "[${this@LayerPositionAwareNode}] repositionLayersForCurrentNode() called with: layerPosition = $layerPosition"
-    )
+    }
     val associatedLayers = getLayerIds()
     if (associatedLayers.isEmpty()) {
       logW(

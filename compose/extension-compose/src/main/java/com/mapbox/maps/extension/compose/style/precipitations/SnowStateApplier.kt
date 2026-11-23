@@ -65,7 +65,7 @@ internal class SnowStateApplier internal constructor(
     detach()
     if (!enabled) {
       if (styleDefaults.isNotEmpty()) {
-        logD(TAG, "Resetting snow to style default: $styleDefaults")
+        logD(TAG) { "Resetting snow to style default: $styleDefaults" }
         mapboxMap.setStyleSnow(Value(HashMap(styleDefaults))).onError {
           logE(TAG, "Failed to reset snow to style default: $it")
         }
@@ -77,13 +77,13 @@ internal class SnowStateApplier internal constructor(
     val userProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
     val merged = HashMap<String, Value>(styleDefaults).apply { putAll(userProperties) }
     if (merged.isNotEmpty()) {
-      logD(TAG, "Adding snow: $this")
+      logD(TAG) { "Adding snow: $this" }
       mapboxMap.setStyleSnow(
         properties = Value(merged),
       ).onError {
         logE(TAG, "Failed to add snow: $it")
       }.onValue {
-        logD(TAG, "Added snow: $this")
+        logD(TAG) { "Added snow: $this" }
         snowSet = true
       }
     }
@@ -95,7 +95,7 @@ internal class SnowStateApplier internal constructor(
       propertiesFlowsToCollect.collect { (name: String, valueFlow: PropertyValueFlow) ->
         val updatePropertyJob = coroutineScope.launch {
           valueFlow.collect { value ->
-            logD(TAG, "settingProperty: name=$name, value=$value ...")
+            logD(TAG) { "settingProperty: name=$name, value=$value ..." }
             mapboxMap.setStyleSnowProperty(name, value)
               .onError { error ->
                 // handle the use case of changing snow e.g. for Standard style
@@ -106,7 +106,7 @@ internal class SnowStateApplier internal constructor(
                     mapboxMap.setStyleSnowProperty(name, value).onError {
                       logW(TAG, "Failed to set snow property $name as $value: $error")
                     }.onValue {
-                      logD(TAG, "settingProperty: name=$name, value=$value executed")
+                      logD(TAG) { "settingProperty: name=$name, value=$value executed" }
                     }
                   }.onError {
                     logW(TAG, "Failed to set snow with no properties, error = $it")
@@ -116,7 +116,7 @@ internal class SnowStateApplier internal constructor(
                   logW(TAG, "Failed to set snow property $name as $value: $error")
                 }
               }.onValue {
-                logD(TAG, "settingProperty: name=$name, value=$value executed")
+                logD(TAG) { "settingProperty: name=$name, value=$value executed" }
               }
           }
         }
@@ -141,7 +141,7 @@ internal class SnowStateApplier internal constructor(
     if (currentFlow != null) {
       currentFlow.second.value = value
     } else {
-      logD(TAG, "setProperty: emitting new property to listen to: $name")
+      logD(TAG) { "setProperty: emitting new property to listen to: $name" }
       // Add the new property to the set of property flows we want to collect
       propertiesFlowsToCollect.tryEmit(name to MutableStateFlow(value))
     }

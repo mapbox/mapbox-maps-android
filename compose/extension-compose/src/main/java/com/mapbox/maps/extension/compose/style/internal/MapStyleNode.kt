@@ -62,7 +62,7 @@ internal class MapStyleNode(
 
   internal val styleSourcesLoaded: SharedFlow<StyleDataLoaded> = styleDataLoadedFlow
     .filter { it.type == StyleDataLoadedType.SOURCES }
-    .onEach { logD(TAG, "$this - styleSourcesLoaded: $it") }
+    .onEach { logD(TAG) { "$this - styleSourcesLoaded: $it" } }
     .shareIn(
       scope = coroutineScope,
       started = SharingStarted.Eagerly,
@@ -70,7 +70,7 @@ internal class MapStyleNode(
     )
   internal val styleDataLoaded = styleDataLoadedFlow
     .filter { it.type == StyleDataLoadedType.STYLE }
-    .onEach { logD(TAG, "$this - styleDataLoaded: $it") }
+    .onEach { logD(TAG) { "$this - styleDataLoaded: $it" } }
     .shareIn(
       scope = coroutineScope,
       started = SharingStarted.Eagerly,
@@ -78,7 +78,7 @@ internal class MapStyleNode(
     )
   internal val styleSpritesLoaded = styleDataLoadedFlow
     .filter { it.type == StyleDataLoadedType.SPRITE }
-    .onEach { logD(TAG, "$this - styleSpritesLoaded: $it") }
+    .onEach { logD(TAG) { "$this - styleSpritesLoaded: $it" } }
     .shareIn(
       scope = coroutineScope,
       started = SharingStarted.Eagerly,
@@ -86,7 +86,7 @@ internal class MapStyleNode(
     )
 
   override fun onAttached(parent: MapNode) {
-    logD(TAG, "onAttached: parent=$parent")
+    logD(TAG) { "onAttached: parent=$parent" }
     updateStyle(style)
     updateProjection(projection)
     // Single consolidated STYLE collector (launched once, not per recomposition).
@@ -105,7 +105,7 @@ internal class MapStyleNode(
   }
 
   override fun onRemoved(parent: MapNode) {
-    logD(TAG, "onRemoved: parent=$parent")
+    logD(TAG) { "onRemoved: parent=$parent" }
     coroutineScope.cancel()
     // remove the current style with loading an empty style json, if this is the only style
     // node in the node tree.
@@ -132,9 +132,9 @@ internal class MapStyleNode(
   }
 
   private fun updateStyle(style: String) {
-    logD(TAG, "loadStyle $style started")
+    logD(TAG) { "loadStyle $style started" }
     mapboxMap.loadStyle(style) {
-      logD(TAG, "loadStyle $style finished")
+      logD(TAG) { "loadStyle $style finished" }
     }
   }
 

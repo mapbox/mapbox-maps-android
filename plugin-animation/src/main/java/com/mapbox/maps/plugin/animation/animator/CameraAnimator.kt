@@ -124,10 +124,9 @@ abstract class CameraAnimator<out T>(
     val cameraCurrentValue = defaultStartValue(getStartCameraState)
     val resolvedStartValue = startValue ?: cameraCurrentValue
     if (DEBUG_MODE) {
-      logD(
-        CameraAnimationsPluginImpl.Companion.TAG,
+      logD(CameraAnimationsPluginImpl.Companion.TAG) {
         "Animation ${type.name}(${hashCode()}): automatically setting start value $resolvedStartValue."
-      )
+      }
     }
     val animationObjectValues = resolveAnimationObjectValues(resolvedStartValue)
     if ((evaluator is CameraTypeEvaluator) &&
@@ -135,10 +134,7 @@ abstract class CameraAnimator<out T>(
     ) {
       skipped = true
       if (DEBUG_MODE) {
-        logD(
-          CameraAnimationsPluginImpl.Companion.TAG,
-          "Animation ${type.name}(${hashCode()}) was skipped."
-        )
+        logD(CameraAnimationsPluginImpl.Companion.TAG) { "Animation ${type.name}(${hashCode()}) was skipped." }
       }
       return
     }

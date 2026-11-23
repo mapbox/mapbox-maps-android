@@ -43,7 +43,7 @@ internal class StyleConfigNode(
 
   fun setProperty(value: Value) {
     dispatchWhenStyleDataLoaded {
-      logD(TAG, "Setting style import config property $value for $this")
+      logD(TAG) { "Setting style import config property $value for $this" }
       mapboxMap.setStyleImportConfigProperty(importId = importId, config = configName, value)
     }
   }

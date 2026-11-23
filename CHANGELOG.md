@@ -17,6 +17,9 @@ Mapbox welcomes participation and contributions from everyone.
     )
     ```
 
+## Bug fixes 🐞
+* Build debug log messages only when debug logging is enabled.
+
 # 11.36.0-rc.1 November 16, 2026
 
 ## Features ✨ and improvements 🏁

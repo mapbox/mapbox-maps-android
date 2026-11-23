@@ -71,7 +71,7 @@ internal class RainStateApplier internal constructor(
     detach()
     if (!enabled) {
       if (styleDefaults.isNotEmpty()) {
-        logD(TAG, "Resetting rain to style default: $styleDefaults")
+        logD(TAG) { "Resetting rain to style default: $styleDefaults" }
         mapboxMap.setStyleRain(Value(HashMap(styleDefaults))).onError {
           logE(TAG, "Failed to reset rain to style default: $it")
         }
@@ -83,13 +83,13 @@ internal class RainStateApplier internal constructor(
     val userProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
     val merged = HashMap<String, Value>(styleDefaults).apply { putAll(userProperties) }
     if (merged.isNotEmpty()) {
-      logD(TAG, "Adding rain: $this")
+      logD(TAG) { "Adding rain: $this" }
       mapboxMap.setStyleRain(
         properties = Value(merged),
       ).onError {
         logE(TAG, "Failed to add rain: $it")
       }.onValue {
-        logD(TAG, "Added rain: $this")
+        logD(TAG) { "Added rain: $this" }
         rainSet = true
       }
     }
@@ -101,7 +101,7 @@ internal class RainStateApplier internal constructor(
       propertiesFlowsToCollect.collect { (name: String, valueFlow: PropertyValueFlow) ->
         val updatePropertyJob = coroutineScope.launch {
           valueFlow.collect { value ->
-            logD(TAG, "settingProperty: name=$name, value=$value ...")
+            logD(TAG) { "settingProperty: name=$name, value=$value ..." }
             mapboxMap.setStyleRainProperty(name, value)
               .onError { error ->
                 // handle the use case of changing rain e.g. for Standard style
@@ -112,7 +112,7 @@ internal class RainStateApplier internal constructor(
                     mapboxMap.setStyleRainProperty(name, value).onError {
                       logW(TAG, "Failed to set rain property $name as $value: $error")
                     }.onValue {
-                      logD(TAG, "settingProperty: name=$name, value=$value executed")
+                      logD(TAG) { "settingProperty: name=$name, value=$value executed" }
                     }
                   }.onError {
                     logW(TAG, "Failed to set rain with no properties, error = $it")
@@ -122,7 +122,7 @@ internal class RainStateApplier internal constructor(
                   logW(TAG, "Failed to set rain property $name as $value: $error")
                 }
               }.onValue {
-                logD(TAG, "settingProperty: name=$name, value=$value executed")
+                logD(TAG) { "settingProperty: name=$name, value=$value executed" }
               }
           }
         }
@@ -147,7 +147,7 @@ internal class RainStateApplier internal constructor(
     if (currentFlow != null) {
       currentFlow.second.value = value
     } else {
-      logD(TAG, "setProperty: emitting new property to listen to: $name")
+      logD(TAG) { "setProperty: emitting new property to listen to: $name" }
       // Add the new property to the set of property flows we want to collect
       propertiesFlowsToCollect.tryEmit(name to MutableStateFlow(value))
     }
