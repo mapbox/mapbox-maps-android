@@ -40,7 +40,7 @@ internal class LayerNode(
   override var isAttached: Boolean = false
 
   override fun onAttached(parent: MapNode) {
-    logD(TAG, "onAttached: parent=$parent")
+    logD(TAG) { "onAttached: parent=$parent" }
     super.onAttached(parent)
     if (parent is StyleSlotNode) {
       parameters["slot"] = Value(parent.slotName)
@@ -61,12 +61,12 @@ internal class LayerNode(
   }
 
   private fun detachSource() {
-    logD(TAG, "detaching Source: $this")
+    logD(TAG) { "detaching Source: $this" }
     sourceState?.detachFromLayer(layerId, map)
   }
 
   override fun onRemoved(parent: MapNode) {
-    logD(TAG, "onRemoved: parent=$parent")
+    logD(TAG) { "onRemoved: parent=$parent" }
     cleanUp()
     super.onRemoved(parent)
   }
@@ -95,35 +95,35 @@ internal class LayerNode(
   }
 
   private fun addLayer() {
-    logD(TAG, "Adding layer: $parameters, within parent: $parentNode")
+    logD(TAG) { "Adding layer: $parameters, within parent: $parentNode" }
     // layer added within the style or slot node, add as non-persistent layer
     if (parentNode is StyleSlotNode || parentNode is StyleLayerPositionNode) {
       dispatchWhenReady {
         val layerPosition = getRelativePositionInfo(parentNode)
-        logD(TAG, "Adding layer: $parameters, with layer position: $layerPosition")
+        logD(TAG) { "Adding layer: $parameters, with layer position: $layerPosition" }
         it.addStyleLayer(
           parameters = Value(parameters),
           position = layerPosition
         ).onError { error ->
           logW(TAG, "Failed to add layer: $error")
         }.onValue {
-          logD(TAG, "Added layer: $parameters")
+          logD(TAG) { "Added layer: $parameters" }
           attachSource()
         }
         isAttached = true
       }
     } else {
       // layer added outside of the style node, add as persistent layer
-      logD(TAG, "Adding persistent layer: $parameters")
+      logD(TAG) { "Adding persistent layer: $parameters" }
       val layerPosition = getRelativePositionInfo(parentNode)
-      logD(TAG, "Adding layer: $parameters, with layer position: $layerPosition")
+      logD(TAG) { "Adding layer: $parameters, with layer position: $layerPosition" }
       map.addPersistentStyleLayer(
         properties = Value(parameters),
         layerPosition = layerPosition
       ).onError {
         logW(TAG, "Failed to add persistent layer: $it")
       }.onValue {
-        logD(TAG, "Added persistent layer: $parameters")
+        logD(TAG) { "Added persistent layer: $parameters" }
         attachSource()
       }
       isAttached = true
@@ -131,7 +131,7 @@ internal class LayerNode(
   }
 
   private fun removeLayer() {
-    logD(TAG, "Removing layer: $this")
+    logD(TAG) { "Removing layer: $this" }
     map.removeStyleLayer(layerId).error?.let {
       logW(
         TAG,
@@ -189,7 +189,7 @@ internal class LayerNode(
   }
 
   internal fun setProperty(name: String, value: Value) {
-    logD(TAG, "[$layerType] settingProperty: property=$name, value=$value ...")
+    logD(TAG) { "[$layerType] settingProperty: property=$name, value=$value ..." }
     if (!isAttached) {
       logD(TAG, "setProperty() called before the layer is attached to the map.")
       parameters[name] = value
@@ -203,7 +203,7 @@ internal class LayerNode(
           "Failed to set $name property as $value on $layerType layer $layerId: $error"
         )
       }
-      logD(TAG, "[$layerType] setProperty: property=$name, value=$value executed")
+      logD(TAG) { "[$layerType] setProperty: property=$name, value=$value executed" }
     }
   }
 

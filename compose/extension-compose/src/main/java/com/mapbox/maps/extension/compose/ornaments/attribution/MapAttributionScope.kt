@@ -581,7 +581,7 @@ public class MapAttributionScope internal constructor(
               it.mapAttributionDelegate.geofencingConsent().getUserConsent()
             )
             .build()
-          logD(TAG, "User set telemetry state: $telemetryEnableState")
+          logD(TAG) { "User set telemetry state: $telemetryEnableState" }
         }
       }
     }
@@ -601,10 +601,7 @@ public class MapAttributionScope internal constructor(
                     plugin.mapAttributionDelegate.geofencingConsent().getUserConsent()
                   )
                   .build()
-                logD(
-                  TAG,
-                  "User set geofencingUserConsentState: $geofencingUserConsentState, error: ${it.error}"
-                )
+                logD(TAG) { "User set geofencingUserConsentState: $geofencingUserConsentState, error: ${it.error}" }
               }
           }
           error?.let {
@@ -802,10 +799,9 @@ public class MapAttributionScope internal constructor(
               plugin.mapAttributionDelegate.geofencingConsent().getUserConsent()
             )
             .build()
-          logD(
-            TAG,
+          logD(TAG) {
             "AttributionComposePlugin(${plugin.hashCode()}) Load initial user consent state: $userConsentState "
-          )
+          }
         }
       }
 
@@ -819,10 +815,9 @@ public class MapAttributionScope internal constructor(
           // Used internal styleManager API to utlise this new StyleAttributionsChanged event.
           styleAttributionChangedCancelable = mapView.mapboxMap.styleManager.subscribe(
             StyleAttributionsChangedCallback {
-              logD(
-                TAG,
+              logD(TAG) {
                 "AttributionComposePlugin(${plugin.hashCode()}) StyleAttributionsChanged, refresh attributions"
-              )
+              }
               updateAttributionState(mapView, plugin)
             }
           )
@@ -846,10 +841,9 @@ public class MapAttributionScope internal constructor(
                 subscribeSourceDataLoaded {
                   // refresh the attribution only when the source metadata is loaded, otherwise the new attribution is not yet parsed
                   if (it.type == SourceDataLoadedType.METADATA && it.sourceId == sourceAdded.sourceId) {
-                    logD(
-                      TAG,
+                    logD(TAG) {
                       "AttributionComposePlugin(${plugin.hashCode()}) source metadata loaded, refresh attributions"
-                    )
+                    }
                     updateAttributionState(mapView, plugin)
                     sourceDataLoadedCancellable.remove(sourceAdded.sourceId)?.cancel()
                   }

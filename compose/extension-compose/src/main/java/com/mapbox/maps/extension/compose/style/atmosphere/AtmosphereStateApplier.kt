@@ -66,13 +66,13 @@ internal class AtmosphereStateApplier internal constructor(
     val userProperties = propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value }
     val merged = HashMap<String, Value>(styleDefaults).apply { putAll(userProperties) }
     if (merged.isNotEmpty()) {
-      logD(TAG, "Adding atmosphere: $this")
+      logD(TAG) { "Adding atmosphere: $this" }
       mapboxMap.setStyleAtmosphere(
         properties = Value(merged),
       ).onError {
         logE(TAG, "Failed to add atmosphere: $it")
       }.onValue {
-        logD(TAG, "Added atmosphere: $this")
+        logD(TAG) { "Added atmosphere: $this" }
         atmosphereSet = true
       }
     }
@@ -84,7 +84,7 @@ internal class AtmosphereStateApplier internal constructor(
       propertiesFlowsToCollect.collect { (name: String, valueFlow: PropertyValueFlow) ->
         val updatePropertyJob = coroutineScope.launch {
           valueFlow.collect { value ->
-            logD(TAG, "settingProperty: name=$name, value=$value ...")
+            logD(TAG) { "settingProperty: name=$name, value=$value ..." }
             mapboxMap.setStyleAtmosphereProperty(name, value)
               .onError { error ->
                 // handle the use case of changing atmosphere e.g. for Standard style
@@ -95,7 +95,7 @@ internal class AtmosphereStateApplier internal constructor(
                     mapboxMap.setStyleAtmosphereProperty(name, value).onError {
                       logW(TAG, "Failed to set atmosphere property $name as $value: $error")
                     }.onValue {
-                      logD(TAG, "settingProperty: name=$name, value=$value executed")
+                      logD(TAG) { "settingProperty: name=$name, value=$value executed" }
                     }
                   }.onError {
                     logW(TAG, "Failed to set atmosphere with no properties, error = $it")
@@ -105,7 +105,7 @@ internal class AtmosphereStateApplier internal constructor(
                   logW(TAG, "Failed to set atmosphere property $name as $value: $error")
                 }
               }.onValue {
-                logD(TAG, "settingProperty: name=$name, value=$value executed")
+                logD(TAG) { "settingProperty: name=$name, value=$value executed" }
               }
           }
         }
@@ -130,7 +130,7 @@ internal class AtmosphereStateApplier internal constructor(
     if (currentFlow != null) {
       currentFlow.second.value = value
     } else {
-      logD(TAG, "setProperty: emitting new property to listen to: $name")
+      logD(TAG) { "setProperty: emitting new property to listen to: $name" }
       // Add the new property to the set of property flows we want to collect
       propertiesFlowsToCollect.tryEmit(name to MutableStateFlow(value))
     }

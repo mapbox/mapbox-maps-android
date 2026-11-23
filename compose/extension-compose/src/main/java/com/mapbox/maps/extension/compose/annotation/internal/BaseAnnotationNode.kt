@@ -20,7 +20,7 @@ internal abstract class BaseAnnotationNode(
 
   @CallSuper
   override fun onAttached(parent: MapNode) {
-    logD(TAG, "[$this] onAttached() called with: parent = $parent")
+    logD(TAG) { "[$this] onAttached() called with: parent = $parent" }
     super.onAttached(parent)
     dispatchWhenReady { mapboxStyleManager ->
       // For annotations nodes within a slot we need to set the slot property on all the layers

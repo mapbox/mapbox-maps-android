@@ -191,7 +191,7 @@ public class DirectionalLightState internal constructor(
   ) {
     val value = state.value
     if (value.isNotInitial()) {
-      logD(TAG, "update Directional light property: $id, $name, $value")
+      logD(TAG) { "update Directional light property: $id, $name, $value" }
       setStyleLightProperty(id, name, value.value)
         .onError {
           logW(TAG, "update Directional light property error: $it")
@@ -333,11 +333,11 @@ public class DirectionalLightState internal constructor(
     public val Saver: Saver<DirectionalLightState, Holder> = Saver(
       save = { directionalLightState ->
         Holder(directionalLightState.getProperties()).also {
-          logD(TAG, "save: $it")
+          logD(TAG) { "save: $it" }
         }
       },
       restore = { holder ->
-        logD(TAG, "restore: $holder")
+        logD(TAG) { "restore: $holder" }
         val id: String = holder.savedProperties["id"]!!.contents as String
         @Suppress("UNCHECKED_CAST")
         val properties: Map<String, Value> = holder.savedProperties["properties"]!!.contents as HashMap<String, Value>

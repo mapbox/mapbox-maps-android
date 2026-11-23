@@ -164,7 +164,7 @@ public class FlatLightState internal constructor(
   ) {
     val value = state.value
     if (value.isNotInitial()) {
-      logD(TAG, "update Flat light property: $id, $name, $value")
+      logD(TAG) { "update Flat light property: $id, $name, $value" }
       setStyleLightProperty(id, name, value.value)
         .onError {
           logW(TAG, "update Flat light property error: $it")
@@ -288,11 +288,11 @@ public class FlatLightState internal constructor(
     public val Saver: Saver<FlatLightState, Holder> = Saver(
       save = { flatLightState ->
         Holder(flatLightState.getProperties()).also {
-          logD(TAG, "save: $it")
+          logD(TAG) { "save: $it" }
         }
       },
       restore = { holder ->
-        logD(TAG, "restore: $holder")
+        logD(TAG) { "restore: $holder" }
         val id: String = holder.savedProperties["id"]!!.contents as String
         @Suppress("UNCHECKED_CAST")
         val properties: Map<String, Value> = holder.savedProperties["properties"]!!.contents as HashMap<String, Value>

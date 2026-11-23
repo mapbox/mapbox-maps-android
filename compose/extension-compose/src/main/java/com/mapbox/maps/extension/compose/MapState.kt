@@ -638,13 +638,13 @@ public class MapState internal constructor(initialGesturesState: GesturesState) 
       save = { mapState ->
         Holder(
           mapOf(GESTURES_SETTINGS_KEY to with(GesturesState.Saver) { save(mapState.gesturesState) }!!)
-        ).also { logD(TAG, "save: $it") }
+        ).also { logD(TAG) { "save: $it" } }
       },
       restore = { holder ->
         val gesturesSettings = holder.savedProperties[GESTURES_SETTINGS_KEY] as? GesturesSettings
           ?: GesturesSettings { }
         MapState(
-          GesturesState.Saver.restore(gesturesSettings.also { logD(TAG, "restore: $it") })!!
+          GesturesState.Saver.restore(gesturesSettings.also { logD(TAG) { "restore: $it" } })!!
         )
       }
     )

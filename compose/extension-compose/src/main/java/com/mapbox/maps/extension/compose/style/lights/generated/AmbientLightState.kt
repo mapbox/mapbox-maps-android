@@ -130,7 +130,7 @@ public class AmbientLightState internal constructor(
   ) {
     val value = state.value
     if (value.isNotInitial()) {
-      logD(TAG, "update Ambient light property: $id, $name, $value")
+      logD(TAG) { "update Ambient light property: $id, $name, $value" }
       setStyleLightProperty(id, name, value.value)
         .onError {
           logW(TAG, "update Ambient light property error: $it")
@@ -236,11 +236,11 @@ public class AmbientLightState internal constructor(
     public val Saver: Saver<AmbientLightState, Holder> = Saver(
       save = { ambientLightState ->
         Holder(ambientLightState.getProperties()).also {
-          logD(TAG, "save: $it")
+          logD(TAG) { "save: $it" }
         }
       },
       restore = { holder ->
-        logD(TAG, "restore: $holder")
+        logD(TAG) { "restore: $holder" }
         val id: String = holder.savedProperties["id"]!!.contents as String
         @Suppress("UNCHECKED_CAST")
         val properties: Map<String, Value> = holder.savedProperties["properties"]!!.contents as HashMap<String, Value>

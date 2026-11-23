@@ -97,27 +97,27 @@ internal class TerrainStateApplier internal constructor(
           map["source"] = Value(rasterDemSourceState.sourceId)
           // Get the most recent list of properties and their values; user properties win.
           map.putAll(propertiesFlowsToCollect.replayCache.associate { it.first to it.second.value })
-          logD(TAG, "Setting all properties in one go: $map")
+          logD(TAG) { "Setting all properties in one go: $map" }
         }
       ).also {
-        logD(TAG, "Adding terrain: $this")
+        logD(TAG) { "Adding terrain: $this" }
       }
     } else if (styleDefaults.isNotEmpty()) {
       failureMessage = "Failed to reset terrain to style default"
       Value(HashMap(styleDefaults)).also {
-        logD(TAG, "Resetting terrain to style default: $styleDefaults")
+        logD(TAG) { "Resetting terrain to style default: $styleDefaults" }
       }
     } else {
       failureMessage = "Failed to remove terrain"
       Value.nullValue().also {
-        logD(TAG, "Removing terrain: $this")
+        logD(TAG) { "Removing terrain: $this" }
       }
     }
     mapboxMap.setStyleTerrain(properties).onError {
       logE(TAG, "$failureMessage: $it")
     }.onValue {
       if (rasterDemSourceState != null) {
-        logD(TAG, "Added terrain: $this")
+        logD(TAG) { "Added terrain: $this" }
       }
     }
     startCollectingPropertyFlows(mapboxMap)
@@ -128,9 +128,9 @@ internal class TerrainStateApplier internal constructor(
       propertiesFlowsToCollect.collect { (name: String, valueFlow: MutableStateFlow<Value>) ->
         val updatePropertyJob = coroutineScope.launch {
           valueFlow.collect { value ->
-            logD(TAG, "settingProperty: name=$name, value=$value ...")
+            logD(TAG) { "settingProperty: name=$name, value=$value ..." }
             mapboxMap.setStyleTerrainProperty(name, value).onValue {
-              logD(TAG, "settingProperty: name=$name, value=$value executed")
+              logD(TAG) { "settingProperty: name=$name, value=$value executed" }
             }.onError { error ->
               logW(TAG, "Failed to set terrain property $name as $value: $error")
             }
@@ -157,7 +157,7 @@ internal class TerrainStateApplier internal constructor(
     if (currentFlow != null) {
       currentFlow.second.value = value
     } else {
-      logD(TAG, "setProperty: emitting new property to listen to: $name")
+      logD(TAG) { "setProperty: emitting new property to listen to: $name" }
       // Add the new property to the set of property flows we want to collect
       propertiesFlowsToCollect.tryEmit(name to MutableStateFlow(value))
     }
