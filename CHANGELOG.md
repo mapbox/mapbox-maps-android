@@ -6,16 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-## Features ✨ and improvements 🏁
-* Reduce the main-thread cost of the location puck: its location is now sent to the map as a double array instead of a list of boxed values serialized through JSON.
-* Add the experimental Albers equal-area projection: `ProjectionName.ALBERS`. Use the experimental `Projection.center` and `Projection.parallels` to configure it for a region.
-    ```kotlin
-    mapboxMap.setProjection(
-      projection(ProjectionName.ALBERS)
-        .center(listOf(10.0, 50.0))
-        .parallels(listOf(43.0, 62.0))
-    )
-    ```
+# 11.36.0
 
 ## Bug fixes 🐞
 * Build debug log messages only when debug logging is enabled.
