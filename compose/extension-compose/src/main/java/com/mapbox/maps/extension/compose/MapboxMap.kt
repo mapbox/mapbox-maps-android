@@ -24,6 +24,7 @@ import com.mapbox.maps.extension.compose.internal.MapApplier
 import com.mapbox.maps.extension.compose.internal.MapPreviewPlaceHolder
 import com.mapbox.maps.extension.compose.internal.MapViewLifecycle
 import com.mapbox.maps.extension.compose.internal.MapboxMapComposeNode
+import com.mapbox.maps.extension.compose.ornaments.MapOrnamentsScope
 import com.mapbox.maps.extension.compose.ornaments.attribution.MapAttributionScope
 import com.mapbox.maps.extension.compose.ornaments.compass.MapCompassScope
 import com.mapbox.maps.extension.compose.ornaments.indoorselector.MapIndoorSelectorScope
@@ -74,11 +75,12 @@ public fun MapboxMap(
   MapboxMap(
     modifier = modifier,
     composeMapInitOptions = composeMapInitOptions,
-    compass = compass,
-    scaleBar = scaleBar,
-    logo = logo,
-    attribution = attribution,
-    indoorSelector = {},
+    ornaments = {
+      compass(compass)
+      scaleBar(scaleBar)
+      logo(logo)
+      attribution(attribution)
+    },
     mapViewportState = mapViewportState,
     mapState = mapState,
     onMapClickListener = onMapClickListener,
@@ -105,6 +107,10 @@ public fun MapboxMap(
  * @param style The Style of the map.
  * @param content The content of the map.
  */
+@Deprecated(
+  "Superseded by the MapboxMap overload with the `ornaments` slot. " +
+    "Use ornaments = { Defaults(); indoorSelector { ... } } instead."
+)
 @MapboxExperimental
 @Composable
 public fun MapboxMap(
@@ -123,6 +129,58 @@ public fun MapboxMap(
   mapState: MapState = rememberMapState(),
   onMapClickListener: OnMapClickListener? = null,
   onMapLongClickListener: OnMapLongClickListener? = null,
+  style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
+  content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null,
+) {
+  MapboxMap(
+    modifier = modifier,
+    composeMapInitOptions = composeMapInitOptions,
+    ornaments = {
+      compass(compass)
+      scaleBar(scaleBar)
+      logo(logo)
+      attribution(attribution)
+      indoorSelector(indoorSelector)
+    },
+    mapViewportState = mapViewportState,
+    mapState = mapState,
+    onMapClickListener = onMapClickListener,
+    onMapLongClickListener = onMapLongClickListener,
+    style = style,
+    content = content,
+  )
+}
+
+/**
+ * Entry point for adding a Mapbox Map instance to the Jetpack Compose UI.
+ *
+ * @param modifier Modifier to be applied to the Mapbox map.
+ * @param composeMapInitOptions Defines the initialisation configurations for a [MapboxMap]. It should only be set once and not mutated after the initialisation. Mutating the [ComposeMapInitOptions] will result in internal [MapView] recreation and impact performance.
+ * @param mapViewportState A state object that can be hoisted to control and observe the map's camera state. A [MapViewportState] may only be used by a single [MapboxMap] composable at a time as it reflects instance state for a single view of a map.
+ * @param mapState A state object that can be hoisted to query map rendered features and gestures settings.
+ * @param onMapClickListener Callback to be invoked when the user clicks on the map view.
+ * @param onMapLongClickListener Callback to be invoked when the user long clicks on the map view.
+ * @param ornaments The map ornaments (compass, scale bar, logo, attribution, and others), consider using [MapOrnamentsScope.Defaults].
+ * @param style The Style of the map.
+ * @param content The content of the map.
+ */
+@MapboxExperimental
+@Composable
+public fun MapboxMap(
+  modifier: Modifier = Modifier,
+  composeMapInitOptions: ComposeMapInitOptions = with(LocalDensity.current) {
+    remember {
+      ComposeMapInitOptions(density)
+    }
+  },
+  mapViewportState: MapViewportState = rememberMapViewportState(),
+  mapState: MapState = rememberMapState(),
+  onMapClickListener: OnMapClickListener? = null,
+  onMapLongClickListener: OnMapLongClickListener? = null,
+  // Keep `ornaments` out of any position where the stable overload declares a function-typed
+  // parameter. A lambda literal there matches both overloads, and because neither receiver
+  // type is a subtype of the other the call fails with overload resolution ambiguity.
+  ornaments: @Composable MapOrnamentsScope.() -> Unit,
   style: @Composable @MapboxStyleComposable () -> Unit = { MapboxStandardStyle() },
   content: (@Composable @MapboxMapComposable MapboxMapScope.() -> Unit)? = null,
 ) {
@@ -155,11 +213,7 @@ public fun MapboxMap(
           factory = { mapView },
           modifier = Modifier.fillMaxSize(),
         )
-        MapCompassScope(mapView, this).compass()
-        MapScaleBarScope(mapView, this).scaleBar()
-        MapLogoScope(this).logo()
-        MapAttributionScope(mapView, this).attribution()
-        MapIndoorSelectorScope(mapView, this).indoorSelector()
+        MapOrnamentsScope(mapView, this).ornaments()
       }
 
       key(mapViewportState) {

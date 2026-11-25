@@ -53,16 +53,19 @@ public class IndoorExampleActivity : ComponentActivity() {
                   pitch(PITCH)
                 }
               },
-              indoorSelector = {
-                if (!enabled) return@MapboxMap
-                IndoorSelector(
-                  state = indoorState,
-                  alignment = Alignment.TopEnd,
-                  contentPadding = PaddingValues(top = 80.dp, end = 20.dp),
-                  onFloorClicked = { floor ->
-                    Log.d("IndoorExample", "Floor clicked: ${floor.id}")
-                  }
-                )
+              ornaments = {
+                Defaults()
+                indoorSelector {
+                  if (!enabled) return@indoorSelector
+                  IndoorSelector(
+                    state = indoorState,
+                    alignment = Alignment.TopEnd,
+                    contentPadding = PaddingValues(top = 80.dp, end = 20.dp),
+                    onFloorClicked = { floor ->
+                      Log.d("IndoorExample", "Floor clicked: ${floor.id}")
+                    }
+                  )
+                }
               },
               style = {
                 MapboxStandardStyle(

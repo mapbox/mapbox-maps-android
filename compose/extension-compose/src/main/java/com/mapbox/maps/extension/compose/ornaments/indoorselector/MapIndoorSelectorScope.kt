@@ -165,7 +165,10 @@ public class MapIndoorSelectorScope internal constructor(
    * ```
    * val indoorState = rememberIndoorSelectorState()
    * MapboxMap(
-   *   indoorSelector = { IndoorSelectorControl(state = indoorState) }
+   *   ornaments = {
+   *     Defaults()
+   *     indoorSelector { IndoorSelectorControl(state = indoorState) }
+   *   }
    * ) { ... }
    * // Use indoorState.floors / indoorState.selectedFloorId in your own UI
    * ```

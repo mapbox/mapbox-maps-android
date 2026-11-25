@@ -17,6 +17,7 @@
     <string name="activity_map_viewport_state_predefined_animators">Map Viewport State Predefined Animators</string>
     <string name="activity_multiple_display">Multi display</string>
     <string name="activity_ornaments_customisation">Ornament customisation</string>
+    <string name="activity_ornaments_scope">Ornaments scope (experimental)</string>
     <string name="activity_custom_attribution">Custom attribution</string>
     <string name="activity_consolidated_attribution">Consolidated attribution</string>
     <string name="activity_location_location_component">Location Component</string>

@@ -17,6 +17,7 @@
     <string name="description_map_viewport_state_predefined_animators">Use incremental camera animations (rotateBy, moveBy, pitchBy, scaleBy) via MapViewportState</string>
     <string name="description_multiple_display">Display the map on a secondary display</string>
     <string name="description_ornaments_customisation">Customise ornaments of the Map</string>
+    <string name="description_ornaments_scope">Add and customise ornaments via the unified ornaments scope slot</string>
     <string name="description_custom_attribution">Customise attribution of the Map</string>
     <string name="description_consolidated_attribution">Show the logo and attribution as a single consolidated pill</string>
     <string name="description_location_location_component">Show Location on the Map</string>

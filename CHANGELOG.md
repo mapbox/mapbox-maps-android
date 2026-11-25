@@ -232,6 +232,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 11.33.0-rc.1 October 05, 2026
 ## Features ✨ and improvements 🏁
 * [compose] Add `showHdRoads` and `colorHdRoads` configuration options to the Standard style.
+* [compose] Add experimental `ornaments` slot on `MapboxMap` via `MapOrnamentsScope`, replacing the individual ornament parameters; deprecates the experimental `indoorSelector` overload.
 * [androidauto] Add `MapboxCarMapGestureHandler.onClick` to handle clicks on the car map. `DefaultMapboxCarMapGestureHandler` forwards them to the map, so that map interactions such as `ClickInteraction` also work in Android Auto.
 
 ## Bug fixes 🐞

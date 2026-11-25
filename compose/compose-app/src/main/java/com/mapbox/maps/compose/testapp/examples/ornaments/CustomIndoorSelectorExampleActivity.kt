@@ -36,7 +36,8 @@ import com.mapbox.maps.extension.compose.style.standard.StandardStyleState
 /**
  * Demonstrates a custom indoor floor-selector UI built on top of `IndoorSelectorControl`.
  *
- * `IndoorSelectorControl` attaches the plugin headlessly inside `indoorSelector = { }`;
+ * `IndoorSelectorControl` attaches the plugin headlessly inside the `ornaments` slot's
+ * `indoorSelector { }` block;
  * the floor list is read directly from [IndoorSelectorState][com.mapbox.maps.extension.compose.ornaments.indoorselector.IndoorSelectorState].
  * Uses a plain [Column] (no scroll) so the widget is always wrap-content tall.
  */
@@ -58,66 +59,69 @@ public class CustomIndoorSelectorExampleActivity : ComponentActivity() {
                 pitch(PITCH)
               }
             },
-            indoorSelector = {
-              // Attach the plugin to indoorState without rendering the default UI.
-              IndoorSelectorControl(state = indoorState)
+            ornaments = {
+              Defaults()
+              indoorSelector {
+                // Attach the plugin to indoorState without rendering the default UI.
+                IndoorSelectorControl(state = indoorState)
 
-              // Custom floor-selector panel — wrap in Box to get BoxScope alignment.
-              // Visible only when an indoor building is in view.
-              val floors = indoorState.floors
-              if (floors.isEmpty()) return@MapboxMap
-              Box(modifier = Modifier.fillMaxSize()) {
-                Surface(
-                  modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = 80.dp, end = 16.dp),
-                  shape = RoundedCornerShape(8.dp),
-                  elevation = 4.dp,
-                ) {
-                  val selectedBg = MaterialTheme.colors.primary
-                  val selectedText = MaterialTheme.colors.onPrimary
-                  val bg = MaterialTheme.colors.surface
-                  val text = MaterialTheme.colors.onSurface
-                  Column(
-                    modifier = Modifier.width(ITEM_SIZE),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                // Custom floor-selector panel — wrap in Box to get BoxScope alignment.
+                // Visible only when an indoor building is in view.
+                val floors = indoorState.floors
+                if (floors.isEmpty()) return@indoorSelector
+                Box(modifier = Modifier.fillMaxSize()) {
+                  Surface(
+                    modifier = Modifier
+                      .align(Alignment.TopEnd)
+                      .padding(top = 80.dp, end = 16.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = 4.dp,
                   ) {
-                    // Building item — clears the active floor selection.
-                    val isBuildingSelected = indoorState.selectedFloorId == null
-                    Box(
-                      modifier = Modifier
-                        .size(ITEM_SIZE)
-                        .background(if (isBuildingSelected) selectedBg else bg)
-                        .clickable { indoorState.selectedFloorId = null },
-                      contentAlignment = Alignment.Center,
+                    val selectedBg = MaterialTheme.colors.primary
+                    val selectedText = MaterialTheme.colors.onPrimary
+                    val bg = MaterialTheme.colors.surface
+                    val text = MaterialTheme.colors.onSurface
+                    Column(
+                      modifier = Modifier.width(ITEM_SIZE),
+                      horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                      Text(
-                        text = "🏢",
-                        color = if (isBuildingSelected) selectedText else text,
-                        fontSize = ITEM_TEXT_SP,
-                        textAlign = TextAlign.Center,
-                      )
-                    }
-
-                    // One item per floor — no scroll, wrap-content height.
-                    floors.forEach { floor ->
-                      val isSelected = floor.id == indoorState.selectedFloorId
+                      // Building item — clears the active floor selection.
+                      val isBuildingSelected = indoorState.selectedFloorId == null
                       Box(
                         modifier = Modifier
                           .size(ITEM_SIZE)
-                          .background(if (isSelected) selectedBg else bg)
-                          .clickable {
-                            indoorState.selectedFloorId = floor.id
-                            Log.d(TAG, "Floor tapped: ${floor.id} (${floor.name})")
-                          },
+                          .background(if (isBuildingSelected) selectedBg else bg)
+                          .clickable { indoorState.selectedFloorId = null },
                         contentAlignment = Alignment.Center,
                       ) {
                         Text(
-                          text = floor.name.take(FLOOR_LABEL_MAX_CHARS),
-                          color = if (isSelected) selectedText else text,
+                          text = "🏢",
+                          color = if (isBuildingSelected) selectedText else text,
                           fontSize = ITEM_TEXT_SP,
                           textAlign = TextAlign.Center,
                         )
+                      }
+
+                      // One item per floor — no scroll, wrap-content height.
+                      floors.forEach { floor ->
+                        val isSelected = floor.id == indoorState.selectedFloorId
+                        Box(
+                          modifier = Modifier
+                            .size(ITEM_SIZE)
+                            .background(if (isSelected) selectedBg else bg)
+                            .clickable {
+                              indoorState.selectedFloorId = floor.id
+                              Log.d(TAG, "Floor tapped: ${floor.id} (${floor.name})")
+                            },
+                          contentAlignment = Alignment.Center,
+                        ) {
+                          Text(
+                            text = floor.name.take(FLOOR_LABEL_MAX_CHARS),
+                            color = if (isSelected) selectedText else text,
+                            fontSize = ITEM_TEXT_SP,
+                            textAlign = TextAlign.Center,
+                          )
+                        }
                       }
                     }
                   }
