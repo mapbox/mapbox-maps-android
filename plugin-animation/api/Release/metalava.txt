@@ -87,6 +87,9 @@ package com.mapbox.maps.plugin.animation.animator {
     method public default boolean canSkip(Object cameraCurrentValue, Object startValue, Object![] values);
   }
 
+  public final class CameraViewPointAnimatorKt {
+  }
+
   public final class Evaluators {
     method public android.animation.TypeEvaluator<java.lang.Double> getDOUBLE();
     method public android.animation.TypeEvaluator<com.mapbox.maps.EdgeInsets> getEDGE_INSET();

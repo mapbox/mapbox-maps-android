@@ -1615,6 +1615,7 @@ public abstract interface class com/mapbox/maps/extension/compose/style/interact
 	public abstract fun setStandardLandmarkIconsState (Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardPlaceLabelsState (Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setStandardPoiState (Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun setStandardWaterState (Lcom/mapbox/maps/interactions/standard/generated/StandardWaterFeature;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope$DefaultImpls {
@@ -1626,6 +1627,7 @@ public final class com/mapbox/maps/extension/compose/style/interactions/generate
 	public static fun setStandardLandmarkIconsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardLandmarkIconsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardPlaceLabelsState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPlaceLabelsFeature;Lkotlin/jvm/functions/Function1;)V
 	public static fun setStandardPoiState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardPoiFeature;Lkotlin/jvm/functions/Function1;)V
+	public static fun setStandardWaterState (Lcom/mapbox/maps/extension/compose/style/interactions/generated/FeaturesetFeatureScope;Lcom/mapbox/maps/interactions/standard/generated/StandardWaterFeature;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class com/mapbox/maps/extension/compose/style/layers/Filter : com/mapbox/maps/extension/compose/style/HoldsValue {
@@ -4747,6 +4749,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun getColorIndustrial ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorLand ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorMedical ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
+	public final fun getColorMix3dLandmarks ()Lcom/mapbox/maps/extension/compose/style/DoubleValue;
 	public final fun getColorModePointOfInterestLabels ()Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;
 	public final fun getColorMotorways ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
 	public final fun getColorPlaceLabelHighlight ()Lcom/mapbox/maps/extension/compose/style/ColorValue;
@@ -4788,6 +4791,7 @@ public final class com/mapbox/maps/extension/compose/style/standard/StandardStyl
 	public final fun setColorIndustrial (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorLand (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorMedical (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
+	public final fun setColorMix3dLandmarks (Lcom/mapbox/maps/extension/compose/style/DoubleValue;)V
 	public final fun setColorModePointOfInterestLabels (Lcom/mapbox/maps/extension/compose/style/standard/ColorModePointOfInterestLabelsValue;)V
 	public final fun setColorMotorways (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
 	public final fun setColorPlaceLabelHighlight (Lcom/mapbox/maps/extension/compose/style/ColorValue;)V
@@ -4883,6 +4887,10 @@ public final class com/mapbox/maps/extension/compose/style/standard/generated/St
 	public static synthetic fun onPoiClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public final fun onPoiLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 	public static synthetic fun onPoiLongClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun onWaterClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public static synthetic fun onWaterClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public final fun onWaterLongClicked (Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
+	public static synthetic fun onWaterLongClicked$default (Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;Ljava/lang/String;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;Ljava/lang/Double;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)Lcom/mapbox/maps/extension/compose/style/standard/generated/StandardStyleInteractionsState;
 }
 
 public final class com/mapbox/maps/extension/compose/style/terrain/generated/TerrainState {

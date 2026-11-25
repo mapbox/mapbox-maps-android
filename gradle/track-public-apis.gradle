@@ -8,8 +8,8 @@ tasks.register("updateApiMetalava") {
 }
 
 tasks.register("checkApiMetalava") {
-    group = "Other"
-    description = "Update metalava generated public api files for all variants."
+    group = "Verification"
+    description = "Checks metalava generated public api files for all variants."
 }
 
 android.libraryVariants.all { variant ->
@@ -92,7 +92,10 @@ android.libraryVariants.all { variant ->
 
         def variantMetalavaFilePath = "api/${variantName}/metalava.txt"
         inputs.file(variantMetalavaFilePath)
-        outputs.file(variantMetalavaFilePath)
+        // Generate the current API into build/ and compare it with the committed file in doLast.
+        // The compatibility check alone passes on added API, so the committed file could drift.
+        def generatedMetalavaFile = layout.buildDirectory.file("metalava/${variantName}/metalava.txt").get().asFile
+        outputs.file(generatedMetalavaFile)
 
         classpath = configurations.metalava
         mainClass.set("com.android.tools.metalava.Driver")
@@ -110,7 +113,8 @@ android.libraryVariants.all { variant ->
                     '--hide', 'HiddenSuperclass',
                     '--hide', 'DeprecationMismatch',
                     '--classpath', metalavaClasspath,
-                    '--check-compatibility:api:released', variantMetalavaFilePath
+                    '--check-compatibility:api:released', variantMetalavaFilePath,
+                    '--api', generatedMetalavaFile.path
             ]
             if (project.hasProperty('hidePackage')) {
                 args += '--hide-package'
@@ -119,6 +123,16 @@ android.libraryVariants.all { variant ->
             if (project.hasProperty('hideId')) {
                 args += '--hide'
                 args += hideId
+            }
+        }
+
+        doLast {
+            if (file(variantMetalavaFilePath).text != generatedMetalavaFile.text) {
+                throw new GradleException(
+                        "${project.path}/${variantMetalavaFilePath} is out of date. " +
+                        "Run `make update-api` in projects/maps-android/mapbox-maps-android and commit the result. " +
+                        "Generated file: ${generatedMetalavaFile}"
+                )
             }
         }
     }

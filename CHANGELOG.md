@@ -16,6 +16,9 @@ Mapbox welcomes participation and contributions from everyone.
         .parallels(listOf(43.0, 62.0))
     )
     ```
+* Add the `StandardWater` featureset for Standard style interactions: `ClickInteraction.standardWater`, `LongClickInteraction.standardWater`, `StandardWaterFeature` and `StandardWaterState`.
+* [compose] Add `StandardStyleConfigurationState.colorMix3dLandmarks` to set the color mix level for landmark building models.
+* [compose] Add `StandardStyleInteractionsState.onWaterClicked` and `StandardStyleInteractionsState.onWaterLongClicked`.
 
 ## Bug fixes 🐞
 * Build debug log messages only when debug logging is enabled.

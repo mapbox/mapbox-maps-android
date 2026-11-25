@@ -252,6 +252,9 @@ public fun MapboxStandardStyle(
             if (colorMedical.isNotInitial()) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_MEDICAL, colorMedical.value)
             }
+            if (colorMix3dLandmarks.isNotInitial()) {
+              config(StandardStyleConfigurationState.CONFIG_COLOR_MIX3D_LANDMARKS, colorMix3dLandmarks.value)
+            }
             if (colorModePointOfInterestLabels.notInitial) {
               config(StandardStyleConfigurationState.CONFIG_COLOR_MODE_POINT_OF_INTEREST_LABELS, colorModePointOfInterestLabels.value)
             }

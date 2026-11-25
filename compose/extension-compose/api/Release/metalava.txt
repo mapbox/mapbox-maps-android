@@ -1899,6 +1899,7 @@ package com.mapbox.maps.extension.compose.style.interactions.generated {
     method public default void setStandardLandmarkIconsState(com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState.Builder,kotlin.Unit> init);
     method public default void setStandardPlaceLabelsState(com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState.Builder,kotlin.Unit> init);
     method public default void setStandardPoiState(com.mapbox.maps.interactions.standard.generated.StandardPoiFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,kotlin.Unit> init);
+    method public default void setStandardWaterState(com.mapbox.maps.interactions.standard.generated.StandardWaterFeature, kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardWaterState.Builder,kotlin.Unit> init);
   }
 
 }
@@ -5569,6 +5570,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorIndustrial();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorLand();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorMedical();
+    method public com.mapbox.maps.extension.compose.style.DoubleValue getColorMix3dLandmarks();
     method public com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue getColorModePointOfInterestLabels();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorMotorways();
     method public com.mapbox.maps.extension.compose.style.ColorValue getColorPlaceLabelHighlight();
@@ -5610,6 +5612,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     method public void setColorIndustrial(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorLand(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorMedical(com.mapbox.maps.extension.compose.style.ColorValue);
+    method public void setColorMix3dLandmarks(com.mapbox.maps.extension.compose.style.DoubleValue);
     method public void setColorModePointOfInterestLabels(com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue);
     method public void setColorMotorways(com.mapbox.maps.extension.compose.style.ColorValue);
     method public void setColorPlaceLabelHighlight(com.mapbox.maps.extension.compose.style.ColorValue);
@@ -5651,6 +5654,7 @@ package com.mapbox.maps.extension.compose.style.standard {
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorIndustrial;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorLand;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorMedical;
+    property public final com.mapbox.maps.extension.compose.style.DoubleValue colorMix3dLandmarks;
     property public final com.mapbox.maps.extension.compose.style.standard.ColorModePointOfInterestLabelsValue colorModePointOfInterestLabels;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorMotorways;
     property public final com.mapbox.maps.extension.compose.style.ColorValue colorPlaceLabelHighlight;
@@ -5735,6 +5739,8 @@ package com.mapbox.maps.extension.compose.style.standard.generated {
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPlaceLabelsLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPoiClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
     method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onPoiLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onWaterClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public com.mapbox.maps.extension.compose.style.standard.generated.StandardStyleInteractionsState onWaterLongClicked(String? importId = null, com.mapbox.maps.extension.style.expressions.generated.Expression? filter = null, Double? radius = null, kotlin.jvm.functions.Function3<? super com.mapbox.maps.extension.compose.style.interactions.generated.FeaturesetFeatureScope,? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
   }
 
 }

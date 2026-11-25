@@ -33,6 +33,7 @@ public class StandardStyleConfigurationState private constructor(
   initialColorIndustrial: ColorValue,
   initialColorLand: ColorValue,
   initialColorMedical: ColorValue,
+  initialColorMix3dLandmarks: DoubleValue,
   initialColorModePointOfInterestLabels: ColorModePointOfInterestLabelsValue,
   initialColorMotorways: ColorValue,
   initialColorPlaceLabelHighlight: ColorValue,
@@ -80,6 +81,7 @@ public class StandardStyleConfigurationState private constructor(
     initialColorIndustrial = ColorValue.INITIAL,
     initialColorLand = ColorValue.INITIAL,
     initialColorMedical = ColorValue.INITIAL,
+    initialColorMix3dLandmarks = DoubleValue.INITIAL,
     initialColorModePointOfInterestLabels = ColorModePointOfInterestLabelsValue.INITIAL,
     initialColorMotorways = ColorValue.INITIAL,
     initialColorPlaceLabelHighlight = ColorValue.INITIAL,
@@ -190,6 +192,11 @@ public class StandardStyleConfigurationState private constructor(
    * Set a custom color for medical areas.
    */
   public var colorMedical: ColorValue by mutableStateOf(initialColorMedical)
+
+  /**
+   * Set the color mix level for landmark building models.
+   */
+  public var colorMix3dLandmarks: DoubleValue by mutableStateOf(initialColorMix3dLandmarks)
 
   /**
    * Use the default categorical colors or set a single custom color for POI labels.
@@ -335,6 +342,7 @@ public class StandardStyleConfigurationState private constructor(
     internal const val CONFIG_COLOR_INDUSTRIAL = "colorIndustrial"
     internal const val CONFIG_COLOR_LAND = "colorLand"
     internal const val CONFIG_COLOR_MEDICAL = "colorMedical"
+    internal const val CONFIG_COLOR_MIX3D_LANDMARKS = "colorMix3dLandmarks"
     internal const val CONFIG_COLOR_MODE_POINT_OF_INTEREST_LABELS = "colorModePointOfInterestLabels"
     internal const val CONFIG_COLOR_MOTORWAYS = "colorMotorways"
     internal const val CONFIG_COLOR_PLACE_LABEL_HIGHLIGHT = "colorPlaceLabelHighlight"

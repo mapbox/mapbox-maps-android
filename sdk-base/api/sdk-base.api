@@ -1014,6 +1014,16 @@ public final class com/mapbox/maps/interactions/standard/generated/StandardInter
 	public static final fun standardPoi (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
 	public static synthetic fun standardPoi$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
 	public static synthetic fun standardPoi$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/ClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static final fun standardWater (Lcom/mapbox/maps/LongClickInteraction$Companion;Lkotlin/jvm/functions/Function2;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardWater$default (Lcom/mapbox/maps/ClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
+	public static synthetic fun standardWater$default (Lcom/mapbox/maps/LongClickInteraction$Companion;Ljava/lang/String;Lcom/mapbox/bindgen/Value;Ljava/lang/Double;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lcom/mapbox/maps/MapInteraction;
 }
 
 public final class com/mapbox/maps/interactions/standard/generated/StandardLandmarkIcons : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
@@ -1169,6 +1179,47 @@ public final class com/mapbox/maps/interactions/standard/generated/StandardPoiSt
 
 public final class com/mapbox/maps/interactions/standard/generated/StandardPoiStateKt {
 	public static final synthetic fun StandardPoiState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/standard/generated/StandardPoiState;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWater : com/mapbox/maps/interactions/TypedFeaturesetDescriptor {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public synthetic fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeatureState;
+	public fun getFeatureState (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardWaterState;
+	public synthetic fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/FeaturesetFeature;
+	public fun getFeaturesetFeature (Lcom/mapbox/geojson/Feature;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/maps/interactions/standard/generated/StandardWaterFeature;
+	public final fun getImportId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toFeaturesetDescriptor ()Lcom/mapbox/maps/FeaturesetDescriptor;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWaterFeature : com/mapbox/maps/interactions/FeaturesetFeature {
+	public fun <init> (Lcom/mapbox/maps/FeaturesetFeatureId;Ljava/lang/String;Lcom/mapbox/geojson/Feature;Lcom/mapbox/maps/interactions/standard/generated/StandardWaterState;)V
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWaterState : com/mapbox/maps/interactions/FeatureState {
+	public fun getInternalState ()Lcom/mapbox/bindgen/Value;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWaterState$Builder : com/mapbox/maps/interactions/FeatureState$Builder {
+	public fun <init> ()V
+	public synthetic fun build ()Lcom/mapbox/maps/interactions/FeatureState;
+	public fun build ()Lcom/mapbox/maps/interactions/standard/generated/StandardWaterState;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWaterStateKey : com/mapbox/maps/interactions/FeatureStateKey {
+	public static final field Companion Lcom/mapbox/maps/interactions/standard/generated/StandardWaterStateKey$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWaterStateKey$Companion {
+	public final fun create (Ljava/lang/String;)Lcom/mapbox/maps/interactions/standard/generated/StandardWaterStateKey;
+}
+
+public final class com/mapbox/maps/interactions/standard/generated/StandardWaterStateKt {
+	public static final synthetic fun StandardWaterState (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/interactions/standard/generated/StandardWaterState;
 }
 
 public abstract interface class com/mapbox/maps/module/MapTelemetry {

@@ -19,6 +19,8 @@ import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeatur
 import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsState
 import com.mapbox.maps.interactions.standard.generated.StandardPoiFeature
 import com.mapbox.maps.interactions.standard.generated.StandardPoiState
+import com.mapbox.maps.interactions.standard.generated.StandardWaterFeature
+import com.mapbox.maps.interactions.standard.generated.StandardWaterState
 
 /**
  * The featureset feature scope provides extension functions to [FeaturesetFeature]
@@ -91,6 +93,19 @@ public sealed interface FeaturesetFeatureScope {
     init: StandardIndoorLabelsState.Builder.() -> Unit,
   ) {
     setFeatureState(StandardIndoorLabelsState(init)) { }
+  }
+
+  /**
+   * Extension function allowing to set the [StandardWaterState] for [StandardWaterFeature]
+   * in the most convenient way.
+   *
+   * Note: this is an asynchronous function, but this function does not provide the callback for easier use.
+   * Refer to [setFeatureState] if the callback is required.
+   */
+  public fun StandardWaterFeature.setStandardWaterState(
+    init: StandardWaterState.Builder.() -> Unit,
+  ) {
+    setFeatureState(StandardWaterState(init)) { }
   }
 
   /**

@@ -1014,6 +1014,14 @@ package com.mapbox.maps.interactions.standard.generated {
     method public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
     method public static com.mapbox.maps.MapInteraction standardPoi(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardPoiFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.ClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.ClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, Double? radius = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, com.mapbox.bindgen.Value? filter = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.LongClickInteraction.Companion, String? importId = null, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
+    method public static com.mapbox.maps.MapInteraction standardWater(com.mapbox.maps.LongClickInteraction.Companion, kotlin.jvm.functions.Function2<? super com.mapbox.maps.interactions.standard.generated.StandardWaterFeature,? super com.mapbox.maps.InteractionContext,java.lang.Boolean> onLongClick);
   }
 
   public final class StandardLandmarkIcons extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsState,com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature> {
@@ -1172,6 +1180,40 @@ package com.mapbox.maps.interactions.standard.generated {
 
   public final class StandardPoiStateKt {
     method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardPoiState! StandardPoiState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardPoiState.Builder,? extends kotlin.Unit> init);
+  }
+
+  public final class StandardWater extends com.mapbox.maps.interactions.TypedFeaturesetDescriptor<com.mapbox.maps.interactions.standard.generated.StandardWaterState,com.mapbox.maps.interactions.standard.generated.StandardWaterFeature> {
+    ctor public StandardWater(String? importId = null);
+    ctor public StandardWater();
+    method public com.mapbox.maps.interactions.standard.generated.StandardWaterState getFeatureState(com.mapbox.bindgen.Value rawState);
+    method public com.mapbox.maps.interactions.standard.generated.StandardWaterFeature getFeaturesetFeature(com.mapbox.geojson.Feature feature, String? featureNamespace, com.mapbox.bindgen.Value rawState);
+    method public String? getImportId();
+    method public com.mapbox.maps.FeaturesetDescriptor toFeaturesetDescriptor();
+    property public final String? importId;
+  }
+
+  public final class StandardWaterFeature extends com.mapbox.maps.interactions.FeaturesetFeature<com.mapbox.maps.interactions.standard.generated.StandardWaterState> {
+    ctor public StandardWaterFeature(com.mapbox.maps.FeaturesetFeatureId? id, String? importId, com.mapbox.geojson.Feature originalFeature, com.mapbox.maps.interactions.standard.generated.StandardWaterState state);
+  }
+
+  public final class StandardWaterState extends com.mapbox.maps.interactions.FeatureState {
+  }
+
+  public static final class StandardWaterState.Builder extends com.mapbox.maps.interactions.FeatureState.Builder {
+    ctor public StandardWaterState.Builder();
+    method public com.mapbox.maps.interactions.standard.generated.StandardWaterState build();
+  }
+
+  public final class StandardWaterStateKey extends com.mapbox.maps.interactions.FeatureStateKey<com.mapbox.maps.interactions.standard.generated.StandardWaterState> {
+    field public static final com.mapbox.maps.interactions.standard.generated.StandardWaterStateKey.Companion Companion;
+  }
+
+  public static final class StandardWaterStateKey.Companion {
+    method @com.mapbox.maps.MapboxDelicateApi public com.mapbox.maps.interactions.standard.generated.StandardWaterStateKey create(String key);
+  }
+
+  public final class StandardWaterStateKt {
+    method @kotlin.jvm.JvmSynthetic public static com.mapbox.maps.interactions.standard.generated.StandardWaterState! StandardWaterState(kotlin.jvm.functions.Function1<? super com.mapbox.maps.interactions.standard.generated.StandardWaterState.Builder,? extends kotlin.Unit> init);
   }
 
 }

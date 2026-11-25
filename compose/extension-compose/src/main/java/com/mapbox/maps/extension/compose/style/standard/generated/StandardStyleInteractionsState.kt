@@ -17,11 +17,13 @@ import com.mapbox.maps.interactions.standard.generated.StandardIndoorLabelsFeatu
 import com.mapbox.maps.interactions.standard.generated.StandardLandmarkIconsFeature
 import com.mapbox.maps.interactions.standard.generated.StandardPlaceLabelsFeature
 import com.mapbox.maps.interactions.standard.generated.StandardPoiFeature
+import com.mapbox.maps.interactions.standard.generated.StandardWaterFeature
 import com.mapbox.maps.interactions.standard.generated.standardBuildings
 import com.mapbox.maps.interactions.standard.generated.standardIndoorLabels
 import com.mapbox.maps.interactions.standard.generated.standardLandmarkIcons
 import com.mapbox.maps.interactions.standard.generated.standardPlaceLabels
 import com.mapbox.maps.interactions.standard.generated.standardPoi
+import com.mapbox.maps.interactions.standard.generated.standardWater
 
 /**
  * [StandardStyleInteractionsState] manages the map interactions defined for Mapbox Standard Style.
@@ -303,6 +305,62 @@ public class StandardStyleInteractionsState : BasicStyleInteractions() {
   ): StandardStyleInteractionsState = apply {
     entries.add { import ->
       LongClickInteraction.standardIndoorLabels(
+        importId = importId ?: import,
+        filter = filter,
+        radius = radius,
+        onLongClick = { feature, context ->
+          featuresetFeatureScope?.onLongClick(feature, context) ?: false
+        }
+      )
+    }
+  }
+
+  /**
+   * Add the [ClickInteraction] for featureset 'water' from Mapbox Standard Style or Mapbox Standard Satellite Style.
+   *
+   * When several [ClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+   *
+   * @param importId optional Standard style import id.
+   * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+   * @param onClick callback triggered when the Standard featureset is clicked.
+   */
+  public fun onWaterClicked(
+    importId: String? = null,
+    filter: Expression? = null,
+    radius: Double? = null,
+    onClick: FeaturesetFeatureScope.(StandardWaterFeature, InteractionContext) -> Boolean
+  ): StandardStyleInteractionsState = apply {
+    entries.add { import ->
+      ClickInteraction.standardWater(
+        importId = importId ?: import,
+        filter = filter,
+        radius = radius,
+        onClick = { feature, context ->
+          featuresetFeatureScope?.onClick(feature, context) ?: false
+        }
+      )
+    }
+  }
+
+  /**
+   * Add the [LongClickInteraction] for featureset 'water' from Mapbox Standard Style or Mapbox Standard Satellite Style.
+   *
+   * When several [LongClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+   *
+   * @param importId optional Standard style import id.
+   * @param filter optional filter. Defaults to NULL.
+   * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+   * @param onLongClick callback triggered when the Standard featureset is long clicked.
+   */
+  public fun onWaterLongClicked(
+    importId: String? = null,
+    filter: Expression? = null,
+    radius: Double? = null,
+    onLongClick: FeaturesetFeatureScope.(StandardWaterFeature, InteractionContext) -> Boolean
+  ): StandardStyleInteractionsState = apply {
+    entries.add { import ->
+      LongClickInteraction.standardWater(
         importId = importId ?: import,
         filter = filter,
         radius = radius,

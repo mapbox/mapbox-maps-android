@@ -366,4 +366,75 @@ fun LongClickInteraction.Companion.standardIndoorLabels(
     )
   }
 }
+/**
+ * Create the [ClickInteraction] for Mapbox Standard Style `water` featureset and an optional [importId].
+ *
+ * When several [ClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+ *
+ * @param importId optional style import id. Defaults to NULL.
+ * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+ * @param onClick callback triggered when the `water` featureset is clicked.
+ */
+@JvmOverloads
+fun ClickInteraction.Companion.standardWater(
+  importId: String? = null,
+  filter: Value? = null,
+  radius: Double? = null,
+  onClick: (StandardWaterFeature, InteractionContext) -> Boolean
+): MapInteraction {
+  return ClickInteraction(
+    FeaturesetDescriptor(
+      /* featuresetId */ StandardWater.FEATURESET_ID,
+      /* importId */ importId ?: TypedFeaturesetDescriptor.DEFAULT_IMPORT_ID,
+      /* layerId */null
+    ),
+    filter,
+    radius,
+    onClick
+  ) { feature, featuresetFeatureId, state ->
+    StandardWaterFeature(
+      id = featuresetFeatureId,
+      importId = importId,
+      originalFeature = feature,
+      state = StandardWaterState(state)
+    )
+  }
+}
+
+/**
+ * Create the [LongClickInteraction] for Mapbox Standard Style `water` featureset and an optional [importId].
+ *
+ * When several [LongClickInteraction]s are registered for the same [importId] - the callbacks will be triggered from last to first.
+ *
+ * @param importId optional style import id. Defaults to NULL.
+ * @param filter optional filter. Defaults to NULL.
+ * @param radius of an extra area around touch in screen pixels. Defaults to NULL meaning 0-radius pixels area.
+ * @param onLongClick callback triggered when the `water` featureset is long clicked.
+ */
+@JvmOverloads
+fun LongClickInteraction.Companion.standardWater(
+  importId: String? = null,
+  filter: Value? = null,
+  radius: Double? = null,
+  onLongClick: (StandardWaterFeature, InteractionContext) -> Boolean
+): MapInteraction {
+  return LongClickInteraction(
+    FeaturesetDescriptor(
+      /* featuresetId */ StandardWater.FEATURESET_ID,
+      /* importId */ importId ?: TypedFeaturesetDescriptor.DEFAULT_IMPORT_ID,
+      /* layerId */null
+    ),
+    filter,
+    radius,
+    onLongClick
+  ) { feature, featuresetFeatureId, state ->
+    StandardWaterFeature(
+      id = featuresetFeatureId,
+      importId = importId,
+      originalFeature = feature,
+      state = StandardWaterState(state)
+    )
+  }
+}
 // End of generated file.
