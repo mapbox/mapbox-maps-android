@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.view.MotionEvent
 import android.view.Surface
+import android.view.SurfaceView
 import android.view.WindowManager
 import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
@@ -35,8 +36,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   @get:JvmSynthetic
   internal val mapController: MapController
-  private val mapInitOptions: MapInitOptions
   private val renderer: MapboxSurfaceRenderer
+  private val mapView: MapView?
   private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
 
   @Suppress("PrivatePropertyName")
@@ -59,7 +60,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   ) {
     this.context = context
     this.surface = surface
-    this.mapInitOptions = mapInitOptions
+    this.mapView = null
     val mapName = mapInitOptions.mapName.ifBlank { "${System.identityHashCode(this)}" }
     TAG = "MapSurface\\$mapName"
     this.renderer = MapboxSurfaceRenderer(
@@ -73,9 +74,31 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   }
 
   /**
+   * Provides access to an existing [MapView] without creating another map or renderer.
+   *
+   * The view must use a [SurfaceView] whose surface has already been created. The [MapView]
+   * remains the sole owner of surface callbacks and lifecycle events; calling [surfaceCreated],
+   * [surfaceChanged], [surfaceDestroyed], [onStart], [onStop], [onResume], or [onDestroy] on this
+   * facade throws [IllegalStateException].
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  constructor(mapView: MapView) {
+    val surfaceView = mapView.rendererSurfaceView
+      ?: error("MapView must use SurfaceView mode to provide a MapSurface facade")
+    check(surfaceView.holder.surface.isValid) {
+      "MapView's surface must be created before providing a MapSurface facade"
+    }
+    this.context = mapView.context
+    this.surface = surfaceView.holder.surface
+    this.mapController = mapView.mapController
+    this.renderer = mapController.renderer as? MapboxSurfaceRenderer
+      ?: error("MapView must use a surface renderer to provide a MapSurface facade")
+    this.mapView = mapView
+  }
+
+  /**
    * @param context a visual context (Activity, WindowContext, or DisplayContext) used to initialise the default [MapInitOptions]. On API 30+, a non-visual context (e.g. applicationContext) disables VRR/refresh-rate monitoring and locks the map to 60 fps on high-refresh-rate displays.
    * @param surface the surface that will display map
-   * @param mapInitOptions the init options for map
    * @param renderer the MapboxSurfaceRenderer instance to be used
    * @param mapController the MapController instance to be used
    */
@@ -83,13 +106,12 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   internal constructor(
     context: Context,
     surface: Surface,
-    mapInitOptions: MapInitOptions,
     renderer: MapboxSurfaceRenderer,
     mapController: MapController
   ) {
     this.context = context
     this.surface = surface
-    this.mapInitOptions = mapInitOptions
+    this.mapView = null
     this.renderer = renderer
     this.mapController = mapController
   }
@@ -98,6 +120,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Must be called when the surface has been created.
    */
   fun surfaceCreated() {
+    checkOwnsLifecycle()
     logI(TAG, "surfaceCreated() called")
     renderer.surfaceCreated()
     // Set default refresh rate immediately to ensure map controller has a valid value
@@ -132,6 +155,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * @param height The height of the surface viewport
    */
   fun surfaceChanged(width: Int, height: Int) {
+    checkOwnsLifecycle()
     renderer.surfaceChanged(surface, width, height)
     onSizeChanged(width, height)
   }
@@ -140,6 +164,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Must be called when the surface is destroyed.
    */
   fun surfaceDestroyed() {
+    checkOwnsLifecycle()
     logI(TAG, "surfaceDestroyed() called")
     stopDisplayRefreshRateMonitor()
     renderer.surfaceDestroyed()
@@ -296,6 +321,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Called to resume rendering
    */
   override fun onStart() {
+    checkOwnsLifecycle()
     mapController.onStart()
   }
 
@@ -303,6 +329,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Called to stop rendering
    */
   override fun onStop() {
+    checkOwnsLifecycle()
     mapController.onStop()
   }
 
@@ -310,6 +337,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Called when the activity is resumed
    */
   override fun onResume() {
+    checkOwnsLifecycle()
     mapController.onResume()
   }
 
@@ -317,7 +345,12 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * Called to dispose the renderer
    */
   override fun onDestroy() {
+    checkOwnsLifecycle()
     mapController.onDestroy()
+  }
+
+  private fun checkOwnsLifecycle() {
+    check(mapView == null) { "The backing MapView owns surface callbacks and lifecycle events" }
   }
 
   /**
@@ -371,7 +404,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    */
   fun createPlugin(
     plugin: Plugin
-  ) = mapController.createPlugin(null, plugin)
+  ) = mapController.createPlugin(mapView, plugin)
 
   /**
    * Remove the plugin instance that will be removed from the map.

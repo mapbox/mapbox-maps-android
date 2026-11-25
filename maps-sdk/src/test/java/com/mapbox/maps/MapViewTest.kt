@@ -1,6 +1,9 @@
 package com.mapbox.maps
 
 import android.view.MotionEvent
+import android.view.SurfaceView
+import android.view.TextureView
+import android.view.View
 import androidx.test.core.app.ApplicationProvider
 import com.mapbox.maps.coroutine.isRenderable
 import com.mapbox.maps.debugoptions.DebugOptionsController
@@ -21,6 +24,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -113,6 +117,22 @@ class MapViewTest {
   fun getMapboxMap() {
     mapView.mapboxMap
     verify { mapController.mapboxMap }
+  }
+
+  @Test
+  fun rendererSurfaceViewReturnsSurfaceViewAmongChildren() {
+    val surfaceView = SurfaceView(mapView.context)
+    mapView.addView(View(mapView.context))
+    mapView.addView(surfaceView)
+
+    assertSame(surfaceView, mapView.rendererSurfaceView)
+  }
+
+  @Test
+  fun rendererSurfaceViewReturnsNullForTextureView() {
+    mapView.addView(TextureView(mapView.context))
+
+    assertNull(mapView.rendererSurfaceView)
   }
 
   @Test

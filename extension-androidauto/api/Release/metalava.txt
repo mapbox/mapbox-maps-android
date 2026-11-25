@@ -6,6 +6,7 @@ package com.mapbox.maps.extension.androidauto {
   }
 
   public final class MapboxCarMap {
+    ctor public MapboxCarMap(com.mapbox.maps.extension.androidauto.MapboxCarMapType mapType = com.mapbox.maps.extension.androidauto.MapboxCarMapType.MAP_SURFACE);
     ctor public MapboxCarMap();
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap clearObservers();
     method public androidx.car.app.CarContext getCarContext();
@@ -31,6 +32,7 @@ package com.mapbox.maps.extension.androidauto {
 
   public final class MapboxCarMapEx {
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller mapboxMapInstaller(androidx.car.app.Session);
+    method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapSessionInstaller mapboxMapInstaller(androidx.car.app.Session, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
     method @com.mapbox.maps.MapboxExperimental public static com.mapbox.maps.extension.androidauto.MapboxCarMapScreenInstaller mapboxMapInstaller(androidx.car.app.Screen, com.mapbox.maps.extension.androidauto.MapboxCarMap mapboxCarMap);
   }
 
@@ -73,10 +75,17 @@ package com.mapbox.maps.extension.androidauto {
   public final class MapboxCarMapSurface {
     method public androidx.car.app.CarContext getCarContext();
     method public com.mapbox.maps.MapSurface getMapSurface();
+    method public com.mapbox.maps.MapView? getMapView();
     method public androidx.car.app.SurfaceContainer getSurfaceContainer();
     property public final androidx.car.app.CarContext carContext;
     property public final com.mapbox.maps.MapSurface mapSurface;
+    property public final com.mapbox.maps.MapView? mapView;
     property public final androidx.car.app.SurfaceContainer surfaceContainer;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public enum MapboxCarMapType {
+    enum_constant public static final com.mapbox.maps.extension.androidauto.MapboxCarMapType MAP_SURFACE;
+    enum_constant public static final com.mapbox.maps.extension.androidauto.MapboxCarMapType MAP_VIEW;
   }
 
 }

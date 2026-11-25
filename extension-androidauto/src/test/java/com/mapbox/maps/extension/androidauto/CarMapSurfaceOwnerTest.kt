@@ -3,15 +3,22 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
+import android.os.Looper
 import android.view.Surface
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceContainer
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapSurface
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logI
+import com.mapbox.maps.logW
+import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.Plugin
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -24,12 +31,18 @@ import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertSame
+import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import java.time.Duration
 
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
@@ -50,6 +63,7 @@ class CarMapSurfaceOwnerTest {
     } just Runs
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+    every { logW(any(), any()) } just Runs
     mockkObject(MapSurfaceProvider)
     every { MapSurfaceProvider.create(any(), any(), any()) } returns testMapSurface
   }
@@ -151,7 +165,7 @@ class CarMapSurfaceOwnerTest {
   }
 
   @Test
-  fun `surfaceDestroyed should stop and destroy map before notifying observers`() {
+  fun `surfaceDestroyed should notify observers before stopping and destroying map`() {
     val observer: MapboxCarMapObserver = mockk(relaxed = true)
     carMapSurfaceOwner.registerObserver(observer)
     val surfaceContainer: SurfaceContainer = mockk {
@@ -165,10 +179,10 @@ class CarMapSurfaceOwnerTest {
     carMapSurfaceOwner.onSurfaceDestroyed(surfaceContainer)
 
     verifyOrder {
+      observer.onDetached(any())
       testMapSurface.onStop()
       testMapSurface.surfaceDestroyed()
       testMapSurface.onDestroy()
-      observer.onDetached(any())
     }
   }
 
@@ -397,5 +411,596 @@ class CarMapSurfaceOwnerTest {
     verify(exactly = 1) { carMapGestures.onScale(any(), any(), any(), any()) }
     verify(exactly = 1) { carMapGestures.onFling(any(), any(), any()) }
     verify(exactly = 1) { carMapGestures.onScale(any(), any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW attaches observers once the map view surface is created`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    verify(exactly = 0) { observer.onAttached(any()) }
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    verify { observer.onAttached(match { it.mapView == testMapView && it.mapSurface == testMapSurface }) }
+    verify(exactly = 0) { MapSurfaceProvider.create(any(), any(), any()) }
+    verify(exactly = 0) { testMapSurface.onStart() }
+    verify(exactly = 0) { testMapSurface.surfaceCreated() }
+    verify(exactly = 0) { testMapSurface.surfaceChanged(any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW warns when the map view surface is not created in time`() {
+    val owner = mapViewOwner()
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(2_999))
+    verify(exactly = 0) { logW(any(), any()) }
+
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(1))
+    verify(exactly = 1) { logW("CarMapSurfaceOwner", match { it.contains("still not created") }) }
+  }
+
+  @Test
+  fun `MAP_VIEW does not warn when the map view surface is created in time`() {
+    val owner = mapViewOwner()
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(10))
+
+    verify(exactly = 0) { logW(any(), any()) }
+    verify { logI("CarMapSurfaceOwner", match { it.startsWith("Map view surface created after") }) }
+  }
+
+  @Test
+  fun `MAP_VIEW does not warn when the car surface is destroyed while pending`() {
+    val owner = mapViewOwner()
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(10))
+
+    verify(exactly = 0) { logW(any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW warns once for the replacement display only`() {
+    val owner = mapViewOwner()
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(2))
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(2))
+    verify(exactly = 0) { logW(any(), any()) }
+
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(10))
+    verify(exactly = 1) { logW(any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW attaches immediately when the map view surface already exists`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    every { mapViewSurfaceHolder.surface } returns mockk { every { isValid } returns true }
+
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    verify(exactly = 1) { observer.onAttached(match { it.mapView == testMapView }) }
+    verify { mapViewSurfaceHolder.removeCallback(mapViewSurfaceCallback.captured) }
+    shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(10))
+    verify(exactly = 0) { logW(any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW excludes default ornaments without changing the original options`() {
+    val options = MapInitOptions(carContext, mapOptions = mockk())
+    val originalPlugins = options.plugins
+    val owner = mapViewOwner(options)
+    val displayOptions = slot<MapInitOptions>()
+
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    verify { MapSurfaceProvider.createMapViewDisplay(carContext, any(), capture(displayOptions)) }
+    assertEquals(
+      listOf(
+        Plugin.MAPBOX_CAMERA_PLUGIN_ID,
+        Plugin.MAPBOX_GESTURES_PLUGIN_ID,
+        Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID,
+        Plugin.MAPBOX_ANNOTATION_PLUGIN_ID,
+        Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID,
+        Plugin.MAPBOX_MAP_OVERLAY_PLUGIN_ID,
+        Plugin.MAPBOX_VIEWPORT_PLUGIN_ID,
+      ),
+      displayOptions.captured.plugins.map { it.id }
+    )
+    assertSame(originalPlugins, options.plugins)
+    assertSame(options, owner.mapInitOptions)
+    assertEquals(options.copy(plugins = displayOptions.captured.plugins), displayOptions.captured)
+  }
+
+  @Test
+  fun `MAP_VIEW excludes explicitly supplied ornaments while retaining custom and lifecycle plugins`() {
+    val customPlugin = Plugin.Custom("custom", mockk())
+    val lifecyclePlugin = Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID)
+    val plugins = listOf(
+      Plugin.Mapbox(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
+      customPlugin,
+      Plugin.Mapbox(Plugin.MAPBOX_LOGO_PLUGIN_ID),
+      lifecyclePlugin,
+      Plugin.Mapbox(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_CONSOLIDATED_ATTRIBUTION_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
+    )
+    val options = MapInitOptions(carContext, mapOptions = mockk(), plugins = plugins)
+    val owner = mapViewOwner(options)
+    val displayOptions = slot<MapInitOptions>()
+
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    verify { MapSurfaceProvider.createMapViewDisplay(carContext, any(), capture(displayOptions)) }
+    assertEquals(listOf(customPlugin, lifecyclePlugin), displayOptions.captured.plugins)
+    assertSame(plugins, options.plugins)
+  }
+
+  @Test
+  fun `MAP_SURFACE passes default plugins through without filtering`() {
+    val options = MapInitOptions(carContext, mapOptions = mockk())
+    carMapSurfaceOwner.setup(carContext, options)
+    val surfaceOptions = slot<MapInitOptions>()
+
+    carMapSurfaceOwner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    verify { MapSurfaceProvider.create(carContext, testSurface, capture(surfaceOptions)) }
+    assertSame(options, surfaceOptions.captured)
+    assertSame(MapInitOptions.defaultPluginList, options.plugins)
+  }
+
+  @Test
+  fun `MAP_VIEW surfaceDestroyed notifies observers while the map is valid before destroying the display`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    var mapValid = true
+    every { testMapSurface.mapboxMap.isValid() } answers { mapValid }
+    every { testMapViewDisplay.destroy() } answers { mapValid = false }
+    every { observer.onDetached(any()) } answers {
+      assertNull(owner.mapboxCarMapSurface)
+      assertTrue(testMapSurface.mapboxMap.isValid())
+    }
+
+    owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+    owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+
+    assertFalse(mapValid)
+    verifyOrder {
+      observer.onDetached(any())
+      testMapViewDisplay.destroy()
+    }
+    verify(exactly = 1) { observer.onDetached(any()) }
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { testMapSurface.onStop() }
+    verify(exactly = 0) { testMapSurface.surfaceDestroyed() }
+    verify(exactly = 0) { testMapSurface.onDestroy() }
+  }
+
+  @Test
+  fun `MAP_VIEW surfaceDestroyed still releases the display if an observer throws`() {
+    val owner = mapViewOwner()
+    val observer = mockk<MapboxCarMapObserver>(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    val failure = IllegalStateException("observer failed to detach")
+    every { observer.onDetached(any()) } throws failure
+
+    assertSame(
+      failure,
+      assertThrows(IllegalStateException::class.java) {
+        owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+      }
+    )
+    owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+
+    assertNull(owner.mapboxCarMapSurface)
+    verifyOrder {
+      observer.onDetached(any())
+      testMapViewDisplay.destroy()
+    }
+    verify(exactly = 1) { observer.onDetached(any()) }
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+  }
+
+  @Test
+  fun `MAP_VIEW replacement releases the previous display without destroying its facade`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    val nextDisplay: CarMapViewDisplay = mockk(relaxed = true) {
+      every { mapView } returns testMapView
+    }
+    every { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) } returns nextDisplay
+
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    verifyOrder {
+      observer.onDetached(any())
+      testMapViewDisplay.destroy()
+      MapSurfaceProvider.createMapViewDisplay(any(), any(), any())
+      observer.onAttached(any())
+    }
+    verify(exactly = 0) { testMapSurface.onDestroy() }
+    verify(exactly = 0) { nextDisplay.destroy() }
+  }
+
+  @Test
+  fun `MAP_VIEW cleans up shared plugins before initializing the replacement`() {
+    val plugin = mockk<MapPlugin>(relaxed = true)
+    var initialized = false
+    every { plugin.initialize() } answers { initialized = true }
+    every { plugin.cleanup() } answers { initialized = false }
+    val options = MapInitOptions(
+      carContext,
+      mapOptions = mockk(),
+      plugins = listOf(
+        Plugin.Custom("custom", plugin),
+        Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
+      ),
+    )
+    val owner = mapViewOwner(options)
+    every { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) } answers {
+      plugin.initialize()
+      testMapViewDisplay
+    }
+    every { testMapViewDisplay.destroy() } answers { plugin.cleanup() }
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    val replacement = mapViewSurfaceContainer(width = 1000, height = 600)
+    val nextDisplay = mockk<CarMapViewDisplay>(relaxed = true) {
+      every { mapView } returns testMapView
+    }
+    every { MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any()) } answers {
+      assertNull(owner.mapboxCarMapSurface)
+      plugin.initialize()
+      nextDisplay
+    }
+
+    owner.onSurfaceAvailable(replacement)
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    assertTrue(initialized)
+    verifyOrder {
+      plugin.cleanup()
+      MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any())
+      plugin.initialize()
+    }
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { nextDisplay.destroy() }
+  }
+
+  @Test
+  fun `MAP_VIEW failed active replacement leaves no destroyed surface for observers`() {
+    val owner = mapViewOwner()
+    val observer = mockk<MapboxCarMapObserver>(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    owner.onVisibleAreaChanged(Rect(20, 10, 750, 350))
+    owner.onStableAreaChanged(Rect(30, 20, 700, 300))
+    val replacement = mapViewSurfaceContainer(width = 1000, height = 600)
+    every { MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any()) } returns null
+
+    owner.onSurfaceAvailable(replacement)
+    val lateObserver = mockk<MapboxCarMapObserver>(relaxed = true)
+    owner.registerObserver(lateObserver)
+    owner.onSurfaceDestroyed(replacement)
+
+    assertNull(owner.mapboxCarMapSurface)
+    assertNull(owner.visibleEdgeInsets)
+    assertNull(owner.stableEdgeInsets)
+    verifyOrder {
+      observer.onDetached(any())
+      testMapViewDisplay.destroy()
+      MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any())
+    }
+    verify(exactly = 1) { observer.onDetached(any()) }
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { lateObserver.onAttached(any()) }
+    verify(exactly = 0) { lateObserver.onVisibleAreaChanged(any(), any()) }
+    verify(exactly = 0) { lateObserver.onStableAreaChanged(any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW surfaceDestroyed before the map view surface exists releases the display`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    verify { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { observer.onAttached(any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW failed replacement releases pending display and ignores its stale callback`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    val oldCallback = mapViewSurfaceCallback.captured
+    val replacement = mapViewSurfaceContainer(width = 1000, height = 600)
+    every { MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any()) } returns null
+    every { testMapViewDisplay.destroy() } answers {
+      oldCallback.surfaceCreated(mapViewSurfaceHolder)
+    }
+
+    owner.onSurfaceAvailable(replacement)
+    oldCallback.surfaceCreated(mapViewSurfaceHolder)
+    owner.onSurfaceDestroyed(replacement)
+
+    assertNull(owner.mapboxCarMapSurface)
+    verifyOrder {
+      testMapViewDisplay.destroy()
+      MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any())
+    }
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { observer.onAttached(any()) }
+    verify(exactly = 0) { MapSurfaceProvider.createFromMapView(any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW replacement exception releases pending display and ignores its stale callback`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    val oldCallback = mapViewSurfaceCallback.captured
+    val replacement = mapViewSurfaceContainer(width = 1000, height = 600)
+    val failure = IllegalStateException("display creation failed")
+    every { MapSurfaceProvider.createMapViewDisplay(carContext, replacement, any()) } throws failure
+
+    assertSame(
+      failure,
+      assertThrows(IllegalStateException::class.java) {
+        owner.onSurfaceAvailable(replacement)
+      }
+    )
+    oldCallback.surfaceCreated(mapViewSurfaceHolder)
+    owner.onSurfaceDestroyed(replacement)
+
+    assertNull(owner.mapboxCarMapSurface)
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { observer.onAttached(any()) }
+    verify(exactly = 0) { MapSurfaceProvider.createFromMapView(any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW replays stable area received before the view surface exists`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    val area = Rect(30, 20, 750, 350)
+
+    owner.onStableAreaChanged(area)
+
+    assertNull(owner.stableEdgeInsets)
+    verify(exactly = 0) { observer.onStableAreaChanged(any(), any()) }
+
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    val expectedInsets = EdgeInsets(20.0, 30.0, 50.0, 50.0)
+    assertEquals(expectedInsets, owner.stableEdgeInsets)
+    verifyOrder {
+      observer.onAttached(any())
+      observer.onStableAreaChanged(area, expectedInsets)
+    }
+    val lateObserver: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(lateObserver)
+    verify(exactly = 1) { lateObserver.onStableAreaChanged(area, expectedInsets) }
+  }
+
+  @Test
+  fun `MAP_VIEW recalculates stored stable area when replacement dimensions change`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    val area = Rect(30, 20, 750, 350)
+    owner.onStableAreaChanged(area)
+    val replacement = mapViewSurfaceContainer(width = 1000, height = 600)
+
+    owner.onSurfaceAvailable(replacement)
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    val expectedInsets = EdgeInsets(20.0, 30.0, 250.0, 250.0)
+    assertEquals(expectedInsets, owner.stableEdgeInsets)
+    verify(exactly = 1) { observer.onStableAreaChanged(area, expectedInsets) }
+  }
+
+  @Test
+  fun `MAP_VIEW recalculates stable area updated while replacement is pending`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+    owner.onStableAreaChanged(Rect(30, 20, 750, 350))
+    owner.onSurfaceAvailable(mapViewSurfaceContainer(width = 1000, height = 600))
+    val area = Rect(40, 25, 700, 300)
+    owner.onStableAreaChanged(area)
+
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    val expectedInsets = EdgeInsets(25.0, 40.0, 300.0, 300.0)
+    assertEquals(expectedInsets, owner.stableEdgeInsets)
+    verify(exactly = 1) { observer.onStableAreaChanged(area, expectedInsets) }
+  }
+
+  @Test
+  fun `MAP_SURFACE replays stable area received before attachment`() {
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    carMapSurfaceOwner.registerObserver(observer)
+    carMapSurfaceOwner.setup(carContext, mapInitOptions)
+    val area = Rect(30, 20, 750, 350)
+    carMapSurfaceOwner.onStableAreaChanged(area)
+
+    carMapSurfaceOwner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    val expectedInsets = EdgeInsets(20.0, 30.0, 50.0, 50.0)
+    assertEquals(expectedInsets, carMapSurfaceOwner.stableEdgeInsets)
+    verifyOrder {
+      observer.onAttached(any())
+      observer.onStableAreaChanged(area, expectedInsets)
+    }
+  }
+
+  @Test
+  fun `MAP_VIEW does not notify stable area when none was received`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+
+    owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    mapViewSurfaceCallback.captured.surfaceCreated(mapViewSurfaceHolder)
+
+    assertNull(owner.stableEdgeInsets)
+    verify(exactly = 0) { observer.onStableAreaChanged(any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW rejects texture mode during setup before allocating a display`() {
+    val owner = CarMapSurfaceOwner(carMapGestures, MapboxCarMapType.MAP_VIEW)
+    every { mapInitOptions.textureView } returns true
+
+    val exception = assertThrows(IllegalArgumentException::class.java) {
+      owner.setup(carContext, mapInitOptions)
+    }
+
+    assertEquals("MAP_VIEW requires MapInitOptions.textureView = false", exception.message)
+    assertFalse(owner.isSetup())
+    verify(exactly = 0) { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW rejects texture mode enabled after setup before allocating a display`() {
+    val owner = mapViewOwner()
+    every { mapInitOptions.textureView } returns true
+
+    assertThrows(IllegalArgumentException::class.java) {
+      owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    }
+
+    verify(exactly = 0) { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW rejects missing lifecycle plugin during setup before allocating a display`() {
+    val owner = CarMapSurfaceOwner(carMapGestures, MapboxCarMapType.MAP_VIEW)
+    every { mapInitOptions.plugins } returns listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID))
+
+    val exception = assertThrows(IllegalArgumentException::class.java) {
+      owner.setup(carContext, mapInitOptions)
+    }
+
+    assertEquals(
+      "MAP_VIEW requires the MAPBOX_LIFECYCLE_PLUGIN_ID plugin in MapInitOptions.plugins",
+      exception.message
+    )
+    assertFalse(owner.isSetup())
+    verify(exactly = 0) { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW rejects lifecycle plugin removed after setup before allocating a display`() {
+    val owner = mapViewOwner()
+    every { mapInitOptions.plugins } returns emptyList()
+
+    assertThrows(IllegalArgumentException::class.java) {
+      owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    }
+
+    verify(exactly = 0) { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_SURFACE does not require the lifecycle plugin`() {
+    every { mapInitOptions.plugins } returns emptyList()
+    carMapSurfaceOwner.setup(carContext, mapInitOptions)
+
+    carMapSurfaceOwner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    verify(exactly = 1) { MapSurfaceProvider.create(carContext, testSurface, mapInitOptions) }
+    verify(exactly = 0) { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_SURFACE continues to ignore texture mode`() {
+    every { mapInitOptions.textureView } returns true
+    carMapSurfaceOwner.setup(carContext, mapInitOptions)
+
+    carMapSurfaceOwner.onSurfaceAvailable(mapViewSurfaceContainer())
+
+    verify(exactly = 1) { MapSurfaceProvider.create(carContext, testSurface, mapInitOptions) }
+    verify(exactly = 0) { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) }
+  }
+
+  @Test
+  fun `MAP_VIEW releases unexpected view display before throwing`() {
+    val owner = mapViewOwner()
+    val observer: MapboxCarMapObserver = mockk(relaxed = true)
+    owner.registerObserver(observer)
+    every { testMapView.rendererSurfaceView } returns null
+
+    assertThrows(IllegalStateException::class.java) {
+      owner.onSurfaceAvailable(mapViewSurfaceContainer())
+    }
+    owner.onSurfaceDestroyed(mapViewSurfaceContainer())
+
+    verify(exactly = 1) { testMapViewDisplay.destroy() }
+    verify(exactly = 0) { observer.onAttached(any()) }
+    verify(exactly = 0) { MapSurfaceProvider.createFromMapView(any()) }
+  }
+
+  private val mapViewSurfaceCallback = slot<SurfaceHolder.Callback>()
+  private val mapViewSurfaceHolder: SurfaceHolder = mockk(relaxed = true) {
+    every { addCallback(capture(mapViewSurfaceCallback)) } just Runs
+  }
+  private val testMapView: MapView = mockk(relaxed = true) {
+    every { rendererSurfaceView } returns mockk<SurfaceView>(relaxed = true) {
+      every { holder } returns mapViewSurfaceHolder
+    }
+  }
+  private val testMapViewDisplay: CarMapViewDisplay = mockk(relaxed = true) {
+    every { mapView } returns testMapView
+  }
+
+  private fun mapViewOwner(options: MapInitOptions = mapInitOptions): CarMapSurfaceOwner {
+    every { mapInitOptions.plugins } returns listOf(Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID))
+    every { MapSurfaceProvider.createMapViewDisplay(any(), any(), any()) } returns testMapViewDisplay
+    every { MapSurfaceProvider.createFromMapView(testMapView) } returns testMapSurface
+    val owner = CarMapSurfaceOwner(carMapGestures, MapboxCarMapType.MAP_VIEW)
+    owner.setup(carContext, options)
+    return owner
+  }
+
+  private fun mapViewSurfaceContainer(
+    width: Int = 800,
+    height: Int = 400,
+  ): SurfaceContainer = mockk {
+    every { this@mockk.width } returns width
+    every { this@mockk.height } returns height
+    every { surface } returns testSurface
   }
 }

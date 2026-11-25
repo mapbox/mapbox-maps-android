@@ -8,6 +8,8 @@ public class com/mapbox/maps/extension/androidauto/DefaultMapboxCarMapGestureHan
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 	public fun <init> ()V
+	public fun <init> (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapType;)V
+	public synthetic fun <init> (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun clearObservers ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
 	public final fun getCarContext ()Landroidx/car/app/CarContext;
 	public final fun getCarMapSurface ()Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;
@@ -26,6 +28,7 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapEx {
 	public static final fun mapboxMapInstaller (Landroidx/car/app/Screen;Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapScreenInstaller;
 	public static final fun mapboxMapInstaller (Landroidx/car/app/Session;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
+	public static final fun mapboxMapInstaller (Landroidx/car/app/Session;Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSessionInstaller;
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
@@ -69,8 +72,16 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMapSessionInst
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapSurface {
 	public final fun getCarContext ()Landroidx/car/app/CarContext;
 	public final fun getMapSurface ()Lcom/mapbox/maps/MapSurface;
+	public final fun getMapView ()Lcom/mapbox/maps/MapView;
 	public final fun getSurfaceContainer ()Landroidx/car/app/SurfaceContainer;
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/androidauto/MapboxCarMapType : java/lang/Enum {
+	public static final field MAP_SURFACE Lcom/mapbox/maps/extension/androidauto/MapboxCarMapType;
+	public static final field MAP_VIEW Lcom/mapbox/maps/extension/androidauto/MapboxCarMapType;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMapType;
+	public static fun values ()[Lcom/mapbox/maps/extension/androidauto/MapboxCarMapType;
 }
 
 public final class com/mapbox/maps/extension/androidauto/widgets/CompassWidget : com/mapbox/maps/renderer/widget/BitmapWidget {

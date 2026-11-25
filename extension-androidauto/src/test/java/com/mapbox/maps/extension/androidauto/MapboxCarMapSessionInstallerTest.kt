@@ -1,11 +1,13 @@
 package com.mapbox.maps.extension.androidauto
 
+import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.Session
 import androidx.lifecycle.Lifecycle
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.androidauto.testing.TestLifecycleOwner
 import io.mockk.*
+import org.junit.Assert.assertSame
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -13,6 +15,42 @@ import org.robolectric.RobolectricTestRunner
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 class MapboxCarMapSessionInstallerTest {
+
+  @Test
+  fun `session extension installs the supplied view mode map`() {
+    val lifecycleOwner = TestLifecycleOwner()
+    val sessionCarContext = mockk<CarContext> {
+      every { getCarService(AppManager::class.java) } returns mockk(relaxed = true)
+    }
+    val session = mockk<Session> {
+      every { carContext } returns sessionCarContext
+      every { lifecycle } returns lifecycleOwner.lifecycle
+    }
+    val mapboxCarMap = MapboxCarMap(MapboxCarMapType.MAP_VIEW)
+
+    val installedMap = session.mapboxMapInstaller(mapboxCarMap).install(mockCarInitializer())
+    lifecycleOwner.moveToState(Lifecycle.State.CREATED)
+
+    assertSame(mapboxCarMap, installedMap)
+    assertSame(sessionCarContext, installedMap.carContext)
+  }
+
+  @Test
+  fun `session extension without arguments still installs a default map`() {
+    val lifecycleOwner = TestLifecycleOwner()
+    val sessionCarContext = mockk<CarContext> {
+      every { getCarService(AppManager::class.java) } returns mockk(relaxed = true)
+    }
+    val session = mockk<Session> {
+      every { carContext } returns sessionCarContext
+      every { lifecycle } returns lifecycleOwner.lifecycle
+    }
+
+    val installedMap = session.mapboxMapInstaller().install(mockCarInitializer())
+    lifecycleOwner.moveToState(Lifecycle.State.CREATED)
+
+    assertSame(sessionCarContext, installedMap.carContext)
+  }
 
   @Test
   fun `install should setup MapboxCarMap and then register created observers`() {

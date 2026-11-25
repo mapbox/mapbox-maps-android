@@ -44,6 +44,8 @@ dependencies {
   implementation(libs.androidx.annotations)
 
   testImplementation(libs.bundles.base.dependenciesTests)
+  testImplementation(platform(libs.compose.bom))
+  testImplementation(libs.compose.ui)
   androidTestImplementation(libs.bundles.base.dependenciesAndroidTests)
 }
 

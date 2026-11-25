@@ -6,6 +6,8 @@ import android.hardware.display.DisplayManager
 import android.view.Display
 import android.view.MotionEvent
 import android.view.Surface
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 import android.view.WindowManager
 import com.mapbox.maps.coroutine.isRenderable
 import com.mapbox.maps.plugin.MapPlugin
@@ -18,7 +20,6 @@ import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
-import junit.framework.Assert.assertSame
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,6 +29,8 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertSame
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,7 +43,6 @@ class MapSurfaceTest {
   private lateinit var context: Context
   private lateinit var mapController: MapController
   private lateinit var mapSurface: MapSurface
-  private lateinit var mapInitOptions: MapInitOptions
   private lateinit var mapboxSurfaceRenderer: MapboxSurfaceRenderer
   private lateinit var surface: Surface
 
@@ -58,7 +60,6 @@ class MapSurfaceTest {
     every { logE(any(), any()) } just Runs
 
     context = mockk(relaxUnitFun = true)
-    mapInitOptions = mockk(relaxUnitFun = true)
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
     surface = mockk(relaxed = true)
@@ -69,7 +70,6 @@ class MapSurfaceTest {
     mapSurface = MapSurface(
       context,
       surface,
-      mapInitOptions,
       mapboxSurfaceRenderer,
       mapController
     )
@@ -297,5 +297,97 @@ class MapSurfaceTest {
     val plugin: MapPlugin? = mapSurface.getPlugin(pluginId)
     verifyOnce { mapController.getPlugin<MapPlugin>(pluginId) }
     assertNull(plugin)
+  }
+
+  @Test
+  fun mapViewFacadeUsesExistingMapAndRenderer() {
+    val mapView = mapViewWithSurface()
+    val mapboxMap: MapboxMap = mockk()
+    val plugin: MapPlugin = mockk()
+    every { mapController.mapboxMap } returns mapboxMap
+    every { mapController.getPlugin<MapPlugin>("id") } returns plugin
+
+    val facade = MapSurface(mapView)
+    val listener = OnFpsChangedListener { }
+
+    assertSame(mapboxMap, facade.mapboxMap)
+    assertSame(plugin, facade.getPlugin<MapPlugin>("id"))
+    assertSame(surface, facade.surface)
+    facade.setOnFpsChangedListener(listener)
+    facade.setMaximumFps(30)
+
+    verifyOnce { mapboxSurfaceRenderer.setOnFpsChangedListener(listener) }
+    verifyOnce { mapController.setMaximumFps(30) }
+    verify(exactly = 0) { mapboxSurfaceRenderer.surfaceCreated() }
+    verify(exactly = 0) { mapboxSurfaceRenderer.surfaceChanged(any(), any(), any()) }
+    verify(exactly = 0) { mapController.onStart() }
+  }
+
+  @Test
+  fun mapViewFacadeCreatesPluginsWithBackingView() {
+    val mapView = mapViewWithSurface()
+    val facade = MapSurface(mapView)
+    val plugin = Plugin.Custom("id", mockk())
+    every { mapController.createPlugin(mapView, plugin) } returns mockk()
+
+    facade.createPlugin(plugin)
+
+    verifyOnce { mapController.createPlugin(mapView, plugin) }
+  }
+
+  @Test
+  fun mapViewFacadeRejectsDuplicateSurfaceAndLifecycleEvents() {
+    val facade = MapSurface(mapViewWithSurface())
+    val callbacks = listOf<() -> Unit>(
+      { facade.surfaceCreated() },
+      { facade.surfaceChanged(100, 200) },
+      { facade.surfaceDestroyed() },
+      { facade.onStart() },
+      { facade.onStop() },
+      { facade.onResume() },
+      { facade.onDestroy() },
+    )
+
+    callbacks.forEach { callback ->
+      assertThrows(IllegalStateException::class.java) { callback() }
+    }
+
+    verify { mapboxSurfaceRenderer wasNot Called }
+    verify(exactly = 0) { mapController.onStart() }
+    verify(exactly = 0) { mapController.onStop() }
+    verify(exactly = 0) { mapController.onResume() }
+    verify(exactly = 0) { mapController.onDestroy() }
+  }
+
+  @Test
+  fun mapViewFacadeRequiresCreatedSurface() {
+    val mapView = mapViewWithSurface()
+    every { surface.isValid } returns false
+
+    assertThrows(IllegalStateException::class.java) { MapSurface(mapView) }
+  }
+
+  @Test
+  fun mapViewFacadeRequiresSurfaceView() {
+    val mapView = mapViewWithSurface()
+    every { mapView.rendererSurfaceView } returns null
+
+    assertThrows(IllegalStateException::class.java) { MapSurface(mapView) }
+  }
+
+  private fun mapViewWithSurface(): MapView {
+    every { surface.isValid } returns true
+    every { mapController.renderer } returns mapboxSurfaceRenderer
+    val surfaceHolder: SurfaceHolder = mockk {
+      every { surface } returns this@MapSurfaceTest.surface
+    }
+    val surfaceView: SurfaceView = mockk {
+      every { holder } returns surfaceHolder
+    }
+    return mockk {
+      every { context } returns this@MapSurfaceTest.context
+      every { mapController } returns this@MapSurfaceTest.mapController
+      every { rendererSurfaceView } returns surfaceView
+    }
   }
 }

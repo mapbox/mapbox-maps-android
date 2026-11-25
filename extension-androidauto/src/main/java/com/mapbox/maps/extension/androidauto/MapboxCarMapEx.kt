@@ -13,6 +13,13 @@ import com.mapbox.maps.MapboxExperimental
 fun Session.mapboxMapInstaller() = MapboxCarMapSessionInstaller(this)
 
 /**
+ * Shorthand extension for installing the given [mapboxCarMap] onto a [Session].
+ */
+@MapboxExperimental
+fun Session.mapboxMapInstaller(mapboxCarMap: MapboxCarMap) =
+  MapboxCarMapSessionInstaller(this, mapboxCarMap)
+
+/**
  * Shorthand extension for installing an experience onto a [Screen].
  */
 @MapboxExperimental

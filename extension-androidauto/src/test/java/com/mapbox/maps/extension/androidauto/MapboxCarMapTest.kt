@@ -15,9 +15,11 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -69,6 +71,17 @@ class MapboxCarMapTest {
   @Test(expected = IllegalStateException::class)
   fun `MapboxCarMap crashes when mapInitOptions is accessed before setup`() {
     MapboxCarMap().mapInitOptions
+  }
+
+  @Test
+  fun `MAP_VIEW type is forwarded and rejects texture mode during setup`() {
+    every { mapInitOptions.textureView } returns true
+
+    val exception = assertThrows(IllegalArgumentException::class.java) {
+      MapboxCarMap(MapboxCarMapType.MAP_VIEW).setup(carContext, mapInitOptions)
+    }
+
+    assertEquals("MAP_VIEW requires MapInitOptions.textureView = false", exception.message)
   }
 
   @Test

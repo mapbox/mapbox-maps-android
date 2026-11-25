@@ -30,8 +30,11 @@ import com.mapbox.maps.MapboxExperimental
  * surface callback. Do not use setSurfaceCallback, and do not create multiple instances of
  * [MapboxCarMap].
  */
-class MapboxCarMap {
-  private val carMapSurfaceOwner = CarMapSurfaceOwner()
+@OptIn(MapboxExperimental::class)
+class MapboxCarMap @JvmOverloads constructor(
+  mapType: MapboxCarMapType = MapboxCarMapType.MAP_SURFACE,
+) {
+  private val carMapSurfaceOwner = CarMapSurfaceOwner(mapType = mapType)
 
   /**
    * The initial options used to [setup] the map.
@@ -66,6 +69,9 @@ class MapboxCarMap {
    *
    * @param carContext Android Auto CarContext
    * @param mapInitOptions parameter to initialize the head unit map
+   * @throws IllegalArgumentException if [MapboxCarMapType.MAP_VIEW] is used with
+   * [MapInitOptions.textureView] enabled or without
+   * [com.mapbox.maps.plugin.Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID] in [MapInitOptions.plugins].
    */
   @OptIn(MapboxExperimental::class)
   fun setup(
@@ -84,6 +90,10 @@ class MapboxCarMap {
    * This may be a temporary solution, while androidx.car.app:app:1.3.0 is rolling out
    * [SurfaceCallback.onClick]. If there is no use for this function in the future, it will be
    * removed.
+   *
+   * @throws IllegalArgumentException if [MapboxCarMapType.MAP_VIEW] is used with
+   * [MapInitOptions.textureView] enabled or without
+   * [com.mapbox.maps.plugin.Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID] in [MapInitOptions.plugins].
    */
   @MapboxExperimental
   fun prepareSurfaceCallback(

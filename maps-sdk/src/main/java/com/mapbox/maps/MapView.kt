@@ -16,6 +16,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.RequiresApi
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.children
 import com.mapbox.common.MapboxTracing
 import com.mapbox.maps.debugoptions.DebugOptionsController
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
@@ -445,6 +446,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   val maximumFps: Int?
     get() = mapController.maximumFps
+
+  /**
+   * The [SurfaceView] used by the map renderer, or null when this map uses a [TextureView].
+   */
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val rendererSurfaceView: SurfaceView?
+    get() = children.filterIsInstance<SurfaceView>().firstOrNull()
 
   /**
    * Reset to "no cap" — equivalent to never having called [setMaximumFps].

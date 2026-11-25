@@ -80,6 +80,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun <init> (Landroid/content/Context;Landroid/view/Surface;)V
 	public fun <init> (Landroid/content/Context;Landroid/view/Surface;Lcom/mapbox/maps/MapInitOptions;)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/view/Surface;Lcom/mapbox/maps/MapInitOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lcom/mapbox/maps/MapView;)V
 	public final fun addOnMaximumFpsChangedListener (Lcom/mapbox/maps/renderer/OnMaximumFpsChangedListener;)V
 	public fun addRendererSetupErrorListener (Lcom/mapbox/maps/renderer/RendererSetupErrorListener;)V
 	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
@@ -133,6 +134,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public final fun getMaximumFps ()Ljava/lang/Integer;
 	public fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
 	public fun getRenderThreadStatsRecorder ()Lcom/mapbox/maps/renderer/RenderThreadStatsRecorder;
+	public final fun getRendererSurfaceView ()Landroid/view/SurfaceView;
 	public final fun getViewAnnotationManager ()Lcom/mapbox/maps/viewannotation/ViewAnnotationManager;
 	public static final fun isRenderingSupported ()Z
 	public static final fun isTerrainRenderingSupported ()Z

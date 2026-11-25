@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 ## Features ✨ and improvements 🏁
+* [androidauto] Add experimental `MAP_VIEW` mode to `MapboxCarMap`, enabling view-based map features on Android Auto. Use `Session.mapboxMapInstaller(MapboxCarMap(MapboxCarMapType.MAP_VIEW))` to install it.
 * Reduce the main-thread cost of the location puck: its location is now sent to the map as a double array instead of a list of boxed values serialized through JSON.
 * Add the experimental Albers equal-area projection: `ProjectionName.ALBERS`. Use the experimental `Projection.center` and `Projection.parallels` to configure it for a region.
     ```kotlin
@@ -21,6 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `StandardStyleInteractionsState.onWaterClicked` and `StandardStyleInteractionsState.onWaterLongClicked`.
 
 ## Bug fixes 🐞
+* [androidauto] Call `MapboxCarMapObserver.onDetached` before the map is destroyed when the car surface is destroyed, so observers can still use the map.
 * Build debug log messages only when debug logging is enabled.
 
 # 11.36.0-rc.1 November 16, 2026
