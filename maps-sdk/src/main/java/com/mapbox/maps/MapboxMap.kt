@@ -531,17 +531,57 @@ class MapboxMap :
   fun getStyle(): Style? = style
 
   /**
-   * Get the [Style] of the map asynchronously.
+   * Execute the provided [onStyleLoaded] when the style becomes fully loaded.
+   * Will be executed synchronously if the style is loaded at the moment of invocation.
    *
    * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
    * see [Style.isValid] for more details.
+   *
+   * If no style is loaded yet, the map keeps a reference to [onStyleLoaded] until a style finishes
+   * loading or the map is destroyed, and the request cannot be removed earlier. Everything
+   * [onStyleLoaded] captures stays reachable for that time. If the style may never load
+   * and [onStyleLoaded] captures an object that lives shorter than the
+   * map, each such object leaks. In that case use [whenStyleReady] and cancel the returned
+   * [Cancelable] when the object is destroyed.
+   *
+   * Passing the same [onStyleLoaded] instance again while it is still pending does not add a
+   * second request, and the callback is invoked once. If the map is destroyed before the style
+   * loads, [onStyleLoaded] is never invoked.
    *
    * @param onStyleLoaded the callback to be invoked when the style is fully loaded
    */
   fun getStyle(onStyleLoaded: Style.OnStyleLoaded) {
     checkNativeMap("getStyle")
-    style?.let(onStyleLoaded::onStyleLoaded)
-      ?: styleObserver.addGetStyleListener(onStyleLoaded)
+    runWhenStyleReady(onStyleLoaded)
+  }
+
+  /**
+   * Execute the provided [onStyleLoaded] when the style becomes fully loaded.
+   * Will be executed synchronously if the style is loaded at the moment of invocation.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
+   *
+   * Passing the same [onStyleLoaded] instance again while it is still pending does not add a
+   * second request: the callback is invoked once, both calls return the same [Cancelable], and
+   * cancelling it removes the request for both. Use separate instances to cancel them independently.
+   * If the map is destroyed before the style loads, [onStyleLoaded] is never invoked.
+   *
+   * @param onStyleLoaded the callback to be invoked when the style is fully loaded
+   * @return a [Cancelable] that can be used to cancel this registration if the style
+   * never becomes ready. Cancelling after [onStyleLoaded] was invoked has no effect.
+   */
+  fun whenStyleReady(onStyleLoaded: Style.OnStyleLoaded): Cancelable {
+    checkNativeMap("whenStyleReady")
+    return runWhenStyleReady(onStyleLoaded)
+  }
+
+  private fun runWhenStyleReady(onStyleLoaded: Style.OnStyleLoaded): Cancelable {
+    style?.let {
+      onStyleLoaded.onStyleLoaded(it)
+      return EmptyCancelable
+    }
+    return styleObserver.addGetStyleListener(onStyleLoaded)
   }
 
   /**

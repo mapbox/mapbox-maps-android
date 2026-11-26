@@ -81,7 +81,7 @@ internal class OverviewViewportStateImpl(
   private fun evaluateViewportData(callback: (CameraOptions) -> Unit): Cancelable {
     var cancelled = false
     var styleResolved = false
-    mapDelegateProvider.getStyle {
+    val styleRequest = mapDelegateProvider.whenStyleReady {
       styleResolved = true
       evaluateCameraForCoordinates(callback) { cancelled }
     }
@@ -90,6 +90,7 @@ internal class OverviewViewportStateImpl(
     }
     return Cancelable {
       cancelled = true
+      styleRequest.cancel()
     }
   }
 

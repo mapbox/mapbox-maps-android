@@ -20,18 +20,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 /**
- * Get the [Style] of the map.
+ * Get the [Style] of the map, suspending until the style becomes fully loaded.
+ * Returns without suspending if the style is loaded at the moment of invocation.
  *
  * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
  * see [Style.isValid] for more details.
+ *
+ * Cancelling the calling coroutine before the style loads releases the pending style request.
+ * If the map is destroyed before the style loads, this never resumes, so call it from a scope
+ * that is cancelled together with the map, such as the owner's lifecycle scope.
  */
 @JvmSynthetic
-suspend fun MapboxMap.awaitStyle(): Style = suspendCoroutine { continuation ->
-  getStyle(continuation::resume)
+suspend fun MapboxMap.awaitStyle(): Style = suspendCancellableCoroutine { continuation ->
+  val request = whenStyleReady { continuation.resume(it) }
+  continuation.invokeOnCancellation { request.cancel() }
 }
 
 /**

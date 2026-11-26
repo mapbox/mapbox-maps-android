@@ -7,6 +7,8 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 
 ## Features ✨ and improvements 🏁
+* Add `MapboxMap.whenStyleReady(onStyleLoaded)`, which works like `getStyle(onStyleLoaded)` (runs the callback when the style is fully loaded, synchronously if it is already loaded) but returns a `Cancelable`. Cancel it to release the callback when it is no longer needed and the style has not loaded yet, for example when its owner is destroyed while the map is offline.
+* `MapboxMap.awaitStyle()` is now cancellable. Cancelling the calling coroutine before the style loads releases the pending style request.
 * Add `setLoggingLevel(tag, level)` and `getLoggingLevel(tag)` to control the logging level of a single tag.
 * [androidauto] Add experimental `MAP_VIEW` mode to `MapboxCarMap`, enabling view-based map features on Android Auto. Use `Session.mapboxMapInstaller(MapboxCarMap(MapboxCarMapType.MAP_VIEW))` to install it.
 * Reduce the main-thread cost of the location puck: its location is now sent to the map as a double array instead of a list of boxed values serialized through JSON.
@@ -27,6 +29,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * [androidauto] Call `MapboxCarMapObserver.onDetached` before the map is destroyed when the car surface is destroyed, so observers can still use the map.
 * Build debug log messages only when debug logging is enabled.
+* Fix pending style requests from the gestures and viewport plugins being kept after they are no longer needed.
 * Fix lazy `logD(tag) { ... }` not logging when `DEBUG` level is set only for this tag (with `setLoggingLevel(tag, level)`) and the default level is higher.
 
 # 11.36.0-rc.1 November 16, 2026

@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.delegates
 
 import androidx.annotation.RestrictTo
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.IndoorManager
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxStyleManager
@@ -32,9 +33,31 @@ interface MapDelegateProvider {
   val mapAttributionDelegate: MapAttributionDelegate
 
   /**
-   * Delegate used to interact with map's style.
+   * Execute the provided [callback] when the style becomes fully loaded.
+   * Will be executed synchronously if the style is loaded at the moment of invocation.
+   *
+   * If no style is loaded yet, [callback] stays referenced until a style loads or the map is
+   * destroyed. Prefer [whenStyleReady] when the caller can be destroyed earlier than the map.
+   *
+   * Passing the same [callback] instance again while it is still pending does not add a
+   * second request, and the callback is invoked once. If the map is destroyed before the style
+   * loads, [callback] is never invoked.
    */
   fun getStyle(callback: (MapboxStyleManager) -> Unit)
+
+  /**
+   * Execute the provided [callback] when the style becomes fully loaded.
+   * Will be executed synchronously if the style is loaded at the moment of invocation.
+   *
+   * Passing the same [callback] instance again while it is still pending does not add a
+   * second request: the callback is invoked once, both calls return the same [Cancelable], and
+   * cancelling it removes the request for both. Use separate instances to cancel them independently.
+   * If the map is destroyed before the style loads, [callback] is never invoked.
+   *
+   * @return a [Cancelable] that can be used to cancel this registration if the style
+   * never becomes ready. Cancelling after [callback] was invoked has no effect.
+   */
+  fun whenStyleReady(callback: (MapboxStyleManager) -> Unit): Cancelable
 
   /**
    * Delegate used to interact with map's style manager without waiting for style loading events.

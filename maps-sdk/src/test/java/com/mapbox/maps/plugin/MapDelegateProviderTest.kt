@@ -1,11 +1,13 @@
 package com.mapbox.maps.plugin
 
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
 import com.mapbox.maps.geofencing.MapGeofencingConsent
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.attribution.attribution
 import io.mockk.*
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertNotNull
 import org.junit.After
 import org.junit.Before
@@ -69,12 +71,45 @@ class MapDelegateProviderTest {
   @Test
   fun styleExtensionDelegate() {
     val captureCallback = slot<Style.OnStyleLoaded>()
+    val style = mockk<Style>()
     every { mapboxMap.getStyle(capture(captureCallback)) } answers {
-      captureCallback.captured.onStyleLoaded(mockk())
+      captureCallback.captured.onStyleLoaded(style)
     }
     val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, mockk(), mockk(), mockk())
-    mapDelegateProvider.getStyle {}
-    assertNotNull(captureCallback.captured)
+    var received: MapboxStyleManager? = null
+    mapDelegateProvider.getStyle { received = it }
+    assertEquals(style, received)
+  }
+
+  @Test
+  fun whenStyleReadyReturnsMapboxMapCancelable() {
+    val styleRequest = mockk<Cancelable>(relaxed = true)
+    every { mapboxMap.whenStyleReady(any()) } returns styleRequest
+    val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, mockk(), mockk(), mockk())
+    val callback = mockk<(MapboxStyleManager) -> Unit>(relaxed = true)
+
+    mapDelegateProvider.whenStyleReady(callback).cancel()
+
+    verify(exactly = 1) { styleRequest.cancel() }
+    verify(exactly = 0) { callback.invoke(any()) }
+  }
+
+  @Test
+  fun whenStyleReadyWithSameCallbackPassesEqualListeners() {
+    val listeners = mutableListOf<Style.OnStyleLoaded>()
+    every { mapboxMap.whenStyleReady(capture(listeners)) } returns mockk()
+    val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, mockk(), mockk(), mockk())
+    val callback: (MapboxStyleManager) -> Unit = {}
+    val otherCallback: (MapboxStyleManager) -> Unit = {}
+
+    mapDelegateProvider.whenStyleReady(callback)
+    mapDelegateProvider.whenStyleReady(callback)
+    mapDelegateProvider.whenStyleReady(otherCallback)
+
+    // StyleObserver deduplicates pending requests by listener equals and hashCode
+    assertEquals(listeners[0], listeners[1])
+    assertEquals(listeners[0].hashCode(), listeners[1].hashCode())
+    assertFalse(listeners[0] == listeners[2])
   }
 
   @Test

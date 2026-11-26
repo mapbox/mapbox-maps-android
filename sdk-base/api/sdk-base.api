@@ -2681,6 +2681,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProv
 	public abstract fun getMapTransformDelegate ()Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;
 	public abstract fun getMaximumFps ()Ljava/lang/Integer;
 	public abstract fun getStyle (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun whenStyleReady (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/common/Cancelable;
 }
 
 public final class com/mapbox/maps/plugin/delegates/MapDelegateProvider$DefaultImpls {

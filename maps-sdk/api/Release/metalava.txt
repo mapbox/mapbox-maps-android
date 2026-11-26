@@ -375,6 +375,7 @@ package com.mapbox.maps {
     method public void triggerRepaint();
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) @com.mapbox.maps.MapboxExperimental public com.mapbox.common.Cancelable whenSizeReady(kotlin.jvm.functions.Function0<kotlin.Unit> action);
+    method public com.mapbox.common.Cancelable whenStyleReady(com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     property public com.mapbox.maps.CameraState cameraState;
     property public final com.mapbox.maps.IndoorManager indoor;
     property public final com.mapbox.maps.Style? style;

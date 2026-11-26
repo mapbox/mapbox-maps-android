@@ -5,6 +5,9 @@ import com.mapbox.verifyNo
 import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -458,5 +461,162 @@ class StyleObserverTest {
     verifyOnce { styleCallback.onStyleLoaded(any()) }
     verifyOnce { styleSourcesCallback.onStyleLoaded(any()) }
     verifyOnce { styleSpritesCallback.onStyleLoaded(any()) }
+  }
+
+  private fun loadStyle() {
+    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), null, null)
+    styleObserver.run(
+      StyleDataLoaded(StyleDataLoadedType.STYLE, EventTimeInterval(Date(0), Date(0)))
+    ) // needed to initialize style internally
+    styleObserver.run(mockk<StyleLoaded>())
+  }
+
+  @Test
+  fun getStyleListenerCancelledBeforeLoadIsNotInvoked() {
+    val cancelled = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val kept = mockk<Style.OnStyleLoaded>(relaxed = true)
+    styleObserver.addGetStyleListener(cancelled).cancel()
+    styleObserver.addGetStyleListener(kept)
+    loadStyle()
+    verifyNo { cancelled.onStyleLoaded(any()) }
+    verifyOnce { kept.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleListenerInvokedOnlyOnce() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val registration = styleObserver.addGetStyleListener(listener)
+    loadStyle()
+    loadStyle()
+    // cancelling after the listener fired is a no-op
+    registration.cancel()
+    registration.cancel()
+    verifyOnce { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleListenerCancelledByEarlierListenerIsNotInvoked() {
+    val second = mockk<Style.OnStyleLoaded>(relaxed = true)
+    lateinit var secondRegistration: Cancelable
+    styleObserver.addGetStyleListener { secondRegistration.cancel() }
+    secondRegistration = styleObserver.addGetStyleListener(second)
+    loadStyle()
+    verifyNo { second.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleCancelAfterInvokedDoesNotRemoveNewerRegistrationOfSameListener() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val firstRegistration = styleObserver.addGetStyleListener(listener)
+    loadStyle()
+    styleObserver.addGetStyleListener(listener)
+    // stale handle from the first, already invoked, registration
+    firstRegistration.cancel()
+    loadStyle()
+    verify(exactly = 2) { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleCancelOfSatisfiedDuplicateDoesNotRemoveNewerRegistrationOfSameListener() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    styleObserver.addGetStyleListener(listener)
+    // duplicate registration while the first one is still pending
+    val duplicateRegistration = styleObserver.addGetStyleListener(listener)
+    loadStyle()
+    styleObserver.addGetStyleListener(listener)
+    // stale handle from the duplicate, already satisfied by the first load
+    duplicateRegistration.cancel()
+    loadStyle()
+    verify(exactly = 2) { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun sameGetStyleListenerCanBeRegisteredAgainAfterCancel() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    styleObserver.addGetStyleListener(listener).cancel()
+    styleObserver.addGetStyleListener(listener)
+    loadStyle()
+    verifyOnce { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun sameGetStyleListenerRegisteredTwiceIsInvokedOnce() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    styleObserver.addGetStyleListener(listener)
+    styleObserver.addGetStyleListener(listener)
+    loadStyle()
+    verifyOnce { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun sameGetStyleListenerRegisteredTwiceIsRemovedByEitherCancel() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    styleObserver.addGetStyleListener(listener)
+    styleObserver.addGetStyleListener(listener).cancel()
+    assertTrue(styleObserver.getStyleListeners.isEmpty())
+    loadStyle()
+    verifyNo { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleListenerCancelAfterDestroyIsNoOp() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val registration = styleObserver.addGetStyleListener(listener)
+    styleObserver.onDestroy()
+    assertTrue(styleObserver.getStyleListeners.isEmpty())
+    registration.cancel()
+    verifyNo { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleListenerCancelRemovesRequest() {
+    val registration = styleObserver.addGetStyleListener(mockk(relaxed = true))
+    assertEquals(1, styleObserver.getStyleListeners.size)
+    registration.cancel()
+    assertTrue(styleObserver.getStyleListeners.isEmpty())
+  }
+
+  @Test
+  fun getStyleListenerInvokedRequestIsRemoved() {
+    styleObserver.addGetStyleListener(mockk(relaxed = true))
+    loadStyle()
+    assertTrue(styleObserver.getStyleListeners.isEmpty())
+  }
+
+  @Test
+  fun getStyleRequestDropsListenerOnceFinished() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val requests = mutableSetOf<StyleObserver.GetStyleRequest>()
+    val fired = StyleObserver.GetStyleRequest(listener, requests)
+    val cancelled = StyleObserver.GetStyleRequest(listener, requests)
+    val released = StyleObserver.GetStyleRequest(listener, requests)
+    val pending = StyleObserver.GetStyleRequest(listener, requests)
+    val hash = pending.hashCode()
+    assertEquals(pending, fired)
+    assertEquals(pending, cancelled)
+    assertEquals(pending, released)
+
+    fired.onStyleLoaded(mockk())
+    cancelled.cancel()
+    released.release()
+
+    // a finished request no longer references the listener, so it only equals itself
+    listOf(fired, cancelled, released).forEach { finished ->
+      assertNotEquals(pending, finished)
+      assertNotEquals(finished, pending)
+      assertEquals(finished, finished)
+      assertEquals(hash, finished.hashCode())
+    }
+    verifyOnce { listener.onStyleLoaded(any()) }
+  }
+
+  @Test
+  fun getStyleListenerAddedAfterDestroyIsNotRegistered() {
+    val listener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    styleObserver.onDestroy()
+    val registration = styleObserver.addGetStyleListener(listener)
+    assertSame(EmptyCancelable, registration)
+    assertTrue(styleObserver.getStyleListeners.isEmpty())
+    verifyNo { listener.onStyleLoaded(any()) }
   }
 }

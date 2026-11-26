@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
+import com.mapbox.maps.coroutine.awaitStyle
 import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.coroutine.cameraChangedEvents
 import com.mapbox.maps.coroutine.genericEvents
@@ -24,6 +25,7 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.toList
@@ -236,6 +238,34 @@ class MapboxMapExtTest {
     assertSame(genericEvent, values[0])
     assertSame(genericEvent, values[1])
     assertSame(genericEvent2, values[2])
+  }
+
+  @Test
+  fun awaitStyleResumesWhenStyleLoads() = runTest {
+    val listenerSlot = slot<Style.OnStyleLoaded>()
+    every { styleObserver.addGetStyleListener(capture(listenerSlot)) } returns cancelable
+    val style = mockk<Style>()
+
+    var result: Style? = null
+    backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+      result = mapboxMap.awaitStyle()
+    }
+    listenerSlot.captured.onStyleLoaded(style)
+
+    assertSame(style, result)
+    verify(exactly = 0) { cancelable.cancel() }
+  }
+
+  @Test
+  fun awaitStyleCancelsStyleRequestWhenCoroutineIsCancelled() = runTest {
+    every { styleObserver.addGetStyleListener(any()) } returns cancelable
+
+    val job = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+      mapboxMap.awaitStyle()
+    }
+    job.cancel()
+
+    verify(exactly = 1) { cancelable.cancel() }
   }
 
   private inline fun <reified EventCallback : Any, reified EventData> testEventsFlow(

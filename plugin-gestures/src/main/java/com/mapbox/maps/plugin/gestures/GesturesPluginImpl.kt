@@ -77,6 +77,7 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   internal lateinit var moveGestureListener: MoveGestureListener
   private lateinit var gestureState: GestureState
   private var style: MapboxStyleManager? = null
+  private var styleRequest: Cancelable? = null
   @VisibleForTesting(otherwise = PRIVATE)
   internal val interactionsCancelableSet = mutableSetOf<Cancelable>()
   @VisibleForTesting(otherwise = PRIVATE)
@@ -1877,6 +1878,8 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
    */
   override fun cleanup() {
     isCleanedUp = true
+    styleRequest?.cancel()
+    styleRequest = null
     style = null
     unregisterInteractions()
     protectedCameraAnimatorOwners.clear()
@@ -1917,7 +1920,8 @@ internal class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapSty
   @SuppressLint("RestrictedApi")
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     if (checkCleanedUp("onDelegateProvider")) return
-    delegateProvider.getStyle {
+    styleRequest?.cancel()
+    styleRequest = delegateProvider.whenStyleReady {
       this.style = it
     }
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate

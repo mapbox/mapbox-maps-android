@@ -82,6 +82,7 @@ class GesturesPluginTest {
   private val attrs: AttributeSet = mockk(relaxUnitFun = true)
 
   private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
+  private val styleRequest: Cancelable = mockk(relaxed = true)
 
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
@@ -131,6 +132,7 @@ class GesturesPluginTest {
     every { typedArray.hasValue(any()) } returns true
 
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { mapDelegateProvider.whenStyleReady(any()) } returns styleRequest
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
@@ -1198,6 +1200,13 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun verifyCleanupCancelsPendingStyleRequest() {
+    presenter.cleanup()
+
+    verify(exactly = 1) { styleRequest.cancel() }
+  }
+
+  @Test
   fun verifyPublicApiIsNoOpAfterCleanup() {
     presenter.cleanup()
 
@@ -1486,6 +1495,7 @@ class IsPointAboveHorizonTest(
   private val context: Context = mockk(relaxed = true)
   private val attrs: AttributeSet = mockk(relaxUnitFun = true)
   private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
+  private val styleRequest: Cancelable = mockk(relaxed = true)
   private val gesturesManager: AndroidGesturesManager = mockk(relaxed = true)
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
@@ -1530,6 +1540,7 @@ class IsPointAboveHorizonTest(
     )
 
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { mapDelegateProvider.whenStyleReady(any()) } returns styleRequest
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
@@ -1736,6 +1747,7 @@ class FlingGestureTest(
   private val context: Context = mockk(relaxed = true)
   private val attrs: AttributeSet = mockk(relaxUnitFun = true)
   private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
+  private val styleRequest: Cancelable = mockk(relaxed = true)
   private val gesturesManager: AndroidGesturesManager = mockk(relaxed = true)
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
@@ -1773,6 +1785,7 @@ class FlingGestureTest(
     every { typedArray.hasValue(any()) } returns true
 
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { mapDelegateProvider.whenStyleReady(any()) } returns styleRequest
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate

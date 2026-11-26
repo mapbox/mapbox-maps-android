@@ -359,6 +359,25 @@ class MapboxMapTest {
   }
 
   @Test
+  fun whenStyleReadyLoadedInvokesSynchronouslyAndReturnsEmptyCancelable() {
+    val style = mockk<Style>()
+    mapboxMap.style = style
+    val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    assertEquals(EmptyCancelable, mapboxMap.whenStyleReady(styleLoadCallback))
+    verifyOnce { styleLoadCallback.onStyleLoaded(style) }
+    verifyNo { styleObserver.addGetStyleListener(any()) }
+  }
+
+  @Test
+  fun whenStyleReadyNotLoadedReturnsObserverRegistration() {
+    val registration = mockk<Cancelable>()
+    val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+    every { styleObserver.addGetStyleListener(styleLoadCallback) } returns registration
+    assertEquals(registration, mapboxMap.whenStyleReady(styleLoadCallback))
+    verifyNo { styleLoadCallback.onStyleLoaded(any()) }
+  }
+
+  @Test
   fun getStyleSynchronously() {
     val style = mockk<Style>()
     mapboxMap.style = style

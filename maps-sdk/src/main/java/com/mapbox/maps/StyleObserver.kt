@@ -4,6 +4,7 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import java.util.concurrent.CopyOnWriteArraySet
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Class that listens to style error and load events
@@ -29,7 +30,8 @@ internal class StyleObserver(
   private var styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null
   // fired when [StyleDataType.SOURCES] arrives
   private var styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null
-  private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val getStyleListeners = CopyOnWriteArraySet<GetStyleRequest>()
 
   /** Initialized after [MapEvent.STYLE_LOADED] event from [preLoadedStyle], sent to user and all plugins. */
   private var loadedStyle: Style? = null
@@ -72,9 +74,19 @@ internal class StyleObserver(
   /**
    * Add a style listener coming from getStyle requests.
    * NOTE : listener is invoked only once after successful style load.
+   *
+   * After [onDestroy] the listener is not registered, because it could never be invoked
+   * and would only stay referenced.
+   *
+   * @return a [Cancelable] that removes this registration. Cancelling after the listener
+   * was invoked, or cancelling more than once, has no effect.
    */
-  fun addGetStyleListener(loadedListener: Style.OnStyleLoaded) {
-    getStyleListeners.add(loadedListener)
+  fun addGetStyleListener(loadedListener: Style.OnStyleLoaded): Cancelable {
+    // filled in init and cleared only by onDestroy, so empty means destroyed
+    if (cancelableList.isEmpty()) return EmptyCancelable
+    val request = GetStyleRequest(loadedListener, getStyleListeners)
+    if (getStyleListeners.add(request)) return request
+    return getStyleListeners.firstOrNull { it == request } ?: request
   }
 
   /**
@@ -168,9 +180,60 @@ internal class StyleObserver(
     preLoadedStyle = null
     loadedStyle?.markInvalid()
     loadedStyle = null
+    getStyleListeners.forEach { it.release() }
     getStyleListeners.clear()
     cancelableList.forEach { it.cancel() }
     cancelableList.clear()
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  class GetStyleRequest(
+    listener: Style.OnStyleLoaded,
+    requests: MutableSet<GetStyleRequest>,
+  ) : Style.OnStyleLoaded, Cancelable {
+    private class State(
+      val listener: Style.OnStyleLoaded,
+      val requests: MutableSet<GetStyleRequest>,
+    )
+
+    /**
+     * The listener plus the set this request was added to, so [cancel] can remove it.
+     * The set is passed in instead of using an inner class to avoid holding a reference to the
+     * whole [StyleObserver].
+     *
+     * Doubles as a one-shot flag: whichever of [onStyleLoaded], [cancel] or [release] nulls it
+     * first wins, the others are no-ops. Nulling it also drops both references, so a
+     * [Cancelable] kept by the caller retains neither the listener nor the set.
+     */
+    private val state = AtomicReference<State?>(State(listener, requests))
+
+    private val hash = listener.hashCode()
+
+    override fun onStyleLoaded(style: Style) {
+      state.getAndSet(null)?.listener?.onStyleLoaded(style)
+    }
+
+    override fun cancel() {
+      // remove(this) still matches after the state is cleared, through the identity check in equals
+      state.getAndSet(null)?.requests?.remove(this)
+    }
+
+    fun release() {
+      state.set(null)
+    }
+
+    /**
+     * A pending request equals another pending request for the same listener.
+     * A finished request only equals itself.
+     */
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (other !is GetStyleRequest) return false
+      val listener = state.get()?.listener ?: return false
+      return listener == other.state.get()?.listener
+    }
+
+    override fun hashCode(): Int = hash
   }
 
   companion object {

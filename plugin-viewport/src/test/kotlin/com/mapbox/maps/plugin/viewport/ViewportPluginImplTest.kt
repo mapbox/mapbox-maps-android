@@ -75,8 +75,9 @@ class ViewportPluginImplTest {
     every { statusObserver.onViewportStatusChanged(any(), any(), any()) } just runs
     every { transitionUpdateCancelable.cancel() } just runs
     every { mapCameraManagerDelegate.cameraForCoordinates(any(), any(), any(), any(), any(), any()) } just runs
-    every { delegateProvider.getStyle(any()) } answers {
+    every { delegateProvider.whenStyleReady(any()) } answers {
       firstArg<(MapboxStyleManager) -> Unit>().invoke(mockk(relaxed = true))
+      Cancelable { }
     }
     viewportPlugin = ViewportPluginImpl(handler)
     viewportPlugin.onDelegateProvider(delegateProvider)

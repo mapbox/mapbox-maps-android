@@ -2585,6 +2585,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.plugin.delegates.MapTransformDelegate getMapTransformDelegate();
     method public default Integer? getMaximumFps();
     method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapboxStyleManager,kotlin.Unit> callback);
+    method public com.mapbox.common.Cancelable whenStyleReady(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapboxStyleManager,kotlin.Unit> callback);
     property public abstract com.mapbox.maps.IndoorManager indoorManager;
     property public abstract com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate mapCameraManagerDelegate;

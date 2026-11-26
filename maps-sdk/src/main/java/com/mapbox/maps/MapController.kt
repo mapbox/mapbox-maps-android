@@ -127,6 +127,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
   private var style: Style? = null
 
+  private var styleRequest: Cancelable? = null
+
   private var contextMode: ContextMode? = null
 
   override val mapboxMap: MapboxMap
@@ -167,7 +169,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     this.styleDataLoadedCallback = StyleDataLoadedCallback { eventData ->
       if (eventData.type == StyleDataLoadedType.STYLE) {
-        mapboxMap.getStyle { style ->
+        styleRequest?.cancel()
+        styleRequest = mapboxMap.whenStyleReady { style ->
           this.style = style
           pluginRegistry.onStyleChanged(style)
         }
@@ -286,6 +289,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
     renderer.setSurfaceAvailabilityListener(null)
 
+    styleRequest?.cancel()
+    styleRequest = null
     pluginRegistry.onDestroy()
     nativeObserver.onDestroy()
     renderer.onDestroy()

@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin
 
 import androidx.annotation.RestrictTo
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.IndoorManager
 import com.mapbox.maps.MapController
 import com.mapbox.maps.MapboxExperimental
@@ -39,8 +40,11 @@ internal class MapDelegateProviderImpl(
   override val mapFeatureStateDelegate: MapFeatureStateDelegate = mapboxMap
 
   override fun getStyle(callback: (MapboxStyleManager) -> Unit) {
-    mapboxMap.getStyle { style -> callback(style) }
+    mapboxMap.getStyle(callback)
   }
+
+  override fun whenStyleReady(callback: (MapboxStyleManager) -> Unit): Cancelable =
+    mapboxMap.whenStyleReady(callback)
 
   override val mapStyleManagerDelegate: MapboxStyleManager = mapboxMap
   override val mapInteractionDelegate: MapInteractionDelegate = mapboxMap
