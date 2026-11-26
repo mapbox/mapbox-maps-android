@@ -6,10 +6,24 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 
-# 11.36.0
+## Breaking changes ⚠️
+* Remove FTP protocol support for 3D model URLs.
+
+## Bug fixes 🐞
+* Fix HTTP request timeout not being respected as a timeout for the whole request in Cronet. Previously it was used as a read timeout, now it applies to the whole request. A 60s read timeout still always applies.
+
+## 💫️ Other
+* Reduce Android binary size by applying size optimizations.
+
+
+# 11.36.0 November 26, 2026
 
 ## Bug fixes 🐞
 * Build debug log messages only when debug logging is enabled.
+
+## Dependencies
+* Update gl-native to [v11.36.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0), common to [v24.36.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0).
+
 
 # 11.36.0-rc.1 November 16, 2026
 
