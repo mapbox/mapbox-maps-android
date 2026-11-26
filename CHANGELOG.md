@@ -25,12 +25,27 @@ Mapbox welcomes participation and contributions from everyone.
 * [compose] Add `StandardStyleInteractionsState.onWaterClicked` and `StandardStyleInteractionsState.onWaterLongClicked`.
 * Promote view annotation collision APIs to stable: `ViewAnnotationOptions.enableSymbolLayerCollision`, `ViewAnnotationOptions.collisionBoxes`, `ViewAnnotationOptions.enableAvoidRegions`, `View.mbxViewAnnotationCollisionBox`, `ViewAnnotationManager.viewAnnotationAvoidRegions` and `ViewAnnotationManager.viewAnnotationAvoidLayers`.
 * [compose] Add experimental `Modifier.mbxViewAnnotationCollisionBox` to mark parts of a `ViewAnnotation` as collision boxes, matching the SwiftUI modifier and the `View` property of the same name. When at least one composable is marked, the map uses only the marked ones instead of the whole annotation. `Marker` now marks its pin and its label and takes part in symbol layer collision, so after upgrading a `Marker` hides the map labels it covers, and it uses the shapes of its pin and label to decide that rather than its full bounds.
+## Breaking changes ⚠️
+* Remove FTP protocol support for 3D model URLs.
+
+## Bug fixes 🐞
+* Fix HTTP request timeout not being respected as a timeout for the whole request in Cronet. Previously it was used as a read timeout, now it applies to the whole request. A 60s read timeout still always applies.
+
+## 💫️ Other
+* Reduce Android binary size by applying size optimizations.
+
+
+# 11.36.0 November 26, 2026
 
 ## Bug fixes 🐞
 * [androidauto] Call `MapboxCarMapObserver.onDetached` before the map is destroyed when the car surface is destroyed, so observers can still use the map.
 * Build debug log messages only when debug logging is enabled.
 * Fix pending style requests from the gestures and viewport plugins being kept after they are no longer needed.
 * Fix lazy `logD(tag) { ... }` not logging when `DEBUG` level is set only for this tag (with `setLoggingLevel(tag, level)`) and the default level is higher.
+
+## Dependencies
+* Update gl-native to [v11.36.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0), common to [v24.36.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/v11.36.0).
+
 
 # 11.36.0-rc.1 November 16, 2026
 
