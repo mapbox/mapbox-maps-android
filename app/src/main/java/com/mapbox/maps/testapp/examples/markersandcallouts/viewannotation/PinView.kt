@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.LinearLayout
 import androidx.core.graphics.withTranslation
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.viewannotation.mbxViewAnnotationCollisionBox
 
 /**
@@ -24,7 +23,6 @@ import com.mapbox.maps.viewannotation.mbxViewAnnotationCollisionBox
  * Both the pin and the label are marked as [mbxViewAnnotationCollisionBox] so they can collide
  * independently with map symbols.
  */
-@OptIn(MapboxExperimental::class)
 class PinView(context: Context, text: String) : LinearLayout(context) {
 
   /** Y offset (px, from view top) of the pin's tip — i.e. the bottom of the pin shape. */

@@ -85,13 +85,11 @@ internal class ViewAnnotationManagerImpl(
    *
    * @return A list of layer ids if there are any, empty set otherwise.
    */
-  @MapboxExperimental
   override var viewAnnotationAvoidLayers: HashSet<String>
     get() = mapboxMap.getViewAnnotationAvoidLayers()
     set(value) {
       mapboxMap.setViewAnnotationAvoidLayers(value)
     }
-  @MapboxExperimental
   override var viewAnnotationAvoidRegions: List<ScreenBox>
     get() = mapboxMap.viewAnnotationAvoidRegions
     set(value) {

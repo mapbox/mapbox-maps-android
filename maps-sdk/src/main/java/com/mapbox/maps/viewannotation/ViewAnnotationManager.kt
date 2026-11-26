@@ -41,14 +41,12 @@ interface ViewAnnotationManager {
    *
    * @return A list of layer ids if there are any, empty set otherwise.
    */
-  @MapboxExperimental
   var viewAnnotationAvoidLayers: HashSet<String>
 
   /**
    * Rectangular screen regions that view annotations should avoid. This applies to view annotations
    * with [ViewAnnotationOptions.enableAvoidRegions] set to `true`.
    */
-  @MapboxExperimental
   var viewAnnotationAvoidRegions: List<ScreenBox>
 
   /**

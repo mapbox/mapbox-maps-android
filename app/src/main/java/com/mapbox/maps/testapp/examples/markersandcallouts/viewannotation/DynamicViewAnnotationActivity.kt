@@ -337,7 +337,6 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
    * Adds three avoid regions and renders a debug overlay highlighting them.
    * These regions won't be occupied by the DVA.
    */
-  @OptIn(com.mapbox.maps.MapboxExperimental::class)
   private fun MapView.setupAvoidRegions() {
     val avoidRegionsView = AvoidRegionsView(context)
     addView(avoidRegionsView)
@@ -435,7 +434,6 @@ class DynamicViewAnnotationActivity : AppCompatActivity() {
     )
   }
 
-  @OptIn(com.mapbox.maps.MapboxExperimental::class)
   private fun addViewAnnotations() {
     etaView = viewAnnotationManager.addViewAnnotation(
       resId = R.layout.item_dva_eta,

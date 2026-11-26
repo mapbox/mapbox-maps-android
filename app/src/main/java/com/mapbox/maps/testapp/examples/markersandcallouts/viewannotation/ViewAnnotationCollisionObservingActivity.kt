@@ -17,7 +17,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
@@ -43,7 +42,6 @@ private const val SHIFT_DP = 20
  * Mirrors the iOS UIKit `ViewAnnotationCollisionObservingExample` and SwiftUI
  * `ViewAnnotationsCollisionObservingExample`, so the three can be compared side by side.
  */
-@OptIn(MapboxExperimental::class)
 class ViewAnnotationCollisionObservingActivity : AppCompatActivity() {
 
   private lateinit var pin: TwoBoxPinView
@@ -231,7 +229,6 @@ class ViewAnnotationCollisionObservingActivity : AppCompatActivity() {
  * Manual-layout pin with two circles; only the red one is marked as a collision box initially.
  * Mirrors the iOS example's pin: 30pt circles, 30pt gap, 10pt padding.
  */
-@OptIn(MapboxExperimental::class)
 private class TwoBoxPinView(context: Context) : FrameLayout(context) {
   val redBox: View = circle(Color.parseColor("#FF3B30"))
   val blueBox: View = circle(Color.parseColor("#007AFF"))

@@ -1,7 +1,6 @@
 package com.mapbox.maps.viewannotation
 
 import android.view.View
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.R
 
 /**
@@ -29,7 +28,6 @@ import com.mapbox.maps.R
  *
  * Must be set on the main thread: the setter requests a layout pass on the view.
  */
-@MapboxExperimental
 var View.mbxViewAnnotationCollisionBox: Boolean
   get() = getTag(R.id.collisionBox) as? Boolean ?: false
   set(value) {
