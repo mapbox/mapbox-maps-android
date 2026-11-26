@@ -1,9 +1,9 @@
 package com.mapbox.maps.extension.compose.internal
 
 import androidx.compose.runtime.AbstractApplier
-import com.mapbox.common.LogConfiguration
 import com.mapbox.common.LoggingLevel
 import com.mapbox.maps.MapView
+import com.mapbox.maps.getLoggingLevel
 import com.mapbox.maps.logD
 
 /**
@@ -131,7 +131,7 @@ internal class MapApplier(
   private fun printNodesTree(tag: String = TAG) {
     // We don't know how many nodes are in the tree, so we only walk the tree when the logging
     // level is DEBUG.
-    LogConfiguration.getLoggingLevel(tag)?.let {
+    getLoggingLevel(tag)?.let {
       if (it.ordinal <= LoggingLevel.DEBUG.ordinal) {
         walkChildren(tag = tag, node = root)
       }

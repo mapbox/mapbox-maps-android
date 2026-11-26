@@ -155,6 +155,7 @@ public final class com/mapbox/maps/MapboxLocationComponentException : java/lang/
 }
 
 public final class com/mapbox/maps/MapboxLogger {
+	public static final fun getLoggingLevel (Ljava/lang/String;)Lcom/mapbox/common/LoggingLevel;
 	public static final fun isLoggableD ()Z
 	public static final fun logD (Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun logD (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/common/LogThrottler;)V
@@ -165,6 +166,7 @@ public final class com/mapbox/maps/MapboxLogger {
 	public static final fun logI (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/common/LogThrottler;)V
 	public static final fun logW (Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun logW (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/common/LogThrottler;)V
+	public static final fun setLoggingLevel (Ljava/lang/String;Lcom/mapbox/common/LoggingLevel;)V
 }
 
 public final class com/mapbox/maps/MapboxMapException : java/lang/RuntimeException {

@@ -62,6 +62,22 @@ internal object MapboxMapsAndroidLogger {
     }
   }
 
+  internal fun internalSetLoggingLevel(tag: String, level: LoggingLevel?) {
+    try {
+      LogConfiguration.setLoggingLevel("$SDK_IDENTIFIER\\$tag", level)
+    } catch (e: UnsatisfiedLinkError) {
+      // NOP
+    }
+  }
+
+  internal fun internalGetLoggingLevel(tag: String): LoggingLevel? {
+    return try {
+      LogConfiguration.getLoggingLevel("$SDK_IDENTIFIER\\$tag")
+    } catch (e: UnsatisfiedLinkError) {
+      null
+    }
+  }
+
   internal fun internalIsLoggableD(): Boolean {
     return try {
       LogConfiguration.getLoggingLevel() == LoggingLevel.DEBUG

@@ -131,6 +131,7 @@ package com.mapbox.maps {
   }
 
   public final class MapboxLogger {
+    method public static com.mapbox.common.LoggingLevel? getLoggingLevel(String tag);
     method public static boolean isLoggableD();
     method public static void logD(String tag, String message);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static void logD(String tag, String message, com.mapbox.common.LogThrottler? logThrottler);
@@ -141,6 +142,7 @@ package com.mapbox.maps {
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static void logI(String tag, String message, com.mapbox.common.LogThrottler? logThrottler);
     method public static void logW(String tag, String message);
     method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP) public static void logW(String tag, String message, com.mapbox.common.LogThrottler? logThrottler);
+    method public static void setLoggingLevel(String tag, com.mapbox.common.LoggingLevel? level);
   }
 
   public final class MapboxMapException extends java.lang.RuntimeException {
