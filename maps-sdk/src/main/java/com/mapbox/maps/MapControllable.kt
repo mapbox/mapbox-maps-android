@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.graphics.Bitmap
 import android.view.MotionEvent
-import androidx.annotation.MainThread
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
@@ -67,9 +66,11 @@ interface MapControllable : MapboxLifecycleObserver {
   /**
    * Called to limit the maximum fps
    *
+   * Call it on the Mapbox thread; with the default `MapboxThreadProvider` that is the main
+   * thread.
+   *
    * @param fps The maximum fps
    */
-  @MainThread
   fun setMaximumFps(fps: Int)
 
   /**

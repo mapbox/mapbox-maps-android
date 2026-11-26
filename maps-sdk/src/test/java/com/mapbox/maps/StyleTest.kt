@@ -40,7 +40,7 @@ class StyleTest {
   fun setUp() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    style = Style(styleManager, 1.0f, mapLoadingErrorDelegate = { })
+    style = Style(styleManager, 1.0f, mapLoadingErrorDelegate = { }, threadChecker = mockk(relaxed = true))
   }
 
   @After

@@ -2,6 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxThread
 import com.mapbox.maps.ContextMode
 import com.mapbox.maps.RenderBackendType
 
@@ -15,6 +16,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
     antialiasingSampleCount: Int,
     contextMode: ContextMode,
     mapName: String,
+    mapboxThread: MapboxThread,
   ) : super(mapName) {
     widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
@@ -25,6 +27,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
         mapboxRenderer = this,
         antialiasingSampleCount = antialiasingSampleCount,
         mapName = mapName,
+        mapboxThread = mapboxThread,
       )
       RenderBackendType.OPEN_GL -> GLMapboxRenderThread(
         mapboxRenderer = this,
@@ -33,6 +36,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
         antialiasingSampleCount = antialiasingSampleCount,
         contextMode = contextMode,
         mapName = mapName,
+        mapboxThread = mapboxThread,
       )
     }
   }

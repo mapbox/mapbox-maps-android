@@ -1,13 +1,19 @@
 package com.mapbox.maps
 
 import android.content.Context
+import android.os.Looper
+import android.os.SystemClock
 import android.util.TypedValue
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxThread
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
@@ -67,4 +73,45 @@ internal suspend fun <T> safeBinderCall(
 } catch (e: Exception) {
   logE(logTag, "System call failed: ${e.message}, using fallback")
   fallback
+}
+
+/**
+ * Runs [block] on this [MapboxThread] and returns its result once it has finished.
+ *
+ * When called on this thread, e.g. from the main thread with the default main-thread provider, it
+ * runs [block] inline. Otherwise, it dispatches [block] to this thread and blocks the caller until
+ * it completes. Running inline matters with the default provider: when a test replaces
+ * `Dispatchers.Main` with a queueing test dispatcher such as `StandardTestDispatcher`, a dispatch
+ * would wait for a scheduler the blocked test can't advance.
+ *
+ * The Mapbox thread may be shared by several maps, so [block] can be queued behind other work.
+ * A warning is logged when [block] starts more than [SLOW_MAPBOX_THREAD_WAIT_MS] after it was
+ * dispatched.
+ */
+@OptIn(com.mapbox.annotation.MapboxExperimental::class)
+internal inline fun <T> MapboxThread.runAndWait(crossinline block: () -> T): T =
+  if (Looper.myLooper() == handler.looper) {
+    block()
+  } else {
+    val dispatchedAt = SystemClock.uptimeMillis()
+    runBlocking(dispatcher.immediate) {
+      warnIfSlowMapboxThreadWait(SystemClock.uptimeMillis() - dispatchedAt)
+      block()
+    }
+  }
+
+@VisibleForTesting(otherwise = PRIVATE)
+internal const val MAPBOX_THREAD_TAG = "MapboxThread"
+
+@VisibleForTesting(otherwise = PRIVATE)
+internal const val SLOW_MAPBOX_THREAD_WAIT_MS = 100L
+
+internal fun warnIfSlowMapboxThreadWait(waitedMs: Long) {
+  if (waitedMs > SLOW_MAPBOX_THREAD_WAIT_MS) {
+    logW(
+      MAPBOX_THREAD_TAG,
+      "Waited $waitedMs ms for the Mapbox thread before running blocking map work. " +
+        "Other work queued on the Mapbox thread delays map creation and destruction."
+    )
+  }
 }

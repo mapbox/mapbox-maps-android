@@ -9,6 +9,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.geojson.Feature
 
 /**
@@ -29,7 +30,28 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
    */
   @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   val mapLoadingErrorDelegate: MapLoadingErrorDelegate,
+  /**
+   * For internal usage.
+   */
+  @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  val threadChecker: MapThreadChecker,
 ) {
+  /**
+   * For internal usage. Checks threads against the Mapbox thread, the same default the
+   * snapshotter uses.
+   */
+  @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  constructor(
+    styleManager: StyleManager,
+    pixelRatio: Float,
+    mapLoadingErrorDelegate: MapLoadingErrorDelegate,
+  ) : this(
+    styleManager,
+    pixelRatio,
+    mapLoadingErrorDelegate,
+    MapThreadChecker(mapboxThreadProvider.getOrCreate().handler.looper),
+  )
+
   /**
    * Returns the map style's default camera, if any, or a default camera otherwise.
    * The map style's default camera is defined as follows:
@@ -46,7 +68,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     @CallSuper
     @MainThread
     get() {
-      ThreadChecker.throwIfNotMainThread()
+      threadChecker.throwIfNotMainThread()
       return styleManager.styleDefaultCamera
     }
 
@@ -59,7 +81,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     @CallSuper
     @MainThread
     get() {
-      ThreadChecker.throwIfNotMainThread()
+      threadChecker.throwIfNotMainThread()
       return styleManager.styleURI
     }
 
@@ -72,7 +94,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     @CallSuper
     @MainThread
     get() {
-      ThreadChecker.throwIfNotMainThread()
+      threadChecker.throwIfNotMainThread()
       return styleManager.styleJSON
     }
 
@@ -85,7 +107,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     @CallSuper
     @MainThread
     get() {
-      ThreadChecker.throwIfNotMainThread()
+      threadChecker.throwIfNotMainThread()
       return styleManager.styleLayers
     }
 
@@ -99,7 +121,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     @CallSuper
     @MainThread
     get() {
-      ThreadChecker.throwIfNotMainThread()
+      threadChecker.throwIfNotMainThread()
       return styleManager.styleSlots
     }
 
@@ -112,7 +134,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     @CallSuper
     @MainThread
     get() {
-      ThreadChecker.throwIfNotMainThread()
+      threadChecker.throwIfNotMainThread()
       return styleManager.styleSources
     }
 
@@ -125,7 +147,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleGlyphURL(): String {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleGlyphURL
   }
 
@@ -138,7 +160,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleGlyphURL(url: String) {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     styleManager.styleGlyphURL = url
   }
 
@@ -155,7 +177,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleTransition(): TransitionOptions {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleTransition
   }
 
@@ -169,7 +191,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleTransition(transitionOptions: TransitionOptions) {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     styleManager.styleTransition = transitionOptions
   }
 
@@ -181,7 +203,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleImports(): List<StyleObjectInfo> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleImports
   }
 
@@ -195,7 +217,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun removeStyleImport(importId: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.removeStyleImport(importId)
   }
 
@@ -209,7 +231,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleImportSchema(importId: String): Expected<String, Value> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleImportSchema(importId)
   }
 
@@ -221,7 +243,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleImportConfigProperties(importId: String): Expected<String, HashMap<String, StylePropertyValue>> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleImportConfigProperties(importId)
   }
 
@@ -238,7 +260,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     importId: String,
     config: String
   ): Expected<String, StylePropertyValue> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleImportConfigProperty(importId, config)
   }
 
@@ -262,7 +284,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     importId: String,
     configs: HashMap<String, Value>
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleImportConfigProperties(importId, configs)
   }
 
@@ -282,7 +304,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     config: String,
     value: Value
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleImportConfigProperty(importId, config, value)
   }
 
@@ -304,7 +326,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     config: HashMap<String, Value>?,
     importPosition: ImportPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleImportFromJSON(importId, json, config, importPosition)
   }
 
@@ -326,7 +348,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     config: HashMap<String, Value>?,
     importPosition: ImportPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleImportFromURI(importId, uri, config, importPosition)
   }
 
@@ -348,7 +370,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     json: String,
     config: HashMap<String, Value>?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.updateStyleImportWithJSON(
       importId, json, config
     )
@@ -372,7 +394,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     uri: String,
     config: HashMap<String, Value>?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.updateStyleImportWithURI(importId, uri, config)
   }
 
@@ -390,7 +412,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     importId: String,
     importPosition: ImportPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.moveStyleImport(importId, importPosition)
   }
 
@@ -410,7 +432,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     parameters: Value,
     position: LayerPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleLayer(parameters, position)
   }
 
@@ -432,7 +454,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
@@ -459,7 +481,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     properties: Value,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addPersistentStyleLayer(properties, layerPosition)
   }
 
@@ -488,7 +510,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
@@ -501,7 +523,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.isStyleLayerPersistent(layerId)
   }
 
@@ -515,7 +537,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun removeStyleLayer(layerId: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.removeStyleLayer(layerId)
   }
 
@@ -534,7 +556,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     layerId: String,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.moveStyleLayer(layerId, layerPosition)
   }
 
@@ -548,7 +570,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun styleLayerExists(layerId: String): Boolean {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleLayerExists(layerId)
   }
 
@@ -562,7 +584,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleLayerProperty(layerId, property)
   }
 
@@ -582,7 +604,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     property: String,
     value: Value
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleLayerProperty(layerId, property, value)
   }
 
@@ -633,7 +655,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleLayerProperties(layerId)
   }
 
@@ -651,7 +673,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleLayerProperties(layerId, properties)
   }
 
@@ -711,7 +733,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun addStyleSource(sourceId: String, properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleSource(sourceId, properties)
   }
 
@@ -725,7 +747,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleSourceProperty(sourceId, property)
   }
 
@@ -748,7 +770,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     property: String,
     value: Value
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleSourceProperty(sourceId, property, value)
   }
 
@@ -775,7 +797,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     property: String,
     value: Value
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleSourceProperty(importId, sourceId, property, value)
   }
 
@@ -789,7 +811,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleSourceProperties(sourceId)
   }
 
@@ -811,7 +833,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     sourceId: String,
     properties: Value
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleSourceProperties(sourceId, properties)
   }
 
@@ -935,7 +957,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.updateStyleImageSourceImage(sourceId, image)
   }
 
@@ -947,7 +969,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun removeStyleSource(sourceId: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.removeStyleSource(sourceId)
   }
 
@@ -960,7 +982,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   open fun removeStyleSourceUnchecked(sourceId: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.removeStyleSourceUnchecked(sourceId)
   }
 
@@ -974,7 +996,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun styleSourceExists(sourceId: String): Boolean {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleSourceExists(sourceId)
   }
 
@@ -988,7 +1010,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleAtmosphere(properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleAtmosphere(properties)
   }
 
@@ -1001,7 +1023,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleAtmosphereProperty(property)
   }
 
@@ -1016,7 +1038,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleAtmosphereProperty(property, value)
   }
 
@@ -1031,7 +1053,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MainThread
   @MapboxExperimental
   open fun setStyleSnow(properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleSnow(properties)
   }
 
@@ -1045,7 +1067,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MapboxExperimental
   fun getStyleSnowProperty(property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleSnowProperty(property)
   }
 
@@ -1061,7 +1083,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MainThread
   @MapboxExperimental
   open fun setStyleSnowProperty(property: String, value: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleSnowProperty(property, value)
   }
 
@@ -1076,7 +1098,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MapboxExperimental
   fun setStyleRain(properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleRain(properties)
   }
 
@@ -1090,7 +1112,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MapboxExperimental
   fun getStyleRainProperty(property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleRainProperty(property)
   }
 
@@ -1106,7 +1128,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MapboxExperimental
   fun setStyleRainProperty(property: String, value: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleRainProperty(property, value)
   }
 
@@ -1120,7 +1142,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleTerrain(properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleTerrain(properties)
   }
 
@@ -1133,7 +1155,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleTerrainProperty(property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleTerrainProperty(property)
   }
 
@@ -1148,7 +1170,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleTerrainProperty(property, value)
   }
 
@@ -1165,7 +1187,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleProjection(properties: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleProjection(properties)
   }
 
@@ -1178,7 +1200,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleProjectionProperty(property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleProjectionProperty(property)
   }
 
@@ -1193,7 +1215,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleProjectionProperty(property, value)
   }
 
@@ -1207,7 +1229,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleImage(imageId: String): Image? {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleImage(imageId)
   }
 
@@ -1247,7 +1269,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     stretchY: List<ImageStretches>,
     content: ImageContent?
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleImage(imageId, scale, image, sdf, stretchX, stretchY, content)
   }
 
@@ -1261,7 +1283,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun removeStyleImage(imageId: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.removeStyleImage(imageId)
   }
 
@@ -1275,7 +1297,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun hasStyleImage(imageId: String): Boolean {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.hasStyleImage(imageId)
   }
 
@@ -1293,7 +1315,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     sourceId: String,
     options: CustomGeometrySourceOptions
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleCustomGeometrySource(sourceId, options)
   }
 
@@ -1311,7 +1333,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     tileId: CanonicalTileID,
     featureCollection: MutableList<Feature>
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleCustomGeometrySourceTileData(sourceId, tileId, featureCollection)
   }
 
@@ -1329,7 +1351,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     sourceId: String,
     tileId: CanonicalTileID
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.invalidateStyleCustomGeometrySourceTile(sourceId, tileId)
   }
 
@@ -1347,7 +1369,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     sourceId: String,
     coordinateBounds: CoordinateBounds
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.invalidateStyleCustomGeometrySourceRegion(sourceId, coordinateBounds)
   }
 
@@ -1363,7 +1385,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun isStyleLoaded(): Boolean {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.isStyleLoaded
   }
 
@@ -1382,7 +1404,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     sourceId: String,
     options: CustomRasterSourceOptions
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleCustomRasterSource(sourceId, options)
   }
 
@@ -1403,7 +1425,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     sourceId: String,
     tiles: List<CustomRasterSourceTileData>,
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleCustomRasterSourceTileData(sourceId, tiles)
   }
 
@@ -1418,7 +1440,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleLightProperty(id: String, property: String): StylePropertyValue {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.getStyleLightProperty(id, property)
   }
 
@@ -1438,7 +1460,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
     property: String,
     value: Value
   ): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleLightProperty(id, property, value)
   }
 
@@ -1450,7 +1472,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun getStyleLights(): MutableList<StyleObjectInfo> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleLights
   }
 
@@ -1464,7 +1486,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun setStyleLights(lights: Value): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleLights(lights)
   }
 
@@ -1483,7 +1505,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.addStyleModel(modelId, modelUri)
   }
 
@@ -1498,7 +1520,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun removeStyleModel(modelId: String): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.removeStyleModel(modelId)
   }
 
@@ -1513,7 +1535,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @CallSuper
   @MainThread
   open fun hasStyleModel(modelId: String): Boolean {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.hasStyleModel(modelId)
   }
 
@@ -1663,7 +1685,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MainThread
   @MapboxExperimental
   open fun getFeaturesets(): List<FeaturesetDescriptor> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.styleFeaturesets
   }
 
@@ -1675,7 +1697,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MapboxExperimental
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   open fun setInitialStyleColorTheme() {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     styleManager.setInitialStyleColorTheme()
   }
 
@@ -1693,7 +1715,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MainThread
   @MapboxExperimental
   open fun setStyleColorTheme(colorTheme: ColorTheme?): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setStyleColorTheme(colorTheme)
   }
 
@@ -1770,7 +1792,7 @@ open class MapboxStyleManager @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   @MainThread
   @MapboxExperimental
   open fun setImportColorTheme(importId: String, colorTheme: ColorTheme?): Expected<String, None> {
-    ThreadChecker.throwIfNotMainThread()
+    threadChecker.throwIfNotMainThread()
     return styleManager.setImportColorTheme(importId, colorTheme)
   }
 

@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.*
+import android.os.Looper
 import android.text.Html
 import android.util.DisplayMetrics
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.geojson.Point
@@ -26,6 +28,10 @@ import kotlin.math.min
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  * The [Snapshotter] is valid until [destroy] is called.
+ *
+ * The snapshotter runs on the thread that creates it, and its callbacks are delivered on that
+ * thread. When the app configures a [MapboxThreadProvider][com.mapbox.common.MapboxThreadProvider]
+ * whose thread isn't the main thread, create and use the [Snapshotter] on that Mapbox thread.
  */
 open class Snapshotter {
 
@@ -43,6 +49,8 @@ open class Snapshotter {
   private var cancelableEvents = mutableListOf<Cancelable>()
   private var loadingErrorCancelable: Cancelable? = null
   private var styleLoadedCancelable: Cancelable? = null
+  private val mapboxLooper = mapboxThreadProvider.getOrCreate().handler.looper
+  private val mapThreadChecker = MapThreadChecker(mapboxLooper)
 
   @JvmOverloads
   constructor(
@@ -50,6 +58,12 @@ open class Snapshotter {
     options: MapSnapshotOptions,
     overlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
   ) {
+    // The native snapshotter is bound to the thread that creates it, while the style objects
+    // passed to the callbacks check against the Mapbox thread. With the default main Mapbox
+    // thread, keep allowing snapshotters on other threads that don't touch the style.
+    if (mapboxLooper != Looper.getMainLooper()) {
+      mapThreadChecker.throwIfNotMainThread()
+    }
     if (MapboxOptions.accessToken.isBlank()) {
       throw MapboxConfigurationException()
     }
@@ -76,7 +90,8 @@ open class Snapshotter {
                 Style(
                   snapshotter,
                   pixelRatio,
-                  mapLoadingErrorDelegate = { }
+                  mapLoadingErrorDelegate = { },
+                  threadChecker = mapThreadChecker
                 )
               )
             }
@@ -91,7 +106,8 @@ open class Snapshotter {
             Style(
               snapshotter,
               pixelRatio,
-              mapLoadingErrorDelegate = { }
+              mapLoadingErrorDelegate = { },
+              threadChecker = mapThreadChecker
             )
           )
         }

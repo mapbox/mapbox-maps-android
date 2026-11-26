@@ -9,6 +9,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.maps.coroutine.isRenderable
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
@@ -20,10 +21,13 @@ import com.mapbox.verifyOnce
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNull
-import kotlinx.coroutines.CoroutineScope
+import junit.framework.Assert.assertTrue
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -32,6 +36,7 @@ import org.junit.After
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -40,6 +45,9 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class MapSurfaceTest {
 
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
+
   private lateinit var context: Context
   private lateinit var mapController: MapController
   private lateinit var mapSurface: MapSurface
@@ -47,9 +55,7 @@ class MapSurfaceTest {
   private lateinit var surface: Surface
 
   private val testScheduler = TestCoroutineScheduler()
-  private val testDispatcher = UnconfinedTestDispatcher(testScheduler)
   private val mainTestDispatcher = UnconfinedTestDispatcher(testScheduler, "MainTestDispatcher")
-  private val testScope = CoroutineScope(testDispatcher)
 
   @Before
   fun setUp() {
@@ -63,9 +69,6 @@ class MapSurfaceTest {
     mapController = mockk(relaxUnitFun = true)
     mapboxSurfaceRenderer = mockk(relaxUnitFun = true)
     surface = mockk(relaxed = true)
-
-    // Use test scope for lifecycleScope
-    every { mapController.lifecycleScope } returns testScope
 
     mapSurface = MapSurface(
       context,
@@ -107,7 +110,6 @@ class MapSurfaceTest {
     // Verify the immediate default setting is called
     verifySequence {
       mapController.setScreenRefreshRate(MapView.DEFAULT_FPS)
-      mapController.lifecycleScope
       mapController.setScreenRefreshRate(refreshRate.toInt())
     }
   }
@@ -145,7 +147,15 @@ class MapSurfaceTest {
     val nativeMap: NativeMapImpl = mockk(relaxed = true)
     val nativeObserver: NativeObserver = mockk(relaxed = true)
     val styleObserver: StyleObserver = mockk(relaxUnitFun = true)
-    val mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
+    val mapboxThread = mapboxThreadProvider.getOrCreate()
+    val mapboxMap = MapboxMap(
+      nativeMap,
+      nativeObserver,
+      pixelRatio = 1.0f,
+      mapName = "",
+      mapboxThread = mapboxThread,
+      threadChecker = MapThreadChecker(mapboxThread.handler.looper)
+    )
     every { mapController.mapboxMap } returns mapboxMap
     val result = mapSurface.mapboxMap
     verifyOnce { mapController.mapboxMap }
@@ -233,6 +243,17 @@ class MapSurfaceTest {
   fun onDestroyTest() {
     mapSurface.onDestroy()
     verifyOnce { mapController.onDestroy() }
+  }
+
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
+  @Test
+  fun onDestroyCancelsMapScopes() {
+    val job = mapSurface.mapScope.launch(start = CoroutineStart.UNDISPATCHED) { awaitCancellation() }
+    val immediateJob =
+      mapSurface.mapImmediateScope.launch(start = CoroutineStart.UNDISPATCHED) { awaitCancellation() }
+    mapSurface.onDestroy()
+    assertTrue(job.isCancelled)
+    assertTrue(immediateJob.isCancelled)
   }
 
   @Test
@@ -375,6 +396,19 @@ class MapSurfaceTest {
     assertThrows(IllegalStateException::class.java) { MapSurface(mapView) }
   }
 
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
+  @Test
+  fun mapViewFacadeSharesMapViewScopes() {
+    val mapView = mapViewWithSurface()
+
+    val facade = MapSurface(mapView)
+
+    assertSame(mapView.mapScope, facade.mapScope)
+    assertSame(mapView.mapImmediateScope, facade.mapImmediateScope)
+    assertSame(mapView.dispatcher, facade.dispatcher)
+  }
+
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
   private fun mapViewWithSurface(): MapView {
     every { surface.isValid } returns true
     every { mapController.renderer } returns mapboxSurfaceRenderer
@@ -388,6 +422,10 @@ class MapSurfaceTest {
       every { context } returns this@MapSurfaceTest.context
       every { mapController } returns this@MapSurfaceTest.mapController
       every { rendererSurfaceView } returns surfaceView
+      every { mapboxThread } returns mockk()
+      every { mapScope } returns mockk()
+      every { mapImmediateScope } returns mockk()
+      every { dispatcher } returns mockk()
     }
   }
 }

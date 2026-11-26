@@ -100,6 +100,11 @@ package com.mapbox.maps {
     method public void sendMapLoadingError(com.mapbox.maps.MapLoadingError error);
   }
 
+  @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public class MapThreadChecker {
+    ctor public MapThreadChecker(android.os.Looper looper);
+    method public final void throwIfNotMainThread();
+  }
+
   public final class MapboxAnnotationException extends java.lang.RuntimeException {
     ctor public MapboxAnnotationException(String? exceptionText);
   }
@@ -154,6 +159,7 @@ package com.mapbox.maps {
   }
 
   public class MapboxStyleManager {
+    ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public MapboxStyleManager(com.mapbox.maps.StyleManager styleManager, float pixelRatio, com.mapbox.maps.MapLoadingErrorDelegate mapLoadingErrorDelegate, com.mapbox.maps.MapThreadChecker threadChecker);
     ctor @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public MapboxStyleManager(com.mapbox.maps.StyleManager styleManager, float pixelRatio, com.mapbox.maps.MapLoadingErrorDelegate mapLoadingErrorDelegate);
     method @AnyThread @CallSuper public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addGeoJSONSourceFeatures(String sourceId, String dataId, java.util.List<com.mapbox.geojson.Feature> features);
     method @CallSuper @MainThread public final com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, com.mapbox.maps.Image image, boolean sdf);
@@ -199,6 +205,7 @@ package com.mapbox.maps {
     method @CallSuper @MainThread public com.mapbox.maps.StylePropertyValue getStyleTerrainProperty(String property);
     method @CallSuper @MainThread public com.mapbox.maps.TransitionOptions getStyleTransition();
     method @CallSuper @MainThread public String getStyleURI();
+    method @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.MapThreadChecker getThreadChecker();
     method @CallSuper @MainThread public boolean hasStyleImage(String imageId);
     method @CallSuper @MainThread @com.mapbox.maps.MapboxExperimental public boolean hasStyleModel(String modelId);
     method @CallSuper @MainThread public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomGeometrySourceRegion(String sourceId, com.mapbox.maps.CoordinateBounds coordinateBounds);
@@ -264,6 +271,7 @@ package com.mapbox.maps {
     property @CallSuper @MainThread public java.util.List<java.lang.String> styleSlots;
     property @CallSuper @MainThread public java.util.List<com.mapbox.maps.StyleObjectInfo> styleSources;
     property @CallSuper @MainThread public String styleURI;
+    property @RestrictTo(androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX) public final com.mapbox.maps.MapThreadChecker threadChecker;
   }
 
   public final class MapboxTracingConstants {
@@ -2582,6 +2590,7 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate getMapPluginProviderDelegate();
     method public com.mapbox.maps.plugin.delegates.MapProjectionDelegate getMapProjectionDelegate();
     method public com.mapbox.maps.MapboxStyleManager getMapStyleManagerDelegate();
+    method public com.mapbox.maps.plugin.delegates.MapThreadDelegate getMapThreadDelegate();
     method public com.mapbox.maps.plugin.delegates.MapTransformDelegate getMapTransformDelegate();
     method public default Integer? getMaximumFps();
     method public void getStyle(kotlin.jvm.functions.Function1<? super com.mapbox.maps.MapboxStyleManager,kotlin.Unit> callback);
@@ -2596,6 +2605,7 @@ package com.mapbox.maps.plugin.delegates {
     property public abstract com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate mapPluginProviderDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapProjectionDelegate mapProjectionDelegate;
     property public abstract com.mapbox.maps.MapboxStyleManager mapStyleManagerDelegate;
+    property public abstract com.mapbox.maps.plugin.delegates.MapThreadDelegate mapThreadDelegate;
     property public abstract com.mapbox.maps.plugin.delegates.MapTransformDelegate mapTransformDelegate;
     property public default Integer? maximumFps;
   }
@@ -2692,6 +2702,17 @@ package com.mapbox.maps.plugin.delegates {
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public interface MapThreadDelegate {
+    method public kotlinx.coroutines.MainCoroutineDispatcher getDispatcher();
+    method public kotlinx.coroutines.CoroutineScope getImmediateScope();
+    method public android.os.Looper getLooper();
+    method public kotlinx.coroutines.CoroutineScope getScope();
+    property public abstract kotlinx.coroutines.MainCoroutineDispatcher dispatcher;
+    property public abstract kotlinx.coroutines.CoroutineScope immediateScope;
+    property public abstract android.os.Looper looper;
+    property public abstract kotlinx.coroutines.CoroutineScope scope;
   }
 
   public interface MapTransformDelegate {

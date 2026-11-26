@@ -7,15 +7,19 @@ import android.view.MotionEvent
 import android.view.Surface
 import android.view.SurfaceView
 import android.view.WindowManager
-import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
+import com.mapbox.common.MapboxThread
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.*
 import com.mapbox.maps.renderer.widget.Widget
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainCoroutineDispatcher
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 /**
@@ -32,13 +36,58 @@ import kotlinx.coroutines.launch
  */
 class MapSurface : MapPluginProviderDelegate, MapControllable {
 
+  private val mapboxThread: MapboxThread
   val context: Context
 
   @get:JvmSynthetic
-  internal val mapController: MapController
-  private val renderer: MapboxSurfaceRenderer
+  internal lateinit var mapController: MapController
+    private set
+  private lateinit var renderer: MapboxSurfaceRenderer
   private val mapView: MapView?
   private var displayRefreshRateMonitor: DisplayRefreshRateMonitor? = null
+
+  /**
+   * Cancelled in [onDestroy], tying [mapScope] and [mapImmediateScope] to this [MapSurface]'s
+   * lifecycle instead of [mapboxThread]'s (which outlives any single [MapSurface]).
+   */
+  private val mapSurfaceJob = SupervisorJob()
+
+  /**
+   * Coroutine scope that dispatches onto whichever thread Mapbox is configured to run on: the
+   * main thread by default, but a dedicated background thread if the app configures a
+   * [MapboxThreadProvider][com.mapbox.common.MapboxThreadProvider] such as
+   * `OneMapboxThreadProvider`. Cancelled in [onDestroy].
+   *
+   * Wrap only the calls that actually touch Mapbox map/style APIs (e.g. [mapboxMap], plugin
+   * calls) in this scope. Do not wrap unrelated main-thread-only Android framework calls in it
+   * (e.g. `Lifecycle.addObserver`, other work that requires the real main thread regardless of
+   * how Mapbox is configured) — those need the main thread specifically, not "whatever thread
+   * Mapbox happens to be using," and belong outside this scope, called directly or via
+   * `Dispatchers.Main`.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  val mapScope: CoroutineScope
+
+  /**
+   * Like [mapScope], but using [MapboxThread.dispatcher][com.mapbox.common.MapboxThread.dispatcher]'s `immediate` variant:
+   * runs inline when already on the right thread, instead of always re-dispatching. See
+   * [mapScope] for what belongs (and doesn't belong) in this scope.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  val mapImmediateScope: CoroutineScope
+
+  /**
+   * The [MainCoroutineDispatcher] backing [mapScope]: always posts to whichever thread Mapbox is
+   * configured to run on, even when already called from it. Exposed for code that wants to
+   * `withContext` onto that thread rather than launch a separate coroutine via [mapScope]. Use
+   * [immediate][MainCoroutineDispatcher.immediate] to run inline when already on that thread,
+   * matching [mapImmediateScope].
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  val dispatcher: MainCoroutineDispatcher
 
   @Suppress("PrivatePropertyName")
   private var TAG: String = "MapSurface"
@@ -56,20 +105,33 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   @JvmOverloads constructor(
     context: Context,
     surface: Surface,
-    mapInitOptions: MapInitOptions = MapInitOptions(context) // could use strong ref here as MapInitOptions have strong ref in any case
+    mapInitOptions: MapInitOptions = MapInitOptions(context), // could use strong ref here as MapInitOptions have strong ref in any case
   ) {
+    this.mapboxThread = mapboxThreadProvider.getOrCreate()
+    this.mapScope = CoroutineScope(mapSurfaceJob + mapboxThread.dispatcher)
+    this.mapImmediateScope = CoroutineScope(mapSurfaceJob + mapboxThread.dispatcher.immediate)
+    this.dispatcher = mapboxThread.dispatcher
+
     this.context = context
     this.surface = surface
     this.mapView = null
     val mapName = mapInitOptions.mapName.ifBlank { "${System.identityHashCode(this)}" }
     TAG = "MapSurface\\$mapName"
-    this.renderer = MapboxSurfaceRenderer(
-      antialiasingSampleCount = mapInitOptions.antialiasingSampleCount,
-      contextMode = mapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE,
-      mapName = mapName,
-    )
-    this.mapController = MapController(renderer, mapInitOptions, mapName).apply {
-      initializePlugins(mapInitOptions)
+    // The renderer, map controller and plugins are created on the Mapbox thread, where the map
+    // runs. For now the constructor waits for them so that the MapSurface is complete when it
+    // returns: mapboxMap, getPlugin() and the surface callbacks all go through mapController.
+    mapboxThread.runAndWait {
+      renderer = MapboxSurfaceRenderer(
+        antialiasingSampleCount = mapInitOptions.antialiasingSampleCount,
+        contextMode = mapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE,
+        mapName = mapName,
+        mapboxThread = mapboxThread,
+      )
+      val threadChecker = MapThreadChecker(mapboxThread.handler.looper)
+      mapController =
+        MapController(renderer, mapInitOptions, mapName, mapboxThread, threadChecker).apply {
+          initializePlugins(mapInitOptions)
+        }
     }
   }
 
@@ -82,7 +144,14 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * facade throws [IllegalStateException].
    */
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
   constructor(mapView: MapView) {
+    // Share the MapView's thread and scopes: the MapView owns the lifecycle, so this facade never
+    // cancels anything in onDestroy.
+    this.mapboxThread = mapView.mapboxThread
+    this.mapScope = mapView.mapScope
+    this.mapImmediateScope = mapView.mapImmediateScope
+    this.dispatcher = mapView.dispatcher
     val surfaceView = mapView.rendererSurfaceView
       ?: error("MapView must use SurfaceView mode to provide a MapSurface facade")
     check(surfaceView.holder.surface.isValid) {
@@ -109,6 +178,10 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     renderer: MapboxSurfaceRenderer,
     mapController: MapController
   ) {
+    this.mapboxThread = mapboxThreadProvider.getOrCreate()
+    this.mapScope = CoroutineScope(mapSurfaceJob + mapboxThread.dispatcher)
+    this.mapImmediateScope = CoroutineScope(mapSurfaceJob + mapboxThread.dispatcher.immediate)
+    this.dispatcher = mapboxThread.dispatcher
     this.context = context
     this.surface = surface
     this.mapView = null
@@ -119,6 +192,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * Must be called when the surface has been created.
    */
+  @OptIn(MapboxDelicateApi::class, MapboxExperimental::class)
   fun surfaceCreated() {
     checkOwnsLifecycle()
     logI(TAG, "surfaceCreated() called")
@@ -126,7 +200,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     // Set default refresh rate immediately to ensure map controller has a valid value
     mapController.setScreenRefreshRate(MapView.DEFAULT_FPS)
     // Retrieve screen refresh rate off the main thread to prevent ANR
-    mapController.lifecycleScope.launch {
+    mapImmediateScope.launch {
       val rate = safeBinderCall(fallback = MapView.DEFAULT_FPS, logTag = TAG) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           context.display.refreshRate.toInt()
@@ -258,9 +332,11 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * Called to limit the maximum fps
    *
+   * Call it on the Mapbox thread, for example from [mapImmediateScope]; with the default
+   * `MapboxThreadProvider` that is the main thread.
+   *
    * @param fps The maximum fps
    */
-  @MainThread
   override fun setMaximumFps(fps: Int) {
     mapController.setMaximumFps(fps)
   }
@@ -269,7 +345,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
    * The currently configured maximum FPS, or null if [setMaximumFps] was never called
    * (or was followed by [clearMaximumFps]).
    */
-  @get:MainThread
   @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   val maximumFps: Int?
     get() = mapController.maximumFps
@@ -277,7 +352,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * Reset to "no cap" — equivalent to never having called [setMaximumFps].
    */
-  @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun clearMaximumFps() {
     mapController.clearMaximumFps()
@@ -285,9 +359,8 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   /**
    * Register a callback invoked when [setMaximumFps] or [clearMaximumFps] is called.
-   * Fires synchronously on the main thread.
+   * Fires synchronously on the Mapbox thread.
    */
-  @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun addOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     mapController.addOnMaximumFpsChangedListener(listener)
@@ -296,7 +369,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   /**
    * Unregister a callback previously registered via [addOnMaximumFpsChangedListener].
    */
-  @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     mapController.removeOnMaximumFpsChangedListener(listener)
@@ -347,6 +419,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   override fun onDestroy() {
     checkOwnsLifecycle()
     mapController.onDestroy()
+    mapSurfaceJob.cancel()
   }
 
   private fun checkOwnsLifecycle() {

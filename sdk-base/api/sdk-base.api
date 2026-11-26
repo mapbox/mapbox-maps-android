@@ -120,6 +120,11 @@ public abstract interface class com/mapbox/maps/MapLoadingErrorDelegate {
 	public abstract fun sendMapLoadingError (Lcom/mapbox/maps/MapLoadingError;)V
 }
 
+public class com/mapbox/maps/MapThreadChecker {
+	public fun <init> (Landroid/os/Looper;)V
+	public final fun throwIfNotMainThread ()V
+}
+
 public final class com/mapbox/maps/MapboxAnnotationException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 }
@@ -179,6 +184,7 @@ public final class com/mapbox/maps/MapboxStyleException : java/lang/RuntimeExcep
 
 public class com/mapbox/maps/MapboxStyleManager {
 	public fun <init> (Lcom/mapbox/maps/StyleManager;FLcom/mapbox/maps/MapLoadingErrorDelegate;)V
+	public fun <init> (Lcom/mapbox/maps/StyleManager;FLcom/mapbox/maps/MapLoadingErrorDelegate;Lcom/mapbox/maps/MapThreadChecker;)V
 	public fun addGeoJSONSourceFeatures (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public final fun addImage (Ljava/lang/String;Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;
 	public final fun addImage (Ljava/lang/String;Landroid/graphics/Bitmap;Z)Lcom/mapbox/bindgen/Expected;
@@ -223,6 +229,7 @@ public class com/mapbox/maps/MapboxStyleManager {
 	public fun getStyleTerrainProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
 	public fun getStyleURI ()Ljava/lang/String;
+	public final fun getThreadChecker ()Lcom/mapbox/maps/MapThreadChecker;
 	public fun hasStyleImage (Ljava/lang/String;)Z
 	public fun hasStyleModel (Ljava/lang/String;)Z
 	public fun invalidateStyleCustomGeometrySourceRegion (Ljava/lang/String;Lcom/mapbox/maps/CoordinateBounds;)Lcom/mapbox/bindgen/Expected;
@@ -287,11 +294,6 @@ public final class com/mapbox/maps/MapboxTracingConstants {
 
 public final class com/mapbox/maps/MapboxViewAnnotationException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
-}
-
-public final class com/mapbox/maps/ThreadChecker {
-	public static final field INSTANCE Lcom/mapbox/maps/ThreadChecker;
-	public final fun throwIfNotMainThread ()V
 }
 
 public final class com/mapbox/maps/dsl/CameraOptionsKtxKt {
@@ -2678,6 +2680,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProv
 	public abstract fun getMapPluginProviderDelegate ()Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;
 	public abstract fun getMapProjectionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapProjectionDelegate;
 	public abstract fun getMapStyleManagerDelegate ()Lcom/mapbox/maps/MapboxStyleManager;
+	public abstract fun getMapThreadDelegate ()Lcom/mapbox/maps/plugin/delegates/MapThreadDelegate;
 	public abstract fun getMapTransformDelegate ()Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;
 	public abstract fun getMaximumFps ()Ljava/lang/Integer;
 	public abstract fun getStyle (Lkotlin/jvm/functions/Function1;)V
@@ -2781,6 +2784,13 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapProjectionDe
 	public abstract fun project (Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
 	public abstract fun projectedMetersForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ProjectedMeters;
 	public abstract fun unproject (Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapThreadDelegate {
+	public abstract fun getDispatcher ()Lkotlinx/coroutines/MainCoroutineDispatcher;
+	public abstract fun getImmediateScope ()Lkotlinx/coroutines/CoroutineScope;
+	public abstract fun getLooper ()Landroid/os/Looper;
+	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 }
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapTransformDelegate {

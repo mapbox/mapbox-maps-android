@@ -18,7 +18,9 @@ fun interface ViewPlugin : MapPlugin {
   fun bind(mapView: FrameLayout, attrs: AttributeSet?, pixelRatio: Float): View
 
   /**
-   * Provides a view instances returned in [inflate] after it's been added to the MapView.
+   * Provides the view returned by [bind]. With the default Mapbox thread (the main thread) the view
+   * has already been added to the MapView. With a non-main Mapbox thread it's added on the main
+   * thread shortly after, so don't rely on its parent here.
    *
    * @param view plugin view
    */

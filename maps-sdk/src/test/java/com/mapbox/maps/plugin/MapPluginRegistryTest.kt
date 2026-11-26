@@ -91,7 +91,7 @@ class MapPluginRegistryTest {
     every { viewPlugin.bind(mapView, any(), any()) } returns view
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
     verify { viewPlugin.bind(mapView, any(), any()) }
-    verify { mapView.addView(view) }
+    verify { mapView.addViewOnMainThread(view) }
     verify { viewPlugin.onPluginView(view) }
   }
 

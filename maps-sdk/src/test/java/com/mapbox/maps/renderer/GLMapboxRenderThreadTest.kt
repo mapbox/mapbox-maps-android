@@ -9,8 +9,10 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.SettingsService
 import com.mapbox.common.SettingsServiceFactory
 import com.mapbox.common.SettingsServiceStorageType
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.countDownEvery
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.MapboxThreadProviderTestRule
 import com.mapbox.maps.logE
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -39,6 +41,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -63,6 +66,9 @@ import java.util.concurrent.locks.ReentrantLock
 )
 @LooperMode(LooperMode.Mode.PAUSED)
 class GLMapboxRenderThreadTest {
+
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
 
   private lateinit var mapboxRenderThread: MapboxRenderThread
   private lateinit var mapboxRenderer: MapboxRenderer
@@ -98,7 +104,8 @@ class GLMapboxRenderThreadTest {
       textureRenderer,
       surfaceProcessingLock,
       createCondition = surfaceProcessingLock.newCondition(),
-      destroyCondition = destroyCondition
+      destroyCondition = destroyCondition,
+      mapboxThread = mapboxThreadProvider.getOrCreate(),
     )
     renderHandlerThread.start(mapboxRenderThread.handlerCallback)
     mockkStatic("com.mapbox.maps.MapboxLogger")

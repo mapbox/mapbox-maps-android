@@ -14,13 +14,20 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-@OptIn(MapboxExperimental::class)
+@OptIn(MapboxExperimental::class, ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 class DebugOptionsControllerTest {
   private val mapboxMap: MapboxMap = mockk(relaxed = true)
@@ -32,16 +39,20 @@ class DebugOptionsControllerTest {
   @Before
   fun setUp() {
     clearAllMocks()
+    Dispatchers.setMain(UnconfinedTestDispatcher())
     every { mapView.context } returns ApplicationProvider.getApplicationContext()
+    every { mapView.mapboxMap } returns mapboxMap
+    every { mapView.mapScope } returns CoroutineScope(SupervisorJob())
     every { cameraDebugView.parent } returns null
     every { paddingDebugView.parent } returns null
 
     debugOptionsController =
-      DebugOptionsController(mapView, mapboxMap, { cameraDebugView }, { paddingDebugView })
+      DebugOptionsController(mapView, { cameraDebugView }, { paddingDebugView })
   }
 
   @After
   fun tearDown() {
+    Dispatchers.resetMain()
     unmockkAll()
   }
 

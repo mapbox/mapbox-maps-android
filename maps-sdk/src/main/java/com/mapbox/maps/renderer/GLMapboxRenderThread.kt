@@ -7,6 +7,7 @@ import android.opengl.GLES20
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.LogThrottler
+import com.mapbox.common.MapboxThread
 import com.mapbox.maps.ContextMode
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -41,7 +42,8 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
     antialiasingSampleCount: Int,
     contextMode: ContextMode,
     mapName: String,
-  ) : super(mapboxRenderer, mapboxWidgetRenderer, mapName, "GL") {
+    mapboxThread: MapboxThread,
+  ) : super(mapboxRenderer, mapboxWidgetRenderer, mapName, "GL", mapboxThread) {
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount, mapName = mapName)
     this.eglSurface = eglCore.eglNoSurface
     this.widgetTextureRenderer = TextureRenderer()
@@ -61,6 +63,7 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
     surfaceProcessingLock: ReentrantLock,
     createCondition: Condition,
     destroyCondition: Condition,
+    mapboxThread: MapboxThread,
   ) : super(
     mapboxRenderer,
     mapboxWidgetRenderer,
@@ -68,7 +71,8 @@ internal class GLMapboxRenderThread : MapboxRenderThread {
     fpsManager,
     surfaceProcessingLock,
     createCondition,
-    destroyCondition
+    destroyCondition,
+    mapboxThread
   ) {
     this.translucentSurface = false
     this.eglCore = eglCore

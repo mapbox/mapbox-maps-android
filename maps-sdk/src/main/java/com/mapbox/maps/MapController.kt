@@ -6,7 +6,10 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Cancelable
 import com.mapbox.common.MapboxOptions
+import com.mapbox.common.MapboxThread
 import com.mapbox.common.MapboxTracing
+import com.mapbox.common.mapboxThreadProvider
+import com.mapbox.common.runOrDispatch
 import com.mapbox.maps.plugin.DisabledPlugin
 import com.mapbox.maps.plugin.InvalidViewPluginHostException
 import com.mapbox.maps.plugin.MapPlugin
@@ -48,21 +51,16 @@ import com.mapbox.maps.renderer.OnMaximumFpsChangedListener
 import com.mapbox.maps.renderer.RenderThreadStatsRecorder
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.maps.renderer.widget.Widget
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.plus
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CopyOnWriteArraySet
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
+  private val mapboxThread: MapboxThread
   internal val renderer: MapboxRenderer
   private val nativeObserver: NativeObserver
   private val mapInitOptions: MapInitOptions
@@ -71,15 +69,16 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val pluginRegistry: MapPluginRegistry
   private val styleDataLoadedCallback: StyleDataLoadedCallback
 
-  // Main-thread only: MapView/MapSurface setMaximumFps/clearMaximumFps and the
-  // maximumFps getter are all @MainThread, so this field is only ever touched
-  // from the main thread. No synchronization needed.
+  // Mapbox thread only: setMaximumFps/clearMaximumFps check the thread, and the maximumFps getter
+  // and the listeners are documented for it, so this field is only touched on that thread. No
+  // synchronization needed.
   private var cachedMaximumFps: Int? = null
 
   private val maximumFpsListeners =
     CopyOnWriteArrayList<OnMaximumFpsChangedListener>()
 
-  // Main-thread only, like cachedMaximumFps.
+  // Main-thread only: the host view, the renderer surface callbacks and the lifecycle methods
+  // update these there.
   private var hostVisible = true
   private var surfaceAvailable = false
   private val _isRenderable = MutableStateFlow(false)
@@ -114,15 +113,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val cameraChangedCoalescedCallback: CameraChangedCoalescedCallback
   private val cancelableSubscriberSet = CopyOnWriteArraySet<Cancelable>()
 
-  /**
-   * Lifecycle-aware coroutine scope that follows the MapView/MapSurface lifecycle.
-   * This scope is created when the MapController is constructed and cancelled when destroyed.
-   * Can be used for any background operations that should be tied to the map lifecycle.
-   */
-  internal val lifecycleScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) + CoroutineName(
-    "MapControllerLifecycleScope"
-  )
-
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
   private var style: Style? = null
@@ -139,21 +129,32 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
     mapName: String,
+    mapboxThread: MapboxThread,
+    threadChecker: MapThreadChecker,
   ) {
     if (MapboxOptions.accessToken.isBlank()) {
       throw MapboxConfigurationException()
     }
 
+    this.mapboxThread = mapboxThread
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     this.contextMode = mapInitOptions.mapOptions.contextMode
     this.nativeMap = MapProvider.getNativeMapWrapper(
       mapInitOptions,
       renderer,
+      mapboxThread
     )
     this.nativeObserver = NativeObserver(nativeMap)
     this._mapboxMap =
-      MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio, mapName)
+      MapProvider.getMapboxMap(
+        nativeMap,
+        nativeObserver,
+        mapInitOptions.mapOptions.pixelRatio,
+        mapName,
+        mapboxThread,
+        threadChecker,
+      )
     this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
@@ -197,6 +198,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     pluginRegistry: MapPluginRegistry,
     onStyleLoadingFinishedListener: StyleDataLoadedCallback
   ) {
+    this.mapboxThread = mapboxThreadProvider.getOrCreate()
     this.renderer = renderer
     this.nativeObserver = nativeObserver
     this.mapInitOptions = mapInitOptions
@@ -236,24 +238,26 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_STARTED
     updateRenderable()
 
-    mapboxMap.style?.let {
-      if (it != style) {
-        style = it
-        pluginRegistry.onStyleChanged(it)
+    mapboxThread.dispatcher.runOrDispatch {
+      mapboxMap.style?.let {
+        if (it != style) {
+          style = it
+          pluginRegistry.onStyleChanged(it)
+        }
       }
-    }
-    nativeObserver.apply {
-      cancelableSubscriberSet.add(subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback))
-      cancelableSubscriberSet.add(subscribeStyleDataLoaded(styleDataLoadedCallback))
-    }
-    renderer.onStart()
-    if (!mapboxMap.isStyleLoadInitiated) {
-      // Load the style in mapInitOptions if no style has loaded yet.
-      mapInitOptions.styleUri?.let {
-        mapboxMap.loadStyle(it)
+      nativeObserver.apply {
+        cancelableSubscriberSet.add(subscribeCameraChangedCoalesced(cameraChangedCoalescedCallback))
+        cancelableSubscriberSet.add(subscribeStyleDataLoaded(styleDataLoadedCallback))
       }
+      renderer.onStart()
+      if (!mapboxMap.isStyleLoadInitiated) {
+        // Load the style in mapInitOptions if no style has loaded yet.
+        mapInitOptions.styleUri?.let {
+          mapboxMap.loadStyle(it)
+        }
+      }
+      pluginRegistry.onStart()
     }
-    pluginRegistry.onStart()
   }
 
   override fun onStop() {
@@ -263,14 +267,18 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_STOPPED
     updateRenderable()
 
-    cancelableSubscriberSet.forEach {
-      it.cancel()
+    // Same hop as onStart so both bodies (and onDestroy's runAndWait) run in FIFO order on
+    // mapboxThread; otherwise a stop right after a start could pause before the queued resume.
+    mapboxThread.dispatcher.runOrDispatch {
+      cancelableSubscriberSet.forEach {
+        it.cancel()
+      }
+      cancelableSubscriberSet.clear()
+      renderer.onStop()
+      pluginRegistry.onStop()
+      // flush the queued events before destroy to avoid lost telemetry events
+      MapProvider.flushPendingEvents()
     }
-    cancelableSubscriberSet.clear()
-    renderer.onStop()
-    pluginRegistry.onStop()
-    // flush the queued events before destroy to avoid lost telemetry events
-    MapProvider.flushPendingEvents()
   }
 
   override fun onResume() {
@@ -284,22 +292,31 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_DESTROYED
     updateRenderable()
 
-    // Cancel the lifecycle coroutine scope to prevent memory leaks
-    lifecycleScope.cancel()
-
+    // The renderer outlives this controller, so drop its reference to us; done on the main
+    // thread, where the renderer calls the listener.
     renderer.setSurfaceAvailabilityListener(null)
 
-    styleRequest?.cancel()
-    styleRequest = null
-    pluginRegistry.onDestroy()
-    nativeObserver.onDestroy()
-    renderer.onDestroy()
-    mapboxMap.onDestroy()
+    // This method is always called from Android's real main/UI thread (Activity/Fragment lifecycle
+    // contract), so hop and wait: callers expect the map, renderer and plugins to be fully
+    // destroyed when it returns, as they were before the Mapbox thread existed.
+    @OptIn(com.mapbox.annotation.MapboxExperimental::class)
+    mapboxThread.runAndWait {
+      styleRequest?.cancel()
+      styleRequest = null
+      pluginRegistry.onDestroy()
+      nativeObserver.onDestroy()
+      renderer.onDestroy()
+      mapboxMap.onDestroy()
+    }
     this.style = null
   }
 
   override fun onLowMemory() {
-    mapboxMap.reduceMemoryUse()
+    // Same hop as onStart and onStop: the low-memory callback arrives on main, and the native
+    // map belongs to mapboxThread.
+    mapboxThread.dispatcher.runOrDispatch {
+      mapboxMap.reduceMemoryUse()
+    }
   }
 
   override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -311,17 +328,19 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onSizeChanged(w: Int, h: Int) {
-    // we could not reliably check here if new dimensions differ from
-    // current ones due to different threads so we always set flag to false
-    // and set it to true below
-    nativeMap.sizeSet = false
-    renderer.queueRenderEvent {
-      renderer.onSurfaceChanged(w, h)
-      // Map.setSize might not be called if dimensions are the same
-      // so we need to make sure we set `sizeSet = true` explicitly
-      nativeMap.sizeSet = true
+    mapboxThread.dispatcher.runOrDispatch {
+      // we could not reliably check here if new dimensions differ from
+      // current ones due to different threads so we always set flag to false
+      // and set it to true below
+      nativeMap.sizeSet = false
+      renderer.queueRenderEvent {
+        renderer.onSurfaceChanged(w, h)
+        // Map.setSize might not be called if dimensions are the same
+        // so we need to make sure we set `sizeSet = true` explicitly
+        nativeMap.sizeSet = true
+      }
+      pluginRegistry.onSizeChanged(w, h)
     }
-    pluginRegistry.onSizeChanged(w, h)
   }
 
   override fun queueEvent(event: Runnable, needRender: Boolean) {
@@ -338,11 +357,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.snapshot(listener)
   }
 
-  @get:MainThread
   internal val maximumFps: Int? get() = cachedMaximumFps
 
-  @MainThread
   override fun setMaximumFps(fps: Int) {
+    mapboxMap.threadChecker.throwIfNotMainThread()
     if (cachedMaximumFps != fps) {
       cachedMaximumFps = fps
       renderer.setMaximumFps(fps)
@@ -350,8 +368,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  @MainThread
   internal fun clearMaximumFps() {
+    mapboxMap.threadChecker.throwIfNotMainThread()
     if (cachedMaximumFps != null) {
       cachedMaximumFps = null
       renderer.clearMaximumFps()
@@ -359,12 +377,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  @MainThread
   internal fun addOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     maximumFpsListeners.add(listener)
   }
 
-  @MainThread
   internal fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     maximumFpsListeners.remove(listener)
   }

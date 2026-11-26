@@ -1,7 +1,6 @@
 package com.mapbox.maps.renderer
 
 import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
 import android.os.Trace
 import android.view.Choreographer
@@ -12,6 +11,7 @@ import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.common.LogThrottler
+import com.mapbox.common.MapboxThread
 import com.mapbox.common.MapboxTracing
 import com.mapbox.common.MapboxTracing.MAPBOX_TRACE_ID
 import com.mapbox.common.SettingsServiceFactory
@@ -87,6 +87,7 @@ import kotlin.properties.Delegates
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
+  private val mapboxThread: MapboxThread
   internal val renderHandlerThread: RenderHandlerThread
   protected val mapboxRenderer: MapboxRenderer
   protected val widgetRenderer: MapboxWidgetRenderer?
@@ -186,7 +187,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
 
   /**
    * Uptime (ms) at which the currently pending frame was requested, i.e. when [awaitingNextVsync]
-   * flipped to true. Read by the render-loop watchdog on the main thread.
+   * flipped to true. Read by the render-loop watchdog on mapboxThread.
    */
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -209,13 +210,6 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   // render thread always sees it without synchronization.
   @OptIn(MapboxExperimental::class)
   internal val renderThreadStatsRecorder = RenderThreadStatsRecorder()
-
-  /**
-   * Handler for posting tasks to the main thread.
-   */
-  private val mainHandler by lazy {
-    Handler(Looper.getMainLooper())
-  }
 
   private val renderThreadPreparedLock = ReentrantLock()
 
@@ -297,12 +291,14 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer: MapboxRenderer,
     widgetRenderer: MapboxWidgetRenderer?,
     mapName: String,
-    rendererName: String
+    rendererName: String,
+    mapboxThread: MapboxThread,
   ) {
     this.mapboxRenderer = mapboxRenderer
     this.widgetRenderer = widgetRenderer
     this.TAG = "${rendererName}RenderThread" + if (mapName.isNotBlank()) "\\$mapName" else ""
     this.ownTraceID = "$TAG: ${System.identityHashCode(this)}"
+    this.mapboxThread = mapboxThread
     renderHandlerThread = RenderHandlerThread(mapName)
     val handler = renderHandlerThread.start(handlerCallback)
     fpsManager = FpsManager(handler, mapName)
@@ -320,6 +316,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     surfaceProcessingLock: ReentrantLock,
     createCondition: Condition,
     destroyCondition: Condition,
+    mapboxThread: MapboxThread,
   ) {
     this.TAG = ""
     this.ownTraceID = ""
@@ -330,6 +327,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     this.surfaceProcessingLock = surfaceProcessingLock
     this.createCondition = createCondition
     this.destroyCondition = destroyCondition
+    this.mapboxThread = mapboxThread
   }
 
   protected abstract fun prepareRenderer(): Boolean
@@ -817,7 +815,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   /**
-   * Schedules a resetThreadServiceType on the main thread after a specified delay.
+   * Schedules a resetThreadServiceType on mapboxThread after a specified delay.
    * This method is called to ensure CPU affinity is properly set
    * when coming back from background, addressing timing issues where CPU affinity
    * might not be immediately available.
@@ -825,21 +823,19 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   @OptIn(MapboxExperimental::class)
   fun scheduleThreadServiceTypeReset() {
     logI(TAG, "Scheduling thread service type reset with delay")
-    mainHandler.postDelayed({
+    mapboxThread.handler.postDelayed({
       // log current thread name to help debug
       logI(TAG, "Executing thread service type reset from ${Thread.currentThread().name} thread")
       mapboxRenderer.resetThreadServiceType()
     }, RESET_THREAD_SERVICE_TYPE_DELAY_MS)
   }
 
-  @UiThread
   fun pause() {
     paused = true
     stopRenderLoopWatchdog()
     logI(TAG, "Renderer paused")
   }
 
-  @UiThread
   fun resume() {
     paused = false
     logI(
@@ -865,7 +861,6 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  @UiThread
   internal fun destroy() {
     trace("destroy") {
       logI(TAG, "destroy")
@@ -926,7 +921,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   /**
-   * Render-loop watchdog, ticking on the main thread while the renderer is resumed.
+   * Render-loop watchdog, ticking on mapboxThread while the renderer is resumed.
    *
    * Detects a frame that has been pending ([awaitingNextVsync] is true) for longer than
    * [RENDER_STALL_THRESHOLD_MS] without [doFrame] completing, while the renderer is prepared and
@@ -945,36 +940,39 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
       }
       checkRenderLoop()
       if (watchdogRunning.get()) {
-        mainHandler.postDelayed(this, RENDER_WATCHDOG_INTERVAL_MS)
+        // Via a function, not mapboxThread.handler inline: this object is created in a property
+        // initializer, before the secondary constructors assign mapboxThread.
+        postRenderLoopWatchdogTick()
       }
     }
   }
 
-  @UiThread
   private fun startRenderLoopWatchdog() {
     if (!renderLoopWatchdogEnabled) {
       return
     }
     if (watchdogRunning.compareAndSet(false, true)) {
       watchdogStalledSinceUptimeMs = 0L
-      mainHandler.postDelayed(renderLoopWatchdog, RENDER_WATCHDOG_INTERVAL_MS)
+      postRenderLoopWatchdogTick()
     }
   }
 
-  @UiThread
   private fun stopRenderLoopWatchdog() {
     if (!renderLoopWatchdogEnabled) {
       return
     }
     watchdogRunning.set(false)
-    mainHandler.removeCallbacks(renderLoopWatchdog)
+    mapboxThread.handler.removeCallbacks(renderLoopWatchdog)
     watchdogStalledSinceUptimeMs = 0L
+  }
+
+  private fun postRenderLoopWatchdogTick() {
+    mapboxThread.handler.postDelayed(renderLoopWatchdog, RENDER_WATCHDOG_INTERVAL_MS)
   }
 
   /**
    * Single watchdog check. Internal for tests; production code runs it via [renderLoopWatchdog].
    */
-  @UiThread
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun checkRenderLoop() {
     val now = SystemClock.uptimeMillis()
@@ -1052,7 +1050,7 @@ internal abstract class MapboxRenderThread : Choreographer.FrameCallback {
      */
     internal const val RESET_THREAD_SERVICE_TYPE_DELAY_MS = 300L
     /**
-     * Render-loop watchdog tick interval on the main thread.
+     * Render-loop watchdog tick interval on mapboxThread.
      */
     internal const val RENDER_WATCHDOG_INTERVAL_MS = 1_000L
     /**

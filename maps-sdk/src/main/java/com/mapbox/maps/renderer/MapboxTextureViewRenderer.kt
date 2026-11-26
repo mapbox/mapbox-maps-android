@@ -5,6 +5,7 @@ import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxThread
 import com.mapbox.maps.ContextMode
 import com.mapbox.maps.RenderBackendType
 
@@ -18,6 +19,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
     antialiasingSampleCount: Int,
     contextMode: ContextMode,
     mapName: String,
+    mapboxThread: MapboxThread,
   ) : super(mapName) {
     val widgetRenderer = MapboxWidgetRenderer(
       antialiasingSampleCount = antialiasingSampleCount,
@@ -29,6 +31,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
         mapboxRenderer = this,
         antialiasingSampleCount = antialiasingSampleCount,
         mapName = mapName,
+        mapboxThread = mapboxThread,
       )
       RenderBackendType.OPEN_GL -> GLMapboxRenderThread(
         mapboxRenderer = this,
@@ -37,6 +40,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
         antialiasingSampleCount = antialiasingSampleCount,
         contextMode = contextMode,
         mapName = mapName,
+        mapboxThread = mapboxThread,
       )
     }
     textureView.let {

@@ -9,15 +9,19 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
+import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
-import androidx.annotation.MainThread
 import androidx.annotation.RequiresApi
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.children
+import com.mapbox.common.MainMapboxThreadProvider
+import com.mapbox.common.MapboxThread
 import com.mapbox.common.MapboxTracing
+import com.mapbox.common.mapboxThreadProvider
+import com.mapbox.common.runOrDispatch
 import com.mapbox.maps.debugoptions.DebugOptionsController
 import com.mapbox.maps.debugoptions.MapViewDebugOptions
 import com.mapbox.maps.plugin.MapPlugin
@@ -34,6 +38,10 @@ import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainCoroutineDispatcher
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.nio.IntBuffer
 import kotlin.math.abs
@@ -57,8 +65,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     private set
   private val debugOptionsControllerDelegate = lazy {
     DebugOptionsController(
-      this,
-      mapController.mapboxMap
+      this
     )
   }
   private val debugOptionsController: DebugOptionsController by debugOptionsControllerDelegate
@@ -95,6 +102,53 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
           MapViewDebugOptions.COLLISION in value
       }
     }
+
+  @MapboxExperimental
+  @MapboxDelicateApi
+  internal val mapboxThread: MapboxThread
+
+  /**
+   * Cancelled in [onDestroy], tying [mapScope] and [mapImmediateScope] to this [MapView]'s
+   * lifecycle instead of [mapboxThread]'s (which outlives any single [MapView]).
+   */
+  private val mapViewJob = SupervisorJob()
+
+  /**
+   * Coroutine scope that dispatches onto whichever thread Mapbox is configured to run on: the
+   * main thread by default, but a dedicated background thread if the app configures a
+   * [MapboxThreadProvider][com.mapbox.common.MapboxThreadProvider] such as
+   * `OneMapboxThreadProvider`. Cancelled in [onDestroy].
+   *
+   * Wrap only the calls that actually touch Mapbox map/style APIs (e.g. [mapboxMap], plugin
+   * calls) in this scope. Do not wrap unrelated main-thread-only Android framework calls in it
+   * (e.g. `Lifecycle.addObserver`, other work that requires the real main thread regardless of
+   * how Mapbox is configured) — those need the main thread specifically, not "whatever thread
+   * Mapbox happens to be using," and belong outside this scope, called directly or via
+   * `Dispatchers.Main`.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  val mapScope: CoroutineScope
+
+  /**
+   * Like [mapScope], but using [MapboxThread.dispatcher][com.mapbox.common.MapboxThread.dispatcher]'s `immediate` variant:
+   * runs inline when already on the right thread, instead of always re-dispatching. See
+   * [mapScope] for what belongs (and doesn't belong) in this scope.
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  val mapImmediateScope: CoroutineScope
+
+  /**
+   * The [MainCoroutineDispatcher] backing [mapScope]: always posts to whichever thread Mapbox is
+   * configured to run on, even when already called from it. Exposed for code that wants to
+   * `withContext` onto that thread rather than launch a separate coroutine via [mapScope]. Use
+   * [immediate][MainCoroutineDispatcher.immediate] to run inline when already on that thread,
+   * matching [mapImmediateScope].
+   */
+  @MapboxExperimental
+  @MapboxDelicateApi
+  val dispatcher: MainCoroutineDispatcher
 
   /**
    * Build a [MapView] with [Context] and [MapInitOptions] objects.
@@ -147,6 +201,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * a [AttributeSet] object, an [Int] which represents a style attribute file,
    * and an [Int] which represents a style resource file.
    */
+  @OptIn(
+    MapboxDelicateApi::class, MapboxExperimental::class,
+    com.mapbox.annotation.MapboxExperimental::class
+  )
   private constructor(
     context: Context,
     attrs: AttributeSet?,
@@ -154,12 +212,23 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     defStyleRes: Int,
     initOptions: MapInitOptions?,
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
+    val resolvedMapInitOptions = if (attrs != null) {
+      parseTypedArray(context, attrs)
+    } else {
+      initOptions ?: MapInitOptions(context)
+    }
+    // Layout Preview doesn't run the Mapbox startup initializers, so mapboxThreadProvider isn't
+    // set there. The preview map is never created, so the main thread serves as a placeholder.
+    mapboxThread = if (isInEditMode) {
+      MainMapboxThreadProvider().getOrCreate()
+    } else {
+      mapboxThreadProvider.getOrCreate()
+    }
+
+    mapScope = CoroutineScope(mapViewJob + mapboxThread.dispatcher)
+    mapImmediateScope = CoroutineScope(mapViewJob + mapboxThread.dispatcher.immediate)
+    dispatcher = mapboxThread.dispatcher
     MapboxTracing.traceSync("$MAPS_SDK_TRACE_PREFIX MapView") {
-      val resolvedMapInitOptions = if (attrs != null) {
-        parseTypedArray(context, attrs)
-      } else {
-        initOptions ?: MapInitOptions(context)
-      }
       val mapName = resolvedMapInitOptions.mapName.ifBlank { "${System.identityHashCode(this)}" }
       TAG = "MapView\\$mapName"
       if (isInEditMode) {
@@ -171,36 +240,56 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         SurfaceView(context, attrs)
       }
       val contextMode = resolvedMapInitOptions.mapOptions.contextMode ?: ContextMode.UNIQUE
+      // The renderer, map controller and plugins are created on the Mapbox thread, where the map
+      // runs. For now the constructor waits for them so that the MapView is complete when it
+      // returns: mapboxMap, getPlugin() and the view callbacks all go through mapController.
+      mapboxThread.runAndWait {
+        val renderer = MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX renderer($mapName)" }) {
+          when (view) {
+            is SurfaceView -> MapboxSurfaceHolderRenderer(
+              view.holder,
+              resolvedMapInitOptions.antialiasingSampleCount,
+              contextMode,
+              mapName,
+              mapboxThread,
+            )
 
-      val renderer = MapboxTracing.traceSync({ "$MAPS_SDK_TRACE_PREFIX renderer($mapName)" }) {
-        when (view) {
-          is SurfaceView -> MapboxSurfaceHolderRenderer(
-            view.holder,
-            resolvedMapInitOptions.antialiasingSampleCount,
-            contextMode,
-            mapName,
-          )
+            is TextureView -> MapboxTextureViewRenderer(
+              view,
+              resolvedMapInitOptions.antialiasingSampleCount,
+              contextMode,
+              mapName,
+              mapboxThread,
+            )
 
-          is TextureView -> MapboxTextureViewRenderer(
-            view,
-            resolvedMapInitOptions.antialiasingSampleCount,
-            contextMode,
-            mapName,
-          )
-
-          else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
+            else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
+          }
         }
+        mapController = MapController(
+          renderer,
+          resolvedMapInitOptions,
+          mapName,
+          mapboxThread = mapboxThread,
+          threadChecker = MapThreadChecker(mapboxThread.handler.looper),
+        )
+        mapController.initializePlugins(resolvedMapInitOptions, this@MapView)
       }
-      mapController = MapController(renderer, resolvedMapInitOptions, mapName)
       addView(view, 0)
-      mapController.initializePlugins(resolvedMapInitOptions, this)
     }
+  }
+
+  /**
+   * Adds [view] on the main thread: right away when called there, which is always the case with
+   * the default Mapbox thread, and dispatched to the main thread otherwise.
+   */
+  internal fun addViewOnMainThread(view: View, index: Int = -1) {
+    Dispatchers.Main.runOrDispatch { addView(view, index) }
   }
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     if (!isInEditMode) {
-      mapController.onAttachedToWindow(this)
+      mapController.onAttachedToWindow(this@MapView)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         // The platform reports the visibility of a view that is attached as hidden only when it
         // changes, so read the initial value here.
@@ -237,7 +326,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         },
         attrs = attrs,
         antialiasingSampleCount = antialiasingSampleCount,
-        mapName = mapName,
+        mapName = mapName
       ).also {
         it.cameraOptions = cameraOptions
         it.textureView = textureView
@@ -247,12 +336,17 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  @OptIn(MapboxDelicateApi::class, MapboxExperimental::class)
   private constructor(
     context: Context,
     attrs: AttributeSet?,
     mapController: MapController,
   ) : super(context, attrs, 0, 0) {
     this.mapController = mapController
+    mapboxThread = mapboxThreadProvider.getOrCreate()
+    mapScope = CoroutineScope(mapViewJob + mapboxThread.dispatcher)
+    mapImmediateScope = CoroutineScope(mapViewJob + mapboxThread.dispatcher.immediate)
+    dispatcher = mapboxThread.dispatcher
   }
 
   /**
@@ -279,12 +373,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onStart
    * @see android.app.Fragment.onStart
    */
+  @OptIn(MapboxDelicateApi::class, MapboxExperimental::class)
   override fun onStart() {
     logI(TAG, "onStart() called")
     // Set default refresh rate immediately to ensure map controller has a valid value
     mapController.setScreenRefreshRate(DEFAULT_FPS)
     // Retrieve screen refresh rate off the main thread to prevent ANR
-    mapController.lifecycleScope.launch {
+    mapImmediateScope.launch {
       val rate = safeBinderCall(fallback = DEFAULT_FPS, logTag = TAG) {
         display?.refreshRate?.toInt() ?: DEFAULT_FPS
       }
@@ -300,8 +395,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     ).also { it.start() }
 
     mapController.onStart()
-    if (debugOptionsControllerDelegate.isInitialized()) {
-      debugOptionsController.started = true
+    mapImmediateScope.launch {
+      if (debugOptionsControllerDelegate.isInitialized()) {
+        debugOptionsController.started = true
+      }
     }
   }
 
@@ -314,8 +411,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     logI(TAG, "onStop() called")
     stopDisplayRefreshRateMonitor()
     mapController.onStop()
-    if (debugOptionsControllerDelegate.isInitialized()) {
-      debugOptionsController.started = false
+    mapImmediateScope.launch {
+      if (debugOptionsControllerDelegate.isInitialized()) {
+        debugOptionsController.started = false
+      }
     }
   }
 
@@ -347,12 +446,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * You must call this method from the parent's Activity#onDestroy() or Fragment#onDestroy()
    */
+  @OptIn(MapboxDelicateApi::class, MapboxExperimental::class)
   override fun onDestroy() {
     logI(TAG, "onDestroy() called")
     if (viewAnnotationManagerDelegate.isInitialized()) {
       (viewAnnotationManager as ViewAnnotationManagerImpl).destroy()
     }
     mapController.onDestroy()
+    mapViewJob.cancel()
   }
 
   /**
@@ -430,10 +531,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Set new maximum FPS for map rendering.
    *
+   * Call it on the Mapbox thread, for example from [mapImmediateScope]; with the default
+   * `MapboxThreadProvider` that is the main thread.
+   *
    * @param fps new maximum FPS value that must be greater than 0 and less than max integer.
    * When setting this value higher than screen physically supports - max possible screen FPS rate will be used.
    */
-  @MainThread
   override fun setMaximumFps(@IntRange(from = 1, to = Int.MAX_VALUE.toLong()) fps: Int) {
     mapController.setMaximumFps(fps)
   }
@@ -442,7 +545,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * The currently configured maximum FPS, or null if [setMaximumFps] was never called
    * (or was followed by [clearMaximumFps]).
    */
-  @get:MainThread
   @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   val maximumFps: Int?
     get() = mapController.maximumFps
@@ -457,7 +559,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Reset to "no cap" — equivalent to never having called [setMaximumFps].
    */
-  @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun clearMaximumFps() {
     mapController.clearMaximumFps()
@@ -465,9 +566,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   /**
    * Register a callback invoked when [setMaximumFps] or [clearMaximumFps] is called.
-   * Fires synchronously on the main thread.
+   * Fires synchronously on the Mapbox thread.
    */
-  @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun addOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     mapController.addOnMaximumFpsChangedListener(listener)
@@ -476,7 +576,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Unregister a callback previously registered via [addOnMaximumFpsChangedListener].
    */
-  @MainThread
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
   fun removeOnMaximumFpsChangedListener(listener: OnMaximumFpsChangedListener) {
     mapController.removeOnMaximumFpsChangedListener(listener)

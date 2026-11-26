@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.annotation.MapboxExperimental
 import com.mapbox.common.Cancelable
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.maps.coroutine.awaitStyle
 import com.mapbox.maps.coroutine.cameraChangedCoalescedEvents
 import com.mapbox.maps.coroutine.cameraChangedEvents
@@ -36,6 +37,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -48,6 +50,9 @@ import org.robolectric.annotation.LooperMode
 @Config(shadows = [ShadowMap::class])
 class MapboxMapExtTest {
 
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
+
   private lateinit var nativeObserver: NativeObserver
   private val cancelable = mockk<Cancelable>(relaxUnitFun = true)
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
@@ -57,10 +62,19 @@ class MapboxMapExtTest {
 
   @Before
   fun setUp() {
-    nativeObserver = mockk()
+    nativeObserver = mockk(relaxed = true)
     every { cancelable.cancel() } just runs
     styleObserver = mockk(relaxUnitFun = true)
-    mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
+    val mapboxThread = mapboxThreadProvider.getOrCreate()
+    mapboxMap = MapboxMap(
+      nativeMap,
+      nativeObserver,
+      pixelRatio = 1.0f,
+      mapName = "",
+      mapboxThread = mapboxThread,
+      threadChecker = MapThreadChecker(mapboxThread.handler.looper),
+      styleObserver = styleObserver,
+    )
   }
 
   @Test

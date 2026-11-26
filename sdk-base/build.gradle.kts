@@ -116,6 +116,7 @@ dependencies {
   implementation(libs.kotlin)
   implementation(libs.mapbox.base)
   implementation(libs.androidx.annotations)
+  api(libs.coroutines)
   api(libs.mapbox.gestures)
   // Note that GLNative and Common are brought through the `mapboxLibrary` plugin above
 

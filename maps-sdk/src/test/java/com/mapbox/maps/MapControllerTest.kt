@@ -22,9 +22,15 @@ import com.mapbox.maps.shadows.ShadowEventsService
 import com.mapbox.maps.shadows.ShadowTelemetryService
 import com.mapbox.verifyOnce
 import io.mockk.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -39,6 +45,9 @@ import org.robolectric.annotation.Config
   ]
 )
 class MapControllerTest {
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
+
   private val mockRenderer: MapboxRenderer = mockk()
   private val mockNativeObserver: NativeObserver = mockk()
   private val mockNativeMap: NativeMapImpl = mockk()
@@ -59,6 +68,7 @@ class MapControllerTest {
   @Before
   fun setUp() {
     every { mockContext.packageName } returns "com.mapbox.maps"
+    every { mockMapboxMap.threadChecker } returns mockk(relaxed = true)
 
     testMapController = MapController(
       mockRenderer,
@@ -208,6 +218,35 @@ class MapControllerTest {
     every { mockRenderer.setSurfaceAvailabilityListener(null) } just Runs
 
     testMapController.onDestroy()
+
+    verifySequence {
+      mockRenderer.setSurfaceAvailabilityListener(null)
+      mockPluginRegistry.onDestroy()
+      mockNativeObserver.onDestroy()
+      mockRenderer.onDestroy()
+      mockMapboxMap.onDestroy()
+    }
+  }
+
+  /**
+   * With the default provider the Mapbox thread's dispatcher is `Dispatchers.Main`. A test that
+   * swaps it for a queueing [StandardTestDispatcher] must not hang in `onDestroy`: the teardown runs
+   * inline because the caller is already on the Mapbox thread.
+   */
+  @OptIn(ExperimentalCoroutinesApi::class)
+  @Test
+  fun onDestroyWithStandardTestMainDispatcherRunsInline() {
+    every { mockMapboxMap.onDestroy() } just Runs
+    every { mockPluginRegistry.onDestroy() } just Runs
+    every { mockNativeObserver.onDestroy() } just Runs
+    every { mockRenderer.onDestroy() } just Runs
+    every { mockRenderer.setSurfaceAvailabilityListener(null) } just Runs
+    Dispatchers.setMain(StandardTestDispatcher())
+    try {
+      testMapController.onDestroy()
+    } finally {
+      Dispatchers.resetMain()
+    }
 
     verifySequence {
       mockRenderer.setSurfaceAvailabilityListener(null)

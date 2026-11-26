@@ -102,4 +102,9 @@ interface MapDelegateProvider {
    * throttle gesture-driven animations to match the render loop's frame rate.
    */
   val maximumFps: Int? get() = null
+
+  /**
+   * Gives plugins access to the thread that drives this map.
+   */
+  val mapThreadDelegate: MapThreadDelegate
 }

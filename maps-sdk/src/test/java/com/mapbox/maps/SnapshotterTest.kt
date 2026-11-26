@@ -5,6 +5,7 @@ import io.mockk.*
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -22,6 +23,9 @@ import java.lang.IllegalStateException
   ]
 )
 class SnapshotterTest {
+
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
 
   private lateinit var snapshotter: Snapshotter
   private lateinit var coreSnapshotter: MapSnapshotter

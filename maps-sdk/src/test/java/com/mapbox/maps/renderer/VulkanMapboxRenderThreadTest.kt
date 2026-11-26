@@ -5,7 +5,9 @@ import android.view.Surface
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.SettingsService
 import com.mapbox.common.SettingsServiceFactory
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.maps.IVulkanManager
+import com.mapbox.maps.MapboxThreadProviderTestRule
 import com.mapbox.maps.NativeMapImpl
 import com.mapbox.maps.logI
 import com.mapbox.maps.logW
@@ -24,6 +26,7 @@ import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -45,6 +48,9 @@ import java.util.concurrent.locks.ReentrantLock
 )
 @LooperMode(LooperMode.Mode.PAUSED)
 class VulkanMapboxRenderThreadTest {
+
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
 
   private lateinit var mapboxRenderer: MapboxRenderer
   private lateinit var vulkanManager: IVulkanManager
@@ -78,6 +84,7 @@ class VulkanMapboxRenderThreadTest {
       surfaceProcessingLock = surfaceProcessingLock,
       createCondition = surfaceProcessingLock.newCondition(),
       destroyCondition = surfaceProcessingLock.newCondition(),
+      mapboxThread = mapboxThreadProvider.getOrCreate(),
     )
     renderHandlerThread.start(renderThread.handlerCallback)
 

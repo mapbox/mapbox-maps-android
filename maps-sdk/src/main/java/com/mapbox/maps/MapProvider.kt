@@ -4,8 +4,10 @@ import android.content.Context
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.EventsServerOptions
 import com.mapbox.common.EventsService
+import com.mapbox.common.MapboxThread
 import com.mapbox.common.SdkInformation
 import com.mapbox.common.TelemetryService
+import com.mapbox.common.mapboxThread
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.base.BuildConfig
@@ -17,7 +19,6 @@ import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainCoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
@@ -27,19 +28,27 @@ internal object MapProvider {
   private lateinit var mapTelemetry: MapTelemetry
 
   /**
-   * [CoroutineScope] that runs on Main dispatcher by default (NOTE that it is not using [MainCoroutineDispatcher.immediate]).
+   * [CoroutineScope] that runs on Main/Mapbox thread dispatcher by default (NOTE that it is not
+   * using [MainCoroutineDispatcher.immediate]).
+   *
+   * Lazy so that merely touching [MapProvider] (e.g. calling [flushPendingEvents], which doesn't
+   * use this scope) doesn't force [mapboxThread]'s resolution as a side effect of loading this
+   * `object`; only actually using [mainScope] does.
    */
-  private val mainScope =
-    CoroutineScope(CoroutineName(MapController.TAG) + SupervisorJob() + Dispatchers.Main)
+  private val mainScope by lazy {
+    CoroutineScope(CoroutineName("MapProvider") + SupervisorJob() + mapboxThread.dispatcher)
+  }
 
   fun getNativeMapWrapper(
     mapInitOptions: MapInitOptions,
     mapClient: MapClient,
+    mapboxThread: MapboxThread,
   ) = NativeMapImpl(
     Map(
       mapClient,
       mapInitOptions.mapOptions,
-    )
+    ),
+    mapboxThread,
   )
 
   fun getNativeMapCore(mapView: MapView): Map {
@@ -50,8 +59,10 @@ internal object MapProvider {
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float,
-    mapName: String
-  ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName)
+    mapName: String,
+    mapboxThread: MapboxThread,
+    threadChecker: MapThreadChecker,
+  ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName, mapboxThread, threadChecker)
 
   @OptIn(MapboxExperimental::class)
   fun getMapPluginRegistry(

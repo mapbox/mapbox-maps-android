@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.annotation.SuppressLint
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxThread
 import com.mapbox.maps.IVulkanManager
 import com.mapbox.maps.RenderCallback
 import com.mapbox.maps.logI
@@ -32,11 +33,13 @@ internal class VulkanMapboxRenderThread : MapboxRenderThread {
     mapboxRenderer: MapboxRenderer,
     antialiasingSampleCount: Int,
     mapName: String,
+    mapboxThread: MapboxThread,
   ) : super(
     mapboxRenderer = mapboxRenderer,
     widgetRenderer = null,
     mapName = mapName,
-    rendererName = "Vulkan"
+    rendererName = "Vulkan",
+    mapboxThread = mapboxThread
   ) {
     this.antialiasingSampleCount = antialiasingSampleCount
   }
@@ -51,6 +54,7 @@ internal class VulkanMapboxRenderThread : MapboxRenderThread {
     surfaceProcessingLock: ReentrantLock,
     createCondition: Condition,
     destroyCondition: Condition,
+    mapboxThread: MapboxThread,
   ) : super(
     mapboxRenderer,
     null,
@@ -58,7 +62,8 @@ internal class VulkanMapboxRenderThread : MapboxRenderThread {
     fpsManager,
     surfaceProcessingLock,
     createCondition,
-    destroyCondition
+    destroyCondition,
+    mapboxThread
   ) {
     this.antialiasingSampleCount = antialiasingSampleCount
   }

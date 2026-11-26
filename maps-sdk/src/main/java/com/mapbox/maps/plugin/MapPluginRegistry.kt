@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin
 
 import android.view.MotionEvent
+import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -77,7 +78,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
             mapInitOptions.attrs,
             mapInitOptions.mapOptions.pixelRatio
           )
-          mapView.addView(pluginView)
+          mapView.addViewOnMainThread(pluginView)
           mapPlugin.onPluginView(pluginView)
         }
 
@@ -201,6 +202,7 @@ internal class MapPluginRegistry(private val mapDelegateProvider: MapDelegatePro
     }
   }
 
+  @MainThread
   fun onAttachedToWindow(mapView: MapView) {
     mapboxLifecyclePlugin?.registerLifecycleObserver(mapView, mapView)
   }

@@ -18,6 +18,7 @@ import com.mapbox.maps.plugin.delegates.MapInteractionDelegate
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapThreadDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 
 @OptIn(MapboxExperimental::class)
@@ -51,4 +52,5 @@ internal class MapDelegateProviderImpl(
   @OptIn(com.mapbox.annotation.MapboxExperimental::class)
   override val indoorManager: IndoorManager = mapboxMap.indoor
   override val maximumFps: Int? get() = mapController.maximumFps
+  override val mapThreadDelegate: MapThreadDelegate = mapboxMap
 }

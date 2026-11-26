@@ -74,7 +74,6 @@ internal abstract class MapboxRenderer(
     surfaceAvailabilityListener?.invoke(available)
   }
 
-  @UiThread
   fun onDestroy() {
     widgetRenderer.cleanUpAllWidgets()
     renderThread.destroy()
@@ -151,14 +150,12 @@ internal abstract class MapboxRenderer(
     map?.resetThreadServiceType()
   }
 
-  @UiThread
   fun onStop() {
     renderThread.pause()
     renderFrameCancelable?.cancel()
     readyForSnapshot.set(false)
   }
 
-  @UiThread
   fun onStart() {
     renderThread.resume()
     renderFrameCancelable = map?.subscribe(renderFrameFinishedCallback)

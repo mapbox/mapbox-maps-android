@@ -21,7 +21,8 @@ class Style internal constructor(
   styleManager: StyleManager,
   pixelRatio: Float,
   mapLoadingErrorDelegate: MapLoadingErrorDelegate,
-) : MapboxStyleManager(styleManager, pixelRatio, mapLoadingErrorDelegate) {
+  threadChecker: MapThreadChecker,
+) : MapboxStyleManager(styleManager, pixelRatio, mapLoadingErrorDelegate, threadChecker) {
 
   @Volatile
   private var isStyleValid = true

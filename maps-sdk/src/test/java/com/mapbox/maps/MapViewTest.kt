@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
@@ -14,10 +15,12 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.RendererSetupErrorListener
 import com.mapbox.verifyNo
 import io.mockk.*
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -28,22 +31,26 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import kotlin.concurrent.thread
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 class MapViewTest {
+
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
 
   private lateinit var mapController: MapController
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
 
   private val testScheduler = TestCoroutineScheduler()
-  private val testDispatcher = UnconfinedTestDispatcher(testScheduler)
   private val mainTestDispatcher = UnconfinedTestDispatcher(testScheduler, "MainTestDispatcher")
-  private val testScope = CoroutineScope(testDispatcher)
 
   @Before
   fun setUp() {
@@ -53,8 +60,6 @@ class MapViewTest {
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
     every { mapController.mapboxMap } returns mapboxMap
-    // Use test scope for lifecycleScope
-    every { mapController.lifecycleScope } returns testScope
 
     mapView = MapView(
       ApplicationProvider.getApplicationContext(),
@@ -97,6 +102,17 @@ class MapViewTest {
   fun onDestroy() {
     mapView.onDestroy()
     verify { mapController.onDestroy() }
+  }
+
+  @OptIn(MapboxExperimental::class, MapboxDelicateApi::class)
+  @Test
+  fun onDestroyCancelsMapScopes() {
+    val job = mapView.mapScope.launch(start = CoroutineStart.UNDISPATCHED) { awaitCancellation() }
+    val immediateJob =
+      mapView.mapImmediateScope.launch(start = CoroutineStart.UNDISPATCHED) { awaitCancellation() }
+    mapView.onDestroy()
+    assertTrue(job.isCancelled)
+    assertTrue(immediateJob.isCancelled)
   }
 
   @Test
@@ -292,5 +308,31 @@ class MapViewTest {
     every { renderer.renderThread } returns renderThread
     mapView.scheduleThreadServiceTypeReset()
     verify { renderThread.scheduleThreadServiceTypeReset() }
+  }
+
+  @Test
+  fun addViewOnMainThreadDispatchesOffMainThread() {
+    // setUp's unconfined test dispatcher would run the add inline on the calling thread, so use
+    // the real main dispatcher.
+    Dispatchers.resetMain()
+    val view = View(ApplicationProvider.getApplicationContext())
+
+    onBackgroundThread { mapView.addViewOnMainThread(view) }
+    assertNull(view.parent)
+
+    shadowOf(Looper.getMainLooper()).idle()
+    assertSame(mapView, view.parent)
+  }
+
+  private fun onBackgroundThread(block: () -> Unit) {
+    var error: Throwable? = null
+    thread {
+      try {
+        block()
+      } catch (t: Throwable) {
+        error = t
+      }
+    }.join()
+    error?.let { throw it }
   }
 }

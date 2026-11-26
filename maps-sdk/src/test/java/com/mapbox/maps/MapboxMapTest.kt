@@ -1,11 +1,15 @@
 package com.mapbox.maps
 
+import android.content.ComponentCallbacks
+import android.content.Context
+import android.content.res.Configuration
 import android.graphics.RectF
 import android.os.Looper
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
 import com.mapbox.common.LogThrottler
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
@@ -49,8 +53,12 @@ import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
 import junit.framework.Assert.assertTrue
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.launch
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
@@ -58,6 +66,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
+import kotlin.concurrent.thread
 
 private val ZERO_EDGE_INSETS = EdgeInsets(0.0, 0.0, 0.0, 0.0)
 
@@ -67,6 +76,9 @@ private val ZERO_EDGE_INSETS = EdgeInsets(0.0, 0.0, 0.0, 0.0)
 @LooperMode(LooperMode.Mode.PAUSED)
 @Config(shadows = [ShadowMap::class, ShadowLogThrottler::class])
 class MapboxMapTest {
+
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
 
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
@@ -79,7 +91,54 @@ class MapboxMapTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
     styleObserver = mockk(relaxUnitFun = true)
-    mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
+    val mapboxThread = mapboxThreadProvider.getOrCreate()
+    mapboxMap = MapboxMap(
+      nativeMap,
+      nativeObserver,
+      pixelRatio = 1.0f,
+      mapName = "",
+      mapboxThread = mapboxThread,
+      threadChecker = MapThreadChecker(mapboxThread.handler.looper),
+      styleObserver = styleObserver,
+    )
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun systemFontScaleChangeOffMainIsAppliedOnMapboxThread() {
+    val callbacks = registerSystemScaleBehavior()
+    var scaleThread: Thread? = null
+    every { nativeMap.setScaleFactor(any()) } answers { scaleThread = Thread.currentThread() }
+
+    thread { callbacks.onConfigurationChanged(Configuration().apply { fontScale = 2f }) }.join()
+    assertNull(scaleThread)
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    assertEquals(Looper.getMainLooper().thread, scaleThread)
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun systemFontScaleChangeIsIgnoredAfterSwitchingToFixed() {
+    val callbacks = registerSystemScaleBehavior()
+    mapboxMap.symbolScaleBehavior = SymbolScaleBehavior.fixed(1.5f)
+
+    callbacks.onConfigurationChanged(Configuration().apply { fontScale = 2f })
+
+    verify(exactly = 0) { nativeMap.setScaleFactor(2f) }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  private fun registerSystemScaleBehavior(): ComponentCallbacks {
+    val callbacks = slot<ComponentCallbacks>()
+    val appContext = mockk<Context>(relaxed = true)
+    every { appContext.registerComponentCallbacks(capture(callbacks)) } just Runs
+    val context = mockk<Context>(relaxed = true)
+    every { context.applicationContext } returns appContext
+    every { context.resources.configuration } returns Configuration().apply { fontScale = 1f }
+    mapboxMap.initializeAccessibility(context)
+    mapboxMap.symbolScaleBehavior = SymbolScaleBehavior.system
+    return callbacks.captured
   }
 
   @Test
@@ -139,6 +198,17 @@ class MapboxMapTest {
     mapboxMap.startPerformanceStatisticsCollection(mockk(), mockk())
     mapboxMap.onDestroy()
     verify(exactly = 1) { nativeMap.stopPerformanceStatisticsCollection() }
+  }
+
+  @OptIn(MapboxExperimental::class)
+  @Test
+  fun onDestroyCancelsScopes() {
+    val job = mapboxMap.scope.launch(start = CoroutineStart.UNDISPATCHED) { awaitCancellation() }
+    val immediateJob =
+      mapboxMap.immediateScope.launch(start = CoroutineStart.UNDISPATCHED) { awaitCancellation() }
+    mapboxMap.onDestroy()
+    assertTrue(job.isCancelled)
+    assertTrue(immediateJob.isCancelled)
   }
 
   @Test
@@ -2013,10 +2083,12 @@ class PixelForCoordinatesTest(
   private val input: List<ScreenCoordinate>,
   private val expected: List<ScreenCoordinate>,
 ) {
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
+
   private val nativeMap: NativeMapImpl = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
 
-  private lateinit var styleObserver: StyleObserver
   private lateinit var mapboxMap: MapboxMap
 
   @Before
@@ -2024,8 +2096,15 @@ class PixelForCoordinatesTest(
     mockkStatic(kotlin.collections.Map::class)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
-    styleObserver = mockk(relaxUnitFun = true)
-    mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
+    val mapboxThread = mapboxThreadProvider.getOrCreate()
+    mapboxMap = MapboxMap(
+      nativeMap,
+      nativeObserver,
+      pixelRatio = 1.0f,
+      mapName = "",
+      mapboxThread = mapboxThread,
+      threadChecker = MapThreadChecker(mapboxThread.handler.looper)
+    )
   }
 
   @Test
@@ -2035,6 +2114,7 @@ class PixelForCoordinatesTest(
     every { nativeMap.pixelForCoordinate(point) } returns input[0]
     val screenCoordinate = mapboxMap.pixelForCoordinate(point)
     verifySequence {
+      nativeMap.map
       nativeMap.map
       nativeMap.pixelForCoordinate(point)
       nativeMap.getSize()

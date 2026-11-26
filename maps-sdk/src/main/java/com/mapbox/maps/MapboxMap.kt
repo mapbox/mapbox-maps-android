@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.app.Activity
 import android.graphics.RectF
 import android.os.Handler
+import android.os.Looper
 import android.webkit.URLUtil
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
@@ -11,6 +12,8 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxThread
+import com.mapbox.common.runOrDispatch
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -28,6 +31,9 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainCoroutineDispatcher
+import kotlinx.coroutines.SupervisorJob
 import kotlin.math.roundToInt
 
 /**
@@ -53,7 +59,8 @@ class MapboxMap :
   MapCameraManagerDelegate,
   MapboxStyleManager,
   MapInteractionDelegate,
-  MapFeatureStateDelegate {
+  MapFeatureStateDelegate,
+  MapThreadDelegate {
 
   private val nativeMap: NativeMapImpl
   private var isMapValid = true
@@ -132,28 +139,71 @@ class MapboxMap :
   @get:JvmSynthetic @set:JvmSynthetic
   internal var gesturesPlugin: GesturesPlugin? = null
 
-  private constructor(
-    nativeMap: NativeMapImpl,
-    nativeObserver: NativeObserver,
-    styleObserver: StyleObserver
-  ) : super(nativeMap.map, 1.0f, mapLoadingErrorDelegate = { }) {
-    this.nativeMap = nativeMap
-    this.nativeObserver = nativeObserver
-    this.styleObserver = styleObserver
-  }
+  /**
+   * Cancelled in [onDestroy], tying [scope] and [immediateScope] to this [MapboxMap]'s lifecycle
+   * instead of the underlying [MapboxThread]'s (which outlives any single [MapboxMap]).
+   */
+  private val mapboxMapJob = SupervisorJob()
 
+  /**
+   * Coroutine scope that dispatches onto whichever thread the Mapbox SDKs are configured to run
+   * on: the main thread by default, but a dedicated background thread if the app configures a
+   * [MapboxThreadProvider][com.mapbox.common.MapboxThreadProvider] such as
+   * `OneMapboxThreadProvider`. Cancelled in [onDestroy].
+   *
+   * Wrap only the calls that actually touch Mapbox map/style APIs in this scope. Do not wrap
+   * unrelated main-thread-only Android framework calls in it (e.g. `Lifecycle.addObserver`,
+   * other work that requires the real main thread regardless of how Mapbox is configured) —
+   * those need the main thread specifically, not "whatever thread Mapbox happens to be using,"
+   * and belong outside this scope, called directly or via `Dispatchers.Main`.
+   */
+  @MapboxExperimental
+  override val scope: CoroutineScope
+
+  /**
+   * Like [scope], but using [MapboxThread.dispatcher][com.mapbox.common.MapboxThread.dispatcher]'s `immediate` variant:
+   * runs inline when already on the right thread, instead of always re-dispatching. See [scope]
+   * for what belongs (and doesn't belong) in this scope.
+   */
+  @MapboxExperimental
+  override val immediateScope: CoroutineScope
+  @MapboxExperimental
+  override val looper: Looper
+
+  /**
+   * The [MainCoroutineDispatcher] backing [scope]: always posts to whichever thread the Mapbox
+   * SDKs are configured to run on, even when already called from it. Exposed for code that
+   * wants to `withContext` onto that thread rather than launch a separate coroutine via [scope].
+   * Use [immediate][MainCoroutineDispatcher.immediate] to run inline when already on that
+   * thread, matching [immediateScope].
+   */
+  @MapboxExperimental
+  override val dispatcher: MainCoroutineDispatcher
+
+  /**
+   * @param styleObserverOverride tests only: replaces the [StyleObserver] this constructor would
+   * otherwise create, so tests run the same initialization as production.
+   */
   private constructor(
     nativeMap: NativeMapImpl,
     nativeObserver: NativeObserver,
     pixelRatio: Float,
-    mapName: String
+    mapName: String,
+    mapboxThread: MapboxThread,
+    threadChecker: MapThreadChecker,
+    styleObserverOverride: StyleObserver? = null,
   ) : super(
     nativeMap.map,
     pixelRatio,
     MapLoadingErrorDelegate { error ->
       nativeObserver.sendMapLoadingError(error)
-    }
+    },
+    threadChecker = threadChecker
   ) {
+    this.scope = CoroutineScope(mapboxMapJob + mapboxThread.dispatcher)
+    this.immediateScope = CoroutineScope(mapboxMapJob + mapboxThread.dispatcher.immediate)
+    this.looper = mapboxThread.handler.looper
+    this.dispatcher = mapboxThread.dispatcher
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     if (mapName.isNotBlank()) {
@@ -164,12 +214,13 @@ class MapboxMap :
     }
     // we register our internal native observers here and
     // this is critical to always have our observers registered first
-    this.styleObserver = StyleObserver(
+    this.styleObserver = styleObserverOverride ?: StyleObserver(
       this.nativeMap.map,
       { style -> this.style = style },
       nativeObserver,
       pixelRatio,
-      mapLoadingErrorDelegate
+      mapLoadingErrorDelegate,
+      threadChecker
     )
   }
 
@@ -2465,9 +2516,13 @@ class MapboxMap :
     configCallbacks = object : android.content.ComponentCallbacks {
       override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
         val newFontScale = newConfig.fontScale
-        if (newFontScale != currentSystemFontScale && isMapValid) {
-          currentSystemFontScale = newFontScale
-          applyCurrentScale()
+        // Android delivers this on the main thread, while the native map and the scale state
+        // belong to the Mapbox thread.
+        dispatcher.runOrDispatch {
+          if (newFontScale != currentSystemFontScale && isMapValid && scaleBehavior.isSystem()) {
+            currentSystemFontScale = newFontScale
+            applyCurrentScale()
+          }
         }
       }
       override fun onLowMemory() {}
@@ -2637,6 +2692,8 @@ class MapboxMap :
   @OptIn(MapboxExperimental::class)
   @JvmSynthetic
   internal fun onDestroy() {
+    // Cancel first so no coroutine on scope/immediateScope runs against the map torn down below.
+    mapboxMapJob.cancel()
     // Always attempt to clean up observers first to prevent memory leaks
     unregisterConfigurationObserver()
     accessibilityContext = null
@@ -2764,9 +2821,9 @@ class MapboxMap :
     return nativeMap.setViewAnnotationPositionsUpdateListener(listener)
   }
 
-  private fun checkNativeMap(methodName: String, checkMainThread: Boolean = true) {
-    if (checkMainThread) {
-      ThreadChecker.throwIfNotMainThread()
+  private fun checkNativeMap(methodName: String, checkMapThread: Boolean = true) {
+    if (checkMapThread) {
+      threadChecker.throwIfNotMainThread()
     }
     if (!isMapValid) {
       logW(
@@ -3189,21 +3246,32 @@ class MapboxMap :
     @JvmSynthetic
     internal const val QFE_EXPANSION_ZOOM = "expansion-zoom"
 
-    @VisibleForTesting(otherwise = PRIVATE)
-    @JvmSynthetic
-    internal operator fun invoke(
-      nativeMap: NativeMapImpl,
-      nativeObserver: NativeObserver,
-      styleObserver: StyleObserver
-    ) = MapboxMap(nativeMap, nativeObserver, styleObserver)
-
     @JvmSynthetic
     internal operator fun invoke(
       nativeMap: NativeMapImpl,
       nativeObserver: NativeObserver,
       pixelRatio: Float,
-      mapName: String
-    ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName)
+      mapName: String,
+      mapboxThread: MapboxThread,
+      threadChecker: MapThreadChecker,
+    ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName, mapboxThread, threadChecker)
+
+    /**
+     * Lets tests substitute [styleObserver] instead of the real one [MapboxMap] would otherwise
+     * build internally, so they can control which [Style] instance flows through the listeners
+     * passed to [StyleObserver.setLoadStyleListener].
+     */
+    @VisibleForTesting(otherwise = PRIVATE)
+    @JvmSynthetic
+    internal operator fun invoke(
+      nativeMap: NativeMapImpl,
+      nativeObserver: NativeObserver,
+      pixelRatio: Float,
+      mapName: String,
+      mapboxThread: MapboxThread,
+      threadChecker: MapThreadChecker,
+      styleObserver: StyleObserver,
+    ) = MapboxMap(nativeMap, nativeObserver, pixelRatio, mapName, mapboxThread, threadChecker, styleObserver)
 
     /**
      * Calculates the bounding box for a list of points.

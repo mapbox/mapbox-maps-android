@@ -19,6 +19,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -31,6 +32,9 @@ import org.robolectric.RobolectricTestRunner
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
 class DisabledPluginGetterTest {
+
+  @get:Rule
+  val mapboxThreadProviderTestRule = MapboxThreadProviderTestRule()
 
   private val mockPluginRegistry: MapPluginRegistry = mockk()
   private lateinit var mapController: MapController

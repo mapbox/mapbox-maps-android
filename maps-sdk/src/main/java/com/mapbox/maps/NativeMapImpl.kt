@@ -1,6 +1,5 @@
 package com.mapbox.maps
 
-import android.os.Handler
 import android.os.Looper
 import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
@@ -8,6 +7,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
+import com.mapbox.common.MapboxThread
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -15,8 +15,12 @@ import java.util.HashSet
 import java.util.concurrent.CopyOnWriteArrayList
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-internal class NativeMapImpl(val map: Map) {
+internal class NativeMapImpl(
+  val map: Map,
+  mapboxThread: MapboxThread,
+) {
 
+  private val mapboxHandler = mapboxThread.handler
   @Volatile
   internal var sizeSet = false
     @Synchronized
@@ -24,9 +28,9 @@ internal class NativeMapImpl(val map: Map) {
       // callbacks should be invoked only when size was not set and being set now
       if (value && !field) {
         // in current design this function is called from Android render thread
-        // so we explicitly invoke callback on main thread
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-          mainHandler.post {
+        // so we explicitly invoke callback on main/map thread
+        if (Looper.myLooper() != mapboxHandler.looper) {
+          mapboxHandler.post {
             if (sizeSet) {
               sizeSetCallbackList.forEach {
                 it.invoke()
@@ -44,7 +48,6 @@ internal class NativeMapImpl(val map: Map) {
       field = value
     }
   private var sizeSetCallbackList = CopyOnWriteArrayList<() -> (Unit)>()
-  private val mainHandler = Handler(Looper.getMainLooper())
 
   @MainThread
   fun whenMapSizeReady(callback: () -> (Unit)): Cancelable {

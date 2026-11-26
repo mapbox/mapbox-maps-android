@@ -5,8 +5,17 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import com.mapbox.annotation.MapboxExperimental
+import com.mapbox.common.MapboxThread
+import com.mapbox.common.MapboxThreadProvider
+import com.mapbox.common.mapboxThreadProvider
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import io.mockk.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -14,6 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(Parameterized::class)
 class MapViewTypedArrayTest(
   private val inputAntialiasingSampleCount: Int,
@@ -28,8 +38,20 @@ class MapViewTypedArrayTest(
   private lateinit var context: Context
   private lateinit var mapView: MapView
 
+  @OptIn(MapboxExperimental::class)
   @Before
   fun setUp() {
+    // This test isn't Robolectric-backed, so MainMapboxThreadProvider's real Looper.getMainLooper()
+    // call isn't available here, use a plain mock instead of MapboxThreadProviderTestRule. The
+    // dispatcher is stubbed with the Dispatchers.Main proxy backed by an UnconfinedTestDispatcher,
+    // since MapView.<init> combines it via CoroutineContext.plus, which a fully relaxed mock can't
+    // satisfy.
+    Dispatchers.setMain(UnconfinedTestDispatcher())
+    val mockMapboxThread = mockk<MapboxThread>(relaxed = true)
+    every { mockMapboxThread.dispatcher } returns Dispatchers.Main
+    mapboxThreadProvider = mockk<MapboxThreadProvider> {
+      every { getOrCreate() } returns mockMapboxThread
+    }
     attrs = mockk()
     val mapController = mockk<MapController>(relaxUnitFun = true)
     val mapboxMap = mockk<MapboxMap>(relaxUnitFun = true)
@@ -71,6 +93,7 @@ class MapViewTypedArrayTest(
   @After
   fun shutDown() {
     unmockkAll()
+    Dispatchers.resetMain()
   }
 
   companion object {

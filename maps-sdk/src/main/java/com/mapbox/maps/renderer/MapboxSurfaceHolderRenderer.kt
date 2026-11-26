@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer
 import android.view.SurfaceHolder
 import androidx.annotation.RestrictTo
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.MapboxThread
 import com.mapbox.maps.ContextMode
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
@@ -13,7 +14,8 @@ internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolde
     antialiasingSampleCount: Int,
     contextMode: ContextMode,
     mapName: String,
-  ) : super(antialiasingSampleCount, contextMode, mapName) {
+    mapboxThread: MapboxThread,
+  ) : super(antialiasingSampleCount, contextMode, mapName, mapboxThread) {
     surfaceHolder.addCallback(this)
   }
 
